@@ -35,5 +35,9 @@ namespace DD4hep {
     /** Returns nearest module to given coordinates (3D) on endplate (default 0 or 1, see compact xml).
      */
     const DDTPCModule& getNearestModule(double c0, double c1, int endplate) const;
+
+    /** Check if coordinate is on a module on given endplate.
+     */
+    bool isInsideModule(double c0, double c1, int endplate) const;
   };
 }
