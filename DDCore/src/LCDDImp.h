@@ -46,18 +46,20 @@ namespace DD4hep {
             this->insert(std::make_pair(n, e.ptr()));
           }
         }
-        void append(const Ref_t& e) {
+        void append(const Ref_t& e, bool throw_on_doubles = true) {
           if (e.isValid()) {
             std::string n = e.name();
-            this->insert(std::make_pair(n, e.ptr()));
-            return;
+            std::pair<iterator, bool> r = this->insert(std::make_pair(n, e.ptr()));
+            if (!throw_on_doubles || r.second)
+              return;
+            throw InvalidObjectError("Attempt to add an already existing object:" + std::string(e.name()) + ".");
           }
-          throw InvalidObjectError("Attempt to add an invalid object object");
+          throw InvalidObjectError("Attempt to add an invalid object.");
         }
-        template <typename T> void append(const Ref_t& e) {
+        template <typename T> void append(const Ref_t& e, bool throw_on_doubles = true) {
           T* obj = dynamic_cast<T*>(e.ptr());
           if (obj) {
-            this->append(e);
+            this->append(e, throw_on_doubles);
             return;
           }
           throw InvalidObjectError("Attempt to add an object, which is of the wrong type.");
@@ -157,7 +159,7 @@ namespace DD4hep {
 
       // These not:
       virtual LCDD& addConstant(const Ref_t& x) {
-        m_define.append(x);
+        m_define.append(x, false);
         __R;
       }
       virtual LCDD& addMaterial(const Ref_t& x) {
