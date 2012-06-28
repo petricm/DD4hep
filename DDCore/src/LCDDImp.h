@@ -9,12 +9,14 @@
 
 #ifndef DD4hep_LCDDGEOIMP_H
 #define DD4hep_LCDDGEOIMP_H
-#include "DD4hep/LCDD.h"
-//#include "XML/XMLElements.h"
 
+// Framework include files
+#include "DD4hep/LCDD.h"
+
+// Forward declarations
 class TGeoManager;
 
-// C++ include files
+// C/C++ include files
 #include <map>
 
 /*
@@ -35,15 +37,17 @@ namespace DD4hep {
 
       struct ObjectHandleMap : public HandleMap {
         ObjectHandleMap() {}
-        void append_noCheck(const Ref_t& e) {
-          if (e.isValid()) {
+#if 0
+        void append_noCheck(const Ref_t& e) { 
+          if ( e.isValid() )  {
             std::string n = e.name();
-            if (this->find(n) != this->end()) {
-              throw InvalidObjectError("Object " + n + " is already present in map!");
+            if ( this->find(n) != this->end() ) {
+              throw InvalidObjectError("Object "+n+" is already present in map!");
             }
-            this->insert(std::make_pair(n, e.ptr()));
+            this->insert(std::make_pair(n,e.ptr()));
           }
         }
+#endif
         void append(const Ref_t& e, bool throw_on_doubles = true) {
           if (e.isValid()) {
             std::string n = e.name();
@@ -177,7 +181,7 @@ namespace DD4hep {
         m_sensitive.append(x);
         __R;
       }
-      virtual LCDD& addDetector(const Ref_t& x);  //  { m_detectors.append_noCheck(x);  __R;}
+      virtual LCDD& addDetector(const Ref_t& x);
 
       virtual LCDD& addAlignment(const Ref_t& x) {
         m_alignments.append(x);
