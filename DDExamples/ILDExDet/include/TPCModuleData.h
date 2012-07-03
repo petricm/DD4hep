@@ -11,13 +11,12 @@
 
 namespace DD4hep {
 
-  struct TPCModuleData : public Geometry::DetElement::Object {
-    typedef Geometry::Ref_t Ref_t;
-    double                  rowHeight;
-    double                  padWidth;
-    double                  padHeight;
-    double                  padGap;
-    int                     nRows;
-    int                     nPads;
+  struct TPCModuleData {
+    double rowHeight;
+    double padWidth;
+    double padHeight;
+    double padGap;
+    int    nRows;
+    int    nPads;
   };
 }
