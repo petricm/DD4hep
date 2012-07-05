@@ -11,18 +11,16 @@
 
 #include <Exceptions.h>
 #include "DD4hep/Detector.h"
+#include "PadLayout.h"
 
 namespace DD4hep {
 
-  struct FixedPadAngleDiskLayout : public Geometry::DetElement {
-    typedef Geometry::Ref_t Ref_t;
+  struct FixedPadAngleDiskLayout : public PadLayout {
+    Geometry::DetElement module;
     //various constructors
     FixedPadAngleDiskLayout() {}
-    FixedPadAngleDiskLayout(const Ref_t& e) : Geometry::DetElement(e) {}
-    FixedPadAngleDiskLayout(const Geometry::DetElement& e) : Geometry::DetElement(e) {}
-    FixedPadAngleDiskLayout(const std::string& name, const std::string& type, int id) {
-      Geometry::DetElement(name, type, id);
-    }
+    FixedPadAngleDiskLayout(const Geometry::DetElement& e) : module(e) {}
+    FixedPadAngleDiskLayout(const FixedPadAngleDiskLayout& p) : module(p.module) {}
 
     /** The type of pad layout (segmentation) on this module.
      */
@@ -63,9 +61,6 @@ namespace DD4hep {
     /** Closest pad to a given location.
      */
     int getNearestPad(double c0, double c1) const;
-    /**Helper function to get the z position of the module in local coordinates.
-     */
-    double getModuleZPosition() const;
   };
 }
 #endif
