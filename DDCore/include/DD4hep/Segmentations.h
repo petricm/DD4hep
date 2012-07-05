@@ -66,7 +66,7 @@ namespace DD4hep {
       /// Constructor to be used when reading the already parsed object
       template <typename Q> Segmentation(const Handle<Q>& e) : Handle<Implementation>(e) {}
       /// Constructor to create a new segmentation object (to be called by super class only)
-      Segmentation(LCDD& lcdd, const std::string& type);
+      Segmentation(const std::string& type);
       Object&           _data() const { return *data<Object>(); }
       bool              useForHitPosition() const;
       const std::string type() const;
@@ -81,7 +81,7 @@ namespace DD4hep {
       /// Constructor to be used when reading the already parsed object
       template <typename Q> ProjectiveCylinder(const Handle<Q>& e) : Segmentation(e) {}
       /// Constructor to create a new segmentation object
-      ProjectiveCylinder(LCDD& lcdd);
+      ProjectiveCylinder();
       /// Accessors: get number of bins in theta
       int thetaBins() const;
       /// Accessors: get number of bins in phi
@@ -101,7 +101,7 @@ namespace DD4hep {
       /// Constructor to be used when reading the already parsed object
       template <typename Q> NonProjectiveCylinder(const Handle<Q>& e) : Segmentation(e) {}
       /// Constructor to create a new segmentation object
-      NonProjectiveCylinder(LCDD& lcdd);
+      NonProjectiveCylinder();
       /// Accessors: get size of bins in Z
       double gridSizeZ() const;
       /// Accessors: get size of bins in phi
@@ -121,7 +121,7 @@ namespace DD4hep {
       /// Constructor to be used when reading the already parsed object
       template <typename Q> ProjectiveZPlane(const Handle<Q>& e) : Segmentation(e) {}
       /// Constructor to create a new segmentation object
-      ProjectiveZPlane(LCDD& lcdd);
+      ProjectiveZPlane();
       /// Accessors: get number of bins in theta
       int thetaBins() const;
       /// Accessors: get number of bins in phi
@@ -141,9 +141,9 @@ namespace DD4hep {
       /// Constructor to be used when reading the already parsed object
       template <typename Q> GridXY(const Handle<Q>& e) : Segmentation(e) {}
       /// Constructor to be used when creating a new object. Data are taken from the input handle
-      GridXY(LCDD& lcdd, const std::string& tag);
+      GridXY(const std::string& tag);
       /// Constructor to be used when creating a new object.
-      GridXY(LCDD& lcdd, const std::string& tag, double size_x, double size_y);
+      GridXY(const std::string& tag, double size_x, double size_y);
       /// Accessors: set grid size in X
       void setGridSizeX(double value);
       /// Accessors: set grid size in Y
@@ -159,9 +159,9 @@ namespace DD4hep {
       /// Constructor to be used when reading the already parsed object
       template <typename Q> GridXYZ(const Handle<Q>& e) : GridXY(e) {}
       /// Constructor to be used when creating a new object.
-      GridXYZ(LCDD& lcdd);
+      GridXYZ();
       /// Constructor to be used when creating a new object.
-      GridXYZ(LCDD& lcdd, double size_x, double size_y, double size_z);
+      GridXYZ(double size_x, double size_y, double size_z);
       /// Accessors: set grid size in Z
       void setGridSizeZ(double value);
     };
@@ -175,7 +175,7 @@ namespace DD4hep {
       /// Constructor to be used when reading the already parsed object
       template <typename Q> CartesianGridXY(const Handle<Q>& e) : GridXY(e) {}
       /// Constructor to be used when creating a new object. Data are taken from the input handle
-      CartesianGridXY(LCDD& lcdd) : GridXY(lcdd, "cartesian_grid_xy") {}
+      CartesianGridXY() : GridXY("cartesian_grid_xy") {}
     };
 
     /** @class GlobalGridXY Segmentations.h DD4hep/lcdd/Segmentations.h
@@ -187,7 +187,7 @@ namespace DD4hep {
       /// Constructor to be used when reading the already parsed object
       template <typename Q> GlobalGridXY(const Handle<Q>& e) : GridXY(e) {}
       /// Constructor to be used when creating a new object. Data are taken from the input handle
-      GlobalGridXY(LCDD& lcdd) : GridXY(lcdd, "global_grid_xy") {}
+      GlobalGridXY() : GridXY("global_grid_xy") {}
     };
 
   } /* End namespace Geometry               */

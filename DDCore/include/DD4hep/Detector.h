@@ -137,12 +137,14 @@ namespace DD4hep {
       /// Templated default constructor
       template <typename T> static void* _construct() { return new T(); }
       /// Templated copy constructor
-      template <typename T> static void* _copy(const void* ptr) { return new T(*(T*)ptr); }
+      template <typename T> static void* _copy(const void* ptr, DetElement elt) {
+        return new T(*(dynamic_cast<const T*>((T*)ptr)), elt);
+      }
       /// Templated destructor function
       template <typename T> static void _delete(void* ptr) { delete (T*)(ptr); }
 
       /// Add an extension object to the detector element
-      void* i_addExtension(void* ptr, const std::type_info& info, void* (*construct)(), void* (*copy)(const void*),
+      void* i_addExtension(void* ptr, const std::type_info& info, void* (*copy)(const void*, DetElement),
                            void (*destruct)(void*));
       /// Access an existing extension object from the detector element
       void* i_extension(const std::type_info& info) const;
@@ -177,7 +179,7 @@ namespace DD4hep {
       DetElement clone(const std::string& new_name, int new_id) const;
 
       template <typename IFACE, typename CONCRETE> IFACE* addExtension(CONCRETE* c) {
-        return (IFACE*)i_addExtension(c, typeid(IFACE), _construct<CONCRETE>, _copy<CONCRETE>, _delete<IFACE>);
+        return (IFACE*)i_addExtension(dynamic_cast<IFACE*>(c), typeid(IFACE), _copy<CONCRETE>, _delete<IFACE>);
       }
 
       template <class T> T* extension() const { return (T*)i_extension(typeid(T)); }
