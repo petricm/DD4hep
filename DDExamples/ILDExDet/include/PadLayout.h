@@ -15,7 +15,7 @@
 namespace DD4hep {
 
   struct PadLayout {
-    /// Default destructir
+    /// Default destructor
     virtual ~PadLayout() {}
 
     /** The type of pad layout (segmentation) on this module.
