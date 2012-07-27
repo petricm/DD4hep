@@ -159,6 +159,8 @@ namespace DD4hep {
       void setSensitiveDetector(const SensitiveDetector& obj) const;
       /// Access to the handle to the sensitive detector
       Ref_t sensitiveDetector() const;
+      /// Accessor if volume is sensitive (ie. is attached to a sensitive detector)
+      bool isSensitive() const;
 
       /// Set the volume's solid shape
       void setSolid(const Solid& s) const;

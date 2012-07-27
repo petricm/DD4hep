@@ -67,8 +67,11 @@ namespace DD4hep {
       template <typename Q> Segmentation(const Handle<Q>& e) : Handle<Implementation>(e) {}
       /// Constructor to create a new segmentation object (to be called by super class only)
       Segmentation(const std::string& type);
-      Object&           _data() const { return *data<Object>(); }
-      bool              useForHitPosition() const;
+      /// Accessor to ata structure
+      Object& _data() const { return *data<Object>(); }
+      /// Access flag for hit positioning
+      bool useForHitPosition() const;
+      /// Segmentation type
       const std::string type() const;
     };
 
