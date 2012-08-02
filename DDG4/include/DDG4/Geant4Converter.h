@@ -48,6 +48,7 @@ typedef G4AnyThing<G4VSolid> G4Tubs;
 typedef G4AnyThing<G4VSolid> G4Trd;
 typedef G4AnyThing<G4VSolid> G4Paraboloid;
 typedef G4AnyThing<G4VSolid> G4Polycone;
+typedef G4AnyThing<G4VSolid> G4Polyhedra;
 typedef G4AnyThing<G4VSolid> G4Sphere;
 typedef G4AnyThing<G4VSolid> G4Torus;
 typedef G4AnyThing<G4VSolid> G4UnionSolid;
@@ -69,6 +70,7 @@ typedef G4AnyThing<G4VAny>   G4PVPlacement;
 #include "G4IntersectionSolid.hh"
 #include "G4Paraboloid.hh"
 #include "G4Polycone.hh"
+#include "G4Polyhedra.hh"
 #include "G4Sphere.hh"
 #include "G4SubtractionSolid.hh"
 #include "G4Torus.hh"
