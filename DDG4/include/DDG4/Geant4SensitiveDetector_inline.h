@@ -18,13 +18,8 @@ DD4hep::Simulation::Geant4GenericSD<SD>::Geant4GenericSD(const std::string& name
     : Geant4SensitiveDetector(name, lcdd) {}
 
 /// Initialize the sensitive detector for the usage of a single hit collection
-template <class SD> bool DD4hep::Simulation::Geant4GenericSD<SD>::defineCollections(const std::string& coll_name) {
-  return Geant4SensitiveDetector::defineCollections(coll_name);
-}
-
-/// Initialize the sensitive detector for the usage of a multiple hit collection
-template <class SD> bool DD4hep::Simulation::Geant4GenericSD<SD>::defineCollections(const HitCollectionNames& coll_names) {
-  return Geant4SensitiveDetector::defineCollections(coll_names);
+template <class SD> bool DD4hep::Simulation::Geant4GenericSD<SD>::defineCollection(const std::string& coll_name) {
+  return Geant4SensitiveDetector::defineCollection(coll_name);
 }
 
 /** Method invoked at the begining of each event. 

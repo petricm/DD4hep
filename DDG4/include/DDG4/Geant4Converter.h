@@ -13,32 +13,6 @@
 #include "DD4hep/GeoHandler.h"
 #include "DD4hep/LCDD.h"
 
-// Geant4 include files
-#include "G4Box.hh"
-#include "G4Element.hh"
-#include "G4IntersectionSolid.hh"
-#include "G4Paraboloid.hh"
-#include "G4Polycone.hh"
-#include "G4Polyhedra.hh"
-#include "G4Sphere.hh"
-#include "G4SubtractionSolid.hh"
-#include "G4Torus.hh"
-#include "G4Trd.hh"
-#include "G4Tubs.hh"
-#include "G4UnionSolid.hh"
-
-#include "G4Region.hh"
-#include "G4UserLimits.hh"
-#include "G4VSensitiveDetector.hh"
-
-#include "G4Element.hh"
-#include "G4Isotope.hh"
-#include "G4LogicalVolume.hh"
-#include "G4Material.hh"
-#include "G4PVPlacement.hh"
-#include "G4ThreeVector.hh"
-#include "G4Transform3D.hh"
-
 // C/C++ include files
 #include <map>
 #include <set>
@@ -46,7 +20,19 @@
 
 // Forward declarations
 class TGeoVolume;
+class TGeoElement;
+class TGeoShape;
+class TGeoMedium;
 class TGeoNode;
+
+class G4Element;
+class G4Material;
+class G4VSolid;
+class G4LogicalVolume;
+class G4PVPlacement;
+class G4Region;
+class Geant4SensitiveDetector;
+class G4UserLimits;
 
 /*
  *   DD4hep namespace declaration
@@ -57,6 +43,8 @@ namespace DD4hep {
    *   Simulation namespace declaration
    */
   namespace Simulation {
+
+    class Geant4SensitiveDetector;
 
     /** @class Geant4Converter Geant4Converter.h DDG4/Geant4Converter.h
      * 
@@ -76,7 +64,7 @@ namespace DD4hep {
         std::map<const TGeoNode*, G4PVPlacement*>     g4Placements;
         std::map<const TNamed*, G4Region*>            g4Regions;
         LimitMap g4Limits;
-        std::map<const TNamed*, G4VSensitiveDetector*> g4SensDets;
+        std::map<const TNamed*, Geant4SensitiveDetector*> g4SensDets;
 
         SensitiveVolumes sensitives;
         RegionVolumes    regions;
