@@ -7,8 +7,8 @@
 //
 //====================================================================
 
-#ifndef DD4hep_GEOMETRY_OBJECTS_H
-#define DD4hep_GEOMETRY_OBJECTS_H
+#ifndef DD4HEP_GEOMETRY_OBJECTS_H
+#define DD4HEP_GEOMETRY_OBJECTS_H
 
 // Framework include files
 #include "DD4hep/Handle.h"
@@ -30,13 +30,11 @@ class TGeoPhysicalNode;
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
+
 /*
  *   DD4hep namespace declaration
  */
 namespace DD4hep {
-
-  // Forward declarations
-  class IDDescriptor;
 
   /*
    *   Geoemtry namespace declaration
@@ -45,6 +43,7 @@ namespace DD4hep {
 
     // Forward declarations
     struct LCDD;
+    class IDDescriptor;
 
     /** @class Author Objects.h
      *  
@@ -87,9 +86,9 @@ namespace DD4hep {
       /// Constructor to be used when reading the already parsed DOM tree
       template <typename Q> Constant(const Handle<Q>& e) : Ref_t(e) {}
       /// Constructor to be used when creating a new DOM tree
-      Constant(LCDD& doc, const std::string& name);
+      Constant(const std::string& name);
       /// Constructor to be used when creating a new DOM tree
-      Constant(LCDD& doc, const std::string& name, const std::string& val);
+      Constant(const std::string& name, const std::string& val);
       /// String representation of this object
       std::string toString() const;
     };
@@ -281,7 +280,7 @@ namespace DD4hep {
       /// Constructor to be used when creating a new DOM tree
       template <typename Q> Atom(const Handle<Q>& e) : Handle<TGeoElement>(e) {}
       /// Constructor to be used when reading the already parsed DOM tree
-      Atom(LCDD& doc, const std::string& name, const std::string& formula, int Z, int N, double density);
+      Atom(const std::string& name, const std::string& formula, int Z, int N, double density);
     };
 
     /** @class Material Objects.h
@@ -295,7 +294,7 @@ namespace DD4hep {
       /// Constructor to be used when creating a new DOM tree
       template <typename Q> Material(const Handle<Q>& e) : Handle<TGeoMaterial>(e) {}
       /// Constructor to be used when reading the already parsed DOM tree
-      Material(LCDD& doc, const std::string& name);
+      Material(const std::string& name);
       /// String representation of this object
       std::string toString() const;
     };
@@ -323,7 +322,7 @@ namespace DD4hep {
       /// Copy constructor for handle
       VisAttr(const VisAttr& e) : Ref_t(e) {}
       /// Constructor to be used when creating a new registered visualization object
-      VisAttr(LCDD& doc, const std::string& name);
+      VisAttr(const std::string& name);
       /// Additional data accessor
       Object& _data() const { return *data<Object>(); }
 
@@ -376,7 +375,7 @@ namespace DD4hep {
       /// Constructor to be used when reading the already parsed DOM tree
       template <typename Q> AlignmentEntry(const Handle<Q>& h) : Base(h) {}
       /// Constructor to be used when creating a new aligment entry
-      AlignmentEntry(LCDD& doc, const std::string& path);
+      AlignmentEntry(const std::string& path);
       /// Align the PhysicalNode (translation only)
       int align(const Position& pos, bool check = false, double overlap = 0.001);
       /// Align the PhysicalNode (rotation only)
@@ -483,5 +482,5 @@ namespace DD4hep {
     };
 
   } /* End namespace Geometry           */
-} /* End namespace DD4hep            */
-#endif /* DD4hep_GEOMETRY_OBJECTS_H       */
+} /* End namespace DD4hep             */
+#endif /* DD4HEP_GEOMETRY_OBJECTS_H        */
