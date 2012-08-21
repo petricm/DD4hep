@@ -23,13 +23,13 @@ namespace DD4hep {
   namespace Simulation {
 
     // Forward declarations;
-    typedef Geometry::Position          Position;
-    typedef Geometry::Direction         Direction;
-    typedef Geometry::Momentum          Momentum;
-    typedef Geometry::LCDD              LCDD;
-    typedef Geometry::Readout           Readout;
-    typedef Geometry::DetElement        DetElement;
-    typedef Geometry::SensitiveDetector SensitiveDetector;
+    typedef Geometry::Position   Position;
+    typedef Geometry::Direction  Direction;
+    typedef Geometry::Momentum   Momentum;
+    typedef Geometry::LCDD       LCDD;
+    typedef Geometry::Readout    Readout;
+    typedef Geometry::DetElement DetElement;
+    //typedef Geometry::SensitiveDetector    SensitiveDetector;
 
     template <class HIT> struct HitCompare;
     template <class HIT> struct HitPositionCompare;
