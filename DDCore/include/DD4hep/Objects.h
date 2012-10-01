@@ -15,6 +15,7 @@
 class TMap;
 class TGeoElement;
 class TGeoMaterial;
+class TGeoMedium;
 class TGeoMatrix;
 class TGeoRotation;
 class TGeoTranslation;
@@ -301,11 +302,11 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct Material : public Handle<TGeoMaterial> {
+    struct Material : public Handle<TGeoMedium> {
       /// Default constructor
-      Material() : Handle<TGeoMaterial>() {}
+      Material() : Handle<TGeoMedium>() {}
       /// Constructor to be used when creating a new DOM tree
-      template <typename Q> Material(const Handle<Q>& e) : Handle<TGeoMaterial>(e) {}
+      template <typename Q> Material(const Handle<Q>& e) : Handle<TGeoMedium>(e) {}
       /// Constructor to be used when reading the already parsed DOM tree
       Material(const std::string& name);
       /// String representation of this object
