@@ -17,11 +17,10 @@
 namespace DD4hep {
 
   struct VersatileDiskRowLayout : public PadLayout {
-    Geometry::DetElement                module;
-    Geometry::VersatileDiskRowLayoutSeg pads;
-    Geometry::Tube                      tube;
-
-    void getExtension();
+    Geometry::DetElement                  module;
+    Geometry::VersatileDiskRowLayoutSeg   pads;
+    Geometry::VersatileDiskRowLayoutData* padData;
+    Geometry::Tube                        tube;
 
     /// Default empty constructor
     VersatileDiskRowLayout() : module(), pads(), tube() {}

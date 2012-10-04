@@ -16,28 +16,30 @@ namespace DD4hep {
 
   namespace Geometry {
 
-    struct VersatileDiskRowLayoutSeg : public Segmentation {
-      // public:
-      /// Constructor to be used when reading the already parsed object
-      template <typename Q> VersatileDiskRowLayoutSeg(const Handle<Q>& e) : Segmentation(e) {}
-      /// Constructor to create a new segmentation object
-      VersatileDiskRowLayoutSeg();
+    struct Row {
+      int    _rowNumber;
+      int    _nPads;
+      double _padPitch;
+      double _rowHeight;
+      double _offset;
+    };
+
+    struct VersatileDiskRowLayoutData {
+      VersatileDiskRowLayoutData(){};
       void addRow(int nPads, double padPitch, double rowHeight, double offset);
       int setRMin(int rmin);
-
-      //protected:
-      struct Row {
-        int    _rowNumber;
-        int    _nPads;
-        double _padPitch;
-        double _rowHeight;
-        double _offset;
-      };
-
       std::vector<Row> _rows;
       int              _rMin;
       int              _nPads;
     };
+
+    struct VersatileDiskRowLayoutSeg : public Segmentation {
+      /// Constructor to be used when reading the already parsed object
+      template <typename Q> VersatileDiskRowLayoutSeg(const Handle<Q>& e) : Segmentation(e) {}
+      /// Constructor to create a new segmentation object
+      VersatileDiskRowLayoutSeg();
+    };
+
   }  //Geometry
 }  //DD4hep
 
