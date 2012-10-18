@@ -39,7 +39,7 @@ namespace DD4hep {
    *   Geometry sub-namespace declaration
    */
   namespace Geometry {
-    static inline std::string _toString(const XMLCh* value) { return XML::_toString(value); }
+    static inline std::string _toString(const DD4hep::XML::XmlChar* value) { return XML::_toString(value); }
 
     template <typename T> inline std::string _toString(T value, const char* fmt) { return XML::_toString(value, fmt); }
   }
