@@ -161,6 +161,14 @@ namespace DD4hep {
         }
         return *this;
       }
+      /// Rho - radius in cylindrical coordinates
+      double rho() const { return std::sqrt(x * x + y * y); }
+      /// Phi - rotation angle around z in cylindrical coordinates
+      double phi() const { return x == 0.0 && y == 0.0 ? 0.0 : std::atan2(x, y); }
+      /// Theta - rotation angle around x in cylindrical coordinates
+      double theta() const { return x == 0.0 && y == 0.0 && z == 0.0 ? 0.0 : std::atan2(std::sqrt(x * x + y * y), y); }
+      /// cos(Theta angle): optimisation for std::cos(pos.theta())
+      double cosTheta() const { return x == 0.0 && y == 0.0 && z == 0.0 ? 1.0 : z / std::sqrt(x * x + y * y * z * z); }
       /// Rotates the position vector around the x-axis.
       Position& rotateX(double angle_in_rad);
       /// Rotates the position vector around the y-axis.
@@ -317,6 +325,8 @@ namespace DD4hep {
       Material(const std::string& name);
       /// String representation of this object
       std::string toString() const;
+      /// Access the radiation length of the undrelying material
+      double radLength() const;
     };
 
     /** @class VisAttr Objects.h

@@ -91,7 +91,7 @@ namespace DD4hep {
       template <typename Q> SensitiveDetector(const Handle<Q>& e) : Ref_t(e) {}
 
       /// Constructor for a new sensitive detector element
-      SensitiveDetector(const std::string& name, const std::string& type);
+      SensitiveDetector(const std::string& name, const std::string& type = "sensitive");
 
       /// Additional data accessor
       Object& _data() const { return *data<Object>(); }
@@ -270,9 +270,9 @@ namespace DD4hep {
 
       /// Set the detector identifier
       int id() const;
-      /// Setter: Combine hits attribite
+      /// Setter: Combine hits attribute
       DetElement& setCombineHits(bool value, SensitiveDetector& sens);
-      /// Getter: Combine hits attribite
+      /// Getter: Combine hits attribute
       bool combineHits() const;
 
       /// Access detector type (structure, tracker, calorimeter, etc.).
