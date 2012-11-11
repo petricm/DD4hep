@@ -203,40 +203,52 @@ namespace DD4hep {
      */
     struct Tube : public Solid_type<TGeoTubeSeg> {
     protected:
-      void make(const std::string& name, double rmin, double rmax, double z, double deltaPhi);
+      void make(const std::string& name, double rmin, double rmax, double z, double startPhi, double deltaPhi);
 
     public:
       /// Constructor to assign an object
       template <typename Q> Tube(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
 
       /// Constructor to be used when creating a new anonymous tube object
-      Tube() { make("", 0, 0, 0, 0); }
+      Tube() { make("", 0, 0, 0, 0, 0); }
 
       /// Constructor to be used when creating a new identifiable tube object
-      Tube(const std::string& name) { make(name, 0, 0, 0, 0); }
+      Tube(const std::string& name) { make(name, 0, 0, 0, 0, 0); }
 
       /// Constructor to be used when creating a new anonymous tube object with attribute initialization
-      Tube(double rmin, double rmax, double z, double deltaPhi = 2 * M_PI) { make("", rmin, rmax, z, deltaPhi); }
+      Tube(double rmin, double rmax, double z, double deltaPhi = 2 * M_PI) { make("", rmin, rmax, z, 0, deltaPhi); }
 
-      /// Constructor to be used when creating a new identifiable tube object with attribute initialization
+      /// Constructor to be used when creating a new anonymous tube object with attribute initialization
+      Tube(double rmin, double rmax, double z, double startPhi, double deltaPhi) {
+        make("", rmin, rmax, z, startPhi, deltaPhi);
+      }
+
+      /// Legacy: Constructor to be used when creating a new identifiable tube object with attribute initialization
       Tube(const std::string& name, double rmin, double rmax, double z, double deltaPhi = 2 * M_PI) {
-        make(name, rmin, rmax, z, deltaPhi);
+        make(name, rmin, rmax, z, 0, deltaPhi);
+      }
+
+      /// Legacy: Constructor to be used when creating a new identifiable tube object with attribute initialization
+      template <typename RMIN, typename RMAX, typename Z, typename DELTAPHI>
+      Tube(const std::string& name, const RMIN& rmin, const RMAX& rmax, const Z& z, const DELTAPHI& deltaPhi) {
+        make(name, _toDouble(rmin), _toDouble(rmax), _toDouble(z), 0, _toDouble(deltaPhi));
       }
 
       /// Constructor to be used when creating a new anonymous tube object with attribute initialization
       template <typename RMIN, typename RMAX, typename Z, typename DELTAPHI>
       Tube(const RMIN& rmin, const RMAX& rmax, const Z& z, const DELTAPHI& deltaPhi) {
-        make("", _toDouble(rmin), _toDouble(rmax), _toDouble(z), _toDouble(deltaPhi));
+        make("", _toDouble(rmin), _toDouble(rmax), _toDouble(z), 0, _toDouble(deltaPhi));
       }
 
       /// Constructor to be used when creating a new identifiable tube object with attribute initialization
-      template <typename RMIN, typename RMAX, typename Z, typename DELTAPHI>
-      Tube(const std::string& name, const RMIN& rmin, const RMAX& rmax, const Z& z, const DELTAPHI& deltaPhi) {
-        make(name, _toDouble(rmin), _toDouble(rmax), _toDouble(z), _toDouble(deltaPhi));
+      template <typename RMIN, typename RMAX, typename Z, typename STARTPHI, typename DELTAPHI>
+      Tube(const std::string& name, const RMIN& rmin, const RMAX& rmax, const Z& z, const STARTPHI& startPhi,
+           const DELTAPHI& deltaPhi) {
+        make(name, _toDouble(rmin), _toDouble(rmax), _toDouble(z), _toDouble(startPhi), _toDouble(deltaPhi));
       }
 
       /// Set the tube dimensions
-      Tube& setDimensions(double rmin, double rmax, double z, double deltaPhi = 2 * M_PI);
+      Tube& setDimensions(double rmin, double rmax, double z, double startPhi, double deltaPhi);
     };
 
     /**@class Cone Shapes.h 
@@ -293,6 +305,9 @@ namespace DD4hep {
       /// Constructor to be used when creating a new anonymous object with attribute initialization
       Trap(double z, double theta, double phi, double y1, double x1, double x2, double alpha1, double y2, double x3,
            double x4, double alpha2);
+
+      /// Constructor to create a new anonymous object for right angular wedge from STEP (Se G4 manual for details)
+      Trap(double pz, double py, double px, double pLTX);
 
       /// Set the trap dimensions
       Trap& setDimensions(double z, double theta, double phi, double y1, double x1, double x2, double alpha1, double y2,
@@ -397,6 +412,8 @@ namespace DD4hep {
       /// Constructor to be used when creating a new object
       PolyhedraRegular(int nsides, double rmin, double rmax, double zlen);
       /// Constructor to be used when creating a new object
+      PolyhedraRegular(int nsides, double rmin, double rmax, double zplanes[2]);
+      /// Constructor to be used when creating a new object
       PolyhedraRegular(int nsides, double phi_start, double rmin, double rmax, double zlen);
       /// Constructor to be used when creating a new object
       PolyhedraRegular(const std::string& name, int nsides, double rmin, double rmax, double zlen);
@@ -423,8 +440,12 @@ namespace DD4hep {
      *   @version 1.0
      */
     struct SubtractionSolid : public BooleanSolid {
+      /// Default constructor
+      SubtractionSolid() : BooleanSolid() {}
       /// Constructor to be used when reading the already parsed object
       template <typename Q> SubtractionSolid(const Handle<Q>& e) : BooleanSolid(e) {}
+      /// Constructor to be used when creating a new object. Position is identity, Rotation is identity-rotation!
+      SubtractionSolid(const Solid& shape1, const Solid& shape2);
       /// Constructor to be used when creating a new object. Rotation is identity-rotation!
       SubtractionSolid(const Solid& shape1, const Solid& shape2, const Position& pos);
       /// Constructor to be used when creating a new object
@@ -440,8 +461,12 @@ namespace DD4hep {
      *   @version 1.0
      */
     struct UnionSolid : public BooleanSolid {
+      /// Default constructor
+      UnionSolid() : BooleanSolid() {}
       /// Constructor to be used when reading the already parsed object
       template <typename Q> UnionSolid(const Handle<Q>& e) : BooleanSolid(e) {}
+      /// Constructor to be used when creating a new object. Position is identity, Rotation is identity-rotation!
+      UnionSolid(const Solid& shape1, const Solid& shape2);
       /// Constructor to be used when creating a new object. Rotation is identity-rotation!
       UnionSolid(const Solid& shape1, const Solid& shape2, const Position& pos);
       /// Constructor to be used when creating a new object
@@ -457,8 +482,12 @@ namespace DD4hep {
      *   @version 1.0
      */
     struct IntersectionSolid : public BooleanSolid {
+      /// Default constructor
+      IntersectionSolid() : BooleanSolid() {}
       /// Constructor to be used when reading the already parsed object
       template <typename Q> IntersectionSolid(const Handle<Q>& e) : BooleanSolid(e) {}
+      /// Constructor to be used when creating a new object. Position is identity, Rotation is identity-rotation!
+      IntersectionSolid(const Solid& shape1, const Solid& shape2);
       /// Constructor to be used when creating a new object. Rotation is identity-rotation!
       IntersectionSolid(const Solid& shape1, const Solid& shape2, const Position& pos);
       /// Constructor to be used when creating a new object
