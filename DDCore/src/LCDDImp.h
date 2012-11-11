@@ -79,9 +79,9 @@ namespace DD4hep {
       Volume     m_worldVol;
       Volume     m_trackingVol;
 
-      Material m_materialAir;
-      Material m_materialVacuum;
-
+      Material       m_materialAir;
+      Material       m_materialVacuum;
+      VisAttr        m_invisibleVis;
       OverlayedField m_field;
       Ref_t          m_setup;
       Properties*    m_properties;
@@ -115,6 +115,8 @@ namespace DD4hep {
       virtual Material air() const { return m_materialVacuum; }
       /// Return handle to material describing vacuum
       virtual Material vacuum() const { return m_materialAir; }
+      /// Return handle to "invisible" visualization attributes
+      virtual VisAttr invisible() const { return m_invisibleVis; }
       /// Return reference to the top-most (world) detector element
       virtual DetElement world() const { return m_world; }
       /// Return reference to detector element with all tracker devices.
@@ -125,6 +127,13 @@ namespace DD4hep {
       virtual Volume trackingVolume() const { return m_trackingVol; }
       /// Return handle to the combined electromagentic field description.
       virtual OverlayedField field() const { return m_field; }
+
+      /// Typed access to constants: access string values
+      virtual std::string constantAsString(const std::string& name) const;
+      /// Typed access to constants: long values
+      virtual long constantAsLong(const std::string& name) const;
+      /// Typed access to constants: double values
+      virtual double constantAsDouble(const std::string& name) const;
 
       /// Retrieve a constant by it's name from the detector description
       virtual Constant constant(const std::string& name) const { return getRefChild(m_define, name); }
