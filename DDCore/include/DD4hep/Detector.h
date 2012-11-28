@@ -239,6 +239,11 @@ namespace DD4hep {
         this->assign(data, name, type);
       }
 
+      template <typename Q> DetElement(const std::string& name, const std::string& type, int id, const Q&) {
+        assign(new Value<TNamed, Q>(), name, type);
+        _data().id = id;
+      }
+
       /// Templated constructor for handle conversions
       template <typename Q> DetElement(const Handle<Q>& e) : Ref_t(e) {}
 

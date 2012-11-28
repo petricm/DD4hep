@@ -44,6 +44,6 @@ template <class SD> G4bool DD4hep::Simulation::Geant4GenericSD<SD>::ProcessHits(
 }
 
 /// Method for generating hit(s) using the information of G4Step object.
-template <class SD> bool DD4hep::Simulation::Geant4GenericSD<SD>::buildHits(G4Step*, G4TouchableHistory*) {}
+template <class SD> bool DD4hep::Simulation::Geant4GenericSD<SD>::buildHits(G4Step*, G4TouchableHistory*) { return true; }
 
 #endif  // DD4HEP_GEANT4SENSITIVEDETECTOR_INLINE_H
