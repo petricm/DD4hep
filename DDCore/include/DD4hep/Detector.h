@@ -55,6 +55,7 @@ namespace DD4hep {
         Region       region;
         LimitSet     limits;
         Extensions   extensions;
+
         /// Default constructor
         Object()
             : magic(magic_word()),
