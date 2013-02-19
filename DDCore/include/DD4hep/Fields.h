@@ -27,6 +27,9 @@ namespace DD4hep {
    */
   namespace Geometry {
 
+    // Forward declarations
+    typedef Position Direction;
+
     /** @class CartesianField Fields.h
      *  
      *  Generic structure describing any field type (electric or magnetic)
@@ -74,10 +77,10 @@ namespace DD4hep {
       bool changesEnergy() const;
 
       /// Returns the 3 field components (x, y, z).
-      void value(const Position& pos, Direction& field) const { value(pos, &field.x); }
+      void value(const Position& pos, Direction& field) const;  // { value(pos,&field.x); }
 
       /// Returns the 3 field components (x, y, z).
-      void value(const Position& pos, double* val) const { value(&pos.x, val); }
+      void value(const Position& pos, double* val) const;  //      { value(&pos.x,val);   }
 
       /// Returns the 3 field components (x, y, z).
       void value(const double* pos, double* val) const;
@@ -135,22 +138,24 @@ namespace DD4hep {
       void add(CartesianField field);
 
       /// Returns the 3 electric field components (x, y, z) if many components are present
-      void combinedElectric(const Position& pos, double* field) const { combinedElectric(&pos.x, field); }
+      void combinedElectric(const Position& pos, double* field) const { combinedElectric((const double*)&pos, field); }
 
       /// Returns the 3 electric field components (x, y, z) if many components are present
       void combinedElectric(const double* pos, double* field) const;
 
       /// Returns the 3 magnetic field components (x, y, z) if many components are present
-      void combinedMagnetic(const Position& pos, double* field) const { combinedMagnetic(&pos.x, field); }
+      void combinedMagnetic(const Position& pos, double* field) const { combinedMagnetic((const double*)&pos, field); }
 
       /// Returns the 3 magnetic field components (x, y, z) if many components are present
       void combinedMagnetic(const double* pos, double* field) const;
 
       /// Returns the 3 electric field components (x, y, z).
-      void electricField(const Position& pos, Direction& field) const { electricField(&pos.x, &field.x); }
+      void electricField(const Position& pos, Direction& field) const {
+        electricField((const double*)&pos, (double*)&field);
+      }
 
       /// Returns the 3 electric field components (x, y, z).
-      void electricField(const Position& pos, double* field) const { electricField(&pos.x, field); }
+      void electricField(const Position& pos, double* field) const { electricField((double*)&pos, field); }
 
       /// Returns the 3 electric field components (x, y, z).
       void electricField(const double* pos, double* field) const {
@@ -159,10 +164,10 @@ namespace DD4hep {
       }
 
       /// Returns the 3 magnetic field components (x, y, z).
-      void magneticField(const Position& pos, Direction& field) const { magneticField(&pos.x, &field.x); }
+      void magneticField(const Position& pos, Direction& field) const { magneticField((double*)&pos, (double*)&field); }
 
       /// Returns the 3  magnetic field components (x, y, z).
-      void magneticField(const Position& pos, double* field) const { magneticField(&pos.x, field); }
+      void magneticField(const Position& pos, double* field) const { magneticField((double*)&pos, field); }
 
       /// Returns the 3  magnetic field components (x, y, z).
       void magneticField(const double* pos, double* field) const {
@@ -171,7 +176,7 @@ namespace DD4hep {
       }
 
       /// Returns the 3 electric (val[0]-val[2]) and magnetic field components (val[3]-val[5]).
-      void electromagneticField(const Position& pos, double* val) const { electromagneticField(&pos.x, val); }
+      void electromagneticField(const Position& pos, double* val) const { electromagneticField((double*)&pos, val); }
 
       /// Returns the 3 electric (val[0]-val[2]) and magnetic field components (val[3]-val[5]).
       void electromagneticField(const double* pos, double* val) const;
