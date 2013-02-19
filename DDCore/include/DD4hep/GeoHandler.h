@@ -31,6 +31,12 @@ namespace DD4hep {
    */
   namespace Geometry {
 
+    struct LCDD;
+    struct Volume;
+    struct PlacedVolume;
+    struct DetElement;
+    struct SensitiveDetector;
+
     /** @class GeoHandler  GeoHandler.h
      *
      * @author  M.Frank
@@ -51,12 +57,6 @@ namespace DD4hep {
       typedef std::set<TNamed*>       Fields;
       typedef std::set<TNamed*>       ObjectSet;
       typedef LCDD::HandleMap         DefinitionSet;
-
-      typedef Geometry::LCDD              LCDD;
-      typedef Geometry::Volume            Volume;
-      typedef Geometry::PlacedVolume      PlacedVolume;
-      typedef Geometry::DetElement        DetElement;
-      typedef Geometry::SensitiveDetector SensitiveDetector;
 
       struct GeometryInfo {
         SolidSet     solids;
