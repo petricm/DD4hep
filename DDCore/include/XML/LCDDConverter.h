@@ -25,6 +25,7 @@ class TGeoElement;
 class TGeoShape;
 class TGeoMedium;
 class TGeoNode;
+class TGeoMatrix;
 
 /*
  *   DD4hep namespace declaration
@@ -55,6 +56,7 @@ namespace DD4hep {
       typedef std::map<const TGeoVolume*, XmlElement*>  VolumeMap;
       typedef std::map<const TGeoShape*, XmlElement*>   SolidMap;
       typedef std::map<const TNamed*, XmlElement*>      VisMap;
+      typedef std::map<const TNamed*, XmlElement*>      FieldMap;
       typedef std::map<const TNamed*, XmlElement*>      IdSpecMap;
       typedef std::map<const TGeoMatrix*, XmlElement*>  TrafoMap;
       struct GeometryInfo : public Geometry::GeoHandler::GeometryInfo {
@@ -70,12 +72,25 @@ namespace DD4hep {
         SensDetMap   xmlSensDets;
         TrafoMap     xmlPositions;
         TrafoMap     xmlRotations;
+        FieldMap     xmlFields;
+        ObjectSet    sensitives;
+        ObjectSet    regions;
+        ObjectSet    limits;
+        // These we need for redundancy and checking the data integrity
+        typedef std::map<std::string, const TNamed*> CheckIter;
+        struct _checks {
+          std::map<std::string, const TNamed *> positions, rotations, volumes, solids, materials;
+        };
+        mutable _checks checks;
+        void check(const std::string& name, const TNamed* n, std::map<std::string, const TNamed*>& array) const;
+        void checkPosition(const std::string& name, const TNamed* n) const { check(name, n, checks.positions); }
+        void checkRotation(const std::string& name, const TNamed* n) const { check(name, n, checks.rotations); }
+        void checkVolume(const std::string& name, const TNamed* n) const { check(name, n, checks.volumes); }
+        void checkShape(const std::string& name, const TNamed* n) const { check(name, n, checks.solids); }
+        void checkMaterial(const std::string& name, const TNamed* n) const { check(name, n, checks.materials); }
 
-        ObjectSet sensitives;
-        ObjectSet regions;
-        ObjectSet limits;
-        Document  doc;
-        Element doc_root, doc_header, doc_idDict, doc_detectors, doc_limits, doc_regions, doc_display, doc_gdml, doc_fields,
+        Document doc;
+        Element  doc_root, doc_header, doc_idDict, doc_detectors, doc_limits, doc_regions, doc_display, doc_gdml, doc_fields,
             doc_define, doc_materials, doc_solids, doc_structure, doc_setup;
         GeometryInfo();
       };
@@ -142,6 +157,9 @@ namespace DD4hep {
 
       /// Convert the Rotation into the corresponding Xml object(s).
       virtual Handle_t handleRotation(const std::string& name, const TGeoMatrix* trafo) const;
+
+      /// Convert the electric or magnetic fields into the corresponding Xml object(s).
+      virtual Handle_t handleField(const std::string& name, const TNamed* field) const;
 
       /// Handle the geant 4 specific properties
       void handleProperties(LCDD::Properties& prp) const;
