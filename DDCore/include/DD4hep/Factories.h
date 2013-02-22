@@ -38,6 +38,11 @@ namespace DD4hep {
     struct SensitiveDetector;
     struct DetElement;
 
+    template <typename T> class ConstructionFactory {
+    public:
+      static void* create(const char* arg);
+    };
+
     /** @class TranslationFactory Factories.h DDCore/Factories.h
      *  Specialized factory to translate objects, which can be retrieved from LCDD
      *  Example: Translate DD4hep geometry to Geant4
@@ -116,6 +121,13 @@ namespace DD4hep {
 }
 
 namespace {
+
+  template <typename P> class Factory<P, void*(const char*)> {
+  public:
+    static void Func(void* ret, void*, const std::vector<void*>& arg, void*) {
+      *(void**)ret = DD4hep::Geometry::ConstructionFactory<P>::create((const char*)arg[0]);
+    }
+  };
 
   template <typename P> class Factory<P, TNamed*(DD4hep::Geometry::LCDD*)> {
   public:
@@ -210,6 +222,17 @@ namespace {
   }                                                                                                                     \
   using DD4hep::Geometry::name;                                                                                         \
   DECLARE_NAMED_APPLY_FACTORY(DD4hep::Geometry, name)
+
+#define DECLARE_CONSTRUCTOR(name, func)                                                      \
+  namespace DD4hep {                                                                         \
+    namespace Geometry {                                                                     \
+      namespace {                                                                            \
+        struct name {};                                                                      \
+      }                                                                                      \
+      template <> void* ConstructionFactory<name>::create(const char* n) { return func(n); } \
+    }                                                                                        \
+  }                                                                                          \
+  PLUGINSVC_FACTORY_WITH_ID(name, std::string(#name), void*(const char*))
 
 #define DECLARE_TRANSLATION(name, func)                                                                                   \
   namespace DD4hep {                                                                                                      \

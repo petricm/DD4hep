@@ -39,7 +39,6 @@ namespace DD4hep {
 
     typedef const XmlAttr* Attribute;
 
-#ifdef __TIXML__
     /** XmlString  XMLElements.h XML/XMLElements.h
      *
      *  Definition of the XmlString class.
@@ -57,8 +56,15 @@ namespace DD4hep {
       /// Transcode string
       static XmlChar* transcode(const char* c);
       /// Release string
+      static void release(char** p);
+#ifndef __TIXML__
+      static char* transcode(const XmlChar* c);
+      /// Release string
       static void release(XmlChar** p);
+#endif
     };
+
+#ifdef __TIXML__
     /** XmlException  XMLElements.h XML/XMLElements.h
      *
      *  Definition of the XmlException class.
@@ -299,21 +305,13 @@ namespace DD4hep {
       Elt_t ptr() const { return m_node; }
       /// Clone the DOMelement - with the option of a deep copy
       Handle_t clone(XmlDocument* new_doc) const;
-#ifndef __TIXML__
-      /// Unicode text access to the element's tag
-      const XmlChar* rawTag() const { return m_node->getTagName(); }
-      /// Unicode text access to the element's text
-      const XmlChar* rawText() const { return m_node->getTextContent(); }
-      /// Unicode text access to the element's value
-      const XmlChar* rawValue() const { return m_node->getNodeValue(); }
-#else
+
       /// Unicode text access to the element's tag. Tis must be wrong ....
-      const XmlChar* rawTag() const { return m_node->Value(); }
+      const XmlChar* rawTag() const;
       /// Unicode text access to the element's text
-      const XmlChar* rawText() const { return m_node->GetText(); }
+      const XmlChar* rawText() const;
       /// Unicode text access to the element's value
-      const XmlChar* rawValue() const { return m_node->Value(); }
-#endif
+      const XmlChar* rawValue() const;
       /// Text access to the element's tag
       std::string tag() const { return _toString(rawTag()); }
       /// Text access to the element's text
@@ -453,10 +451,10 @@ namespace DD4hep {
       NodeList m_children;
 #ifndef __TIXML__
       /// Constructor over XmlElements with a given tag name
-      Collection_t(Elt_t node, const XmlChar* tag);
+      Collection_t(Handle_t node, const XmlChar* tag);
 #endif
       /// Constructor over XmlElements with a given tag name
-      Collection_t(Elt_t node, const char* tag);
+      Collection_t(Handle_t node, const char* tag);
       /// Constructor over XmlElements in a node list
       Collection_t(NodeList children);
       /// Reset the collection object to restart the iteration
