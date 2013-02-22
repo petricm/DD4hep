@@ -208,6 +208,7 @@ namespace {
       template <> long ApplyFactory<name>::create(DD4hep::Geometry::LCDD& l, int n, char** a) { return func(l, n, a); } \
     }                                                                                                                   \
   }                                                                                                                     \
+  using DD4hep::Geometry::name;                                                                                         \
   DECLARE_NAMED_APPLY_FACTORY(DD4hep::Geometry, name)
 
 #define DECLARE_TRANSLATION(name, func)                                                                                   \
@@ -219,6 +220,7 @@ namespace {
       template <> DD4hep::Geometry::Ref_t TranslationFactory<name>::create(DD4hep::Geometry::LCDD& l) { return func(l); } \
     }                                                                                                                     \
   }                                                                                                                       \
+  using DD4hep::Geometry::name;                                                                                           \
   DECLARE_NAMED_TRANSLATION_FACTORY(DD4hep::Geometry, name)
 
 #define DECLARE_XMLELEMENT(name, func)                                                                                     \
@@ -234,6 +236,7 @@ namespace {
       }                                                                                                                    \
     }                                                                                                                      \
   }                                                                                                                        \
+  using DD4hep::Geometry::xml_element_##name;                                                                              \
   PLUGINSVC_FACTORY_WITH_ID(xml_element_##name, std::string(#name), TNamed*(DD4hep::Geometry::LCDD*, DD4hep::XML::Handle_t*))
 
 #define DECLARE_XML_DOC_READER(name, func)                                                                      \
@@ -249,6 +252,7 @@ namespace {
       }                                                                                                         \
     }                                                                                                           \
   }                                                                                                             \
+  using DD4hep::Geometry::xml_document_##name;                                                                  \
   PLUGINSVC_FACTORY_WITH_ID(xml_document_##name, std::string(#name "_XML_reader"),                              \
                             long(DD4hep::Geometry::LCDD*, DD4hep::XML::Handle_t*))
 
@@ -264,7 +268,7 @@ namespace {
       }                                                                                                                    \
     }                                                                                                                      \
   }                                                                                                                        \
-  typedef DD4hep::Geometry::det_element_##name det_element_##name;                                                         \
+  using DD4hep::Geometry::det_element_##name;                                                                              \
   PLUGINSVC_FACTORY_WITH_ID(det_element_##name, std::string(#name),                                                        \
                             TNamed*(DD4hep::Geometry::LCDD*, DD4hep::XML::Handle_t*, DD4hep::Geometry::Ref_t*))
 
