@@ -61,6 +61,16 @@ namespace DD4hep {
 
       /// Access rotation constants: angle
       double angle() const;
+      /// Access rotation constants: angle
+      double alpha() const;
+      /// Access rotation constants: angle
+      double beta() const;
+      /// Access rotation constants: angle
+      double gamma() const;
+      /// Access rotation constants: angle
+      double delta() const;
+      /// Access rotation constants: angle
+      double epsilon() const;
       /// Access rotation constants: theta
       double theta() const;
       /// Access rotation constants: thetaBins
@@ -81,6 +91,15 @@ namespace DD4hep {
       double zhalf() const;
       /// Access Tube parameters: deltaphi
       double deltaphi() const;
+
+      /// Access parameters: b
+      double b() const;
+      /// Access parameters: B
+      double B() const;
+      /// Access parameters: g
+      double g() const;
+      /// Access parameters: G
+      double G() const;
 
       /// Access parameters: r
       double r() const;
@@ -287,6 +306,11 @@ namespace DD4hep {
       /// Access attribute values: outer_field
       double outer_field() const;
 
+      /// Access attribute values: visible
+      bool visible() const;
+      /// Access attribute values: show_daughters
+      bool show_daughters() const;
+
       /// Access child element with tag "dimensions" as Dimension object
       Dimension dimensions(bool throw_if_not_present = true) const;
       /// Child access: position
@@ -304,6 +328,8 @@ namespace DD4hep {
 
       /// Access name attribute as STL string
       std::string nameStr() const;
+      /// Access ref attribute as a string
+      std::string refStr() const;
       /// Access type attribute as STL string
       std::string typeStr() const;
       /// Access module attribute as STL string
@@ -348,7 +374,7 @@ namespace DD4hep {
     struct DetElement : public Dimension {
       /// Constructor from Handle
       DetElement(Handle_t e) : Dimension(e) {}
-      /// Access undrlying XML handle object
+      /// Access underlying XML handle object
       Handle_t handle() const { return m_element; }
 
       /// Access parameters: id

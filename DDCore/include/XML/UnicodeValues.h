@@ -8,10 +8,6 @@ namespace DD4hep {
     extern const Tag_t Unicode_PI;
     extern const Tag_t Unicode_TWOPI;
 
-    UNICODE(value);
-    UNICODE(radian);
-    UNICODE(ref);
-
     UNICODE(0);
     UNICODE(1);
     UNICODE(2);
@@ -34,6 +30,7 @@ namespace DD4hep {
     UNICODE(alpha2);
     UNICODE(alpha3);
     UNICODE(alpha4);
+    UNICODE(arb8);
     UNICODE(assembly);
     UNICODE(atom);
     UNICODE(attributes);
@@ -42,11 +39,11 @@ namespace DD4hep {
 
     UNICODE(b);
     UNICODE(B);
-    UNICODE(box);
     UNICODE(barrel);
     UNICODE(barrel_envelope);
     UNICODE(beampipe);
     UNICODE(beta);
+    UNICODE(box);
 
     UNICODE(c);
     UNICODE(C);
@@ -71,6 +68,7 @@ namespace DD4hep {
     UNICODE(d);
     UNICODE(D);
     UNICODE(define);
+    UNICODE(delta);
     UNICODE(deltaphi);
     UNICODE(deltatheta);
     UNICODE(depth);
@@ -103,6 +101,7 @@ namespace DD4hep {
     UNICODE(end_modules);
     UNICODE(endcap);
     UNICODE(endphi);
+    UNICODE(epsilon);
     UNICODE(eunit);
     UNICODE(end_x);
     UNICODE(end_y);
@@ -151,6 +150,7 @@ namespace DD4hep {
     UNICODE(header);
     UNICODE(height);
     UNICODE(hits_collection);
+    UNICODE(hype);
 
     UNICODE(i);
     UNICODE(I);
@@ -239,6 +239,7 @@ namespace DD4hep {
     UNICODE(outer_radius);
     UNICODE(outer_z);
     UNICODE(outgoing_r);
+    UNICODE(outst);
 
     UNICODE(p);
     UNICODE(P);
@@ -272,12 +273,15 @@ namespace DD4hep {
     UNICODE(R);
     UNICODE(r_size);
     UNICODE(r0);
+    UNICODE(rad);
+    UNICODE(radian);
     UNICODE(radius);
     UNICODE(radiator);
     UNICODE(rbg);
     UNICODE(rc);
     UNICODE(readout);
     UNICODE(readouts);
+    UNICODE(ref);
     UNICODE(reflect);
     UNICODE(reflect_rot);
     UNICODE(region);
@@ -370,7 +374,24 @@ namespace DD4hep {
 
     UNICODE(v);
     UNICODE(V);
+    UNICODE(v1x);
+    UNICODE(v1y);
+    UNICODE(v2x);
+    UNICODE(v2y);
+    UNICODE(v3x);
+    UNICODE(v3y);
+    UNICODE(v4x);
+    UNICODE(v4y);
+    UNICODE(v5x);
+    UNICODE(v5y);
+    UNICODE(v6x);
+    UNICODE(v6y);
+    UNICODE(v7x);
+    UNICODE(v7y);
+    UNICODE(v8x);
+    UNICODE(v8y);
     UNICODE(Vacuum);
+    UNICODE(value);
     UNICODE(verbose);
     UNICODE(version);
     UNICODE(vis);
