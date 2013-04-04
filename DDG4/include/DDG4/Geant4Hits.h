@@ -73,6 +73,9 @@ namespace DD4hep {
      */
     class Geant4Hit : public G4VHit {
     public:
+      // cellID
+      unsigned long cellID;
+
       struct MonteCarloContrib {
         /// Geant 4 Track identifier
         int trackID;
@@ -126,6 +129,8 @@ namespace DD4hep {
       double length;
       /// Monte Carlo / Geant4 information
       Contribution truth;
+
+      double energyDeposit;
 
     public:
       /// Default constructor
