@@ -8,11 +8,19 @@
 #include "G4UserRunAction.hh"
 #include "globals.hh"
 
+#include <string>
 #include "IO/LCWriter.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class G4Run;
+
+// helper structfor 'global' run data:
+struct RunData {
+  std::string   detectorName;
+  IO::LCWriter* lcioWriter;
+  RunData() : detectorName("UNKNOWN"), lcioWriter(0) {}
+};
 
 class ILDExRunAction : public G4UserRunAction {
 public:
@@ -25,8 +33,8 @@ public:
   void fillPerEvent(G4double ESupport, G4double ESensitive, G4double LSupport, G4double LSensitive, G4double AngleSupport,
                     G4double AngleSensitive);
 
-  const G4Run*  g4run;
-  IO::LCWriter* lcioWriter;
+  const G4Run* g4run;
+  RunData      runData;
 
 private:
   G4double sumESupport, sum2ESupport;
