@@ -9,7 +9,7 @@
 #ifndef FixedPadAngleDiskLayout_H
 #define FixedPadAngleDiskLayout_H
 
-#include <Exceptions.h>
+#include <DD4HepExceptions.h>
 #include "DD4hep/Detector.h"
 #include "DD4hep/Segmentations.h"
 #include "PadLayout.h"

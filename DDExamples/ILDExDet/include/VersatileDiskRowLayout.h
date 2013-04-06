@@ -9,7 +9,7 @@
 #ifndef VersatileDiskRowLayout_H
 #define VersatileDiskRowLayout_H
 
-#include <Exceptions.h>
+#include <DD4HepExceptions.h>
 #include "DD4hep/Detector.h"
 #include "PadLayout.h"
 #include "VersatileDiskRowLayoutSeg.h"

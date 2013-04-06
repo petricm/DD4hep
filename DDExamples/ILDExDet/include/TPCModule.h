@@ -11,7 +11,7 @@
 #ifndef TPCMODULE_H
 #define TPCMODULE_H
 
-#include <Exceptions.h>
+#include <DD4HepExceptions.h>
 #include <PadLayout.h>
 #include "DD4hep/Detector.h"
 
