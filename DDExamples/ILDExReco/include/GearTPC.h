@@ -12,7 +12,7 @@
 #ifndef GEARTPC_H
 #define GEARTPC_H
 
-#include <DD4HepExceptions.h>
+#include <DD4hepExceptions.h>
 #include "DD4hep/Detector.h"
 #include "TPCModule.h"
 

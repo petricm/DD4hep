@@ -9,7 +9,7 @@
 #ifndef RectangularPadRowLayout_H
 #define RectangularPadRowLayout_H
 
-#include <DD4HepExceptions.h>
+#include <DD4hepExceptions.h>
 #include "DD4hep/Detector.h"
 #include "DD4hep/Segmentations.h"
 #include "PadLayout.h"
