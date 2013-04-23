@@ -97,6 +97,12 @@ namespace DD4hep {
       /// Constructor for a new sensitive detector element
       SensitiveDetector(const std::string& name, const std::string& type = "sensitive");
 
+      /// Assignment operator
+      SensitiveDetector& operator=(const SensitiveDetector& sd) {
+        m_element = sd.m_element;
+        return *this;
+      }
+
       /// Additional data accessor
       Object& _data() const { return *data<Object>(); }
 
@@ -171,7 +177,7 @@ namespace DD4hep {
       typedef std::map<std::string, DetElement>      Children;
       typedef std::map<const std::type_info*, void*> Extensions;
 
-      enum { COPY_NONE = 0, COPY_PLACEMENT = 1 << 0, COPY_PARENT = 1 << 1, COPY_ALIGNMENT = 1 << 2, LAST } CopyParameters;
+      enum CopyParameters { COPY_NONE = 0, COPY_PLACEMENT = 1 << 0, COPY_PARENT = 1 << 1, COPY_ALIGNMENT = 1 << 2, LAST };
       struct Object {
         unsigned int magic;
         int          id;
@@ -282,6 +288,12 @@ namespace DD4hep {
 
       /// Constructor for a new subdetector element
       DetElement(DetElement parent, const std::string& name, int id);
+
+      /// Assignment operator
+      DetElement& operator=(const DetElement& e) {
+        m_element = e.m_element;
+        return *this;
+      }
 
       /// Clone (Deep copy) the DetElement structure with a new name
       DetElement clone(const std::string& new_name) const;

@@ -123,7 +123,10 @@ namespace DD4hep {
       Handle(const Handle<T>& e) : m_element(e.m_element) {}
       template <typename Q> Handle(Q* e) : m_element((T*)e) { verifyObject(); }
       template <typename Q> Handle(const Handle<Q>& e) : m_element((T*)e.m_element) { verifyObject(); }
-
+      Handle<T>& operator=(const Handle<T>& e) {
+        m_element = e.m_element;
+        return *this;
+      }
       bool isValid() const { return 0 != m_element; }
       bool operator!() const { return 0 == m_element; }
       T* operator->() const { return m_element; }
