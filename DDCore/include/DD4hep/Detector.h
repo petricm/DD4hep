@@ -289,6 +289,12 @@ namespace DD4hep {
       /// Constructor for a new subdetector element
       DetElement(DetElement parent, const std::string& name, int id);
 
+      /// Operator less to insert into a map
+      bool operator<(const DetElement e) const { return ptr() < e.ptr(); }
+
+      /// Equality operator
+      bool operator==(const DetElement e) const { return ptr() == e.ptr(); }
+
       /// Assignment operator
       DetElement& operator=(const DetElement& e) {
         m_element = e.m_element;

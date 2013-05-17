@@ -79,10 +79,11 @@ namespace DD4hep {
       ObjectHandleMap m_define;
       ObjectHandleMap m_materials;
 
-      DetElement m_world;
-      DetElement m_trackers;
-      Volume     m_worldVol;
-      Volume     m_trackingVol;
+      DetElement    m_world;
+      DetElement    m_trackers;
+      Volume        m_worldVol;
+      Volume        m_trackingVol;
+      VolumeManager m_volManager;
 
       Material       m_materialAir;
       Material       m_materialVacuum;
@@ -138,6 +139,8 @@ namespace DD4hep {
       virtual Volume worldVolume() const { return m_worldVol; }
       /// Return handle to the world volume containing the volume with the tracking devices
       virtual Volume trackingVolume() const { return m_trackingVol; }
+      /// Return handle to the VolumeManager
+      virtual VolumeManager volumeManager() const { return m_volManager; }
       /// Return handle to the combined electromagentic field description.
       virtual OverlayedField field() const { return m_field; }
       /// Accessor to the header entry

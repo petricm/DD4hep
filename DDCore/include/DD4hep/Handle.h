@@ -92,6 +92,9 @@ namespace DD4hep {
         delete p;
       p = 0;
     }
+    template <typename T> struct DeleteMapEntry {
+      void operator()(T& p) { deletePtr(p.second); }
+    };
 
     /** @class Value Handle.h
      *  
