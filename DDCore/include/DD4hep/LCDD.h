@@ -24,6 +24,9 @@
 // C/C++ include files
 #include <map>
 
+// Forward declarations
+class TGeoManager;
+
 /*
  *   DD4hep namespace declaration
  */
@@ -62,6 +65,8 @@ namespace DD4hep {
       /// Finalize the geometry
       virtual void endDocument() = 0;
 
+      /// Access the geometry manager of this instance
+      virtual TGeoManager& manager() const = 0;
       /// Access to properties map
       virtual Properties& properties() const = 0;
       /// Return handle to material describing air
@@ -96,8 +101,6 @@ namespace DD4hep {
       virtual const HandleMap& constants() const = 0;
       /// Accessor to the map of region settings
       virtual const HandleMap& regions() const = 0;
-      /// Accessor to the map of materials
-      virtual const HandleMap& materials() const = 0;
       /// Accessor to the map of sub-detectors
       virtual const HandleMap& detectors() const = 0;
       /// Accessor to the map of readout structures
@@ -148,8 +151,6 @@ namespace DD4hep {
 
       /// Add a new constant to the detector description
       virtual LCDD& add(Constant constant) = 0;
-      /// Add a new material to the detector description
-      virtual LCDD& add(Material mat) = 0;
       /// Add a new visualisation attribute to the detector description
       virtual LCDD& add(VisAttr attr) = 0;
       /// Add a new limit set to the detector description
@@ -169,8 +170,6 @@ namespace DD4hep {
 
       /// Add a new constant by named reference to the detector description
       virtual LCDD& addConstant(const Ref_t& element) = 0;
-      /// Add a new material by named reference to the detector description
-      virtual LCDD& addMaterial(const Ref_t& element) = 0;
       /// Add a new visualisation attribute by named reference to the detector description
       virtual LCDD& addVisAttribute(const Ref_t& element) = 0;
       /// Add a new limit set by named reference to the detector description

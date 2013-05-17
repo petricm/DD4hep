@@ -62,9 +62,11 @@ namespace DD4hep {
         /// ID container
         VolIDs volIDs;
         /// Default constructor
-        Object() : magic(0), volIDs() {}
+        Object();
         /// Copy constructor
-        Object(const Object& c) : magic(c.magic), volIDs(c.volIDs) {}
+        Object(const Object& c);
+        /// Default destructor
+        ~Object();
         /// Assignment operator
         Object& operator=(const Object& c) {
           magic  = c.magic;
@@ -117,7 +119,10 @@ namespace DD4hep {
         VisAttr       vis;
         Ref_t         sens_det;
         int           referenced;
-        Object() : magic(0), region(), limits(), vis(), sens_det(), referenced(0) {}
+        /// Default constructor
+        Object();
+        /// Default destructor
+        ~Object();
         void copy(const Object& c) {
           magic      = c.magic;
           region     = c.region;
@@ -152,6 +157,7 @@ namespace DD4hep {
 
       /// Place daughter volume. The position and rotation are the identity
       PlacedVolume placeVolume(const Volume& vol) const { return placeVolume(vol, IdentityPos()); }
+
       /// Place daughter volume according to generic Transform3D
       PlacedVolume placeVolume(const Volume& volume, const Transform3D& tr) const;
       /// Place un-rotated daughter volume at the given position.

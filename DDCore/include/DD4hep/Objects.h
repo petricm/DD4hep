@@ -84,6 +84,8 @@ namespace DD4hep {
 
     /** @class Header Objects.h
      *  
+     *  Description of the geometry header. Containes useful auxiliary information.
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
