@@ -173,10 +173,10 @@ namespace DD4hep {
         unsigned int magic;
         int          id;
         /// Full path to this detector element. May be invalid
-        std::string  path;
-        int          combineHits;
-        Volume       volume;
-        Readout      readout;
+        std::string path;
+        int         combineHits;
+        Volume      volume;
+        // Readout           readout;
         Alignment    alignment;
         Conditions   conditions;
         PlacedVolume placement;
@@ -336,11 +336,15 @@ namespace DD4hep {
       /// Set the limits to the detector element
       DetElement& setLimitSet(const LCDD& lcdd, const std::string& name, const Volume& volume);
 
+#if 0      
+      !!!!
+      !!!! MUST remove this: double caching and invalid information in case of reflection etc.
+      !!!!
       /// Access the readout structure
-      Readout readout() const;
+      Readout         readout() const;
       /// Assign readout definition
-      DetElement& setReadout(const Readout& readout);
-
+      DetElement&     setReadout(const Readout& readout);
+#endif
       /// Access to the logical volume of the daughter placement
       Volume volume() const;
 
