@@ -94,15 +94,13 @@ namespace DD4hep {
             doc_fields, doc_define, doc_materials, doc_solids, doc_structure, doc_setup;
         GeometryInfo();
       };
-      /// Reference to detector description
-      LCDD& m_lcdd;
-      /// Processing flag
-      bool m_checkOverlaps;
-
       typedef std::set<std::string> NameSet;
-      mutable NameSet               m_checkNames;
 
-      GeometryInfo* m_dataPtr;
+      /// Reference to detector description
+      LCDD&           m_lcdd;
+      mutable NameSet m_checkNames;
+      GeometryInfo*   m_dataPtr;
+
       GeometryInfo& data() const { return *m_dataPtr; }
 
       /// Data integrity checker
