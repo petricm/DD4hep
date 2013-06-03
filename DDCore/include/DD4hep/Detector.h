@@ -45,7 +45,7 @@ namespace DD4hep {
       /// Definition of the extension type
       typedef std::map<const std::type_info*, void*> Extensions;
 
-      struct Object {
+      struct Object : public TNamed {
         unsigned int magic;
         int          verbose;
         int          combineHits;
@@ -93,9 +93,6 @@ namespace DD4hep {
         m_element = sd.m_element;
         return *this;
       }
-
-      /// Additional data accessor
-      Object& _data() const { return *data<Object>(); }
 
       /// Access the type of the sensitive detector
       std::string type() const;
@@ -169,7 +166,7 @@ namespace DD4hep {
       typedef std::map<const std::type_info*, void*> Extensions;
 
       enum CopyParameters { COPY_NONE = 0, COPY_PLACEMENT = 1 << 0, COPY_PARENT = 1 << 1, COPY_ALIGNMENT = 1 << 2, LAST };
-      struct Object {
+      struct Object : public TNamed {
         unsigned int magic;
         int          id;
         /// Full path to this detector element. May be invalid
@@ -198,7 +195,7 @@ namespace DD4hep {
         /// Internal object destructor: release extension object(s)
         virtual ~Object();
         /// Deep object copy to replicate DetElement trees e.g. for reflection
-        virtual Value<TNamed, Object>* clone(int new_id, int flag) const;
+        virtual Object* clone(int new_id, int flag) const;
         /// Conversion to reference object
         operator Ref_t();
         /// Conversion to reference object
@@ -210,9 +207,6 @@ namespace DD4hep {
         /// Create cached matrix to transform to reference coordinates
         TGeoMatrix* referenceTransformation();
       };
-
-      /// Additional data accessor
-      Object& _data() const { return *data<Object>(); }
 
       /// Internal assert function to check conditions
       void check(bool condition, const std::string& msg) const;
@@ -241,19 +235,19 @@ namespace DD4hep {
       }
 
       template <typename Q> DetElement(const std::string& name, const std::string& type, int id, const Q&) {
-        assign(new Value<TNamed, Q>(), name, type);
-        _data().id = id;
+        assign(new Q(), name, type);
+        object<Object>().id = id;
       }
 
       /// Construction function for a new subdetector element
       template <typename Q> static Q* createObject(const std::string& name, const std::string& type, int id) {
         DetElement det;
-        Value<TNamed, Q>* p = new Value<TNamed, Q>();
-        Object* o = p;
+        Q*         p = new Q();
+        Object*    o = p;
         if (o) {                      // This should cause a compilation error if Q is
           det.assign(p, name, type);  // not a subclass of Object, which is mandatoryyyy
         }
-        det._data().id = id;
+        det.object<Object>().id = id;
         return p;
       }
 
@@ -262,7 +256,7 @@ namespace DD4hep {
         Q* p = createObject<Q>(name, type, id);
         if (ptr)
           *ptr = p;
-        return DetElement(Ref_t(dynamic_cast<Value<TNamed, Q>*>(p)));
+        return DetElement(Ref_t(p));
       }
 
       /// Templated constructor for handle conversions
@@ -279,6 +273,9 @@ namespace DD4hep {
 
       /// Constructor for a new subdetector element
       DetElement(DetElement parent, const std::string& name, int id);
+
+      /// Additional data accessor
+      Object& _data() const { return object<Object>(); }
 
       /// Operator less to insert into a map
       bool operator<(const DetElement e) const { return ptr() < e.ptr(); }

@@ -154,7 +154,7 @@ namespace DD4hep {
        * @author  M.Frank
        * @version 1.0
        */
-      struct Object {
+      struct Object : public TNamed {
       public:
         typedef IDDescriptor::Field Field;
 
@@ -189,7 +189,7 @@ namespace DD4hep {
 
     protected:
       /// Additional data accessor
-      Object& _data() const { return *data<Object>(); }
+      Object& _data() const { return *(Object*)ptr(); }
 
     public:
       /// Default constructor
