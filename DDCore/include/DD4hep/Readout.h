@@ -48,7 +48,7 @@ namespace DD4hep {
         /// Standard constructor
         Object();
         /// Default destructor
-        ~Object();
+        virtual ~Object();
       };
 
     public:
@@ -76,6 +76,10 @@ namespace DD4hep {
     struct Alignment : public Ref_t {
       struct Object : public TNamed {
         Volume volume;
+        /// Standard constructor
+        Object();
+        /// Default destructor
+        virtual ~Object();
       };
       /// Default constructor
       Alignment() : Ref_t() {}
@@ -93,7 +97,12 @@ namespace DD4hep {
       * @version 1.0
       */
     struct Conditions : public Ref_t {
-      struct Object : public TNamed {};
+      struct Object : public TNamed {
+        /// Standard constructor
+        Object();
+        /// Default destructor
+        virtual ~Object();
+      };
       /// Default constructor
       Conditions() : Ref_t() {}
       /// Constructor to be used when reading the already parsed object
