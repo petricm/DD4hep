@@ -38,7 +38,7 @@ namespace DD4hep {
        * @author  M.Frank
        * @version 1.0
        */
-      struct Object {
+      struct Object : public TNamed {
         /// Handle to the readout segmentation
         Segmentation segmentation;
         /// Handle to the volume
@@ -50,10 +50,6 @@ namespace DD4hep {
         /// Default destructor
         ~Object();
       };
-
-    protected:
-      /// Additional data accessor
-      Object& _data() const { return *data<Object>(); }
 
     public:
       /// Default constructor
@@ -78,7 +74,7 @@ namespace DD4hep {
       * @version 1.0
       */
     struct Alignment : public Ref_t {
-      struct Object {
+      struct Object : public TNamed {
         Volume volume;
       };
       /// Default constructor
@@ -97,7 +93,7 @@ namespace DD4hep {
       * @version 1.0
       */
     struct Conditions : public Ref_t {
-      struct Object {};
+      struct Object : public TNamed {};
       /// Default constructor
       Conditions() : Ref_t() {}
       /// Constructor to be used when reading the already parsed object
