@@ -10,11 +10,19 @@
 
 #include "G4VUserDetectorConstruction.hh"
 
+/*
+ *   DD4hep namespace declaration
+ */
 namespace DD4hep {
 
+  // Forward declarations
   namespace Geometry {
     class LCDD;
   }
+
+  /*
+   *   Simulation namespace declaration
+   */
   namespace Simulation {
 
     class Geant4DetectorConstruction : public G4VUserDetectorConstruction {
