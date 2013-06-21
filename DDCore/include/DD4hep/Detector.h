@@ -378,5 +378,5 @@ namespace DD4hep {
     };
 
   } /* End namespace Geometry      */
-} /* End namespace DD4hep       */
-#endif /* DD4hep_LCDD_DETECTOR_H     */
+} /* End namespace DD4hep        */
+#endif /* DD4hep_LCDD_DETECTOR_H      */
