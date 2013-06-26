@@ -43,9 +43,13 @@ namespace DD4hep {
         VolumeID mask;
         VolumeID encode(int value) const {
           VolumeID v = value;
+          //FGxx return  ( (  v  << first )  & mask  ) ;
           return mask | ((v << (64 - second)) >> first);
         }
-        int decode(VolumeID value) const { return (~mask & value) >> (64 - second - first); }
+        int decode(VolumeID value) const {
+          //FGxx return  ( mask & value ) >> first  ;
+          return (~mask & value) >> (64 - second - first);
+        }
       };
       typedef std::vector<std::pair<std::string, Field>>  FieldMap;
       typedef std::vector<std::pair<size_t, std::string>> FieldIDs;
