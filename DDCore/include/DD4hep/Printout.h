@@ -18,6 +18,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <map>
+#include <string>
 
 /*
  *   DD4hep namespace declaration
@@ -44,6 +45,30 @@ namespace DD4hep {
    *  @return Status code indicating success or failure
    */
   int printout(PrintLevel severity, const char* src, const char* fmt, ...);
+
+  /** Calls the display action
+   *  @arg severity   [int,read-only]      Display severity flag (see enum)
+   *  @arg src        [string,read-only]   Information source (component, etc.)
+   *  @arg fmt        [string,read-only]   Format string for ellipsis args
+   *  @return Status code indicating success or failure
+   */
+  int printout(PrintLevel severity, const std::string& src, const char* fmt, ...);
+
+  /** Calls the display action
+   *  @arg severity   [int,read-only]      Display severity flag (see enum)
+   *  @arg src        [string,read-only]   Information source (component, etc.)
+   *  @arg fmt        [string,read-only]   Format string for ellipsis args
+   *  @return Status code indicating success or failure
+   */
+  int printout(PrintLevel severity, const std::string& src, const std::string& fmt, ...);
+
+  /** Calls the display action
+   *  @arg severity   [int,read-only]      Display severity flag (see enum)
+   *  @arg src        [string,read-only]   Information source (component, etc.)
+   *  @arg fmt        [string,read-only]   Format string for ellipsis args
+   *  @return Status code indicating success or failure
+   */
+  int printout(PrintLevel severity, const char* src, const std::string& fmt, ...);
 
   /// Set new print level. Returns the old print level
   PrintLevel setPrintLevel(PrintLevel new_level);
