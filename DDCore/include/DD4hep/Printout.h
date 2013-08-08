@@ -14,11 +14,15 @@
 //#include "DD4hep/Handle.h"
 
 // C/C++ include files
+#include <cstdarg>
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
 #include <map>
 #include <string>
+
+/// Forward declarations
+class TNamed;
 
 /*
  *   DD4hep namespace declaration
@@ -69,6 +73,57 @@ namespace DD4hep {
    *  @return Status code indicating success or failure
    */
   int printout(PrintLevel severity, const char* src, const std::string& fmt, ...);
+
+  /** Calls the display action
+   *  @arg severity   [int,read-only]      Display severity flag (see enum)
+   *  @arg src        [string,read-only]   Information source (component, etc.)
+   *  @arg fmt        [string,read-only]   Format string for ellipsis args
+   *  @arg args       [ap_list,read-only]  List with variable number of arguments to fill format string.
+   *  @return Status code indicating success or failure
+   */
+  int printout(PrintLevel severity, const char* src, const char* fmt, va_list& args);
+
+  /** Calls the display action
+   *  @arg severity   [int,read-only]      Display severity flag (see enum)
+   *  @arg src        [string,read-only]   Information source (component, etc.)
+   *  @arg fmt        [string,read-only]   Format string for ellipsis args
+   *  @arg args       [ap_list,read-only]  List with variable number of arguments to fill format string.
+   *  @return Status code indicating success or failure
+   */
+  int printout(PrintLevel severity, const std::string& src, const char* fmt, va_list& args);
+
+  /** Calls the display action
+   *  @arg severity   [int,read-only]      Display severity flag (see enum)
+   *  @arg src        [string,read-only]   Information source (component, etc.)
+   *  @arg fmt        [string,read-only]   Format string for ellipsis args
+   *  @arg args       [ap_list,read-only]  List with variable number of arguments to fill format string.
+   *  @return Status code indicating success or failure
+   */
+  int printout(PrintLevel severity, const std::string& src, const std::string& fmt, va_list& args);
+
+  /** Calls the display action
+   *  @arg severity   [int,read-only]      Display severity flag (see enum)
+   *  @arg src        [string,read-only]   Information source (component, etc.)
+   *  @arg fmt        [string,read-only]   Format string for ellipsis args
+   *  @arg args       [ap_list,read-only]  List with variable number of arguments to fill format string.
+   *  @return Status code indicating success or failure
+   */
+  int printout(PrintLevel severity, const char* src, const std::string& fmt, va_list& args);
+
+  /** Build formatted string
+   *  @arg src        [string,read-only]   Information source (component, etc.)
+   *  @arg fmt        [string,read-only]   Format string for ellipsis args
+   *  @return Status code indicating success or failure
+   */
+  std::string format(const std::string& src, const std::string& fmt, ...);
+
+  /** Build formatted string
+   *  @arg src        [string,read-only]   Information source (component, etc.)
+   *  @arg fmt        [string,read-only]   Format string for ellipsis args
+   *  @arg args       [ap_list,read-only]  List with variable number of arguments to fill format string.
+   *  @return Status code indicating success or failure
+   */
+  std::string format(const std::string& src, const std::string& fmt, va_list& args);
 
   /// Set new print level. Returns the old print level
   PrintLevel setPrintLevel(PrintLevel new_level);
