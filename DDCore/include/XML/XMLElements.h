@@ -16,6 +16,7 @@
 #include <vector>
 
 // Framework include files
+#include "DD4hep/Primitives.h"
 #include "XML/config.h"
 
 #ifndef RAD_2_DEGREE
@@ -30,11 +31,6 @@
  */
 namespace DD4hep {
 
-  template <class T> void deletePtr(T*& p) {
-    if (p)
-      delete p;
-    p = 0;
-  }
   namespace XML {
 
     typedef const XmlAttr* Attribute;
