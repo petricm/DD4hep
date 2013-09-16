@@ -214,8 +214,10 @@ namespace DD4hep {
       template <typename Q> Material(const Handle<Q>& e) : Handle<TGeoMedium>(e) {}
       /// String representation of this object
       std::string toString() const;
-      /// Access the radiation length of the undrelying material
+      /// Access the radiation length of the underlying material
       double radLength() const;
+      /// Access the interaction length of the underlying material
+      double intLength() const;
     };
 
     /** @class VisAttr Objects.h
