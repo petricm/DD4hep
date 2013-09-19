@@ -252,6 +252,7 @@ namespace DD4hep {
     UNICODE(particles);
     UNICODE(phi);
     UNICODE(phi0);
+    UNICODE(phi1);
     UNICODE(phi_tilt);
     UNICODE(phiBins);
     UNICODE(phi_size_max);
