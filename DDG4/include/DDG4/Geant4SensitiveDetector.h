@@ -11,7 +11,6 @@
 
 // Framework include files
 #include "DD4hep/LCDD.h"
-#include "DDG4/G4SDFactory.h"
 #include "DDG4/Geant4Hits.h"
 
 // Geant 4 include files
