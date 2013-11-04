@@ -15,7 +15,9 @@
 /// Constructor. The sensitive detector element is identified by the detector name
 template <class SD>
 DD4hep::Simulation::Geant4GenericSD<SD>::Geant4GenericSD(const std::string& name, LCDD& lcdd)
-    : Geant4SensitiveDetector(name, lcdd) {}
+    : Geant4SensitiveDetector(name, lcdd) {
+  defineCollection(m_sensitive.hitsCollection());
+}
 
 /// Initialize the sensitive detector for the usage of a single hit collection
 template <class SD> bool DD4hep::Simulation::Geant4GenericSD<SD>::defineCollection(const std::string& coll_name) {
