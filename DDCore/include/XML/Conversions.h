@@ -22,7 +22,7 @@ namespace DD4hep {
   // Forward declarations
   namespace XML {
     struct Handle_t;
-  };
+  }
 
   /** @class Converter Conversions.h  DD4hep/compact/Conversions.h
       *
@@ -44,6 +44,10 @@ namespace DD4hep {
     Converter(Geometry::LCDD& l, user_param p) : lcdd(l), param(p) {}
     /// Callback operator to be specialized depending on the element type
     void operator()(XML::Handle_t xml) const;
+    /// Typed access to the user parameter (unchecked)
+    template <typename TYPE> TYPE* _param() const { return (TYPE*)param; }
+    /// Typed object access to the user parameter (unchecked)
+    template <typename TYPE> TYPE& _object() const { return *(TYPE*)param; }
   };
-} /* End namespace DD4hep   */
+} /* End namespace DD4hep           */
 #endif /* DD4hep_COMPACT_CONVERSION_H    */
