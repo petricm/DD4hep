@@ -43,8 +43,14 @@ namespace DD4hep {
       void setLocal(bool isLocal) { _isLocal = isLocal; }
       /// access the encoding string
       std::string fieldDescription() const { return _decoder->fieldDescription(); }
+      /// access the segmentation name
+      const std::string& name() const { return _name; }
+      /// Set the segmentation name
+      void setName(const std::string& value) { _name = value; }
       /// access the segmentation type
-      std::string type() const { return _type; }
+      const std::string& type() const { return _type; }
+      /// Set the segmentation type
+      void setType(const std::string& value) { _type = value; }
       /// access the underlying decoder
       BitField64* decoder() { return _decoder; }
       /// set the underlying decoder
@@ -59,13 +65,8 @@ namespace DD4hep {
       bool _ownsDecoder;
       /// the segmentation type
       std::string _type;
-      /// distinguish between local and global coordinate systems
-      bool _isLocal;
-
-      /// helper method to convert a bin number to a 1D position
-      double binToPosition(long64 bin, double cellSize, double offset = 0.) const;
-      /// helper method to convert a 1D position to a cell ID
-      int positionToBin(double position, double cellSize, double offset = 0.) const;
+      /// the segmentation name
+      std::string _name;
     };
 
   } /* namespace DDSegmentation */

@@ -11,8 +11,8 @@
 namespace DD4hep {
 
   //fixme: do  need to do this also for 32 bit machines ?
-  typedef long          long64;
-  typedef unsigned long ulong64;
+  typedef long long int      long64;
+  typedef unsigned long long ulong64;
 
   namespace DDSegmentation {
 
@@ -102,7 +102,7 @@ namespace DD4hep {
 
       /** The low  word, bits 0-31
      */
-      unsigned lowWord() const { return unsigned(_value & 0xffffFFFF); }
+      unsigned lowWord() const { return unsigned(_value & 0xffffFFFFUL); }
 
       /** The high  word, bits 32-63
      */
