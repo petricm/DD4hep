@@ -36,7 +36,7 @@ namespace DD4hep {
     class Geant4CalorimeterHit;
 
     /** @class HitCompare Geant4Hits.h DDG4/Geant4Hits.h
-     * 
+     *
      *  Base class for hit comparisons.
      *
      * @author  M.Frank
@@ -48,7 +48,7 @@ namespace DD4hep {
     };
 
     /** @class HitPositionCompare Geant4Hits.h DDG4/Geant4Hits.h
-     * 
+     *
      * Seek the hits of an arbitrary collection for the same position.
      *
      * @author  M.Frank
@@ -63,8 +63,8 @@ namespace DD4hep {
     };
 
     /** @class Geant4Hit Geant4Hits.h DDG4/Geant4Hits.h
-     * 
-     * Geant4 hit base class. Here only the basic 
+     *
+     * Geant4 hit base class. Here only the basic
      * quantites are stored such as the energy deposit and
      * the time stamp.
      *
@@ -112,7 +112,7 @@ namespace DD4hep {
     };
 
     /** @class Geant4TrackerHit Geant4Hits.h DDG4/Geant4Hits.h
-     * 
+     *
      * Geant4 tracker hit class. Tracker hits contain the momentum
      * direction as well as the hit position.
      *
@@ -153,7 +153,7 @@ namespace DD4hep {
     };
 
     /** @class Geant4CalorimeterHit Geant4Hits.h DDG4/Geant4Hits.h
-     * 
+     *
      * Geant4 tracker hit class. Calorimeter hits contain the momentum
      * direction as well as the hit position.
      *

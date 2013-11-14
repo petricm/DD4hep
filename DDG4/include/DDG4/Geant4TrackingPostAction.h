@@ -24,7 +24,7 @@ namespace DD4hep {
   namespace Simulation {
 
     /** @class Geant4TrackingPostAction Geant4TrackingPostAction.h DDG4/Geant4TrackingPostAction.h
-     * 
+     *
      * Default base class for all geant 4 tracking actions.
      *
      * @author  M.Frank

@@ -11,7 +11,7 @@
 
 // Framework include files
 #include "DD4hep/LCDD.h"
-#include "DDG4/ComponentUtils.h"
+#include "DDG4/ComponentProperties.h"
 
 // C/C++ include files
 #include <memory>
@@ -32,7 +32,7 @@ namespace DD4hep {
     class Geant4Action;
 
     /** @class Geant4Handle Geant4Handle.h DDG4/Geant4Handle.h
-     * 
+     *
      * Handle to Geant4 actions with built-in creation mechanism
      *
      * @author  M.Frank

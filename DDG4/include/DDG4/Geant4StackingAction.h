@@ -23,7 +23,7 @@ namespace DD4hep {
   namespace Simulation {
 
     /** @class Geant4StackingAction Geant4Action.h DDG4/Geant4Action.h
-     * 
+     *
      * Concrete implementation of the Geant4 stacking action base class
      *
      * @author  M.Frank
@@ -42,7 +42,7 @@ namespace DD4hep {
     };
 
     /** @class Geant4StackingActionSequence Geant4Action.h DDG4/Geant4Action.h
-     * 
+     *
      * Concrete implementation of the Geant4 stacking action sequence
      *
      * @author  M.Frank

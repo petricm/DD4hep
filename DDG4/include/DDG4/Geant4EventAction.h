@@ -25,8 +25,8 @@ namespace DD4hep {
   namespace Simulation {
 
     /** @class Geant4EventAction Geant4Action.h DDG4/Geant4Action.h
-     * 
-     * Concrete basic implementation of the Geant4 event action 
+     *
+     * Concrete basic implementation of the Geant4 event action
      *
      * @author  M.Frank
      * @version 1.0
@@ -44,7 +44,7 @@ namespace DD4hep {
     };
 
     /** @class Geant4EventActionSequence Geant4Action.h DDG4/Geant4Action.h
-     * 
+     *
      * Concrete implementation of the Geant4 event action sequence
      *
      * @author  M.Frank

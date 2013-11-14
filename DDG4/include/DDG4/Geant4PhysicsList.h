@@ -30,7 +30,7 @@ namespace DD4hep {
   namespace Simulation {
 
     /** @class Geant4UserPhysics Geant4PhysicsList.h DDG4/Geant4PhysicsList.h
-     * 
+     *
      * Interface class exposing some of the G4VUserPhysicsList class.
      *
      * @author  M.Frank
@@ -51,8 +51,8 @@ namespace DD4hep {
     };
 
     /** @class Geant4PhysicsList Geant4PhysicsList.h DDG4/Geant4PhysicsList.h
-     * 
-     * Concrete basic implementation of the Geant4 event action 
+     *
+     * Concrete basic implementation of the Geant4 event action
      *
      * @author  M.Frank
      * @version 1.0
@@ -60,7 +60,7 @@ namespace DD4hep {
     class Geant4PhysicsList : public Geant4Action {
     public:
       /** @class PhysicsConstructor Geant4PhysicsList.h DDG4/Geant4PhysicsList.h
-       * 
+       *
        * Image of a physics constructor holding all stub information to attach
        * the concrete process contributing to the user physics list.
        *
@@ -77,27 +77,26 @@ namespace DD4hep {
         /// Assignment operator
         Process& operator=(const Process& p);
       };
+      typedef std::vector<Process> ParticleProcesses;
+      typedef std::map<std::string, ParticleProcesses> PhysicsProcesses;
+
       struct ParticleConstructor : public std::string {
         ParticleConstructor() : std::string() {}
         ParticleConstructor(const std::string& s) : std::string(s) {}
         ~ParticleConstructor() {}
       };
+      typedef std::vector<ParticleConstructor> ParticleConstructors;
+
       struct PhysicsConstructor : public std::string {
         PhysicsConstructor() : std::string() {}
         PhysicsConstructor(const std::string& s) : std::string(s) {}
         ~PhysicsConstructor() {}
       };
-
-      typedef std::vector<Process> ParticleProcesses;
-      typedef std::map<std::string, ParticleProcesses> PhysicsProcesses;
-
-      PhysicsProcesses m_processes;
-
-      typedef std::vector<ParticleConstructor> ParticleConstructors;
-      ParticleConstructors                     m_particles;
-
       typedef std::vector<PhysicsConstructor> PhysicsConstructors;
-      PhysicsConstructors                     m_physics;
+
+      PhysicsProcesses     m_processes;
+      ParticleConstructors m_particles;
+      PhysicsConstructors  m_physics;
 
     public:
       /// Standard constructor with initailization parameters
@@ -122,8 +121,9 @@ namespace DD4hep {
       /// Access all physics constructors
       const PhysicsConstructors& physics() const { return m_physics; }
 
-      /// Callback to construct the physics list
+      /// Callback to construct the physics constructors
       virtual void constructProcess(Geant4UserPhysics* interface);
+
       /// constructParticle callback
       virtual void constructParticles(Geant4UserPhysics* particle);
       /// constructPhysics callback
@@ -133,7 +133,7 @@ namespace DD4hep {
     };
 
     /** @class Geant4PhysicsListActionSequence Geant4Action.h DDG4/Geant4Action.h
-     * 
+     *
      * Concrete implementation of the Geant4 physics list sequence.
      * A list to setup the physics content in a modular form
      *
@@ -141,6 +141,7 @@ namespace DD4hep {
      * @version 1.0
      */
     class Geant4PhysicsListActionSequence : public Geant4Action {
+    public:
     protected:
       /// Callback sequence for event finalization action
       CallbackSequence m_process;
@@ -148,6 +149,7 @@ namespace DD4hep {
       CallbackSequence m_particle;
       /// The list of action objects to be called
       Actors<Geant4PhysicsList> m_actors;
+
       /// Callback to construct particle decays
       virtual void constructDecays(Geant4UserPhysics* physics);
 
@@ -156,6 +158,8 @@ namespace DD4hep {
       bool m_transportation;
       /// Flag if particle decays are to be added
       bool m_decays;
+      /// Property: Store name of basic predefined Geant4 physics list
+      std::string m_extends;
 
     public:
       /// Standard constructor
@@ -176,10 +180,11 @@ namespace DD4hep {
       }
       /// Add an actor responding to all callbacks. Sequence takes ownership.
       void adopt(Geant4PhysicsList* action);
+
       /// begin-of-event callback
-      void constructProcess(Geant4UserPhysics* physics);
+      virtual void constructProcess(Geant4UserPhysics* physics);
       /// begin-of-event callback
-      void constructParticles(Geant4UserPhysics* physics);
+      virtual void constructParticles(Geant4UserPhysics* physics);
     };
 
   }  // End namespace Simulation

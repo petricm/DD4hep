@@ -25,7 +25,7 @@ namespace DD4hep {
   namespace Simulation {
 
     /** @class Geant4GeneratorAction Geant4GeneratorAction.h DDG4/Geant4GeneratorAction.h
-     * 
+     *
      * Concrete implementation of the Geant4 generator action base class
      *
      * @author  M.Frank
@@ -45,7 +45,7 @@ namespace DD4hep {
     };
 
     /** @class Geant4GeneratorActionSequence Geant4GeneratorAction.h DDG4/Geant4GeneratorAction.h
-     * 
+     *
      * Concrete implementation of the Geant4 generator action sequence
      *
      * @author  M.Frank

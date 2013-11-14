@@ -18,7 +18,10 @@
 #include <string>
 #include <typeinfo>
 
+// Forward declarations
 class G4RunManager;
+class G4UIdirectory;
+
 /*
  *   DD4hep namespace declaration
  */
@@ -51,7 +54,7 @@ namespace DD4hep {
     class Geant4SensDetSequences;
 
     /** @class Invoke Geant4Kernel.h DDG4/Geant4Kernel.h
-     * 
+     *
      * Default base class for all geant 4 actions and derivates thereof.
      *
      * @author  M.Frank
@@ -68,6 +71,8 @@ namespace DD4hep {
       Geant4Context* m_context;
       /// Reference to the run manager
       G4RunManager* m_runManager;
+      /// Top level control directory
+      G4UIdirectory* m_control;
       /// Property pool
       PropertyManager m_properties;
       /// Reference to the Geant4 primary generator action
@@ -94,6 +99,8 @@ namespace DD4hep {
       GlobalActions m_globalFilters;
       /// Detector description object
       LCDD& m_lcdd;
+      /// Name of the G4UI command tree
+      std::string m_controlName;
       /// Helper to register an action sequence
       template <typename C> bool registerSequence(C*& seq, const std::string& name);
 
@@ -102,7 +109,7 @@ namespace DD4hep {
 
     public:
       /** @class PhaseSelector Geant4Kernel.h DDG4/Geant4Kernel.h
-       * 
+       *
        * Embedded helper class to facilitate map access to the phases.
        *
        * @author  M.Frank
@@ -138,6 +145,9 @@ namespace DD4hep {
       LCDD& lcdd() const { return m_lcdd; }
       /// Access to the Geant4 run manager
       G4RunManager& runManager();
+      /// Access the command directory
+      const std::string& directoryName() const { return m_controlName; }
+
       /// Register action by name to be retrieved when setting up and connecting action objects
       /** Note: registered actions MUST be unique.
        *  However, not all actions need to registered....

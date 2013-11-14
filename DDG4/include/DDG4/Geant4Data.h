@@ -26,7 +26,7 @@ namespace DD4hep {
     typedef Geometry::Position Direction;
 
     /** @class HitCompare Geant4Data.h DDG4/Geant4Data.h
-     * 
+     *
      *  Base class for hit comparisons.
      *
      * @author  M.Frank
@@ -38,7 +38,7 @@ namespace DD4hep {
     };
 
     /** @class HitPositionCompare Geant4Data.h DDG4/Geant4Data.h
-     * 
+     *
      * Seek the hits of an arbitrary collection for the same position.
      *
      * @author  M.Frank
@@ -52,6 +52,53 @@ namespace DD4hep {
       virtual bool operator()(const HIT* h) const { return pos == h->position; }
     };
 
+    /** @class SimpleRun Geant4Data.h DDG4/Geant4Data.h
+     *
+     * Example class to store the run related information.
+     *
+     * @author  M.Frank
+     * @version 1.0
+     */
+    struct SimpleRun {
+      /// Run identifiers
+      int runID;
+      /// Number of events in this run
+      int numEvents;
+      /// Default constructor
+      SimpleRun();
+      /// Default destructor
+      virtual ~SimpleRun();
+    };
+
+    /** @class SimpleEvent Geant4Data.h DDG4/Geant4Data.h
+     *
+     * Example class to store the event related information.
+     *
+     * @author  M.Frank
+     * @version 1.0
+     */
+    struct SimpleEvent {
+      typedef std::vector<long> Seeds;
+      /// Run identifiers
+      int runID;
+      /// Event identifier
+      int eventID;
+      /// Random number generator seeds
+      Seeds seeds;
+      /// Default constructor
+      SimpleEvent();
+      /// Default destructor
+      virtual ~SimpleEvent();
+    };
+
+    /** @class SimpleHit Geant4Data.h DDG4/Geant4Data.h
+     *
+     * Base class for geant4 hit structures created by the
+     * example sensitive detectors.
+     *
+     * @author  M.Frank
+     * @version 1.0
+     */
     struct SimpleHit {
       // cellID
       long long int cellID;
@@ -89,7 +136,7 @@ namespace DD4hep {
 
     public:
       /// Default constructor
-      SimpleHit() : cellID(0) {}
+      SimpleHit();
       /// Default destructor
       virtual ~SimpleHit();
       /// Extract the MC contribution for a given hit from the step information
@@ -98,7 +145,7 @@ namespace DD4hep {
 
     struct SimpleTracker {
       /** @class SimpleTracker::Hit Geant4Data.h DDG4/Geant4Data.h
-       * 
+       *
        * Geant4 tracker hit class. Tracker hits contain the momentum
        * direction as well as the hit position.
        *
@@ -133,7 +180,7 @@ namespace DD4hep {
 
     struct SimpleCalorimeter {
       /** @class SimpleCalorimeter::Hit Geant4Data.h DDG4/Geant4Data.h
-       * 
+       *
        * Geant4 tracker hit class. Calorimeter hits contain the momentum
        * direction as well as the hit position.
        *
@@ -150,6 +197,8 @@ namespace DD4hep {
         double energyDeposit;
 
       public:
+        /// Default constructor (for ROOT)
+        Hit();
         /// Standard constructor
         Hit(const Position& cell_pos);
         /// Default destructor

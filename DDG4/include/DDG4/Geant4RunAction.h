@@ -23,9 +23,9 @@ namespace DD4hep {
    */
   namespace Simulation {
 
-    /** @class Geant4RunAction Geant4Action.h DDG4/Geant4Action.h
-     * 
-     * Concrete basic implementation of the Geant4 run action 
+    /** @class Geant4RunAction Geant4RunAction.h DDG4/Geant4RunAction.h
+     *
+     * Concrete basic implementation of the Geant4 run action
      *
      * @author  M.Frank
      * @version 1.0
@@ -42,8 +42,8 @@ namespace DD4hep {
       virtual void end(const G4Run* run);
     };
 
-    /** @class Geant4RunActionSequence Geant4Action.h DDG4/Geant4Action.h
-     * 
+    /** @class Geant4RunActionSequence Geant4RunAction.h DDG4/Geant4RunAction.h
+     *
      * Concrete implementation of the Geant4 run action sequence
      *
      * @author  M.Frank

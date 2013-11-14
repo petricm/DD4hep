@@ -178,9 +178,9 @@ namespace DD4hep {
       virtual bool process(G4Step* step, G4TouchableHistory* history);
 
       /// G4VSensitiveDetector interface: Method invoked if the event was aborted.
-      /** Hits collections created but not being set to G4HCofThisEvent 
+      /** Hits collections created but not being set to G4HCofThisEvent
        *  at the event should be deleted.
-       *  Collection(s) which have already set to G4HCofThisEvent 
+       *  Collection(s) which have already set to G4HCofThisEvent
        *  will be deleted automatically.
        */
       virtual void clear(G4HCofThisEvent* hce);
@@ -193,7 +193,7 @@ namespace DD4hep {
     };
 
     /** @class Geant4SensDetActionSequence Geant4SensDetAction.h DDG4/Geant4SensDetAction.h
-     * 
+     *
      * Concrete implementation of the sensitive detector action sequence
      *
      * @author  M.Frank
@@ -289,16 +289,16 @@ namespace DD4hep {
 
       virtual void end(G4HCofThisEvent* hce);
       /// G4VSensitiveDetector interface: Method invoked if the event was aborted.
-      /** Hits collections created but not beibg set to G4HCofThisEvent 
+      /** Hits collections created but not beibg set to G4HCofThisEvent
        *  at the event should be deleted.
-       *  Collection(s) which have already set to G4HCofThisEvent 
+       *  Collection(s) which have already set to G4HCofThisEvent
        *  will be deleted automatically.
        */
       virtual void clear();
     };
 
     /** @class Geant4SensDetActionSequences Geant4SensDetAction.h DDG4/Geant4SensDetAction.h
-     * 
+     *
      * Concrete implementation of the sensitive detector action sequence
      *
      * @author  M.Frank

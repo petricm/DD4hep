@@ -6,11 +6,11 @@
 //  Author     : M.Frank
 //
 //====================================================================
-#ifndef DD4HEP_DDG4_COMPONENTTUILS_INL_H
-#define DD4HEP_DDG4_COMPONENTTUILS_INL_H
+#ifndef DD4HEP_DDG4_COMPONENTPROPERTIES_INL_H
+#define DD4HEP_DDG4_COMPONENTPROPERTIES_INL_H
 
 // Framework include files
-#include "DDG4/ComponentUtils.h"
+#include "DDG4/ComponentProperties.h"
 
 #ifdef DD4HEP_USE_BOOST
 #include "DDG4/Parsers.h"
@@ -70,7 +70,7 @@ namespace DD4hep {
 #ifdef DD4HEP_USE_BOOST
     TYPE temp;
     int  sc = Parsers::parse(temp, str);
-    std::cout << "Converting value: " << str << " to type " << typeid(TYPE).name() << std::endl;
+    //std::cout << "Converting value: " << str << " to type " << typeid(TYPE).name() << std::endl;
     if (sc) {
       *(TYPE*)ptr = temp;
       return true;
@@ -148,4 +148,4 @@ namespace DD4hep {
 
 }  // End namespace DD4hep
 
-#endif  // DD4HEP_DDG4_COMPONENTTUILS_INL_H
+#endif  // DD4HEP_DDG4_COMPONENTPROPERTIES_INL_H

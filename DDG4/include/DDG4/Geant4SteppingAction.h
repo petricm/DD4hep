@@ -27,7 +27,7 @@ namespace DD4hep {
   namespace Simulation {
 
     /** @class Geant4SteppingAction Geant4Action.h DDG4/Geant4Action.h
-     * 
+     *
      * Concrete implementation of the Geant4 stepping action sequence
      *
      * @author  M.Frank
@@ -44,7 +44,7 @@ namespace DD4hep {
     };
 
     /** @class Geant4SteppingActionSequence Geant4Action.h DDG4/Geant4Action.h
-     * 
+     *
      * Concrete implementation of the Geant4 stepping action sequence
      *
      * @author  M.Frank

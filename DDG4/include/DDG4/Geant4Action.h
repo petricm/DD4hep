@@ -10,11 +10,12 @@
 #define DD4HEP_DDG4_GEANT4ACTION_H
 
 // Framework include files
-#include "DDG4/ComponentUtils.h"
+#include "DDG4/ComponentProperties.h"
 #include "DDG4/Geant4Callback.h"
 #include "DDG4/Geant4Context.h"
 
 #include "G4VUserTrackInformation.hh"
+
 // Geant4 forward declarations
 class G4Run;
 class G4Event;
@@ -24,6 +25,7 @@ class G4TrackStack;
 class G4EventGenerator;
 class G4VTrajectory;
 class G4TrackingManager;
+class G4UIdirectory;
 
 // C/C++ include files
 #include <cstdarg>
@@ -38,6 +40,9 @@ namespace DD4hep {
    *   Simulation namespace declaration
    */
   namespace Simulation {
+
+    // Forward declarations
+    class Geant4UIMessenger;
 
     template <typename TO, typename FROM> TO fast_cast(FROM from) {
 #ifdef USE_FASTCAST
@@ -55,7 +60,7 @@ namespace DD4hep {
     };
 
     /** @class Geant4TrackInformation Geant4Action.h DDG4/Geant4Action.h
-     * 
+     *
      * @author  M.Frank
      * @version 1.0
      */
@@ -74,56 +79,56 @@ namespace DD4hep {
 
 #if 0
     /** @class Geant4UserTrajectory Geant4Action.h DDG4/Geant4Action.h
-     * 
+     *
      * @author  M.Frank
      * @version 1.0
      */
-    struct Geant4UserTrajectory  {
+    struct Geant4UserTrajectory {
       /// Default constructor
       Geant4UserTrajectory();
       /// Standard destructor
       virtual ~Geant4UserTrajectory();
       /// accessors
-      virtual int                 trackID()       const = 0;
-      virtual int                 parentID()      const = 0;
-      virtual std::string         particleName()  const = 0;
-      virtual double              charge()        const = 0;
-      virtual int                 pdgID()         const = 0;
-      virtual G4ThreeVector       momentum()      const = 0;
-      virtual int                 numPoints()     const = 0;
-      virtual G4VTrajectoryPoint* point(int i)    const = 0;
+      virtual int trackID() const = 0;
+      virtual int parentID() const = 0;
+      virtual std::string particleName() const = 0;
+      virtual double charge() const = 0;
+      virtual int pdgID() const = 0;
+      virtual G4ThreeVector momentum() const = 0;
+      virtual int numPoints() const = 0;
+      virtual G4VTrajectoryPoint* point(int i) const = 0;
     };
 
     /** @class Geant4Trajectory Geant4Action.h DDG4/Geant4Action.h
-     * 
+     *
      * @author  M.Frank
      * @version 1.0
      */
-    struct Geant4Trajectory : public G4VTrajectory  {
+    struct Geant4Trajectory : public G4VTrajectory {
       std::auto_ptr<Geant4UserTrajectory> trajectory;
       /// Default constructor
       Geant4Trajectory(Geant4UserTrajectory* traj);
       /// Standard destructor
       virtual ~Geant4Trajectory();
-      /// Mandatory G4 overloads: Get/Set functions 
-      virtual G4int GetTrackID() const                     {  return trajectory->trackID;       }
-      virtual G4int GetParentID() const                    {  return trajectory->parentID();      }
-      virtual G4String GetParticleName() const             {  return trajectory->particleName();  }
+      /// Mandatory G4 overloads: Get/Set functions
+      virtual G4int GetTrackID() const {return trajectory->trackID;}
+      virtual G4int GetParentID() const {return trajectory->parentID();}
+      virtual G4String GetParticleName() const {return trajectory->particleName();}
       /// Mandatory G4 overloads:  Charge is that of G4DynamicParticle
-      virtual G4double GetCharge() const                   {  return trajectory->charge();        }
+      virtual G4double GetCharge() const {return trajectory->charge();}
       /// Mandatory G4 overloads:  Zero will be returned if the particle does not have PDG code.
-      virtual G4int GetPDGEncoding() const                 {  return trajectory->pdgID();         }
+      virtual G4int GetPDGEncoding() const {return trajectory->pdgID();}
       /// Mandatory G4 overloads:  Momentum at the origin of the track in global coordinate system.
-      virtual G4ThreeVector GetInitialMomentum() const     {  return trajectory->momentum();      }
-      
+      virtual G4ThreeVector GetInitialMomentum() const {return trajectory->momentum();}
+
       /// Mandatory G4 overloads:  Returns the number of trajectory points
-      virtual int GetPointEntries() const                  {  return trajectory->numPoints();     }
-      virtual G4VTrajectoryPoint* GetPoint(G4int i) const  {  return trajectory->point(i);        }
+      virtual int GetPointEntries() const {return trajectory->numPoints();}
+      virtual G4VTrajectoryPoint* GetPoint(G4int i) const {return trajectory->point(i);}
     };
 #endif
 
     /** @class Invoke Geant4Action.h DDG4/Geant4Action.h
-     * 
+     *
      * Default base class for all geant 4 actions and derivates thereof.
      *
      * @author  M.Frank
@@ -133,6 +138,13 @@ namespace DD4hep {
     protected:
       /// Reference to the Geant4 context
       Geant4Context* m_context;
+      /// Control directory of this action
+      Geant4UIMessenger* m_control;
+
+      /// Default property: Output level
+      int m_outputLevel;
+      /// Default property: Flag to create control instance
+      bool m_needsControl;
       /// Action name
       std::string m_name;
       /// Property pool
@@ -245,6 +257,12 @@ namespace DD4hep {
       template <typename T> Geant4Action& declareProperty(const char* nam, T& val);
       /// Set object properties
       Geant4Action& setProperties(PropertyConfigurator& setup);
+
+      /// Install property control messenger if wanted
+      virtual void installMessengers();
+      /// Install property control messenger if wanted
+      void installPropertyMessenger();
+
       /// Support of debug messages.
       void debug(const std::string& fmt, ...) const;
       /// Support of info messages.

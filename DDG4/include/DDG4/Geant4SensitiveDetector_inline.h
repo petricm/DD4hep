@@ -24,7 +24,7 @@ template <class SD> bool DD4hep::Simulation::Geant4GenericSD<SD>::defineCollecti
   return Geant4SensitiveDetector::defineCollection(coll_name);
 }
 
-/** Method invoked at the begining of each event. 
+/** Method invoked at the begining of each event.
  *  The hits collection(s) created by this sensitive detector must
  *  be set to the G4HCofThisEvent object at one of these two methods.
  */

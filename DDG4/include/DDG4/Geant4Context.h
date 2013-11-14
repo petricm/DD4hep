@@ -40,7 +40,7 @@ namespace DD4hep {
     class Geant4SensDetSequences;
 
     /** @class Geant4Context  Geant4Context.h DDG4/Geant4Context.h
-     * 
+     *
      * @author  M.Frank
      * @version 1.0
      */

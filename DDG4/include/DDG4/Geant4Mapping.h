@@ -26,7 +26,7 @@ namespace DD4hep {
   namespace Simulation {
 
     /** @class Geant4Mapping Geant4Mapping.h DDG4/Geant4Mapping.h
-     * 
+     *
      * Geometry mapping from DD4hep to Geant 4.
      *
      * @author  M.Frank

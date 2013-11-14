@@ -33,7 +33,7 @@ namespace DD4hep {
 
     namespace Test {
       /** @class Geant4TestRunAction
-       * 
+       *
        * @author  M.Frank
        * @version 1.0
        */
