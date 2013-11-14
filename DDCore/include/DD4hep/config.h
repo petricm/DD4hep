@@ -21,5 +21,5 @@ namespace DD4hep {
    *   Geometry sub-namespace declaration
    */
   namespace Geometry {} /* End namespace Geometry  */
-} /* End namespace DD4hep    */
+} /*   End namespace DD4hep    */
 #endif /* DD4HEP_CONFIG_H         */

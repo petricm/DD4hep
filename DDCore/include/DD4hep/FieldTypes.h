@@ -25,7 +25,7 @@ namespace DD4hep {
   namespace Geometry {
 
     /** @class ConstantField FieldTypes.h
-     *  
+     *
      *  Generic constant uniform field
      *
      *  @author  M.Frank
@@ -44,7 +44,7 @@ namespace DD4hep {
     };
 
     /** @class SolenoidField FieldTypes.h DD4hep/FieldTypes.h
-     *  
+     *
      *  Generic solonoid magnetic field
      *
      *  @author  M.Frank
@@ -67,7 +67,7 @@ namespace DD4hep {
     };
 
     /** @class DipoleField FieldTypes.h DD4hep/FieldTypes.h
-     *  
+     *
      *  Generic solonoid magnetic field
      *
      *  @author  M.Frank

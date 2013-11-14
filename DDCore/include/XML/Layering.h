@@ -67,8 +67,8 @@ namespace DD4hep {
   };
 
   /*
-  *   XML namespace declaration
-  */
+   *   XML namespace declaration
+   */
   namespace XML {
 
     // Tag and attribute objects. See XMLTags.cpp for the instantiation

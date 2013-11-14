@@ -39,14 +39,14 @@ namespace DD4hep {
 
     /** @enum LCDDBuildType LCDD.h  DD4hep/LCDD.h
      * Detector description build types.
-     * The corresponding flag is ONLY valid while parsing the 
+     * The corresponding flag is ONLY valid while parsing the
      * compact description. If no eometry, ie. at all other times
      * the accessor to the flag returns BUILD_NONE.
      */
     enum LCDDBuildType { BUILD_NONE = 0, BUILD_DEFAULT = 1, BUILD_SIMU = BUILD_DEFAULT, BUILD_RECO, BUILD_DISPLAY };
 
     /** @class LCDD LCDD.h  DD4hep/LCDD.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -83,7 +83,7 @@ namespace DD4hep {
 
       /// Return handle to the world volume containing everything
       virtual Volume worldVolume() const = 0;
-      /// Return handle to the world volume containing the volume with the tracking devices
+      /// Return handle to the volume containing the tracking devices
       virtual Volume trackingVolume() const = 0;
 
       /// Return handle to the VolumeManager
@@ -220,7 +220,7 @@ namespace DD4hep {
 
 /*
      *   The following are convenience implementations to access constants by type.
-     *   I do not think this violates the interface approach, but it is so much 
+     *   I do not think this violates the interface approach, but it is so much
      *   more intuitiv to say constant<int>(name) than constantAsInt(name).
      */
 #ifndef __CINT__

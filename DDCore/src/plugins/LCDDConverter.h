@@ -38,7 +38,7 @@ namespace DD4hep {
   namespace Geometry {
 
     /** @class LCDDConverter LCDDConverter.h XML/LCDDConverter.h
-     * 
+     *
      * Geometry converter from DD4hep to Geant 4.
      *
      * @author  M.Frank

@@ -18,15 +18,15 @@
 namespace DD4hep {
 
   /*
-  *   XML namespace declaration
-  */
+   *   XML namespace declaration
+   */
   namespace XML {
 
     /** @class DetElement::Component XMLDetector.h XML/XMLDetector.h
-     * 
+     *
      *  Helper class to access any field in a xml tag.
      *  Specialized for attributes of a detector sub-element.
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -42,10 +42,10 @@ namespace DD4hep {
     };
 
     /** @class DetElement XMLDetector.h XML/XMLDetector.h
-     * 
+     *
      *  Helper class to access any field in a xml tag.
      *  Specialized for some of the attributes of a detector element.
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */

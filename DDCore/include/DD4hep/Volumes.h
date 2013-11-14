@@ -43,7 +43,7 @@ namespace DD4hep {
     struct SensitiveDetector;
 
     /** @class PlacedVolume Volume.h  DD4hep/lcdd/Volume.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -103,7 +103,7 @@ namespace DD4hep {
     };
 
     /** @class Volume Volume.h  DD4hep/lcdd/Volume.h
-     *  
+     *
      *  Handle describing a Volume
      *
      *  @author  M.Frank
@@ -214,7 +214,7 @@ namespace DD4hep {
     };
 
     /** @class Assembly Volume.h  DD4hep/lcdd/Volume.h
-     *  
+     *
      *  Handle describing a volume assembly
      *
      *  @author  M.Frank

@@ -43,6 +43,17 @@ namespace DD4hep {
   };
   template <typename M> DestroyObjects<M> destroyObjects(M& m) { return DestroyObjects<M>(m); }
 
+  /// map Functor to delete objects from heap
+  template <typename M> struct DestroyFirst {
+    M& object;
+    DestroyFirst(M& m) : object(m) {}
+    ~DestroyFirst() { object.clear(); }
+    void operator()(std::pair<typename M::key_type, typename M::mapped_type> p) const {
+      DestroyObject<typename M::key_type>()(p.first);
+    }
+  };
+  template <typename M> DestroyFirst<M> destroyFirst(M& m) { return DestroyFirst<M>(m); }
+
   /// Helper to delete objects from heap and reset the pointer. Saves many many lines of code
   template <typename T> inline void releasePtr(T*& p) {
     if (0 != p)

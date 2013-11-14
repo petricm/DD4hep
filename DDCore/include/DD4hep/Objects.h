@@ -62,7 +62,7 @@ namespace DD4hep {
     TGeoIdentity* identityTransform();
 
     /** @class Author Objects.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -88,7 +88,7 @@ namespace DD4hep {
     };
 
     /** @class Header Objects.h
-     *  
+     *
      *  Description of the geometry header. Containes useful auxiliary information.
      *
      *  @author  M.Frank
@@ -145,7 +145,7 @@ namespace DD4hep {
     };
 
     /** @class Constant Objects.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -198,7 +198,7 @@ namespace DD4hep {
     typedef ROOT::Math::Translation3D Translation3D;
 
     /** @class Atom Objects.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -216,7 +216,7 @@ namespace DD4hep {
     };
 
     /** @class Material Objects.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -238,7 +238,7 @@ namespace DD4hep {
     };
 
     /** @class VisAttr Objects.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -307,8 +307,8 @@ namespace DD4hep {
     };
 
     /**@class AligmentEntry
-     * 
-     * Class representing an alignment entry 
+     *
+     * Class representing an alignment entry
      *
      * @author  M.Frank
      * @version 1.0
@@ -328,8 +328,8 @@ namespace DD4hep {
     };
 
     /** @class Limit Objects.h
-     *  Small object describing a limit structure 
-     * 
+     *  Small object describing a limit structure
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -354,7 +354,7 @@ namespace DD4hep {
     };
 
     /** @class LimitSet Objects.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -378,7 +378,7 @@ namespace DD4hep {
     };
 
     /** @class Region Objects.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */

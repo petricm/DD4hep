@@ -31,7 +31,7 @@ namespace DD4hep {
     typedef Position Direction;
 
     /** @class CartesianField Fields.h
-     *  
+     *
      *  Generic structure describing any field type (electric or magnetic)
      *  with field components in Cartesian coordinates.
      *
@@ -101,7 +101,7 @@ namespace DD4hep {
     typedef CartesianField MagneticField;
 
     /** @class OverlayedField Fields.h
-     *  
+     *
      *  Generic structure describing any field type (electric or magnetic)
      *  with field components in Cartesian coordinates.
      *

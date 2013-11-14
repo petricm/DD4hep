@@ -1,4 +1,3 @@
-
 namespace DD4hep {
   namespace XML {
 

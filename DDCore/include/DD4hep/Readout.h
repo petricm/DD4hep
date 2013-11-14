@@ -29,10 +29,10 @@ namespace DD4hep {
     class DetElement;
 
     /** @class Readout  Readout.h DD4hep/Readout.h
-      *
-      * @author  M.Frank
-      * @version 1.0
-      */
+     *
+     * @author  M.Frank
+     * @version 1.0
+     */
     struct Readout : public Ref_t {
     public:
       /** @class Readout::Object  Readout.h DD4hep/Readout.h
@@ -79,10 +79,10 @@ namespace DD4hep {
     };
 
     /** @class Alignment  Readoutn.h DD4hep/lcdd/Readout.h
-      *
-      * @author  M.Frank
-      * @version 1.0
-      */
+     *
+     * @author  M.Frank
+     * @version 1.0
+     */
     struct Alignment : public Ref_t {
       struct Object : public TNamed {
         Volume volume;
@@ -102,10 +102,10 @@ namespace DD4hep {
     };
 
     /** @class Conditions  Readout.h DD4hep/lcdd/Readout.h
-      *
-      * @author  M.Frank
-      * @version 1.0
-      */
+     *
+     * @author  M.Frank
+     * @version 1.0
+     */
     struct Conditions : public Ref_t {
       struct Object : public TNamed {
         /// Standard constructor

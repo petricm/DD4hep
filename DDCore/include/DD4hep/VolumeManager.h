@@ -30,27 +30,27 @@ namespace DD4hep {
     class LCDD;
 
     /** @class VolumeManager  VolumeManager.h DD4hep/lcdd/VolumeManager.h
-     * 
-     *  The VolumeManager manages the repository of sensitive physical 
+     *
+     *  The VolumeManager manages the repository of sensitive physical
      *  volumes (placements). These volumes can then be accessed together with
      *  basic other elements, such as the top level Detector element of the
      *  subdetector or the coordinate trasformation to world coordinates.
-     *    The basic key to access this information is the 'VolumeID', a 64 bit 
+     *    The basic key to access this information is the 'VolumeID', a 64 bit
      *  number, which uniquely identifies a placement.
      *
      *  There are 2 working modes:
      *
-     *  1) Starting from the top level element, the next level is addressed 
+     *  1) Starting from the top level element, the next level is addressed
      *  separately and the volumes are stored in a 2-level 'tree'. Placements
      *  this way are partitioned e.g. 'by subdetector'. This tries to keep
      *  the number of mapped elements at a reasonable level.
      *
-     *  2) All placements are mapped to the top-level element. Good for small 
-     *  setups. Note, that the system field of all IDDescriptors of the 
+     *  2) All placements are mapped to the top-level element. Good for small
+     *  setups. Note, that the system field of all IDDescriptors of the
      *  subdetectors must have the same length to ensure the uniqueness of the
      *  placement keys.
-     *  
-     *  By default the volume manager in TREE mode (-> 1)) is attached to the 
+     *
+     *  By default the volume manager in TREE mode (-> 1)) is attached to the
      *  LCDD instance and also managed by this instance.
      *  If you wish to create instances yourself, you must ensure that the
      *  handle is destroyed once no other references are present.
@@ -67,7 +67,7 @@ namespace DD4hep {
         NONE = 0,
         TREE = 1 << 1,  // Build 1 level DetElement hierarchy while populating
         ONE  = 1 << 2,  // Populate all daughter volumes into one big lookup-container
-                        // This flag may be in parallel with 'TREE'
+        // This flag may be in parallel with 'TREE'
         LAST
       };
 
@@ -77,37 +77,37 @@ namespace DD4hep {
        * @author  M.Frank
        * @version 1.0
        */
-      struct VolIdentifier  {
+      struct VolIdentifier {
       public:
-	/// The volume identifier and it's mask
-	VolumeID identifier, mask;
+        /// The volume identifier and it's mask
+        VolumeID identifier, mask;
       private:
-	/// Equality operator is provate. Not to be used!
-	bool operator==(const VolIdentifier& c) const {
-	  return identifier == c.identifier && mask == c.mask; 
-	}
+        /// Equality operator is provate. Not to be used!
+        bool operator==(const VolIdentifier& c) const {
+          return identifier == c.identifier && mask == c.mask;
+        }
       public:
-	/// Default constructor
-        VolIdentifier() : identifier(0), mask(~0x0ull)   {
-	}
-	/// Initializing constructor
-        VolIdentifier(VolumeID id, VolumeID msk) : identifier(id), mask(msk) 	{
-	}
-	/// Copt constructor
-        VolIdentifier(const VolIdentifier& c) : identifier(c.identifier), mask(c.mask) 	{
-	}
-	/** Operator less for map storage. 
-	 *  Note, that this takes advantag, the only volumes with the same descriptor length are 
-	 *  stored in one map, because some bits are masked out. Otherwise all breaks!
-	 */
-	bool operator< (const VolIdentifier& c) const { 
-	  return identifier < (c.identifier&mask); 
-	}
-	/// Assignment operator
-	VolIdentifier& operator=(const VolIdentifier& c) {
-	  identifier=c.identifier; mask=c.mask; 
-	  return *this;
-	}
+        /// Default constructor
+        VolIdentifier() : identifier(0), mask(~0x0ull) {
+        }
+        /// Initializing constructor
+        VolIdentifier(VolumeID id, VolumeID msk) : identifier(id), mask(msk) {
+        }
+        /// Copt constructor
+        VolIdentifier(const VolIdentifier& c) : identifier(c.identifier), mask(c.mask) {
+        }
+        /** Operator less for map storage.
+         *  Note, that this takes advantag, the only volumes with the same descriptor length are
+         *  stored in one map, because some bits are masked out. Otherwise all breaks!
+         */
+        bool operator< (const VolIdentifier& c) const {
+          return identifier < (c.identifier&mask);
+        }
+        /// Assignment operator
+        VolIdentifier& operator=(const VolIdentifier& c) {
+          identifier=c.identifier; mask=c.mask;
+          return *this;
+        }
       };
 #endif
       typedef VolumeID VolIdentifier;
@@ -239,7 +239,7 @@ namespace DD4hep {
       /// Register physical volume with the manager and pre-computed volume id
       bool adoptPlacement(VolumeID volume_id, Context* context);
 
-      /** This set of functions is required when reading/analyzing 
+      /** This set of functions is required when reading/analyzing
        *  already created hits which have a VolumeID attached.
        */
       /// Lookup the context, which belongs to a registered physical volume.

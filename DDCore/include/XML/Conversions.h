@@ -25,12 +25,12 @@ namespace DD4hep {
   }
 
   /** @class Converter Conversions.h  DD4hep/compact/Conversions.h
-      *
-      *  Basic conversion objects for handling DD4hep XML files.
-      *
-      *  @author   M.Frank
-      *  @version  1.0
-      */
+   *
+   *  Basic conversion objects for handling DD4hep XML files.
+   *
+   *  @author   M.Frank
+   *  @version  1.0
+   */
   template <typename T> struct Converter {
     typedef T     to_type;
     typedef void* user_param;

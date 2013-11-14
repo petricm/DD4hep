@@ -102,7 +102,7 @@ namespace DD4hep {
     inline unsigned long long int magic_word() { return 0xFEEDAFFEDEADFACEULL; }
 
     /** @class Value Handle.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -114,7 +114,7 @@ namespace DD4hep {
     };
 
     /** @class Value Handle.h
-     *  
+     *
      *  Class to simply combine to object types to one
      *
      *  @author  M.Frank
@@ -148,7 +148,7 @@ namespace DD4hep {
     }
 
     /** @class Handle Handle.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */

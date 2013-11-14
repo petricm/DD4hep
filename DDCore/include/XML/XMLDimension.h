@@ -18,13 +18,13 @@
 namespace DD4hep {
 
   /*
-  *   XML namespace declaration
-  */
+   *   XML namespace declaration
+   */
   namespace XML {
 
     /** @class Dimension XMLDetector.h XML/XMLDetector.h
-     * 
-     *  Helper class to access any field in a xml tag in a 
+     *
+     *  Helper class to access any field in a xml tag in a
      *  very easy way.
      *  - You may assign any xml handle to a dimension object
      *  - Any attribute of this xml element may then be accessed
@@ -32,12 +32,12 @@ namespace DD4hep {
      *    reflected by the Dimmension object's member functions.
      *  - If an attribute is requested and not present, a exception
      *    is thrown.
-     *  - Functions, which accept a default value do NOT throw 
+     *  - Functions, which accept a default value do NOT throw
      *    an exception if the attribute is not present. These
      *    rather return the default value.
-     *  - If a often used function is not present - the 
+     *  - If a often used function is not present - the
      *    implementation thereof is simple.
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      */

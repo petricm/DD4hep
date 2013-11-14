@@ -31,7 +31,7 @@ namespace DD4hep {
   namespace Geometry {
 
     /** @class IDDescriptor IDDescriptor.h DDCore/IDDescriptor.h
-     *  
+     *
      *  @author  M.Frank
      *  @version 1.0
      *  @date    2012/07/31
@@ -46,7 +46,7 @@ namespace DD4hep {
       typedef std::vector<VolIDField> VolIDFields;
 
       /** @class IDDescriptor::Object IDDescriptor.h DDCore/IDDescriptor.h
-       *  
+       *
        *  @author  M.Frank
        *  @version 1.0
        *  @date    2012/07/31
