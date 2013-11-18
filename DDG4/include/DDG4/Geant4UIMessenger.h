@@ -12,6 +12,7 @@
 // Framework include files
 #include "DDG4/ComponentProperties.h"
 #include "DDG4/Geant4Callback.h"
+#include "G4UIdirectory.hh"
 #include "G4UImessenger.hh"
 
 /*
