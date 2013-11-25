@@ -66,17 +66,17 @@ namespace DD4hep {
       typedef T Implementation;
       void _setDimensions(double* param);
       /// Assign pointrs and register solid to geometry
-      void _assign(Implementation* n, const std::string& nam, const std::string& tit, bool cbbox);
+      void _assign(T* n, const std::string& nam, const std::string& tit, bool cbbox);
 
     public:
       /// Default constructor for uninitialized object
-      Solid_type() : Handle<Implementation>() {}
+      Solid_type() : Handle<T>() {}
 
       /// Direct assignment using the implementation pointer
-      Solid_type(Implementation* p) : Handle<Implementation>(p) {}
+      Solid_type(T* p) : Handle<T>(p) {}
 
       /// Constructor to be used when reading the already parsed object
-      Solid_type(const Handle<Implementation>& e) : Handle<Implementation>(e) {}
+      Solid_type(const Handle<T>& e) : Handle<T>(e) {}
 
       /// Constructor to be used when reading the already parsed object: need to check pointers
       template <typename Q> Solid_type(const Handle<Q>& e) : Handle<T>(e) {}
@@ -85,10 +85,10 @@ namespace DD4hep {
       const char* name() const;
 
       /// Auto conversion to underlying ROOT object
-      operator Implementation*() const { return this->m_element; }
+      operator T*() const { return this->m_element; }
 
       /// Overloaded operator -> to access underlying object
-      Implementation* operator->() const { return this->m_element; }
+      T* operator->() const { return this->m_element; }
     };
     typedef Solid_type<TGeoShape> Solid;
 
@@ -103,7 +103,7 @@ namespace DD4hep {
 
     public:
       /// Constructor to be used when reading the already parsed box object
-      template <typename Q> Box(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> Box(const Handle<Q>& e) : Solid_type<TGeoBBox>(e) {}
 
       /// Constructor to create an anonymous new box object (retrieves name from volume)
       Box(double x, double y, double z) { make("", x, y, z); }
@@ -140,7 +140,7 @@ namespace DD4hep {
      */
     struct Polycone : public Solid_type<TGeoPcon> {
       /// Constructor to be used when reading the already parsed polycone object
-      template <typename Q> Polycone(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> Polycone(const Handle<Q>& e) : Solid_type<TGeoPcon>(e) {}
 
       /// Constructor to create a new polycone object
       Polycone(double start, double delta);
@@ -163,7 +163,7 @@ namespace DD4hep {
      */
     struct ConeSegment : public Solid_type<TGeoConeSeg> {
       /// Constructor to be used when reading the already parsed ConeSegment object
-      template <typename Q> ConeSegment(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> ConeSegment(const Handle<Q>& e) : Solid_type<TGeoConeSeg>(e) {}
 
       /// Constructor to create a new ConeSegment object
       ConeSegment(double dz, double rmin1, double rmax1, double rmin2, double rmax2, double phi1 = 0.0,
@@ -192,7 +192,7 @@ namespace DD4hep {
 
     public:
       /// Constructor to assign an object
-      template <typename Q> Tube(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> Tube(const Handle<Q>& e) : Solid_type<MyConeSeg>(e) {}
 
       /// Constructor to create a new anonymous tube object with attribute initialization
       Tube(double rmin, double rmax, double z, double deltaPhi = 2 * M_PI) { make("", rmin, rmax, z, 0, deltaPhi); }
@@ -228,7 +228,7 @@ namespace DD4hep {
 
     public:
       /// Constructor to be used when reading the already parsed object
-      template <typename Q> Cone(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> Cone(const Handle<Q>& e) : Solid_type<TGeoCone>(e) {}
 
       /// Constructor to create a new anonymous object with attribute initialization
       Cone(double z, double rmin1, double rmax1, double rmin2, double rmax2) { make("", z, rmin1, rmax1, rmin2, rmax2); }
@@ -249,7 +249,7 @@ namespace DD4hep {
      */
     struct Trap : public Solid_type<TGeoTrap> {
       /// Constructor to be used when reading the already parsed object
-      template <typename Q> Trap(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> Trap(const Handle<Q>& e) : Solid_type<TGeoTrap>(e) {}
 
       /// Constructor to create a new anonymous object with attribute initialization
       Trap(double z, double theta, double phi, double y1, double x1, double x2, double alpha1, double y2, double x3,
@@ -270,7 +270,7 @@ namespace DD4hep {
      */
     struct Trapezoid : public Solid_type<TGeoTrd2> {
       /// Constructor to be used when reading the already parsed object
-      template <typename Q> Trapezoid(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> Trapezoid(const Handle<Q>& e) : Solid_type<TGeoTrd2>(e) {}
       /// Constructor to create a new anonymous object with attribute initialization
       Trapezoid(double x1, double x2, double y1, double y2, double z);
       /// Set the Trapezoid dimensions
@@ -284,7 +284,7 @@ namespace DD4hep {
      */
     struct Torus : public Solid_type<TGeoTorus> {
       /// Constructor to be used when reading the already parsed object
-      template <typename Q> Torus(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> Torus(const Handle<Q>& e) : Solid_type<TGeoTorus>(e) {}
       /// Constructor to create a new anonymous object with attribute initialization
       Torus(double r, double rmin, double rmax, double phi = M_PI, double delta_phi = 2. * M_PI);
       /// Set the Torus dimensions
@@ -298,7 +298,7 @@ namespace DD4hep {
      */
     struct Sphere : public Solid_type<TGeoSphere> {
       /// Constructor to be used when reading the already parsed object
-      template <typename Q> Sphere(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> Sphere(const Handle<Q>& e) : Solid_type<TGeoSphere>(e) {}
       /// Constructor to create a new anonymous object with attribute initialization
       Sphere(double rmin, double rmax, double theta = 0., double delta_theta = M_PI, double phi = 0.0,
              double delta_phi = 2. * M_PI);
@@ -313,7 +313,7 @@ namespace DD4hep {
      */
     struct Paraboloid : public Solid_type<TGeoParaboloid> {
       /// Constructor to be used when reading the already parsed object
-      template <typename Q> Paraboloid(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> Paraboloid(const Handle<Q>& e) : Solid_type<TGeoParaboloid>(e) {}
       /// Constructor to create a new anonymous object with attribute initialization
       Paraboloid(double r_low, double r_high, double delta_z);
       /// Set the Paraboloid dimensions
@@ -333,7 +333,7 @@ namespace DD4hep {
 
     public:
       /// Constructor to be used when reading the already parsed object
-      template <typename Q> PolyhedraRegular(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> PolyhedraRegular(const Handle<Q>& e) : Solid_type<TGeoPgon>(e) {}
 
       /// Constructor to create a new object. Phi(start)=0, deltaPhi=2PI, Z-planes at -zlen/2 and +zlen/2
       PolyhedraRegular(int nsides, double rmin, double rmax, double zlen);
@@ -351,11 +351,11 @@ namespace DD4hep {
     struct BooleanSolid : public Solid_type<TGeoCompositeShape> {
     protected:
       /// Constructor to be used when reading the already parsed object
-      BooleanSolid() : Solid_type<Implementation>() {}
+      BooleanSolid() : Solid_type<TGeoCompositeShape>() {}
 
     public:
       /// Constructor to be used when reading the already parsed object
-      template <typename Q> BooleanSolid(const Handle<Q>& e) : Solid_type<Implementation>(e) {}
+      template <typename Q> BooleanSolid(const Handle<Q>& e) : Solid_type<TGeoCompositeShape>(e) {}
     };
 
     /**@class SubtractionSolid Shapes.h

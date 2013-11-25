@@ -199,6 +199,8 @@ namespace DD4hep {
       virtual const HandleMap& readouts() const { return m_readouts; }
       /// Accessor to the map of sub-detectors
       virtual const HandleMap& detectors() const { return m_detectors; }
+      /// Retrieve a sensitive detector by it's name from the detector description
+      virtual const HandleMap& sensitiveDetectors() const { return m_sensitive; }
       /// Accessor to the map of aligment entries
       virtual const HandleMap& alignments() const { return m_alignments; }
       /// Accessor to the map of field entries, which together form the global field

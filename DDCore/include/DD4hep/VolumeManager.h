@@ -167,8 +167,12 @@ namespace DD4hep {
         typedef IDDescriptor::Field Field;
 
       public:
-        /// Reference to the LCDD instance
+/// Reference to the LCDD instance
+#ifdef __CINT__
+        LCDD* lcdd;
+#else
         LCDD& lcdd;
+#endif
         /// The container of subdetector elements
         Detectors subdetectors;
         /// The volume managers for the individual subdetector elements
