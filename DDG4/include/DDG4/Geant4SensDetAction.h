@@ -75,6 +75,7 @@ namespace DD4hep {
      * @version 1.0
      */
     struct Geant4Filter : public Geant4Action {
+    public:
       /// Standard constructor
       Geant4Filter(Geant4Context* context, const std::string& name);
       /// Standard destructor
@@ -147,6 +148,9 @@ namespace DD4hep {
 
       /// Add an actor responding to all callbacks. Sequence takes ownership.
       void adopt(Geant4Filter* filter);
+
+      /// Add an actor responding to all callbacks. Sequence takes ownership.
+      void adoptFilter(Geant4Action* filter);
 
       /// Callback before hit processing starts. Invoke all filters.
       /** Return fals if any filter returns false
@@ -271,6 +275,9 @@ namespace DD4hep {
       /// Add an actor responding to all callbacks. Sequence takes ownership.
       void adopt(Geant4Filter* filter);
 
+      /// Add an actor responding to all callbacks. Sequence takes ownership.
+      void adoptFilter(Geant4Action* filter);
+
       /// Callback before hit processing starts. Invoke all filters.
       /** Return fals if any filter returns false
        */
@@ -328,6 +335,8 @@ namespace DD4hep {
       Members& sequences() { return m_sequences; }
       /// Access to the members CONST
       const Members& sequences() const { return m_sequences; }
+      /// Clear the sequence list
+      void clear();
     };
 
     /// Initialize the usage of a single hit collection. Returns the collection ID

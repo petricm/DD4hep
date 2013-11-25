@@ -50,7 +50,8 @@ namespace DD4hep {
      */
     namespace Setup {
       // Basics
-      typedef Geant4Kernel Kernel;
+      typedef Geant4Kernel               Kernel;
+      typedef Geant4Handle<Geant4Kernel> KernelH;
       // Actions
       typedef Geant4Handle<Geant4Action>          Action;
       typedef Geant4Handle<Geant4Filter>          Filter;

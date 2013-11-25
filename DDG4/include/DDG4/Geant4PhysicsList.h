@@ -103,7 +103,10 @@ namespace DD4hep {
       Geant4PhysicsList(Geant4Context* context, const std::string& nam);
       /// Default destructor
       virtual ~Geant4PhysicsList();
-
+      /// Dump content to stdout
+      void dump();
+      /// Install command control messenger if wanted
+      virtual void installCommandMessenger();
       /// Access all physics processes
       PhysicsProcesses& processes() { return m_processes; }
       /// Access all physics processes
@@ -120,6 +123,14 @@ namespace DD4hep {
       PhysicsConstructors& physics() { return m_physics; }
       /// Access all physics constructors
       const PhysicsConstructors& physics() const { return m_physics; }
+
+      /// Add physics particle constructor by name
+      void addParticleConstructor(const std::string& part_name);
+      /// Add particle process by name with arguments
+      void addParticleProcess(const std::string& part_name, const std::string& proc_name, int ordAtRestDoIt,
+                              int ordAlongSteptDoIt, int ordPostStepDoIt);
+      /// Add PhysicsConstructor by name
+      void addPhysicsConstructor(const std::string& physics_name);
 
       /// Callback to construct the physics constructors
       virtual void constructProcess(Geant4UserPhysics* interface);
@@ -166,6 +177,10 @@ namespace DD4hep {
       Geant4PhysicsListActionSequence(Geant4Context* context, const std::string& nam);
       /// Default destructor
       virtual ~Geant4PhysicsListActionSequence();
+      /// Dump content to stdout
+      void dump();
+      /// Install command control messenger if wanted
+      virtual void installCommandMessenger();
       /// Update transportation flag
       void setTransportation(bool value) { m_transportation = value; }
       /// Access the transportation flag
