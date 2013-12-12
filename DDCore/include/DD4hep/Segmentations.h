@@ -111,7 +111,9 @@ namespace DD4hep {
         int ntheta;
         int nz;
         /// Default constructor
-        Data(BitField64* decoder = 0) : Object(), BaseSegmentation(decoder), nphi(0), ntheta(0), nz(0) {}
+        Data(BitField64* decoder = 0) : Object(), BaseSegmentation(decoder), nphi(0), ntheta(0), nz(0) {
+          segmentation = this;
+        }
         /// Default destructor
         virtual ~Data();
         /// determine the position based on the cell ID
@@ -152,6 +154,7 @@ namespace DD4hep {
         /// Default constructor
         Data(BitField64* decoder = 0) : Object(), BaseSegmentation(decoder) {
           grid_size_phi = grid_size_theta = grid_size_z = 0;
+          segmentation                                  = this;
         }
         /// Default destructor
         virtual ~Data();
@@ -187,7 +190,10 @@ namespace DD4hep {
         int ntheta;
         int nz;
         /// Default constructor
-        Data(BitField64* decoder = 0) : Object(), BaseSegmentation(decoder) { nphi = ntheta = nz = 0; }
+        Data(BitField64* decoder = 0) : Object(), BaseSegmentation(decoder) {
+          nphi = ntheta = nz = 0;
+          segmentation       = this;
+        }
         /// Default destructor
         virtual ~Data();
         /// determine the position based on the cell ID
@@ -219,7 +225,7 @@ namespace DD4hep {
     struct GridXY : public Segmentation {
       struct Data : public Object, public DDSegmentation::CartesianGridXY {
         /// Default constructor
-        Data(BitField64* decoder = 0) : Object(), DDSegmentation::CartesianGridXY(decoder) {}
+        Data(BitField64* decoder = 0) : Object(), DDSegmentation::CartesianGridXY(decoder) { segmentation = this; }
         /// Default destructor
         virtual ~Data();
       };
@@ -245,7 +251,7 @@ namespace DD4hep {
     struct GridXYZ : public Segmentation {
       struct Data : public Object, public DDSegmentation::CartesianGridXYZ {
         /// Default constructor
-        Data(BitField64* decoder = 0) : Object(), DDSegmentation::CartesianGridXYZ(decoder) {}
+        Data(BitField64* decoder = 0) : Object(), DDSegmentation::CartesianGridXYZ(decoder) { segmentation = this; }
         /// Default destructor
         virtual ~Data();
       };

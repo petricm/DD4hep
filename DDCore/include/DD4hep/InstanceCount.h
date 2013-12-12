@@ -43,18 +43,21 @@ namespace DD4hep {
       counter_t m_count;
       /// Increment counter value
       counter_t m_tot;
+      /// Maximum number of simultaneous instances
+      counter_t m_max;
 
     public:
       /// Default constructor
-      Counter() : m_count(0), m_tot(0) {}
+      Counter() : m_count(0), m_tot(0), m_max(0) {}
       /// Copy constructor
-      Counter(const Counter& c) : m_count(c.m_count), m_tot(c.m_tot) {}
+      Counter(const Counter& c) : m_count(c.m_count), m_tot(c.m_tot), m_max(c.m_max) {}
       /// Destructor
       ~Counter() {}
       /// Increment counter
       void increment() {
         ++m_count;
         ++m_tot;
+        m_max = std::max(m_max, m_count);
       }
       /// Decrement counter
       void decrement() { --m_count; }
@@ -62,6 +65,8 @@ namespace DD4hep {
       counter_t value() const { return m_count; }
       /// Access counter value
       counter_t total() const { return m_tot; }
+      /// Access maximum counter value
+      counter_t maximum() const { return m_max; }
     };
 
   public:

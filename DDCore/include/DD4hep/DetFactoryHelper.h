@@ -11,6 +11,7 @@
 
 #include "DD4hep/Factories.h"
 #include "DD4hep/LCDD.h"
+#include "DD4hep/TGeoUnits.h"
 #include "XML/XMLDetector.h"
 
 // Shortcuts to elements of the XML namespace
