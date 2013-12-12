@@ -70,6 +70,12 @@ namespace DD4hep {
      */
       void setValue(long64 value) { _value = (_joined & value); }
 
+      /** Operator for setting a new value and accessing the BitField directly */
+      BitField64& operator()(long64 val) {
+        setValue(val);
+        return *this;
+      }
+
       /** Reset - same as setValue(0) - useful if the same encoder is used for many objects.
      */
       void reset() { _value = 0; }
