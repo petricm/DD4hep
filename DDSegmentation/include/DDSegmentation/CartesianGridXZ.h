@@ -16,28 +16,26 @@ namespace DD4hep {
     class CartesianGridXZ : public CartesianGrid {
     public:
       /// default constructor using an arbitrary type
-      template <typename TYPE>
-      CartesianGridXZ(TYPE cellEncoding, double gridSizeX = 1., double gridSizeZ = 1., double offsetX = 0.,
-                      double offsetZ = 0., const std::string& xField = "x", const std::string& zField = "z");
+      CartesianGridXZ(const std::string& cellEncoding);
       /// destructor
       virtual ~CartesianGridXZ();
 
       /// determine the local based on the cell ID
-      virtual std::vector<double> getPosition(const long64& cellID) const;
+      virtual Position position(const CellID& cellID) const;
       /// determine the cell ID based on the position
-      virtual long64 getCellID(double x, double y, double z) const;
+      virtual CellID cellID(const Position& localPosition, const Position& globalPosition, const VolumeID& volumeID) const;
       /// access the grid size in X
-      double getGridSizeX() const { return _gridSizeX; }
+      double gridSizeX() const { return _gridSizeX; }
       /// access the grid size in Z
-      double getGridSizeZ() const { return _gridSizeZ; }
+      double gridSizeZ() const { return _gridSizeZ; }
       /// access the coordinate offset in X
-      double getOffsetX() const { return _offsetX; }
+      double offsetX() const { return _offsetX; }
       /// access the coordinate offset in Z
-      double getOffsetZ() const { return _offsetZ; }
+      double offsetZ() const { return _offsetZ; }
       /// access the field name used for X
-      std::string getFieldNameX() const { return _xId; }
+      const std::string& fieldNameX() const { return _xId; }
       /// access the field name used for Z
-      std::string getFieldNameZ() const { return _zId; }
+      const std::string& fieldNameZ() const { return _zId; }
       /// set the grid size in X
       void setGridSizeX(double cellSize) { _gridSizeX = cellSize; }
       /// set the grid size in Z
@@ -50,8 +48,6 @@ namespace DD4hep {
       void setFieldNameX(const std::string& name) { _xId = name; }
       /// set the field name used for Y
       void setFieldNameZ(const std::string& name) { _zId = name; }
-      /// access the set of parameters for this segmentation
-      Parameters parameters() const;
 
     protected:
       /// the grid size in X

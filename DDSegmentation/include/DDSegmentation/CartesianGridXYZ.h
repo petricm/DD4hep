@@ -16,31 +16,26 @@ namespace DD4hep {
     class CartesianGridXYZ : public CartesianGridXY {
     public:
       /// default constructor using an arbitrary type
-      template <typename TYPE>
-      CartesianGridXYZ(TYPE cellEncoding, double gridSizeX = 1., double gridSizeY = 1., double gridSizeZ = 1.,
-                       double offsetX = 0., double offsetY = 0., double offsetZ = 0., const std::string& xField = "x",
-                       const std::string& yField = "y", const std::string& zField = "z");
+      CartesianGridXYZ(const std::string& cellEncoding);
       /// destructor
       virtual ~CartesianGridXYZ();
 
       /// determine the position based on the cell ID
-      virtual std::vector<double> getPosition(const long64& cellID) const;
+      virtual Position position(const CellID& cellID) const;
       /// determine the cell ID based on the position
-      virtual long64 getCellID(double x, double y, double z) const;
+      virtual CellID cellID(const Position& localPosition, const Position& globalPosition, const VolumeID& volumeID) const;
       /// access the grid size in Z
-      double getGridSizeZ() const { return _gridSizeZ; }
+      double gridSizeZ() const { return _gridSizeZ; }
       /// access the coordinate offset in Z
-      double getOffsetZ() const { return _offsetZ; }
+      double offsetZ() const { return _offsetZ; }
       /// access the field name used for Z
-      std::string getFieldNameZ() const { return _zId; }
+      const std::string& fieldNameZ() const { return _zId; }
       /// set the grid size in Z
       void setGridSizeZ(double cellSize) { _gridSizeZ = cellSize; }
       /// set the coordinate offset in Z
       void setOffsetZ(double offset) { _offsetZ = offset; }
       /// set the field name used for Z
       void setFieldNameZ(const std::string& name) { _zId = name; }
-      /// access the set of parameters for this segmentation
-      Parameters parameters() const;
 
     protected:
       /// the grid size in Z
