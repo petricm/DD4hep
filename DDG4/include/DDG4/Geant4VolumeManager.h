@@ -70,6 +70,14 @@ namespace DD4hep {
       Geant4VolumeManager(const Geant4VolumeManager& e) : Base(e), m_isValid(false) {}
       /// Constructor to be used when reading the already parsed object
       template <typename Q> Geant4VolumeManager(const Geometry::Handle<Q>& e) : Base(e), m_isValid(false) {}
+      /// Assignment operator
+      Geant4VolumeManager& operator=(const Geant4VolumeManager& c) {
+        if (this != &c) {
+          m_element = c.m_element;
+          m_isValid = c.m_isValid;
+        }
+        return *this;
+      }
 
       /// Helper: Generate placement path from touchable object
       PlacementPath placementPath(const G4VTouchable* touchable, bool exception = true) const;

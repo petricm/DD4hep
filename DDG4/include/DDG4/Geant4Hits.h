@@ -92,6 +92,16 @@ namespace DD4hep {
             : trackID(track_id), pdgID(pdg), deposit(dep), time(time_stamp) {}
         MonteCarloContrib(const MonteCarloContrib& c)
             : trackID(c.trackID), pdgID(c.pdgID), deposit(c.deposit), time(c.time) {}
+        /// Assignment operator
+        MonteCarloContrib& operator=(const MonteCarloContrib& c) {
+          if (this != &c) {
+            trackID = c.trackID;
+            pdgID   = c.pdgID;
+            deposit = c.deposit;
+            time    = c.time;
+          }
+          return *this;
+        }
         void clear() {
           time = deposit = 0.0;
           pdgID = trackID = -1;
@@ -102,7 +112,7 @@ namespace DD4hep {
 
     public:
       /// Standard constructor
-      Geant4Hit() {}
+      Geant4Hit() : cellID(0) {}
       /// Default destructor
       virtual ~Geant4Hit() {}
       /// Check if the Geant4 track is a Geantino

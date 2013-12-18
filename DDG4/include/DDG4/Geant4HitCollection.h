@@ -98,18 +98,18 @@ namespace DD4hep {
 
     public:
       /// Default constructor
-      Geant4HitWrapper() {
+      Geant4HitWrapper() : G4VHit() {
         m_data.second = manipulator<InvalidHit>();
         m_data.first  = 0;
       }
       /// Copy constructor
-      Geant4HitWrapper(const Geant4HitWrapper& v) {
+      Geant4HitWrapper(const Geant4HitWrapper& v) : G4VHit() {
         m_data         = v.m_data;
         v.m_data.first = 0;
         //v.release();
       }
       /// Copy constructor
-      Geant4HitWrapper(const Wrapper& v) { m_data = v; }
+      Geant4HitWrapper(const Wrapper& v) : G4VHit() { m_data = v; }
       /// Default destructor
       virtual ~Geant4HitWrapper();
       /// Geant4 required object allocator
@@ -130,9 +130,11 @@ namespace DD4hep {
       template <typename TYPE> static HitManipulator* manipulator() { return HitManipulator::instance<TYPE>(); }
       /// Assignment transfers the pointer ownership
       Geant4HitWrapper& operator=(const Geant4HitWrapper& v) {
-        m_data         = v.m_data;
-        v.m_data.first = 0;
-        //v.release();
+        if (this != &v) {
+          m_data         = v.m_data;
+          v.m_data.first = 0;
+          //v.release();
+        }
         return *this;
       }
       /// Automatic conversion to the desired type

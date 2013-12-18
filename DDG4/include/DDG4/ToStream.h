@@ -17,6 +17,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "Math/Point3D.h"
+#include "Math/Vector3D.h"
+#include "Math/Vector4D.h"
 
 // ============================================================================
 /** @file DD4hepKernel/ToStream.h
@@ -264,6 +267,14 @@ namespace DD4hep {
       s.flags(orig_flags);
       return s.str();
     }
+    // ============================================================================
+    /// print XYZ point
+    std::ostream& toStream(const ROOT::Math::XYZPoint& obj, std::ostream& s);
+    // print XYZ-vector
+    std::ostream& toStream(const ROOT::Math::XYZVector& obj, std::ostream& s);
+    /// print Lorentz vector
+    std::ostream& toStream(const ROOT::Math::PxPyPzEVector& obj, std::ostream& s);
+
     // ========================================================================
   }  //                                            end of namespace DD4hep::Utils
   // ==========================================================================

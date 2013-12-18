@@ -29,6 +29,10 @@
 
 #include <boost/spirit/repository/include/qi_confix.hpp>
 
+#include "Math/Point3D.h"
+#include "Math/Vector3D.h"
+#include "Math/Vector4D.h"
+
 //==============================================================================
 namespace DD4hep {
   namespace Parsers {
@@ -40,6 +44,9 @@ namespace DD4hep {
     namespace qi  = sp::qi;
     namespace enc = sp::ascii;
     namespace rep = sp::repository;
+
+    template <typename T> T evaluate_string(const std::string& value);
+
     //==============================================================================
     // Grammars
     //==============================================================================
@@ -284,6 +291,127 @@ namespace DD4hep {
       // ----------------------------------------------------------------------------
     };  // END KeyValueGrammar
     // We don't register KeyalueGrammar because it's a special parser
+
+    // ============================================================================
+    template <typename Iterator, typename PointT, typename Skipper>
+    struct Pnt3DGrammar : qi::grammar<Iterator, PointT(), Skipper> {
+      typedef PointT      ResultT;
+      typedef std::string Scalar;
+      // ----------------------------------------------------------------------------
+      struct Operations {
+        template <typename A, typename B = boost::fusion::unused_type, typename C = boost::fusion::unused_type,
+                  typename D = boost::fusion::unused_type>
+        struct result {
+          typedef void type;
+        };
+        void operator()(ResultT& res, const Scalar& value, const char xyz) const {
+          typename PointT::Scalar val = evaluate_string<typename PointT::Scalar>(value);
+          switch (xyz) {
+            case 'x':
+              res.SetX(val);
+              break;
+            case 'y':
+              res.SetY(val);
+              break;
+            case 'z':
+              res.SetZ(val);
+              break;
+            default:
+              break;
+          }
+        }
+      };  //  Operations
+      // ----------------------------------------------------------------------------
+      Pnt3DGrammar() : Pnt3DGrammar::base_type(point) {
+        point = list | ('(' >> list >> ')') | ('[' >> list >> ']');
+        list  = -(enc::no_case[qi::lit("x") | qi::lit("px")] >> ':') >> scalar[op(qi::_val, qi::_1, 'x')] >> ',' >>
+               -(enc::no_case[qi::lit("y") | qi::lit("py")] >> ':') >> scalar[op(qi::_val, qi::_1, 'y')] >> ',' >>
+               -(enc::no_case[qi::lit("z") | qi::lit("pz")] >> ':') >> scalar[op(qi::_val, qi::_1, 'z')];
+      }
+      // ----------------------------------------------------------------------------
+      qi::rule<Iterator, ResultT(), Skipper>                point, list;
+      typename Grammar_<Iterator, Scalar, Skipper>::Grammar scalar;
+      ph::function<Operations> op;
+      // ----------------------------------------------------------------------------
+    };  //   Pnt3DGrammar
+    // ----------------------------------------------------------------------------
+    // Register Pnt3DGrammar for ROOT::Math::PositionVector3D:
+    // ----------------------------------------------------------------------------
+    template <typename Iterator, typename T1, typename T2, typename Skipper>
+    struct Grammar_<Iterator, ROOT::Math::PositionVector3D<T1, T2>, Skipper> {
+      typedef Pnt3DGrammar<Iterator, ROOT::Math::PositionVector3D<T1, T2>, Skipper> Grammar;
+    };
+    // ----------------------------------------------------------------------------
+    // Register Pnt3DGrammar for ROOT::Math::DisplacementVector3D:
+    // ----------------------------------------------------------------------------
+    template <typename Iterator, typename T1, typename T2, typename Skipper>
+    struct Grammar_<Iterator, ROOT::Math::DisplacementVector3D<T1, T2>, Skipper> {
+      typedef Pnt3DGrammar<Iterator, ROOT::Math::DisplacementVector3D<T1, T2>, Skipper> Grammar;
+    };
+    // ============================================================================
+    template <typename Iterator, typename PointT, typename Skipper>
+    struct Pnt4DGrammar : qi::grammar<Iterator, PointT(), Skipper> {
+      typedef PointT      ResultT;
+      typedef std::string ScalarT;
+      //-----------------------------------------------------------------------------
+      struct Operations {
+        template <typename A, typename B = boost::fusion::unused_type, typename C = boost::fusion::unused_type,
+                  typename D = boost::fusion::unused_type>
+        struct result {
+          typedef void type;
+        };
+
+        void operator()(ResultT& res, const ScalarT& value, const char xyz) const {
+          typename PointT::Scalar val = evaluate_string<typename PointT::Scalar>(value);
+          switch (xyz) {
+            case 'x':
+              res.SetPx(val);
+              break;
+            case 'y':
+              res.SetPy(val);
+              break;
+            case 'z':
+              res.SetPz(val);
+              break;
+            case 'e':
+              res.SetE(val);
+              break;
+            default:
+              break;
+          }
+        }
+        void operator()(ResultT& res, const ResultT& xyz) const {
+          res.SetPx(xyz.Px());
+          res.SetPy(xyz.Py());
+          res.SetPz(xyz.Pz());
+        }
+      };  //   Operations
+      // ----------------------------------------------------------------------------
+      Pnt4DGrammar() : Pnt4DGrammar::base_type(point4d) {
+        point4d = list4d | ('(' >> list4d >> ')') | ('[' >> list4d >> ']');
+        list4d  = (point3d[op(qi::_val, qi::_1)] >> enc::char_(";,") >> e[op(qi::_val, qi::_1, 'e')]) |
+                 (e[op(qi::_val, qi::_1, 'e')] >> enc::char_(";,") >> point3d[op(qi::_val, qi::_1)]);
+        e = -(enc::no_case[enc::char_("te")] >> ':') >> scalar[qi::_val = qi::_1];
+
+        point3d = list3d | ('(' >> list3d >> ')') | ('[' >> list3d >> ']');
+        list3d  = -(enc::no_case[qi::lit("x") | qi::lit("px")] >> ':') >> scalar[op(qi::_val, qi::_1, 'x')] >> ',' >>
+                 -(enc::no_case[qi::lit("y") | qi::lit("py")] >> ':') >> scalar[op(qi::_val, qi::_1, 'y')] >> ',' >>
+                 -(enc::no_case[qi::lit("z") | qi::lit("pz")] >> ':') >> scalar[op(qi::_val, qi::_1, 'z')];
+      }
+      // ----------------------------------------------------------------------------
+      qi::rule<Iterator, ResultT(), Skipper>                 point3d, point4d, list3d, list4d;
+      qi::rule<Iterator, ScalarT(), Skipper>                 e;
+      typename Grammar_<Iterator, ScalarT, Skipper>::Grammar scalar;
+      ph::function<Operations> op;
+      // ----------------------------------------------------------------------------
+    };  //   Pnt4DGrammar
+    // ----------------------------------------------------------------------------
+    // Register Pnt4DGrammar for ROOT::Math::LorentzVector:
+    // ----------------------------------------------------------------------------
+    template <typename Iterator, typename T1, typename Skipper>
+    struct Grammar_<Iterator, ROOT::Math::LorentzVector<T1>, Skipper> {
+      typedef Pnt4DGrammar<Iterator, ROOT::Math::LorentzVector<T1>, Skipper> Grammar;
+    };
     // ============================================================================
   }
 }  //   DD4hep::Parsers
