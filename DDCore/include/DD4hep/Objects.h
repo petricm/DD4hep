@@ -77,6 +77,11 @@ namespace DD4hep {
       template <typename Q> Author(const Handle<Q>& e) : Ref_t(e) {}
       /// Constructor to be used when creating a new DOM tree
       Author(LCDD& doc);
+      /// Assignment operator
+      Author& operator=(const Author& e) {
+        m_element = e.m_element;
+        return *this;
+      }
       /// Access the auhor's name
       std::string authorName() const;
       /// Set the author's name
