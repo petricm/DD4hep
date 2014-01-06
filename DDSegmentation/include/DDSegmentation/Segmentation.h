@@ -13,6 +13,7 @@
 #include "DDSegmentation/SegmentationParameter.h"
 
 #include <map>
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -20,8 +21,13 @@
 namespace DD4hep {
   namespace DDSegmentation {
 
-    typedef SegmentationParameter* Parameter;
-    typedef std::vector<Parameter> Parameters;
+    typedef SegmentationParameter*                   Parameter;
+    typedef std::vector<Parameter>                   Parameters;
+    typedef TypedSegmentationParameter<int>*         IntParameter;
+    typedef TypedSegmentationParameter<float>*       FloatParameter;
+    typedef TypedSegmentationParameter<double>*      DoubleParameter;
+    typedef TypedSegmentationParameter<std::string>* StringParameter;
+    typedef SegmentationParameter::UnitType          UnitType;
 
     /// Useful typedefs to differentiate cell IDs and volume IDs
     typedef long long int CellID;
@@ -57,6 +63,8 @@ namespace DD4hep {
       /// Determine the cell ID based on the position
       virtual CellID cellID(const Position& localPosition, const Position& globalPosition,
                             const VolumeID& volumeID) const = 0;
+      /// Calculates the neighbours of the given cell ID and adds them to the list of neighbours
+      virtual void neighbours(const CellID& cellID, std::set<CellID>& neighbours) const;
       /// Access the encoding string
       virtual std::string fieldDescription() const { return _decoder->fieldDescription(); }
       /// Access the segmentation name
@@ -81,10 +89,21 @@ namespace DD4hep {
     protected:
       /// Default constructor used by derived classes passing the encoding string
       Segmentation(const std::string& cellEncoding = "");
+      /// Default constructor used by derived classes passing an existing decoder
+      Segmentation(BitField64* decoder);
 
       /// Add a parameter to this segmentation. Used by derived classes to define their parameters
-      virtual void registerParameter(const std::string& name, const std::string& description, double& parameter,
-                                     const double& defaultValue, bool isOptional = false);
+      template <typename TYPE>
+      void registerParameter(const std::string& name, const std::string& description, TYPE& parameter,
+                             const TYPE& defaultValue, UnitType unitType = SegmentationParameter::NoUnit,
+                             bool isOptional = false) {
+        _parameters[name] =
+            new TypedSegmentationParameter<TYPE>(name, description, parameter, defaultValue, unitType, isOptional);
+      }
+      /// Add a cell identifier to this segmentation. Used by derived classes to define their required identifiers
+      void registerIdentifier(const std::string& name, const std::string& description, std::string& identifier,
+                              const std::string& defaultValue);
+
       /// Helper method to convert a bin number to a 1D position
       static double binToPosition(CellID bin, double cellSize, double offset = 0.);
       /// Helper method to convert a 1D position to a cell ID
@@ -102,6 +121,8 @@ namespace DD4hep {
       std::string _description;
       /// The parameters for this segmentation
       std::map<std::string, Parameter> _parameters;
+      /// The indices used for the encoding
+      std::map<std::string, StringParameter> _indexIdentifiers;
 
     private:
       /// No copy constructor allowed
