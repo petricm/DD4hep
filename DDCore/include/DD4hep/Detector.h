@@ -7,8 +7,8 @@
 //
 //====================================================================
 
-#ifndef DD4hep_LCDD_DETECTOR_H
-#define DD4hep_LCDD_DETECTOR_H
+#ifndef DD4HEP_LCDD_DETECTOR_H
+#define DD4HEP_LCDD_DETECTOR_H
 
 // Framework include files
 #include "DD4hep/Handle.h"
@@ -182,7 +182,6 @@ namespace DD4hep {
         /// Full path to this detector element. May be invalid
         std::string  path;
         int          combineHits;
-        Volume       volume;
         Alignment    alignment;
         Conditions   conditions;
         PlacedVolume placement;
@@ -388,4 +387,4 @@ namespace DD4hep {
 
   } /* End namespace Geometry      */
 } /* End namespace DD4hep        */
-#endif /* DD4hep_LCDD_DETECTOR_H      */
+#endif /* DD4HEP_LCDD_DETECTOR_H      */
