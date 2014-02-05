@@ -79,7 +79,9 @@ namespace DD4hep {
       Author(LCDD& doc);
       /// Assignment operator
       Author& operator=(const Author& e) {
-        m_element = e.m_element;
+        if (this != &e) {
+          m_element = e.m_element;
+        }
         return *this;
       }
       /// Access the auhor's name
@@ -126,6 +128,13 @@ namespace DD4hep {
       template <typename Q> Header(const Handle<Q>& e) : Ref_t(e) {}
       /// Constructor to be used when creating a new DOM tree
       Header(const std::string& author, const std::string& url);
+      /// Assignment operator
+      Header& operator=(const Header& e) {
+        if (this != &e) {
+          m_element = e.m_element;
+        }
+        return *this;
+      }
       /// Accessor to object name
       const std::string name() const;
       /// Accessor: set object name

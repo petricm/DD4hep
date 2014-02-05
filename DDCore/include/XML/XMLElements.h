@@ -76,6 +76,11 @@ namespace DD4hep {
       XmlException(const std::string& m) : msg(m) {}
       XmlException(const XmlException& e) : msg(e.msg) {}
       virtual ~XmlException() {}
+      XmlException& operator=(const XmlException& c) {
+        if (&c != this)
+          msg = c.msg;
+        return *this;
+      }
     };
 #endif
 
@@ -177,6 +182,8 @@ namespace DD4hep {
       Strng_t(const char* c) { m_xml = XmlString::transcode(c); }
       /// Initializing constructor from STL string
       Strng_t(const std::string& c) { m_xml = XmlString::transcode(c.c_str()); }
+      /// Copy constructor
+      Strng_t(const Strng_t& c) { m_xml = XmlString::replicate(c.m_xml); }
       /// Default destructor - release unicode string
       ~Strng_t() {
         if (m_xml)
@@ -574,7 +581,6 @@ namespace DD4hep {
       operator Elt_t() const { return m_element; }
       /// Access to XmlElement pointer
       Elt_t ptr() const { return m_element; }
-
       /// Access the tag name of this DOM element
       std::string tag() const { return m_element.tag(); }
       /// Access the tag name of this DOM element
