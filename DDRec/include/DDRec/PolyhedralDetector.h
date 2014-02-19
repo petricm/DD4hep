@@ -12,8 +12,9 @@
 
 namespace DD4hep {
   namespace DDRec {
-    class PolyhedralDetector : virtual public DetElement {
+    class PolyhedralDetector : virtual public Geometry::DetElement {
     public:
+      typedef Geometry::DetElement DetElement;
       PolyhedralDetector(const DetElement& e) : DetElement(e) {}
       virtual ~PolyhedralDetector() {}
 

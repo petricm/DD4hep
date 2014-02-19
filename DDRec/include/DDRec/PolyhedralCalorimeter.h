@@ -8,8 +8,8 @@
 #ifndef POLYHEDRALCALORIMETER_H_
 #define POLYHEDRALCALORIMETER_H_
 
-#include "Calorimeter.h"
-#include "PolyhedralDetector.h"
+#include "DDRec/Calorimeter.h"
+#include "DDRec/PolyhedralDetector.h"
 
 namespace DD4hep {
   namespace DDRec {

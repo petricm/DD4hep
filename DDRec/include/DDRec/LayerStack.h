@@ -17,6 +17,7 @@ namespace DD4hep {
 
     class LayerStack {
     public:
+      typedef Geometry::DetElement DetElement;
       LayerStack(const DetElement& det);
       LayerStack(const LayerStack& layerStack, const DetElement& det);
       virtual ~LayerStack();

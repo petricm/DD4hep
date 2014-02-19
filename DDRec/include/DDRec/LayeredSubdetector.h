@@ -8,15 +8,14 @@
 #ifndef LAYEREDSUBDETECTOR_H_
 #define LAYEREDSUBDETECTOR_H_
 
-#include "LayerStack.h"
-
-#include "DD4hep/Detector.h"
+#include "DDRec/LayerStack.h"
 
 namespace DD4hep {
   namespace DDRec {
 
-    class LayeredSubdetector : virtual public DetElement {
+    class LayeredSubdetector : virtual public Geometry::DetElement {
     public:
+      typedef Geometry::DetElement DetElement;
       LayeredSubdetector(const DetElement& e);
       virtual ~LayeredSubdetector();
 
@@ -44,7 +43,7 @@ namespace DD4hep {
         return layerStack->getRadiationLengths(layerIndex, moduleIndex);
       }
 
-      inline double getMipEnergyLoss(int layerIndex, int moduleIndex = 1) const { return 0.; }
+      inline double getMipEnergyLoss(int /* layerIndex */, int /* moduleIndex */ = 1) const { return 0.; }
 
       inline double getTotalThickness(int moduleIndex = 1) const { return layerStack->getTotalThickness(moduleIndex); }
 

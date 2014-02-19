@@ -13,8 +13,9 @@
 namespace DD4hep {
 
   namespace DDRec {
-    class BarrelDetector : virtual public DetElement {
+    class BarrelDetector : virtual public Geometry::DetElement {
     public:
+      typedef Geometry::DetElement DetElement;
       BarrelDetector(const DetElement& e) : DetElement(e){};
       virtual ~BarrelDetector() {}
 

@@ -8,8 +8,8 @@
 #ifndef CYLINDRICALCALORIMETER_H_
 #define CYLINDRICALCALORIMETER_H_
 
-#include "Calorimeter.h"
-#include "CylindricalDetector.h"
+#include "DDRec/Calorimeter.h"
+#include "DDRec/CylindricalDetector.h"
 
 namespace DD4hep {
   namespace DDRec {
