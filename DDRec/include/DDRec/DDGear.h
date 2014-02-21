@@ -3,9 +3,14 @@
 
 #include "DD4hep/Detector.h"
 
-#include "gear/GEAR.h"
-#include "gear/GearMgr.h"
-#include "gearimpl/GearParametersImpl.h"
+// #include "gear/GEAR.h"
+// #include "gearimpl/GearParametersImpl.h"
+// #include "gear/GearMgr.h"
+
+namespace gear {
+  class GearParametersImpl;
+  class GearMgr;
+}
 
 namespace DD4hep {
 
@@ -17,7 +22,8 @@ namespace DD4hep {
      @version $Id:$
   */
 
-  class GearHandle : public gear::GearParametersImpl {
+  class GearHandle {  //: public gear::GearParametersImpl {
+
   protected:
     gear::GearParametersImpl* _gObj;
     std::string               _name;
