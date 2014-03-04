@@ -68,15 +68,15 @@ namespace {
     cout << "        -build_type <number/string> Specify the build type                         \n"
             "                     [OPTIONAL]     MUST come immediately after the -compact input.\n"
             "                                    Default for each file is: BUILD_DEFAULT [=1]   \n"
-            "                                    Allowed values: BUILD_SIMU [=1], BUILD_RECO [=2] or BUILD_DISPLAY [=3]\n",
-        "        -destroy     [OPTIONAL]     Force destruction of the LCDD instance         \n"
-        "                                    before exiting the application                 \n"
-        "        -volmgr      [OPTIONAL]     Load and populate phys.volume manager to       \n"
-        "                                    check the volume ids for duplicates etc.       \n"
-        "        -print      <number/string> Specify output level. Default: INFO(=3)        \n"
-        "                     [OPTIONAL]     Allowed values: VERBOSE(=1), DEBUG(=2),        \n"
-        "                                    INFO(=3), WARNING(=4), ERROR(=5), FATAL(=6)    \n"
-        "                                    The lover the level, the more printout...      \n";
+            "                                    Allowed values: BUILD_SIMU [=1], BUILD_RECO [=2] or BUILD_DISPLAY [=3]\n"
+            "        -destroy     [OPTIONAL]     Force destruction of the LCDD instance         \n"
+            "                                    before exiting the application                 \n"
+            "        -volmgr      [OPTIONAL]     Load and populate phys.volume manager to       \n"
+            "                                    check the volume ids for duplicates etc.       \n"
+            "        -print      <number/string> Specify output level. Default: INFO(=3)        \n"
+            "                     [OPTIONAL]     Allowed values: VERBOSE(=1), DEBUG(=2),        \n"
+            "                                    INFO(=3), WARNING(=4), ERROR(=5), FATAL(=6)    \n"
+            "                                    The lover the level, the more printout...      \n";
     return cout;
   }
 
