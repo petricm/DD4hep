@@ -25,16 +25,16 @@ namespace DDSurfaces {
     }
 
     /// Checks if the surface has measurement directions
-    bool hasMeasurement() const { return m_measurement != 0; }
+    virtual bool hasMeasurement() const { return m_measurement != 0; }
 
     /// Checks if the given point lies within the surface
-    bool isInsideBoundaries(const Vector3D& point) const = 0;
+    virtual bool isInsideBoundaries(const Vector3D& point) const = 0;
 
     /// Access to the normal direction at the given point
-    Vector3D getNormal(const Vector3D& point) const = 0;
+    virtual Vector3D getNormal(const Vector3D& point) const = 0;
 
     /// Access to the measurement directions at the given point
-    Measurement measurement(const Vector3D& point) const = 0;
+    virtual Measurement measurement(const Vector3D& point) const = 0;
 
     /// Access to the material in opposite direction of the normal
     const Material& innerMaterial() const { return m_innerMaterial; }

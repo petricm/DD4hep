@@ -16,7 +16,7 @@ namespace DDSurfaces {
   class Measurement {
   public:
     /// Default constructor
-    Measurement(const Vector3D& u, const Vector3D& v) : m_u(u), m_v(v) {}
+    Measurement(const Vector3D& u = Vector3D(), const Vector3D& v = Vector3D()) : m_u(u), m_v(v) {}
 
     /// Copy constructor
     Measurement(const Measurement& measurement) : m_u(measurement.u()), m_v(measurement.v()) {}
