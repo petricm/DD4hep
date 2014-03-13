@@ -1,28 +1,28 @@
 /*
- * Measurement.h
+ * MeasurementDirections.h
  *
  *  Created on: Mar 7, 2014
  *      Author: cgrefe
  */
 
-#ifndef DDSurfaces_MEASUREMENT_H_
-#define DDSurfaces_MEASUREMENT_H_
+#ifndef DDSurfaces_MEASUREMENTDIRECTIONS_H_
+#define DDSurfaces_MEASUREMENTDIRECTIONS_H_
 
 #include "DDSurfaces/Vector3D.h"
 
 namespace DDSurfaces {
 
   /** Container class for measurement directions */
-  class Measurement {
+  class MeasurementDirections {
   public:
     /// Default constructor
-    Measurement(const Vector3D& u = Vector3D(), const Vector3D& v = Vector3D()) : m_u(u), m_v(v) {}
+    MeasurementDirections(const Vector3D& u = Vector3D(), const Vector3D& v = Vector3D()) : m_u(u), m_v(v) {}
 
     /// Copy constructor
-    Measurement(const Measurement& measurement) : m_u(measurement.u()), m_v(measurement.v()) {}
+    MeasurementDirections(const MeasurementDirections& measurement) : m_u(measurement.u()), m_v(measurement.v()) {}
 
     /// Destructor
-    virtual ~Measurement() {}
+    virtual ~MeasurementDirections() {}
 
     /// Access to the U measurement direction
     const Vector3D& u() const { return m_u; }
@@ -37,4 +37,4 @@ namespace DDSurfaces {
 
 } /* namespace DDSurfaces */
 
-#endif /* DDSurfaces_MEASUREMENT_H_ */
+#endif /* DDSurfaces_MEASUREMENTDIRECTIONS_H_ */
