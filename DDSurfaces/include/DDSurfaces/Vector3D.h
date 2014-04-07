@@ -33,10 +33,15 @@ namespace DDSurfaces {
     /** Default corrdinate system for initialization is cartesian */
     Vector3D(double x, double y, double z) : _x(x), _y(y), _z(z) {}
 
-    template <class T>
-    /**Copy c'tor for three vectors from other packages - requires T::x(),T::y(), T::z().
-     */
-    Vector3D(const T& t) : _x(t.x()), _y(t.y()), _z(t.z()) {}
+    // ---- this causes all sorts of template lookup errors ...
+    // /** Copy c'tor for three vectors from other packages - requires T::x(),T::y(), T::z().
+    //  */
+    // template <class T>
+    // Vector3D( const T& t) :
+    //   _x( t.x() ) ,
+    //   _y( t.y() ) ,
+    //   _z( t.z() ){
+    // }
 
     /** Cartesian x coordinate */
     inline double x() const { return _x; }
