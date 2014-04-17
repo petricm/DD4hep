@@ -4,8 +4,8 @@
 #include "DDSurfaces/IMaterial.h"
 #include "DDSurfaces/Vector3D.h"
 
-#include <math.h>
 #include <bitset>
+#include <cmath>
 
 namespace DDSurfaces {
 

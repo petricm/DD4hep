@@ -1,6 +1,9 @@
 #ifndef DDSurfaces_IMaterial_H_
 #define DDSurfaces_IMaterial_H_
 
+#include <ostream>
+#include <string>
+
 namespace DDSurfaces {
 
   /** Interface for material description for tracking. 
