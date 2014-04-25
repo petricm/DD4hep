@@ -28,19 +28,6 @@
 #include "TGeoTorus.h"
 #include "TGeoTrd2.h"
 #include "TGeoTube.h"
-//class TGeoShape;
-//class TGeoBBox;
-//class TGeoPcon;
-//class TGeoCone;
-//class TGeoConeSeg;
-//class TGeoSphere;
-//class TGeoTrd2;
-//class TGeoTorus;
-//class TGeoTrap;
-//class TGeoTube;
-//class TGeoTubeSeg;
-//class TGeoParaboloid;
-//class TGeoCompositeShape;
 
 /*
  *   DD4hep namespace declaration
@@ -75,10 +62,10 @@ namespace DD4hep {
       /// Direct assignment using the implementation pointer
       Solid_type(T* p) : Handle<T>(p) {}
 
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
       Solid_type(const Handle<T>& e) : Handle<T>(e) {}
 
-      /// Constructor to be used when reading the already parsed object: need to check pointers
+      /// Constructor to be used when passing an already created object: need to check pointers
       template <typename Q> Solid_type(const Handle<Q>& e) : Handle<T>(e) {}
 
       /// Access to shape name
@@ -93,6 +80,10 @@ namespace DD4hep {
     typedef Solid_type<TGeoShape> Solid;
 
     /**@class Box Shapes.h
+     *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoBBox.html 
+     *
      *
      *   @author  M.Frank
      *   @version 1.0
@@ -135,6 +126,11 @@ namespace DD4hep {
      *        radii are changing;
      *      - z coordinate, inner and outer radius for each z plane
      *
+     *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoPcon.html 
+     *
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
@@ -158,6 +154,9 @@ namespace DD4hep {
      *   A ConeSegment is, in the general case, a Phi segment of a cone, with
      *   half-length dz, inner and outer radii specified at -dz and +dz.
      *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoConeSeg.html 
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
@@ -174,11 +173,6 @@ namespace DD4hep {
                                  double phi2 = 2.0 * M_PI);
     };
 
-    /**@class Tube Shapes.h
-     *
-     *   @author  M.Frank
-     *   @version 1.0
-     */
     struct MyConeSeg : public TGeoConeSeg {
     public:
       MyConeSeg() : TGeoConeSeg() {}
@@ -186,6 +180,18 @@ namespace DD4hep {
       double GetRmin() const { return GetRmin1(); }
       double GetRmax() const { return GetRmax1(); }
     };
+
+    /**@class Tube Shapes.h
+     *
+     *   TGeoTube - cylindrical tube class. It takes 3 parameters :
+     *            inner radius, outer radius and half-length dz.
+     *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoConeSeg.html 
+     *
+     *   @author  M.Frank
+     *   @version 1.0
+     */
     struct Tube : public Solid_type</*TGeoTubeSeg */ MyConeSeg> {
     protected:
       void make(const std::string& name, double rmin, double rmax, double z, double startPhi, double deltaPhi);
@@ -225,6 +231,10 @@ namespace DD4hep {
 
     /**@class Cone Shapes.h
      *
+     *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoCone.html 
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
@@ -233,7 +243,7 @@ namespace DD4hep {
       void make(const std::string& name, double z, double rmin1, double rmax1, double rmin2, double rmax2);
 
     public:
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
       template <typename Q> Cone(const Handle<Q>& e) : Solid_type<TGeoCone>(e) {}
 
       /// Constructor to create a new anonymous object with attribute initialization
@@ -250,6 +260,9 @@ namespace DD4hep {
 
     /**@class Trap Shapes.h
      *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoTrap.html 
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
@@ -258,7 +271,9 @@ namespace DD4hep {
       void make(double pz, double py, double px, double pLTX);
 
     public:
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
+      Trap(const Trap& e) : Solid_type<TGeoTrap>(e) {}
+      /// Constructor to be used when passing an already created object
       template <typename Q> Trap(const Handle<Q>& e) : Solid_type<TGeoTrap>(e) {}
 
       /// Constructor to create a new anonymous object with attribute initialization
@@ -280,6 +295,10 @@ namespace DD4hep {
 
     /**@class Trapezoid Shapes.h
      *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoTrd2.html 
+     *
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
@@ -288,10 +307,12 @@ namespace DD4hep {
       void make(double x1, double x2, double y1, double y2, double z);
 
     public:
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
+      Trapezoid(const Trapezoid& e) : Solid_type<TGeoTrd2>(e) {}
+      /// Constructor to be used when passing an already created object
       template <typename Q> Trapezoid(const Handle<Q>& e) : Solid_type<TGeoTrd2>(e) {}
       /// Constructor to create a new anonymous object with attribute initialization
-      Trapezoid(double x1, double x2, double y1, double y2, double z) { make(x1, x2, y1, y2, z); }
+      Trapezoid(double x1, double x2, double y1, double y2, double z);
       /// Constructor to create a new anonymous object with attribute initialization
       template <typename X1, typename X2, typename Y1, typename Y2, typename Z> Trapezoid(X1 x1, X2 x2, Y1 y1, Y2 y2, Z z) {
         make(_toDouble(x1), _toDouble(x2), _toDouble(y1), _toDouble(y2), _toDouble(z));
@@ -302,6 +323,9 @@ namespace DD4hep {
 
     /**@class Torus Shapes.h
      *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoTorus.html 
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
@@ -310,7 +334,9 @@ namespace DD4hep {
       void make(double r, double rmin, double rmax, double phi, double delta_phi);
 
     public:
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
+      Torus(const Torus& e) : Solid_type<TGeoTorus>(e) {}
+      /// Constructor to be used when passing an already created object
       template <typename Q> Torus(const Handle<Q>& e) : Solid_type<TGeoTorus>(e) {}
       /// Constructor to create a new anonymous object with attribute initialization
       template <typename R, typename RMIN, typename RMAX, typename PHI, typename DELTA_PHI>
@@ -327,11 +353,17 @@ namespace DD4hep {
 
     /**@class Sphere Shapes.h
      *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoSphere.html 
+     *
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
     struct Sphere : public Solid_type<TGeoSphere> {
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
+      Sphere(const Sphere& e) : Solid_type<TGeoSphere>(e) {}
+      /// Constructor to be used when passing an already created object
       template <typename Q> Sphere(const Handle<Q>& e) : Solid_type<TGeoSphere>(e) {}
       /// Constructor to create a new anonymous object with attribute initialization
       Sphere(double rmin, double rmax, double theta = 0., double delta_theta = M_PI, double phi = 0.0,
@@ -342,11 +374,17 @@ namespace DD4hep {
 
     /**@class Paraboloid Shapes.h
      *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoParaboloid.html 
+     *
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
     struct Paraboloid : public Solid_type<TGeoParaboloid> {
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
+      Paraboloid(const Paraboloid& e) : Solid_type<TGeoParaboloid>(e) {}
+      /// Constructor to be used when passing an already created object
       template <typename Q> Paraboloid(const Handle<Q>& e) : Solid_type<TGeoParaboloid>(e) {}
       /// Constructor to create a new anonymous object with attribute initialization
       Paraboloid(double r_low, double r_high, double delta_z);
@@ -354,7 +392,10 @@ namespace DD4hep {
       Paraboloid& setDimensions(double r_low, double r_high, double delta_z);
     };
 
-    /**@class PolyhedraRegular Shapes.h
+    /**@class PolyhedraRegular Shapes.h 
+     *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoPgon.html 
      *
      *   @author  M.Frank
      *   @version 1.0
@@ -366,7 +407,9 @@ namespace DD4hep {
                    double delta);
 
     public:
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
+      PolyhedraRegular(const PolyhedraRegular& e) : Solid_type<TGeoPgon>(e) {}
+      /// Constructor to be used when passing an already created object
       template <typename Q> PolyhedraRegular(const Handle<Q>& e) : Solid_type<TGeoPgon>(e) {}
 
       /// Constructor to create a new object. Phi(start)=0, deltaPhi=2PI, Z-planes at -zlen/2 and +zlen/2
@@ -379,6 +422,9 @@ namespace DD4hep {
 
     /**@class EightPointSolid Shapes.h
      *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoArb8.html 
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
@@ -388,7 +434,9 @@ namespace DD4hep {
       void make(double dz, const double* vtx);
 
     public:
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
+      EightPointSolid(const EightPointSolid& e) : Solid_type<TGeoArb8>(e) {}
+      /// Constructor to be used when passing an already created object
       template <typename Q> EightPointSolid(const Handle<Q>& e) : Solid_type<TGeoArb8>(e) {}
       /// Constructor to create a new anonymous object with attribute initialization
       EightPointSolid(double dz, const double* vertices) { make(dz, vertices); }
@@ -396,20 +444,27 @@ namespace DD4hep {
 
     /**@class BooleanSolid Shapes.h
      *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoCompositeShape.html 
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
     struct BooleanSolid : public Solid_type<TGeoCompositeShape> {
     protected:
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
       BooleanSolid() : Solid_type<TGeoCompositeShape>() {}
 
     public:
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
       template <typename Q> BooleanSolid(const Handle<Q>& e) : Solid_type<TGeoCompositeShape>(e) {}
     };
 
     /**@class SubtractionSolid Shapes.h
+     *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoCompositeShape.html 
+     *   @see http://root.cern.ch/root/html/TGeoSubtraction.html 
      *
      *   @author  M.Frank
      *   @version 1.0
@@ -417,7 +472,9 @@ namespace DD4hep {
     struct SubtractionSolid : public BooleanSolid {
       /// Default constructor
       SubtractionSolid() : BooleanSolid() {}
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
+      SubtractionSolid(const SubtractionSolid& e) : BooleanSolid(e) {}
+      /// Constructor to be used when passing an already created object
       template <typename Q> SubtractionSolid(const Handle<Q>& e) : BooleanSolid(e) {}
       /// Constructor to create a new object. Position is identity, Rotation is identity-rotation!
       SubtractionSolid(const Solid& shape1, const Solid& shape2);
@@ -433,13 +490,19 @@ namespace DD4hep {
 
     /**@class UnionSolid Shapes.h
      *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoCompositeShape.html 
+     *   @see http://root.cern.ch/root/html/TGeoUnion.html 
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
     struct UnionSolid : public BooleanSolid {
       /// Default constructor
       UnionSolid() : BooleanSolid() {}
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
+      UnionSolid(const UnionSolid& e) : BooleanSolid(e) {}
+      /// Constructor to be used when passing an already created object
       template <typename Q> UnionSolid(const Handle<Q>& e) : BooleanSolid(e) {}
       /// Constructor to create a new object. Position is identity, Rotation is identity-rotation!
       UnionSolid(const Solid& shape1, const Solid& shape2);
@@ -455,13 +518,19 @@ namespace DD4hep {
 
     /**@class IntersectionSolid Shapes.h
      *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoCompositeShape.html 
+     *   @see http://root.cern.ch/root/html/TGeoIntersection.html 
+     *
      *   @author  M.Frank
      *   @version 1.0
      */
     struct IntersectionSolid : public BooleanSolid {
       /// Default constructor
       IntersectionSolid() : BooleanSolid() {}
-      /// Constructor to be used when reading the already parsed object
+      /// Constructor to be used when passing an already created object
+      IntersectionSolid(const IntersectionSolid& e) : BooleanSolid(e) {}
+      /// Constructor to be used when passing an already created object
       template <typename Q> IntersectionSolid(const Handle<Q>& e) : BooleanSolid(e) {}
       /// Constructor to create a new object. Position is identity, Rotation is identity-rotation!
       IntersectionSolid(const Solid& shape1, const Solid& shape2);
