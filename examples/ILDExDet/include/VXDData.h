@@ -7,8 +7,12 @@
 //
 //====================================================================
 
-#include <vector>
 #include "DD4hep/Detector.h"
+
+//fixme: VXDData should not depend on this internal header
+#include "DD4hep/objects/DetectorInterna.h"
+
+#include <vector>
 
 namespace DD4hep {
 

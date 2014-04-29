@@ -169,7 +169,7 @@ namespace DDSurfaces {
   inline std::ostream& operator<<(std::ostream& os, const SurfaceType& t) {
     os << "sensitive[" << t.isSensitive() << "] helper[" << t.isHelper() << "] plane[" << t.isPlane() << "] cylinder["
        << t.isCylinder() << "] parallelToZ[" << t.isParallelToZ() << "] orthogonalToZ[" << t.isOrthogonalToZ()
-       << "] zCylinder[" << t.isZCylinder() << "] zPlane[" << t.isZPlane() << "]";
+       << "] zCylinder[" << t.isZCylinder() << "] zPlane[" << t.isZPlane() << "] zDisk[" << t.isZDisk() << "]";
 
     return os;
   }
@@ -178,8 +178,8 @@ namespace DDSurfaces {
   inline std::ostream& operator<<(std::ostream& os, const ISurface& s) {
     os << "   id: " << std::hex << s.id() << std::dec << " type : " << s.type() << std::endl
        << "   u : " << s.u() << " v : " << s.v() << " normal : " << s.normal() << " origin : " << s.origin() << std::endl;
-    os << "   inner material : " << s.innerMaterial() << std::endl
-       << "   outerMaterial :  " << s.outerMaterial() << std::endl;
+    os << "   inner material : " << s.innerMaterial() << "  thickness: " << s.innerThickness() << std::endl
+       << "   outerMaterial :  " << s.outerMaterial() << "  thickness: " << s.outerThickness() << std::endl;
 
     return os;
   }
