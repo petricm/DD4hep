@@ -169,21 +169,25 @@ namespace DDSurfaces {
     /// direct access to data as double* - allows modification
     inline double* array() { return &_x; }
 
-    /** Implicit templated conversion to anything that has a c'tor T(x,y,z) 
-     *  and accessor functions x(),y(),z(). For safety the result is checked which 
-     *  causes a small performance penalty.
-     *  @see to()
-     *  
-     */
-    template <class T> inline operator T() const {
-      T t(_x, _y, _z);
+    // this causes template lookup errors on some machines :
+    //   -> use explicit conversion with to<T>()
+    // /** Implicit templated conversion to anything that has a c'tor T(x,y,z)
+    //  *  and accessor functions x(),y(),z(). For safety the result is checked which
+    //  *  causes a small performance penalty.
+    //  *  @see to()
+    //  *
+    //  */
+    // template <class T>
+    // inline operator T() const {
 
-      assert(t.x() == _x && t.y() == _y && t.z() == _z);
+    //   T t( _x, _y , _z ) ;
 
-      return t;
+    //   assert( t.x()== _x && t.y()== _y && t.z()== _z ) ;
 
-      //     return T( _x, _y, _z ) ;
-    }
+    //   return t ;
+
+    //   //     return T( _x, _y, _z ) ;
+    // }
 
     /** Explicit, unchecked conversion to anything that has a c'tor T(x,y,z). 
      *  Example: 
