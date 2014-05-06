@@ -76,6 +76,8 @@ namespace DDSurfaces {
     virtual double radius() const = 0;
   };
 
+  //==============================================================================================
+
   /** Helper class for describing surface properties.
    *  Usage: SurfaceType type(  SurfaceType::Plane, SurfaceType::Sensitive ) ; 
    *
@@ -147,6 +149,14 @@ namespace DDSurfaces {
 
     /// true if this is a plane orthogonal to Z
     bool isZDisk() const { return (_bits[SurfaceType::Plane] && _bits[SurfaceType::OrthogonalToZ]); }
+
+    /// true if all properties of otherType are also true for this type.
+    bool isSimilar(const SurfaceType& otherType) const {
+      unsigned long otherBits = otherType._bits.to_ulong();
+      unsigned long theseBits = _bits.to_ulong();
+      //      std::cout << " ** isSimilar : " << otherType._bits.to_string() << " - " << _bits.to_string() << " : " <<  ((  otherBits & theseBits ) == otherBits) << std::endl ;
+      return (otherBits & theseBits) == otherBits;
+    }
 
     /** True if surface is parallel to Z with accuracy epsilon - result is cached in bit SurfaceType::ParallelToZ */
     bool checkParallelToZ(const ISurface& surf, double epsilon = 1.e-6) const {
