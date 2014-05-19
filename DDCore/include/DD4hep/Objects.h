@@ -250,6 +250,12 @@ namespace DD4hep {
       Material(const Handle<TGeoMedium>& e) : Handle<TGeoMedium>(e) {}
       /// Constructorto be used for assignment from object handle
       template <typename Q> Material(const Handle<Q>& e) : Handle<TGeoMedium>(e) {}
+      /// proton number of the underlying material
+      double Z() const;
+      /// atomic number of the underlying material
+      double A() const;
+      /// density of the underlying material
+      double density() const;
       /// String representation of this object
       std::string toString() const;
       /// Access the radiation length of the underlying material
