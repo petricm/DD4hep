@@ -2,6 +2,7 @@
 #define DDRec_MaterialManager_H_
 
 #include "DD4hep/Objects.h"
+#include "DDRec/Material.h"
 #include "DDSurfaces/Vector3D.h"
 
 #include <vector>
@@ -37,6 +38,8 @@ namespace DD4hep {
       /** Get the material at the given position
        */
       const Material& material(const DDSurfaces::Vector3D& pos);
+
+      void createAveragedMaterial(const MaterialVec& materials, MaterialData& mData);
 
     protected:
       //cached materials

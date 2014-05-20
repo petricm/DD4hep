@@ -5,6 +5,7 @@
 #include "DD4hep/Objects.h"
 #include "DD4hep/Volumes.h"
 
+#include "DDRec/Material.h"
 #include "DDSurfaces/ISurface.h"
 
 #include <list>
@@ -16,14 +17,16 @@ namespace DD4hep {
 
     using namespace DDSurfaces;
 
-    // typedef DDRec::Material SurfaceMaterial ;
+#if 1
+    typedef MaterialData SurfaceMaterial;
 
+#else
     /** Wrapper class to  Geometry::Material that implements the DDSurfaces::IMaterial interface.
-     *
-     * @author F.Gaede, DESY
-     * @date Apr, 6 2014
-     * @version $Id$
-     */
+      *
+      * @author F.Gaede, DESY
+      * @date Apr, 6 2014
+      * @version $Id$
+      */
     struct SurfaceMaterial : public virtual Geometry::Material, public IMaterial {
       /** Copy c'tor - copies handle */
       SurfaceMaterial(Geometry::Material m) : Geometry::Material(m) {}
@@ -50,6 +53,7 @@ namespace DD4hep {
       /// interaction length - tgeo units
       virtual double interactionLength() const { return Geometry::Material::intLength(); }
     };
+#endif
 
     /** Helper class for holding surface data. 
      * @author F.Gaede, DESY
