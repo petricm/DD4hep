@@ -9,7 +9,8 @@
 namespace DD4hep {
   namespace DDRec {
 
-    /** Simple data class that implements the DDSurfaces::IMaterial interface.
+    /** Simple data class that implements the DDSurfaces::IMaterial interface
+     *  and is used in the Surface implementation.
      *
      * @author F.Gaede, DESY
      * @date May, 20 2014
@@ -25,9 +26,16 @@ namespace DD4hep {
       double      _lambda;
 
     public:
-      /** Instantiate from Geometry::Material handle */
-      MaterialData(Geometry::Material m) {
-        // handle data can only be accessed if the handle is valid
+      /** Instantiate from Geometry::Material - default initialization if handle is not valid */
+      MaterialData(Geometry::Material m)
+          :
+
+            _name("unknown"),
+            _Z(-1.),
+            _A(0.),
+            _rho(0.),
+            _x0(0.),
+            _lambda(0.) {
         if (m.isValid()) {
           _name   = m.name();
           _Z      = m.Z();
@@ -54,8 +62,28 @@ namespace DD4hep {
             _x0(m.radiationLength()),
             _lambda(m.interactionLength()) {}
 
+      /// assignment from Geometry::Material
+      MaterialData& operator=(const Geometry::Material& m) {
+        if (m.isValid()) {
+          _name   = m.name();
+          _Z      = m.Z();
+          _A      = m.A();
+          _rho    = m.density();
+          _x0     = m.radLength();
+          _lambda = m.intLength();
+
+        } else {
+          _name   = "unknown";
+          _Z      = -1.;
+          _A      = 0.;
+          _rho    = 0.;
+          _x0     = 0.;
+          _lambda = 0.;
+        }
+      }
+
       /// true if initialized
-      bool isValid() const { return true; }  //( _Z > 0. ) ; }
+      bool isValid() const { return (_Z > 0.); }
 
       /** D'tor.*/
       virtual ~MaterialData() {}
