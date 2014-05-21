@@ -80,6 +80,8 @@ namespace DD4hep {
           _x0     = 0.;
           _lambda = 0.;
         }
+
+        return *this;
       }
 
       /// true if initialized
