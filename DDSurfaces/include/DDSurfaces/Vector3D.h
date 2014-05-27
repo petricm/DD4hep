@@ -1,9 +1,9 @@
 #ifndef DDSurfaces_Vector3D_h
 #define DDSurfaces_Vector3D_h 1
 
-#include <math.h>
+#include <cassert>
+#include <cmath>
 #include <iostream>
-#include "assert.h"
 
 namespace DDSurfaces {
 
