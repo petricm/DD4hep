@@ -71,16 +71,17 @@ namespace DD4hep {
       SurfaceMaterial _innerMat;
       SurfaceMaterial _outerMat;
 
+      /// default c'tor.
       SurfaceData();
 
+      /// Standard c'tor for initialization.
       SurfaceData(SurfaceType type, double thickness_inner, double thickness_outer, Vector3D u, Vector3D v, Vector3D n,
                   Vector3D o);
 
       /// Default destructor
       virtual ~SurfaceData() {}
 
-      /// Copy the object
-
+      /// Copy the from object
       void copy(const SurfaceData& c) {
         _type     = c._type;
         _u        = c._u;
@@ -104,14 +105,26 @@ namespace DD4hep {
     protected:
       Geometry::Volume _vol;
 
+      /// setter for daughter classes
+      virtual void setU(const Vector3D& u) { object<SurfaceData>()._u = u; }
+
+      /// setter for daughter classes
+      virtual void setV(const Vector3D& v) { object<SurfaceData>()._v = v; }
+
+      /// setter for daughter classes
+      virtual void setNormal(const Vector3D& n) { object<SurfaceData>()._n = n; }
+
     public:
       virtual ~VolSurface() {}
 
+      ///default c'tor
       VolSurface() {}
 
+      /// Standrad c'tor for initialization.
       VolSurface(Geometry::Volume vol, SurfaceType type, double thickness_inner, double thickness_outer, Vector3D u,
                  Vector3D v, Vector3D n, Vector3D o = Vector3D(0., 0., 0.));
 
+      /// the volume to which this surface is attached.
       Geometry::Volume volume() const { return _vol; }
 
       /// The id of this surface - always 0 for VolSurfaces
@@ -125,19 +138,19 @@ namespace DD4hep {
       //==== geometry ====
 
       /** First direction of measurement U */
-      virtual const Vector3D& u(const Vector3D& point = Vector3D()) const {
+      virtual Vector3D u(const Vector3D& point = Vector3D()) const {
         point.x();
         return object<SurfaceData>()._u;
       }
 
       /** Second direction of measurement V */
-      virtual const Vector3D& v(const Vector3D& point = Vector3D()) const {
+      virtual Vector3D v(const Vector3D& point = Vector3D()) const {
         point.x();
         return object<SurfaceData>()._v;
       }
 
       /// Access to the normal direction at the given point
-      virtual const Vector3D& normal(const Vector3D& point = Vector3D()) const {
+      virtual Vector3D normal(const Vector3D& point = Vector3D()) const {
         point.x();
         return object<SurfaceData>()._n;
       }
@@ -190,11 +203,12 @@ namespace DD4hep {
     struct VolSurfaceList : std::list<VolSurface> {
       VolSurfaceList() {}
 
-      // required c'tors for extension mechanism
+      // required c'tor for extension mechanism
       VolSurfaceList(Geometry::DetElement& det) {
         // det.addExtension<VolSurfaceList>( this ) ;
       }
 
+      // required c'tor for extension mechanism
       VolSurfaceList(const VolSurfaceList& vsl, Geometry::DetElement& det) {
         //fixme: this causes a seg fault ...
 
@@ -213,6 +227,9 @@ namespace DD4hep {
       }
     };
 
+    /** Helper function for accessing the list assigned to a DetElement - attaches
+     * empty list if needed.
+     */
     VolSurfaceList* volSurfaceList(Geometry::DetElement& det);
 
     //======================================================================================================
@@ -224,10 +241,13 @@ namespace DD4hep {
      */
     class VolPlane : public VolSurface {
     public:
+      ///default c'tor
       VolPlane() : VolSurface() {}
 
+      /// copy c'tor
       VolPlane(const VolSurface& vs) : VolSurface(vs) {}
 
+      /// standard c'tor with all necessary arguments - origin is (0,0,0) if not given.
       VolPlane(Geometry::Volume vol, SurfaceType type, double thickness_inner, double thickness_outer, Vector3D u,
                Vector3D v, Vector3D n, Vector3D o = Vector3D(0., 0., 0.))
           :
@@ -235,6 +255,8 @@ namespace DD4hep {
             VolSurface(vol, type, thickness_inner, thickness_outer, u, v, n, o) {
         object<SurfaceData>()._type.setProperty(SurfaceType::Plane, true);
         object<SurfaceData>()._type.setProperty(SurfaceType::Cylinder, false);
+        object<SurfaceData>()._type.checkParallelToZ(*this);
+        object<SurfaceData>()._type.checkOrthogonalToZ(*this);
       }
 
       /** Distance to surface */
@@ -253,18 +275,40 @@ namespace DD4hep {
      */
     class VolCylinder : public VolSurface {
     public:
+      /// default c'tor
       VolCylinder() : VolSurface() {}
 
+      /// copy c'tor
       VolCylinder(const VolSurface& vs) : VolSurface(vs) {}
 
-      VolCylinder(Geometry::Volume vol, SurfaceType type, double thickness_inner, double thickness_outer, Vector3D u,
-                  Vector3D v, Vector3D n, Vector3D o = Vector3D(0., 0., 0.))
-          :
+      /** The standard constructor. The origin vector points to the origin of the coordinate system on the cylinder,
+       *  its rho defining the radius of the cylinder. The measurement direction u is set to be (0,0,1), the normal is
+       *  chosen to be parallel to the origin vector and v = n X u. 
+       */
+      VolCylinder(Geometry::Volume vol, SurfaceType type, double thickness_inner, double thickness_outer, Vector3D origin);
 
-            VolSurface(vol, type, thickness_inner, thickness_outer, u, v, n, o) {
-        object<SurfaceData>()._type.setProperty(SurfaceType::Plane, false);
-        object<SurfaceData>()._type.setProperty(SurfaceType::Cylinder, true);
-      }
+      //fg: for now we don't allow to set u and v for cylinders
+      // VolCylinder( Geometry::Volume vol, SurfaceType type, double thickness_inner ,double thickness_outer,
+      // 		Vector3D u ,Vector3D v ,Vector3D n , Vector3D o = Vector3D(0.,0.,0.) ) :
+      // 	VolSurface( vol, type, thickness_inner, thickness_outer, u,v,n,o ) {
+      // 	object<SurfaceData>()._type.setProperty( SurfaceType::Plane    , false ) ;
+      // 	object<SurfaceData>()._type.setProperty( SurfaceType::Cylinder , true ) ;
+      // }
+
+      /** First direction of measurement U - rotated to point projected onto the cylinder.
+       *  No check is done whether the point actually is on the cylinder surface
+       */
+      virtual Vector3D u(const Vector3D& point = Vector3D()) const;
+
+      /** Second direction  of measurement V - rotated to point projected onto the cylinder.
+       *  No check is done whether the point actually is on the cylinder surface
+       */
+      virtual Vector3D v(const Vector3D& point = Vector3D()) const;
+
+      /** The normal direction at the given point, projected  onto the cylinder.
+       *  No check is done whether the point actually is on the cylinder surface
+       */
+      virtual Vector3D normal(const Vector3D& point = Vector3D()) const;
 
       /** Distance to surface */
       virtual double distance(const Vector3D& point) const;
@@ -296,14 +340,18 @@ namespace DD4hep {
       Vector3D    _n;
       Vector3D    _o;
 
+      /// default c'tor
       Surface() : _det(Geometry::DetElement()), _volSurf(VolSurface()), _wtM(0), _id(0) {}
 
     public:
       virtual ~Surface() {}
 
+      /** Standard c'tor initializes the surface from the parameters of the VolSurface and the 
+       *  transform (placement) of the corresponding volume, if found in DetElement 
+       */
       Surface(Geometry::DetElement det, VolSurface volSurf);
 
-      /// The id of this surface - corresponds to DetElement id ( or'ed with the placement ids )
+      /// The id of this surface - corresponds to DetElement id.
       virtual long64 id() const { return _id; }
 
       /** properties of the surface encoded in Type.
@@ -311,26 +359,28 @@ namespace DD4hep {
        */
       virtual const SurfaceType& type() const { return _type; }
 
+      /// The volume that has the surface attached.
       Geometry::Volume volume() const { return _volSurf.volume(); }
 
+      /// The VolSurface attched to the volume.
       VolSurface volSurface() const { return _volSurf; }
 
       //==== geometry ====
 
       /** First direction of measurement U */
-      virtual const Vector3D& u(const Vector3D& point = Vector3D()) const {
+      virtual Vector3D u(const Vector3D& point = Vector3D()) const {
         point.x();
         return _u;
       }
 
       /** Second direction of measurement V */
-      virtual const Vector3D& v(const Vector3D& point = Vector3D()) const {
+      virtual Vector3D v(const Vector3D& point = Vector3D()) const {
         point.x();
         return _v;
       }
 
       /// Access to the normal direction at the given point
-      virtual const Vector3D& normal(const Vector3D& point = Vector3D()) const {
+      virtual Vector3D normal(const Vector3D& point = Vector3D()) const {
         point.x();
         return _n;
       }
@@ -373,10 +423,32 @@ namespace DD4hep {
 
     //======================================================================================================
 
+    /** Specialization of Surface for cylinders. Provides acces to the cylinder radius and
+     *  implements the access to the rotated surface vectors for points on the cylinder.
+     *  @author F.Gaede, DESY
+     *  @date May, 10 2014
+     */
     class CylinderSurface : public Surface, public ICylinder {
     public:
+      ///Standard c'tor.
       CylinderSurface(Geometry::DetElement det, VolSurface volSurf) : Surface(det, volSurf) {}
 
+      /** First direction of measurement U - rotated to point projected onto the cylinder.
+       *  No check is done whether the point actually is on the cylinder surface
+       */
+      virtual Vector3D u(const Vector3D& point = Vector3D()) const;
+
+      /** Second direction of measurement V - rotated to point projected onto the cylinder.
+       *  No check is done whether the point actually is on the cylinder surface
+       */
+      virtual Vector3D v(const Vector3D& point = Vector3D()) const;
+
+      /** The normal direction at the given point - rotated to point projected onto the cylinder.
+       *  No check is done whether the point actually is on the cylinder surface
+       */
+      virtual Vector3D normal(const Vector3D& point = Vector3D()) const;
+
+      /// the radius of the cylinder (rho of the origin vector)
       virtual double radius() const { return _volSurf.origin().rho(); }
     };
 
@@ -391,18 +463,22 @@ namespace DD4hep {
       bool _isOwner;
 
     public:
+      /// defaul c'tor - allow to set ownership for surfaces
       SurfaceList(bool isOwner = false) : _isOwner(isOwner) {}
 
+      /// copy c'tor
       SurfaceList(const SurfaceList& other) : std::list<Surface*>(other), _isOwner(false) {}
 
-      // required c'tors for extension mechanism
+      /// required c'tor for extension mechanism
       SurfaceList(const Geometry::DetElement&) {
         // anything to do here  ?
       }
+      /// required c'tor for extension mechanism
       SurfaceList(const SurfaceList&, const Geometry::DetElement&) {
         // anything to do here  ?
       }
 
+      /// d'tor deletes all owned surfaces
       virtual ~SurfaceList() {
         if (_isOwner) {
           // delete all surfaces attached to this volume
