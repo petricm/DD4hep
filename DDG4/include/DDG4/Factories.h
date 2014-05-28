@@ -15,9 +15,13 @@
 #include "RVersion.h"
 
 // Framework include files
+#include "DD4hep/Primitives.h"
+#include "DD4hep/Printout.h"
+#include "DDG4/Defs.h"
+
+// C/C++ include files
 #include <map>
 #include <string>
-#include "DDG4/Defs.h"
 
 // Forward declarations
 class G4ParticleDefinition;
@@ -138,6 +142,8 @@ namespace {
   template <typename P> class Factory<P, G4VUserPhysicsList*(DS::Geant4PhysicsListActionSequence*, int)> {
   public:
     static void Func(void* ret, void*, ARGS a, void*) {
+      DD4hep::printout(DD4hep::INFO, "PhysicsList", "+++ Create physics list of type:%s",
+                       DD4hep::typeName(typeid(P)).c_str());
       *(G4VUserPhysicsList**)ret = (G4VUserPhysicsList*)new P((DS::Geant4PhysicsListActionSequence*)a[0], *(int*)a[1]);
     }
   };

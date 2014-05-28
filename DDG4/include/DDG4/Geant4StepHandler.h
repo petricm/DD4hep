@@ -51,6 +51,7 @@ namespace DD4hep {
         track = s->GetTrack();
       }
       G4ParticleDefinition* trackDef() const { return track->GetDefinition(); }
+      int                   trkPdgID() const { return track->GetDefinition()->GetPDGEncoding(); }
       static const char* stepStatus(G4StepStatus status);
       const char* preStepStatus() const;
       const char* postStepStatus() const;
@@ -70,6 +71,14 @@ namespace DD4hep {
         const G4ThreeVector& p = post->GetMomentum();
         return Momentum(p.x(), p.y(), p.z());
       }
+      Momentum trkMom() const {
+        const G4ThreeVector& p = track->GetMomentum();
+        return Momentum(p.x(), p.y(), p.z());
+      }
+      double              deposit() const { return step->GetTotalEnergyDeposit(); }
+      int                 trkID() const { return track->GetTrackID(); }
+      double              trkEnergy() const { return track->GetTotalEnergy(); }
+      double              trkKineEnergy() const { return track->GetKineticEnergy(); }
       const G4VTouchable* preTouchable() const { return pre->GetTouchable(); }
       const G4VTouchable* postTouchable() const { return post->GetTouchable(); }
       const char* volName(const G4StepPoint* p, const char* undefined = "") const {
@@ -97,6 +106,8 @@ namespace DD4hep {
       G4VSensitiveDetector*               preSD() const { return sd(pre); }
       G4VPhysicalVolume*                  postVolume() const { return volume(post); }
       G4VSensitiveDetector*               postSD() const { return sd(post); }
+      bool                                firstInVolume() const { return step->IsFirstStepInVolume(); }
+      bool                                lastInVolume() const { return step->IsLastStepInVolume(); }
     };
 
   }  // End namespace Simulation

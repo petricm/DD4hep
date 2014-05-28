@@ -10,6 +10,7 @@
 #define DD4HEP_DDG4_GEANT4ACTION_H
 
 // Framework include files
+#include "DD4hep/Printout.h"
 #include "DDG4/ComponentProperties.h"
 #include "DDG4/Geant4Callback.h"
 #include "DDG4/Geant4Context.h"
@@ -235,6 +236,10 @@ namespace DD4hep {
       void setName(const std::string& new_name) { m_name = new_name; }
       /// Access to the properties of the object
       PropertyManager& properties() { return m_properties; }
+      /// Access the output level
+      PrintLevel outputLevel() const { return (PrintLevel)m_outputLevel; }
+      /// Set the output level; returns previous value
+      PrintLevel setOutputLevel(PrintLevel new_level);
       /// Access to the UI messenger
       Geant4UIMessenger* control() const;
       /// Enable and install UI messenger
@@ -256,6 +261,11 @@ namespace DD4hep {
       virtual void installCommandMessenger();
       /// Install property control messenger if wanted
       void installPropertyMessenger();
+
+      /// Support for messages with variable output level using output level
+      void print(const std::string& fmt, ...) const;
+      /// Support for messages with variable output level using output level
+      void print(const std::string& tag, const std::string& fmt, ...) const;
 
       /// Support of debug messages.
       void debug(const std::string& fmt, ...) const;
