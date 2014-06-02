@@ -11,8 +11,7 @@
 #define DD4hep_LCDDGEOIMP_H
 
 // Framework include files
-#include "DD4hep/LCDD.h"
-#include "DD4hep/ObjectExtensions.h"
+#include "DD4hep/LCDDData.h"
 
 // Forward declarations
 class TGeoManager;
@@ -30,72 +29,22 @@ namespace DD4hep {
    */
   namespace Geometry {
 
-    class LCDDImp : public LCDD {
+    /** @class LCDDImp   LCDDImp.h  src/LCDDImp.h
+     *
+     * @author  M.Frank
+     * @version 1.0
+     */
+    class LCDDImp : public LCDD, public LCDDData {
     private:
       /// Disable copy constructor
-      LCDDImp(const LCDDImp&) : m_extensions(typeid(LCDDImp)) {}
+      LCDDImp(const LCDDImp&);
+
       /// Disable assignment operator
-      LCDDImp& operator=(const LCDDImp&) { return *this; }
+      LCDDImp& operator=(const LCDDImp&);
 
     public:
-      struct InvalidObjectError : public std::runtime_error {
-        InvalidObjectError(const std::string& msg) : std::runtime_error("DD4hep: " + msg) {}
-      };
-
-      struct ObjectHandleMap : public HandleMap {
-        ObjectHandleMap() {}
-        void append(const Ref_t& e, bool throw_on_doubles = true) {
-          if (e.isValid()) {
-            std::string n = e.name();
-            std::pair<iterator, bool> r = this->insert(std::make_pair(n, e.ptr()));
-            if (!throw_on_doubles || r.second)
-              return;
-            throw InvalidObjectError("Attempt to add an already existing object:" + std::string(e.name()) + ".");
-          }
-          throw InvalidObjectError("Attempt to add an invalid object.");
-        }
-
-        template <typename T> void append(const Ref_t& e, bool throw_on_doubles = true) {
-          T* obj = dynamic_cast<T*>(e.ptr());
-          if (obj) {
-            this->append(e, throw_on_doubles);
-            return;
-          }
-          throw InvalidObjectError("Attempt to add an object, which is of the wrong type.");
-        }
-      };
-
-      TGeoManager*    m_manager;
-      ObjectHandleMap m_readouts;
-      ObjectHandleMap m_idDict;
-      ObjectHandleMap m_limits;
-      ObjectHandleMap m_regions;
-      ObjectHandleMap m_detectors;
-      ObjectHandleMap m_alignments;
-
-      ObjectHandleMap m_sensitive;
-      ObjectHandleMap m_display;
-      ObjectHandleMap m_fields;
-
-      // GDML fields
-      ObjectHandleMap m_define;
-
-      DetElement    m_world;
-      DetElement    m_trackers;
-      Volume        m_worldVol;
-      Volume        m_trackingVol;
       VolumeManager m_volManager;
-
-      Material       m_materialAir;
-      Material       m_materialVacuum;
-      VisAttr        m_invisibleVis;
-      OverlayedField m_field;
-      Ref_t          m_header;
-      Properties*    m_properties;
-      LCDDBuildType  m_buildType;
-
-      /// Definition of the extension type
-      ObjectExtensions m_extensions;
+      LCDDBuildType m_buildType;
 
       /// Default constructor
       LCDDImp();
@@ -133,7 +82,7 @@ namespace DD4hep {
       /// Access the geometry manager of this instance
       virtual TGeoManager& manager() const { return *m_manager; }
       /// Access to properties
-      Properties& properties() const { return *m_properties; }
+      Properties& properties() const { return *(Properties*)&m_properties; }
       /// Return handle to material describing air
       virtual Material air() const { return m_materialVacuum; }
       /// Return handle to material describing vacuum
@@ -207,6 +156,8 @@ namespace DD4hep {
       virtual const HandleMap& alignments() const { return m_alignments; }
       /// Accessor to the map of field entries, which together form the global field
       virtual const HandleMap& fields() const { return m_fields; }
+      /// Accessor to the map of ID specifications
+      virtual const HandleMap& idSpecifications() const { return m_idDict; }
 
 #define __R return *this
       /// Add a new constant to the detector description
@@ -223,6 +174,8 @@ namespace DD4hep {
       virtual LCDD& add(AlignmentEntry x) { return addAlignment(x); }
       /// Add a new detector readout to the detector description
       virtual LCDD& add(Readout x) { return addReadout(x); }
+      /// Add a new sensitive detector to the detector description
+      virtual LCDD& add(SensitiveDetector x) { return addSensitiveDetector(x); }
       /// Add a new subdetector to the detector description
       virtual LCDD& add(DetElement x) { return addDetector(x); }
       /// Add a field component to the detector description

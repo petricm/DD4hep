@@ -12,6 +12,8 @@
 
 // Framework include files
 #include "DD4hep/Handle.h"
+#include "DD4hep/NamedObject.h"
+
 class TMap;
 class TGeoElement;
 class TGeoMaterial;
@@ -55,8 +57,12 @@ namespace DD4hep {
   namespace Geometry {
 
     // Forward declarations
-    struct LCDD;
+    class LCDD;
     class IDDescriptor;
+    class VisAttrObject;
+    class HeaderObject;
+    class RegionObject;
+    class LimitSetObject;
 
     /** Access to identity transformation  */
     TGeoIdentity* identityTransform();
@@ -66,16 +72,17 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct Author : public Ref_t {
+    class Author : public Ref_t {
+    public:
       /// Definition of the implementation type
-      typedef TNamed Object;
+      typedef NamedObject Object;
       /// Default constructor
       Author() : Ref_t() {}
       /// Constructorto be used for assignment from a handle
       Author(const Author& e) : Ref_t(e) {}
-      /// Constructor to be used when reading the already parsed DOM tree
+      /// Constructor to be used when assigning already valid handle
       template <typename Q> Author(const Handle<Q>& e) : Ref_t(e) {}
-      /// Constructor to be used when creating a new DOM tree
+      /// Constructor to be used when creating a new object
       Author(LCDD& doc);
       /// Assignment operator
       Author& operator=(const Author& e) {
@@ -101,31 +108,15 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct Header : public Ref_t {
-      struct Object : public TNamed {
-      public:
-        std::string url;
-        std::string author;
-        std::string status;
-        std::string version;
-        std::string comment;
-        /// Standard constructor
-        Object();
-        /// Default destructor
-        virtual ~Object();
-
-      private:
-        /// Private copy constructor
-        Object(const Object&) : TNamed() {}
-        /// Private assignment operator
-        Object& operator=(const Object&) { return *this; }
-      };
+    class Header : public Handle<HeaderObject> {
+    public:
+      typedef HeaderObject Object;
       /// Default constructor
-      Header() : Ref_t() {}
+      Header() : Handle<HeaderObject>() {}
       /// Constructorto be used for assignment from a handle
-      Header(const Header& e) : Ref_t(e) {}
+      Header(const Header& e) : Handle<HeaderObject>(e) {}
       /// Constructor to be used when reading the already parsed DOM tree
-      template <typename Q> Header(const Handle<Q>& e) : Ref_t(e) {}
+      template <typename Q> Header(const Handle<Q>& e) : Handle<HeaderObject>(e) {}
       /// Constructor to be used when creating a new DOM tree
       Header(const std::string& author, const std::string& url);
       /// Assignment operator
@@ -170,9 +161,10 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct Constant : public Ref_t {
+    class Constant : public Ref_t {
+    public:
       /// Definition of the implementation type
-      typedef TNamed Object;
+      typedef NamedObject Object;
       /// Default constructor
       Constant() : Ref_t() {}
       /// Constructorto be used for assignment from a handle
@@ -223,15 +215,18 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct Atom : public Handle<TGeoElement> {
+    class Atom : public Handle<TGeoElement> {
+    public:
       /// Definition of the implementation type
       typedef TGeoElement Object;
       /// Default constructor
-      Atom() : Handle<TGeoElement>() {}
+      Atom() : Handle<Object>() {}
+#ifndef __CINT__
       /// Constructorto be used for assignment from a handle
-      Atom(const Handle<TGeoElement>& e) : Handle<TGeoElement>(e) {}
+      Atom(const Handle<Object>& e) : Handle<Object>(e) {}
+#endif
       /// Constructor to be used when creating from a object handle
-      template <typename Q> Atom(const Handle<Q>& e) : Handle<TGeoElement>(e) {}
+      template <typename Q> Atom(const Handle<Q>& e) : Handle<Object>(e) {}
       /// Constructor to be used when reading the already parsed DOM tree
       Atom(const std::string& name, const std::string& formula, int Z, int N, double density);
     };
@@ -241,15 +236,19 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct Material : public Handle<TGeoMedium> {
+    class Material : public Handle<TGeoMedium> {
+    public:
       /// Definition of the implementation type
       typedef TGeoMedium Object;
+
       /// Default constructor
-      Material() : Handle<TGeoMedium>() {}
+      Material() : Handle<Object>() {}
+#ifndef __CINT__
       /// Constructorto be used for assignment from material handle
-      Material(const Handle<TGeoMedium>& e) : Handle<TGeoMedium>(e) {}
+      Material(const Handle<Object>& e) : Handle<Object>(e) {}
+#endif
       /// Constructorto be used for assignment from object handle
-      template <typename Q> Material(const Handle<Q>& e) : Handle<TGeoMedium>(e) {}
+      template <typename Q> Material(const Handle<Q>& e) : Handle<Object>(e) {}
       /// proton number of the underlying material
       double Z() const;
       /// atomic number of the underlying material
@@ -269,27 +268,24 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct VisAttr : public Ref_t {
+    class VisAttr : public Handle<VisAttrObject> {
+    public:
       enum Style { SOLID = 0x1, WIREFRAME = 0x2, DASHED = 0x2, LAST_STYLE };
-      struct Object : public TNamed {
-        unsigned long magic;
-        void*         col;
-        int           color;
-        float         alpha;
-        unsigned char drawingStyle, lineStyle, showDaughters, visible;
-        /// Standard constructor
-        Object();
-        /// Default destructor
-        virtual ~Object();
-      };
+      typedef VisAttrObject Object;
       /// Default constructor
-      VisAttr() : Ref_t() {}
-      /// Constructor to be used for assignment from object handle
-      template <typename Q> VisAttr(const Handle<Q>& e) : Ref_t(e) {}
+      VisAttr() : Handle<Object>() {}
       /// Copy constructor for handle
-      VisAttr(const VisAttr& e) : Ref_t(e) {}
+      VisAttr(const VisAttr& e) : Handle<Object>(e) {}
+#ifndef __CINT__
+      /// Copy constructor for handle
+      VisAttr(const Handle<Object>& e) : Handle<Object>(e) {}
+#endif
+      /// Constructor to be used for assignment from object handle
+      template <typename Q> VisAttr(const Handle<Q>& e) : Handle<Object>(e) {}
       /// Constructor to be used when creating a new registered visualization object
       VisAttr(const std::string& name);
+      /// Constructor to be used when creating a new registered visualization object
+      VisAttr(const char* name);
       /// Assignment operator
       VisAttr& operator=(const VisAttr& attr) {
         m_element = attr.m_element;
@@ -340,7 +336,8 @@ namespace DD4hep {
      * @author  M.Frank
      * @version 1.0
      */
-    struct AlignmentEntry : public Handle<TGeoPhysicalNode> {
+    class AlignmentEntry : public Handle<TGeoPhysicalNode> {
+    public:
       typedef Handle<TGeoPhysicalNode> Base;
       /// Constructor to be used when reading the already parsed DOM tree
       template <typename Q> AlignmentEntry(const Handle<Q>& h) : Base(h) {}
@@ -360,7 +357,8 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct Limit {
+    class Limit {
+    public:
       std::string particles;
       std::string name;
       std::string unit;
@@ -385,23 +383,25 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct LimitSet : public Ref_t {
-      struct Object : public TNamed, public std::set<Limit> {
-        /// Standard constructor
-        Object();
-        /// Default destructor
-        virtual ~Object();
-      };
+    class LimitSet : public Handle<LimitSetObject> {
+    public:
+      typedef LimitSetObject Object;
       /// Constructor to be used when reading the already parsed DOM tree
-      LimitSet() : Ref_t() {}
+      LimitSet() : Handle<LimitSetObject>() {}
+      /// Copy constructor for handle
+      LimitSet(const LimitSet& e) : Handle<LimitSetObject>(e) {}
+#ifndef __CINT__
+      /// Copy constructor for handle
+      LimitSet(const Handle<LimitSetObject>& e) : Handle<LimitSetObject>(e) {}
+#endif
       /// Constructor to be used when reading the already parsed DOM tree
-      template <typename Q> LimitSet(const Handle<Q>& e) : Ref_t(e) {}
+      template <typename Q> LimitSet(const Handle<Q>& e) : Handle<LimitSetObject>(e) {}
       /// Constructor to be used when creating a new object
       LimitSet(const std::string& name);
       /// Add new limit. Returns true if the new limit was added, false if it already existed.
-      bool addLimit(const Limit& limit);
+      bool addLimit(const DD4hep::Geometry::Limit& limit);
       /// Accessor to limits container
-      const std::set<Limit>& limits() const;
+      const std::set<DD4hep::Geometry::Limit>& limits() const;
     };
 
     /** @class Region Objects.h
@@ -409,23 +409,20 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct Region : public Ref_t {
-      struct Object : public TNamed {
-        unsigned long            magic;
-        double                   threshold;
-        double                   cut;
-        bool                     store_secondaries;
-        std::string              lunit, eunit;
-        std::vector<std::string> user_limits;
-        /// Standard constructor
-        Object();
-        /// Default destructor
-        virtual ~Object();
-      };
+    class Region : public Handle<RegionObject> {
+    public:
+      /// Implemeting class
+      typedef RegionObject Object;
       /// Default constructor
-      Region() : Ref_t() {}
-      /// Constructor to be used when reading the already parsed DOM tree
-      template <typename Q> Region(const Handle<Q>& e) : Ref_t(e) {}
+      Region() : Handle<Object>() {}
+      /// Copy Constructor
+      Region(const Region& e) : Handle<Object>(e) {}
+#ifndef __CINT__
+      /// Copy Constructor
+      Region(const Handle<RegionObject>& e) : Handle<Object>(e) {}
+#endif
+      /// Constructor to be used when assigning handle
+      template <typename Q> Region(const Handle<Q>& e) : Handle<Object>(e) {}
       /// Constructor to be used when creating a new object
       Region(const std::string& name);
 

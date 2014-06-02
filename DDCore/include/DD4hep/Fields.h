@@ -11,6 +11,7 @@
 #define DD4HEP_GEOMETRY_FIELDS_H
 
 // Framework include files
+#include "DD4hep/NamedObject.h"
 #include "DD4hep/Objects.h"
 
 // C/C++ include files
@@ -41,13 +42,15 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct CartesianField : public Ref_t {
+    class CartesianField : public Ref_t {
+    public:
       enum FieldType { UNKNOWN = 0, ELECTRIC = 0x1, MAGNETIC = 0x2 };
       typedef std::map<std::string, std::string>    PropertyValues;
       typedef std::map<std::string, PropertyValues> Properties;
 
       /// Internal data class shared by all handles of a given type
-      struct Object : public TNamed {
+      class Object : public NamedObject {
+      public:
         /// Field type
         int type;
         /// Field extensions
@@ -111,17 +114,19 @@ namespace DD4hep {
      *  @author  M.Frank
      *  @version 1.0
      */
-    struct OverlayedField : public Ref_t {
+    class OverlayedField : public Ref_t {
+    public:
       enum FieldType { ELECTRIC = 0x1, MAGNETIC = 0x2 };
       typedef std::map<std::string, std::string>    PropertyValues;
       typedef std::map<std::string, PropertyValues> Properties;
 
-      struct Object : public TNamed {
-        int                         type;
-        CartesianField              electric;
-        CartesianField              magnetic;
-        std::vector<CartesianField> electric_components;
-        std::vector<CartesianField> magnetic_components;
+      class Object : public NamedObject {
+      public:
+        int                                           type;
+        DD4hep::Geometry::CartesianField              electric;
+        DD4hep::Geometry::CartesianField              magnetic;
+        std::vector<DD4hep::Geometry::CartesianField> electric_components;
+        std::vector<DD4hep::Geometry::CartesianField> magnetic_components;
         /// Field extensions
         Properties properties;
         /// Default constructor
