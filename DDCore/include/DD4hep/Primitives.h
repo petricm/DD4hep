@@ -19,6 +19,11 @@
  */
 namespace DD4hep {
 
+  namespace DDSegmentation {
+    class BitField64;
+    class BitFieldValue;
+  }
+
   /// We need it so often: one-at-time 32 bit hash function
   inline unsigned int hash32(const char* key) {
     unsigned int hash = 0;
@@ -95,9 +100,18 @@ namespace DD4hep {
     void* apply_downCast(const ComponentCast& to, const void* ptr) const;
   };
 
-  // Put here global basic type definitions derived from primitive types of the DD4hep namespace
-  typedef DDSegmentation::CellID   CellID;
-  typedef DDSegmentation::VolumeID VolumeID;
+// Put here global basic type definitions derived from primitive types of the DD4hep namespace
+#ifdef __CINT__
+  typedef DDSegmentation::CellID        CellID;
+  typedef DDSegmentation::VolumeID      VolumeID;
+  typedef DDSegmentation::BitField64    BitField64;
+  typedef DDSegmentation::BitFieldValue BitFieldValue;
+#else
+  using DDSegmentation::CellID;
+  using DDSegmentation::VolumeID;
+  using DDSegmentation::BitField64;
+  using DDSegmentation::BitFieldValue;
+#endif
 
   /// Helper to copy objects.
   template <typename T> inline void copyObject(void* target, const void* source) {
