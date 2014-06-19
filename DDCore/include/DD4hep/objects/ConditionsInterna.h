@@ -56,8 +56,9 @@ namespace DD4hep {
       public:
         enum { UNKNOWN_IOV = 1 << 0 } _IOVTypes;
         /// IOV buffer type: Must be a bitmap!
-        int           type;
-        unsigned char data[16];
+        int type;
+        int data[4];
+        int _spare;
         /// Initializing constructor
         IOV(int t = UNKNOWN_IOV);
         /// Standard Destructor

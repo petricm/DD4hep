@@ -18,6 +18,7 @@
  */
 namespace DD4hep {
 
+  /// Helper to support object counting when debugging memory leaks
   /** @class InstanceCount InstanceCount.h StorageSvc/InstanceCount.h
    *
    * Small class to enable object construction/destruction tracing
@@ -30,6 +31,8 @@ namespace DD4hep {
     typedef long long int counter_t;
     /// Enumeration to steer the output
     enum { NONE = 1 << 0, STRING = 1 << 1, TYPEINFO = 1 << 2, ALL = STRING | TYPEINFO };
+
+    /// Internal class to could object constructions and destructions
     /** @class Counter
      *
      * Small class to enable object construction/destruction tracing.

@@ -67,8 +67,8 @@ namespace DD4hep {
     /** Access to identity transformation  */
     TGeoIdentity* identityTransform();
 
-    /** @class Author Objects.h
-     *
+    /// Handle class describing an author identity
+    /** 
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -101,8 +101,8 @@ namespace DD4hep {
       void setAuthorEmail(const std::string& addr);
     };
 
-    /** @class Header Objects.h
-     *
+    /// Handle class describing the basic information about geometry objects as it is defined in LCDD
+    /**
      *  Description of the geometry header. Containes useful auxiliary information.
      *
      *  @author  M.Frank
@@ -156,7 +156,10 @@ namespace DD4hep {
       void setComment(const std::string& new_comment);
     };
 
-    /** @class Constant Objects.h
+    /// Handle class describing a constant (define) object in lcdd
+    /** 
+     *  Constant objects are parsed by the expression evaluator and
+     *  are subsequently available for expression evaluation.
      *
      *  @author  M.Frank
      *  @version 1.0
@@ -210,8 +213,8 @@ namespace DD4hep {
     /**  @see http://root.cern.ch/root/html/ROOT__Math__Translations3D.html */
     typedef ROOT::Math::Translation3D Translation3D;
 
-    /** @class Atom Objects.h
-     *
+    /// Handle class describing an element in the periodic table
+    /** 
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -329,8 +332,8 @@ namespace DD4hep {
       std::string toString() const;
     };
 
-    /**@class AligmentEntry
-     *
+    /// OBSOLETE: Handle class describing an alignment entry
+    /**
      * Class representing an alignment entry
      *
      * @author  M.Frank
@@ -351,9 +354,8 @@ namespace DD4hep {
       int align(const Position& pos, const RotationZYX& rot, bool check = false, double overlap = 0.001);
     };
 
-    /** @class Limit Objects.h
-     *  Small object describing a limit structure
-     *
+    /// Small object describing a limit structure acting on a particle type
+    /** 
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -378,8 +380,8 @@ namespace DD4hep {
       std::string toString() const;
     };
 
-    /** @class LimitSet Objects.h
-     *
+    /// Handle class describing a set of limits as they are used for simulation
+    /**
      *  @author  M.Frank
      *  @version 1.0
      */
@@ -404,8 +406,8 @@ namespace DD4hep {
       const std::set<DD4hep::Geometry::Limit>& limits() const;
     };
 
-    /** @class Region Objects.h
-     *
+    /// Handle class describing a region as used in simulation
+    /**
      *  @author  M.Frank
      *  @version 1.0
      */

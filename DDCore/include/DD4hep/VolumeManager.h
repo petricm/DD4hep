@@ -32,6 +32,7 @@ namespace DD4hep {
     class VolumeManagerContext;
     class VolumeManagerObject;
 
+    /// Class to support the retrieval of detector elements and volumes given a valid identifier
     /** @class VolumeManager  VolumeManager.h DD4hep/lcdd/VolumeManager.h
      *
      *  The VolumeManager manages the repository of sensitive physical
@@ -105,6 +106,8 @@ namespace DD4hep {
        */
       VolumeManager(LCDD& lcdd, const std::string& name, DetElement world = DetElement(), Readout ro = Readout(),
                     int flags = NONE);
+      /// Initializing constructor for subdetector volume managers.
+      VolumeManager(DetElement subdetector, Readout ro);
 
       /// Assignment operator
       VolumeManager& operator=(const VolumeManager& m) {
@@ -117,12 +120,8 @@ namespace DD4hep {
       /// Access the volume manager by cell id
       VolumeManager subdetector(VolumeID id) const;
 
-      /// Assign the top level detector element to this manager
-      void setDetector(DetElement det_eleemnt, Readout ro);
       /// Access the top level detector element
       DetElement detector() const;
-      /// Assign IDDescription to VolumeManager structure
-      void setIDDescriptor(IDDescriptor spec) const;
       /// Access IDDescription structure
       IDDescriptor idSpec() const;
 

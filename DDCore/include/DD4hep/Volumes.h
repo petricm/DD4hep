@@ -61,6 +61,7 @@ namespace DD4hep {
     class PlacedVolume;
     class SensitiveDetector;
 
+    /// Implementation class extending the ROOT placed volume (TGeoNode)
     /** @class PlacedVolumeExtension Volume.h  DD4hep/lcdd/Volume.h
      *
      *  @author  M.Frank
@@ -69,6 +70,7 @@ namespace DD4hep {
     class PlacedVolumeExtension : public TGeoExtension {
     public:
       typedef std::pair<std::string, int> VolID;
+      /// Volume ID container
       class VolIDs : public std::vector<VolID> {
       public:
         typedef std::vector<VolID> Base;
@@ -103,7 +105,11 @@ namespace DD4hep {
       ClassDef(PlacedVolumeExtension, 1);
     };
 
+    /// Handle class holding a placed volume (also called physical volume)
     /** @class PlacedVolume Volume.h  DD4hep/lcdd/Volume.h
+     *
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoNode.html 
      *
      *  @author  M.Frank
      *  @version 1.0
@@ -143,6 +149,7 @@ namespace DD4hep {
       std::string toString() const;
     };
 
+    /// Implementation class extending the ROOT volume (TGeoVolume)
     /** @class Volume::Object Volume.h  DD4hep/Volume.h
      *
      *  Internal data structure optional to TGeo data
@@ -182,12 +189,16 @@ namespace DD4hep {
       ClassDef(VolumeExtension, 1);
     };
 
+    /// Handle class holding a placed volume (also called physical volume)
     /** @class Volume Volume.h  DD4hep/Volume.h
      *
-     *  Handle describing a Volume
+     *   Handle describing a Volume
      *
-     *  @author  M.Frank
-     *  @version 1.0
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoVolume.html 
+     *
+     *   @author  M.Frank
+     *   @version 1.0
      */
     class Volume : public Handle<TGeoVolume> {
     public:

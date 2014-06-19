@@ -41,9 +41,12 @@ namespace DD4hep {
 
     // Forward declarations
 
-    /**@class Solid_type Shapes.h
+    ///  Base class for Solid (shape) objects
+    /**
+     *   Generic handle holding an object of base TGeoShape.
      *
-     *   Base class for Solid objects
+     *   For any further documentation please see the following ROOT documentation:
+     *   @see http://root.cern.ch/root/html/TGeoShape.html 
      *
      *   @author  M.Frank
      *   @version 1.0
@@ -79,8 +82,8 @@ namespace DD4hep {
     };
     typedef Solid_type<TGeoShape> Solid;
 
-    /**@class Box Shapes.h
-     *
+    /// Class describing a box shape
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoBBox.html 
      *
@@ -90,6 +93,7 @@ namespace DD4hep {
      */
     struct Box : public Solid_type<TGeoBBox> {
     protected:
+      /// Internal helper method to support object construction
       void make(const std::string& name, double x, double y, double z);
 
     public:
@@ -117,8 +121,8 @@ namespace DD4hep {
       double z() const;
     };
 
-    /**@class Polycone Shapes.h
-     *
+    /// Class describing a Polycone shape
+    /**
      *   Polycone. It has at least 9 parameters :
      *      - the lower phi limit;
      *      - the range in phi;
@@ -149,8 +153,8 @@ namespace DD4hep {
       void addZPlanes(const std::vector<double>& rmin, const std::vector<double>& rmax, const std::vector<double>& z);
     };
 
-    /**@class ConeSegment Shapes.h DDCore/Shapes.h
-     *
+    /// Class describing a cone segment shape
+    /**
      *   A ConeSegment is, in the general case, a Phi segment of a cone, with
      *   half-length dz, inner and outer radii specified at -dz and +dz.
      *
@@ -181,8 +185,8 @@ namespace DD4hep {
       double GetRmax() const { return GetRmax1(); }
     };
 
-    /**@class Tube Shapes.h
-     *
+    /// Class describing a tube shape of a section of a tube
+    /**
      *   TGeoTube - cylindrical tube class. It takes 3 parameters :
      *            inner radius, outer radius and half-length dz.
      *
@@ -194,6 +198,7 @@ namespace DD4hep {
      */
     struct Tube : public Solid_type</*TGeoTubeSeg */ MyConeSeg> {
     protected:
+      /// Internal helper method to support object construction
       void make(const std::string& name, double rmin, double rmax, double z, double startPhi, double deltaPhi);
 
     public:
@@ -229,9 +234,8 @@ namespace DD4hep {
       Tube& setDimensions(double rmin, double rmax, double z, double startPhi = 0.0, double deltaPhi = 2 * M_PI);
     };
 
-    /**@class Cone Shapes.h
-     *
-     *
+    /// Class describing a cone shape
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoCone.html 
      *
@@ -240,6 +244,7 @@ namespace DD4hep {
      */
     struct Cone : public Solid_type<TGeoCone> {
     protected:
+      /// Internal helper method to support object construction
       void make(const std::string& name, double z, double rmin1, double rmax1, double rmin2, double rmax2);
 
     public:
@@ -258,8 +263,8 @@ namespace DD4hep {
       Cone& setDimensions(double z, double rmin1, double rmax1, double rmin2, double rmax2);
     };
 
-    /**@class Trap Shapes.h
-     *
+    /// Class describing a trap shape
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoTrap.html 
      *
@@ -268,6 +273,7 @@ namespace DD4hep {
      */
     struct Trap : public Solid_type<TGeoTrap> {
     private:
+      /// Internal helper method to support object construction
       void make(double pz, double py, double px, double pLTX);
 
     public:
@@ -293,8 +299,8 @@ namespace DD4hep {
                           double x3, double x4, double alpha2);
     };
 
-    /**@class Trapezoid Shapes.h
-     *
+    /// Class describing a Trapezoid shape
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoTrd2.html 
      *
@@ -304,6 +310,7 @@ namespace DD4hep {
      */
     struct Trapezoid : public Solid_type<TGeoTrd2> {
     private:
+      /// Internal helper method to support object construction
       void make(double x1, double x2, double y1, double y2, double z);
 
     public:
@@ -321,8 +328,8 @@ namespace DD4hep {
       Trapezoid& setDimensions(double x1, double x2, double y1, double y2, double z);
     };
 
-    /**@class Torus Shapes.h
-     *
+    /// Class describing a Torus shape
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoTorus.html 
      *
@@ -331,6 +338,7 @@ namespace DD4hep {
      */
     struct Torus : public Solid_type<TGeoTorus> {
     private:
+      /// Internal helper method to support object construction
       void make(double r, double rmin, double rmax, double phi, double delta_phi);
 
     public:
@@ -351,8 +359,8 @@ namespace DD4hep {
       Torus& setDimensions(double r, double rmin, double rmax, double phi, double delta_phi);
     };
 
-    /**@class Sphere Shapes.h
-     *
+    /// Class describing a sphere shape
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoSphere.html 
      *
@@ -372,8 +380,8 @@ namespace DD4hep {
       Sphere& setDimensions(double rmin, double rmax, double theta, double delta_theta, double phi, double delta_phi);
     };
 
-    /**@class Paraboloid Shapes.h
-     *
+    /// Class describing a Paraboloid shape
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoParaboloid.html 
      *
@@ -392,8 +400,8 @@ namespace DD4hep {
       Paraboloid& setDimensions(double r_low, double r_high, double delta_z);
     };
 
-    /**@class PolyhedraRegular Shapes.h 
-     *
+    /// Class describing a regular polyhedron shape
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoPgon.html 
      *
@@ -420,8 +428,8 @@ namespace DD4hep {
       PolyhedraRegular(int nsides, double phi_start, double rmin, double rmax, double zlen);
     };
 
-    /**@class EightPointSolid Shapes.h
-     *
+    /// Class describing an arbitray solid defined by 8 vertices.
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoArb8.html 
      *
@@ -430,7 +438,7 @@ namespace DD4hep {
      */
     struct EightPointSolid : public Solid_type<TGeoArb8> {
     private:
-      /// Creator method
+      /// Internal helper method to support object construction
       void make(double dz, const double* vtx);
 
     public:
@@ -442,8 +450,8 @@ namespace DD4hep {
       EightPointSolid(double dz, const double* vertices) { make(dz, vertices); }
     };
 
-    /**@class BooleanSolid Shapes.h
-     *
+    /// Base class describing boolean (=union,intersection,subtraction) solids
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoCompositeShape.html 
      *
@@ -460,8 +468,8 @@ namespace DD4hep {
       template <typename Q> BooleanSolid(const Handle<Q>& e) : Solid_type<TGeoCompositeShape>(e) {}
     };
 
-    /**@class SubtractionSolid Shapes.h
-     *
+    /// Class describing boolean subtraction solid
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoCompositeShape.html 
      *   @see http://root.cern.ch/root/html/TGeoSubtraction.html 
@@ -488,8 +496,8 @@ namespace DD4hep {
       SubtractionSolid(const Solid& shape1, const Solid& shape2, const Transform3D& pos);
     };
 
-    /**@class UnionSolid Shapes.h
-     *
+    /// Class describing boolean union solid
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoCompositeShape.html 
      *   @see http://root.cern.ch/root/html/TGeoUnion.html 
@@ -516,8 +524,8 @@ namespace DD4hep {
       UnionSolid(const Solid& shape1, const Solid& shape2, const Transform3D& pos);
     };
 
-    /**@class IntersectionSolid Shapes.h
-     *
+    /// Class describing boolean intersection solid
+    /**
      *   For any further documentation please see the following ROOT documentation:
      *   @see http://root.cern.ch/root/html/TGeoCompositeShape.html 
      *   @see http://root.cern.ch/root/html/TGeoIntersection.html 

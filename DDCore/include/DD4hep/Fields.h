@@ -31,8 +31,8 @@ namespace DD4hep {
     // Forward declarations
     typedef Position Direction;
 
-    /** @class CartesianField Fields.h
-     *
+    /// Handle class describing any field with 3D cartesian vectors for the field strength.
+    /**
      *  Generic structure describing any field type (electric or magnetic)
      *  with field components in Cartesian coordinates.
      *
@@ -103,8 +103,8 @@ namespace DD4hep {
     typedef CartesianField ElectricField;
     typedef CartesianField MagneticField;
 
-    /** @class OverlayedField Fields.h
-     *
+    /// Class describing a field overlay with several sources
+    /**
      *  Generic structure describing any field type (electric or magnetic)
      *  with field components in Cartesian coordinates.
      *

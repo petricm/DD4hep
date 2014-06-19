@@ -19,8 +19,8 @@
  */
 namespace DD4hep {
 
-  /** @class unrelated_type_error
-   *
+  /// Exception class to signal operations on unrelated classes
+  /**
    *   @author  M.Frank
    *   @date    13.08.2013
    */
@@ -30,8 +30,8 @@ namespace DD4hep {
         : std::runtime_error(msg(typ1, typ2, text)) {}
   };
 
-  /** @class unrelated_value_error
-   *
+  /// Exception class to signal operations on unrelated types of values
+  /**
    *   @author  M.Frank
    *   @date    13.08.2013
    */
