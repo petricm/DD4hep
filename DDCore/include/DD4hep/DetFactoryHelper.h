@@ -9,9 +9,9 @@
 #ifndef DD4hep_DETECTOR_DETFACTORYHELPER_H
 #define DD4hep_DETECTOR_DETFACTORYHELPER_H
 
+#include "DD4hep/DD4hepUnits.h"
 #include "DD4hep/Factories.h"
 #include "DD4hep/LCDD.h"
-#include "DD4hep/TGeoUnits.h"
 #include "XML/XMLDetector.h"
 
 // Shortcuts to elements of the XML namespace

@@ -1,8 +1,8 @@
 #ifndef DDRec_MaterialManager_H_
 #define DDRec_MaterialManager_H_
 
+#include "DD4hep/DD4hepUnits.h"
 #include "DD4hep/Objects.h"
-#include "DD4hep/TGeoUnits.h"
 #include "DDRec/Material.h"
 #include "DDSurfaces/Vector3D.h"
 
