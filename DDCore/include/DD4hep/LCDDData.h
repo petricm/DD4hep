@@ -108,7 +108,7 @@ namespace DD4hep {
 
     public:
       /// Clear data content: releases all allocated resources
-      void destroyData();
+      void destroyData(bool destroy_mgr = true);
       /// Clear data content: DOES NOT RELEASEW ALLOCATED RESOURCES!
       void clearData();
       /// Adopt all data from source structure.
