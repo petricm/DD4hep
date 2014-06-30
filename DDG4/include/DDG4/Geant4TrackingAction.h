@@ -43,7 +43,7 @@ namespace DD4hep {
       /// Default destructor
       virtual ~Geant4TrackingAction();
       /// Access the Geant4 tracking manager. Only use between tracking pre- and post action
-      G4TrackingManager* trackMgr() const { return m_context->trackMgr(); }
+      G4TrackingManager* trackMgr() const { return m_context.trackMgr(); }
       /// Mark the track to be kept for MC truth propagation
       void mark(const G4Track* track) const;
       /// Get the valid Geant4 tarck information

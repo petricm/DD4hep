@@ -49,10 +49,10 @@ namespace DD4hep {
       Geant4Handle(handled_type* typ);
       template <typename T> Geant4Handle(T* typ) : value(0) { checked_assign(dynamic_cast<handled_type*>(typ)); }
       Geant4Handle(const Geant4Handle& handle);
-      Geant4Handle(const Geant4Kernel&, const char* type_name);
-      Geant4Handle(const Geant4Kernel&, const std::string& type_name);
+      Geant4Handle(Geant4Kernel&, const char* type_name);
+      Geant4Handle(Geant4Kernel&, const std::string& type_name);
       /// Constructor only implemented for sensitive objects
-      Geant4Handle(const Geant4Kernel& ctxt, const std::string& type_name, const std::string& detector);
+      Geant4Handle(Geant4Kernel& ctxt, const std::string& type_name, const std::string& detector);
       ~Geant4Handle();
       Property& operator[](const std::string& property_name) const;
       Geant4Handle& operator=(const Geant4Handle& handle);
