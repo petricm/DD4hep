@@ -70,6 +70,7 @@ namespace DD4hep {
       /// Reference to the original Geant4 run object
       const G4Run* m_run;
 
+    protected:
     public:
       /// Intializing constructor
       Geant4Run(const G4Run* run);
@@ -87,8 +88,8 @@ namespace DD4hep {
         return ObjectExtensions::addExtension(ptr, info, dtor);
       }
       /// Add user extension object. Ownership is transferred!
-      template <typename T> T* addExtension(T* ptr) {
-        return (T*)ObjectExtensions::addExtension(ptr, typeid(T), deletePtr<T>);
+      template <typename T> T* addExtension(T* ptr, bool take_ownership = true) {
+        return (T*)ObjectExtensions::addExtension(ptr, typeid(T), take_ownership ? _delete<T> : 0);
       }
       /// Access to type safe extension object. Exception is thrown if the object is invalid
       template <typename T> T* extension(bool alert = true) { return (T*)ObjectExtensions::extension(typeid(T), alert); }
@@ -131,8 +132,8 @@ namespace DD4hep {
         return ObjectExtensions::addExtension(ptr, info, dtor);
       }
       /// Add user extension object. Ownership is transferred and object deleted at the end of the event.
-      template <typename T> T* addExtension(T* ptr) {
-        return (T*)ObjectExtensions::addExtension(ptr, typeid(T), deletePtr<T>);
+      template <typename T> T* addExtension(T* ptr, bool take_ownership = true) {
+        return (T*)ObjectExtensions::addExtension(ptr, typeid(T), take_ownership ? _delete<T> : 0);
       }
       /// Access to type safe extension object. Exception is thrown if the object is invalid
       template <typename T> T* extension(bool alert = true) { return (T*)ObjectExtensions::extension(typeid(T), alert); }
