@@ -76,8 +76,9 @@ namespace DD4hep {
       Geant4Run(const G4Run* run);
       /// Default destructor
       virtual ~Geant4Run();
-      /// Access the G4Run directly
+      /// Access the G4Run directly: Automatic type conversion
       operator const G4Run&() const { return *m_run; }
+      /// Access the G4Event directly: Explicit G4Run accessor
       const G4Run& run() const { return *m_run; }
       /// Add an extension object to the detector element
       /** Note:
@@ -89,7 +90,8 @@ namespace DD4hep {
       }
       /// Add user extension object. Ownership is transferred!
       template <typename T> T* addExtension(T* ptr, bool take_ownership = true) {
-        return (T*)ObjectExtensions::addExtension(ptr, typeid(T), take_ownership ? _delete<T> : 0);
+        destruct_t dt = ObjectExtensions::_delete<T>;
+        return (T*)ObjectExtensions::addExtension(ptr, typeid(T), take_ownership ? dt : 0);
       }
       /// Access to type safe extension object. Exception is thrown if the object is invalid
       template <typename T> T* extension(bool alert = true) { return (T*)ObjectExtensions::extension(typeid(T), alert); }
@@ -120,9 +122,11 @@ namespace DD4hep {
       Geant4Event(const G4Event* run);
       /// Default destructor
       virtual ~Geant4Event();
-      /// Access the G4Event directly
+      /// Access the G4Event directly: Automatic type conversion
       operator const G4Event&() const { return *m_event; }
+      /// Access the G4Event directly: Explicit G4Event accessor
       const G4Event& event() const { return *m_event; }
+
       /// Add an extension object to the detector element
       /** Note:
        *  To add an extension, which should NOT be deleted,
@@ -133,7 +137,8 @@ namespace DD4hep {
       }
       /// Add user extension object. Ownership is transferred and object deleted at the end of the event.
       template <typename T> T* addExtension(T* ptr, bool take_ownership = true) {
-        return (T*)ObjectExtensions::addExtension(ptr, typeid(T), take_ownership ? _delete<T> : 0);
+        destruct_t dt = ObjectExtensions::_delete<T>;
+        return (T*)ObjectExtensions::addExtension(ptr, typeid(T), take_ownership ? dt : 0);
       }
       /// Access to type safe extension object. Exception is thrown if the object is invalid
       template <typename T> T* extension(bool alert = true) { return (T*)ObjectExtensions::extension(typeid(T), alert); }
