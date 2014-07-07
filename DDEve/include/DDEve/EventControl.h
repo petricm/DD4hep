@@ -10,8 +10,8 @@
 #define DD4HEP_DDEVE_EVENTCONTROL_H
 
 // Framework include files
-#include "DDEve/EventHandler.h"
 #include "DDEve/FrameControl.h"
+#include "DDEve/GenericEventHandler.h"
 
 class TGPictureButton;
 class TGLabel;
