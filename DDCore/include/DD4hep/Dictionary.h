@@ -263,7 +263,8 @@ template vector<pair<string, int>>::iterator;
 #include "DDSegmentation/Segmentation.h"
 #include "DDSegmentation/SegmentationParameter.h"
 #include "DDSegmentation/TiledLayerSegmentation.h"
-typedef DD4hep::DDSegmentation::CellID CellID;
+typedef DD4hep::DDSegmentation::VolumeID VolumeID;
+typedef DD4hep::DDSegmentation::CellID   CellID;
 
 #ifdef __CINT__
 #pragma link C++ class DD4hep::DDSegmentation::SegmentationParameter + ;
