@@ -35,7 +35,7 @@ namespace DD4hep {
     class Geant4ActionPhase;
     class Geant4GeneratorAction;
     class Geant4PhysicsList;
-
+    class Geant4UserParticleHandler;
     class Geant4GeneratorActionSequence;
     class Geant4RunActionSequence;
     class Geant4EventActionSequence;
@@ -64,6 +64,7 @@ namespace DD4hep {
       typedef Geant4Handle<Geant4PhysicsList>     PhysicsList;
       typedef Geant4Handle<Geant4ActionPhase>     Phase;
       typedef Geant4Handle<Geant4Sensitive>       Sensitive;
+
       // Sequences
       typedef Geant4Handle<Geant4SensDetActionSequence>     SensitiveSeq;
       typedef Geant4Handle<Geant4GeneratorActionSequence>   GeneratorSeq;
@@ -85,11 +86,13 @@ namespace DD4hep {
 #include "DDG4/Geant4GeneratorAction.h"
 #include "DDG4/Geant4Handle.h"
 #include "DDG4/Geant4Kernel.h"
+#include "DDG4/Geant4ParticleHandler.h"
 #include "DDG4/Geant4PhysicsList.h"
 #include "DDG4/Geant4RunAction.h"
 #include "DDG4/Geant4SensDetAction.h"
 #include "DDG4/Geant4StackingAction.h"
 #include "DDG4/Geant4SteppingAction.h"
 #include "DDG4/Geant4TrackingAction.h"
+#include "DDG4/Geant4UserParticleHandler.h"
 
 #endif  // DDG4_GEANT4CONFIG_H

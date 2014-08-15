@@ -36,7 +36,7 @@ namespace DD4hep {
     Display* m_display;
 
   public:
-    enum { CALODATA = 1 << 1, DETELEMENT = 1 << 2, VIEW = 1 << 3, PANEL = 1 << 4 };
+    enum { CALODATA = 1 << 1, DETELEMENT = 1 << 2, VIEW = 1 << 3, PANEL = 1 << 4, COLLECTION = 1 << 5 };
     struct Defaults {
       char  load_geo;
       char  show_evt;
@@ -55,6 +55,14 @@ namespace DD4hep {
       int   spare;
     };
     struct Panel : public Defaults {};
+    struct Hits : public Defaults {
+      float size;  // Marker size
+      float width;
+      float threshold;
+      float towerH;
+      float emax;  // Max energy deposit displayed
+      int   type;  // Marker type
+    };
     class Config {
     public:
       union Values {
@@ -63,6 +71,7 @@ namespace DD4hep {
         Calo3D   calo3d;
         Calodata calodata;
         Panel    pane;
+        Hits     hits;
       } data;
       std::string name;
       std::string hits;
@@ -96,6 +105,7 @@ namespace DD4hep {
     typedef std::list<ViewConfig> ViewConfigurations;
     ViewConfigurations            views;
     Configurations                calodata;
+    Configurations                collections;
 
   public:
     /// Initializing constructor
