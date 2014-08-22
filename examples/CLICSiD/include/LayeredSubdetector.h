@@ -44,7 +44,7 @@ namespace DD4hep {
         return layerStack->getRadiationLengths(layerIndex, moduleIndex);
       }
 
-      inline double getMipEnergyLoss(int layerIndex, int moduleIndex = 1) const { return 0.; }
+      inline double getMipEnergyLoss(int /* layerIndex */, int /* moduleIndex */ = 1) const { return 0.; }
 
       inline double getTotalThickness(int moduleIndex = 1) const { return layerStack->getTotalThickness(moduleIndex); }
 
