@@ -11,24 +11,8 @@
 #include <string>
 
 // Forward declarations
-class G4Event;
-namespace IO {
-  class LCReader;
-}
-namespace UTIL {
-  class LCStdHepRdr;
-}
-namespace EVENT {
-  class MCParticle;
-}
 namespace EVENT {
   class LCCollection;
-}
-namespace IMPL {
-  class MCParticleImpl;
-}
-namespace IMPL {
-  class LCCollectionVec;
 }
 
 /*

@@ -52,18 +52,27 @@ namespace DD4hep {
       }
       G4ParticleDefinition* trackDef() const { return track->GetDefinition(); }
       int                   trkPdgID() const { return track->GetDefinition()->GetPDGEncoding(); }
+      /// Returns the step status (argument) in form of a string
       static const char* stepStatus(G4StepStatus status);
+      /// Returns the pre-step status in form of a string
       const char* preStepStatus() const;
+      /// Returns the post-step status in form of a string
       const char* postStepStatus() const;
-      Position    prePos() const {
+      /// Returns total energy deposit
+      double totalEnergy() const { return step->GetTotalEnergyDeposit(); }
+      /// Returns the pre-step position
+      Position prePos() const {
         const G4ThreeVector& p = pre->GetPosition();
         return Position(p.x(), p.y(), p.z());
       }
+      /// Returns the pre-step position as a G4ThreeVector
       const G4ThreeVector& prePosG4() const { return pre->GetPosition(); }
-      Position             postPos() const {
+      /// Returns the post-step position
+      Position postPos() const {
         const G4ThreeVector& p = post->GetPosition();
         return Position(p.x(), p.y(), p.z());
       }
+      /// Returns the post-step position as a G4ThreeVector
       const G4ThreeVector& postPosG4() const { return post->GetPosition(); }
       Momentum             preMom() const {
         const G4ThreeVector& p = pre->GetMomentum();
@@ -79,6 +88,7 @@ namespace DD4hep {
       }
       double              deposit() const { return step->GetTotalEnergyDeposit(); }
       int                 trkID() const { return track->GetTrackID(); }
+      double              trkTime() const { return track->GetGlobalTime(); }
       double              trkEnergy() const { return track->GetTotalEnergy(); }
       double              trkKineEnergy() const { return track->GetKineticEnergy(); }
       const G4VTouchable* preTouchable() const { return pre->GetTouchable(); }
@@ -110,6 +120,16 @@ namespace DD4hep {
       G4VSensitiveDetector*               postSD() const { return sd(post); }
       bool                                firstInVolume() const { return step->IsFirstStepInVolume(); }
       bool                                lastInVolume() const { return step->IsLastStepInVolume(); }
+      /// Coordinate transformation to global coordinates.
+      /** Note: Positions are in units of MM! */
+      Position localToGlobal(const Position& local) const;
+      /// Coordinate transformation to global coordinates.
+      /** Note: DDSegmentation points are units in CM! Conversion done inside! */
+      Position localToGlobal(const DDSegmentation::Vector3D& local) const;
+      /// Coordinate transformation to global coordinates in MM
+      Position localToGlobal(const G4ThreeVector& local) const;
+      /// Coordinate transformation to global coordinates in MM
+      Position localToGlobal(double x, double y, double z) const;
     };
 
   }  // End namespace Simulation
