@@ -54,7 +54,7 @@ namespace DD4hep {
       /// Print tree of kept particles
       void printParticleTree(const ParticleMap& particles) const;
       /// Print particle table
-      void makePrintout() const;
+      void makePrintout(int event_id) const;
 
     public:
       /// Standard constructor
