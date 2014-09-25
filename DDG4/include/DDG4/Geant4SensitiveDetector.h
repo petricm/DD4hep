@@ -22,23 +22,21 @@
 
 #include <algorithm>
 
-/*
- *   DD4hep namespace declaration
- */
+/// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /*
-   *   Simulation namespace declaration
-   */
+  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
   namespace Simulation {
 
     // Forward declarations
     class Geant4StepHandler;
     class Geant4SensitiveDetector;
 
+    /// Deprecated: Example G4VSensitiveDetector implementation.
     /** @class Geant4SensitiveDetector Geant4SensitiveDetector.h DDG4/Geant4SensitiveDetector.h
-     *  Example G4VSensitiveDetector implementation.
      *
+     *  \deprecated{Deprecated class. Not supported by the DDG4 kernel.}
+     * 
      * @author  M.Frank
      * @version 1.0
      */

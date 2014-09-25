@@ -17,6 +17,7 @@
 #include "DD4hep/objects/DetectorInterna.h"
 #include "DD4hep/objects/ObjectsInterna.h"
 #include "DD4hep/objects/VolumeManagerInterna.h"
+#include "XML/Evaluator.h"
 
 #include <map>
 #include <vector>
@@ -29,6 +30,8 @@ namespace DD4hep {
     TRint app(name.c_str(), &a.first, a.second);
     app.Run();
   }
+  XmlTools::Evaluator& evaluator();
+  XmlTools::Evaluator& g4Evaluator();
 }
 
 // -------------------------------------------------------------------------
@@ -38,6 +41,11 @@ namespace DD4hep {
 #pragma link off all globals;
 #pragma link off all classes;
 #pragma link off all functions;
+
+#pragma link C++ namespace XmlTools;
+#pragma link C++ class XmlTools::Evaluator;
+#pragma link C++ function DD4hep::evaluator;
+#pragma link C++ function DD4hep::g4Evaluator;
 
 #pragma link C++ namespace DD4hep;
 #pragma link C++ namespace DD4hep::Geometry;
@@ -49,6 +57,7 @@ template pair<unsigned int, string>;
 template class DD4hep::Geometry::Handle<NamedObject>;
 template class map<string, DD4hep::Geometry::Handle<DD4hep::NamedObject>>;
 #pragma link C++ class DD4hep::NamedObject + ;
+#pragma link C++ class DD4hep::Geometry::Ref_t + ;
 #pragma link C++ class DD4hep::Geometry::Handle < DD4hep::NamedObject > +;
 #pragma link C++ class pair < string, DD4hep::Geometry::Handle < DD4hep::NamedObject >> +;
 #pragma link C++ class map < string, DD4hep::Geometry::Handle < DD4hep::NamedObject >> +;

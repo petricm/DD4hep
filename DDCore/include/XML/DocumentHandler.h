@@ -9,16 +9,16 @@
 #ifndef DD4HEP_XML_DOCUMENTHANDLER_H
 #define DD4HEP_XML_DOCUMENTHANDLER_H
 
-#include <memory>
+// Framework include files
 #include "XML/XMLElements.h"
-/*
- *   DD4hep namespace declaration
- */
+
+// C/C++ include files
+#include <memory>
+
+/// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /*
-   *   XML namespace declaration
-   */
+  /// Namespace containing utilities to parse XML files using XercesC or TinyXML
   namespace XML {
 
     // Forward declarations

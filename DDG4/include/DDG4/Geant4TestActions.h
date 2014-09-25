@@ -21,14 +21,10 @@
 #include "DDG4/Geant4SteppingAction.h"
 #include "DDG4/Geant4TrackingAction.h"
 
-/*
- *   DD4hep namespace declaration
- */
+/// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /*
-   *   Simulation namespace declaration
-   */
+  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
   namespace Simulation {
 
     namespace Test {
@@ -58,7 +54,8 @@ namespace DD4hep {
        * @author  M.Frank
        * @version 1.0
        */
-      struct Geant4TestGeneratorAction : public Geant4GeneratorAction, public Geant4TestBase {
+      class Geant4TestGeneratorAction : public Geant4GeneratorAction, public Geant4TestBase {
+      public:
         /// Standard constructor with initializing arguments
         Geant4TestGeneratorAction(Geant4Context* c, const std::string& n);
         /// Default destructor
@@ -72,7 +69,8 @@ namespace DD4hep {
        * @author  M.Frank
        * @version 1.0
        */
-      struct Geant4TestRunAction : public Geant4RunAction, public Geant4TestBase {
+      class Geant4TestRunAction : public Geant4RunAction, public Geant4TestBase {
+      public:
         /// Standard constructor with initializing arguments
         Geant4TestRunAction(Geant4Context* c, const std::string& n);
         /// Default destructor
@@ -92,7 +90,8 @@ namespace DD4hep {
        * @author  M.Frank
        * @version 1.0
        */
-      struct Geant4TestEventAction : public Geant4EventAction, public Geant4TestBase {
+      class Geant4TestEventAction : public Geant4EventAction, public Geant4TestBase {
+      public:
         /// Standard constructor with initializing arguments
         Geant4TestEventAction(Geant4Context* c, const std::string& n);
         /// Default destructor
@@ -112,7 +111,8 @@ namespace DD4hep {
        * @author  M.Frank
        * @version 1.0
        */
-      struct Geant4TestTrackAction : public Geant4TrackingAction, public Geant4TestBase {
+      class Geant4TestTrackAction : public Geant4TrackingAction, public Geant4TestBase {
+      public:
         /// Standard constructor with initializing arguments
         Geant4TestTrackAction(Geant4Context* c, const std::string& n);
         /// Default destructor
@@ -128,7 +128,8 @@ namespace DD4hep {
        * @author  M.Frank
        * @version 1.0
        */
-      struct Geant4TestStepAction : public Geant4SteppingAction, public Geant4TestBase {
+      class Geant4TestStepAction : public Geant4SteppingAction, public Geant4TestBase {
+      public:
         /// Standard constructor with initializing arguments
         Geant4TestStepAction(Geant4Context* c, const std::string& n);
         /// Default destructor
@@ -142,8 +143,11 @@ namespace DD4hep {
        * @author  M.Frank
        * @version 1.0
        */
-      struct Geant4TestSensitive : public Geant4Sensitive, public Geant4TestBase {
+      class Geant4TestSensitive : public Geant4Sensitive, public Geant4TestBase {
+      protected:
         size_t m_collectionID;
+
+      public:
         /// Standard constructor with initializing arguments
         Geant4TestSensitive(Geant4Context* c, const std::string& n, DetElement det, LCDD& lcdd);
         /// Default destructor

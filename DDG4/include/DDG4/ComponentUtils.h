@@ -13,9 +13,7 @@
 #include "DD4hep/Exceptions.h"
 #include "DD4hep/Primitives.h"
 
-/*
- *   DD4hep namespace declaration
- */
+/// Namespace for the AIDA detector description toolkit
 namespace DD4hep {}  // End namespace DD4hep
 
 #endif  // DD4HEP_DDG4_COMPONENTTUILS_H
