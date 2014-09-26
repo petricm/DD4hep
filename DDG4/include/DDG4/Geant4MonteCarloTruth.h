@@ -20,24 +20,20 @@ class G4Step;
 class G4Track;
 class G4Event;
 
-/*
- *   DD4hep namespace declaration
- */
+/// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /*
-   *   Simulation namespace declaration
-   */
+  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
   namespace Simulation {
 
     // Forward declarations
     class Geant4Particle;
 
     /// Default Interface class to handle monte carlo truth records
-    /** @class Geant4MonteCarloTruth Geant4MonteCarloTruth.h DDG4/Geant4MonteCarloTruth.h
-     *
-     * @author  M.Frank
-     * @version 1.0
+    /**
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_SIMULATION
      */
     class Geant4MonteCarloTruth {
     public:
@@ -70,12 +66,11 @@ namespace DD4hep {
       virtual void mark(const G4Step* step, int reason) = 0;
     };
 
-    /** @class Geant4DummyTruthHandler Geant4DummyTruthHandler.h DDG4/Geant4DummyTruthHandler.h
-     *
-     * Void implementation doing nothing at all.
-     *
-     * @author  M.Frank
-     * @version 1.0
+    /// Void implementation of the Monte-Carlo thruth handler doing nothing at all.
+    /**
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_SIMULATION
      */
     class Geant4DummyTruthHandler : public Geant4Action, public Geant4MonteCarloTruth {
     protected:

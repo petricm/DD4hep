@@ -26,11 +26,10 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-/*
- *   Gaudi namespace declaration
- */
+/// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
+  /// Namespace for the AIDA detector description toolkit supporting XML utilities
   namespace XML {
 
     typedef const XmlAttr* Attribute;
@@ -42,9 +41,10 @@ namespace DD4hep {
      *  where this class does the unicode translations and
      *  en/decoding.
      *
-     *  @author   M.Frank
-     *  @version  1.0
-     */
+     *  \author   M.Frank
+     *  \version  1.0
+     *  \ingroup DD4HEP_XML
+    */
     class XmlString {
     public:
       /// Replicate string: internally allocates new string, which must be free'ed with release
@@ -66,8 +66,9 @@ namespace DD4hep {
      *  Currently no real use. Present to make Xerces happy,
      *  which has such a class.
      *
-     *  @author   M.Frank
-     *  @version  1.0
+     *  \author   M.Frank
+     *  \version  1.0
+     *  \ingroup DD4HEP_XML
      */
     class XmlException {
     public:
@@ -89,43 +90,46 @@ namespace DD4hep {
     /// Dump DOM tree of a document
     void dumpTree(XmlDocument* doc);
 
-    /// Convert xml attribute to STL string
+    /// Convert xml attribute to STL string  \ingroup DD4HEP_XML
     std::string _toString(const Attribute attr);
-    /// Convert xml string to STL string
+    /// Convert xml string to STL string  \ingroup DD4HEP_XML
     std::string _toString(const XmlChar* toTranscode);
-    /// Do-nothing version. Present for completeness and argument interchangeability
+    /// Do-nothing version. Present for completeness and argument interchangeability  \ingroup DD4HEP_XML
     std::string _toString(const char* s);
-    /// Do-nothing version. Present for completeness and argument interchangeability
+    /// Do-nothing version. Present for completeness and argument interchangeability  \ingroup DD4HEP_XML
     std::string _toString(const std::string& s);
-    /// Format unsigned long integer to string with atrbitrary format
+    /// Format unsigned long integer to string with atrbitrary format  \ingroup DD4HEP_XML
     std::string _toString(unsigned long i, const char* fmt = "%ul");
-    /// Format unsigned integer (32 bits) to string with atrbitrary format
+    /// Format unsigned integer (32 bits) to string with atrbitrary format  \ingroup DD4HEP_XML
     std::string _toString(unsigned int i, const char* fmt = "%u");
-    /// Format signed integer (32 bits) to string with atrbitrary format
+    /// Format signed integer (32 bits) to string with atrbitrary format  \ingroup DD4HEP_XML
     std::string _toString(int i, const char* fmt = "%d");
-    /// Format signed long integer to string with atrbitrary format
+    /// Format signed long integer to string with atrbitrary format  \ingroup DD4HEP_XML
     std::string _toString(long i, const char* fmt = "%fd");
-    /// Format single procision float number (32 bits) to string with atrbitrary format
+    /// Format single procision float number (32 bits) to string with atrbitrary format  \ingroup DD4HEP_XML
     std::string _toString(float d, const char* fmt = "%f");
-    /// Format double procision float number (64 bits) to string with atrbitrary format
+    /// Format double procision float number (64 bits) to string with atrbitrary format  \ingroup DD4HEP_XML
     std::string _toString(double d, const char* fmt = "%f");
 
-    /// Helper function to populate the evaluator dictionary
+    /// Helper function to populate the evaluator dictionary  \ingroup DD4HEP_XML
     void _toDictionary(const XmlChar* name, const XmlChar* value);
+    /// Helper function to populate the evaluator dictionary  \ingroup DD4HEP_XML
     template <typename T> void _toDictionary(const XmlChar* name, T value);
 
+    /// Helper function to populate the evaluator dictionary  \ingroup DD4HEP_XML
     void _toDictionary(const XmlChar* name, float value);
+    /// Helper function to populate the evaluator dictionary  \ingroup DD4HEP_XML
     void _toDictionary(const XmlChar* name, double value);
 
-    /// Conversion function from raw unicode string to bool
+    /// Conversion function from raw unicode string to bool  \ingroup DD4HEP_XML
     bool _toBool(const XmlChar* value);
-    /// Conversion function from raw unicode string to int
+    /// Conversion function from raw unicode string to int  \ingroup DD4HEP_XML
     int _toInt(const XmlChar* value);
-    /// Conversion function from raw unicode string to long
+    /// Conversion function from raw unicode string to long  \ingroup DD4HEP_XML
     long _toLong(const XmlChar* value);
-    /// Conversion function from raw unicode string to float
+    /// Conversion function from raw unicode string to float  \ingroup DD4HEP_XML
     float _toFloat(const XmlChar* value);
-    /// Conversion function from raw unicode string to double
+    /// Conversion function from raw unicode string to double  \ingroup DD4HEP_XML
     double _toDouble(const XmlChar* value);
 
     /// Helper class to encapsulate a unicode string.
@@ -133,8 +137,9 @@ namespace DD4hep {
      *  Simple conversion from ascii strings to unicode strings.
      *  Useful when using XercesC - dummy implementation for TiXml.
      *
-     *  @author  M.Frank
-     *  @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_XML
      */
     class Strng_t {
     public:
@@ -169,25 +174,25 @@ namespace DD4hep {
       Strng_t& operator=(const std::string& s);
     };
 
-    /// Unicode string concatenation of a normal ASCII string from right side
+    /// Unicode string concatenation of a normal ASCII string from right side  \ingroup DD4HEP_XML
     Strng_t operator+(const Strng_t& a, const char* b);
-    /// Unicode string concatenation of a encapsulated and an STL string from right side
+    /// Unicode string concatenation of a encapsulated and an STL string from right side  \ingroup DD4HEP_XML
     Strng_t operator+(const Strng_t& a, const std::string& b);
-    /// Unicode string concatenation of a encapsulated and an encapsulated string from right side
+    /// Unicode string concatenation of a encapsulated and an encapsulated string from right side  \ingroup DD4HEP_XML
     Strng_t operator+(const Strng_t& a, const Strng_t& b);
-    /// Unicode string concatenation of a normal ASCII string from left side
+    /// Unicode string concatenation of a normal ASCII string from left side  \ingroup DD4HEP_XML
     Strng_t operator+(const char* a, const Strng_t& b);
-    /// Unicode string concatenation of a STL string and an encapsulated string from the left.
+    /// Unicode string concatenation of a STL string and an encapsulated string from the left.  \ingroup DD4HEP_XML
     Strng_t operator+(const std::string& a, const Strng_t& b);
 
 #ifndef __TIXML__
-    /// Unicode string concatenation of a encapsulated and raw unicode string from right side
+    /// Unicode string concatenation of a encapsulated and raw unicode string from right side  \ingroup DD4HEP_XML
     Strng_t operator+(const Strng_t& a, const XmlChar* b);
-    /// Unicode string concatenation of a encapsulated and raw unicode string from left side
+    /// Unicode string concatenation of a encapsulated and raw unicode string from left side  \ingroup DD4HEP_XML
     Strng_t operator+(const XmlChar* a, const Strng_t& b);
-    /// Unicode string concatenation of a raw unicode and an STL string from the right
+    /// Unicode string concatenation of a raw unicode and an STL string from the right  \ingroup DD4HEP_XML
     Strng_t operator+(const XmlChar* a, const std::string& b);
-    /// Unicode string concatenation of a raw unicode and an STL string from the left
+    /// Unicode string concatenation of a raw unicode and an STL string from the left  \ingroup DD4HEP_XML
     Strng_t operator+(const std::string& a, const XmlChar* b);
 
 #endif
@@ -200,8 +205,9 @@ namespace DD4hep {
      *  -- const char*.
      *  Internally a copy representation as an std::string is kept.
      *
-     *  @author  M.Frank
-     *  @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_XML
      */
     class Tag_t : public Strng_t {
     public:
@@ -237,17 +243,17 @@ namespace DD4hep {
       const char* c_str() const { return m_str.c_str(); }
     };
 
-    /// Tag/string concatenation with a normal ASCII string from right side
+    /// Tag/string concatenation with a normal ASCII string from right side  \ingroup DD4HEP_XML
     Tag_t operator+(const Tag_t& a, const char* b);
-    /// Tag/string concatenation with a normal ASCII string from left side
+    /// Tag/string concatenation with a normal ASCII string from left side  \ingroup DD4HEP_XML
     Tag_t operator+(const char* a, const Tag_t& b);
-    /// Tag/string concatenation with a unicode string from right side
+    /// Tag/string concatenation with a unicode string from right side  \ingroup DD4HEP_XML
     Tag_t operator+(const Tag_t& a, const XmlChar* b);
-    /// Tag/string concatenation with a internal Xml string from right side
+    /// Tag/string concatenation with a internal Xml string from right side  \ingroup DD4HEP_XML
     Tag_t operator+(const Tag_t& a, const Strng_t& b);
-    /// Tag/string concatenation with a STL string from right side
+    /// Tag/string concatenation with a STL string from right side  \ingroup DD4HEP_XML
     Tag_t operator+(const Tag_t& a, const std::string& b);
-    /// Equality operator between tag object and STL string
+    /// Equality operator between tag object and STL string  \ingroup DD4HEP_XML
     inline bool operator==(const std::string& c, const Tag_t& b) { return c == b.m_str; }
 
     /// Class describing a list of XML nodes
@@ -258,8 +264,9 @@ namespace DD4hep {
      *  string tag need to be replicated using strdup/free
      *  (or when using xerces the corresponding unicode routines).
      *
-     *  @author   M.Frank
-     *  @version  1.0
+     *  \author   M.Frank
+     *  \version  1.0
+     *  \ingroup DD4HEP_XML
      */
     class NodeList {
     public:
@@ -288,8 +295,9 @@ namespace DD4hep {
      *  Note: The assignmant operator as well as the copy constructor
      *  do not have to be implemented, they are aut-generated by the compiler!
      *
-     *  @author  M.Frank
-     *  @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_XML
      */
     class Handle_t {
     public:
@@ -446,9 +454,9 @@ namespace DD4hep {
 
     /// Class to support the access to collections of XmlNodes (or XmlElements)
     /**
-     *  Typical
-     *  @author  M.Frank
-     *  @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_XML
      */
     class Collection_t : public Handle_t {
     public:
@@ -503,8 +511,9 @@ namespace DD4hep {
      *  User class encapsulating a DOM document.
      *  Nothing special - normal handle around pointer.
      *
-     *  @author  M.Frank
-     *  @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_XML
      */
     class Document {
     public:
@@ -536,8 +545,9 @@ namespace DD4hep {
      *  XML document shall be destroyed and the corresponding
      *  resources released.
      *
-     *  @author  M.Frank
-     *  @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_XML
      */
     class DocumentHolder : public Document {
     public:
@@ -555,8 +565,9 @@ namespace DD4hep {
      *  analysing the xml documents for constructing
      *  sub-detectors etc.
      *
-     *  @author  M.Frank
-     *  @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_XML
      */
     class Element {
     public:
@@ -647,8 +658,9 @@ namespace DD4hep {
      *  corresponding "ref" attribute. The value of "name"
      *  and "ref" must match to establish the reference.
      *
-     *  @author  M.Frank
-     *  @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_XML
      */
     class RefElement : public Element {
     public:

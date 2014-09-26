@@ -21,18 +21,22 @@ namespace DD4hep {
 
   /// Definition of the generic callback structure for member functions
   /**
-   * @author  M.Frank
-   * @date    01/03/2013
-   * @version 0.1
+   *  \author  M.Frank
+   *  \date    01/03/2013
+   *  \version 1.0
+   *  \ingroup DD4HEP
    */
-  struct Callback {
+  class Callback {
+  public:
     typedef unsigned long (*func_t)(void* obj, const void* fun, const void* args[]);
+    /// Structure definition to store callback related data  \ingroup DD4HEP
     typedef struct { void *first, *second; } mfunc_t;
     typedef unsigned long ulong;
 
     void*   par;
     func_t  call;
     mfunc_t func;
+    /// Default constructor
     Callback() : par(0), call(0) { func.first = func.second = 0; }
     Callback(void* p) : par(p), call(0) { func.first = func.second = 0; }
     Callback(void* p, void* mf, func_t c) : par(p), call(c) { func = *(mfunc_t*)mf; }
@@ -44,9 +48,16 @@ namespace DD4hep {
     template <typename T> static const T* c_cast(const void* p) { return (const T*)p; }
 
     /// Wrapper around a C++ member function pointer
-    template <typename T> struct Wrapper {
+    /**
+     *  \author  M.Frank
+     *  \date    01/03/2013
+     *  \version 1.0
+     *  \ingroup DD4HEP
+     */
+    template <typename T> class Wrapper {
     public:
       typedef T pmf_t;
+      /// Union to store pointers to member functions in callback objects
       union Functor {
         mfunc_t ptr;
         pmf_t   pmf;

@@ -46,9 +46,9 @@ namespace DD4hep {
 
     /// Interface class to access properties of the underlying Geant4 sensitive detector structure
     /** 
-     *
-     * @author  M.Frank
-     * @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_SIMULATION
      */
     class Geant4ActionSD : virtual public Geant4Action {
     protected:
@@ -73,10 +73,10 @@ namespace DD4hep {
     };
 
     /// Base class to construct filters for Geant4 sensitive detectors
-    /** @class Geant4Filter Geant4SensDetAction.h DDG4/Geant4SensDetAction.h
-     *
-     * @author  M.Frank
-     * @version 1.0
+    /**
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_SIMULATION
      */
     class Geant4Filter : public Geant4Action {
     public:
@@ -89,10 +89,10 @@ namespace DD4hep {
     };
 
     /// The base class for Geant4 sensitive detector actions implemented by users
-    /** @class Geant4Sensitive Geant4SensDetAction.h DDG4/Geant4SensDetAction.h
-     *
-     * @author  M.Frank
-     * @version 1.0
+    /**
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_SIMULATION
      */
     class Geant4Sensitive : public Geant4Action {
     public:
@@ -229,12 +229,12 @@ namespace DD4hep {
     };
 
     /// The sequencer to host Geant4 sensitive actions called if particles interact with sensitive elements
-    /** @class Geant4SensDetActionSequence Geant4SensDetAction.h DDG4/Geant4SensDetAction.h
-     *
+    /**
      * Concrete implementation of the sensitive detector action sequence
      *
-     * @author  M.Frank
-     * @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_SIMULATION
      */
     class Geant4SensDetActionSequence : public Geant4Action {
     public:
@@ -344,12 +344,12 @@ namespace DD4hep {
     };
 
     /// Geant4SensDetSequences: class to access groups of sensitive actions
-    /** @class Geant4SensDetActionSequences Geant4SensDetAction.h DDG4/Geant4SensDetAction.h
-     *
+    /**
      * Concrete implementation of the sensitive detector action sequence
      *
-     * @author  M.Frank
-     * @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_SIMULATION
      */
     class Geant4SensDetSequences {
     public:
@@ -385,8 +385,7 @@ namespace DD4hep {
     }
 
     /// Template class to ease the construction of sensitive detectors using particle template specialization
-    /** @class Geant4SensitiveAction Geant4SensDetAction.h DDG4/Geant4SensDetAction.h
-     *
+    /**
      * Templated implementation to realize sensitive detectors.
      * Default implementations for all functions are provided in the file
      * DDG4/Geant4SensDetAction.inl.
@@ -395,8 +394,9 @@ namespace DD4hep {
      * of the base class using explicit template specialization.
      * An example may be found in DDG4/plugins/eant4SDActions.
      *
-     * @author  M.Frank
-     * @version 1.0
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_SIMULATION
      */
     template <typename T> class Geant4SensitiveAction : public Geant4Sensitive {
     protected:

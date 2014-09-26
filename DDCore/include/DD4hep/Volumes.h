@@ -57,16 +57,22 @@ namespace DD4hep {
 
     /// Implementation class extending the ROOT placed volume
     /** 
-     *  For any further documentation please see the following ROOT documentation:
-     *  @see http://root.cern.ch/root/html/TGeoExtension.html 
+     *   For any further documentation please see the following ROOT documentation:
+     *   \see http://root.cern.ch/root/html/TGeoExtension.html 
      *
-     *  @author  M.Frank
-     *  @version 1.0
+     *   \author  M.Frank
+     *   \version 1.0
+     *   \ingroup DD4HEP_GEOMETRY
      */
     class PlacedVolumeExtension : public TGeoExtension {
     public:
       typedef std::pair<std::string, int> VolID;
       /// Volume ID container
+      /**
+       *   \author  M.Frank
+       *   \version 1.0
+       *   \ingroup DD4HEP_GEOMETRY
+       */
       class VolIDs : public std::vector<VolID> {
       public:
         typedef std::vector<VolID> Base;
@@ -104,10 +110,11 @@ namespace DD4hep {
     /// Handle class holding a placed volume (also called physical volume)
     /** 
      *   For any further documentation please see the following ROOT documentation:
-     *   @see http://root.cern.ch/root/html/TGeoNode.html 
+     *   \see http://root.cern.ch/root/html/TGeoNode.html 
      *
-     *   @author  M.Frank
-     *   @version 1.0
+     *   \author  M.Frank
+     *   \version 1.0
+     *   \ingroup DD4HEP_GEOMETRY
      */
     class PlacedVolume : public Handle<TGeoNode> {
     public:
@@ -146,13 +153,14 @@ namespace DD4hep {
 
     /// Implementation class extending the ROOT volume (TGeoVolume)
     /**
-     *  Internal data structure optional to TGeo data.
+     *   Internal data structure optional to TGeo data.
      *
-     *  For any further documentation please see the following ROOT documentation:
-     *  @see http://root.cern.ch/root/html/TGeoExtension.html 
+     *   For any further documentation please see the following ROOT documentation:
+     *   \see http://root.cern.ch/root/html/TGeoExtension.html 
      *
-     *  @author  M.Frank
-     *  @version 1.0
+     *   \author  M.Frank
+     *   \version 1.0
+     *   \ingroup DD4HEP_GEOMETRY
      */
     class VolumeExtension : public TGeoExtension {
     public:
@@ -191,10 +199,11 @@ namespace DD4hep {
      *   Handle describing a Volume
      *
      *   For any further documentation please see the following ROOT documentation:
-     *   @see http://root.cern.ch/root/html/TGeoVolume.html 
+     *   \see http://root.cern.ch/root/html/TGeoVolume.html 
      *
-     *   @author  M.Frank
-     *   @version 1.0
+     *   \author  M.Frank
+     *   \version 1.0
+     *   \ingroup DD4HEP_GEOMETRY
      */
     class Volume : public Handle<TGeoVolume> {
     public:
@@ -290,10 +299,11 @@ namespace DD4hep {
      *  Handle describing a volume assembly. 
      *
      *   For any further documentation please see the following ROOT documentation:
-     *   @see http://root.cern.ch/root/html/TGeoVolumeAssembly.html
+     *   \see http://root.cern.ch/root/html/TGeoVolumeAssembly.html
      *
-     *   @author  M.Frank
-     *   @version 1.0
+     *   \author  M.Frank
+     *   \version 1.0
+     *   \ingroup DD4HEP_GEOMETRY
      */
     class Assembly : public Volume {
     public:

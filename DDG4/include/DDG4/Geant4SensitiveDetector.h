@@ -33,9 +33,8 @@ namespace DD4hep {
     class Geant4SensitiveDetector;
 
     /// Deprecated: Example G4VSensitiveDetector implementation.
-    /** @class Geant4SensitiveDetector Geant4SensitiveDetector.h DDG4/Geant4SensitiveDetector.h
-     *
-     *  \deprecated{Deprecated class. Not supported by the DDG4 kernel.}
+    /**  \deprecated
+     * Deprecated class. Not supported by the DDG4 kernel.
      * 
      * @author  M.Frank
      * @version 1.0
@@ -123,6 +122,10 @@ namespace DD4hep {
       virtual void clear();
     };
 
+    /// Deprecated: Example G4VSensitiveDetector implementation.
+    /**  \deprecated
+     * Deprecated class. Not supported by the DDG4 kernel.
+     */
     template <class T> class Geant4GenericSD : public Geant4SensitiveDetector {
       T userData;
 
