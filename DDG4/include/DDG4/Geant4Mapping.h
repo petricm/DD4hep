@@ -64,6 +64,9 @@ namespace DD4hep {
       /// Access to the data pointer
       Geant4GeometryInfo& data() const { return *m_dataPtr; }
 
+      /// Access to the data pointer
+      Geant4GeometryInfo* ptr() const { return m_dataPtr; }
+
       /// Create and attach new data block. Delete old data block if present.
       Geant4GeometryInfo& init();
 

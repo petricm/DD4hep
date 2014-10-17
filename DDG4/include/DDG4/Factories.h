@@ -9,9 +9,7 @@
 #ifndef DDG4_FACTORIES_H
 #define DDG4_FACTORIES_H
 
-#ifndef __CINT__
-#include "Reflex/PluginService.h"
-#endif
+#include "DD4hep/Plugins.h"
 #include "RVersion.h"
 
 // Framework include files
@@ -45,6 +43,7 @@ namespace DD4hep {
     class Geant4Converter;
     class Geant4Sensitive;
     class Geant4UserPhysics;
+    class Geant4EventReader;
     class Geant4PhysicsListActionSequence;
 
     /// Templated factory method to invoke setup action
@@ -149,6 +148,14 @@ namespace {
       *(G4VUserPhysicsList**)ret = (G4VUserPhysicsList*)new P((DS::Geant4PhysicsListActionSequence*)a[0], *(int*)a[1]);
     }
   };
+
+  /// Factory template to create Geant4 event reader objects
+  template <typename P> class Factory<P, DD4hep::Simulation::Geant4EventReader*(std::string)> {
+  public:
+    static void Func(void* ret, void*, const std::vector<void*>& a, void*) {
+      *(DD4hep::Simulation::Geant4EventReader**)ret = (DD4hep::Simulation::Geant4EventReader*)new P(*(std::string*)a[0]);
+    }
+  };
 }
 
 #define DECLARE_EXTERNAL_GEANT4SENSITIVEDETECTOR(name, func)                                                               \
@@ -244,5 +251,14 @@ namespace {
   PLUGINSVC_FACTORY_WITH_ID(                                                                                    \
       xml_g4_setup_##name, std::string(#name "_Geant4_action"),                                                 \
       long(DD4hep::Geometry::LCDD*, const DD4hep::Simulation::Geant4Converter*, const std::map<std::string, std::string>*))
+
+/// Plugin defintion to create event reader objects
+#define DECLARE_GEANT4_EVENT_READER(name) \
+  PLUGINSVC_FACTORY_WITH_ID(name, std::string(#name), DD4hep::Simulation::Geant4EventReader*(std::string))
+
+/// Plugin defintion to create event reader objects
+#define DECLARE_GEANT4_EVENT_READER_NS(ns, name) \
+  typedef ns::name __##name##__;                 \
+  PLUGINSVC_FACTORY_WITH_ID(__##name##__, std::string(#name), DD4hep::Simulation::Geant4EventReader*(std::string))
 
 #endif  // DDG4_FACTORIES_H
