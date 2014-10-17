@@ -66,6 +66,15 @@ namespace DD4hep {
       ///  The outer radius of the support shell.
       double rOuterShell;
 
+      /// width of the strips (if applicable )
+      double widthStrip;
+      /// length of the strips (if applicable )
+      double lengthStrip;
+      /// strip pitch  (if applicable )
+      double pitchStrip;
+      /// strip stereo angle  (if applicable )
+      double angleStrip;
+
       /**Internal helper struct for defining the layer layout. Layers are defined 
        * with a sensitive part and a support part.
        */
@@ -75,6 +84,11 @@ namespace DD4hep {
 
         /// Azimuthal angle of the (outward pointing) normal of the first ladder.
         double phi0;
+
+        /// number of sensor per ladder
+        int sensorsPerLadder;
+        /// sensor length (if divided in sensors)
+        double lengthSensor;
 
         /// The distance of the ladder support from the origin (IP).
         double distanceSupport;
@@ -100,6 +114,27 @@ namespace DD4hep {
       };
 
       std::vector<LayerLayout> layers;
+
+      /*
+	DDRec::ZPlanarData::LayerLayout thisLayer ;
+	thisLayer.sensorsPerLadder =
+	thisLayer.lengthSensor =
+	
+	thisLayer.distanceSupport  = 
+	thisLayer.offsetSupport    =
+	thisLayer.thicknessSupport =
+	thisLayer.zHalfSupport     =
+	thisLayer.widthSupport     =
+	
+	thisLayer.distanceSensitive  = 
+	thisLayer.offsetSensitive    =
+	thisLayer.thicknessSensitive =
+	thisLayer.zHalfSensitive     =
+	thisLayer.widthSensitive     =
+	
+	thisLayer.ladderNumber = 
+	thisLayer.phi0 =  
+      */
     };
     typedef StructExtension<ZPlanarStruct> ZPlanarData;
 
