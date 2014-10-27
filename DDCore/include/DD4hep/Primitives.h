@@ -248,6 +248,7 @@ namespace DD4hep {
     T    value() const { return mask; }
     void set(const T& m) { mask |= m; }
     void clear(const T& m) { mask &= ~m; }
+    void                clear() { mask = 0; }
     bool isSet(const T& m) const { return (mask & m) == m; }
     bool anySet(const T& m) const { return (mask & m) != 0; }
     bool testBit(int bit) const {
