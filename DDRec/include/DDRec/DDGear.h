@@ -3,9 +3,10 @@
 
 #include "DD4hep/Detector.h"
 
-// #include "gear/GEAR.h"
-// #include "gearimpl/GearParametersImpl.h"
-// #include "gear/GearMgr.h"
+#include "gear/GEAR.h"
+#include "gear/GearMgr.h"
+#include "gearimpl/GearParametersImpl.h"
+#include "gearimpl/SimpleMaterialImpl.h"
 
 namespace gear {
   class GearParametersImpl;
@@ -25,8 +26,9 @@ namespace DD4hep {
   class GearHandle {  //: public gear::GearParametersImpl {
 
   protected:
-    gear::GearParametersImpl* _gObj;
-    std::string               _name;
+    gear::GearParametersImpl*             _gObj;
+    std::string                           _name;
+    std::vector<gear::SimpleMaterialImpl> _materials;
 
   public:
     /** Default c'tor  - only used by DD4hep extenbsion mechanism.*/
@@ -54,6 +56,14 @@ namespace DD4hep {
       _gObj                         = 0;
       return obj;
     }
+
+    /// add a SimpleMaterial object
+    void addMaterial(const std::string name, double A, double Z, double density, double radLen, double intLen) {
+      _materials.push_back(gear::SimpleMaterialImpl(name, A, Z, density, radLen, intLen));
+    }
+
+    /// get all materials assigned to this wrapper
+    const std::vector<gear::SimpleMaterialImpl>& materials() { return _materials; }
 
     /** dummy implementation of required c'tors to allow using the extension mechanism */
     GearHandle(const Geometry::DetElement& d) : _gObj(0) {}
