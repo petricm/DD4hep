@@ -48,7 +48,7 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    template <typename T> struct Solid_type : public Handle<T> {
+    template <typename T> class Solid_type : public Handle<T> {
     protected:
       typedef T Implementation;
       void _setDimensions(double* param);
@@ -89,7 +89,7 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct Box : public Solid_type<TGeoBBox> {
+    class Box : public Solid_type<TGeoBBox> {
     protected:
       /// Internal helper method to support object construction
       void make(const std::string& name, double x, double y, double z);
@@ -137,7 +137,8 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct Polycone : public Solid_type<TGeoPcon> {
+    class Polycone : public Solid_type<TGeoPcon> {
+    public:
       /// Constructor to be used when reading the already parsed polycone object
       template <typename Q> Polycone(const Handle<Q>& e) : Solid_type<TGeoPcon>(e) {}
 
@@ -164,7 +165,8 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct ConeSegment : public Solid_type<TGeoConeSeg> {
+    class ConeSegment : public Solid_type<TGeoConeSeg> {
+    public:
       /// Constructor to be used when reading the already parsed ConeSegment object
       template <typename Q> ConeSegment(const Handle<Q>& e) : Solid_type<TGeoConeSeg>(e) {}
 
@@ -178,7 +180,7 @@ namespace DD4hep {
     };
 
     /// Intermediate class to overcome drawing probles with the TGeoTubeSeg
-    struct MyConeSeg : public TGeoConeSeg {
+    class MyConeSeg : public TGeoConeSeg {
     public:
       MyConeSeg() : TGeoConeSeg() {}
       virtual ~MyConeSeg() {}
@@ -198,7 +200,7 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct Tube : public Solid_type</*TGeoTubeSeg */ MyConeSeg> {
+    class Tube : public Solid_type</*TGeoTubeSeg */ MyConeSeg> {
     protected:
       /// Internal helper method to support object construction
       void make(const std::string& name, double rmin, double rmax, double z, double startPhi, double deltaPhi);
@@ -245,7 +247,7 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct Cone : public Solid_type<TGeoCone> {
+    class Cone : public Solid_type<TGeoCone> {
     protected:
       /// Internal helper method to support object construction
       void make(const std::string& name, double z, double rmin1, double rmax1, double rmin2, double rmax2);
@@ -275,7 +277,7 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct Trap : public Solid_type<TGeoTrap> {
+    class Trap : public Solid_type<TGeoTrap> {
     private:
       /// Internal helper method to support object construction
       void make(double pz, double py, double px, double pLTX);
@@ -313,7 +315,7 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct Trapezoid : public Solid_type<TGeoTrd2> {
+    class Trapezoid : public Solid_type<TGeoTrd2> {
     private:
       /// Internal helper method to support object construction
       void make(double x1, double x2, double y1, double y2, double z);
@@ -342,7 +344,7 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct Torus : public Solid_type<TGeoTorus> {
+    class Torus : public Solid_type<TGeoTorus> {
     private:
       /// Internal helper method to support object construction
       void make(double r, double rmin, double rmax, double phi, double delta_phi);
@@ -375,7 +377,8 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct Sphere : public Solid_type<TGeoSphere> {
+    class Sphere : public Solid_type<TGeoSphere> {
+    public:
       /// Constructor to be used when passing an already created object
       Sphere(const Sphere& e) : Solid_type<TGeoSphere>(e) {}
       /// Constructor to be used when passing an already created object
@@ -417,7 +420,7 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct PolyhedraRegular : public Solid_type<TGeoPgon> {
+    class PolyhedraRegular : public Solid_type<TGeoPgon> {
     protected:
       /// Helper function to create the polyhedron
       void _create(const std::string& name, int nsides, double rmin, double rmax, double zpos, double zneg, double start,
@@ -446,7 +449,7 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct EightPointSolid : public Solid_type<TGeoArb8> {
+    class EightPointSolid : public Solid_type<TGeoArb8> {
     private:
       /// Internal helper method to support object construction
       void make(double dz, const double* vtx);
@@ -469,7 +472,7 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct BooleanSolid : public Solid_type<TGeoCompositeShape> {
+    class BooleanSolid : public Solid_type<TGeoCompositeShape> {
     protected:
       /// Constructor to be used when passing an already created object
       BooleanSolid() : Solid_type<TGeoCompositeShape>() {}
@@ -489,7 +492,8 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct SubtractionSolid : public BooleanSolid {
+    class SubtractionSolid : public BooleanSolid {
+    public:
       /// Default constructor
       SubtractionSolid() : BooleanSolid() {}
       /// Constructor to be used when passing an already created object
@@ -518,7 +522,8 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct UnionSolid : public BooleanSolid {
+    class UnionSolid : public BooleanSolid {
+    public:
       /// Default constructor
       UnionSolid() : BooleanSolid() {}
       /// Constructor to be used when passing an already created object
@@ -547,7 +552,8 @@ namespace DD4hep {
      *   \version 1.0
      *   \ingroup DD4HEP_GEOMETRY
      */
-    struct IntersectionSolid : public BooleanSolid {
+    class IntersectionSolid : public BooleanSolid {
+    public:
       /// Default constructor
       IntersectionSolid() : BooleanSolid() {}
       /// Constructor to be used when passing an already created object
