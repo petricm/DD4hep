@@ -86,7 +86,6 @@ namespace DD4hep {
       double                   threshold;
       double                   cut;
       bool                     store_secondaries;
-      std::string              lunit, eunit;
       std::vector<std::string> user_limits;
       /// Standard constructor
       RegionObject();
