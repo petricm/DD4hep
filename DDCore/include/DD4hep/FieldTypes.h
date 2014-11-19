@@ -88,7 +88,7 @@ namespace DD4hep {
       virtual void fieldComponents(const double* pos, double* field);
     };
 
-    /// Implementation object of a dipole magnetic field.
+    /// Implementation object of a Multipole magnetic field.
     /** 
      *  Generic multipole magnetic field using the 
      *  Multipole approach. The dipole is assumed to be horizontal
