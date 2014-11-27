@@ -104,7 +104,7 @@ namespace DDSurfaces {
   class SurfaceType {
   public:
     /// enum for defining the bits used to decode the properties
-    enum { Cylinder = 0, Plane, Sensitive, Helper, ParallelToZ, OrthogonalToZ, Invisible, Measurement1D };
+    enum SurfaceTypes { Cylinder = 0, Plane, Sensitive, Helper, ParallelToZ, OrthogonalToZ, Invisible, Measurement1D };
 
     ///default c'tor
     SurfaceType() : _bits(0) {}
