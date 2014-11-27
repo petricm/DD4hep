@@ -44,6 +44,8 @@ namespace DD4hep {
       TFile* m_file;
       /// Reference to the event data tree
       TTree* m_tree;
+      /// Flag if Monte-Carlo truth should be followed and checked
+      bool m_handleMCTruth;
 
     public:
       /// Standard constructor
