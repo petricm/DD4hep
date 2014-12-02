@@ -126,7 +126,7 @@ namespace DD4hep {
       VolSurface(const VolSurface& e) : Geometry::Handle<SurfaceData>(e) {}
 
       /// Constructor to be used with an existing object
-      template <typename Q> VolSurface(const Handle<Q>& e) : Geometry::Handle<SurfaceData>(e) {}
+      template <typename Q> VolSurface(const Geometry::Handle<Q>& e) : Geometry::Handle<SurfaceData>(e) {}
 
       /// Standrad c'tor for initialization.
       VolSurface(Geometry::Volume vol, SurfaceType type, double thickness_inner, double thickness_outer, Vector3D u,
@@ -265,7 +265,7 @@ namespace DD4hep {
       VolPlane(SurfaceData* p) : VolSurface(p) {}
 
       /// Constructor to be used with an existing object
-      template <typename Q> VolPlane(const Handle<Q>& e) : VolSurface(e) {}
+      template <typename Q> VolPlane(const Geometry::Handle<Q>& e) : VolSurface(e) {}
 
       /// copy c'tor
       VolPlane(const VolSurface& vs) : VolSurface(vs) {}
