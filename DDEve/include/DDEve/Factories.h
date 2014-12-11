@@ -15,12 +15,14 @@
 #include "DDEve/Display.h"
 #include "DDEve/View.h"
 
-/*
- *   DD4hep namespace declaration
- */
+/// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
+
+  // Forward declarations
   class View;
   class Display;
+
+  /// Factory template for view objects
   template <typename T> class ViewFactory {
   public:
     static View* create(Display* dis, const char* arg);

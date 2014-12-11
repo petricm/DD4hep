@@ -19,16 +19,15 @@ class TEveElement;
 class TEvePointSet;
 class TEveBoxSet;
 
-/*
- *   DD4hep namespace declaration
- */
+/// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /** Fill EtaPhi histograms from a hit collection
-     *
-     * @author  M.Frank
-     * @version 1.0
-     */
+  /// Fill EtaPhi histograms from a hit collection
+  /*
+   *  \author  M.Frank
+   *  \version 1.0
+   *  \ingroup DD4HEP_EVE
+   */
   struct EtaPhiHistogramActor : public DDEveHitActor {
     TH2F* histogram;
     /// Standard initializing constructor
@@ -37,11 +36,12 @@ namespace DD4hep {
     virtual void operator()(const DDEveHit& hit);
   };
 
-  /** Fill a 3D pointset from a hit collection.
-     *
-     * @author  M.Frank
-     * @version 1.0
-     */
+  /// Fill a 3D pointset from a hit collection.
+  /*
+   *  \author  M.Frank
+   *  \version 1.0
+   *  \ingroup DD4HEP_EVE
+   */
   struct PointsetCreator : public DDEveHitActor {
     TEvePointSet* pointset;
     float         deposit;
@@ -58,11 +58,12 @@ namespace DD4hep {
     virtual void operator()(const DDEveHit& hit);
   };
 
-  /** Fill a 3D box set from a hit collection.
-     *
-     * @author  M.Frank
-     * @version 1.0
-     */
+  /// Fill a 3D box set from a hit collection.
+  /*
+   *  \author  M.Frank
+   *  \version 1.0
+   *  \ingroup DD4HEP_EVE
+   */
   struct BoxsetCreator : public DDEveHitActor {
     TEveBoxSet* boxset;
     float       emax, towerH, deposit;
@@ -79,11 +80,12 @@ namespace DD4hep {
     virtual void operator()(const DDEveHit& hit);
   };
 
-  /** Fill a 3D tower set from a hit collection.
-     *
-     * @author  M.Frank
-     * @version 1.0
-     */
+  /// Fill a 3D tower set from a hit collection.
+  /*
+   *  \author  M.Frank
+   *  \version 1.0
+   *  \ingroup DD4HEP_EVE
+   */
   struct TowersetCreator : public BoxsetCreator {
     /// Standard initializing constructor
     TowersetCreator(const std::string& collection, size_t length) : BoxsetCreator(collection, length) {}
