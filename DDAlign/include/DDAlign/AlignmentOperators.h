@@ -28,7 +28,8 @@ namespace DD4hep {
      *  \version  1.0
      *  \ingroup  DD4HEP_ALIGN
      */
-    struct AlignmentOperator {
+    class AlignmentOperator {
+    public:
       typedef AlignmentStack::StackEntry Entry;
       typedef AlignmentCache::Cache      Cache;
       typedef std::vector<Entry*>        Entries;
@@ -49,7 +50,7 @@ namespace DD4hep {
      *  \version  1.0
      *  \ingroup  DD4HEP_ALIGN
      */
-    struct AlignmentSelector : public AlignmentOperator {
+    class AlignmentSelector : public AlignmentOperator {
     public:
       const Entries& entries;
       /// Initializing functor constructor
@@ -71,7 +72,7 @@ namespace DD4hep {
      *  \version  1.0
      *  \ingroup  DD4HEP_ALIGN
      */
-    template <typename T> struct AlignmentActor : public AlignmentOperator {
+    template <typename T> class AlignmentActor : public AlignmentOperator {
     public:
       /// Initializing functor constructor
       AlignmentActor(AlignmentCache& c, Nodes& n) : AlignmentOperator(c, n) { init(); }
@@ -82,10 +83,10 @@ namespace DD4hep {
 
     /// Helper namespace to specialize functionality  \ingroup  DD4HEP_ALIGN
     namespace DDAlign_standard_operations {
-      struct node_print;
-      struct node_reset;
-      struct node_align;
-      struct node_delete;
+      class node_print;
+      class node_reset;
+      class node_align;
+      class node_delete;
     }
 
     // Specializations
