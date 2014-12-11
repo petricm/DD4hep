@@ -116,8 +116,10 @@ namespace DD4hep {
     /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
     template <> inline double _multiply<double>(double left, const std::string& right) { return left * _toDouble(right); }
 
-    /// Enter name value pair to the dictionary. \"valye\" must be a numerical expression, which is evaluated  \ingroup DD4HEP_GEOMETRY
+    /// Enter name value pair to the dictionary. \"value\" must be a numerical expression, which is evaluated  \ingroup DD4HEP_GEOMETRY
     void _toDictionary(const std::string& name, const std::string& value);
+    /// Enter name value pair to the dictionary.  \ingroup DD4HEP_GEOMETRY
+    void _toDictionary(const std::string& name, const std::string& value, const std::string& typ);
 
     long num_object_validations();
     void increment_object_validations();
@@ -156,9 +158,13 @@ namespace DD4hep {
      */
     template <typename T> class Handle {
     public:
-      typedef T                      Implementation;
+      /** Type definitions and class specific abbreviations and forward declarations */
+      /// Extern accessible definition of the contained element type
+      typedef T Implementation;
+      /// Declaration of 'self'
       typedef Handle<Implementation> handle_t;
-      /// Reference to the actual element.
+
+      /// Single and only data member: Reference to the actual element.
       T* m_element;
       /// Defaulot constructor
       Handle() : m_element(0) {}
@@ -223,15 +229,18 @@ namespace DD4hep {
     /// Helper to delete objects from heap and reset the handle  \ingroup DD4HEP_GEOMETRY
     template <typename T> inline void releaseHandle(T& h) { releasePtr(h.m_element); }
     /// Functor to destroy handles and delete the cached object  \ingroup DD4HEP_GEOMETRY
-    template <typename T> struct DestroyHandle {
+    template <typename T> class DestroyHandle {
+    public:
       void operator()(T p) const { destroyHandle(p); }
     };
     /// Functor to destroy handles and delete the cached object  \ingroup DD4HEP_GEOMETRY
-    template <typename T> struct ReleaseHandle {
+    template <typename T> class ReleaseHandle {
+    public:
       void operator()(T p) const { releaseHandle(p); }
     };
     /// map Functor to destroy handles and delete the cached object  \ingroup DD4HEP_GEOMETRY
-    template <typename M> struct DestroyHandles {
+    template <typename M> class DestroyHandles {
+    public:
       M& object;
       DestroyHandles(M& m) : object(m) {}
       ~DestroyHandles() { object.clear(); }

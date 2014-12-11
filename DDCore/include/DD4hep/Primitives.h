@@ -138,12 +138,14 @@ namespace DD4hep {
   /// Helper to delete objects from heap and reset the pointer
   template <typename T> inline void destroyObject(T*& p) { deletePtr(p); }
   /// Functor to delete objects from heap and reset the pointer
-  template <typename T> struct DestroyObject {
+  template <typename T> class DestroyObject {
+  public:
     void operator()(T& p) const { destroyObject(p); }
   };
 
   /// Operator to select second element of a pair
-  template <typename T> struct Select2nd {
+  template <typename T> class Select2nd {
+  public:
     typedef T                       arg_t;
     typedef typename T::second_type result_t;
     /// Operator function
@@ -153,7 +155,8 @@ namespace DD4hep {
   template <typename T> Select2nd<typename T::value_type> select2nd(const T&) { return Select2nd<typename T::value_type>(); }
 
   /// Operator to select the first element of a pair
-  template <typename T> struct Select1st {
+  template <typename T> class Select1st {
+  public:
     typedef T                      arg_t;
     typedef typename T::first_type result_t;
     /// Operator function
@@ -163,7 +166,8 @@ namespace DD4hep {
   template <typename T> Select1st<typename T::value_type> select1st(const T&) { return Select1st<typename T::value_type>(); }
 
   /// map Functor to delete objects from heap
-  template <typename M> struct DestroyObjects {
+  template <typename M> class DestroyObjects {
+  public:
     M& object;
     DestroyObjects(M& m) : object(m) {}
     ~DestroyObjects() { object.clear(); }
@@ -176,7 +180,8 @@ namespace DD4hep {
   template <typename M> DestroyObjects<M> destroy2nd(M& m) { return DestroyObjects<M>(m); }
 
   /// map Functor to delete objects from heap
-  template <typename M> struct DestroyFirst {
+  template <typename M> class DestroyFirst {
+  public:
     M& object;
     DestroyFirst(M& m) : object(m) {}
     ~DestroyFirst() { object.clear(); }
@@ -196,11 +201,13 @@ namespace DD4hep {
   }
 
   /// Functor to release objects from heap and reset the pointer
-  template <typename T> struct ReleaseObject {
+  template <typename T> class ReleaseObject {
+  public:
     void operator()(T& p) const { releasePtr(p); }
   };
   /// Map Functor to release objects from heap
-  template <typename M> struct ReleaseObjects {
+  template <typename M> class ReleaseObjects {
+  public:
     M& object;
     ReleaseObjects(M& m) : object(m) {}
     ~ReleaseObjects() { object.clear(); }
@@ -216,7 +223,8 @@ namespace DD4hep {
   template <typename M> ReleaseObjects<M> release2nd(M& m) { return ReleaseObjects<M>(m); }
 
   /// Functor to delete objects from heap and reset the pointer
-  template <typename T> struct ReferenceObject {
+  template <typename T> class ReferenceObject {
+  public:
     typedef T arg_t;
     T operator()(T p) const {
       if (p)
@@ -225,7 +233,8 @@ namespace DD4hep {
     }
   };
   /// Functor to delete objects from heap and reset the pointer
-  template <typename M> struct ReferenceObjects {
+  template <typename M> class ReferenceObjects {
+  public:
     typedef typename M::second_type result_t;
     result_t operator()(const M& p) const { return ReferenceObject<result_t>()(p.second); }
   };
