@@ -72,7 +72,26 @@ namespace DD4hep {
       }
       /// Returns the post-step position as a G4ThreeVector
       const G4ThreeVector& postPosG4() const { return post->GetPosition(); }
-      Momentum             preMom() const {
+      /// Average position vector of the step.
+      Position avgPosition() const {
+        const G4ThreeVector& p1 = pre->GetPosition();
+        const G4ThreeVector& p2 = post->GetPosition();
+        G4ThreeVector        r  = 0.5 * (p2 + p1);
+        return Position(r.x(), r.y(), r.z());
+      }
+      /// Direction calculated from the post- and pre-position ofthe step
+      Position direction() const {
+        const G4ThreeVector& p1  = pre->GetPosition();
+        const G4ThreeVector& p2  = post->GetPosition();
+        G4ThreeVector        r   = (p2 - p1);
+        double               len = r.r();
+        if (len > 1e-15) {
+          r /= len;
+          return Position(r.x(), r.y(), r.z());
+        }
+        return Position();
+      }
+      Momentum preMom() const {
         const G4ThreeVector& p = pre->GetMomentum();
         return Momentum(p.x(), p.y(), p.z());
       }
