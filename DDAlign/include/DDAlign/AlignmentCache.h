@@ -26,7 +26,7 @@ namespace DD4hep {
     class LCDD;
 
     /// Class caching all known alignment operations for one LCDD instance.
-    /** 
+    /**
      *  Internally the instances are fragmented to subdetectors defined
      *  by the next-to-top level detector elements.
      *

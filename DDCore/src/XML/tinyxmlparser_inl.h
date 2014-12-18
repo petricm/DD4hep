@@ -1,28 +1,28 @@
 /*
-www.sourceforge.net/projects/tinyxml
-Original code (2.0 and earlier )copyright (c) 2000-2002 Lee Thomason (www.grinninglizard.com)
+  www.sourceforge.net/projects/tinyxml
+  Original code (2.0 and earlier )copyright (c) 2000-2002 Lee Thomason (www.grinninglizard.com)
 
-This software is provided 'as-is', without any express or implied 
-warranty. In no event will the authors be held liable for any 
-damages arising from the use of this software.
+  This software is provided 'as-is', without any express or implied
+  warranty. In no event will the authors be held liable for any
+  damages arising from the use of this software.
 
-Permission is granted to anyone to use this software for any 
-purpose, including commercial applications, and to alter it and 
-redistribute it freely, subject to the following restrictions:
+  Permission is granted to anyone to use this software for any
+  purpose, including commercial applications, and to alter it and
+  redistribute it freely, subject to the following restrictions:
 
-1. The origin of this software must not be misrepresented; you must 
-not claim that you wrote the original software. If you use this
-software in a product, an acknowledgment in the product documentation
-would be appreciated but is not required.
+  1. The origin of this software must not be misrepresented; you must
+  not claim that you wrote the original software. If you use this
+  software in a product, an acknowledgment in the product documentation
+  would be appreciated but is not required.
 
-2. Altered source versions must be plainly marked as such, and 
-must not be misrepresented as being the original software.
+  2. Altered source versions must be plainly marked as such, and
+  must not be misrepresented as being the original software.
 
-3. This notice may not be removed or altered from any source 
-distribution.
+  3. This notice may not be removed or altered from any source
+  distribution.
 
- F.Gaede, DESY : changed extension to .cc  for use with marlin
-                 and include from "marlin/tinyxml.h"
+  F.Gaede, DESY : changed extension to .cc  for use with marlin
+  and include from "marlin/tinyxml.h"
 
 */
 
@@ -56,21 +56,21 @@ TiXmlBase::Entity TiXmlBase::entity[NUM_ENTITY] = {
     {"&apos;", 6, '\''}};
 
 // Bunch of unicode info at:
-//		http://www.unicode.org/faq/utf_bom.html
+//              http://www.unicode.org/faq/utf_bom.html
 // Including the basic of this table, which determines the #bytes in the
 // sequence from the lead byte. 1 placed for invalid sequences --
 // although the result will be junk, pass it through as much as possible.
 // Beware of the non-characters in UTF-8:
-//				ef bb bf (Microsoft "lead bytes")
-//				ef bf be
-//				ef bf bf
+//                              ef bb bf (Microsoft "lead bytes")
+//                              ef bf be
+//                              ef bf bf
 
 const unsigned char TIXML_UTF_LEAD_0 = 0xefU;
 const unsigned char TIXML_UTF_LEAD_1 = 0xbbU;
 const unsigned char TIXML_UTF_LEAD_2 = 0xbfU;
 
 const int TiXmlBase::utf8ByteTable[256] = {
-    //	0	1	2	3	4	5	6	7	8	9	a	b	c	d	e	f
+    //  0       1       2       3       4       5       6       7       8       9       a       b       c       d       e       f
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0x00
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0x10
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0x20
@@ -78,7 +78,7 @@ const int TiXmlBase::utf8ByteTable[256] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0x40
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0x50
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0x60
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0x70	End of ASCII range
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0x70 End of ASCII range
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0x80 0x80 to 0xc1 invalid
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0x90
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  // 0xa0
@@ -135,17 +135,17 @@ void TiXmlBase::ConvertUTF32ToUTF8(unsigned long input, char* output, int* lengt
   // to figure out alhabetical vs. not across encoding. So take a very
   // conservative approach.
 
-  //	if ( encoding == TIXML_ENCODING_UTF8 )
-  //	{
+  //    if ( encoding == TIXML_ENCODING_UTF8 )
+  //    {
   if (anyByte < 127)
     return isalpha(anyByte);
   else
     return 1;  // What else to do? The unicode set is huge...get the english ones right.
-  //	}
-  //	else
-  //	{
-  //		return isalpha( anyByte );
-  //	}
+  //    }
+  //    else
+  //    {
+  //            return isalpha( anyByte );
+  //    }
 }
 
 /*static*/ int TiXmlBase::IsAlphaNum(unsigned char anyByte, TiXmlEncoding /*encoding*/) {
@@ -154,17 +154,17 @@ void TiXmlBase::ConvertUTF32ToUTF8(unsigned long input, char* output, int* lengt
   // to figure out alhabetical vs. not across encoding. So take a very
   // conservative approach.
 
-  //	if ( encoding == TIXML_ENCODING_UTF8 )
-  //	{
+  //    if ( encoding == TIXML_ENCODING_UTF8 )
+  //    {
   if (anyByte < 127)
     return isalnum(anyByte);
   else
     return 1;  // What else to do? The unicode set is huge...get the english ones right.
-  //	}
-  //	else
-  //	{
-  //		return isalnum( anyByte );
-  //	}
+  //    }
+  //    else
+  //    {
+  //            return isalnum( anyByte );
+  //    }
 }
 
 class TiXmlParsingData {
@@ -348,7 +348,7 @@ const char* TiXmlBase::SkipWhiteSpace(const char* p, TiXmlEncoding encoding) {
 }
 
 /*static*/ bool TiXmlBase::StreamTo(std::istream* in, int character, TIXML_STRING* tag) {
-  //assert( character > 0 && character < 128 );	// else it won't work in utf-8
+  //assert( character > 0 && character < 128 ); // else it won't work in utf-8
   while (in->good()) {
     int c = in->peek();
     if (c == character)
@@ -476,7 +476,7 @@ const char* TiXmlBase::GetEntity(const char* p, char* value, int* length, TiXmlE
 
   // So it wasn't an entity, its unrecognized, or something like that.
   *value = *p;  // Don't put back the last one, since we return it!
-  //*length = 1;	// Leave unrecognized entities - this doesn't really work.
+  //*length = 1;        // Leave unrecognized entities - this doesn't really work.
   // Just writes strange XML.
   return p + 1;
 }
@@ -810,10 +810,10 @@ void TiXmlElement::StreamIn(std::istream* in, TIXML_STRING* tag) {
     return;
   } else if (tag->at(tag->length() - 1) == '>') {
     // There is more. Could be:
-    //		text
-    //		cdata text (which looks like another node)
-    //		closing tag
-    //		another node.
+    //                text
+    //                cdata text (which looks like another node)
+    //                closing tag
+    //                another node.
     for (;;) {
       StreamWhiteSpace(in, tag);
 
@@ -1174,9 +1174,9 @@ const char* TiXmlAttribute::Parse(const char* p, TiXmlParsingData* data, TiXmlEn
   if (!p || !*p)
     return 0;
 
-  //	int tabsize = 4;
-  //	if ( document )
-  //		tabsize = document->TabSize();
+  //    int tabsize = 4;
+  //    if ( document )
+  //            tabsize = document->TabSize();
 
   if (data) {
     data->Stamp(p, encoding);

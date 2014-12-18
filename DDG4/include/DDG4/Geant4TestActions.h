@@ -31,7 +31,7 @@ namespace DD4hep {
     namespace Test {
 
       /// Common base class for test action
-      /** 
+      /**
        *  \author  M.Frank
        *  \version 1.0
        *  \ingroup DD4HEP_SIMULATION

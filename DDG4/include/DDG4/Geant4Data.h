@@ -92,7 +92,7 @@ namespace DD4hep {
     /*
      *  Base class for geant4 hit structures created by the
      *  example sensitive detectors. This is a generic class
-     *  only dealing with the cellID. Users may add an extension 
+     *  only dealing with the cellID. Users may add an extension
      *  object, which normally should not be necessary.
      *
      *  \author  M.Frank

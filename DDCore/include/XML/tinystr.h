@@ -1,25 +1,25 @@
 /*
-www.sourceforge.net/projects/tinyxml
-Original file by Yves Berquin.
+  www.sourceforge.net/projects/tinyxml
+  Original file by Yves Berquin.
 
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any
-damages arising from the use of this software.
+  This software is provided 'as-is', without any express or implied
+  warranty. In no event will the authors be held liable for any
+  damages arising from the use of this software.
 
-Permission is granted to anyone to use this software for any
-purpose, including commercial applications, and to alter it and
-redistribute it freely, subject to the following restrictions:
+  Permission is granted to anyone to use this software for any
+  purpose, including commercial applications, and to alter it and
+  redistribute it freely, subject to the following restrictions:
 
-1. The origin of this software must not be misrepresented; you must
-not claim that you wrote the original software. If you use this
-software in a product, an acknowledgment in the product documentation
-would be appreciated but is not required.
+  1. The origin of this software must not be misrepresented; you must
+  not claim that you wrote the original software. If you use this
+  software in a product, an acknowledgment in the product documentation
+  would be appreciated but is not required.
 
-2. Altered source versions must be plainly marked as such, and
-must not be misrepresented as being the original software.
+  2. Altered source versions must be plainly marked as such, and
+  must not be misrepresented as being the original software.
 
-3. This notice may not be removed or altered from any source
-distribution.
+  3. This notice may not be removed or altered from any source
+  distribution.
 */
 
 /*
@@ -42,9 +42,9 @@ distribution.
 #include <assert.h>
 #include <string.h>
 
-/*	The support for explicit isn't that universal, and it isn't really
-	required - it is used to check that the TiXmlString class isn't incorrectly
-	used. Be nice to old compilers and macro it here:
+/*      The support for explicit isn't that universal, and it isn't really
+        required - it is used to check that the TiXmlString class isn't incorrectly
+        used. Be nice to old compilers and macro it here:
 */
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 // Microsoft visual studio, version 6 and higher.
@@ -57,11 +57,11 @@ distribution.
 #endif
 
 /*
-   TiXmlString is an emulation of a subset of the std::string template.
-   Its purpose is to allow compiling TinyXML on compilers with no or poor STL support.
-   Only the member functions relevant to the TinyXML project have been implemented.
-   The buffer allocation is made by a simplistic power of 2 like mechanism : if we increase
-   a string and there's no more room, we allocate a buffer twice as big as we need.
+  TiXmlString is an emulation of a subset of the std::string template.
+  Its purpose is to allow compiling TinyXML on compilers with no or poor STL support.
+  Only the member functions relevant to the TinyXML project have been implemented.
+  The buffer allocation is made by a simplistic power of 2 like mechanism : if we increase
+  a string and there's no more room, we allocate a buffer twice as big as we need.
 */
 class TiXmlString {
 public:
@@ -158,15 +158,15 @@ public:
   void clear() {
     //Lee:
     //The original was just too strange, though correct:
-    //	TiXmlString().swap(*this);
+    //  TiXmlString().swap(*this);
     //Instead use the quit & re-init:
     quit();
     init(0, 0);
   }
 
-  /*	Function to reserve a big amount of data when we know we'll need it. Be aware that this
-		function DOES NOT clear the content of the TiXmlString if any exists.
-	*/
+  /*    Function to reserve a big amount of data when we know we'll need it. Be aware that this
+        function DOES NOT clear the content of the TiXmlString if any exists.
+  */
   void reserve(size_type cap);
 
   TiXmlString& assign(const char* str, size_type len);
@@ -193,7 +193,7 @@ private:
   void init(size_type sz, size_type cap) {
     if (cap) {
       // Lee: the original form:
-      //	rep_ = static_cast<Rep*>(operator new(sizeof(Rep) + cap));
+      //      rep_ = static_cast<Rep*>(operator new(sizeof(Rep) + cap));
       // doesn't work in some cases of new being overloaded. Switching
       // to the normal allocation, although use an 'int' for systems
       // that are overly picky about structure alignment.
@@ -241,8 +241,8 @@ TiXmlString operator+(const TiXmlString& a, const char* b);
 TiXmlString operator+(const char* a, const TiXmlString& b);
 
 /*
-   TiXmlOutStream is an emulation of std::ostream. It is based on TiXmlString.
-   Only the operators that we need for TinyXML have been developped.
+  TiXmlOutStream is an emulation of std::ostream. It is based on TiXmlString.
+  Only the operators that we need for TinyXML have been developped.
 */
 class TiXmlOutStream : public TiXmlString {
 public:

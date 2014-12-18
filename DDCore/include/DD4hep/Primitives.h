@@ -55,7 +55,7 @@ namespace DD4hep {
   /** @class ComponentCast Primitives.h DD4hep/Primitives.h
    *
    *  It is mandatory that the pointers referred do actually
-   *  support the asked functionalty. 
+   *  support the asked functionalty.
    *  Miracles also I cannot do.....
    *
    *   @author  M.Frank

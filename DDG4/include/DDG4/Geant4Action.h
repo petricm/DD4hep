@@ -68,7 +68,7 @@ namespace DD4hep {
 
     /// Default base class for all Geant 4 actions and derivates thereof.
     /**
-     *  This is a utility class supporting properties, output and access to 
+     *  This is a utility class supporting properties, output and access to
      *  event and run objects through the context.
      *
      *  \author  M.Frank
@@ -97,7 +97,7 @@ namespace DD4hep {
       //    as it is used in SequenceHdl::setContextToClients()
     public:
       /// Functor to update the context of a Geant4Action object
-      /** 
+      /**
        *  \author  M.Frank
        *  \version 1.0
        *  \ingroup DD4HEP_SIMULATION
@@ -115,7 +115,7 @@ namespace DD4hep {
 
     protected:
       /// Actor class to manipulate action groups
-      /** 
+      /**
        *  \author  M.Frank
        *  \version 1.0
        *  \ingroup DD4HEP_SIMULATION

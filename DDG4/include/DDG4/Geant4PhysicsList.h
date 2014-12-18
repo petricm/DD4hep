@@ -155,7 +155,7 @@ namespace DD4hep {
     };
 
     /// The implementation of the single Geant4 physics list action sequence
-    /** 
+    /**
      * Concrete implementation of the Geant4 physics list sequence.
      * A list to setup the physics content in a modular form
      *

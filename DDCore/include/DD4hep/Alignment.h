@@ -26,7 +26,7 @@ namespace DD4hep {
     /// Main handle class to hold a TGeo alignment object of type TGeoPhysicalNode
     /**
      *  See the ROOT documentation about the TGeoPhysicalNode for further details:
-     *  @see http://root.cern.ch/root/html/TGeoPhysicalNode.html 
+     *  @see http://root.cern.ch/root/html/TGeoPhysicalNode.html
      *
      *  \author  M.Frank
      *  \version 1.0

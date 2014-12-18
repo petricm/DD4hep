@@ -68,7 +68,7 @@ namespace DD4hep {
     TGeoIdentity* identityTransform();
 
     /// Handle class describing an author entity
-    /** 
+    /**
      *  \author  M.Frank
      *  \version 1.0
      *  \ingroup DD4HEP_GEOMETRY
@@ -159,7 +159,7 @@ namespace DD4hep {
     };
 
     /// Handle class describing a constant (define) object in lcdd
-    /** 
+    /**
      *  Constant objects are parsed by the expression evaluator and
      *  are subsequently available for expression evaluation.
      *
@@ -219,7 +219,7 @@ namespace DD4hep {
     typedef ROOT::Math::Translation3D Translation3D;
 
     /// Handle class describing an element in the periodic table
-    /** 
+    /**
      *  For details please see the ROOT TGeo information:
      *  \see http://root.cern.ch/root/html/TGeoElement.html
      *
@@ -371,7 +371,7 @@ namespace DD4hep {
     };
 
     /// Small object describing a limit structure acting on a particle type
-    /** 
+    /**
      *  \author  M.Frank
      *  \version 1.0
      *  \ingroup DD4HEP_GEOMETRY

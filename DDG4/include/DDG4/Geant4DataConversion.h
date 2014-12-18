@@ -41,7 +41,7 @@ namespace DD4hep {
     };
 
     /// Data conversion class
-    /** 
+    /**
      *  \author  M.Frank
      *  \version 1.0
      *  \ingroup DD4HEP_SIMULATION

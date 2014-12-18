@@ -79,15 +79,15 @@ namespace DD4hep {
     // ========================================================================
     /// parse the <c>char</c> value
     /**
-     *  @see DD4hep::Parsers::CharGrammar
-     *  @param result (output) boolean result
-     *  @param input  (input) the string to be parsed
-     *  @return status code
-     *
-     *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
-     *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
-     *  @date 2006-05-12
-     */
+       *  @see DD4hep::Parsers::CharGrammar
+       *  @param result (output) boolean result
+       *  @param input  (input) the string to be parsed
+       *  @return status code
+       *
+       *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
+       *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
+       *  @date 2006-05-12
+       */
     PARSERS_DECL_FOR_SINGLE(char)
     /// @see DD4hep::Parsers::parser(char&,std::string&)
     PARSERS_DECL_FOR_SINGLE(unsigned char)
@@ -96,15 +96,15 @@ namespace DD4hep {
     // ========================================================================
     /// parse the <c>int</c> value
     /**
-     *  @see DD4hep::Parsers::IntGrammar
-     *  @param result (output) integer result
-     *  @param input  (input) the string to be parsed
-     *  @return status code
-     *
-     *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
-     *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
-     *  @date 2006-05-14
-     */
+       *  @see DD4hep::Parsers::IntGrammar
+       *  @param result (output) integer result
+       *  @param input  (input) the string to be parsed
+       *  @return status code
+       *
+       *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
+       *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
+       *  @date 2006-05-14
+       */
     PARSERS_DECL_FOR_SINGLE(int)
     /// @see DD4hep::Parsers::parser( int&, const std::string& )
     PARSERS_DECL_FOR_SINGLE(short)
@@ -123,15 +123,15 @@ namespace DD4hep {
     // ========================================================================
     /// parse the <c>double</c> value
     /**
-     *  @see DD4hep::Parsers::RealGrammar
-     *  @param result (output) double result
-     *  @param input  (input) the string to be parsed
-     *  @return status code
-     *
-     *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
-     *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
-     *  @date 2006-05-14
-     */
+       *  @see DD4hep::Parsers::RealGrammar
+       *  @param result (output) double result
+       *  @param input  (input) the string to be parsed
+       *  @return status code
+       *
+       *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
+       *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
+       *  @date 2006-05-14
+       */
     PARSERS_DECL_FOR_SINGLE(double)
     /// @see DD4hep::Parsers::parser( double&, const std::string& )
     PARSERS_DECL_FOR_SINGLE(float)
@@ -139,16 +139,16 @@ namespace DD4hep {
     PARSERS_DECL_FOR_SINGLE(long double)
     // ========================================================================
     /** parse the <c>std::string</c> value
-     *
-     *  @see DD4hep::Parsers::StringGrammar
-     *  @param result (output) string result
-     *  @param input  (input) the string to be parsed
-     *  @return status code
-     *
-     *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
-     *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
-     *  @date 2006-05-14
-     */
+       *
+       *  @see DD4hep::Parsers::StringGrammar
+       *  @param result (output) string result
+       *  @param input  (input) the string to be parsed
+       *  @return status code
+       *
+       *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
+       *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
+       *  @date 2006-05-14
+       */
     PARSERS_DECL_FOR_SINGLE(std::string)
     // ========================================================================
 
@@ -176,46 +176,46 @@ namespace DD4hep {
     // ========================================================================
     /// parse the <c>std::pair\<double,double\></c> value
     /**
-     *  @see DD4hep::Parsers::PairGrammar
-     *  @see DD4hep::Parsers::RealGrammar
-     *  @param result (output) pair of doubles
-     *  @param input  (input) the string to be parsed
-     *  @return status code
-     *
-     *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
-     *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
-     *  @date 2006-05-14
-     */
+       *  @see DD4hep::Parsers::PairGrammar
+       *  @see DD4hep::Parsers::RealGrammar
+       *  @param result (output) pair of doubles
+       *  @param input  (input) the string to be parsed
+       *  @return status code
+       *
+       *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
+       *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
+       *  @date 2006-05-14
+       */
     PARSERS_DECL_FOR_PAIR(double, double)
     // ========================================================================
     /** parse the <c>std::pair\<int,int\></c> value
-     *
-     *  @see DD4hep::Parsers::PairGrammar
-     *  @see DD4hep::Parsers::IntGrammar
-     *  @param result (output) pair of integers
-     *  @param input  (input) the string to be parsed
-     *  @return status code
-     *
-     *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
-     *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
-     *  @date 2006-05-14
-     */
+       *
+       *  @see DD4hep::Parsers::PairGrammar
+       *  @see DD4hep::Parsers::IntGrammar
+       *  @param result (output) pair of integers
+       *  @param input  (input) the string to be parsed
+       *  @return status code
+       *
+       *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
+       *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
+       *  @date 2006-05-14
+       */
     PARSERS_DECL_FOR_PAIR(int, int)
     // ========================================================================
 
     /// parse the <c>std::vector\<std::pair\<double,double\> \></c> value
     /**
-     *  @see DD4hep::Parsers::VectorGrammar
-     *  @see DD4hep::Parsers::PairGrammar
-     *  @see DD4hep::Parsers::RealGrammar
-     *  @param result (output) vector with pairs of doubles
-     *  @param input  (input) the string to be parsed
-     *  @return status code
-     *
-     *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
-     *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
-     *  @date 2006-05-14
-     */
+       *  @see DD4hep::Parsers::VectorGrammar
+       *  @see DD4hep::Parsers::PairGrammar
+       *  @see DD4hep::Parsers::RealGrammar
+       *  @param result (output) vector with pairs of doubles
+       *  @param input  (input) the string to be parsed
+       *  @return status code
+       *
+       *  @author Alexander MAZUROV Alexander.Mazurov@gmail.com
+       *  @author Vanya BELYAEV  ibelyaev@physics.syr.edu
+       *  @date 2006-05-14
+       */
     int parse(std::vector<std::pair<double, double>>& result, const std::string& input);
     // ========================================================================
     /// parse the <c>std::vector\<std::pair\<int,int\> \></c> value
@@ -513,17 +513,17 @@ namespace DD4hep {
      *  Valid representations of 3D-point:
      *
      *      - a'la python tuple with 3 elements ("canonical")
-     *      - a'la python list with 3 elements 
-     *      - tuple or list with named ordered fields 
+     *      - a'la python list with 3 elements
+     *      - tuple or list with named ordered fields
      *
      *  @code
      *
-     *    " (1,2,3) " 
-     *    " [1,2,3] " 
-     *    " [ x : 1, 2, Z:3 ] " 
-     *    " [ pX : 1 , PY : 2, 3] " 
-     *     
-     *  @endcode 
+     *    " (1,2,3) "
+     *    " [1,2,3] "
+     *    " [ x : 1, 2, Z:3 ] "
+     *    " [ pX : 1 , PY : 2, 3] "
+     *
+     *  @endcode
      *
      *  Valid keys for names fields:
      *
@@ -533,13 +533,13 @@ namespace DD4hep {
      *    "y", "Y" , "pY" , "Py" , "PY "
      *    "z", "Z" , "pZ" , "Pz" , "PZ "
      *
-     *  @endcode 
+     *  @endcode
      *
      *  @attention Named fields must be ordered <code>(x,y,z)</code>
      *
-     *  @param result (output) the parsed point 
-     *  @param input  (input)  the input string 
-     *  @return status code 
+     *  @param result (output) the parsed point
+     *  @param input  (input)  the input string
+     *  @return status code
      *  @author Vanya BELYAEV Ivan.Belyaev@nikhef.nl
      *  @date 2009-09-05
      */
@@ -551,17 +551,17 @@ namespace DD4hep {
      *  Valid representations of 3D-vector:
      *
      *      - a'la python tuple with 3 elements ("canonical")
-     *      - a'la python list with 3 elements 
-     *      - tuple or list with named ordered fields 
+     *      - a'la python list with 3 elements
+     *      - tuple or list with named ordered fields
      *
      *  @code
      *
-     *    " (1,2,3) " 
-     *    " [1,2,3] " 
-     *    " [ x : 1, 2, Z:3 ] " 
-     *    " [ pX : 1 , PY : 2, 3] " 
-     *     
-     *  @endcode 
+     *    " (1,2,3) "
+     *    " [1,2,3] "
+     *    " [ x : 1, 2, Z:3 ] "
+     *    " [ pX : 1 , PY : 2, 3] "
+     *
+     *  @endcode
      *
      *  Valid keys for names fields:
      *
@@ -571,13 +571,13 @@ namespace DD4hep {
      *    "y", "Y" , "pY" , "Py" , "PY "
      *    "z", "Z" , "pZ" , "Pz" , "PZ "
      *
-     *  @endcode 
+     *  @endcode
      *
      *  @attention Named fields must be ordered <code>(x,y,z)</code>
      *
      *  @param result (output) the parsed vector
-     *  @param input  (input)  the input string 
-     *  @return status code 
+     *  @param input  (input)  the input string
+     *  @return status code
      *  @author Vanya BELYAEV Ivan.Belyaev@nikhef.nl
      *  @date 2009-09-05
      */
@@ -589,47 +589,47 @@ namespace DD4hep {
      *  Valid representations of Lorenzt vector
      *
      *      - a'la python tuple with 4 elements ("canonical")
-     *      - a'la python list with 4 elements 
+     *      - a'la python list with 4 elements
      *      - python/list with inner representation of 3D-point/vector
-     *      - tuple or list with named ordered fields 
+     *      - tuple or list with named ordered fields
      *
      *  @code
      *
-     *    " (1,2,3,4) "     
+     *    " (1,2,3,4) "
      *    " (1,2,3;4) "
      *
-     *    " [1,2,3,4] " 
-     *    " [1,2,3;4] " 
+     *    " [1,2,3,4] "
+     *    " [1,2,3;4] "
      *
-     *    " [ x:1 ,2,3; e= 4] " 
-     *    " [ pX : 1 , PY : 2, 3 , T= 4] " 
+     *    " [ x:1 ,2,3; e= 4] "
+     *    " [ pX : 1 , PY : 2, 3 , T= 4] "
      *
-     *    " [ ( pX : 1 , PY : 2, 3 ) , 4] " 
-     *    " [ ( pX : 1 , PY : 2, 3 ) ; 4] " 
+     *    " [ ( pX : 1 , PY : 2, 3 ) , 4] "
+     *    " [ ( pX : 1 , PY : 2, 3 ) ; 4] "
      *
-     *    " [ 4 , ( pX : 1 , PY : 2, 3 ) ] " 
-     *    " [ 4 ; ( pX : 1 , PY : 2, 3 ) ] " 
+     *    " [ 4 , ( pX : 1 , PY : 2, 3 ) ] "
+     *    " [ 4 ; ( pX : 1 , PY : 2, 3 ) ] "
      *
-     *    " [ [ pX : 1 , PY : 2, 3 ] , 4] " 
-     *    " [ [ pX : 1 , PY : 2, 3 ] ; 4] " 
+     *    " [ [ pX : 1 , PY : 2, 3 ] , 4] "
+     *    " [ [ pX : 1 , PY : 2, 3 ] ; 4] "
      *
-     *    " [ 4 , [ pX : 1 , PY : 2, 3 ] ] " 
-     *    " [ 4 ; [ pX : 1 , PY : 2, 3 ] ] " 
+     *    " [ 4 , [ pX : 1 , PY : 2, 3 ] ] "
+     *    " [ 4 ; [ pX : 1 , PY : 2, 3 ] ] "
      *
-     *    " ( ( pX : 1 , PY : 2, 3 ) , 4 )" 
-     *    " ( ( pX : 1 , PY : 2, 3 ) ; 4 )" 
+     *    " ( ( pX : 1 , PY : 2, 3 ) , 4 )"
+     *    " ( ( pX : 1 , PY : 2, 3 ) ; 4 )"
      *
-     *    " ( 4 , ( pX : 1 , PY : 2, 3 ) )" 
-     *    " ( 4 ; ( pX : 1 , PY : 2, 3 ) )" 
+     *    " ( 4 , ( pX : 1 , PY : 2, 3 ) )"
+     *    " ( 4 ; ( pX : 1 , PY : 2, 3 ) )"
      *
-     *    " ( [ pX : 1 , PY : 2, 3 ] , 4 )" 
-     *    " ( [ pX : 1 , PY : 2, 3 ] ; 4 )" 
+     *    " ( [ pX : 1 , PY : 2, 3 ] , 4 )"
+     *    " ( [ pX : 1 , PY : 2, 3 ] ; 4 )"
      *
-     *    " ( 4 , [ pX : 1 , PY : 2, 3 ] )" 
-     *    " ( 4 ; [ pX : 1 , PY : 2, 3 ] )" 
+     *    " ( 4 , [ pX : 1 , PY : 2, 3 ] )"
+     *    " ( 4 ; [ pX : 1 , PY : 2, 3 ] )"
      *
-     *     
-     *  @endcode 
+     *
+     *  @endcode
      *
      *  Note that "eenrgy" element can be separated with semicolumn.
      *
@@ -640,23 +640,23 @@ namespace DD4hep {
      *    "x", "X" , "pX" , "Px" , "PX "
      *    "y", "Y" , "pY" , "Py" , "PY "
      *    "z", "Z" , "pZ" , "Pz" , "PZ "
-     *    "t", "T" , "e"  , "E" 
+     *    "t", "T" , "e"  , "E"
      *
-     *  @endcode 
+     *  @endcode
      *
      *  @attention Named fields must be ordered <code>(x,y,z)</code>
      *
-     *  @param result (output) the parsed lorentz vector  
-     *  @param input  (input)  the input string 
-     *  @return status code 
+     *  @param result (output) the parsed lorentz vector
+     *  @param input  (input)  the input string
+     *  @return status code
      *  @author Vanya BELYAEV Ivan.Belyaev@nikhef.nl
      *  @date 2009-09-05
      */
     int parse(ROOT::Math::PxPyPzEVector& result, const std::string& input);
     // ========================================================================
     /// parse the vector of points
-    /**  @param result (OUTPUT) the parser vector 
-     *   @param input (INPIUT) the string to be parsed 
+    /**  @param result (OUTPUT) the parser vector
+     *   @param input (INPIUT) the string to be parsed
      *   @author Vanya BELYAEV Ivan.Belyaev@nikhef.nl
      *   @date 2009-09-05
      */
@@ -665,8 +665,8 @@ namespace DD4hep {
     int parse(std::set<ROOT::Math::XYZPoint>& result, const std::string& input);
     // ========================================================================
     /// parse the vector of vectors
-    /**  @param result (OUTPUT) the parser vector 
-     *   @param input (INPIUT) the string to be parsed 
+    /**  @param result (OUTPUT) the parser vector
+     *   @param input (INPIUT) the string to be parsed
      *   @author Vanya BELYAEV Ivan.Belyaev@nikhef.nl
      *   @date 2009-09-05
      */
@@ -675,8 +675,8 @@ namespace DD4hep {
     int parse(std::set<ROOT::Math::XYZVector>& result, const std::string& input);
     // ========================================================================
     /// parse the vector of vectors
-    /**  @param result (OUTPUT) the parser vector 
-     *   @param input (INPIUT) the string to be parsed 
+    /**  @param result (OUTPUT) the parser vector
+     *   @param input (INPIUT) the string to be parsed
      *   @author Vanya BELYAEV Ivan.Belyaev@nikhef.nl
      *   @date 2009-09-05
      */

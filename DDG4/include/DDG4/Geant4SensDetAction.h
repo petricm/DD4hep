@@ -46,7 +46,7 @@ namespace DD4hep {
     class Geant4SensDetSequences;
 
     /// Interface class to access properties of the underlying Geant4 sensitive detector structure
-    /** 
+    /**
      *  \author  M.Frank
      *  \version 1.0
      *  \ingroup DD4HEP_SIMULATION

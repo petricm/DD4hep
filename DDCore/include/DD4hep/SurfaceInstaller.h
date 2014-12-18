@@ -110,7 +110,7 @@ namespace DD4hep {
 #include "DDRec/DetectorData.h"
 #include "DDRec/Surface.h"
 
-/** If you want to save yourself some typing when creating surface installers, 
+/** If you want to save yourself some typing when creating surface installers,
  *  set the compile macro DD4HEP_USE_SURFACEINSTALL_HELPER LOCALLY !
  *  This will then enable the code below and the only thing you will have to
  *  type is the installer member function to create a measurement surface for

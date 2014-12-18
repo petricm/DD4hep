@@ -33,7 +33,7 @@ namespace DD4hep {
     }
 
     /// Class describing an opaque conditions data block
-    /** 
+    /**
      *  Access methods are templated. Once the access is fixed
      *  on the first call, the data type may not be changed anymore.
      *
@@ -71,7 +71,7 @@ namespace DD4hep {
     };
 
     /// Main condition object handle.
-    /**  
+    /**
      *  This objects allows access to the data block and
      *  the interval of validity for a single condition.
      *
@@ -139,7 +139,7 @@ namespace DD4hep {
       /// Re-evaluate the conditions data according to the previous bound type definition
       Condition& rebind();
 
-      /** Bind the data of the conditions object to a given format. 
+      /** Bind the data of the conditions object to a given format.
        *
        *  Note: The type definition is possible exactly once.
        *  Any further rebindings MUST match the identical type.
@@ -161,7 +161,7 @@ namespace DD4hep {
     inline Condition::Condition() : Handle<Condition::Object>() {}
 
     /// Container class for condition handles aggregated by a detector element
-    /** 
+    /**
      *  Note: The conditions container is owner by the detector element
      *        On deletion the detector element will destroy the container
      *        and all associated entries.

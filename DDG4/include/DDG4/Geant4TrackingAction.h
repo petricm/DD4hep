@@ -56,7 +56,7 @@ namespace DD4hep {
     /// Concrete implementation of the Geant4 tracking action sequence
     /**
      * The sequence dispatches the callbacks for each tracking action
-     * to all registered Geant4SteppingAction members and all 
+     * to all registered Geant4SteppingAction members and all
      * registered callbacks.
      *
      *  \author  M.Frank

@@ -22,7 +22,7 @@ namespace DD4hep {
   namespace Simulation {
 
     /// Base class to read lcio files.
-    /** 
+    /**
      *  \author  P.Kostka (main author)
      *  \author  M.Frank  (code reshuffeling into new DDG4 scheme)
      *  \version 1.0

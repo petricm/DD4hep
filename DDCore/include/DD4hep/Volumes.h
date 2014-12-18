@@ -56,9 +56,9 @@ namespace DD4hep {
     class SensitiveDetector;
 
     /// Implementation class extending the ROOT placed volume
-    /** 
+    /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoExtension.html 
+     *   \see http://root.cern.ch/root/html/TGeoExtension.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -108,9 +108,9 @@ namespace DD4hep {
     };
 
     /// Handle class holding a placed volume (also called physical volume)
-    /** 
+    /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoNode.html 
+     *   \see http://root.cern.ch/root/html/TGeoNode.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -156,7 +156,7 @@ namespace DD4hep {
      *   Internal data structure optional to TGeo data.
      *
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoExtension.html 
+     *   \see http://root.cern.ch/root/html/TGeoExtension.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -199,7 +199,7 @@ namespace DD4hep {
      *   Handle describing a Volume
      *
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoVolume.html 
+     *   \see http://root.cern.ch/root/html/TGeoVolume.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -295,8 +295,8 @@ namespace DD4hep {
     };
 
     /// Implementation class extending the ROOT assembly volumes (TGeoVolumeAsembly)
-    /** 
-     *  Handle describing a volume assembly. 
+    /**
+     *  Handle describing a volume assembly.
      *
      *   For any further documentation please see the following ROOT documentation:
      *   \see http://root.cern.ch/root/html/TGeoVolumeAssembly.html

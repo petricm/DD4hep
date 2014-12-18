@@ -35,7 +35,7 @@ namespace DD4hep {
     typedef const XmlAttr* Attribute;
 
     /// Definition of the XmlString class.
-    /** 
+    /**
      *  Definition of the XmlString class.
      *  Unly used to have the same code base as for XercesC,
      *  where this class does the unicode translations and
@@ -44,7 +44,7 @@ namespace DD4hep {
      *  \author   M.Frank
      *  \version  1.0
      *  \ingroup DD4HEP_XML
-    */
+     */
     class XmlString {
     public:
       /// Replicate string: internally allocates new string, which must be free'ed with release
@@ -62,7 +62,7 @@ namespace DD4hep {
 
 #ifdef __TIXML__
     /// Definition of the XmlException class.
-    /** 
+    /**
      *  Currently no real use. Present to make Xerces happy,
      *  which has such a class.
      *
@@ -139,7 +139,7 @@ namespace DD4hep {
     double _toDouble(const XmlChar* value);
 
     /// Helper class to encapsulate a unicode string.
-    /** 
+    /**
      *  Simple conversion from ascii strings to unicode strings.
      *  Useful when using XercesC - dummy implementation for TiXml.
      *
@@ -443,19 +443,19 @@ namespace DD4hep {
     }
 #if 0
     template<> INLINE bool Handle_t::attr<bool>(const Attribute tag) const
-    { return _toBool(attr_value(tag));}
+      { return _toBool(attr_value(tag));}
 
     template<> INLINE int Handle_t::attr<int>(const Attribute tag) const
-    { return _toInt(attr_value(tag));}
+      { return _toInt(attr_value(tag));}
 
     template<> INLINE float Handle_t::attr<float>(const Attribute tag) const
-    { return _toFloat(attr_value(tag));}
+      { return _toFloat(attr_value(tag));}
 
     template<> INLINE double Handle_t::attr<double>(const Attribute tag) const
-    { return _toDouble(attr_value(tag));}
+      { return _toDouble(attr_value(tag));}
 
     template<> INLINE std::string Handle_t::attr<std::string>(const Attribute tag) const
-    { return _toString(attr_value(tag));}
+      { return _toString(attr_value(tag));}
 #endif
 
     /// Class to support the access to collections of XmlNodes (or XmlElements)

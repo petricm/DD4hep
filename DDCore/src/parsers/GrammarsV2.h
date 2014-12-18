@@ -55,11 +55,11 @@ namespace DD4hep {
     //==============================================================================
     template <typename Iterator, typename T, typename Skipper, class Enable = void> struct Grammar_ {
       /* READ THIS IF YOUR COMPILE BREAKS ON THE FOLLOWING LINE
-	 *
-	 * To users: You have to ask developers to implement parser for your type T
-	 * To developer: You have to implement and register Grammar for type T
-	 *
-	 */
+         *
+         * To users: You have to ask developers to implement parser for your type T
+         * To developer: You have to implement and register Grammar for type T
+         *
+         */
       BOOST_MPL_ASSERT_MSG(false, GRAMMAR_FOR_TYPE_DOES_NOT_EXISTS, (T));
     };
 

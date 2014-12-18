@@ -29,10 +29,10 @@ namespace DD4hep {
      *  the main instance avaible throu the Geant4Context.
      *
      *  This is mandatory to ensure reproducability of the event generation
-     *  process. Particular objects may use a dependent generator from 
+     *  process. Particular objects may use a dependent generator from
      *  an experiment framework like GAUDI.
      *
-     *  This main interface is supposed to be stable. Unclear however is 
+     *  This main interface is supposed to be stable. Unclear however is
      *  if the generation functions will have to become virtual....
      *  Future will tell us.
      *

@@ -90,7 +90,7 @@ namespace DD4hep {
     };
 
     ///  Read an arbitrary XML document and analyze it's content
-    /** 
+    /**
      *
      *  \author  M.Frank
      *  \version 1.0
@@ -103,7 +103,7 @@ namespace DD4hep {
     };
 
     /// Read an arbitrary XML document and analyze it's content
-    /** 
+    /**
      *
      *  \author  M.Frank
      *  \version 1.0
@@ -116,7 +116,7 @@ namespace DD4hep {
     };
 
     /// Standard factory to create Detector elements from the compact XML representation.
-    /** 
+    /**
      *
      *  \author  M.Frank
      *  \version 1.0

@@ -23,7 +23,7 @@ namespace DD4hep {
 
     /// Concrete basic implementation of the Geant4 run action base class.
     /**
-     * The Run Action is called once per start and end of a run. 
+     * The Run Action is called once per start and end of a run.
      * i.e. a series of generated events. These two callbacks
      * allow clients to define run-dependent actions such as statistics
      * summaries etc.
@@ -48,7 +48,7 @@ namespace DD4hep {
     /**
      * Concrete implementation of the Geant4 run action sequence.
      * The sequence dispatches the callbacks at the beginning and the and
-     * of a run to all registered Geant4RunAction members and all 
+     * of a run to all registered Geant4RunAction members and all
      * registered callbacks.
      *
      *  \author  M.Frank

@@ -27,7 +27,7 @@ namespace DD4hep {
   namespace Geometry {
 
     /// Implementation class supporting generic Segmentation of sensitive detectors
-    /** 
+    /**
      * \author  M.Frank
      * \version 1.0
      * \ingroup DD4HEP_GEOMETRY
@@ -77,7 +77,7 @@ namespace DD4hep {
     };
 
     /// Handle class supporting generic Segmentation of sensitive detectors
-    /** 
+    /**
      *
      *   \author  M.Frank
      *   \version 1.0

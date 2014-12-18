@@ -268,14 +268,14 @@ namespace dd4hep {
   // This file has been provided by Geant4 (simulation toolkit for HEP).
   //
   // The basic units are :
-  //  		millimeter
-  // 		nanosecond
-  // 		Mega electron Volt
-  // 		positon charge
-  // 		degree Kelvin
+  //            millimeter
+  //            nanosecond
+  //            Mega electron Volt
+  //            positon charge
+  //            degree Kelvin
   //              amount of substance (mole)
   //              luminous intensity (candela)
-  // 		radian
+  //            radian
   //              steradian
   //
   // Below is a non exhaustive list of Physical CONSTANTS,

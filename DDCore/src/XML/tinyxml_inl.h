@@ -1,29 +1,29 @@
 /*
-www.sourceforge.net/projects/tinyxml
-Original code (2.0 and earlier )copyright (c) 2000-2006 Lee Thomason (www.grinninglizard.com)
+  www.sourceforge.net/projects/tinyxml
+  Original code (2.0 and earlier )copyright (c) 2000-2006 Lee Thomason (www.grinninglizard.com)
 
-This software is provided 'as-is', without any express or implied
-warranty. In no event will the authors be held liable for any
-damages arising from the use of this software.
+  This software is provided 'as-is', without any express or implied
+  warranty. In no event will the authors be held liable for any
+  damages arising from the use of this software.
 
-Permission is granted to anyone to use this software for any
-purpose, including commercial applications, and to alter it and
-redistribute it freely, subject to the following restrictions:
+  Permission is granted to anyone to use this software for any
+  purpose, including commercial applications, and to alter it and
+  redistribute it freely, subject to the following restrictions:
 
-1. The origin of this software must not be misrepresented; you must
-not claim that you wrote the original software. If you use this
-software in a product, an acknowledgment in the product documentation
-would be appreciated but is not required.
+  1. The origin of this software must not be misrepresented; you must
+  not claim that you wrote the original software. If you use this
+  software in a product, an acknowledgment in the product documentation
+  would be appreciated but is not required.
 
-2. Altered source versions must be plainly marked as such, and
-must not be misrepresented as being the original software.
+  2. Altered source versions must be plainly marked as such, and
+  must not be misrepresented as being the original software.
 
-3. This notice may not be removed or altered from any source
-distribution.
+  3. This notice may not be removed or altered from any source
+  distribution.
 
 
- F.Gaede, DESY : changed extension to .cc  for use with marlin
-                 and include from "marlin/tinyxml.h"
+  F.Gaede, DESY : changed extension to .cc  for use with marlin
+  and include from "marlin/tinyxml.h"
 */
 
 #include <ctype.h>
@@ -46,7 +46,7 @@ void TiXmlBase::PutString(const TIXML_STRING& str, TIXML_STRING* outString) {
     if (c == '&' && i < ((int)str.length() - 2) && str[i + 1] == '#' && str[i + 2] == 'x') {
       // Hexadecimal character reference.
       // Pass through unchanged.
-      // &#xA9;	-- copyright symbol, for example.
+      // &#xA9;     -- copyright symbol, for example.
       //
       // The -1 is a bug fix from Rob Laveaux. It keeps
       // an overflow from happening if there is no ';'.
@@ -86,8 +86,8 @@ void TiXmlBase::PutString(const TIXML_STRING& str, TIXML_STRING* outString) {
       sprintf(buf, "&#x%02X;", (unsigned)(c & 0xff));
 #endif
 
-      //*ME:	warning C4267: convert 'size_t' to 'int'
-      //*ME:	Int-Cast to make compiler happy ...
+      //*ME:        warning C4267: convert 'size_t' to 'int'
+      //*ME:        Int-Cast to make compiler happy ...
       outString->append(buf, (int)strlen(buf));
       ++i;
     } else {
@@ -754,18 +754,18 @@ bool TiXmlDocument::LoadFile(TiXmlEncoding encoding) {
 
 bool TiXmlDocument::SaveFile() const {
   // See STL_STRING_BUG below.
-  //	StringToBuffer buf( value );
+  //    StringToBuffer buf( value );
   //
-  //	if ( buf.buffer && SaveFile( buf.buffer ) )
-  //		return true;
+  //    if ( buf.buffer && SaveFile( buf.buffer ) )
+  //            return true;
   //
-  //	return false;
+  //    return false;
   return SaveFile(Value());
 }
 
 bool TiXmlDocument::LoadFile(const char* _filename, TiXmlEncoding encoding) {
   // There was a really terrifying little bug here. The code:
-  //		value = filename
+  //            value = filename
   // in the STL case, cause the assignment method of the std::string to
   // be called. What is strange, is that the std::string had the same
   // address as it's c_str() method, and so bad things happen. Looks
@@ -829,11 +829,11 @@ bool TiXmlDocument::LoadFile(FILE* file, TiXmlEncoding encoding) {
   // convention, and not work generally.
 
   /*
-	while( fgets( buf, sizeof(buf), file ) )
-	{
-		data += buf;
-	}
-	*/
+    while( fgets( buf, sizeof(buf), file ) )
+    {
+    data += buf;
+    }
+  */
 
   char* buf = new char[length + 1];
   buf[0]    = 0;
@@ -968,14 +968,14 @@ const TiXmlAttribute* TiXmlAttribute::Next() const {
 }
 
 /*
-TiXmlAttribute* TiXmlAttribute::Next()
-{
-	// We are using knowledge of the sentinel. The sentinel
-	// have a value or name.
-	if ( next->value.empty() && next->name.empty() )
-		return 0;
-	return next;
-}
+  TiXmlAttribute* TiXmlAttribute::Next()
+  {
+  // We are using knowledge of the sentinel. The sentinel
+  // have a value or name.
+  if ( next->value.empty() && next->name.empty() )
+  return 0;
+  return next;
+  }
 */
 
 const TiXmlAttribute* TiXmlAttribute::Previous() const {
@@ -987,14 +987,14 @@ const TiXmlAttribute* TiXmlAttribute::Previous() const {
 }
 
 /*
-TiXmlAttribute* TiXmlAttribute::Previous()
-{
-	// We are using knowledge of the sentinel. The sentinel
-	// have a value or name.
-	if ( prev->value.empty() && prev->name.empty() )
-		return 0;
-	return prev;
-}
+  TiXmlAttribute* TiXmlAttribute::Previous()
+  {
+  // We are using knowledge of the sentinel. The sentinel
+  // have a value or name.
+  if ( prev->value.empty() && prev->name.empty() )
+  return 0;
+  return prev;
+  }
 */
 
 void TiXmlAttribute::Print(FILE* cfile, int /*depth*/, TIXML_STRING* str) const {
@@ -1276,15 +1276,15 @@ const TiXmlAttribute* TiXmlAttributeSet::Find(const std::string& name) const {
 }
 
 /*
-TiXmlAttribute*	TiXmlAttributeSet::Find( const std::string& name )
-{
-	for( TiXmlAttribute* node = sentinel.next; node != &sentinel; node = node->next )
-	{
-		if ( node->name == name )
-			return node;
-	}
-	return 0;
-}
+  TiXmlAttribute*       TiXmlAttributeSet::Find( const std::string& name )
+  {
+  for( TiXmlAttribute* node = sentinel.next; node != &sentinel; node = node->next )
+  {
+  if ( node->name == name )
+  return node;
+  }
+  return 0;
+  }
 */
 #endif
 
@@ -1297,15 +1297,15 @@ const TiXmlAttribute* TiXmlAttributeSet::Find(const char* name) const {
 }
 
 /*
-TiXmlAttribute*	TiXmlAttributeSet::Find( const char* name )
-{
-	for( TiXmlAttribute* node = sentinel.next; node != &sentinel; node = node->next )
-	{
-		if ( strcmp( node->name.c_str(), name ) == 0 )
-			return node;
-	}
-	return 0;
-}
+  TiXmlAttribute*       TiXmlAttributeSet::Find( const char* name )
+  {
+  for( TiXmlAttribute* node = sentinel.next; node != &sentinel; node = node->next )
+  {
+  if ( strcmp( node->name.c_str(), name ) == 0 )
+  return node;
+  }
+  return 0;
+  }
 */
 
 #ifdef TIXML_USE_STL

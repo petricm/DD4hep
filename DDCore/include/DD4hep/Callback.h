@@ -21,10 +21,10 @@ namespace DD4hep {
 
   /// Definition of the generic callback structure for member functions
   /**
-   *  The callback structure allows to wrap any member function with up to 
-   *  3 arguments into an abstract objects, which could later be called 
+   *  The callback structure allows to wrap any member function with up to
+   *  3 arguments into an abstract objects, which could later be called
    *  using the argument list. The pointer to the hosting objects is stored
-   *  in the callback object. The callback objects in this sense behaves 
+   *  in the callback object. The callback objects in this sense behaves
    *  very similar to a static function.
    *
    *  \author  M.Frank

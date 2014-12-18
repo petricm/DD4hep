@@ -23,21 +23,21 @@ namespace DD4hep {
 
     /*
 
-     Geant4Phase,  G4EventGenerator    --> G4VUserPrimaryGeneratorAction::GeneratePrimaries
-     Geant4Begin,  G4Run               --> G4UserRunAction::BeginOfRunAction
-     Geant4End,    G4Run               --> G4UserRunAction::EndOfRunAction
-     Geant4Begin,  G4Event             --> G4UserEventAction::BeginOfEventAction
-     Geant4End,    G4Event             --> G4UserEventAction::EndOfEventAction
-     Geant4Begin,  G4Track             --> G4UserTrackingAction::PreUserTrackingAction
-     Geant4End,    G4Track             --> G4UserTrackingAction::PostUserTrackingAction
-     Geant4Phase,  G4Step              --> G4UserSteppingAction::UserSteppingAction
-     Geant4Begin,  G4TrackStack        --> G4UserStackingAction::NewStage
-     Geant4End,    G4TrackStack        --> G4UserStackingAction::PrepareNewEvent
+      Geant4Phase,  G4EventGenerator    --> G4VUserPrimaryGeneratorAction::GeneratePrimaries
+      Geant4Begin,  G4Run               --> G4UserRunAction::BeginOfRunAction
+      Geant4End,    G4Run               --> G4UserRunAction::EndOfRunAction
+      Geant4Begin,  G4Event             --> G4UserEventAction::BeginOfEventAction
+      Geant4End,    G4Event             --> G4UserEventAction::EndOfEventAction
+      Geant4Begin,  G4Track             --> G4UserTrackingAction::PreUserTrackingAction
+      Geant4End,    G4Track             --> G4UserTrackingAction::PostUserTrackingAction
+      Geant4Phase,  G4Step              --> G4UserSteppingAction::UserSteppingAction
+      Geant4Begin,  G4TrackStack        --> G4UserStackingAction::NewStage
+      Geant4End,    G4TrackStack        --> G4UserStackingAction::PrepareNewEvent
 
-     */
+    */
 
     /// Action phase definition. Client callback at various stage of the simulation processing
-    /** 
+    /**
      *  \author  M.Frank
      *  \version 1.0
      *  \ingroup DD4HEP_SIMULATION

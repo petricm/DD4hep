@@ -130,15 +130,15 @@ namespace DD4hep {
     inline unsigned long long int magic_word() { return 0xFEEDAFFEDEADFACEULL; }
 
     /// Handle: a templated class like a shared pointer, which allows specialized access to tgeometry objects.
-    /** 
+    /**
      * The Handle is the base class to access all objects in DD4hep.
      * Objects, which consist ONLY of data  are NEVER passed directly.
      * They are ALWAYS passed using handles. Such handles are 'handy' ;-).
-     * Assignment is to and from different handles is possible using concrete 
+     * Assignment is to and from different handles is possible using concrete
      * type checking.
      *
      * Real benefits can result from sophisticated handle subclasses, which can
-     * implement any desired user functionality with out compromising the 
+     * implement any desired user functionality with out compromising the
      * object's data content. This leads to very flexible implementations,
      * where the same data may be shared by many handle implementations
      * providing different functionality to the clients.

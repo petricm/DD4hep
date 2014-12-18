@@ -277,7 +277,7 @@ namespace DD4hep {
      *  - At the end of the handling of the MC truth are particles to be kept
      *    are inserted if the required modules are activated such as the
      *    Geant4ParticleHandler.
-     * 
+     *
      *  Note: This object takes OWNERSHIP of the inserted particles!
      *        beware of double deletion of objects!
      *

@@ -17,12 +17,12 @@ namespace DD4hep {
 
   /// Implementation of a named object
   /**
-     *  The data class behind named object handles.
-     *
-     *  \author  M.Frank
-     *  \version 1.0
-     *  \ingroup DD4HEP_GEOMETRY
-     */
+   *  The data class behind named object handles.
+   *
+   *  \author  M.Frank
+   *  \version 1.0
+   *  \ingroup DD4HEP_GEOMETRY
+   */
   class NamedObject {
   public:
     /// The object name

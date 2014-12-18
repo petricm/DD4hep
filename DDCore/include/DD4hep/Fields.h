@@ -38,7 +38,7 @@ namespace DD4hep {
      *  \author  M.Frank
      *  \version 1.0
      *  \ingroup DD4HEP_GEOMETRY
-    */
+     */
     class CartesianField : public Ref_t {
     public:
       enum FieldType { UNKNOWN = 0, ELECTRIC = 0x1, MAGNETIC = 0x2 };
@@ -111,10 +111,10 @@ namespace DD4hep {
      *  with field components in Cartesian coordinates.
      *
      *  The actual behaviour is solely implemented in the underlying object
-     *  classes. The overlay field is the sum of several magnetic of electric 
+     *  classes. The overlay field is the sum of several magnetic of electric
      *  field components.
      *
-     *  The resulting field vectors are computed by the vector addition 
+     *  The resulting field vectors are computed by the vector addition
      *  of the individual components.
      *
      *  \author  M.Frank

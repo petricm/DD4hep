@@ -46,7 +46,7 @@ namespace DD4hep {
     class Geant4SensDetSequences;
 
     ///  User run context for DDG4
-    /** 
+    /**
      *  The context is accessible from the Geant4Context pointer,
      *  which is present in every Geant4Action.
      *  The run context is only valid however, if there is actually
@@ -107,7 +107,7 @@ namespace DD4hep {
      *  Hence: They are only useful to extend data of an event.
      *
      *  Any random numbers used to process one event should be accessed
-     *  from this location. The framework ensures that the same seeded 
+     *  from this location. The framework ensures that the same seeded
      *  sequence is used throughout the processing of one single event.
      *
      *  \author  M.Frank

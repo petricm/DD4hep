@@ -45,7 +45,7 @@ namespace DD4hep {
      *   Generic handle holding an object of base TGeoShape.
      *
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoShape.html 
+     *   \see http://root.cern.ch/root/html/TGeoShape.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -88,7 +88,7 @@ namespace DD4hep {
     /// Class describing a box shape
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoBBox.html 
+     *   \see http://root.cern.ch/root/html/TGeoBBox.html
      *
      *
      *   \author  M.Frank
@@ -139,7 +139,7 @@ namespace DD4hep {
      *
      *
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoPcon.html 
+     *   \see http://root.cern.ch/root/html/TGeoPcon.html
      *
      *
      *   \author  M.Frank
@@ -171,7 +171,7 @@ namespace DD4hep {
      *   half-length dz, inner and outer radii specified at -dz and +dz.
      *
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoConeSeg.html 
+     *   \see http://root.cern.ch/root/html/TGeoConeSeg.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -209,7 +209,7 @@ namespace DD4hep {
      *            inner radius, outer radius and half-length dz.
      *
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoConeSeg.html 
+     *   \see http://root.cern.ch/root/html/TGeoConeSeg.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -259,7 +259,7 @@ namespace DD4hep {
     /// Class describing a cone shape
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoCone.html 
+     *   \see http://root.cern.ch/root/html/TGeoCone.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -292,7 +292,7 @@ namespace DD4hep {
     /// Class describing a trap shape
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoTrap.html 
+     *   \see http://root.cern.ch/root/html/TGeoTrap.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -332,7 +332,7 @@ namespace DD4hep {
     /// Class describing a Trapezoid shape
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoTrd2.html 
+     *   \see http://root.cern.ch/root/html/TGeoTrd2.html
      *
      *
      *   \author  M.Frank
@@ -369,7 +369,7 @@ namespace DD4hep {
     /// Class describing a Torus shape
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoTorus.html 
+     *   \see http://root.cern.ch/root/html/TGeoTorus.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -408,7 +408,7 @@ namespace DD4hep {
     /// Class describing a sphere shape
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoSphere.html 
+     *   \see http://root.cern.ch/root/html/TGeoSphere.html
      *
      *
      *   \author  M.Frank
@@ -437,7 +437,7 @@ namespace DD4hep {
     /// Class describing a Paraboloid shape
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoParaboloid.html 
+     *   \see http://root.cern.ch/root/html/TGeoParaboloid.html
      *
      *
      *   \author  M.Frank
@@ -465,7 +465,7 @@ namespace DD4hep {
     /// Class describing a regular polyhedron shape
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoPgon.html 
+     *   \see http://root.cern.ch/root/html/TGeoPgon.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -498,7 +498,7 @@ namespace DD4hep {
     /// Class describing an arbitray solid defined by 8 vertices.
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoArb8.html 
+     *   \see http://root.cern.ch/root/html/TGeoArb8.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -526,7 +526,7 @@ namespace DD4hep {
     /// Base class describing boolean (=union,intersection,subtraction) solids
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoCompositeShape.html 
+     *   \see http://root.cern.ch/root/html/TGeoCompositeShape.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -545,8 +545,8 @@ namespace DD4hep {
     /// Class describing boolean subtraction solid
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoCompositeShape.html 
-     *   \see http://root.cern.ch/root/html/TGeoSubtraction.html 
+     *   \see http://root.cern.ch/root/html/TGeoCompositeShape.html
+     *   \see http://root.cern.ch/root/html/TGeoSubtraction.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -575,8 +575,8 @@ namespace DD4hep {
     /// Class describing boolean union solid
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoCompositeShape.html 
-     *   \see http://root.cern.ch/root/html/TGeoUnion.html 
+     *   \see http://root.cern.ch/root/html/TGeoCompositeShape.html
+     *   \see http://root.cern.ch/root/html/TGeoUnion.html
      *
      *   \author  M.Frank
      *   \version 1.0
@@ -605,8 +605,8 @@ namespace DD4hep {
     /// Class describing boolean intersection solid
     /**
      *   For any further documentation please see the following ROOT documentation:
-     *   \see http://root.cern.ch/root/html/TGeoCompositeShape.html 
-     *   \see http://root.cern.ch/root/html/TGeoIntersection.html 
+     *   \see http://root.cern.ch/root/html/TGeoCompositeShape.html
+     *   \see http://root.cern.ch/root/html/TGeoIntersection.html
      *
      *   \author  M.Frank
      *   \version 1.0

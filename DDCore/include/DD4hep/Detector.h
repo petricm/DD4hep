@@ -143,15 +143,15 @@ namespace DD4hep {
 
     /// Handle class describing a detector element
     /**
-     * Detector elements (class DetElement are entities which represent 
+     * Detector elements (class DetElement are entities which represent
      * subdetectors or sizable parts of a subdetector.
      * A DetElement instance has the means to provide to clients information about
      *
      *    -  the detector hierarchy by exposing its children.
-     *    -  its placement within the overall experiment if it represents an 
+     *    -  its placement within the overall experiment if it represents an
      *       entire subdetector or its placement with respect to its parent
      *       if the \em DetElement represents a part of a subdetector.
-     *    -  information about the \em Readout structure if the object is 
+     *    -  information about the \em Readout structure if the object is
      *       instrumented and read-out. Otherwise this link is empty.
      *    -  information about the environmental conditions etc. \em conditons.
      *    -  alignment information.

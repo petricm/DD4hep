@@ -37,7 +37,7 @@ namespace DD4hep {
    *  The final aim is to hide all this behind a TFile object,
    *  so that we get the entire network file handling for free!
    *
-   *  Note: 
+   *  Note:
    *  Credits go to a large extend to the authors of boost::iostreams.
    *  Without their work I could not have done this!
    *
@@ -90,7 +90,7 @@ namespace DD4hep {
    *  The final aim is to hide all this behind a TFile object,
    *  so that we get the entire network file handling for free!
    *
-   *  Note: 
+   *  Note:
    *  Credits go to a large extend to the authors of boost::iostreams.
    *  Without their work I could not have done this!
    *
@@ -147,7 +147,7 @@ namespace DD4hep {
    *  The final aim is to hide all this behind a TFile object,
    *  so that we get the entire network file handling for free!
    *
-   *  Note: 
+   *  Note:
    *  Credits go to a large extend to the authors of boost::iostreams.
    *  Without their work I could not have done this!
    *

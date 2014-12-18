@@ -32,7 +32,7 @@ namespace DD4hep {
      *  \author  M.Frank
      *  \version 1.0
      *  \ingroup DD4HEP_SIMULATION
-    */
+     */
     template <typename TYPE> class Geant4Handle {
     protected:
       void checked_assign(TYPE* p);
@@ -61,7 +61,7 @@ namespace DD4hep {
     };
 
     /// Handle to Geant4 actions with built-in creation mechanism
-    /** 
+    /**
      *  \author  M.Frank
      *  \version 1.0
      *  \ingroup DD4HEP_SIMULATION

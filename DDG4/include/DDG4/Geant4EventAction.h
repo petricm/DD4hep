@@ -53,9 +53,9 @@ namespace DD4hep {
     };
 
     /// Concrete implementation of the Geant4 event action sequence
-    /** 
+    /**
      * The sequence dispatches the callbacks at the beginning and the and
-     * of an event to all registered Geant4EventAction members and all 
+     * of an event to all registered Geant4EventAction members and all
      * registered callbacks.
      *
      *  \author  M.Frank

@@ -9,7 +9,7 @@ namespace DD4hep {
   namespace Simulation {
 
     /// Hack! Wrapper around G4AssemblyVolume to access protected members.
-    /** 
+    /**
      *  \author  M.Frank
      *  \version 1.0
      *  \ingroup DD4HEP_SIMULATION
