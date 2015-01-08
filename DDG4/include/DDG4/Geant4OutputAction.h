@@ -43,8 +43,10 @@ namespace DD4hep {
         template <typename U> U* data() const { return (U*)userData; }
       };
 
-      /// Property: output destination
+      /// Property: "Output" output destination
       std::string m_output;
+      /// Property: "HandleErrorsAsFatal" Handle errors as fatal and rethrow eventual exceptions
+      bool m_errorFatal;
       /// Reference to MC truth object
       Geant4ParticleMap* m_truth;
 
