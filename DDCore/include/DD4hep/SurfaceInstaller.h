@@ -68,7 +68,7 @@ namespace DD4hep {
 
   public:
     /// Initializing constructor
-    SurfaceInstaller(LCDD& lcdd, const std::string& det_name);
+    SurfaceInstaller(LCDD& lcdd, int argc, char** argv);
     /// Default destructor
     virtual ~SurfaceInstaller() {}
     /// Set flag to stop scanning volumes and detector elements
@@ -89,11 +89,8 @@ namespace DD4hep {
 
   /// Action routine to execute the test
   template <typename T> inline long SurfaceInstaller::run(Geometry::LCDD& lcdd, int argc, char** argv) {
-    for (; argc > 0; --argc) {
-      std::string name = argv[argc - 1];
-      T           installer(lcdd, name);
-      installer.scan();
-    }
+    T installer(lcdd, argc, argv);
+    installer.scan();
     return 1;
   }
 
@@ -109,6 +106,10 @@ namespace DD4hep {
 
 #include "DDRec/DetectorData.h"
 #include "DDRec/Surface.h"
+
+#ifndef SURFACEINSTALLER_DATA
+typedef void* SURFACEINSTALLER_DATA;
+#endif
 
 /** If you want to save yourself some typing when creating surface installers,
  *  set the compile macro DD4HEP_USE_SURFACEINSTALL_HELPER LOCALLY !
@@ -138,9 +139,12 @@ namespace {
     typedef DDSurfaces::SurfaceType   Type;
     UserData                          data;
 
+    /// Default (empty argument handler
+    void handle_arguments(int argc, char** argv);
+
   public:
     /// Initializing constructor
-    Installer(LCDD& lcdd, const std::string& nam) : DD4hep::SurfaceInstaller(lcdd, nam) {}
+    Installer(LCDD& lcdd, int argc, char** argv);
     /// Default destructor
     virtual ~Installer() {}
     /// Install volume information. Default implementation only prints!
@@ -156,6 +160,12 @@ namespace {
       return false;
     }
   };
+
+  /// Initializing constructor
+  template <typename UserData>
+  Installer<UserData>::Installer(LCDD& lcdd, int argc, char** argv) : DD4hep::SurfaceInstaller(lcdd, argc, argv) {
+    handle_arguments(argc, argv);
+  }
 
   /// Handle surface installation using cached surfaces.
   template <typename UserData> bool Installer<UserData>::handleUsingCache(DetElement comp, Volume vol) const {
@@ -174,10 +184,13 @@ namespace {
     m_surfaces.insert(std::make_pair(surf.volume().ptr(), surf.ptr()));
     DD4hep::DDRec::volSurfaceList(component)->push_back(surf);
   }
-}
+
+  /// Default (empty argument handler
+  template <typename UserData> void Installer<UserData>::handle_arguments(int, char**) {}
 #ifndef SURFACEINSTALLER_DATA
-typedef void* SURFACEINSTALLER_DATA;
+  template <> void Installer<SURFACEINSTALLER_DATA>::handle_arguments(int, char**) {}
 #endif
+}
 
 typedef Installer<SURFACEINSTALLER_DATA> InstallerClass;
 DECLARE_SURFACE_INSTALLER(DD4HEP_USE_SURFACEINSTALL_HELPER, InstallerClass)
