@@ -17,16 +17,17 @@ namespace DD4hep {
 
     using namespace DDSurfaces;
 
-#if 1
+#define use_materialdata 1
+#if use_materialdata
     typedef MaterialData SurfaceMaterial;
 
 #else
     /** Wrapper class to  Geometry::Material that implements the DDSurfaces::IMaterial interface.
-      *
-      * @author F.Gaede, DESY
-      * @date Apr, 6 2014
-      * @version $Id$
-      */
+     *
+     * @author F.Gaede, DESY
+     * @date Apr, 6 2014
+     * @version $Id$
+     */
     struct SurfaceMaterial : public virtual Geometry::Material, public IMaterial {
       /** Copy c'tor - copies handle */
       SurfaceMaterial(Geometry::Material m) : Geometry::Material(m) {}
@@ -36,22 +37,22 @@ namespace DD4hep {
       virtual ~SurfaceMaterial() {}
 
       /// material name
-      virtual std::string name() const { return Geometry::Material::name(); }
+      virtual std::string name() const;
 
       /// averaged proton number
-      virtual double Z() const { return Geometry::Material::Z(); }
+      virtual double Z() const;
 
       /// averaged atomic number
-      virtual double A() const { return Geometry::Material::A(); }
+      virtual double A() const;
 
       /// density - units ?
-      virtual double density() const { return Geometry::Material::density(); }
+      virtual double density() const;
 
       /// radiation length - tgeo units
-      virtual double radiationLength() const { return Geometry::Material::radLength(); }
+      virtual double radiationLength() const;
 
       /// interaction length - tgeo units
-      virtual double interactionLength() const { return Geometry::Material::intLength(); }
+      virtual double interactionLength() const;
     };
 #endif
 
@@ -106,13 +107,13 @@ namespace DD4hep {
     class VolSurface : public Geometry::Handle<SurfaceData>, public ISurface {
     protected:
       /// setter for daughter classes
-      virtual void setU(const Vector3D& u) { object<SurfaceData>()._u = u; }
+      virtual void setU(const Vector3D& u);
 
       /// setter for daughter classes
-      virtual void setV(const Vector3D& v) { object<SurfaceData>()._v = v; }
+      virtual void setV(const Vector3D& v);
 
       /// setter for daughter classes
-      virtual void setNormal(const Vector3D& n) { object<SurfaceData>()._n = n; }
+      virtual void setNormal(const Vector3D& n);
 
     public:
       virtual ~VolSurface() {}
@@ -131,39 +132,31 @@ namespace DD4hep {
       /// Standrad c'tor for initialization.
       VolSurface(Geometry::Volume vol, SurfaceType type, double thickness_inner, double thickness_outer, Vector3D u,
                  Vector3D v, Vector3D n, Vector3D o = Vector3D(0., 0., 0.));
+
       /// the volume to which this surface is attached.
       Geometry::Volume volume() const { return ptr()->_vol; }
 
       /// The id of this surface - always 0 for VolSurfaces
-      virtual long64 id() const { return 0; }
+      virtual long64 id() const;
 
       /** properties of the surface encoded in Type.
        * @see SurfaceType
        */
-      virtual const SurfaceType& type() const { return object<SurfaceData>()._type; }
+      virtual const SurfaceType& type() const;
 
       //==== geometry ====
 
       /** First direction of measurement U */
-      virtual Vector3D u(const Vector3D& point = Vector3D()) const {
-        point.x();
-        return object<SurfaceData>()._u;
-      }
+      virtual Vector3D u(const Vector3D& point = Vector3D()) const;
 
       /** Second direction of measurement V */
-      virtual Vector3D v(const Vector3D& point = Vector3D()) const {
-        point.x();
-        return object<SurfaceData>()._v;
-      }
+      virtual Vector3D v(const Vector3D& point = Vector3D()) const;
 
       /// Access to the normal direction at the given point
-      virtual Vector3D normal(const Vector3D& point = Vector3D()) const {
-        point.x();
-        return object<SurfaceData>()._n;
-      }
+      virtual Vector3D normal(const Vector3D& point = Vector3D()) const;
 
       /** Get Origin of local coordinate system on surface */
-      virtual const Vector3D& origin() const { return object<SurfaceData>()._o; }
+      virtual const Vector3D& origin() const;
 
       /** Convert the global position to the local position (u,v) on the surface */
       virtual Vector2D globalToLocal(const Vector3D& point) const;
@@ -172,16 +165,16 @@ namespace DD4hep {
       virtual Vector3D localToGlobal(const Vector2D& point) const;
 
       /// Access to the material in opposite direction of the normal
-      virtual const IMaterial& innerMaterial() const { return object<SurfaceData>()._innerMat; }
+      virtual const IMaterial& innerMaterial() const;
 
       /// Access to the material in direction of the normal
-      virtual const IMaterial& outerMaterial() const { return object<SurfaceData>()._outerMat; }
+      virtual const IMaterial& outerMaterial() const;
 
       /** Thickness of inner material */
-      virtual double innerThickness() const { return object<SurfaceData>()._th_i; }
+      virtual double innerThickness() const;
 
       /** Thickness of outer material */
-      virtual double outerThickness() const { return object<SurfaceData>()._th_o; }
+      virtual double outerThickness() const;
 
       /** The length of the surface along direction u at the origin. For 'regular' boundaries, like rectangles, 
        *  this can be used to speed up the computation of inSideBounds.
@@ -196,17 +189,10 @@ namespace DD4hep {
       // need default implementations for putting it in list....
 
       /** Distance to surface */
-      virtual double distance(const Vector3D& point) const {
-        point.x();
-        return 1.e99;
-      }
+      virtual double distance(const Vector3D& point) const;
 
       /// Checks if the given point lies within the surface
-      virtual bool insideBounds(const Vector3D& point, double epsilon = 1e-4) const {
-        point.x();
-        (void)epsilon;
-        return false;
-      }
+      virtual bool insideBounds(const Vector3D& point, double epsilon = 1e-4) const;
 
       //fixme: protected: + friend declaration ?
 
@@ -241,22 +227,10 @@ namespace DD4hep {
 
       // required c'tor for extension mechanism
       VolSurfaceList(const VolSurfaceList& vsl, Geometry::DetElement& det) {
-        // std::cout << "  VolSurfaceList(const VolSurfaceList& vsl, Geometry::DetElement& det )   -  vsl.size() " <<  vsl.size()
-        // 	  << " own size: " << this->size() << "   detelem : "  ;
-        // if( det.isValid() )
-        //   std::cout  << det.name() << std::endl ; //<< " path : " << det.placementPath() << std::endl ;
-        // else
-        //   std::cout  << " INVALID " << std::endl ;
-
         this->insert(this->end(), vsl.begin(), vsl.end());
       }
 
-      virtual ~VolSurfaceList() {
-        // delete all surfaces attached to this volume
-        for (VolSurfaceList::iterator i = begin(), n = end(); i != n; ++i) {
-          i->clear();
-        }
-      }
+      virtual ~VolSurfaceList();
     };
 
     //======================================================================================================
@@ -383,12 +357,12 @@ namespace DD4hep {
       Surface(Geometry::DetElement det, VolSurface volSurf);
 
       /// The id of this surface - corresponds to DetElement id.
-      virtual long64 id() const { return _id; }
+      virtual long64 id() const;
 
       /** properties of the surface encoded in Type.
        * @see SurfaceType
        */
-      virtual const SurfaceType& type() const { return _type; }
+      virtual const SurfaceType& type() const;
 
       /// The volume that has the surface attached.
       Geometry::Volume volume() const { return _volSurf.volume(); }
@@ -399,25 +373,16 @@ namespace DD4hep {
       //==== geometry ====
 
       /** First direction of measurement U */
-      virtual Vector3D u(const Vector3D& point = Vector3D()) const {
-        point.x();
-        return _u;
-      }
+      virtual Vector3D u(const Vector3D& point = Vector3D()) const;
 
       /** Second direction of measurement V */
-      virtual Vector3D v(const Vector3D& point = Vector3D()) const {
-        point.x();
-        return _v;
-      }
+      virtual Vector3D v(const Vector3D& point = Vector3D()) const;
 
       /// Access to the normal direction at the given point
-      virtual Vector3D normal(const Vector3D& point = Vector3D()) const {
-        point.x();
-        return _n;
-      }
+      virtual Vector3D normal(const Vector3D& point = Vector3D()) const;
 
       /** Get Origin of local coordinate system on surface */
-      virtual const Vector3D& origin() const { return _o; }
+      virtual const Vector3D& origin() const;
 
       /** Convert the global position to the local position (u,v) on the surface */
       virtual Vector2D globalToLocal(const Vector3D& point) const;
@@ -426,10 +391,10 @@ namespace DD4hep {
       virtual Vector3D localToGlobal(const Vector2D& point) const;
 
       /** Thickness of inner material */
-      virtual double innerThickness() const { return _volSurf.innerThickness(); }
+      virtual double innerThickness() const;
 
       /** Thickness of outer material */
-      virtual double outerThickness() const { return _volSurf.outerThickness(); }
+      virtual double outerThickness() const;
 
       /// Access to the material in opposite direction of the normal
       virtual const IMaterial& innerMaterial() const;
@@ -495,7 +460,10 @@ namespace DD4hep {
       virtual Vector3D localToGlobal(const Vector2D& point) const;
 
       /// the radius of the cylinder (rho of the origin vector)
-      virtual double radius() const { return _volSurf.origin().rho(); }
+      virtual double radius() const;
+
+      /// the center of the cylinder
+      virtual Vector3D center() const;
     };
 
     //======================================================================================================
@@ -525,14 +493,7 @@ namespace DD4hep {
       }
 
       /// d'tor deletes all owned surfaces
-      virtual ~SurfaceList() {
-        if (_isOwner) {
-          // delete all surfaces attached to this volume
-          for (SurfaceList::iterator i = begin(), n = end(); i != n; ++i) {
-            delete (*i);
-          }
-        }
-      }
+      virtual ~SurfaceList();
     };
 
     //    SurfaceList* surfaceList( Geometry::DetElement& det ) ;
