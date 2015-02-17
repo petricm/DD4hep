@@ -31,7 +31,7 @@ namespace DD4hep {
       LayeringExtensionImpl();
 
       /// Copy constructor
-      LayeringExtensionImpl(const LayeringExtensionImpl& e, const Geometry::DetElement& d){};
+      LayeringExtensionImpl(const LayeringExtensionImpl& /*e*/, const Geometry::DetElement& /*d*/){};
 
       /// Destructor
       virtual ~LayeringExtensionImpl();
