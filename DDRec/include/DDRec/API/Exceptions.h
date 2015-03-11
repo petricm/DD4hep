@@ -15,9 +15,9 @@
 
 #include "DDSegmentation/Segmentation.h"
 
+#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <strstream>
 
 namespace DD4hep {
   namespace DDRec {
