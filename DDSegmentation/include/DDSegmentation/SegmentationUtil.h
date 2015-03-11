@@ -50,16 +50,16 @@ namespace DD4hep {
       }
 
       /// calculates the radius in xyz from cylindrical coordinates
-      double magFromRPhiZ(double r, double phi, double z) { return std::sqrt(r * r + z * z); }
+      double magFromRPhiZ(double r, double /* phi */, double z) { return std::sqrt(r * r + z * z); }
 
       /// calculates x from cylindrical coordinates
-      double xFromRPhiZ(double r, double phi, double z) { return r * std::cos(phi); }
+      double xFromRPhiZ(double r, double phi, double /* z */) { return r * std::cos(phi); }
 
       /// calculates y from cylindrical coordinates
-      double yFromRPhiZ(double r, double phi, double z) { return r * std::sin(phi); }
+      double yFromRPhiZ(double r, double phi, double /* z */) { return r * std::sin(phi); }
 
       /// calculates the polar angle theta from cylindrical coordinates
-      double thetaFromRPhiZ(double r, double phi, double z) { return r * std::atan(z / r); }
+      double thetaFromRPhiZ(double r, double /* phi */, double z) { return r * std::atan(z / r); }
 
       /////////////////////////////////////////////////////////////
       /// Conversions from spherical to Cartesian coordinates   ///

@@ -45,7 +45,6 @@ namespace DD4hep {
         InvalidObjectError(const std::string& msg) : std::runtime_error("DD4hep: " + msg) {}
       };
 
-    protected:
       /// Implementation of a map of named DD4hep Handles
       /**
        *  \author  M.Frank
@@ -77,6 +76,7 @@ namespace DD4hep {
         }
       };
 
+    protected:
       TGeoManager*    m_manager;
       ObjectHandleMap m_readouts;
       ObjectHandleMap m_idDict;

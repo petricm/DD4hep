@@ -9,8 +9,10 @@
 #ifndef DD4HEP_GEANT4VERTEX_H
 #define DD4HEP_GEANT4VERTEX_H
 
+// Framework include files
+#include "DD4hep/Memory.h"
+
 // C/C++ include files
-#include <memory>
 #include <set>
 
 /// Namespace for the AIDA detector description toolkit
@@ -50,7 +52,7 @@ namespace DD4hep {
       /// The list of incoming particles
       Particles in;
       /// User data extension if required
-      std::auto_ptr<VertexExtension> extension;
+      dd4hep_ptr<VertexExtension> extension;
 
       /// Default constructor
       Geant4Vertex();

@@ -98,9 +98,8 @@ namespace DD4hep {
 
     protected:
       /// Default constructor used by derived classes
-      SegmentationParameter(const std::string& name, const std::string& description, UnitType unitType = NoUnit,
-                            bool isOptional = false)
-          : _name(name), _description(description), _unitType(unitType), _isOptional(isOptional) {}
+      SegmentationParameter(const std::string& nam, const std::string& desc, UnitType unitTyp = NoUnit, bool isOpt = false)
+          : _name(nam), _description(desc), _unitType(unitTyp), _isOptional(isOpt) {}
       /// The parameter name
       std::string _name;
       /// The parameter description
@@ -114,19 +113,17 @@ namespace DD4hep {
     template <typename TYPE> class TypedSegmentationParameter : public SegmentationParameter {
     public:
       /// Default constructor
-      TypedSegmentationParameter(const std::string& name, const std::string& description, TYPE& value,
-                                 const TYPE&                     defaultValue,
-                                 SegmentationParameter::UnitType unitType   = SegmentationParameter::NoUnit,
-                                 bool                            isOptional = false)
-          : SegmentationParameter(name, description, unitType, isOptional), _value(value), _defaultValue(defaultValue) {
-        _value = defaultValue;
+      TypedSegmentationParameter(const std::string& nam, const std::string& desc, TYPE& val, const TYPE& default_Value,
+                                 SegmentationParameter::UnitType unitTyp = SegmentationParameter::NoUnit, bool isOpt = false)
+          : SegmentationParameter(nam, desc, unitTyp, isOpt), _value(val), _defaultValue(default_Value) {
+        _value = default_Value;
       }
 
       /// Access to the parameter value
       const TYPE& typedValue() const { return _value; }
 
       /// Set the parameter value
-      void setTypedValue(const TYPE& value) { _value = value; }
+      void setTypedValue(const TYPE& val) { _value = val; }
 
       /// Access to the parameter default value
       const TYPE& typedDefaultValue() const { return _defaultValue; }
@@ -142,9 +139,9 @@ namespace DD4hep {
       }
 
       /// Set the parameter value in string representation
-      void setValue(const std::string& value) {
+      void setValue(const std::string& val) {
         std::stringstream s;
-        s << value;
+        s << val;
         s >> _value;
       }
 
@@ -163,19 +160,18 @@ namespace DD4hep {
     template <typename TYPE> class TypedSegmentationParameter<std::vector<TYPE>> : public SegmentationParameter {
     public:
       /// Default constructor
-      TypedSegmentationParameter(const std::string& name, const std::string& description, std::vector<TYPE>& value,
-                                 const std::vector<TYPE>&        defaultValue,
-                                 SegmentationParameter::UnitType unitType   = SegmentationParameter::NoUnit,
-                                 bool                            isOptional = false)
-          : SegmentationParameter(name, description, unitType, isOptional), _value(value), _defaultValue(defaultValue) {
-        _value = defaultValue;
+      TypedSegmentationParameter(const std::string& nam, const std::string& desc, std::vector<TYPE>& val,
+                                 const std::vector<TYPE>&        defaultVal,
+                                 SegmentationParameter::UnitType unitTyp = SegmentationParameter::NoUnit, bool isOpt = false)
+          : SegmentationParameter(nam, desc, unitTyp, isOpt), _value(val), _defaultValue(defaultVal) {
+        _value = defaultVal;
       }
 
       /// Access to the parameter value
       const std::vector<TYPE>& typedValue() const { return _value; }
 
       /// Set the parameter value
-      void setTypedValue(const std::vector<TYPE>& value) { _value = value; }
+      void setTypedValue(const std::vector<TYPE>& val) { _value = val; }
 
       /// Access to the parameter default value
       const std::vector<TYPE>& typedDefaultValue() const { return _defaultValue; }
@@ -199,8 +195,8 @@ namespace DD4hep {
       }
 
       /// Set the parameter value in string representation
-      void setValue(const std::string& value) {
-        std::vector<std::string> elements = splitString(value);
+      void setValue(const std::string& val) {
+        std::vector<std::string> elements = splitString(val);
         _value.clear();
         for (std::vector<std::string>::const_iterator it = elements.begin(); it != elements.end(); ++it) {
           if (not it->empty()) {

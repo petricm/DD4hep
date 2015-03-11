@@ -64,7 +64,7 @@ namespace DD4hep {
       SensitiveDetector() : RefObject() {}
 
       /// Constructor to copy handled object
-      SensitiveDetector(Object* ptr) : RefObject(ptr) {}
+      SensitiveDetector(Object* obj_pointer) : RefObject(obj_pointer) {}
 
       /// Copy from named handle
       SensitiveDetector(const RefObject& sd) : RefObject(sd) {}
@@ -212,7 +212,7 @@ namespace DD4hep {
       DetElement() : RefObject() {}
 
       /// Constructor to hold handled object
-      DetElement(Object* ptr) : RefObject(ptr) {}
+      DetElement(Object* object_ptr) : RefObject(object_ptr) {}
 
       /// Clone constructor
       DetElement(Object* data, const std::string& name, const std::string& type);
@@ -266,10 +266,10 @@ namespace DD4hep {
       template <typename IFACE> IFACE* extension() const { return (IFACE*)i_extension(typeid(IFACE)); }
       /// Extend the detector element with an arbitrary callback
       template <typename Q, typename T>
-      void callAtUpdate(unsigned int type, Q* pointer,
+      void callAtUpdate(unsigned int typ, Q* pointer,
                         void (T::*pmf)(unsigned long typ, DetElement& det, void* opt_par)) const {
         CallbackSequence::checkTypes(typeid(T), typeid(Q), dynamic_cast<T*>(pointer));
-        i_addUpdateCall(type, Callback(pointer).make(pmf));
+        i_addUpdateCall(typ, Callback(pointer).make(pmf));
       }
       /// Remove callback from object
       void removeAtUpdate(unsigned int type, void* pointer) const;

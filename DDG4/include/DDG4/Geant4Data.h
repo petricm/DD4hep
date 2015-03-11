@@ -10,10 +10,10 @@
 #define DD4HEP_GEANT4DATA_H
 
 // Framework include files
+#include "DD4hep/Memory.h"
 #include "Math/Vector3D.h"
 
 // C/C++ include files
-#include <memory>
 #include <set>
 #include <vector>
 
@@ -104,7 +104,7 @@ namespace DD4hep {
       /// cellID
       long long int cellID;
       /// User data extension if required
-      std::auto_ptr<DataExtension> extension;
+      dd4hep_ptr<DataExtension> extension;
 
       /// Utility class describing the monte carlo contribution of a given particle to a hit.
       /**
