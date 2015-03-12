@@ -78,16 +78,16 @@ namespace DD4hep {
   template <typename TYPE> int Grammar<TYPE>::evaluate(void*, const std::string&) const { return 0; }
 
   /// PropertyGrammar overload: Retrieve value from string
-  template <typename TYPE> bool Grammar<TYPE>::fromString(void* ptr, const std::string& str) const {
+  template <typename TYPE> bool Grammar<TYPE>::fromString(void* ptr, const std::string& string_val) const {
     int  sc = 0;
     TYPE temp;
 #ifdef DD4HEP_USE_BOOST
-    sc = Parsers::parse(temp, str);
+    sc = Parsers::parse(temp, string_val);
 #endif
     if (!sc)
-      sc = evaluate(&temp, str);
+      sc = evaluate(&temp, string_val);
 #if 0
-    std::cout << "Sc=" << sc << "  Converting value: " << str 
+    std::cout << "Sc=" << sc << "  Converting value: " << string_val 
 	      << " to type " << typeid(TYPE).name() 
 	      << std::endl;
 #endif
@@ -101,7 +101,7 @@ namespace DD4hep {
         "To enable elaborated property handling set DD4HEP_USE_BOOST=ON\n"
         "and BOOST_INCLUDE_DIR=<boost include path>");
 #else
-    BasicGrammar::invalidConversion(str, typeid(TYPE));
+    BasicGrammar::invalidConversion(string_val, typeid(TYPE));
     return false;
 #endif
   }
