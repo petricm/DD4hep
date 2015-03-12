@@ -241,7 +241,7 @@ namespace {
     }                                                                                                                \
   }                                                                                                                  \
   DD4HEP_PLUGINSVC_FACTORY(                                                                                          \
-      xml_g4_setup_##name, name "_Geant4_action",                                                                    \
+      xml_g4_setup_##name, name##_Geant4_action,                                                                     \
       long(DD4hep::Geometry::LCDD*, const DD4hep::Geometry::GeoHandler*, const std::map<std::string, std::string>*), \
       __LINE__)
 
