@@ -29,7 +29,7 @@ namespace DD4hep {
       /// access the grid size in R
       std::vector<double> gridRValues() const { return _gridRValues; }
       /// access the grid size in Phi
-      double gridSizePhi() const { return _gridSizePhi; }
+      std::vector<double> gridPhiValues() const { return _gridPhiValues; }
       /// access the coordinate offset in R
       double offsetR() const { return _offsetR; }
       /// access the coordinate offset in Phi
@@ -39,9 +39,9 @@ namespace DD4hep {
       /// access the field name used for Phi
       const std::string& fieldNamePhi() const { return _phiId; }
       /// set the grid size in R
-      void setgridRValues(double cellSize, int value) { _gridRValues[value] = cellSize; }
+      void setgridRValues(double cellSize, int position) { _gridRValues[position] = cellSize; }
       /// set the grid size in Phi
-      void setGridSizePhi(double cellSize) { _gridSizePhi = cellSize; }
+      void setGridSizePhi(double cellSize, int position) { _gridPhiValues[position] = cellSize; }
       /// set the coordinate offset in R
       void setOffsetR(double offset) { _offsetR = offset; }
       /// set the coordinate offset in Phi
@@ -52,17 +52,17 @@ namespace DD4hep {
       void setFieldNamePhi(const std::string& name) { _phiId = name; }
 
     protected:
-      /// the grid size in X
+      /// the grid boundaries in R
       std::vector<double> _gridRValues;
-      /// the coordinate offset in X
+      /// the coordinate offset in R
       double _offsetR;
-      /// the grid size in Y
-      double _gridSizePhi;
-      /// the coordinate offset in Y
+      /// the grid sizes in Phi
+      std::vector<double> _gridPhiValues;
+      /// the coordinate offset in Phi
       double _offsetPhi;
-      /// the field name used for X
+      /// the field name used for R
       std::string _rId;
-      /// the field name used for Y
+      /// the field name used for Phi
       std::string _phiId;
     };
 
