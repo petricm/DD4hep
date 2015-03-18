@@ -38,10 +38,16 @@ namespace DD4hep {
       const std::string& fieldNameR() const { return _rId; }
       /// access the field name used for Phi
       const std::string& fieldNamePhi() const { return _phiId; }
-      /// set the grid size in R
-      void setgridRValues(double cellSize, int position) { _gridRValues[position] = cellSize; }
+      /// set the grid Boundaries in R
+      void setGridRValues(double cellSize, int position) { _gridRValues[position] = cellSize; }
       /// set the grid size in Phi
       void setGridSizePhi(double cellSize, int position) { _gridPhiValues[position] = cellSize; }
+
+      /// set the grid boundaries for R
+      void setGridRValues(std::vector<double> const& rValues) { _gridRValues = std::vector<double>(rValues); }
+
+      void setGridPhiValues(std::vector<double> const& phiValues) { _gridPhiValues = std::vector<double>(phiValues); }
+
       /// set the coordinate offset in R
       void setOffsetR(double offset) { _offsetR = offset; }
       /// set the coordinate offset in Phi
