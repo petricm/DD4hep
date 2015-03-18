@@ -8,7 +8,7 @@
 #ifndef DDSegmentation_PolarGridRPhi2_H_
 #define DDSegmentation_PolarGridRPhi2_H_
 
-#include <math.h>
+#include <cmath>
 #include <vector>
 #include "DDSegmentation/PolarGrid.h"
 
