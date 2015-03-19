@@ -179,7 +179,7 @@ namespace DD4hep {
       /// Access to the parameter type
       std::string type() const {
         std::stringstream s;
-        s << TypeName<TYPE>::name() << "Vec";
+        s << TypeName<TYPE>::name() << "vec";
         return s.str();
       }
 
