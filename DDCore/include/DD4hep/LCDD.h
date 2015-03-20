@@ -40,7 +40,14 @@ namespace DD4hep {
    * compact description. If no eometry, ie. at all other times
    * the accessor to the flag returns BUILD_NONE.
    */
-  enum LCDDBuildType { BUILD_NONE = 0, BUILD_DEFAULT = 1, BUILD_SIMU = BUILD_DEFAULT, BUILD_RECO, BUILD_DISPLAY };
+  enum LCDDBuildType {
+    BUILD_NONE    = 0,
+    BUILD_DEFAULT = 1,
+    BUILD_SIMU    = BUILD_DEFAULT,
+    BUILD_RECO,
+    BUILD_DISPLAY,
+    BUILD_ENVELOPE
+  };
 
   /// Namespace for the geometry part of the AIDA detector description toolkit
   namespace Geometry {
