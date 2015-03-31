@@ -31,7 +31,7 @@ namespace DD4hep {
    *    ...                            <br>
    *    int theta = b["theta"] ;                    <br>
    *    ...                                         <br>
-   *    unsigned phiIndex = b.index("phi) ;         <br>
+   *    unsigned phiIndex = b.index("phi") ;        <br>
    *    int phi = b[  phiIndex ] ;                  <br>
    *
    *    @author F.Gaede, DESY
@@ -47,7 +47,7 @@ namespace DD4hep {
       virtual ~BitField64();  // clean up
 
       /** The c'tor takes an initialization string of the form:<br>
-     *  <fieldDesc>[,<fieldDesc>...]<br>
+     *  \<fieldDesc\>[,\<fieldDesc\>...]<br>
      *  fieldDesc = name:[start]:[-]length<br>
      *  where:<br>
      *  name: The name of the field<br>
@@ -193,6 +193,7 @@ namespace DD4hep {
 
       /** The default c'tor.
      * @param  bitfield      reference to the 64bit bitfield
+     * @param  name          name of the field
      * @param  offset        offset of field
      * @param  signedWidth   width of field, negative if field is signed
      */
