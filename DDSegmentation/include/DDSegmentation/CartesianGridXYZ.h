@@ -35,7 +35,7 @@ namespace DD4hep {
       /// set the coordinate offset in Z
       void setOffsetZ(double offset) { _offsetZ = offset; }
       /// set the field name used for Z
-      void setFieldNameZ(const std::string& name) { _zId = name; }
+      void setFieldNameZ(const std::string& fieldName) { _zId = fieldName; }
 
     protected:
       /// the grid size in Z

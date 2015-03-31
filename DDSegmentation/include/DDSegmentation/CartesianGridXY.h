@@ -45,9 +45,9 @@ namespace DD4hep {
       /// set the coordinate offset in Y
       void setOffsetY(double offset) { _offsetY = offset; }
       /// set the field name used for X
-      void setFieldNameX(const std::string& name) { _xId = name; }
+      void setFieldNameX(const std::string& fieldName) { _xId = fieldName; }
       /// set the field name used for Y
-      void setFieldNameY(const std::string& name) { _yId = name; }
+      void setFieldNameY(const std::string& fieldName) { _yId = fieldName; }
 
     protected:
       /// the grid size in X

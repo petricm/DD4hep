@@ -49,9 +49,9 @@ namespace DD4hep {
       /// set the coordinate offset in phi
       void setOffsetPhi(double offset) { _offsetPhi = offset; }
       /// set the field name used for theta
-      void setFieldNameTheta(const std::string& name) { _thetaID = name; }
+      void setFieldNameTheta(const std::string& fieldName) { _thetaID = fieldName; }
       /// set the field name used for phi
-      void setFieldNamePhi(const std::string& name) { _phiID = name; }
+      void setFieldNamePhi(const std::string& fieldName) { _phiID = fieldName; }
 
     protected:
       /// the number of bins in theta
