@@ -39,12 +39,12 @@ class TGeoIdentity;
 #include "TGeoPhysicalNode.h"
 
 // C/C++ include files
+#include <cmath>
 #include <limits>
 #include <set>
 #include <vector>
 
 #define _USE_MATH_DEFINES
-#include <cmath>
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -469,7 +469,7 @@ namespace ROOT {
     typedef DD4hep::Geometry::Position Position;
     /// Dot product of 3-vectors.
     inline double operator*(const Position& l, const Position& r) {
-      return sqrt(l.X() * r.X() + l.Y() * r.Y() + l.Z() * r.Z());
+      return std::sqrt(l.X() * r.X() + l.Y() * r.Y() + l.Z() * r.Z());
     }
     /// Calculate the mean length of two vectors
     inline double mean_length(const Position& p1, const Position& p2) { return 0.5 * (p1.R() + p2.R()) / 2.0; }
