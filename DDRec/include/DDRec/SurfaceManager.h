@@ -15,21 +15,21 @@ namespace DD4hep {
      */
     class SurfaceManager {
     public:
-      SurfaceManager(const Geometry::DetElement& e);
+      SurfaceManager();
 
       ~SurfaceManager();
 
       /** Get the list of all surfaces added to this DetElement and all its daughters -
        *  instantiate SurfaceManager with lcdd.world() to get all surfaces.
        */
-      const SurfaceList& surfaceList() { return _sL; }
+      //      const SurfaceList& surfaceList() { return _sL ; }
 
     protected:
-      SurfaceList                 _sL;
-      const Geometry::DetElement& _det;
+      // SurfaceList  _sL ;
+      // const Geometry::DetElement& _det ;
 
-      /// initializes surfaces from VolSurfaces assigned to this DetElement in detector construction
-      void initialize();
+      // /// initializes surfaces from VolSurfaces assigned to this DetElement in detector construction
+      // void initialize() ;
     };
 
   } /* namespace DDRec */
