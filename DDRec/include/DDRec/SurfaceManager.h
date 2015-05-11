@@ -1,6 +1,7 @@
 #ifndef DDRec_SurfaceManager_H_
 #define DDRec_SurfaceManager_H_
 
+#include <string>
 #include "DDRec/Surface.h"
 
 namespace DD4hep {
@@ -30,6 +31,9 @@ namespace DD4hep {
        *  assigned to tracking detectors. Returns 0 if no map exists.
        */
       const SurfaceMap* map(const std::string name) const;
+
+      ///create a string with all available maps and their size (number of surfaces)
+      std::string toString() const;
 
     protected:
       /// initialize all known surface maps
