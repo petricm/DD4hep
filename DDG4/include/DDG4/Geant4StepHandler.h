@@ -13,6 +13,7 @@
 #include "DDG4/Defs.h"
 
 // Geant4 include files
+#include "G4EmSaturation.hh"
 #include "G4Step.hh"
 #include "G4StepPoint.hh"
 #include "G4VSensitiveDetector.hh"
@@ -147,6 +148,19 @@ namespace DD4hep {
       Position localToGlobal(const G4ThreeVector& local) const;
       /// Coordinate transformation to global coordinates in MM
       Position localToGlobal(double x, double y, double z) const;
+      /// Apply BirksLaw
+      double BirkAttenuation(const G4Step* aStep) const {
+        double                      energyDeposition = aStep->GetTotalEnergyDeposit();
+        double                      length           = aStep->GetStepLength();
+        double                      niel             = aStep->GetNonIonizingEnergyDeposit();
+        const G4Track*              track            = aStep->GetTrack();
+        const G4ParticleDefinition* particle         = track->GetDefinition();
+        const G4MaterialCutsCouple* couple           = track->GetMaterialCutsCouple();
+        G4EmSaturation*             emSaturation     = new G4EmSaturation();
+        double engyVis = emSaturation->VisibleEnergyDeposition(particle, couple, length, energyDeposition, niel);
+        delete emSaturation;
+        return engyVis;
+      }
     };
 
   }  // End namespace Simulation
