@@ -99,9 +99,9 @@ namespace DD4hep {
       /// Access to properties
       Properties& properties() const { return *(Properties*)&m_properties; }
       /// Return handle to material describing air
-      virtual Material air() const { return m_materialVacuum; }
+      virtual Material air() const { return m_materialAir; }
       /// Return handle to material describing vacuum
-      virtual Material vacuum() const { return m_materialAir; }
+      virtual Material vacuum() const { return m_materialVacuum; }
       /// Return handle to "invisible" visualization attributes
       virtual VisAttr invisible() const { return m_invisibleVis; }
       /// Return reference to the top-most (world) detector element
