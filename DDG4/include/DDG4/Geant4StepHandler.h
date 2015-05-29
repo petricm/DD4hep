@@ -18,6 +18,7 @@
 #include "G4StepPoint.hh"
 #include "G4VSensitiveDetector.hh"
 #include "G4VTouchable.hh"
+#include "G4Version.hh"
 
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
@@ -156,7 +157,11 @@ namespace DD4hep {
         const G4Track*              track            = aStep->GetTrack();
         const G4ParticleDefinition* particle         = track->GetDefinition();
         const G4MaterialCutsCouple* couple           = track->GetMaterialCutsCouple();
-        G4EmSaturation*             emSaturation     = new G4EmSaturation();
+#if G4VERSION_NUMBER >= 1001
+        G4EmSaturation* emSaturation = new G4EmSaturation(0);
+#else
+        G4EmSaturation* emSaturation = new G4EmSaturation();
+#endif
         double engyVis = emSaturation->VisibleEnergyDeposition(particle, couple, length, energyDeposition, niel);
         delete emSaturation;
         return engyVis;
