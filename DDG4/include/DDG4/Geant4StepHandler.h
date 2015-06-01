@@ -45,10 +45,12 @@ namespace DD4hep {
       G4StepPoint*  pre;
       G4StepPoint*  post;
       G4Track*      track;
+      bool          applyBirksLaw;
       Geant4StepHandler(const G4Step* s) : step(s) {
-        pre   = s->GetPreStepPoint();
-        post  = s->GetPostStepPoint();
-        track = s->GetTrack();
+        pre           = s->GetPreStepPoint();
+        post          = s->GetPostStepPoint();
+        track         = s->GetTrack();
+        applyBirksLaw = false;
       }
       G4ParticleDefinition* trackDef() const { return track->GetDefinition(); }
       int                   trkPdgID() const { return track->GetDefinition()->GetPDGEncoding(); }
@@ -59,7 +61,12 @@ namespace DD4hep {
       /// Returns the post-step status in form of a string
       const char* postStepStatus() const;
       /// Returns total energy deposit
-      double totalEnergy() const { return step->GetTotalEnergyDeposit(); }
+      double totalEnergy() const {
+        if (applyBirksLaw == true)
+          return BirkAttenuation(step);
+        else
+          return step->GetTotalEnergyDeposit();
+      }
       /// Returns the pre-step position
       Position prePos() const {
         const G4ThreeVector& p = pre->GetPosition();
@@ -166,6 +173,8 @@ namespace DD4hep {
         delete emSaturation;
         return engyVis;
       }
+      /// Set applyBirksLaw to ture
+      void doApplyBirksLaw(void) { applyBirksLaw = true; }
     };
 
   }  // End namespace Simulation
