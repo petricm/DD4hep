@@ -48,6 +48,16 @@ namespace DD4hep {
       void setFieldNameX(const std::string& fieldName) { _xId = fieldName; }
       /// set the field name used for Y
       void setFieldNameZ(const std::string& fieldName) { _zId = fieldName; }
+      /** \brief Returns a vector<double> of the cellDimensions of the given cell ID
+	    in natural order of dimensions, e.g., dx/dy/dz, or dr/r*dPhi
+
+	    Returns a vector of the cellDimensions of the given cell ID
+	    \param cellID is ignored as all cells have the same dimension
+	    \return std::vector<double> size:
+	    -# size in x
+	    -# size in z
+	*/
+      virtual std::vector<double> cellDimensions(const CellID& cellID) const;
 
     protected:
       /// the grid size in X
