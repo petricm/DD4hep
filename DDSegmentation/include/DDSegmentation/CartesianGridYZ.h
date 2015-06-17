@@ -55,7 +55,7 @@ namespace DD4hep {
 
 	    Returns a vector of the cellDimensions of the given cell ID
 	    \param cellID is ignored as all cells have the same dimension
-	    \return std::vector<double> size:
+	    \return std::vector<double> size 2:
 	    -# size in y
 	    -# size in z
 	*/
