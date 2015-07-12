@@ -1,4 +1,4 @@
-// $Id$
+// $Id: $
 //==========================================================================
 //  AIDA Detector description implementation for LCD
 //--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ namespace DD4hep {
      </envelope>
      @endverbatim
      *  @author S.Lu DESY, F. Gaede CERN/DESY 
-     *  @version $Id:$
+     *  @version $Id: $
      */
     Geometry::Volume createPlacedEnvelope(DD4hep::Geometry::LCDD& lcdd, DD4hep::XML::Handle_t e,
                                           DD4hep::Geometry::DetElement sdet);
