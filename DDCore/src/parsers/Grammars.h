@@ -1,4 +1,15 @@
-// ============================================================================
+// $Id: Handle.h 570 2013-05-17 07:47:11Z markus.frank $
+//==========================================================================
+//  AIDA Detector description implementation for LCD
+//--------------------------------------------------------------------------
+// Copyright (C) Organisation européenne pour la Recherche nucléaire (CERN)
+// All rights reserved.
+//
+// For the licensing terms see $DD4hepINSTALL/LICENSE.
+// For the list of contributors see $DD4hepINSTALL/doc/CREDITS.
+//
+//==========================================================================
+
 #ifndef DD4HEPKERNEL_GRAMMARS_H
 #define DD4HEPKERNEL_GRAMMARS_H 1
 #ifdef __GNUC__
@@ -201,13 +212,13 @@ namespace DD4hep {
     public:
       typedef std::string ResultT;
       /** remove CR/LF symbols form the parsed strings
-         *  @attention it is a bit dangerous operation
-         *  The operation allows to write "very long" input strings
-         *  for opts-files (it is actual e.g. for DataOnDemandSvc configuration)
-         *  by splitting the strings into few lines
-         *  All new-line symbols (as well as '\n', '\t', CR/LF etc
-         *  are substituted by ordinary blanks.
-         */
+       *  @attention it is a bit dangerous operation
+       *  The operation allows to write "very long" input strings
+       *  for opts-files (it is actual e.g. for DataOnDemandSvc configuration)
+       *  by splitting the strings into few lines
+       *  All new-line symbols (as well as '\n', '\t', CR/LF etc
+       *  are substituted by ordinary blanks.
+       */
       void matchString() const {
         for (std::string::iterator cur = this->val().begin(); cur != this->val().end(); cur++) {
           if (std::isspace(*cur)) {
@@ -296,8 +307,8 @@ namespace DD4hep {
 
     public:
       /** Constructor
-           *  @param delim Delimiter for pair values
-           */
+       *  @param delim Delimiter for pair values
+       */
       PairGrammar(const std::string& delim = ",") : m_delim(delim) {}
 
     public:
@@ -322,8 +333,8 @@ namespace DD4hep {
       /// @return Delimiter for pair values
       const std::string& delim() const { return m_delim; }
       /** Set delimiters for pair values
-           *  @param delim Delimiter
-           */
+       *  @param delim Delimiter
+       */
       void setDelim(const std::string& delim) { m_delim = delim; }
 
     private:

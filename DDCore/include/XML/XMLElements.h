@@ -1,11 +1,16 @@
 // $Id$
-//====================================================================
-//  AIDA Detector description implementation
-//--------------------------------------------------------------------
+//==========================================================================
+//  AIDA Detector description implementation for LCD
+//--------------------------------------------------------------------------
+// Copyright (C) Organisation européenne pour la Recherche nucléaire (CERN)
+// All rights reserved.
 //
-//  Author     : M.Frank
+// For the licensing terms see $DD4hepINSTALL/LICENSE.
+// For the list of contributors see $DD4hepINSTALL/doc/CREDITS.
 //
-//====================================================================
+// Author     : M.Frank
+//
+//==========================================================================
 #ifndef DD4HEP_XMLELEMENTS_H
 #define DD4HEP_XMLELEMENTS_H
 
@@ -453,19 +458,19 @@ namespace DD4hep {
     }
 #if 0
     template<> INLINE bool Handle_t::attr<bool>(const Attribute tag_value) const
-      { return _toBool(attr_value(tag_value));}
+    { return _toBool(attr_value(tag_value));}
 
     template<> INLINE int Handle_t::attr<int>(const Attribute tag_value) const
-      { return _toInt(attr_value(tag_value));}
+    { return _toInt(attr_value(tag_value));}
 
     template<> INLINE float Handle_t::attr<float>(const Attribute tag_value) const
-      { return _toFloat(attr_value(tag_value));}
+    { return _toFloat(attr_value(tag_value));}
 
     template<> INLINE double Handle_t::attr<double>(const Attribute tag_value) const
-      { return _toDouble(attr_value(tag_value));}
+    { return _toDouble(attr_value(tag_value));}
 
     template<> INLINE std::string Handle_t::attr<std::string>(const Attribute tag_value) const
-      { return _toString(attr_value(tag_value));}
+    { return _toString(attr_value(tag_value));}
 #endif
 
     /// Class to support the access to collections of XmlNodes (or XmlElements)

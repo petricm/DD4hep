@@ -1,11 +1,16 @@
 // $Id$
-//====================================================================
-//  AIDA Detector description implementation
-//--------------------------------------------------------------------
+//==========================================================================
+//  AIDA Detector description implementation for LCD
+//--------------------------------------------------------------------------
+// Copyright (C) Organisation européenne pour la Recherche nucléaire (CERN)
+// All rights reserved.
 //
-//  Author     : M.Frank
+// For the licensing terms see $DD4hepINSTALL/LICENSE.
+// For the list of contributors see $DD4hepINSTALL/doc/CREDITS.
 //
-//====================================================================
+// Author     : M.Frank
+//
+//==========================================================================
 #ifndef DD4HEP_GEANT4STEPHANDLER_H
 #define DD4HEP_GEANT4STEPHANDLER_H
 
@@ -161,9 +166,9 @@ namespace DD4hep {
         double                      energyDeposition = aStep->GetTotalEnergyDeposit();
         double                      length           = aStep->GetStepLength();
         double                      niel             = aStep->GetNonIonizingEnergyDeposit();
-        const G4Track*              track            = aStep->GetTrack();
-        const G4ParticleDefinition* particle         = track->GetDefinition();
-        const G4MaterialCutsCouple* couple           = track->GetMaterialCutsCouple();
+        const G4Track*              trk              = aStep->GetTrack();
+        const G4ParticleDefinition* particle         = trk->GetDefinition();
+        const G4MaterialCutsCouple* couple           = trk->GetMaterialCutsCouple();
 #if G4VERSION_NUMBER >= 1001
         G4EmSaturation* emSaturation = new G4EmSaturation(0);
 #else

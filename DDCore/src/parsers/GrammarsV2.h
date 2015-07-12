@@ -1,4 +1,16 @@
-// ============================================================================
+// $Id: Handle.h 570 2013-05-17 07:47:11Z markus.frank $
+//==========================================================================
+//  AIDA Detector description implementation for LCD
+//--------------------------------------------------------------------------
+// Copyright (C) Organisation européenne pour la Recherche nucléaire (CERN)
+// All rights reserved.
+//
+// For the licensing terms see $DD4hepINSTALL/LICENSE.
+// For the list of contributors see $DD4hepINSTALL/doc/CREDITS.
+//
+// Author     : M.Frank
+//
+//==========================================================================
 #ifndef DD4HEPKERNEL_GRAMMARSV2_H
 #define DD4HEPKERNEL_GRAMMARSV2_H 1
 #ifdef __GNUC__
@@ -55,11 +67,11 @@ namespace DD4hep {
     //==============================================================================
     template <typename Iterator, typename T, typename Skipper, class Enable = void> struct Grammar_ {
       /* READ THIS IF YOUR COMPILE BREAKS ON THE FOLLOWING LINE
-         *
-         * To users: You have to ask developers to implement parser for your type T
-         * To developer: You have to implement and register Grammar for type T
-         *
-         */
+       *
+       * To users: You have to ask developers to implement parser for your type T
+       * To developer: You have to implement and register Grammar for type T
+       *
+       */
       BOOST_MPL_ASSERT_MSG(false, GRAMMAR_FOR_TYPE_DOES_NOT_EXISTS, (T));
     };
 

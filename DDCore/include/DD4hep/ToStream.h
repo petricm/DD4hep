@@ -1,7 +1,16 @@
-// $Id: ToStream.h,v 1.8 2008/10/30 23:38:46 marcocle Exp $
-// ============================================================================
-// CVS tag $Name:  $, version $Revision: 1.8 $
-// ============================================================================
+// $Id: Handle.h 570 2013-05-17 07:47:11Z markus.frank $
+//==========================================================================
+//  AIDA Detector description implementation for LCD
+//--------------------------------------------------------------------------
+// Copyright (C) Organisation européenne pour la Recherche nucléaire (CERN)
+// All rights reserved.
+//
+// For the licensing terms see $DD4hepINSTALL/LICENSE.
+// For the list of contributors see $DD4hepINSTALL/doc/CREDITS.
+//
+// Author     : M.Frank
+//
+//==========================================================================
 #ifndef DD4HEPPROPERTYPARSERS_PARSERVALUETOSTREAM_H
 #define DD4HEPPROPERTYPARSERS_PARSERVALUETOSTREAM_H 1
 // ============================================================================

@@ -1,13 +1,16 @@
 // $Id$
-//====================================================================
+//==========================================================================
 //  AIDA Detector description implementation for LCD
-//--------------------------------------------------------------------
+//--------------------------------------------------------------------------
+// Copyright (C) Organisation européenne pour la Recherche nucléaire (CERN)
+// All rights reserved.
 //
-//  Generic ROOT based geometry display program
+// For the licensing terms see $DD4hepINSTALL/LICENSE.
+// For the list of contributors see $DD4hepINSTALL/doc/CREDITS.
 //
-//  Author     : M.Frank
+// Author     : M.Frank
 //
-//====================================================================
+//==========================================================================
 
 // Framework include files
 #include "DD4hep/LCDD.h"
@@ -35,7 +38,7 @@ namespace {
       union { void* p; LCDD* l; } v;
       v.p = ::DD4hep::PluginService::Create<void*>("LCDD_constructor",name);
       if ( v.p )  {
-	return *v.l;
+        return *v.l;
       }
       throw runtime_error("Failed to locate plugin to create LCDD instance");
     }

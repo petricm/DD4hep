@@ -1,14 +1,16 @@
-// $Id: Geant4config.h 615 2013-06-18 11:13:35Z markus.frank $
-//====================================================================
-//  AIDA Detector description implementation
-//--------------------------------------------------------------------
+// $Id: Handle.h 570 2013-05-17 07:47:11Z markus.frank $
+//==========================================================================
+//  AIDA Detector description implementation for LCD
+//--------------------------------------------------------------------------
+// Copyright (C) Organisation européenne pour la Recherche nucléaire (CERN)
+// All rights reserved.
 //
-//  Small helper file with abbreviations to write configurations
-//  for CINT; also used when writing the XML configuration.
+// For the licensing terms see $DD4hepINSTALL/LICENSE.
+// For the list of contributors see $DD4hepINSTALL/doc/CREDITS.
 //
-//  Author     : M.Frank
+// Author     : M.Frank
 //
-//====================================================================
+//==========================================================================
 #ifndef DDG4_GEANT4USERPHYSICSLIST_H
 #define DDG4_GEANT4USERPHYSICSLIST_H
 

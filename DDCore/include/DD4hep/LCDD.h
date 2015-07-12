@@ -1,12 +1,16 @@
 // $Id$
-//====================================================================
+//==========================================================================
 //  AIDA Detector description implementation for LCD
-//--------------------------------------------------------------------
+//--------------------------------------------------------------------------
+// Copyright (C) Organisation européenne pour la Recherche nucléaire (CERN)
+// All rights reserved.
 //
-//  Author     : M.Frank
+// For the licensing terms see $DD4hepINSTALL/LICENSE.
+// For the list of contributors see $DD4hepINSTALL/doc/CREDITS.
 //
-//====================================================================
-
+// Author     : M.Frank
+//
+//==========================================================================
 #ifndef DD4HEP_LCDD_LCDD_H
 #define DD4HEP_LCDD_LCDD_H
 
@@ -142,11 +146,11 @@ namespace DD4hep {
       /** Access to predefined caches of subdetectors according to the sensitive type */
       /// Access a set of subdetectors according to the sensitive type.
       /**
-	 Please note:
-	 - The sensitive type of a detector is set in the 'detector constructor'.
-	 - Not sensitive detector structures have the name 'passive'
-	 - Compounds (ie. nested detectors) are of type 'compound'
-       */
+         Please note:
+         - The sensitive type of a detector is set in the 'detector constructor'.
+         - Not sensitive detector structures have the name 'passive'
+         - Compounds (ie. nested detectors) are of type 'compound'
+      */
       virtual const std::vector<DetElement>& detectors(const std::string& type) = 0;
 
       /// Access a set of subdetectors according to several sensitive types.
