@@ -37,8 +37,6 @@ namespace DD4hep {
      */
     class ConditionsStack {
     public:
-      friend class dd4hep_ptr<ConditionsStack>;
-
       typedef ConditionsInterna::Entry Entry;
       typedef std::map<std::string, Entry*> Stack;
 
@@ -48,10 +46,11 @@ namespace DD4hep {
 
       /// Standard constructor
       ConditionsStack();
+
+    public:
       /// Standard destructor
       virtual ~ConditionsStack();
 
-    public:
       /// Static client accessor
       static ConditionsStack& get();
       /// Create an conditions stack instance. The creation of a second instance will be refused.

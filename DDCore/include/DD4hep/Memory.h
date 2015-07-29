@@ -45,6 +45,7 @@ namespace DD4hep {
     typedef std::auto_ptr<T> base_t;
     void swap(base_t& c) { this->base_t::operator=(base_t(c.release())); }
 #endif
+  public:
     /// Default Constructor.
     dd4hep_ptr() : base_t() {}
     /// Constructor from pointer

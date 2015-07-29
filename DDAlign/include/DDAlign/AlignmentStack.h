@@ -33,8 +33,6 @@ namespace DD4hep {
      */
     class AlignmentStack {
     public:
-      friend class dd4hep_ptr<AlignmentStack>;
-
       enum {
         OVERLAP_DEFINED  = 1 << 0,
         MATRIX_DEFINED   = 1 << 1,
@@ -120,10 +118,11 @@ namespace DD4hep {
 
       /// Default constructor
       AlignmentStack();
+
+    public:
       /// Default destructor. Careful with this one:
       virtual ~AlignmentStack();
 
-    public:
       /// Static client accessor
       static AlignmentStack& get();
       /// Create an alignment stack instance. The creation of a second instance will be refused.
