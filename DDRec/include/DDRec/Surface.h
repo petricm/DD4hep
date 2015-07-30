@@ -30,9 +30,9 @@ namespace DD4hep {
      */
     struct SurfaceMaterial : public virtual Geometry::Material, public IMaterial {
       /** Copy c'tor - copies handle */
-      SurfaceMaterial(Geometry::Material m) : Geometry::Material(m) {}
+      SurfaceMaterial(Geometry::Material mat) : Geometry::Material(mat) {}
 
-      SurfaceMaterial(const SurfaceMaterial& sm) : Geometry::Material(sm) {}
+      SurfaceMaterial(const SurfaceMaterial& smat) : Geometry::Material(smat) {}
 
       virtual ~SurfaceMaterial() {}
 
@@ -124,7 +124,7 @@ namespace DD4hep {
       /// Constructor to be used with an existing object
       VolSurface(SurfaceData* p) : Geometry::Handle<SurfaceData>(p) {}
       /// Constructor to be used with an existing object
-      VolSurface(const VolSurface& e) : Geometry::Handle<SurfaceData>(e) {}
+      VolSurface(const VolSurface& vsurf) : Geometry::Handle<SurfaceData>(vsurf) {}
 
       /// Constructor to be used with an existing object
       template <typename Q> VolSurface(const Geometry::Handle<Q>& e) : Geometry::Handle<SurfaceData>(e) {}
@@ -255,11 +255,11 @@ namespace DD4hep {
       VolPlane(const VolSurface& vs) : VolSurface(vs) {}
 
       /// standard c'tor with all necessary arguments - origin is (0,0,0) if not given.
-      VolPlane(Geometry::Volume vol, SurfaceType type, double thickness_inner, double thickness_outer, Vector3D u,
-               Vector3D v, Vector3D n, Vector3D o = Vector3D(0., 0., 0.))
+      VolPlane(Geometry::Volume vol, SurfaceType typ, double thickness_inner, double thickness_outer, Vector3D u_val,
+               Vector3D v_val, Vector3D n_val, Vector3D o_val = Vector3D(0., 0., 0.))
           :
 
-            VolSurface(vol, type, thickness_inner, thickness_outer, u, v, n, o) {
+            VolSurface(vol, typ, thickness_inner, thickness_outer, u_val, v_val, n_val, o_val) {
         object<SurfaceData>()._type.setProperty(SurfaceType::Plane, true);
         object<SurfaceData>()._type.setProperty(SurfaceType::Cylinder, false);
         object<SurfaceData>()._type.checkParallelToZ(*this);

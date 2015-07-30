@@ -50,8 +50,9 @@ namespace DD4hep {
       MaterialData() : _name("unknown"), _Z(-1.), _A(0.), _rho(0.), _x0(0.), _lambda(0.) {}
 
       /** C'tor setting all attributes .*/
-      MaterialData(const std::string& name, double Z, double A, double density, double radLength, double intLength)
-          : _name(name), _Z(Z), _A(A), _rho(density), _x0(radLength), _lambda(intLength) {}
+      MaterialData(const std::string& nam, double Z_val, double A_val, double density_val, double radLength,
+                   double intLength)
+          : _name(nam), _Z(Z_val), _A(A_val), _rho(density_val), _x0(radLength), _lambda(intLength) {}
 
       /** Copy c'tor .*/
       MaterialData(const MaterialData& m)

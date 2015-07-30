@@ -34,7 +34,7 @@ namespace DD4hep {
       class BarrelEndcapFlag {
       public:
         enum BarrelEncapID { Barrel = 0, EndcapSouth, EndcapNorth, n_BarrelEndcapID };
-        BarrelEndcapFlag(unsigned int value) : value(static_cast<BarrelEncapID>(value)) {}
+        BarrelEndcapFlag(unsigned int val) : value(static_cast<BarrelEncapID>(val)) {}
 
         virtual ~BarrelEndcapFlag() {}
 
