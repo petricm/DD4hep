@@ -63,6 +63,27 @@ namespace DD4hep {
             _x0(m.radiationLength()),
             _lambda(m.interactionLength()) {}
 
+      /** Copy c'tor .*/
+      MaterialData(const IMaterial& m)
+          : _name(m.name()),
+            _Z(m.Z()),
+            _A(m.A()),
+            _rho(m.density()),
+            _x0(m.radiationLength()),
+            _lambda(m.interactionLength()) {}
+
+      /// assignment from Geometry::Material
+      MaterialData& operator=(const IMaterial& m) {
+        _name   = m.name();
+        _Z      = m.Z();
+        _A      = m.A();
+        _rho    = m.density();
+        _x0     = m.radiationLength();
+        _lambda = m.interactionLength();
+
+        return *this;
+      }
+
       /// assignment from Geometry::Material
       MaterialData& operator=(const Geometry::Material& m) {
         if (m.isValid()) {
