@@ -101,6 +101,8 @@ namespace DD4hep {
       ExtensionHandle extension;
       /// User mask to flag the interaction. Also unique identifier
       int mask;
+      /// Flag that the event is locked for G4 native generators
+      int locked;
       /// Next PID indentifier
       int next_particle_identifier;
 
@@ -154,6 +156,8 @@ namespace DD4hep {
       void add(int id, Geant4PrimaryInteraction* interaction);
       /// Retrieve an interaction by it's ID
       Geant4PrimaryInteraction* get(int id) const;
+      /// Number of interaction contained in the primary event
+      size_t size() const { return m_interactions.size(); }
       /// Retrieve all intractions
       std::vector<Geant4PrimaryInteraction*> interactions() const;
     };
