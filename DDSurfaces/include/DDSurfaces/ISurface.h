@@ -93,6 +93,22 @@ namespace DDSurfaces {
     virtual double   radius() const = 0;
     virtual Vector3D center() const = 0;
   };
+  //==============================================================================================
+  /** Minimal interface to provide acces to radii of conical surfaces.
+   * @author F. Gaede, DESY
+   * @version $Id$
+   * @date Nov 6 2015
+   */
+  class ICone {
+  public:
+    /// Destructor
+    virtual ~ICone() {}
+    virtual double   radius0() const = 0;
+    virtual double   radius1() const = 0;
+    virtual double   z0() const      = 0;
+    virtual double   z1() const      = 0;
+    virtual Vector3D center() const  = 0;
+  };
 
   //==============================================================================================
 
@@ -106,7 +122,7 @@ namespace DDSurfaces {
   class SurfaceType {
   public:
     /// enum for defining the bits used to decode the properties
-    enum SurfaceTypes { Cylinder = 0, Plane, Sensitive, Helper, ParallelToZ, OrthogonalToZ, Invisible, Measurement1D };
+    enum SurfaceTypes { Cylinder = 0, Plane, Sensitive, Helper, ParallelToZ, OrthogonalToZ, Invisible, Measurement1D, Cone };
 
     ///default c'tor
     SurfaceType() : _bits(0) {}
@@ -159,6 +175,9 @@ namespace DDSurfaces {
     /// true if this a cylindrical surface
     bool isCylinder() const { return _bits[SurfaceType::Cylinder]; }
 
+    /// true if this a conical surface
+    bool isCone() const { return _bits[SurfaceType::Cone]; }
+
     /// true if surface is parallel to Z
     bool isParallelToZ() const { return _bits[SurfaceType::ParallelToZ]; }
 
@@ -170,6 +189,9 @@ namespace DDSurfaces {
 
     /// true if this is a cylinder parallel to Z
     bool isZCylinder() const { return (_bits[SurfaceType::Cylinder] && _bits[SurfaceType::ParallelToZ]); }
+
+    /// true if this is a cone parallel to Z
+    bool isZCone() const { return (_bits[SurfaceType::Cone] && _bits[SurfaceType::ParallelToZ]); }
 
     /// true if this is a plane parallel to Z
     bool isZPlane() const { return (_bits[SurfaceType::Plane] && _bits[SurfaceType::ParallelToZ]); }
@@ -221,8 +243,9 @@ namespace DDSurfaces {
   /// dump SurfaceType operator
   inline std::ostream& operator<<(std::ostream& os, const SurfaceType& t) {
     os << "sensitive[" << t.isSensitive() << "] helper[" << t.isHelper() << "] plane[" << t.isPlane() << "] cylinder["
-       << t.isCylinder() << "] parallelToZ[" << t.isParallelToZ() << "] orthogonalToZ[" << t.isOrthogonalToZ()
-       << "] zCylinder[" << t.isZCylinder() << "] zPlane[" << t.isZPlane() << "] zDisk[" << t.isZDisk() << "]";
+       << t.isCylinder() << "] cone[" << t.isCone() << "] parallelToZ[" << t.isParallelToZ() << "] orthogonalToZ["
+       << t.isOrthogonalToZ() << "] zCylinder[" << t.isZCylinder() << "] zCone[" << t.isZCone() << "] zPlane["
+       << t.isZPlane() << "] zDisk[" << t.isZDisk() << "]";
 
     return os;
   }
@@ -235,9 +258,12 @@ namespace DDSurfaces {
        << "   outerMaterial :  " << s.outerMaterial() << "  thickness: " << s.outerThickness() << std::endl;
 
     const ICylinder* cyl = dynamic_cast<const ICylinder*>(&s);
-
     if (cyl)
       os << "   cylinder radius : " << cyl->radius() << std::endl;
+
+    const ICone* cone = dynamic_cast<const ICone*>(&s);
+    if (cone)
+      os << "   cone radius0: " << cone->radius0() << "   cone radius1: " << cone->radius1() << std::endl;
 
     return os;
   }
