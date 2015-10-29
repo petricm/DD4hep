@@ -1,4 +1,3 @@
-
 #ifndef DD4HEP_DDG4_GEANT4ACTION_H
 #define DD4HEP_DDG4_GEANT4ACTION_H
 
@@ -281,7 +280,7 @@ namespace DD4hep {
       /// Support of error messages.
       void error(const char* fmt, ...) const;
       /// Action to support error messages.
-      bool error(bool return_value, const char* fmt, ...) const;
+      bool return_error(bool return_value, const char* fmt, ...) const;
       /// Support of fatal messages. Throws exception
       void fatal(const char* fmt, ...) const;
       /// Support of exceptions: Print fatal message and throw runtime_error.

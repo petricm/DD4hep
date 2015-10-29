@@ -75,7 +75,7 @@ namespace DD4hep {
             _refCount(0) {}
 
       VolSurfaceBase(SurfaceType typ, double thickness_inner, double thickness_outer, Vector3D u_val, Vector3D v_val,
-                     Vector3D n, Vector3D o, Geometry::Volume vol, int id)
+                     Vector3D n, Vector3D o, Geometry::Volume vol, int identifier)
           : _type(typ),
             _u(u_val),
             _v(v_val),
@@ -86,7 +86,7 @@ namespace DD4hep {
             _innerMat(MaterialData()),
             _outerMat(MaterialData()),
             _vol(vol),
-            _id(id),
+            _id(identifier),
             _refCount(0) {}
 
       /// Copy the from object
@@ -323,10 +323,10 @@ namespace DD4hep {
 
       /// standard c'tor with all necessary arguments - origin is (0,0,0) if not given.
       VolPlaneImpl(SurfaceType typ, double thickness_inner, double thickness_outer, Vector3D u_val, Vector3D v_val,
-                   Vector3D n_val, Vector3D o_val, Geometry::Volume vol, int id)
+                   Vector3D n_val, Vector3D o_val, Geometry::Volume vol, int id_val)
           :
 
-            VolSurfaceBase(typ, thickness_inner, thickness_outer, u_val, v_val, n_val, o_val, vol, id) {
+            VolSurfaceBase(typ, thickness_inner, thickness_outer, u_val, v_val, n_val, o_val, vol, id_val) {
         _type.setProperty(SurfaceType::Plane, true);
         _type.setProperty(SurfaceType::Cylinder, false);
         _type.setProperty(SurfaceType::Cone, false);
@@ -447,8 +447,9 @@ namespace DD4hep {
 
     class VolCylinder : public VolSurface {
     public:
-      VolCylinder(Geometry::Volume vol, SurfaceType type, double thickness_inner, double thickness_outer, Vector3D origin)
-          : VolSurface(new VolCylinderImpl(vol, type, thickness_inner, thickness_outer, origin)) {}
+      VolCylinder(Geometry::Volume vol, SurfaceType type_val, double thickness_inner, double thickness_outer,
+                  Vector3D origin_pos)
+          : VolSurface(new VolCylinderImpl(vol, type_val, thickness_inner, thickness_outer, origin_pos)) {}
     };
 
     class VolCone : public VolSurface {
