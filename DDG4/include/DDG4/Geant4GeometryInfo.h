@@ -69,14 +69,13 @@ namespace DD4hep {
       using Geometry::SensitiveDetector;
 
       typedef std::vector<const G4VPhysicalVolume*> Geant4PlacementPath;
-      typedef std::map<Atom, G4Element*>                         ElementMap;
-      typedef std::map<Material, G4Material*>                    MaterialMap;
-      typedef std::map<LimitSet, G4UserLimits*>                  LimitMap;
-      typedef std::map<PlacedVolume, G4VPhysicalVolume*>         PlacementMap;
-      typedef std::map<Region, G4Region*>                        RegionMap;
-      typedef std::map<SensitiveDetector, G4VSensitiveDetector*> SensDetMap;
-      typedef std::map<Volume, G4LogicalVolume*>                 VolumeMap;
-      typedef std::map<PlacedVolume, Geant4AssemblyVolume*>      AssemblyMap;
+      typedef std::map<Atom, G4Element*>                    ElementMap;
+      typedef std::map<Material, G4Material*>               MaterialMap;
+      typedef std::map<LimitSet, G4UserLimits*>             LimitMap;
+      typedef std::map<PlacedVolume, G4VPhysicalVolume*>    PlacementMap;
+      typedef std::map<Region, G4Region*>                   RegionMap;
+      typedef std::map<Volume, G4LogicalVolume*>            VolumeMap;
+      typedef std::map<PlacedVolume, Geant4AssemblyVolume*> AssemblyMap;
 
       typedef std::vector<const TGeoNode*> VolumeChain;
       typedef std::pair<VolumeChain, const G4VPhysicalVolume*> ImprintEntry;
@@ -111,10 +110,7 @@ namespace DD4hep {
       Geant4GeometryMaps::RegionMap        g4Regions;
       Geant4GeometryMaps::VisMap           g4Vis;
       Geant4GeometryMaps::LimitMap         g4Limits;
-      Geant4GeometryMaps::SensDetMap       g4SensDets;
-
-      Geant4GeometryMaps::Geant4PathMap g4Paths;
-
+      Geant4GeometryMaps::Geant4PathMap    g4Paths;
       Geant4GeometryMaps::SensitiveVolumes sensitives;
       Geant4GeometryMaps::RegionVolumes    regions;
       Geant4GeometryMaps::LimitVolumes     limits;
