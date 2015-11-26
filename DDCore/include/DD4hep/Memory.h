@@ -59,6 +59,12 @@ namespace DD4hep {
       }
       return *this;
     }
+    /// Assignment operator
+    dd4hep_ptr& adopt(T* ptr) {
+      base_t smart_ptr(ptr);
+      this->swap(smart_ptr);
+      return *this;
+    }
   };
 }
 
