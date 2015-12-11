@@ -166,6 +166,30 @@ public:
   void DestroyEventRPhi() { fRPhiEventScene->DestroyElements(); }
 
   void DestroyEventRhoZ() { fRhoZEventScene->DestroyElements(); }
+
+private:
+  MultiView(const MultiView& /* x */)
+      : fRPhiMgr(0),
+        fRhoZMgr(0),
+        f3DView(0),
+        fRPhiView(0),
+        fRhoZView(0),
+        fRPhiGeomScene(0),
+        fRhoZGeomScene(0),
+        fRPhiEventScene(0),
+        fRhoZEventScene(0) {}
+  MultiView& operator=(const MultiView& /* x */) {
+    fRPhiMgr        = 0;
+    fRhoZMgr        = 0;
+    f3DView         = 0;
+    fRPhiView       = 0;
+    fRhoZView       = 0;
+    fRPhiGeomScene  = 0;
+    fRhoZGeomScene  = 0;
+    fRPhiEventScene = 0;
+    fRhoZEventScene = 0;
+    return *this;
+  }
 };
 
 //=====================================================================================
