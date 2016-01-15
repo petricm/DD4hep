@@ -190,6 +190,8 @@ namespace DD4hep {
       bool m_decays;
       /// Property: Store name of basic predefined Geant4 physics list
       std::string m_extends;
+      /// global range cut for secondary productions
+      double m_rangecut;
 
     public:
       /// Standard constructor
