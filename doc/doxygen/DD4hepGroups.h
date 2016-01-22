@@ -80,3 +80,25 @@ namespace IO {}
 namespace UTIL {}
 
 /**@}*/
+
+/// Plugins of all kinds and purposes
+/**
+ *  \defgroup Plugins
+ *  @{
+
+ *  \defgroup Geant4ActionPlugin
+ \brief Plugins that are a Geant4Actions
+
+ *  \defgroup SurfacePlugin
+ \brief Plugins to manipulate surfaces automatically
+
+ *  \defgroup Geant4EventReader
+ \brief InputFile Reader Plugins
+
+ *  \defgroup Geant4SDActionPlugin
+ \brief Sensitive Detector Implementations
+
+ *  \defgroup Geant4PhysicsConstructor
+ \brief Extensions for PhysicsLists
+
+ @}*/
