@@ -71,6 +71,9 @@ namespace DD4hep {
     /// true if detector has none of the given properties
     inline bool isNot(unsigned long prop) const { return (_type & prop) == 0; }
 
+    /// return the flag word
+    inline unsigned long to_ulong() const { return _type; }
+
   private:
     unsigned long _type;
   };
