@@ -49,7 +49,9 @@ namespace DD4hep {
       ELECTROMAGNETIC = 1 << 11,
       HADRONIC        = 1 << 12,
       MUON            = 1 << 13,
-      SUPPORT         = 1 << 14
+      SUPPORT         = 1 << 14,
+      BEAMPIPE        = 1 << 15,
+      COIL            = 1 << 16
     };
 
     /// default c'tor
@@ -111,6 +113,10 @@ namespace DD4hep {
       os << "MUON, ";
     if (t.is(DetType::SUPPORT))
       os << "SUPPORT, ";
+    if (t.is(DetType::BEAMPIPE))
+      os << "BEAMPIPE, ";
+    if (t.is(DetType::COIL))
+      os << "COIL, ";
     return os;
   }
 
