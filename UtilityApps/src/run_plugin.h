@@ -141,13 +141,14 @@ namespace {
         // Need to interprete plugin args here locally.....
         plugins.push_back(std::vector<const char*>());
         plugins.back().push_back(argv[++i]);
-        for (; i < argc; ++i) {
+        for (++i; i < argc; ++i) {
           if (argv[i][0] == '-') {
             --i;
             break;
           }
           plugins.back().push_back(argv[i]);
         }
+        plugins.back().push_back(0);
       } else
         return 0;
       return 1;
