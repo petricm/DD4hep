@@ -180,6 +180,9 @@ namespace DD4hep {
       /// Extensions destructor type
       typedef void (*destruct_t)(void*);
 
+      typedef Conditions::IOV       IOV;
+      typedef Conditions::Condition Condition;
+      typedef Conditions::Container ConditionsContainer;
       typedef std::map<std::string, DetElement>      Children;
       typedef std::map<const std::type_info*, void*> Extensions;
 
@@ -340,7 +343,11 @@ namespace DD4hep {
       /// Access to the survey alignment information
       Alignment surveyAlignment() const;
       /// Access to the conditions information
-      Conditions conditions() const;
+      ConditionsContainer conditions() const;
+      /// Access to the conditions information. No loading undertaken. The condition must be present
+      Condition condition(const std::string& key) const;
+      /// Access to condition objects. If not present, load condition.
+      Condition condition(const std::string& key, const IOV& iov);
 
       /// Set detector element for reference transformations. Will delete existing reference trafo.
       DetElement& setReference(DetElement reference);

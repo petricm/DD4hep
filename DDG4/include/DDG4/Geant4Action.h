@@ -15,8 +15,8 @@
 // Author     : M.Frank
 //
 //==========================================================================
+#include "DD4hep/ComponentProperties.h"
 #include "DD4hep/Printout.h"
-#include "DDG4/ComponentProperties.h"
 #include "DDG4/Geant4Callback.h"
 #include "DDG4/Geant4Context.h"
 
