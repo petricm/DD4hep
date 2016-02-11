@@ -179,6 +179,8 @@ namespace DD4hep {
   /// String conversions: boolean value to string  \ingroup DD4HEP_GEOMETRY
   std::string _toString(bool value);
   /// String conversions: integer value to string  \ingroup DD4HEP_GEOMETRY
+  std::string _toString(short value, const char* fmt = "%d");
+  /// String conversions: integer value to string  \ingroup DD4HEP_GEOMETRY
   std::string _toString(int value, const char* fmt = "%d");
   /// String conversions: float value to string  \ingroup DD4HEP_GEOMETRY
   std::string _toString(float value, const char* fmt = "%.17e");
@@ -192,6 +194,8 @@ namespace DD4hep {
   /// String conversions: string to boolean value  \ingroup DD4HEP_GEOMETRY
   bool _toBool(const std::string& value);
   /// String conversions: string to integer value  \ingroup DD4HEP_GEOMETRY
+  short _toShort(const std::string& value);
+  /// String conversions: string to integer value  \ingroup DD4HEP_GEOMETRY
   int _toInt(const std::string& value);
   /// String conversions: string to long integer value  \ingroup DD4HEP_GEOMETRY
   long _toLong(const std::string& value);
@@ -203,9 +207,17 @@ namespace DD4hep {
   /// Void helper function to support formalisms  \ingroup DD4HEP_GEOMETRY
   inline bool _toBool(bool value) { return value; }
   /// Void helper function to support formalisms  \ingroup DD4HEP_GEOMETRY
+  inline short _toShort(short value) { return value; }
+  /// Void helper function to support formalisms  \ingroup DD4HEP_GEOMETRY
   inline int _toInt(int value) { return value; }
   /// Void helper function to support formalisms  \ingroup DD4HEP_GEOMETRY
   inline long _toLong(long value) { return value; }
+  /// Void helper function to support formalisms  \ingroup DD4HEP_GEOMETRY
+  inline unsigned short _toUShort(unsigned short value) { return value; }
+  /// Void helper function to support formalisms  \ingroup DD4HEP_GEOMETRY
+  inline unsigned int _toUInt(unsigned int value) { return value; }
+  /// Void helper function to support formalisms  \ingroup DD4HEP_GEOMETRY
+  inline unsigned long _toULong(unsigned long value) { return value; }
   /// Void helper function to support formalisms  \ingroup DD4HEP_GEOMETRY
   inline float _toFloat(float value) { return value; }
   /// Void helper function to support formalisms  \ingroup DD4HEP_GEOMETRY
@@ -218,6 +230,27 @@ namespace DD4hep {
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
   template <class T> T _multiply(const std::string& left, const std::string& right);
 
+  /** Block for concrete overloads of type:  short */
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> short _multiply<short>(const std::string& left, const std::string& right);
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> inline short _multiply<short>(short left, const std::string& right) { return left * _toInt(right); }
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> inline short _multiply<short>(const std::string& left, short right) { return _toInt(left) * right; }
+
+  /** Block for concrete overloads of type:  unsigned short */
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> unsigned short _multiply<unsigned short>(const std::string& left, const std::string& right);
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> inline unsigned short _multiply<unsigned short>(unsigned short left, const std::string& right) {
+    return left * _toInt(right);
+  }
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> inline unsigned short _multiply<unsigned short>(const std::string& left, unsigned short right) {
+    return _toInt(left) * right;
+  }
+
+  /** Block for concrete overloads of type:  int */
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
   template <> int _multiply<int>(const std::string& left, const std::string& right);
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
@@ -225,6 +258,19 @@ namespace DD4hep {
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
   template <> inline int _multiply<int>(const std::string& left, int right) { return _toInt(left) * right; }
 
+  /** Block for concrete overloads of type:  unsigned int */
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> unsigned int _multiply<unsigned int>(const std::string& left, const std::string& right);
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> inline unsigned int _multiply<unsigned int>(unsigned int left, const std::string& right) {
+    return left * _toInt(right);
+  }
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> inline unsigned int _multiply<unsigned int>(const std::string& left, unsigned int right) {
+    return _toInt(left) * right;
+  }
+
+  /** Block for concrete overloads of type:  long */
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
   template <> long _multiply<long>(const std::string& left, const std::string& right);
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
@@ -232,6 +278,19 @@ namespace DD4hep {
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
   template <> inline long _multiply<long>(const std::string& left, long right) { return _toLong(left) * right; }
 
+  /** Block for concrete overloads of type:  unsigned long */
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> unsigned long _multiply<unsigned long>(const std::string& left, const std::string& right);
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> inline unsigned long _multiply<unsigned long>(unsigned long left, const std::string& right) {
+    return left * _toLong(right);
+  }
+  /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
+  template <> inline unsigned long _multiply<unsigned long>(const std::string& left, unsigned long right) {
+    return _toLong(left) * right;
+  }
+
+  /** Block for concrete overloads of type: float  */
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
   template <> float _multiply<float>(const std::string& left, const std::string& right);
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
@@ -239,6 +298,7 @@ namespace DD4hep {
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
   template <> inline float _multiply<float>(const std::string& left, float right) { return _toFloat(left) * right; }
 
+  /** Block for concrete overloads of type:  double */
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
   template <> double _multiply<double>(const std::string& left, const std::string& right);
   /// Generic multiplication using the evaluator: result = left * right  \ingroup DD4HEP_GEOMETRY
