@@ -81,9 +81,9 @@ namespace DD4hep {
       /// Full cleanup of all managed conditions.
       virtual void clear() = 0;
       /// Check if a condition exists in the pool
-      virtual Condition exists(DetElement, const std::string&) const { return Condition(); }
+      virtual Condition exists(DetElement, const std::string&) const = 0;
       /// Check if a condition exists in the pool
-      virtual Condition exists(Condition) const { return Condition(); }
+      virtual Condition exists(Condition) const = 0;
       /// Select the conditions matching the DetElement and the conditions name
       virtual void select(DetElement det, const std::string& cond_name, RangeConditions& result) = 0;
       /// Select all conditions contained
@@ -94,8 +94,6 @@ namespace DD4hep {
 
     /// Interface for conditions pool optimized to host conditions updates.
     /** 
-     *  Common function for all pools..... 
-     *
      *  \author  M.Frank
      *  \version 1.0
      */
@@ -113,26 +111,23 @@ namespace DD4hep {
       /// Adopt all entries sorted by IOV. Entries will be removed from the pool
       virtual void popEntries(UpdateEntries& entries) = 0;
       /// Register a new condition to this pool
-      virtual void insert(Condition cond) = 0;
-      /// Register a new condition to this pool. May overload for performance reasons.
-      virtual void insert(RangeConditions& cond) = 0;
-      /// Register a new condition to this pool
-      virtual Condition insert(ConditionsPool* pool, Entry* cond) = 0;
+      virtual Condition insertEntry(ConditionsPool* pool, Entry* cond) = 0;
       /// Select the conditions matching the DetElement and the conditions name
       virtual void select_range(DetElement det, const std::string& cond_name, const IOV& req_validity,
                                 RangeConditions& result) = 0;
     };
 
+    /// Interface for conditions pool optimized to host conditions updates.
+    /** 
+     *  \author  M.Frank
+     *  \version 1.0
+     */
     class ReplacementPool : public ConditionsPool {
     public:
       /// Default constructor
       ReplacementPool();
       /// Default destructor.
       virtual ~ReplacementPool();
-      /// Register a new condition to this pool
-      virtual void insert(Condition cond) = 0;
-      /// Register a new condition to this pool. May overload for performance reasons.
-      virtual void insert(RangeConditions& cond) = 0;
       /// Pop conditions. May overloade for performance reasons!
       virtual void popEntries(RangeConditions& entries) = 0;
     };

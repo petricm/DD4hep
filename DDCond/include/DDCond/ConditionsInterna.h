@@ -14,11 +14,12 @@
 #ifndef DDCOND_CONDITIONSINTERNA_H
 #define DDCOND_CONDITIONSINTERNA_H
 
-// Framework include files
+// Framework include files%
 #include "DD4hep/Conditions.h"
 #include "DD4hep/Memory.h"
 #include "DD4hep/Mutex.h"
 #include "DDCond/ConditionsDataLoader.h"
+#include "DDCond/ConditionsIOVPool.h"
 #include "DDCond/ConditionsPool.h"
 
 // C/C++ include files
@@ -32,13 +33,9 @@ namespace DD4hep {
   namespace Conditions {
 
     class Entry;
-    class IOVPool;
     class ConditionsPool;
+    class ConditionsIOVPool;
     class ConditionsDataLoader;
-    typedef std::pair<RangeConditions, bool> RangeStatus;
-
-    using Geometry::LCDD;
-    using Geometry::DetElement;
 
     /// Conditions internal namespace declaration
     /** Internally defined datastructures are not presented to the
@@ -65,7 +62,7 @@ namespace DD4hep {
 
         typedef dd4hep_ptr<ConditionsDataLoader> Loader;
         typedef std::vector<IOVType>             IOVTypes;
-        typedef std::vector<IOVPool*>            TypedConditionPool;
+        typedef std::vector<ConditionsIOVPool*>  TypedConditionPool;
 
         typedef std::map<IOV::Key, ReplacementPool*> ReplacementCache;
         typedef std::vector<ReplacementPool*> FreePools;
@@ -83,8 +80,10 @@ namespace DD4hep {
         std::string m_loaderType;
 
         /// Reference to main detector description object
-        LCDD&              m_lcdd;
-        IOVTypes           m_iovTypes;
+        LCDD& m_lcdd;
+        /// Collection of IOV types managed
+        IOVTypes m_iovTypes;
+        /// Managed pool of typed conditions idexed by IOV-type and IOV key
         TypedConditionPool m_pool;
         /// Lock to protect the update/delayed conditions pool
         dd4hep_mutex_t m_updateLock;
@@ -186,39 +185,7 @@ namespace DD4hep {
         RangeConditions getRange(DetElement detector, const std::string& condition_name, const IOV& req_range_validity);
       };
     } /* End namespace Interna              */
-
-    /// Pool of conditions satisfying one IOV type (epoch, run, fill, etc)
-    /** 
-     *  Purely internal class to the conditions manager implementation.
-     *  Not at all to be accessed by clients!
-     *
-     *  \author  M.Frank
-     *  \version 1.0
-     *  \ingroup DD4HEP_CONDITIONS
-     */
-    class IOVPool {
-    public:
-      typedef ConditionsPool* Entry;
-      typedef std::map<std::pair<int, int>, Entry> Entries;
-      Entries entries;
-
-    public:
-      /// Default constructor
-      IOVPool();
-      /// Default destructor
-      virtual ~IOVPool();
-      /// Retrieve  a condition set given a Detector Element and the conditions name according to their validity
-      void __find(DetElement detector, const std::string& condition_name, const IOV& req_validity, RangeConditions& result);
-      /// Retrieve  a condition set given a Detector Element and the conditions name according to their validity
-      void __find_range(DetElement detector, const std::string& condition_name, const IOV& req_validity,
-                        RangeConditions& result);
-      /// Select all ACTIVE conditions, which do no longer match the IOV requirement
-      void __select_expired(const IOV& required_validity, RangeConditions& result);
-      void __update_expired(Interna::ConditionsManagerObject* caller, ConditionsPool* pool, RangeConditions& expired,
-                            const IOV& required_validity);
-    };
-
-  } /* End namespace Conditions             */
+  }   /* End namespace Conditions             */
 } /* End namespace DD4hep                   */
 
 #endif /* DDCOND_CONDITIONSINTERNA_H    */

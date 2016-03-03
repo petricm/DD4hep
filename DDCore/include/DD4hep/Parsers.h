@@ -18,6 +18,7 @@
 // ============================================================================
 // STD & STL
 // ============================================================================
+#include <deque>
 #include <list>
 #include <map>
 #include <set>
@@ -33,10 +34,18 @@
 #define PARSERS_DECL_FOR_PAIR(FirstType, SecondType) \
   int parse(std::pair<FirstType, SecondType>& result, const std::string& input);
 
-#define PARSERS_DECL_FOR_LIST(InnerType)                               \
-  int parse(std::vector<InnerType>& result, const std::string& input); \
-  int parse(std::list<InnerType>& result, const std::string& input);   \
-  int parse(std::set<InnerType>& result, const std::string& input);
+#define PARSERS_DECL_FOR_LIST(InnerType)                                           \
+  int parse(std::vector<InnerType>& result, const std::string& input);             \
+  int parse(std::list<InnerType>& result, const std::string& input);               \
+  int parse(std::set<InnerType>& result, const std::string& input);                \
+  int parse(std::deque<InnerType>& result, const std::string& input);              \
+  int parse(std::map<std::string, InnerType>& result, const std::string& input);   \
+  int parse(std::map<int, InnerType>& result, const std::string& input);           \
+  int parse(std::map<unsigned long, InnerType>& result, const std::string& input); \
+  int parse(std::pair<std::string, InnerType>& result, const std::string& input);  \
+  int parse(std::pair<int, InnerType>& result, const std::string& input);          \
+  int parse(std::pair<unsigned long, InnerType>& result, const std::string& input);
+
 // ============================================================================
 /** @file
  *  The declaration of major parsing functions used e.g
@@ -665,6 +674,7 @@ namespace DD4hep {
      *  @date 2009-09-05
      */
     int parse(ROOT::Math::PxPyPzEVector& result, const std::string& input);
+
     // ========================================================================
     /// parse the vector of points
     /**  @param result (OUTPUT) the parser vector
@@ -672,9 +682,8 @@ namespace DD4hep {
      *   @author Vanya BELYAEV Ivan.Belyaev@nikhef.nl
      *   @date 2009-09-05
      */
-    int parse(std::vector<ROOT::Math::XYZPoint>& result, const std::string& input);
-    int parse(std::list<ROOT::Math::XYZPoint>& result, const std::string& input);
-    int parse(std::set<ROOT::Math::XYZPoint>& result, const std::string& input);
+    PARSERS_DECL_FOR_LIST(ROOT::Math::XYZPoint)
+
     // ========================================================================
     /// parse the vector of vectors
     /**  @param result (OUTPUT) the parser vector
@@ -682,9 +691,8 @@ namespace DD4hep {
      *   @author Vanya BELYAEV Ivan.Belyaev@nikhef.nl
      *   @date 2009-09-05
      */
-    int parse(std::vector<ROOT::Math::XYZVector>& result, const std::string& input);
-    int parse(std::list<ROOT::Math::XYZVector>& result, const std::string& input);
-    int parse(std::set<ROOT::Math::XYZVector>& result, const std::string& input);
+    PARSERS_DECL_FOR_LIST(ROOT::Math::XYZVector)
+
     // ========================================================================
     /// parse the vector of vectors
     /**  @param result (OUTPUT) the parser vector
@@ -692,9 +700,7 @@ namespace DD4hep {
      *   @author Vanya BELYAEV Ivan.Belyaev@nikhef.nl
      *   @date 2009-09-05
      */
-    int parse(std::vector<ROOT::Math::PxPyPzEVector>& result, const std::string& input);
-    int parse(std::list<ROOT::Math::PxPyPzEVector>& result, const std::string& input);
-    int parse(std::set<ROOT::Math::PxPyPzEVector>& result, const std::string& input);
+    PARSERS_DECL_FOR_LIST(ROOT::Math::PxPyPzEVector)
 
     // ========================================================================
   }  //                                          end of namespace Parsers

@@ -108,18 +108,26 @@ namespace DD4hep {
        *  is fully conained by the caller.
        */
       bool contains(const IOV& iov) const;
+      /// Check if 2 IOV objects are of the same type
       static bool same_type(const IOV& iov, const IOV& test) {
         unsigned int typ1 = iov.iovType ? iov.iovType->type : iov.type;
         unsigned int typ2 = test.iovType ? test.iovType->type : test.type;
         return typ1 == typ2;
       }
-      static bool key_is_contained(const IOV::Key& key, const IOV::Key& test) {
+      /// Check if IOV 'test' is fully contained in IOV 'key'
+      static bool key_is_contained(const Key& key, const Key& test) {
         return key.first >= test.first && key.second <= test.second;
       }
-      static bool key_overlaps_lower_end(const IOV::Key& key, const IOV::Key& test) {
+      /// Same as above, but reverse logic. Gives sometimes more understandable logic.
+      static bool key_contains_range(const Key& key, const Key& test) {
+        return key.first <= test.first && key.second >= test.second;
+      }
+      /// Check if IOV 'test' has an overlap on the lower interval edge with IOV 'key'
+      static bool key_overlaps_lower_end(const Key& key, const Key& test) {
         return key.first <= test.second && key.first >= test.first;
       }
-      static bool key_overlaps_higher_end(const IOV::Key& key, const IOV::Key& test) {
+      /// Check if IOV 'test' has an overlap on the upper interval edge with IOV 'key'
+      static bool key_overlaps_higher_end(const Key& key, const Key& test) {
         return key.second >= test.first && key.second <= test.second;
       }
     };
@@ -155,6 +163,8 @@ namespace DD4hep {
       void fromString(const std::string& rep);
       /// Create string representation of the data block
       std::string str();
+      /// Check if object is already bound....
+      bool is_bound() const { return 0 != pointer; }
       /// Generic getter. Specify the exact type, not a polymorph type
       template <typename T> inline T& get();
       /// Generic getter (const version). Specify the exact type, not a polymorph type

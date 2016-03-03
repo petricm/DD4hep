@@ -20,6 +20,7 @@
 #include "DD4hep/LCDD.h"
 #include "DD4hep/Printout.h"
 
+#include "DDCond/ConditionsIOVPool.h"
 #include "DDCond/ConditionsInterna.h"
 #include "DDCond/ConditionsManager.h"
 
@@ -58,6 +59,13 @@ namespace DD4hep {
       template <typename T> void print_bound_value(Condition condition, const char* norm = 0);
       template <typename T> void print_conditions(const RangeConditions& rc);
       void check_discrete_condition(Condition c, const IOV& iov);
+
+      template <typename T> const T& access_val(Condition c) {
+        if (!c->is_bound()) {
+          c.bind<T>();
+        }
+        return c.get<T>();
+      }
     }
   }
 }

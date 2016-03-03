@@ -31,6 +31,8 @@ namespace DD4hep {
      */
     class Geant4IsotropeGenerator : public Geant4ParticleGenerator {
     protected:
+      /// Property: Distribution name. Default: "uniform". Allowed: "uniform", "cos(theta)", "ffbar", "eta"
+      std::string m_distribution;
       /// Property: Minimal phi angular value
       double m_phiMin;
       /// Property: Maximal phi angular value
@@ -45,6 +47,14 @@ namespace DD4hep {
           User must return a UNIT vector, which gets scaled with momentum.
       */
       virtual void getParticleDirection(int num, ROOT::Math::XYZVector& direction, double& momentum) const;
+      /// e+e- --> ffbar particle distribution ~ 1 + cos^2(theta)
+      void getParticleDirectionFFbar(int num, ROOT::Math::XYZVector& direction, double& momentum) const;
+      /// e+e- --> ffbar particle distribution ~ 1 + cos^2(theta)
+      void getParticleDirectionEta(int num, ROOT::Math::XYZVector& direction, double& momentum) const;
+      /// Particle distribution ~ cos(theta)
+      void getParticleDirectionCosTheta(int num, ROOT::Math::XYZVector& direction, double& momentum) const;
+      /// Uniform particle distribution
+      void getParticleDirectionUniform(int num, ROOT::Math::XYZVector& direction, double& momentum) const;
 
     public:
       /// Standard constructor

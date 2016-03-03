@@ -21,6 +21,7 @@
 // ============================================================================
 // STD:
 //==============================================================================
+#include <deque>
 #include <list>
 #include <map>
 #include <set>
@@ -195,6 +196,14 @@ namespace DD4hep {
       typedef VectorGrammar<Iterator, std::set<InnerT, CompareT, AllocatorT>, Skipper> Grammar;
     };
 
+    // ----------------------------------------------------------------------------
+    // Register VectorGrammar for std::set:
+    // ----------------------------------------------------------------------------
+    template <typename Iterator, typename InnerT, typename AllocatorT, typename Skipper>
+    struct Grammar_<Iterator, std::deque<InnerT, AllocatorT>, Skipper> {
+      typedef VectorGrammar<Iterator, std::deque<InnerT, AllocatorT>, Skipper> Grammar;
+    };
+
     //==============================================================================
     template <typename Iterator, typename PairT, typename Skipper>
     struct PairGrammar : qi::grammar<Iterator, PairT(), qi::locals<char>, Skipper> {
@@ -225,6 +234,7 @@ namespace DD4hep {
       //ph::function<Operations> op;
       // ----------------------------------------------------------------------------
     };  // END PairGrammar
+
     // ----------------------------------------------------------------------------
     // Register PairGrammar:
     // ----------------------------------------------------------------------------
@@ -232,6 +242,7 @@ namespace DD4hep {
     struct Grammar_<Iterator, std::pair<KeyT, ValueT>, Skipper> {
       typedef PairGrammar<Iterator, std::pair<KeyT, ValueT>, Skipper> Grammar;
     };
+
     // ============================================================================
     template <typename Iterator, typename MapT, typename Skipper>
     struct MapGrammar : qi::grammar<Iterator, MapT(), Skipper> {
