@@ -18,6 +18,7 @@
 // Framework include files
 #include "DDG4/Geant4GeneratorAction.h"
 #include "DDG4/Geant4Particle.h"
+#include "DDG4/Geant4Vertex.h"
 
 // C/C++ include files
 #include <memory>
@@ -43,6 +44,7 @@ namespace DD4hep {
      */
     class Geant4EventReader {
     public:
+      typedef Geant4Vertex           Vertex;
       typedef Geant4Particle         Particle;
       typedef std::vector<Particle*> Particles;
       /// Status codes of the event reader object. Anything with NOT low-bit set is an error.
@@ -88,7 +90,7 @@ namespace DD4hep {
       /// Read an event and fill a vector of MCParticles.
       /** The additional argument
        */
-      virtual EventReaderStatus readParticles(int event_number, Particles& particles) = 0;
+      virtual EventReaderStatus readParticles(int event_number, Vertex& primary_vertex, Particles& particles) = 0;
     };
 
     /// Generic input action capable of using the Geant4EventReader class.
@@ -103,6 +105,7 @@ namespace DD4hep {
      */
     class Geant4InputAction : public Geant4GeneratorAction {
     public:
+      typedef Geant4Vertex           Vertex;
       typedef Geant4Particle         Particle;
       typedef std::vector<Particle*> Particles;
 
@@ -122,7 +125,7 @@ namespace DD4hep {
 
     public:
       /// Read an event and return a LCCollectionVec of MCParticles.
-      int readParticles(int event_number, Particles& particles);
+      int readParticles(int event_number, Vertex& primary_vertex, Particles& particles);
       /// helper to report Geant4 exceptions
       std::string issue(int i) const;
 
