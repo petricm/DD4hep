@@ -40,6 +40,10 @@ namespace DD4hep {
       std::vector<double> layerOffsetX() const { return _layerOffsetX; }
       /// access the coordinate layerOffset in Y
       std::vector<double> layerOffsetY() const { return _layerOffsetY; }
+      /// access the boundary dimension in X
+      std::vector<double> boundaryLayerX() const { return _layerDimX; }
+      /// access the fraction cell size in X
+      std::vector<double> FractCellSizeXPerLayer() const { return _fractCellSizeXPerLayer; }
       /// access the field name used for X
       const std::string& fieldNameX() const { return _xId; }
       /// access the field name used for Y
@@ -60,6 +64,10 @@ namespace DD4hep {
       void setFieldNameX(const std::string& fieldName) { _xId = fieldName; }
       /// set the field name used for Y
       void setFieldNameY(const std::string& fieldName) { _yId = fieldName; }
+      /// set the layer boundary dimension for X
+      void setBoundaryLayerX(double halfX) { _layerDimX.push_back(halfX); };
+      /// set the layer fraction cell size for X
+      void setFractCellSizeXPerLayer(double newFractCellSizeX) { _fractCellSizeXPerLayer.push_back(newFractCellSizeX); }
       /** \brief Returns a vector<double> of the cellDimensions of the given cell ID
 	    in natural order of dimensions, e.g., dx/dy/dz, or dr/r*dPhi
 
@@ -90,6 +98,10 @@ namespace DD4hep {
       std::vector<double> _layerOffsetX;
       /// list of layer y offset
       std::vector<double> _layerOffsetY;
+      /// list of layer boundary dimension for X
+      std::vector<double> _layerDimX;
+      /// list of the layer fraction cell size for X
+      std::vector<double> _fractCellSizeXPerLayer;
     };
 
   } /* namespace DDSegmentation */
