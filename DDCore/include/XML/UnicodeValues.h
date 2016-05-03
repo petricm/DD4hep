@@ -82,6 +82,7 @@ namespace DD4hep {
     UNICODE(component);
     UNICODE(composite);
     UNICODE(cone);
+    UNICODE(cons);
     UNICODE(constant);
     UNICODE(crossing_angle);
     UNICODE(cut);
@@ -94,7 +95,7 @@ namespace DD4hep {
     UNICODE(deltaphi);
     UNICODE(deltatheta);
     UNICODE(depth);
-    UNICODE(desnity);
+    UNICODE(density);
     UNICODE(detector);
     UNICODE(detectors);
     UNICODE(dim_r);
@@ -197,6 +198,7 @@ namespace DD4hep {
     UNICODE(intersection);
     UNICODE(InvisibleNoDaughters);
     UNICODE(InvisibleWithDaughters);
+    UNICODE(isotope);
 
     UNICODE(j);
     UNICODE(J);
@@ -220,6 +222,7 @@ namespace DD4hep {
     UNICODE(line_style);
     UNICODE(lineStyle);
     UNICODE(local);
+    UNICODE(logvol);
     UNICODE(lunit);
 
     UNICODE(m);
@@ -279,6 +282,7 @@ namespace DD4hep {
     UNICODE(para);
     UNICODE(paraboloid);
     UNICODE(param);
+    UNICODE(parameter);
     UNICODE(params);
     UNICODE(parent);
     UNICODE(particles);
@@ -298,6 +302,7 @@ namespace DD4hep {
     UNICODE(polycone);
     UNICODE(position);
     UNICODE(positionref);
+    UNICODE(pressure);
     UNICODE(projective_cylinder);
     UNICODE(projective_zplane);
     UNICODE(properties);
@@ -378,6 +383,7 @@ namespace DD4hep {
     UNICODE(start_z);
     UNICODE(startphi);
     UNICODE(starttheta);
+    UNICODE(state);
     UNICODE(stave);
     UNICODE(staves);
     UNICODE(store_secondaries);
@@ -386,9 +392,11 @@ namespace DD4hep {
     UNICODE(subtraction);
     UNICODE(support);
     UNICODE(system);
+    UNICODE(symbol);
 
     UNICODE(t);
     UNICODE(T);
+    UNICODE(temperature);
     UNICODE(theta);
     UNICODE(thetaBins);
     UNICODE(thickness);
@@ -488,6 +496,7 @@ namespace DD4hep {
     UNICODE(z2);
     UNICODE(z3);
     UNICODE(z4);
+    UNICODE(Zeff);
     UNICODE(zhalf);
     UNICODE(zmin);
     UNICODE(zmax);

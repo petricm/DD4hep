@@ -195,14 +195,15 @@ namespace DD4hep {
     struct Grammar_<Iterator, std::set<InnerT, CompareT, AllocatorT>, Skipper> {
       typedef VectorGrammar<Iterator, std::set<InnerT, CompareT, AllocatorT>, Skipper> Grammar;
     };
-
+#if defined(DD4HEP_HAVE_ALL_PARSERS)
     // ----------------------------------------------------------------------------
-    // Register VectorGrammar for std::set:
+    // Register VectorGrammar for std::deque:
     // ----------------------------------------------------------------------------
     template <typename Iterator, typename InnerT, typename AllocatorT, typename Skipper>
     struct Grammar_<Iterator, std::deque<InnerT, AllocatorT>, Skipper> {
       typedef VectorGrammar<Iterator, std::deque<InnerT, AllocatorT>, Skipper> Grammar;
     };
+#endif  //  DD4HEP_HAVE_ALL_PARSERS
 
     //==============================================================================
     template <typename Iterator, typename PairT, typename Skipper>

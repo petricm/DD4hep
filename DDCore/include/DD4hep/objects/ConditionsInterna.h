@@ -250,6 +250,7 @@ namespace DD4hep {
     }                                                \
   }
 
+#if defined(DD4HEP_HAVE_ALL_PARSERS)
 #define DD4HEP_DEFINE_CONDITIONS_CONT(x)                           \
   DD4HEP_DEFINE_CONDITIONS_TYPE(x)                                 \
   DD4HEP_DEFINE_CONDITIONS_TYPE(std::vector<x>)                    \
@@ -264,4 +265,17 @@ namespace DD4hep {
   DD4HEP_DEFINE_CONDITIONS_CONT(x)         \
   DD4HEP_DEFINE_CONDITIONS_CONT(unsigned x)
 
-#endif /* DD4HEP_GEOMETRY_CONDITIONINTERNA_H    */
+#else
+
+#define DD4HEP_DEFINE_CONDITIONS_CONT(x)                         \
+  DD4HEP_DEFINE_CONDITIONS_TYPE(x)                               \
+  DD4HEP_DEFINE_CONDITIONS_TYPE(std::vector<x>)                  \
+  DD4HEP_DEFINE_CONDITIONS_TYPE(std::list<x>)                    \
+  DD4HEP_DEFINE_CONDITIONS_TYPE(std::set<x>)                     \
+  DD4HEP_DEFINE_CONDITIONS_TYPE(DD4hep::Primitive<x>::int_map_t) \
+  DD4HEP_DEFINE_CONDITIONS_TYPE(DD4hep::Primitive<x>::string_map_t)
+
+#define DD4HEP_DEFINE_CONDITIONS_U_CONT(x) DD4HEP_DEFINE_CONDITIONS_CONT(x)
+
+#endif  //  DD4HEP_HAVE_ALL_PARSERS
+#endif  /* DD4HEP_GEOMETRY_CONDITIONINTERNA_H    */

@@ -58,7 +58,12 @@ namespace DD4hep {
       static XmlChar* transcode(const char* c);
       /// Release string
       static void release(char** p);
+      /// String length in native representation
+      static size_t length(const char* s);
 #ifndef __TIXML__
+      /// String length in native representation
+      static size_t length(const XmlChar* s);
+      /// Transcoded string from unicode to ascii
       static char* transcode(const XmlChar* c);
       /// Release string
       static void release(XmlChar** p);
@@ -177,6 +182,8 @@ namespace DD4hep {
       operator const XmlChar*() const { return m_xml; }
       /// Accessor to unicode string
       const XmlChar* ptr() const { return m_xml; }
+      /// String length in native representation
+      size_t length() const { return XmlString::length(m_xml); }
       /// Assignment opertor from ascii string
       Strng_t& operator=(const char* s);
       /// Assignment opertor from helper string
@@ -572,8 +579,12 @@ namespace DD4hep {
      */
     class DocumentHolder : public Document {
     public:
+      /// Default Constructor
+      DocumentHolder() : Document(0) {}
       /// Constructor
       DocumentHolder(DOC d) : Document(d) {}
+      /// Assign new document. Old document is dropped.
+      DocumentHolder& assign(DOC d);
       /// Standard destructor - releases the document
       virtual ~DocumentHolder();
     };
@@ -625,6 +636,10 @@ namespace DD4hep {
       operator Elt_t() const { return m_element; }
       /// Access to XmlElement pointer
       Elt_t ptr() const { return m_element; }
+      /// Access the XmlElements parent
+      Handle_t parent() const { return m_element.parent(); }
+      /// Access the XmlElements parent
+      Elt_t parentElement() const;
       /// Access the tag name of this DOM element
       std::string tag() const { return m_element.tag(); }
       /// Access the tag name of this DOM element
@@ -714,6 +729,18 @@ namespace DD4hep {
     };
 
 #undef INLINE
+
+    /// Forward declarations
+    class DocumentHandler;
+
+    /// Dump partial or full XML trees to stdout
+    void dump_tree(Handle_t elt);
+    /// Dump partial or full XML trees
+    void dump_tree(Handle_t elt, std::ostream& os);
+    /// Dump partial or full XML documents to stdout
+    void dump_tree(Document doc);
+    /// Dump partial or full XML documents
+    void dump_tree(Document doc, std::ostream& os);
   }
 } /* End namespace DD4hep   */
 #endif /* DD4HEP_XMLELEMENTS_H   */

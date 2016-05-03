@@ -26,11 +26,12 @@
 using namespace std;
 using namespace DD4hep::Geometry;
 
-//______________________________________________________________________________
+//________________________________________________________________________________
 #include "TRint.h"
-//______________________________________________________________________________
+//________________________________________________________________________________
 namespace {
 
+  //______________________________________________________________________________
   LCDD& dd4hep_instance(const char* /* name */ = "") {
 #if 0
 #include "DD4hep/PluginService.h"
@@ -54,6 +55,7 @@ namespace {
     return LCDD::getInstance();
   }
 
+  //______________________________________________________________________________
   long run_plugin(LCDD& lcdd, const char* name, int argc, char** argv) {
     try {
       lcdd.apply(name, argc, argv);
@@ -69,6 +71,7 @@ namespace {
     return EINVAL;
   }
 
+  //______________________________________________________________________________
   std::ostream& print_default_args() {
     cout << "        -build_type <number/string> Specify the build type                         \n"
             "                     [OPTIONAL]     MUST come immediately after the -compact input.\n"
@@ -90,6 +93,7 @@ namespace {
     return cout;
   }
 
+  //______________________________________________________________________________
   void usage_default(const char* name) {
     cout << " " << name << " -opt [-opt]                                                  \n"
                            "        -compact       <file>       Specify the compact geometry file              \n"
@@ -100,11 +104,14 @@ namespace {
     exit(EINVAL);
   }
 
+  //______________________________________________________________________________
   struct Args {
     bool                                  volmgr, dry_run, destroy, interpreter;
     int                                   print;
     std::vector<const char *>             geo_files, build_types;
     std::vector<std::vector<const char*>> plugins;
+
+    //____________________________________________________________________________
     Args() {
       volmgr      = false;
       dry_run     = false;
@@ -112,6 +119,8 @@ namespace {
       interpreter = true;
       print       = DD4hep::INFO;
     }
+
+    //____________________________________________________________________________
     int handle(int& i, int argc, char** argv) {
       if (strncmp(argv[i], "-compact", 5) == 0 || strncmp(argv[i], "-input", 4) == 0) {
         geo_files.push_back(argv[++i]);
@@ -154,6 +163,7 @@ namespace {
       return 1;
     }
 
+    //____________________________________________________________________________
     long run(LCDD& lcdd, const char* name) {
       pair<int, char**> a(0, 0);
       long result;
@@ -178,6 +188,7 @@ namespace {
       return result;
     }
 
+    //____________________________________________________________________________
     int decodePrintLevel(const std::string& val) {
       switch (::toupper(val[0])) {
         case '1':
@@ -208,6 +219,7 @@ namespace {
     }
   };
 
+  //______________________________________________________________________________
   void load_compact(LCDD& lcdd, Args& args) {
     // Load all compact files
     for (size_t i = 0; i < args.geo_files.size(); ++i) {
@@ -215,6 +227,7 @@ namespace {
       run_plugin(lcdd, "DD4hepCompactLoader", 2, (char**)argv);
     }
   }
+
   //______________________________________________________________________________
   int main_default(const char* name, int argc, char** argv) {
     Args args;
