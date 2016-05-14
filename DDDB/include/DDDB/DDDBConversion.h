@@ -99,7 +99,7 @@ namespace DD4hep {
     };
     struct Condition : public Named {
       typedef std::map<std::string, ConditionParam*> Params;
-      std::string classID;
+      std::string classID, path;
       Params      params;
       Params      paramVectors;
       /// Default constructor
