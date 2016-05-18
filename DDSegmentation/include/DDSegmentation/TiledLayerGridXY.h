@@ -48,6 +48,8 @@ namespace DD4hep {
       const std::string& fieldNameX() const { return _xId; }
       /// access the field name used for Y
       const std::string& fieldNameY() const { return _yId; }
+      /// access the field name used for Layer
+      const std::string& fieldNameLayer() const { return _identifierLayer; }
       /// set the grid size in X
       void setGridSizeX(double cellSize) { _gridSizeX = cellSize; }
       /// set the grid size in Y
@@ -64,6 +66,8 @@ namespace DD4hep {
       void setFieldNameX(const std::string& fieldName) { _xId = fieldName; }
       /// set the field name used for Y
       void setFieldNameY(const std::string& fieldName) { _yId = fieldName; }
+      /// set the field name used for Y
+      void setFieldNameLayer(const std::string& fieldName) { _identifierLayer = fieldName; }
       /// set the layer boundary dimension for X
       void setBoundaryLayerX(double halfX) { _layerDimX.push_back(halfX); };
       /// set the layer fraction cell size for X
