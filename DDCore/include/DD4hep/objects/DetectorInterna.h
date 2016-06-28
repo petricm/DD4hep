@@ -87,10 +87,12 @@ namespace DD4hep {
       typedef Conditions::IOV                 IOV;
 
       enum DetFlags {
-        HAVE_WORLD_TRAFO     = 1 << 0,
-        HAVE_PARENT_TRAFO    = 1 << 1,
-        HAVE_REFERENCE_TRAFO = 1 << 2,
-        HAVE_OTHER           = 1 << 31
+        HAVE_WORLD_TRAFO        = 1 << 0,
+        HAVE_PARENT_TRAFO       = 1 << 1,
+        HAVE_REFERENCE_TRAFO    = 1 << 2,
+        HAVE_SENSITIVE_DETECTOR = 1 << 29,
+        IS_TOP_LEVEL_DETECTOR   = 1 << 30,
+        HAVE_OTHER              = 1 << 31
       };
 
       /// Magic number to ensure data integrity

@@ -62,6 +62,8 @@ namespace DD4hep {
       /// Destructor
       virtual ~Segmentation();
 
+      /// Add subsegmentation. Call only valid for Multi-segmentations. Default implementation throws an exception
+      virtual void addSubsegmentation(long key_min, long key_max, Segmentation* entry);
       /// Determine the local position based on the cell ID
       virtual Vector3D position(const CellID& cellID) const = 0;
       /// Determine the cell ID based on the position

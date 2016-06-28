@@ -76,6 +76,8 @@ namespace DD4hep {
     UNICODE(coefficient);
     UNICODE(coefficients);
     UNICODE(color);
+    UNICODE(collections);
+    UNICODE(collection);
     UNICODE(combine_hits);
     UNICODE(combineHits);
     UNICODE(comment);
@@ -172,6 +174,7 @@ namespace DD4hep {
     UNICODE(half_z);
     UNICODE(header);
     UNICODE(height);
+    UNICODE(hits_collections);
     UNICODE(hits_collection);
     UNICODE(hype);
 
@@ -204,6 +207,11 @@ namespace DD4hep {
     UNICODE(J);
 
     UNICODE(k);
+    UNICODE(key);
+    UNICODE(key_min);
+    UNICODE(key_max);
+    UNICODE(key_val);
+    UNICODE(key_value);
     UNICODE(K);
 
     UNICODE(l);

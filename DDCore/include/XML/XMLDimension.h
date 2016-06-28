@@ -468,6 +468,16 @@ namespace DD4hep {
       double zstart() const;
       /// Access attribute values: nz
       int nz() const;
+      /// Access attribute values: key
+      int key() const;
+      /// Access attribute values: key_min
+      int key_min() const;
+      /// Access attribute values: key_max
+      int key_max() const;
+      /// Access attribute values: key_val
+      int key_val() const;
+      /// Access attribute values: key_value
+      int key_value() const;
 
       /// Access attribute values: start
       double start() const;

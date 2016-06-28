@@ -141,6 +141,7 @@ namespace DD4hep {
         ~Actors() {}
         void clear() { m_v.clear(); }
         void add(T* obj) { m_v.push_back(obj); }
+        void add_front(T* obj) { m_v.insert(m_v.begin(), obj); }
         operator const _V&() const { return m_v; }
         operator _V&() { return m_v; }
         const _V* operator->() const { return &m_v; }
