@@ -38,6 +38,7 @@ namespace DD4hep {
   /// Namespace of the DDDB conversion stuff
   namespace DDDB {
 
+    /// Forward declarations
     class dddb;
 
     /// Class supporting the interface of the LHCb conditions database to DD4hep
@@ -62,9 +63,9 @@ namespace DD4hep {
       /// Set XML reader object
       void setXmlReader(XML::UriReader* rdr) { m_xmlReader = rdr; }
       /// Access local database representation
-      dddb* geometry() const { return m_geometry; }
+      dddb* detectorDescription() const { return m_detDesc; }
       /// Set XML reader object
-      void setGeometry(dddb* geo);
+      void setDetectorDescription(dddb* geo);
       /// Access visualization attribute for a given volume by path
       Geometry::VisAttr visAttr(const std::string& path) const;
       /// Add visualization attribute
@@ -73,10 +74,14 @@ namespace DD4hep {
       void addVisAttr(const std::string& path, Geometry::VisAttr attr);
 
     public:
+      /// Reference to main detector description instance
       Geometry::LCDD& m_lcdd;
+      /// Reference to XML entity resolver
       XML::UriReader* m_xmlReader;
-      dddb*           m_geometry;
-      VisAttrs        m_visAttrs;
+      /// Reference to extracted detector description information
+      dddb* m_detDesc;
+      /// Optional container of visualization attributes
+      VisAttrs m_visAttrs;
     };
 
   } /* End namespace DDDB        */
