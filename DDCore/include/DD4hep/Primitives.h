@@ -260,7 +260,10 @@ namespace DD4hep {
     void operator()(std::pair<typename M::key_type, typename M::mapped_type> p) const {
       DestroyObject<typename M::mapped_type>()(p.second);
     }
-    void operator()() const { for_each(object.begin(), object.end(), (*this)); }
+    void operator()() const {
+      if (!object.empty())
+        for_each(object.begin(), object.end(), (*this));
+    }
   };
   template <typename M> DestroyObjects<M> destroyObjects(M& m) { return DestroyObjects<M>(m); }
   template <typename M> DestroyObjects<M> destroy2nd(M& m) { return DestroyObjects<M>(m); }
@@ -274,7 +277,10 @@ namespace DD4hep {
     void operator()(std::pair<typename M::key_type, typename M::mapped_type> p) const {
       DestroyObject<typename M::key_type>()(p.first);
     }
-    void operator()() const { for_each(object.begin(), object.end(), (*this)); }
+    void operator()() const {
+      if (!object.empty())
+        for_each(object.begin(), object.end(), (*this));
+    }
   };
   template <typename M> DestroyFirst<M> destroyFirst(M& m) { return DestroyFirst<M>(m); }
   template <typename M> DestroyFirst<M> destroy1st(M& m) { return DestroyFirst<M>(m); }
@@ -300,7 +306,10 @@ namespace DD4hep {
     void operator()(std::pair<typename M::key_type, typename M::mapped_type> p) const {
       ReleaseObject<typename M::mapped_type>()(p.second);
     }
-    void operator()() const { for_each(object.begin(), object.end(), (*this)); }
+    void operator()() const {
+      if (!object.empty())
+        for_each(object.begin(), object.end(), (*this));
+    }
   };
   template <typename M> ReleaseObject<typename M::value_type> releaseObject(M&) {
     return ReleaseObject<typename M::value_type>();

@@ -20,14 +20,16 @@
 // C/C++ include files
 #include <stdexcept>
 
-/*
- *   DD4hep namespace declaration
- */
+/// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
+  /// Namespace for the AIDA detector description toolkit supporting XML utilities
   namespace XML {
     class Handle_t;
+    class UriReader;
   }
+
+  /// Namespace for the geometry part of the AIDA detector description toolkit
   namespace Geometry {
     class LCDD;
   }
@@ -51,10 +53,10 @@ namespace DD4hep {
     virtual ~LCDDLoad();
 
   public:
-    /// Adopt all data from source structure.
-    virtual void processXML(const std::string& fname);
-    /// Adopt all data from source structure.
-    virtual void processXML(const XML::Handle_t& base, const std::string& fname);
+    /// Process XML unit and adopt all data from source structure.
+    virtual void processXML(const std::string& fname, XML::UriReader* entity_resolver = 0);
+    /// Process XML unit and adopt all data from source structure.
+    virtual void processXML(const XML::Handle_t& base, const std::string& fname, XML::UriReader* entity_resolver = 0);
     /// Process a given DOM (sub-) tree
     virtual void processXMLElement(const std::string& msg_source, const XML::Handle_t& root);
     /// Process a given DOM (sub-) tree

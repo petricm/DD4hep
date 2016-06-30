@@ -279,6 +279,10 @@ namespace DD4hep {
     return BasicGrammar::instance<T>().fromString(p, pre_parse_obj(str));
   }
 
+  /// User object evaluator
+  /// Do NOTHING version! Function present to formally satisfy code. User implementation required
+  template <typename T> inline int eval_none(T*, const std::string&) { return 1; }
+
   // Containers of objects are not handled!
 
 }  // End namespace DD4hep
