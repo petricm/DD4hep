@@ -79,7 +79,9 @@ namespace DD4hep {
 
     public:
       /// Key definition
-      typedef std::pair<long, long> Key;
+      typedef long Key_first_type;
+      typedef long Key_second_type;
+      typedef std::pair<Key_first_type, Key_second_type> Key;
 
       const IOVType* iovType;
       Key            keyData;
@@ -110,9 +112,9 @@ namespace DD4hep {
       /// Set discrete IOV value
       void set(const Key& value);
       /// Set discrete IOV value
-      void set(Key::first_type value);
+      void set(Key_first_type value);
       /// Set range IOV value
-      void set(Key::first_type val_1, Key::second_type val_2);
+      void set(Key_first_type val_1, Key_second_type val_2);
       /// Set keys to unphysical values (LONG_MAX, LONG_MIN)
       void reset();
       /// Invert the key values (first=second and second=first)
