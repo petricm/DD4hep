@@ -19,17 +19,18 @@
 #ifndef DD4HEP_GEOMETRY_DICTIONARY_H
 #define DD4HEP_GEOMETRY_DICTIONARY_H
 
-#include "DD4hep/Callback.h"
-#include "DD4hep/Conditions.h"
 #include "DD4hep/DD4hepRootPersistency.h"
-#include "DD4hep/FieldTypes.h"
-#include "DD4hep/LCDDData.h"
-#include "DD4hep/World.h"
 #include "DD4hep/objects/ConditionsInterna.h"
 #include "DD4hep/objects/DetectorInterna.h"
 #include "DD4hep/objects/ObjectsInterna.h"
 #include "DD4hep/objects/VolumeManagerInterna.h"
 #include "XML/Evaluator.h"
+
+#include "DD4hep/Callback.h"
+#include "DD4hep/Conditions.h"
+#include "DD4hep/FieldTypes.h"
+#include "DD4hep/LCDDData.h"
+#include "DD4hep/World.h"
 
 #include <map>
 #include <string>
@@ -183,10 +184,13 @@ template class DD4hep::Handle<TNamed>;
 #pragma link C++ class DD4hep::Handle < DD4hep::Geometry::SegmentationObject > +;
 #pragma link C++ class DD4hep::Geometry::HitCollection + ;
 #pragma link C++ class DD4hep::Geometry::Readout + ;
+#pragma link C++ class DD4hep::Geometry::HitCollection + ;
 #pragma link C++ class DD4hep::Geometry::ReadoutObject + ;
 #pragma link C++ class DD4hep::Handle < DD4hep::Geometry::ReadoutObject > +;
 #pragma link C++ class vector < DD4hep::Geometry::HitCollection > +;
 #pragma link C++ class vector < DD4hep::Geometry::Readout > +;
+#pragma link C++ class vector < DD4hep::Geometry::HitCollection* > +;
+#pragma link C++ class vector < const DD4hep::Geometry::HitCollection* > +;
 #pragma link C++ class vector < DD4hep::Geometry::IDDescriptor > +;
 
 #pragma link C++ class DD4hep::Geometry::Alignment + ;
