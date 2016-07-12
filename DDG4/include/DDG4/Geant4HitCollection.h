@@ -194,6 +194,8 @@ namespace DD4hep {
       typedef std::vector<Geant4HitWrapper> WrappedHits;
       /// Hit manipulator
       typedef Geant4HitWrapper::HitManipulator Manip;
+      /// Hit key map for fast random lookup
+      typedef std::map<VolumeID, size_t> Keys;
 
       /// Generic class template to compare/select hits in Geant4HitCollection objects
       /**
@@ -212,6 +214,14 @@ namespace DD4hep {
         virtual void* operator()(const Geant4HitWrapper& w) const = 0;
       };
 
+      union CollectionFlags {
+        unsigned long value;
+        struct BitItems {
+          unsigned repeatedLookup : 1;
+          unsigned mappedLookup : 1;
+        } bits;
+      };
+
     protected:
       /// The collection of hit pointers in the wrapped format
       WrappedHits m_hits;
@@ -221,20 +231,18 @@ namespace DD4hep {
       Manip* m_manipulator;
       /// Memorize for speedup the last searched hit
       size_t m_lastHit;
+      /// Hit key map for fast random lookup
+      Keys m_keys;
       /// Optimization flags
-      union CollectionFlags {
-        unsigned long value;
-        struct BitItems {
-          unsigned repeatedLookup : 1;
-          unsigned mappedLookup : 1;
-        } bits;
-      } m_flags;
+      CollectionFlags m_flags;
 
     protected:
       /// Notification to increase the instance counter
       void newInstance();
       /// Find hit in a collection by comparison of attributes
       void* findHit(const Compare& cmp);
+      /// Find hit in a collection by comparison of the key
+      Geant4HitWrapper* findHitByKey(VolumeID key);
       /// Release all hits from the Geant4 container and pass ownership to the caller
       void releaseData(const ComponentCast& cast, std::vector<void*>* result);
       /// Release all hits from the Geant4 container. Ownership stays with the container
@@ -268,7 +276,7 @@ namespace DD4hep {
             m_lastHit(ULONG_MAX) {
         newInstance();
         m_hits.reserve(200);
-        m_flags.value = OPTIMIZE_REPEATEDLOOKUP;
+        m_flags.value = 0;  //OPTIMIZE_REPEATEDLOOKUP;
       }
       /// Default destructor
       virtual ~Geant4HitCollection();
@@ -298,8 +306,28 @@ namespace DD4hep {
         m_lastHit = m_hits.size();
         m_hits.push_back(w);
       }
+      /// Add a new hit with a check, that the hit is of the same type
+      template <typename TYPE> void add(VolumeID key, TYPE* hit_pointer) {
+        m_lastHit = m_hits.size();
+        std::pair<Keys::iterator, bool> ret = m_keys.insert(std::make_pair(key, m_lastHit));
+        if (ret.second) {
+          Geant4HitWrapper w(m_manipulator->castHit(hit_pointer));
+          m_hits.push_back(w);
+          return;
+        }
+        throw std::runtime_error("Attempt to insert hit with same key to G4 hit-collection " + GetName());
+      }
       /// Find hits in a collection by comparison of attributes
       template <typename TYPE> TYPE* find(const Compare& cmp) { return (TYPE*)findHit(cmp); }
+      /// Find hits in a collection by comparison of key value
+      template <typename TYPE> TYPE* findByKey(VolumeID key) {
+        Keys::const_iterator i = m_keys.find(key);
+        if (i == m_keys.end())
+          return 0;
+        m_lastHit = (*i).second;
+        TYPE* obj = m_hits.at(m_lastHit);
+        return obj;
+      }
       /// Release all hits from the Geant4 container and pass ownership to the caller
       template <typename TYPE> std::vector<TYPE*> releaseHits() {
         std::vector<TYPE*> vec;
@@ -307,6 +335,7 @@ namespace DD4hep {
           releaseData(ComponentCast::instance<TYPE>(), (std::vector<void*>*)&vec);
         }
         m_lastHit = ULONG_MAX;
+        m_keys.clear();
         return vec;
       }
       /// Release all hits from the Geant4 container and pass ownership to the caller
