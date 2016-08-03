@@ -175,6 +175,8 @@ namespace DD4hep {
       //	std::string _identifierGR;
 
       std::string _layerConfig;
+
+      std::string _identifierModule;
     };
 
   } /* namespace DDSegmentation */
