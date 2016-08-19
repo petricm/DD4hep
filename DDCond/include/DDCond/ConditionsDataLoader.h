@@ -47,6 +47,8 @@ namespace DD4hep {
       typedef std::pair<std::string, IOV> Source;
       typedef std::vector<Source>  Sources;
       typedef ConditionsDataLoader base_t;
+      typedef Condition::iov_type  iov_type;
+      typedef Condition::key_type  key_type;
 
     protected:
       /// Reference to main detector description object
@@ -68,13 +70,12 @@ namespace DD4hep {
       /// Default destructor
       virtual ~ConditionsDataLoader();
       /// Add data source definition to loader
-      void addSource(const std::string& source, const IOV& iov);
+      void addSource(const std::string& source, const iov_type& iov);
       /// Load  a condition set given a Detector Element and the conditions name according to their validity
-      virtual size_t load(DetElement det, const std::string& cond, const IOV& req_validity, RangeConditions& conditions) = 0;
+      virtual size_t load(key_type key, const iov_type& req_validity, RangeConditions& conditions) = 0;
       /// Load  a condition set given a Detector Element and the conditions name according to their validity
-      virtual size_t load_range(DetElement det, const std::string& cond, const IOV& req_validity,
-                                RangeConditions& conditions) = 0;
-      virtual size_t update(const IOV& req_validity, RangeConditions& conditions, IOV& conditions_validity) = 0;
+      virtual size_t load_range(key_type key, const iov_type& req_validity, RangeConditions& conditions)              = 0;
+      virtual size_t update(const iov_type& req_validity, RangeConditions& conditions, iov_type& conditions_validity) = 0;
     };
 
   } /* End namespace Conditions             */

@@ -11,8 +11,8 @@
 // Author     : M.Frank
 //
 //==========================================================================
-#ifndef DD4HEP_DDG4_GRAMMAR_INL_H
-#define DD4HEP_DDG4_GRAMMAR_INL_H
+#ifndef DD4HEP_DDCORE_BASICGRAMMAR_INL_H
+#define DD4HEP_DDCORE_BASICGRAMMAR_INL_H
 
 // Framework include files
 #include "DD4hep/BasicGrammar.h"
@@ -52,6 +52,9 @@ namespace DD4hep {
    *   \ingroup DD4HEP
    */
   template <typename TYPE> class Grammar : public BasicGrammar {
+    /// Cached type information name
+    std::string m_typeName;
+
   public:
     /// Standarsd constructor
     Grammar();
@@ -59,6 +62,8 @@ namespace DD4hep {
     virtual ~Grammar();
     /// PropertyGrammar overload: Access to the type information
     virtual const std::type_info& type() const;
+    /// Access to the type information name
+    virtual const std::string& type_name() const;
     /// Access the object size (sizeof operator)
     virtual size_t sizeOf() const;
     /// PropertyGrammar overload: Serialize a property to a string
@@ -70,13 +75,16 @@ namespace DD4hep {
   };
 
   /// Standarsd constructor
-  template <typename TYPE> Grammar<TYPE>::Grammar() {}
+  template <typename TYPE> Grammar<TYPE>::Grammar() { m_typeName = typeName(typeid(TYPE)); }
 
   /// Default destructor
   template <typename TYPE> Grammar<TYPE>::~Grammar() {}
 
   /// PropertyGrammar overload: Access to the type information
   template <typename TYPE> const std::type_info& Grammar<TYPE>::type() const { return typeid(TYPE); }
+
+  /// PropertyGrammar overload: Access to the type information
+  template <typename TYPE> const std::string& Grammar<TYPE>::type_name() const { return m_typeName; }
 
   /// Access the object size (sizeof operator)
   template <typename TYPE> size_t Grammar<TYPE>::sizeOf() const { return sizeof(TYPE); }
@@ -282,6 +290,7 @@ namespace DD4hep {
   /// User object evaluator
   /// Do NOTHING version! Function present to formally satisfy code. User implementation required
   template <typename T> inline int eval_none(T*, const std::string&) { return 1; }
+  template <typename T> inline int parse_none(T&, const std::string&) { return 1; }
 
   // Containers of objects are not handled!
 
@@ -348,4 +357,4 @@ namespace DD4hep {
 
 #endif
 
-#endif /* DD4HEP_DDG4_GRAMMAR_INL_H */
+#endif /* DD4HEP_DDCORE_BASICGRAMMAR_INL_H */

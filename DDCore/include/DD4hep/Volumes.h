@@ -173,12 +173,17 @@ namespace DD4hep {
       /// Magic word to detect memory corruptions
       unsigned long magic;
       /// Reference count on object (used to implement Grab/Release)
-      long     refCount;
-      Region   region;
+      long refCount;
+      /// Region reference
+      Region region;
+      /// Limit sets used for simulation
       LimitSet limits;
-      VisAttr  vis;
-      Ref_t    sens_det;
-      int      referenced;
+      /// Reference to visualization attributes
+      VisAttr vis;
+      /// Reference to the sensitive detector
+      Ref_t sens_det;
+
+      int referenced;
       /// Default constructor
       VolumeExtension();
       /// Default destructor

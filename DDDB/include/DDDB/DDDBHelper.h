@@ -21,6 +21,7 @@
 #define DD4HEP_DDDB_DDDBHELPER_H
 
 // Framework includes
+#include "DD4hep/Conditions.h"
 #include "DD4hep/DD4hepUnits.h"
 #include "DD4hep/DetFactoryHelper.h"
 #include "DD4hep/FieldTypes.h"
