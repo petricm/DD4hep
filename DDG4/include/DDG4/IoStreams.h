@@ -17,14 +17,21 @@
 // C/C++ include files
 #include <string>
 
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow"  // Code that causes warning goes here
+#endif
+
 // booost iostreams include files
 #include <boost/iostreams/categories.hpp>
 #include <boost/iostreams/detail/ios.hpp>
 #include <boost/iostreams/detail/path.hpp>
 #include <boost/iostreams/positioning.hpp>
 
+// Forward declarations
 class TFile;
 
+/// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
   // Forward declarations
@@ -209,4 +216,9 @@ namespace DD4hep {
     }
   };
 }  // End namespace boost
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+
 #endif  // DD4HEP_DD4HEP_IOSTREAMs_H
