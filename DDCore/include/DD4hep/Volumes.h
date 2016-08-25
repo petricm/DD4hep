@@ -82,9 +82,21 @@ namespace DD4hep {
       class VolIDs : public std::vector<VolID> {
       public:
         typedef std::vector<VolID> Base;
+        /// Default constructor
         VolIDs() : std::vector<VolID>() {}
+        /// Copy constructor
+        VolIDs(const VolIDs& c) : std::vector<VolID>(c) {}
+        /// Destructor
         ~VolIDs() {}
+        /// Assignment operator
+        VolIDs& operator=(const VolIDs& c) {
+          if (&c != this)
+            this->std::vector<VolID>::operator=(c);
+          return *this;
+        }
+        /// Find entry
         std::vector<VolID>::const_iterator find(const std::string& name) const;
+        /// Inert new entry
         std::pair<std::vector<VolID>::iterator, bool> insert(const std::string& name, int value);
       };
       /// Magic word to detect memory corruptions
