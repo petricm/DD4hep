@@ -294,6 +294,7 @@ namespace DD4hep {
     UNICODE(params);
     UNICODE(parent);
     UNICODE(particles);
+    UNICODE(path);
     UNICODE(phi);
     UNICODE(phi0);
     UNICODE(phi0_offset);
@@ -303,6 +304,8 @@ namespace DD4hep {
     UNICODE(phi_size_max);
     UNICODE(physvol);
     UNICODE(physvolid);
+    UNICODE(pivot);
+    UNICODE(pivot_point);
     UNICODE(plugin);
     UNICODE(plugins);
     UNICODE(point);

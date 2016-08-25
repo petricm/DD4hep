@@ -16,8 +16,8 @@
 #define DD4HEP_WORLD_H
 
 // Framework include files
+#include "DD4hep/Alignments.h"
 #include "DD4hep/Conditions.h"
-#include "DD4hep/Detector.h"
 
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
@@ -41,9 +41,9 @@ namespace DD4hep {
       /// Definition of the base handle type
       typedef Handle<Object> RefObject;
       /// Conditions stuff
-      typedef Conditions::IOV       IOV;
-      typedef Conditions::UserPool  UserPool;
-      typedef Conditions::Condition Condition;
+      typedef Conditions::ConditionsLoader ConditionsLoader;
+      /// Alignment stuff
+      typedef Alignments::AlignmentsLoader AlignmentsLoader;
 
     public:
       /// Default constructor
@@ -70,9 +70,9 @@ namespace DD4hep {
       LCDD& lcdd() const;
 #endif
       /// Access the conditions loading
-      Condition getCondition(Condition::key_type key, const IOV& iov) const;
-      /// Access the conditions loading. Only conditions in the pool are accessed.
-      Condition getCondition(Condition::key_type key, const UserPool& pool) const;
+      ConditionsLoader& conditionsLoader() const;
+      /// Access to the alignment loading
+      AlignmentsLoader& alignmentsLoader() const;
     };
 
   } /* End namespace Conditions      */

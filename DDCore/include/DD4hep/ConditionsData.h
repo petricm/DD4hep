@@ -41,31 +41,6 @@ namespace DD4hep {
       virtual void release() = 0;
     };
 
-    /// Class describing an condition to re-adjust an alignment
-    /**
-     *
-     *  \author  M.Frank
-     *  \version 1.0
-     *  \ingroup DD4HEP_CONDITIONS
-     */
-    class AlignmentDelta {
-    public:
-      typedef Geometry::Position    Position;
-      typedef Geometry::Position    Pivot;
-      typedef Geometry::RotationZYX Rotation;
-      Pivot                         pivot;
-      Position                      position;
-      Rotation                      rotation;
-      /// Default constructor
-      AlignmentDelta();
-      /// Copy constructor
-      AlignmentDelta(const AlignmentDelta& c);
-      /// Default destructor
-      ~AlignmentDelta();
-      /// Assignment operator
-      AlignmentDelta& operator=(const AlignmentDelta& c);
-    };
-
     /// Conditions data block. Internally maps other objects to abstract data blocks
     /**
      *   \author  M.Frank
@@ -77,7 +52,7 @@ namespace DD4hep {
     private:
     public:
       enum { REGULAR = 0, ALIGNMENT = 6 };
-      typedef std::map<std::string, BlockData> Params;
+      typedef std::map<std::string, OpaqueDataBlock> Params;
       ClientData* clientData;
       Params      params;
       int         classID;

@@ -123,10 +123,13 @@ namespace DD4hep {
       Particles parents;
       Particles daughters;
 
-      /// User data extension if required
+/// User data extension if required
+#ifdef DD4HEP_DD4HEP_PTR_AUTO
       dd4hep_ptr<ParticleExtension> extension;
-      const G4VProcess*             process;  //! not persistent
-      //const G4ParticleDefinition *definition;  //! not persistent
+#else
+      dd4hep_ptr<ParticleExtension> extension;  //! not persisten. ROOT cannot handle
+#endif
+      const G4VProcess* process;  //! not persistent
       /// Default constructor
       Geant4Particle();
       /// Constructor with ID initialization

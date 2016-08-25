@@ -11,14 +11,23 @@
 // Author     : M.Frank
 //
 //==========================================================================
-#ifndef DD4HEP_GEOMETRY_CONDITIONINTERNA_H
-#define DD4HEP_GEOMETRY_CONDITIONINTERNA_H
+//
+// NOTE:
+//
+// This is an internal include file. It should only be included to
+// instantiate code. Otherwise the Conditions include file should be
+// sufficient for all practical purposes.
+//
+//==========================================================================
+#ifndef DD4HEP_CONDITIONS_CONDITIONINTERNA_H
+#define DD4HEP_CONDITIONS_CONDITIONINTERNA_H
 
 // Framework include files
 #include "DD4hep/BasicGrammar.h"
 #include "DD4hep/Conditions.h"
 #include "DD4hep/Detector.h"
 #include "DD4hep/NamedObject.h"
+#include "DD4hep/objects/OpaqueData_inl.h"
 
 // C/C++ include files
 #include <map>
@@ -30,54 +39,32 @@ namespace DD4hep {
   namespace Conditions {
 
     // Forward declarations
-    class ConditionsLoader;
     class ConditionsPool;
-    class Condition;
-    class IOVType;
-    class IOV;
 
-    /// Class describing an opaque conditions data block
+    /// The data class behind a conditions container handle.
     /**
+     *  See ConditionsInterna.cpp for the implementation.
      *
      *  \author  M.Frank
      *  \version 1.0
      *  \ingroup DD4HEP_CONDITIONS
      */
-    class BlockData : public Block {
-      friend class Condition;
-      friend class Object;
-
-    private:
-      enum { PLAIN_DATA = 1 << 0, ALLOC_DATA = 1 << 1, BOUND_DATA = 1 << 2 } _DataTypes;
-      /// Data buffer: plain data are allocated directly on this buffer
-      /** Internal data buffer is sufficient to store any vector  */
-      unsigned char data[sizeof(std::vector<void*>)];
-      /// Destructor function -- only set if the object is valid
-      void (*destruct)(void*);
-      /// Constructor function -- only set if the object is valid
-      void (*copy)(void*, const void*);
+    class ConditionsLoader {
+    protected:
+      typedef Condition::key_type key_type;
+      typedef Condition::iov_type iov_type;
+      /// Protected destructor
+      virtual ~ConditionsLoader();
 
     public:
-      /// Data buffer type: Must be a bitmap!
-      int type;
-      /// Standard initializing constructor
-      BlockData();
-      /// Copy constructor
-      BlockData(const BlockData& data);
-      /// Standard Destructor
-      ~BlockData();
-      /// Assignment operator
-      BlockData& operator=(const BlockData& clone);
-      /// Move the data content: 'from' will be reset to NULL
-      bool move(BlockData& from);
-      /// Bind data value
-      bool bind(const BasicGrammar* grammar, void (*ctor)(void*, const void*), void (*dtor)(void*));
-      /// Bind data value
-      template <typename T> T& bind();
-      /// Set data value
-      void assign(const void* ptr, const std::type_info& typ);
-      /// Bind grammar and assign value
-      template <typename T> T& set(const std::string& value);
+      /// Addreference count. Use object
+      virtual void addRef() = 0;
+      /// Release object. The client may not use any reference any further.
+      virtual void release() = 0;
+      /// Access the conditions loading mechanism
+      virtual Condition get(key_type key, const iov_type& iov) = 0;
+      /// Access the conditions loading mechanism. Only conditions in the user pool will be accessed.
+      virtual Condition get(key_type key, const UserPool& pool) = 0;
     };
 
     /// Conditions internal namespace declaration
@@ -106,7 +93,13 @@ namespace DD4hep {
       public:
         /// Forward definition of the key type
         typedef Condition::key_type key_type;
+        /// Forward definition of the iov type
         typedef Condition::iov_type iov_type;
+        /// Forward definition of the object properties
+        typedef unsigned int BitMask;
+        /// Forward definition of the object mask manipulator
+        typedef ReferenceBitMask<BitMask> MaskManip;
+
         /// Condition value (in string form)
         std::string value;
         /// Condition validity (in string form)
@@ -116,7 +109,7 @@ namespace DD4hep {
         /// Comment string
         std::string comment;
         /// Data block
-        BlockData data;
+        OpaqueDataBlock data;
         /// Reference to conditions pool
         ConditionsPool* pool;
         /// Interval of validity
@@ -124,11 +117,11 @@ namespace DD4hep {
         /// Hash value of the name
         key_type hash;
         /// Flags
-        int flags;
+        BitMask flags;
         /// Reference count
         int refCount;
         /// Standard constructor
-        ConditionObject();
+        ConditionObject(const std::string& nam = "", const std::string& tit = "");
         /// Standard Destructor
         virtual ~ConditionObject();
         /// Move data content: 'from' will be reset to NULL
@@ -156,7 +149,9 @@ namespace DD4hep {
       public:
         /// Forward defintion of the key type
         typedef Condition::key_type key_type;
+        /// Forward definition of the iov type
         typedef Condition::iov_type iov_type;
+        /// Forward definition of the mapping type
         typedef std::pair<key_type, std::string> key_value;
         /// Definition of the keys
         typedef std::map<key_type, key_value> Keys;
@@ -197,65 +192,6 @@ namespace DD4hep {
 
     } /* End namespace Interna    */
 
-    /// The data class behind a conditions container handle.
-    /**
-     *  See ConditionsInterna.cpp for the implementation.
-     *
-     *  \author  M.Frank
-     *  \version 1.0
-     *  \ingroup DD4HEP_CONDITIONS
-       */
-    class ConditionsLoader {
-    protected:
-      typedef Condition::key_type key_type;
-      typedef Condition::iov_type iov_type;
-      /// Protected destructor
-      virtual ~ConditionsLoader();
-
-    public:
-      /// Addreference count. Use object
-      virtual void addRef() = 0;
-      /// Release object. The client may not use any reference any further.
-      virtual void release() = 0;
-      /// Access the conditions loading mechanism
-      virtual Condition get(key_type key, const iov_type& iov) = 0;
-      /// Access the conditions loading mechanism. Only conditions in the user pool will be accessed.
-      virtual Condition get(key_type key, const UserPool& pool) = 0;
-    };
-
-    template <typename T> static void copyObject(void* t, const void* s) { new (t) T(*(const T*)s); }
-    template <typename T> static void destructObject(void* p) {
-      T* t = (T*)p;
-      t->~T();
-    }
-    /// Generic getter. Specify the exact type, not a polymorph type
-    template <typename T> T& Block::get() {
-      if (!grammar || (grammar->type() != typeid(T))) {
-        throw std::bad_cast();
-      }
-      return *(T*)pointer;
-    }
-    /// Generic getter (const version). Specify the exact type, not a polymorph type
-    template <typename T> const T& Block::get() const {
-      if (!grammar || (grammar->type() != typeid(T))) {
-        throw std::bad_cast();
-      }
-      return *(T*)pointer;
-    }
-    /// Bind data value
-    template <typename T> T& BlockData::bind() {
-      this->bind(&BasicGrammar::instance<T>(), copyObject<T>, destructObject<T>);
-      return *(new (this->pointer) T());
-    }
-    /// Bind grammar and assign value
-    template <typename T> T& BlockData::set(const std::string& value) {
-      T& ret = this->bind<T>();
-      if (!value.empty() && !this->fromString(value)) {
-        throw std::runtime_error("BlockData::set> Failed to bind type " + ::DD4hep::typeName(typeid(T)) +
-                                 " to condition data block.");
-      }
-      return ret;
-    }
     /// Bind the data of the conditions object to a given format.
     template <typename T> T& Condition::bind() {
       Object* o = access();
@@ -323,4 +259,4 @@ namespace DD4hep {
 #define DD4HEP_DEFINE_CONDITIONS_U_CONT(x) DD4HEP_DEFINE_CONDITIONS_CONT(x)
 
 #endif  //  DD4HEP_HAVE_ALL_PARSERS
-#endif  /* DD4HEP_GEOMETRY_CONDITIONINTERNA_H    */
+#endif  /* DD4HEP_CONDITIONS_CONDITIONINTERNA_H    */

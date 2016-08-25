@@ -63,6 +63,11 @@ namespace DD4hep {
      */
     class ConditionUpdateCall {
     public:
+      /**
+       *  \author  M.Frank
+       *  \version 1.0
+       *  \ingroup DD4HEP_CONDITIONS
+       */
       struct Context {
         const ConditionResolver&   resolver;
         const ConditionDependency& dependency;
@@ -200,6 +205,6 @@ namespace DD4hep {
       return this->condition(key_value);
     }
 
-  } /* End namespace Conditions             */
+  } /* End namespace Conditions               */
 } /* End namespace DD4hep                   */
-#endif /* DD4HEP_GEOMETRY_CONDITIONDERIVED_H */
+#endif /* DD4HEP_GEOMETRY_CONDITIONDERIVED_H     */

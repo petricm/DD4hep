@@ -151,8 +151,11 @@ namespace {
         plugins.push_back(std::vector<const char*>());
         plugins.back().push_back(argv[++i]);
         for (++i; i < argc; ++i) {
-          if (argv[i][0] == '-') {
+          if (strncmp(argv[i], "-plugin", 5) == 0) {
             --i;
+            break;
+          }
+          if (strncmp(argv[i], "-end-plugin", 4) == 0) {
             break;
           }
           plugins.back().push_back(argv[i]);
