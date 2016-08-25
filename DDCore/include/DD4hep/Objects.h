@@ -30,6 +30,10 @@ class TGeoTranslation;
 class TGeoPhysicalNode;
 class TGeoIdentity;
 
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"  // Code that causes warning goes here
+#endif
 // ROOT include files
 #include "Math/EulerAngles.h"
 #include "Math/Rotation3D.h"
@@ -42,6 +46,9 @@ class TGeoIdentity;
 #include "Math/Vector3D.h"
 #include "Math/VectorUtil.h"
 #include "TGeoPhysicalNode.h"
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 
 // C/C++ include files
 #include <cmath>
@@ -421,6 +428,11 @@ namespace DD4hep {
 #endif
       /// Constructor to be used when reading the already parsed DOM tree
       template <typename Q> LimitSet(const Handle<Q>& e) : Handle<LimitSetObject>(e) {}
+      /// Assignment operator
+      LimitSet& operator=(const LimitSet& c) {
+        m_element = c.m_element;
+        return *this;
+      }
       /// Constructor to be used when creating a new object
       LimitSet(const std::string& name);
       /// Add new limit. Returns true if the new limit was added, false if it already existed.
@@ -451,6 +463,11 @@ namespace DD4hep {
       template <typename Q> Region(const Handle<Q>& e) : Handle<Object>(e) {}
       /// Constructor to be used when creating a new object
       Region(const std::string& name);
+      /// Assignment operator
+      Region& operator=(const Region& c) {
+        m_element = c.m_element;
+        return *this;
+      }
 
       Region& setStoreSecondaries(bool value);
       Region& setThreshold(double value);
