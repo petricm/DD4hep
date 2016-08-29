@@ -27,6 +27,9 @@ namespace DD4hep {
 
     class LayeringExtensionImpl : public LayeringExtension {
     public:
+      /// Shortcut to use geometrical positions
+      typedef Geometry::Position Position;
+
       /// Default constructor
       LayeringExtensionImpl();
 
