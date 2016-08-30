@@ -37,6 +37,7 @@ namespace DD4hep {
     public:
       struct UserContext {
         UserContext() {}
+        UserContext(const UserContext&) {}
         virtual ~UserContext() {}
       };
 
@@ -72,8 +73,10 @@ namespace DD4hep {
       UriReader::UserContext* m_context;
 
     public:
-      /// Default constructor
+      /// Default initializing constructor
       UriContextReader(UriReader* reader, UriReader::UserContext* ctxt);
+      /// Copy constructor
+      UriContextReader(const UriContextReader& copy);
       /// Default destructor
       virtual ~UriContextReader();
       /// Access to local context
