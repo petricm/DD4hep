@@ -611,6 +611,8 @@ namespace DD4hep {
 
       /// Constructor from XmlElement handle
       Element(const Handle_t& e) : m_element(e) {}
+      /// Constructor from XmlElement handle
+      Element(const Element& e) : m_element(e.m_element) {}
       /// Constructor from DOM document entity
       Element(const Document& document, const XmlChar* type);
       /// Access the hosting document handle of this DOM element
