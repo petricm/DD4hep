@@ -255,37 +255,49 @@ namespace DD4hep {
   public:
     M& object;
     DestroyObjects(M& m) : object(m) {}
-    ~DestroyObjects() { object.clear(); }
     void operator()(std::pair<typename M::key_type, typename M::mapped_type> p) const {
       DestroyObject<typename M::mapped_type>()(p.second);
     }
     void operator()() const {
       if (!object.empty())
         for_each(object.begin(), object.end(), (*this));
+      object.clear();
     }
   };
-  template <typename M> DestroyObjects<M> destroyObjects(M& m) { return DestroyObjects<M>(m); }
-  template <typename M> DestroyObjects<M> destroy2nd(M& m) { return DestroyObjects<M>(m); }
+  template <typename M> void destroyObjects(M& m) {
+    DestroyObjects<M> del(m);
+    del();
+  }
+  template <typename M> DestroyObjects<M> destroy2nd(M& m) {
+    DestroyObjects<M> del(m);
+    del();
+  }
 
   /// map Functor to delete objects from heap
   template <typename M> class DestroyFirst {
   public:
     M& object;
     DestroyFirst(M& m) : object(m) {}
-    ~DestroyFirst() { object.clear(); }
     void operator()(std::pair<typename M::key_type, typename M::mapped_type> p) const {
       DestroyObject<typename M::key_type>()(p.first);
     }
     void operator()() const {
       if (!object.empty())
         for_each(object.begin(), object.end(), (*this));
+      object.clear();
     }
   };
-  template <typename M> DestroyFirst<M> destroyFirst(M& m) { return DestroyFirst<M>(m); }
-  template <typename M> DestroyFirst<M> destroy1st(M& m) { return DestroyFirst<M>(m); }
+  template <typename M> void destroyFirst(M& m) {
+    DestroyFirst<M> del(m);
+    del();
+  }
+  template <typename M> void destroy1st(M& m) {
+    DestroyFirst<M> del(m);
+    del();
+  }
 
   /// Helper to delete objects from heap and reset the pointer. Saves many many lines of code
-  template <typename T> inline void releasePtr(T*& p) {
+  template <typename T> inline void releasePtr(T& p) {
     if (0 != p)
       p->release();
     p = 0;
@@ -301,20 +313,26 @@ namespace DD4hep {
   public:
     M& object;
     ReleaseObjects(M& m) : object(m) {}
-    ~ReleaseObjects() { object.clear(); }
     void operator()(std::pair<typename M::key_type, typename M::mapped_type> p) const {
       ReleaseObject<typename M::mapped_type>()(p.second);
     }
     void operator()() const {
       if (!object.empty())
         for_each(object.begin(), object.end(), (*this));
+      object.clear();
     }
   };
   template <typename M> ReleaseObject<typename M::value_type> releaseObject(M&) {
     return ReleaseObject<typename M::value_type>();
   }
-  template <typename M> ReleaseObjects<M> releaseObjects(M& m) { return ReleaseObjects<M>(m); }
-  template <typename M> ReleaseObjects<M> release2nd(M& m) { return ReleaseObjects<M>(m); }
+  template <typename M> void releaseObjects(M& m) {
+    ReleaseObjects<M> rel(m);
+    rel();
+  }
+  template <typename M> void release2nd(M& m) {
+    ReleaseObjects<M> rel(m);
+    rel();
+  }
 
   /// Functor to delete objects from heap and reset the pointer
   template <typename T> class ReferenceObject {

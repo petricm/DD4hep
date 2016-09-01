@@ -54,13 +54,13 @@ namespace DD4hep {
 
     /// The data class behind a conditions manager handle
     /**
-       *  For convenience, the class definition is here.
-       *  See ConditionsManager.cpp for the implementation.
-       *
-       *  \author  M.Frank
-       *  \version 1.0
-       *  \ingroup DD4HEP_CONDITIONS
-       */
+     *  For convenience, the class definition is here.
+     *  See ConditionsManager.cpp for the implementation.
+     *
+     *  \author  M.Frank
+     *  \version 1.0
+     *  \ingroup DD4HEP_CONDITIONS
+     */
     class ConditionsManagerObject : public NamedObject, public PropertyConfigurable, public ObjectExtensions {
       friend class DD4hep::Conditions::ConditionsPool;
       friend class DD4hep::Conditions::ConditionsDataLoader;
@@ -156,8 +156,8 @@ namespace DD4hep {
 
       /// Register new IOV type if it does not (yet) exist.
       /** Returns (false,pointer) if IOV existed and
-	   *  (true,pointer) if new IOV was registered to the manager.
-	   */
+       *  (true,pointer) if new IOV was registered to the manager.
+       */
       std::pair<bool, const IOVType*> registerIOVType(size_t iov_type, const std::string& iov_name);
 
       /// Access IOV by its type
@@ -198,14 +198,14 @@ namespace DD4hep {
 
       /// Push all pending updates to the conditions store.
       /** Note:
-	   *  This does not yet make the new conditions availible to the clients
-	   */
+       *  This does not yet make the new conditions availible to the clients
+       */
       void pushUpdates();
 
       /// Register a new managed condition.
       /** The condition is created externally by the user.
-	   *  Lengthy and tedious procedure.
-	   */
+       *  Lengthy and tedious procedure.
+       */
       void registerCondition(Condition c);
 
       /// Retrieve a condition set given a Detector Element and the conditions name according to their validity

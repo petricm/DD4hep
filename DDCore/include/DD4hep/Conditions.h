@@ -88,7 +88,14 @@ namespace DD4hep {
         NO_NAME       = 1 << 20,
         NONE
       };
-      enum ConditionState { INACTIVE = 0, ACTIVE = 1 << 0, CHECKED = 1 << 2, DERIVED = 1 << 3, USER_FLAGS_FIRST = 1 << 10 };
+      enum ConditionState {
+        INACTIVE         = 0,
+        ACTIVE           = 1 << 0,
+        CHECKED          = 1 << 2,
+        DERIVED          = 1 << 3,
+        USER_FLAGS_FIRST = 1 << 10,
+        USER_FLAGS_LAST  = 1 << 31
+      };
 
       /// Abstract base for processing callbacks
       /**
@@ -109,7 +116,7 @@ namespace DD4hep {
       Condition(Object* p);
       /// Constructor to be used when reading the already parsed object
       template <typename Q> Condition(const Handle<Q>& e) : Handle<Object>(e) {}
-      /// Initializing constructor
+      /// Initializing constructor for a pure, undecorated conditions object
       Condition(const std::string& name, const std::string& type);
       /// Assignment operator
       Condition& operator=(const Condition& c);

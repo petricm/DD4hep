@@ -117,6 +117,10 @@ namespace DD4hep {
       int combineHits;
       /// Flag to encode detector types
       unsigned int typeFlag;
+      /// Hierarchical level within the detector description
+      int level;
+      /// Access hash key of this detector element (Only valid once geometry is closed!)
+      unsigned int key;
       /// Full path to this detector element. May be invalid
       std::string path;
       /// The path to the placement of the detector element (if placed)

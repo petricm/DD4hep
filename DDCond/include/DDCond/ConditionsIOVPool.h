@@ -42,6 +42,8 @@ namespace DD4hep {
     public:
       typedef ConditionsPool* Element;
       typedef std::map<IOV::Key, Element> Elements;
+
+      /// Container of IOV dependent conditions pools
       Elements elements;
 
     public:

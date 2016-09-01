@@ -19,6 +19,7 @@
 #include "DD4hep/Conditions.h"
 #include "DD4hep/Detector.h"
 #include "DD4hep/Memory.h"
+#include "DDCond/ConditionsDependencyCollection.h"
 
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
@@ -47,9 +48,9 @@ namespace DD4hep {
       typedef ConditionsManagerObject Object;
       typedef ConditionsDataLoader    Loader;
       typedef std::vector<IOVType>    IOVTypes;
-      typedef std::map<IOVType*, Container>                TypeConditions;
-      typedef std::map<DetElement, Container>              DetectorConditions;
-      typedef std::map<unsigned int, ConditionDependency*> Dependencies;
+      typedef std::map<IOVType*, Container>   TypeConditions;
+      typedef std::map<DetElement, Container> DetectorConditions;
+      typedef ConditionsDependencyCollection Dependencies;
 
     public:
       /// Static accessor if installed as an extension
@@ -132,4 +133,4 @@ namespace DD4hep {
 
   } /* End namespace Geometry                 */
 } /* End namespace DD4hep                   */
-#endif /* DDCOND_CONDITIONSMANAGER_H    */
+#endif /* DDCOND_CONDITIONSMANAGER_H             */
