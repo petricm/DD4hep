@@ -30,9 +30,15 @@
 //==============================================================================
 // Boost:
 //==============================================================================
+#ifdef __GNUC__
+#undef __GNUC__
+#include <boost/spirit/include/qi.hpp>
+#define __GNUC__
+#else
+#include <boost/spirit/include/qi.hpp>
+#endif
 #include <boost/fusion/include/std_pair.hpp>
 #include <boost/fusion/include/unused.hpp>
-#include <boost/spirit/include/qi.hpp>
 
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
