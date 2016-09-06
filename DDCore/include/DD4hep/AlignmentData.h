@@ -38,6 +38,7 @@ namespace DD4hep {
 
     // Forward declarations
     class Alignment;
+    class AlignmentCondition;
 
     /// Class describing an condition to re-adjust an alignment
     /**
@@ -115,6 +116,8 @@ namespace DD4hep {
       DetElement detector;
       /// The subdetector placement corresponding to the actual detector element's volume
       PlacedVolume placement;
+      /// Reference to the original condition object (May not be present!)
+      Ref_t condition;
       /// Flag to remember internally calculated quatities
       mutable BitMask flag;
       /// Magic word to verify object if necessary
@@ -131,7 +134,8 @@ namespace DD4hep {
       AlignmentData& operator=(const AlignmentData& copy);
       /// Data accessor for decorator
       inline AlignmentData& data() { return *this; }
-
+      /// Accessor if a conditions object is behind
+      bool hasCondition() const { return condition.isValid(); }
       /// Access the ideal/nominal alignment/placement matrix
       Alignment nominal() const;
       /// Create cached matrix to transform to world coordinates
