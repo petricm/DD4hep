@@ -61,7 +61,7 @@ namespace DD4hep {
      *
      *  Note:
      *  Conditions may be shared between several DetElement objects.
-     *  Hence, the back-link to the DetElemetn structure cannot be
+     *  Hence, the back-link to the DetElement structure cannot be
      *  set - it would be ambiguous.
      *
      *  \author  M.Frank
@@ -89,11 +89,16 @@ namespace DD4hep {
         NONE
       };
       enum ConditionState {
-        INACTIVE         = 0,
-        ACTIVE           = 1 << 0,
-        CHECKED          = 1 << 2,
-        DERIVED          = 1 << 3,
-        USER_FLAGS_FIRST = 1 << 10,
+        INACTIVE    = 0,
+        ACTIVE      = 1 << 0,
+        CHECKED     = 1 << 2,
+        DERIVED     = 1 << 3,
+        TEMPERATURE = 1 << 4,
+        PRESSURE    = 1 << 5,
+        ALIGNMENT   = 1 << 6,
+        // Keep bit 7-15 for other generic types
+        // Bit 16-31 is reserved for user classifications
+        USER_FLAGS_FIRST = 1 << 16,
         USER_FLAGS_LAST  = 1 << 31
       };
 
@@ -168,6 +173,8 @@ namespace DD4hep {
       template <typename T> T& get();
       /// Generic getter (const version). Specify the exact type, not a polymorph type
       template <typename T> const T& get() const;
+      /// Check if object is already bound....
+      bool is_bound() const { return isValid() ? data().is_bound() : false; }
     };
 
     /// Initializing constructor
