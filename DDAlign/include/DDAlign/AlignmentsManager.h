@@ -35,6 +35,7 @@ namespace DD4hep {
 
     /// Forward declarations
     class AlignContext;
+    class AlignmentsManager;
     class AlignmentsManagerObject;
 
     /// Alignment manager instance to handle alignment dependencies
