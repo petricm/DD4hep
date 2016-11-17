@@ -582,7 +582,7 @@ bool findVolume( PlacedVolume pv, Volume theVol, std::list<PlacedVolume>& volLis
 
     if ( !node ) {
       //	  std::cout <<  " *** findVolume: Invalid  placement:  - node pointer Null for volume:  " << pv.name() <<
-      //std::endl ;
+      // std::endl ;
 
       throw std::runtime_error( "*** findVolume: Invalid  placement:  - node pointer Null ! " +
                                 std::string( pv.name() ) );

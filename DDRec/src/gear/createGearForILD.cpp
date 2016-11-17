@@ -384,7 +384,9 @@ static long createGearForILD( LCDD& lcdd, int /*argc*/, char** /*argv*/ ) {
         // 					     l.cellSize0/dd4hep::mm, l.cellSize1/dd4hep::mm, l.absorberThickness/dd4hep::mm ) ;
         // }else{
         //   gearCalo->layerLayout().addLayer(                             l.thickness/dd4hep::mm ,
-        // 								    l.cellSize0/dd4hep::mm, l.cellSize1/dd4hep::mm, l.absorberThickness/dd4hep::mm )
+        // 								    l.cellSize0/dd4hep::mm, l.cellSize1/dd4hep::mm,
+        // l.absorberThickness/dd4hep::mm
+        // )
         // ;
         // }
       }
@@ -404,7 +406,7 @@ static long createGearForILD( LCDD& lcdd, int /*argc*/, char** /*argv*/ ) {
           Segmentation      seg     = readOut.segmentation();
 
           //	    DDSegmentation::DoubleVecParameter rPar =  dynamic_cast<DDSegmentation::DoubleVecParameter>(
-          //seg.parameter("grid_r_values"));
+          // seg.parameter("grid_r_values"));
           DDSegmentation::DoubleVecParameter pPar =
               dynamic_cast<DDSegmentation::DoubleVecParameter>( seg.parameter( "grid_phi_values" ) );
           DDSegmentation::DoubleParameter oPPar =

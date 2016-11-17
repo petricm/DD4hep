@@ -54,10 +54,10 @@ struct MyDetExtension {
 typedef MyDetExtension DetectorExtension;
 
 static Ref_t create_detector( LCDD& lcdd, xml_h e, SensitiveDetector sens ) {
-  xml_det_t x_det = e;                // xml-detelemnt of the detector taken as an argument
-  string det_name = x_det.nameStr();  // det_name is the name of the xml-detelement
-  Assembly assembly( det_name );
-  int      detectors_id = x_det.id();
+  xml_det_t x_det    = e;                // xml-detelemnt of the detector taken as an argument
+  string    det_name = x_det.nameStr();  // det_name is the name of the xml-detelement
+  Assembly  assembly( det_name );
+  int       detectors_id = x_det.id();
 
   DetElement sdet(
       det_name,

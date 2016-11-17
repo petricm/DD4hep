@@ -40,7 +40,7 @@ std::ostream& operator<<( std::ostream& io, const ZPlanarData& d ) {
      << std::endl;
 
   //"ladderNumber phi0 sensorsPerLadder lengthSensor distanceSupport thicknessSupport offsetSupport widthSupport
-  //zHalfSupport distanceSensitive thicknessSensitive offsetSensitive widthSensitive zHalfSensitive"  <<  std::endl ;
+  // zHalfSupport distanceSensitive thicknessSensitive offsetSensitive widthSensitive zHalfSensitive"  <<  std::endl ;
 
   for ( unsigned i = 0, N = layers.size(); i < N; ++i ) {
     ZPlanarData::LayerLayout l = layers[ i ];
@@ -70,8 +70,8 @@ std::ostream& operator<<( std::ostream& io, const ZDiskPetalsData& d ) {
      << std::endl;
 
   //"petalHalfAngle alphaPetal zPosition petalNumber sensorsPerPetal DoubleSided Pixel phi0 zOffsetSupport
-  //distanceSupport thicknessSupport widthInnerSupport widthOuterSupport lengthSupport zOffsetSensitive
-  //distanceSensitive thicknessSensitive widthInnerSensitive widthOuterSensitive lengthSensitive" << std::endl ;
+  // distanceSupport thicknessSupport widthInnerSupport widthOuterSupport lengthSupport zOffsetSensitive
+  // distanceSensitive thicknessSensitive widthInnerSensitive widthOuterSensitive lengthSensitive" << std::endl ;
 
   for ( unsigned i = 0, N = layers.size(); i < N; ++i ) {
     ZDiskPetalsData::LayerLayout l = layers[ i ];

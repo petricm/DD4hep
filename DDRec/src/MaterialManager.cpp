@@ -88,7 +88,7 @@ const MaterialVec& MaterialManager::materialsBetween( const DDSurfaces::Vector3D
 #endif
       //	printf( " --  step length :  %1.8e %1.8e   %1.8e   %1.8e   %1.8e   %1.8e   %1.8e   - %s \n" , length ,
       //		position[0], position[1], position[2], previouspos[0], previouspos[1], previouspos[2] ,
-      //node1->GetMedium()->GetMaterial()->GetName() ) ;
+      // node1->GetMedium()->GetMaterial()->GetName() ) ;
 
       DDSurfaces::Vector3D posV( position );
 
