@@ -14,9 +14,9 @@ namespace DD4hep {
 namespace DDRec {
 
 class CalorimeterExtension {
-public:
-	CalorimeterExtension();
-	virtual ~CalorimeterExtension();
+ public:
+  CalorimeterExtension();
+  virtual ~CalorimeterExtension();
 };
 
 } /* namespace DDRec */

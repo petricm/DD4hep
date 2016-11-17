@@ -16,14 +16,14 @@
 namespace DD4hep {
 namespace DDRec {
 
-class Calorimeter: public LayeredSubdetector, public Subdetector {
-public:
-	Calorimeter(const Geometry::DetElement& det) :
-		Geometry::DetElement(det), LayeredSubdetector(det), Subdetector(det) {
+class Calorimeter : public LayeredSubdetector, public Subdetector {
+ public:
+  Calorimeter( const Geometry::DetElement& det )
+      : Geometry::DetElement( det ), LayeredSubdetector( det ), Subdetector( det ) {
+  }
 
-	}
-
-	virtual ~Calorimeter() {}
+  virtual ~Calorimeter() {
+  }
 };
 
 } /* namespace DDRec */

@@ -14,9 +14,9 @@ namespace DD4hep {
 namespace DDRec {
 
 class TrackerExtension {
-public:
-	TrackerExtension();
-	virtual ~TrackerExtension();
+ public:
+  TrackerExtension();
+  virtual ~TrackerExtension();
 };
 
 } /* namespace DDRec */

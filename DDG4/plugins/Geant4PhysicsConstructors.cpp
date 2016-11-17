@@ -30,16 +30,16 @@
 // ==================================================================================
 
 // Geant4 physics lists
-#include "G4Version.hh"
 #include "G4DecayPhysics.hh"
+#include "G4Version.hh"
 
 // ==================================================================================
-#if G4VERSION_NUMBER>=960 and G4VERSION_NUMBER<1000
-  #include "Geant4.9.PhysicsConstructors.h"
+#if G4VERSION_NUMBER >= 960 and G4VERSION_NUMBER < 1000
+#include "Geant4.9.PhysicsConstructors.h"
 // ==================================================================================
-#elif G4VERSION_NUMBER>=1000
-  #include "Geant4.10.PhysicsConstructors.h"
+#elif G4VERSION_NUMBER >= 1000
+#include "Geant4.10.PhysicsConstructors.h"
 // ==================================================================================
 #else
-  #error "Unsupported Geant4 version "
-#endif  /*  G4VERSION_NUMBER>=1000  */
+#error "Unsupported Geant4 version "
+#endif /*  G4VERSION_NUMBER>=1000  */

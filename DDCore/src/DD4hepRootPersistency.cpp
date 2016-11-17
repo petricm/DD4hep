@@ -13,53 +13,51 @@
 //==========================================================================
 
 // Framework include files
-#include "DD4hep/Printout.h"
 #include "DD4hep/DD4hepRootPersistency.h"
+#include "DD4hep/Printout.h"
 
 // ROOT include files
 #include "TFile.h"
 
-ClassImp(DD4hepRootPersistency)
+ClassImp( DD4hepRootPersistency )
 
-typedef DD4hep::Geometry::LCDD LCDD;
+    typedef DD4hep::Geometry::LCDD LCDD;
 typedef DD4hep::Geometry::LCDDData LCDDData;
 
-int DD4hepRootPersistency::save(DD4hep::Geometry::LCDD& lcdd, const char* fname, const char* instance)   {
-  TFile* f = TFile::Open(fname,"RECREATE");
-  if ( f && !f->IsZombie()) {
+int DD4hepRootPersistency::save( DD4hep::Geometry::LCDD& lcdd, const char* fname, const char* instance ) {
+  TFile* f = TFile::Open( fname, "RECREATE" );
+  if ( f && !f->IsZombie() ) {
     DD4hepRootPersistency* persist = new DD4hepRootPersistency();
-    persist->adoptData(dynamic_cast<LCDDData&>(lcdd));
-    int nBytes = persist->Write(instance);
+    persist->adoptData( dynamic_cast<LCDDData&>( lcdd ) );
+    int nBytes = persist->Write( instance );
     f->Close();
-    DD4hep::printout(DD4hep::ALWAYS,"DD4hepRootPersistency",
-                     "+++ Wrote %d Bytes of geometry data '%s' to '%s'.",
-                     nBytes, instance, fname);
+    DD4hep::printout( DD4hep::ALWAYS, "DD4hepRootPersistency", "+++ Wrote %d Bytes of geometry data '%s' to '%s'.",
+                      nBytes, instance, fname );
     delete f;
     delete persist;
     return nBytes;
   }
-  DD4hep::printout(DD4hep::ERROR,"DD4hepRootPersistency","+++ Cannot open file '%s'.",fname);
+  DD4hep::printout( DD4hep::ERROR, "DD4hepRootPersistency", "+++ Cannot open file '%s'.", fname );
   return 0;
 }
 
-int DD4hepRootPersistency::load(DD4hep::Geometry::LCDD& lcdd, const char* fname, const char* instance)  {
-  TFile* f = TFile::Open(fname);
-  if ( f && !f->IsZombie()) {
-    DD4hepRootPersistency* persist = (DD4hepRootPersistency*)f->Get(instance);
-    if ( persist )   {
-      LCDDData& data = dynamic_cast<LCDDData&>(lcdd);
-      data.adoptData(*persist);
+int DD4hepRootPersistency::load( DD4hep::Geometry::LCDD& lcdd, const char* fname, const char* instance ) {
+  TFile* f = TFile::Open( fname );
+  if ( f && !f->IsZombie() ) {
+    DD4hepRootPersistency* persist = (DD4hepRootPersistency*)f->Get( instance );
+    if ( persist ) {
+      LCDDData& data = dynamic_cast<LCDDData&>( lcdd );
+      data.adoptData( *persist );
       persist->clearData();
       delete persist;
       return 1;
     }
-    DD4hep::printout(DD4hep::ERROR,"DD4hepRootPersistency",
-                     "+++ Cannot Cannot load instance '%s' from file '%s'.",
-                     instance, fname);
+    DD4hep::printout( DD4hep::ERROR, "DD4hepRootPersistency", "+++ Cannot Cannot load instance '%s' from file '%s'.",
+                      instance, fname );
     f->ls();
     delete f;
     return 0;
   }
-  DD4hep::printout(DD4hep::ERROR,"DD4hepRootPersistency","+++ Cannot open file '%s'.",fname);
+  DD4hep::printout( DD4hep::ERROR, "DD4hepRootPersistency", "+++ Cannot open file '%s'.", fname );
   return 0;
 }

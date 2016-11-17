@@ -14,8 +14,8 @@
 #ifndef DD4HEP_XML_CONFIG_H
 #define DD4HEP_XML_CONFIG_H
 
-#if      defined(DD4HEP_USE_TINYXML)
-#define  __TIXML__
+#if defined( DD4HEP_USE_TINYXML )
+#define __TIXML__
 #endif
 
 // C/C++ include files
@@ -25,29 +25,28 @@
  *
  */
 
-
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /// Namespace for the AIDA detector description toolkit supporting XML utilities
-  namespace XML {
-    class XmlElement;
-    class XmlDocument;
-    class XmlNodeList;
-    class XmlNode;
-    class XmlAttr;
-    typedef std::size_t XmlSize_t;
-#ifdef  __TIXML__
-    typedef char XmlChar;
+/// Namespace for the AIDA detector description toolkit supporting XML utilities
+namespace XML {
+class XmlElement;
+class XmlDocument;
+class XmlNodeList;
+class XmlNode;
+class XmlAttr;
+typedef std::size_t XmlSize_t;
+#ifdef __TIXML__
+typedef char XmlChar;
 #else
-    typedef unsigned short XmlChar;
+typedef unsigned short XmlChar;
 #endif
-  }
+}
 }
 
-#ifdef  __TIXML__
+#ifdef __TIXML__
 #define XML_IMPLEMENTATION_TYPE " TinyXML DOM mini-parser   "
-#else   // Xerces-C
+#else  // Xerces-C
 #define XML_IMPLEMENTATION_TYPE " Apache Xerces-C DOM Parser"
 #endif  // __TIXML__
-#endif // DD4HEP_XML_CONFIG_H
+#endif  // DD4HEP_XML_CONFIG_H

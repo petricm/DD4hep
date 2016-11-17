@@ -14,10 +14,12 @@
 namespace DD4hep {
 namespace Geometry {
 
-class SectorBarrelCalorimeter: public BarrelDetector, public PolyhedralCalorimeter {
-public:
-	SectorBarrelCalorimeter(const DetElement& e) : DetElement(e), BarrelDetector(e), PolyhedralCalorimeter(e) {}
-	virtual ~SectorBarrelCalorimeter() {}
+class SectorBarrelCalorimeter : public BarrelDetector, public PolyhedralCalorimeter {
+ public:
+  SectorBarrelCalorimeter( const DetElement& e ) : DetElement( e ), BarrelDetector( e ), PolyhedralCalorimeter( e ) {
+  }
+  virtual ~SectorBarrelCalorimeter() {
+  }
 };
 
 } /* namespace Geometry */

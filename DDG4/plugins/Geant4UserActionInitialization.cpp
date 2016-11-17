@@ -44,7 +44,7 @@ namespace DD4hep {
     };
   }    // End namespace Simulation
 }      // End namespace DD4hep
-#endif // DD4HEP_DDG4_GEANT4USERACTIONINITIALIZATION_H
+#endif  // DD4HEP_DDG4_GEANT4USERACTIONINITIALIZATION_H
 
 
 //  AIDA Detector description implementation for LCD

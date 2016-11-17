@@ -13,9 +13,9 @@
 //==========================================================================
 
 // Framework include files
-#include "DD4hep/Printout.h"
-#include "DD4hep/InstanceCount.h"
 #include "DDG4/Geant4Vertex.h"
+#include "DD4hep/InstanceCount.h"
+#include "DD4hep/Printout.h"
 
 using namespace DD4hep;
 using namespace DD4hep::Simulation;
@@ -25,43 +25,41 @@ VertexExtension::~VertexExtension() {
 }
 
 /// Copy constructor
-Geant4Vertex::Geant4Vertex(const Geant4Vertex& c)
-  : ref(1), mask(c.mask), x(c.x), y(c.y), z(c.z), time(c.time), out(c.out), in(c.in)
-{
-  InstanceCount::increment(this);
+Geant4Vertex::Geant4Vertex( const Geant4Vertex& c )
+    : ref( 1 ), mask( c.mask ), x( c.x ), y( c.y ), z( c.z ), time( c.time ), out( c.out ), in( c.in ) {
+  InstanceCount::increment( this );
 }
 
 /// Default constructor
-Geant4Vertex::Geant4Vertex()
-  : ref(1), mask(0), x(0), y(0), z(0), time(0)
-{
-  InstanceCount::increment(this);
+Geant4Vertex::Geant4Vertex() : ref( 1 ), mask( 0 ), x( 0 ), y( 0 ), z( 0 ), time( 0 ) {
+  InstanceCount::increment( this );
 }
 
 /// Default destructor
-Geant4Vertex::~Geant4Vertex()  {
-  InstanceCount::decrement(this);
+Geant4Vertex::~Geant4Vertex() {
+  InstanceCount::decrement( this );
 }
 
 /// Assignment operator
-Geant4Vertex& Geant4Vertex::operator=(const Geant4Vertex& c)   {
-  if ( this != &c )  {
+Geant4Vertex& Geant4Vertex::operator=( const Geant4Vertex& c ) {
+  if ( this != &c ) {
     mask = c.mask;
-    x = c.x;
-    y = c.y;
-    z = c.z;
+    x    = c.x;
+    y    = c.y;
+    z    = c.z;
     time = c.time;
-    in = c.in;
-    out = c.out;
+    in   = c.in;
+    out  = c.out;
   }
   return *this;
 }
 
-Geant4Vertex* Geant4Vertex::addRef()   {
+Geant4Vertex* Geant4Vertex::addRef() {
   ++ref;
   return this;
 }
 
-void Geant4Vertex::release()  {
-  if ( --ref <= 0 ) delete this;
+void Geant4Vertex::release() {
+  if ( --ref <= 0 )
+    delete this;
 }

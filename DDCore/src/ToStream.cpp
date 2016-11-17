@@ -13,7 +13,7 @@
 //==========================================================================
 
 // Framework include files
-#if defined(DD4HEP_PARSER_HEADER)
+#if defined( DD4HEP_PARSER_HEADER )
 
 #define DD4HEP_NEED_EVALUATOR
 // This is the case, if the parsers are externalized
@@ -31,39 +31,39 @@
 
 // ============================================================================
 // print XYZ-point
-std::ostream& DD4hep::Utils::toStream(const ROOT::Math::XYZPoint&  obj, std::ostream& s)  {
+std::ostream& DD4hep::Utils::toStream( const ROOT::Math::XYZPoint& obj, std::ostream& s ) {
   s << "( ";
-  toStream(obj.X () , s );
+  toStream( obj.X(), s );
   s << " , ";
-  toStream(obj.Y () , s );
+  toStream( obj.Y(), s );
   s << " , ";
-  toStream(obj.Z () , s );
+  toStream( obj.Z(), s );
   s << " )";
   return s;
 }
 // ============================================================================
 // print XYZ-vector
-std::ostream& DD4hep::Utils::toStream(const ROOT::Math::XYZVector& obj, std::ostream& s)  {
+std::ostream& DD4hep::Utils::toStream( const ROOT::Math::XYZVector& obj, std::ostream& s ) {
   s << "( ";
-  toStream(obj.X () , s );
+  toStream( obj.X(), s );
   s << " , ";
-  toStream(obj.Y () , s );
+  toStream( obj.Y(), s );
   s << " , ";
-  toStream(obj.Z () , s );
+  toStream( obj.Z(), s );
   s << " )";
   return s;
 }
 // ============================================================================
 // print LorentzVector
-std::ostream& DD4hep::Utils::toStream(const ROOT::Math::PxPyPzEVector& obj, std::ostream& s){
+std::ostream& DD4hep::Utils::toStream( const ROOT::Math::PxPyPzEVector& obj, std::ostream& s ) {
   s << "( ";
-  toStream(obj.Px () , s , 12 );
+  toStream( obj.Px(), s, 12 );
   s << " , ";
-  toStream(obj.Py () , s , 12 );
+  toStream( obj.Py(), s, 12 );
   s << " , ";
-  toStream(obj.Pz () , s , 13 );
+  toStream( obj.Pz(), s, 13 );
   s << " , ";
-  toStream(obj.E  () , s , 14 );
+  toStream( obj.E(), s, 14 );
   s << " )";
   return s;
 }

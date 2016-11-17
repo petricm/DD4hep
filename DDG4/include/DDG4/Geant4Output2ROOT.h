@@ -24,54 +24,55 @@ class TBranch;
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  class ComponentCast;
+class ComponentCast;
 
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace Simulation {
+/// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
+namespace Simulation {
 
-    /// Class to output Geant4 event data to ROOT files
-    /**
-     *  \author  M.Frank
-     *  \version 1.0
-     *  \ingroup DD4HEP_SIMULATION
-     */
-    class Geant4Output2ROOT: public Geant4OutputAction {
-    protected:
-      typedef std::map<std::string, TBranch*> Branches;
-      typedef std::map<std::string, TTree*> Sections;
-      /// Known file sections
-      Sections m_sections;
-      /// Branches in the event tree
-      Branches m_branches;
-      /// name of the event tree
-      std::string m_section;
-      /// Reference to the ROOT file to open
-      TFile* m_file;
-      /// Reference to the event data tree
-      TTree* m_tree;
-      /// Flag if Monte-Carlo truth should be followed and checked
-      bool m_handleMCTruth;
-    public:
-      /// Standard constructor
-      Geant4Output2ROOT(Geant4Context* context, const std::string& nam);
-      /// Default destructor
-      virtual ~Geant4Output2ROOT();
-      /// Create/access tree by name for non collection user data
-      TTree* section(const std::string& nam);
-      /// Fill single EVENT branch entry (Geant4 collection data)
-      int fill(const std::string& nam, const ComponentCast& type, void* ptr);
+/// Class to output Geant4 event data to ROOT files
+/**
+ *  \author  M.Frank
+ *  \version 1.0
+ *  \ingroup DD4HEP_SIMULATION
+ */
+class Geant4Output2ROOT : public Geant4OutputAction {
+ protected:
+  typedef std::map<std::string, TBranch*> Branches;
+  typedef std::map<std::string, TTree*>   Sections;
+  /// Known file sections
+  Sections m_sections;
+  /// Branches in the event tree
+  Branches m_branches;
+  /// name of the event tree
+  std::string m_section;
+  /// Reference to the ROOT file to open
+  TFile* m_file;
+  /// Reference to the event data tree
+  TTree* m_tree;
+  /// Flag if Monte-Carlo truth should be followed and checked
+  bool m_handleMCTruth;
 
-      /// Callback to store the Geant4 run information
-      virtual void beginRun(const G4Run* run);
-      /// Callback to store each Geant4 hit collection
-      virtual void saveCollection(OutputContext<G4Event>& ctxt, G4VHitsCollection* collection);
-      /// Callback to store the Geant4 event
-      virtual void saveEvent(OutputContext<G4Event>& ctxt);
+ public:
+  /// Standard constructor
+  Geant4Output2ROOT( Geant4Context* context, const std::string& nam );
+  /// Default destructor
+  virtual ~Geant4Output2ROOT();
+  /// Create/access tree by name for non collection user data
+  TTree* section( const std::string& nam );
+  /// Fill single EVENT branch entry (Geant4 collection data)
+  int fill( const std::string& nam, const ComponentCast& type, void* ptr );
 
-      /// Commit data at end of filling procedure
-      virtual void commit(OutputContext<G4Event>& ctxt);
-    };
+  /// Callback to store the Geant4 run information
+  virtual void beginRun( const G4Run* run );
+  /// Callback to store each Geant4 hit collection
+  virtual void saveCollection( OutputContext<G4Event>& ctxt, G4VHitsCollection* collection );
+  /// Callback to store the Geant4 event
+  virtual void saveEvent( OutputContext<G4Event>& ctxt );
 
-  }    // End namespace Simulation
-}      // End namespace DD4hep
-#endif // DD4HEP_DDG4_GEANT4OUTPUT2ROOT_H
+  /// Commit data at end of filling procedure
+  virtual void commit( OutputContext<G4Event>& ctxt );
+};
+
+}  // End namespace Simulation
+}  // End namespace DD4hep
+#endif  // DD4HEP_DDG4_GEANT4OUTPUT2ROOT_H

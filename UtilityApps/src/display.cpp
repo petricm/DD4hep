@@ -16,6 +16,6 @@
 #include "run_plugin.h"
 
 //______________________________________________________________________________
-int main(int argc,char** argv)  {
-  return main_default("DD4hepGeometryDisplay",argc,argv);
+int main( int argc, char** argv ) {
+  return main_default( "DD4hepGeometryDisplay", argc, argv );
 }

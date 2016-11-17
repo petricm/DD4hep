@@ -1,60 +1,60 @@
 
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlAttribute			{};
+class TiXmlAttribute {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlAttributeSet			{};
+class TiXmlAttributeSet {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlBase			{
+class TiXmlBase {
   /// TinyXML class. See http://www.grinninglizard.com/tinyxml
   /** See \see http://www.grinninglizard.com/tinyxml   */
   class Entity {};
 };
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlComment			{};
+class TiXmlComment {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlCursor			{};
+class TiXmlCursor {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlDeclaration			{};
+class TiXmlDeclaration {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlDocument			{};
+class TiXmlDocument {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlElement			{};
+class TiXmlElement {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlHandle			{};
+class TiXmlHandle {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlNode			{};
+class TiXmlNode {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlOutStream			{};
+class TiXmlOutStream {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlParsingData			{};
+class TiXmlParsingData {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlPrinter			{};
+class TiXmlPrinter {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlString			{
+class TiXmlString {
   /// TinyXML class. See http://www.grinninglizard.com/tinyxml
   /** See \see http://www.grinninglizard.com/tinyxml   */
   class Rep {};
 };
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlText			{};
+class TiXmlText {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlUnknown			{};
+class TiXmlUnknown {};
 /// TinyXML class. See http://www.grinninglizard.com/tinyxml
 /** See \see http://www.grinninglizard.com/tinyxml   */
-class TiXmlVisitor		{};
+class TiXmlVisitor {};

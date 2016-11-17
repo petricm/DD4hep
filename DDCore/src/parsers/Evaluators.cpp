@@ -13,7 +13,7 @@
 //==========================================================================
 
 // Framework include files
-#if defined(DD4HEP_PARSER_HEADER)
+#if defined( DD4HEP_PARSER_HEADER )
 
 #define DD4HEP_NEED_EVALUATOR
 // This is the case, if the parsers are externalized
@@ -32,35 +32,39 @@
 #include <stdexcept>
 
 namespace DD4hep {
-  XmlTools::Evaluator& g4Evaluator();
+XmlTools::Evaluator& g4Evaluator();
 }
 namespace {
-  XmlTools::Evaluator& eval(DD4hep::g4Evaluator());
+XmlTools::Evaluator& eval( DD4hep::g4Evaluator() );
 }
 
 //==============================================================================
-namespace DD4hep {  namespace Parsers {
-    template <typename T> T evaluate_string(const std::string& /* value */)   {
-      throw "Bad undefined call";
-    }
+namespace DD4hep {
+namespace Parsers {
+template <typename T>
+T evaluate_string( const std::string& /* value */ ) {
+  throw "Bad undefined call";
+}
 
-    template <> double evaluate_string<double>(const std::string& value)   {
-      double result = eval.evaluate(value.c_str());
-      if (eval.status() != XmlTools::Evaluator::OK) {
-        std::cerr << value << ": ";
-        eval.print_error();
-        throw std::runtime_error("DD4hep::Properties: Severe error during expression evaluation of " + value);
-      }
-      return result;
-    }
-    template <> float evaluate_string<float>(const std::string& value)   {
-      double result = eval.evaluate(value.c_str());
-      if (eval.status() != XmlTools::Evaluator::OK) {
-        std::cerr << value << ": ";
-        eval.print_error();
-        throw std::runtime_error("DD4hep::Properties: Severe error during expression evaluation of " + value);
-      }
-      return (float) result;
-    }
+template <>
+double evaluate_string<double>( const std::string& value ) {
+  double result = eval.evaluate( value.c_str() );
+  if ( eval.status() != XmlTools::Evaluator::OK ) {
+    std::cerr << value << ": ";
+    eval.print_error();
+    throw std::runtime_error( "DD4hep::Properties: Severe error during expression evaluation of " + value );
   }
+  return result;
+}
+template <>
+float evaluate_string<float>( const std::string& value ) {
+  double result = eval.evaluate( value.c_str() );
+  if ( eval.status() != XmlTools::Evaluator::OK ) {
+    std::cerr << value << ": ";
+    eval.print_error();
+    throw std::runtime_error( "DD4hep::Properties: Severe error during expression evaluation of " + value );
+  }
+  return (float)result;
+}
+}
 }

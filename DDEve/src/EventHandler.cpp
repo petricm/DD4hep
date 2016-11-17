@@ -17,23 +17,21 @@
 
 using namespace DD4hep;
 
-ClassImp(EventHandler)
-ClassImp(EventConsumer)
+ClassImp( EventHandler ) ClassImp( EventConsumer )
 
-/// Standard constructor
-EventHandler::EventHandler() : m_hasFile(false), m_hasEvent(false) {
+    /// Standard constructor
+    EventHandler::EventHandler()
+    : m_hasFile( false ), m_hasEvent( false ) {
 }
 
 /// Default destructor
-EventHandler::~EventHandler()   {
+EventHandler::~EventHandler() {
 }
 
 /// Standard constructor
-EventConsumer::EventConsumer()  {
+EventConsumer::EventConsumer() {
 }
 
 /// Default destructor
-EventConsumer::~EventConsumer()   {
+EventConsumer::~EventConsumer() {
 }
-
-

@@ -27,7 +27,6 @@
 
 #include "XML/tinyxml.h"
 
-
 // The goal of the seperate error file is to make the first
 // step towards localization. tinyxml (currently) only supports
 // english error messages, but the could now be translated.
@@ -35,8 +34,7 @@
 // It also cleans up the code a bit.
 //
 
-const char* TiXmlBase::errorString[ TIXML_ERROR_STRING_COUNT ] =
-  {
+const char* TiXmlBase::errorString[ TIXML_ERROR_STRING_COUNT ] = {
     "No error",
     "Error",
     "Failed to open file",
@@ -54,4 +52,4 @@ const char* TiXmlBase::errorString[ TIXML_ERROR_STRING_COUNT ] =
     "Error null (0) or unexpected EOF found in input stream.",
     "Error parsing CDATA.",
     "Error when TiXmlDocument added to document, because TiXmlDocument can only be at the root.",
-  };
+};

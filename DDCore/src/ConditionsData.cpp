@@ -13,67 +13,64 @@
 //==========================================================================
 
 // Framework includes
-#include "DD4hep/Printout.h"
-#include "DD4hep/InstanceCount.h"
 #include "DD4hep/ConditionsData.h"
 #include <sstream>
+#include "DD4hep/InstanceCount.h"
+#include "DD4hep/Printout.h"
 
 using namespace DD4hep::Conditions;
 
 /// print Conditions object
-std::ostream& operator << (std::ostream& s, const AbstractMap& data)   {
+std::ostream& operator<<( std::ostream& s, const AbstractMap& data ) {
   struct _Print {
-    void operator()(const AbstractMap::Params::value_type& obj)  const {
-      const AbstractMap& d= obj.second.get<AbstractMap>();
-      DD4hep::printout(DD4hep::INFO,"Condition","++ %-16s [%d] %-8s -> %s",
-                       obj.first.c_str(), d.classID,
-                       obj.second.dataType().c_str(), 
-                       obj.second.str().c_str());
+    void operator()( const AbstractMap::Params::value_type& obj ) const {
+      const AbstractMap& d = obj.second.get<AbstractMap>();
+      DD4hep::printout( DD4hep::INFO, "Condition", "++ %-16s [%d] %-8s -> %s", obj.first.c_str(), d.classID,
+                        obj.second.dataType().c_str(), obj.second.str().c_str() );
     }
   };
-  if ( !data.params.empty() )  {
-    for_each(data.params.begin(), data.params.end(),_Print());
+  if ( !data.params.empty() ) {
+    for_each( data.params.begin(), data.params.end(), _Print() );
   }
   return s;
 }
 
 /// Default destructor
-ClientData::~ClientData()  {
+ClientData::~ClientData() {
 }
 
 /// Copy constructor
-AbstractMap::AbstractMap(const AbstractMap& c)
-  : clientData(c.clientData), params(c.params), classID(c.classID) 
-{
-  InstanceCount::increment(this);
+AbstractMap::AbstractMap( const AbstractMap& c )
+    : clientData( c.clientData ), params( c.params ), classID( c.classID ) {
+  InstanceCount::increment( this );
 }
 
 /// Default constructor
-AbstractMap::AbstractMap() : clientData(0) {
-  InstanceCount::increment(this);
+AbstractMap::AbstractMap() : clientData( 0 ) {
+  InstanceCount::increment( this );
 }
 
 /// Default destructor
-AbstractMap::~AbstractMap()  {
-  if ( clientData ) clientData->release();
+AbstractMap::~AbstractMap() {
+  if ( clientData )
+    clientData->release();
   clientData = 0;
-  InstanceCount::decrement(this);
+  InstanceCount::decrement( this );
 }
 
 /// Assignment operator
-AbstractMap& AbstractMap::operator=(const AbstractMap& c)  {
-  if ( this != &c )   {
+AbstractMap& AbstractMap::operator=( const AbstractMap& c ) {
+  if ( this != &c ) {
     clientData = c.clientData;
-    params = c.params;
-    classID = c.classID;
+    params     = c.params;
+    classID    = c.classID;
   }
   return *this;
 }
 
 #include "DD4hep/ToStream.h"
 #include "DD4hep/objects/ConditionsInterna.h"
-DD4HEP_DEFINE_CONDITIONS_TYPE_DUMMY(AbstractMap)
+DD4HEP_DEFINE_CONDITIONS_TYPE_DUMMY( AbstractMap )
 
 #include "DD4hep/BasicGrammar_inl.h"
-DD4HEP_DEFINE_PARSER_GRAMMAR(AbstractMap,eval_none<AbstractMap>)
-
+DD4HEP_DEFINE_PARSER_GRAMMAR( AbstractMap, eval_none<AbstractMap> )

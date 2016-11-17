@@ -13,8 +13,8 @@
 //==========================================================================
 
 // Framework include files
-#include "DD4hep/Printout.h"
 #include "DDEve/EveShapeContextMenu.h"
+#include "DD4hep/Printout.h"
 
 // ROOT include files
 #include "TEveGeoShape.h"
@@ -26,21 +26,19 @@
 using namespace std;
 using namespace DD4hep;
 
-ClassImp(EveShapeContextMenu)
+ClassImp( EveShapeContextMenu )
 
-/// Instantiator
-EveShapeContextMenu& EveShapeContextMenu::install(Display* m)   {
-  static EveShapeContextMenu s(m);
+    /// Instantiator
+    EveShapeContextMenu& EveShapeContextMenu::install( Display* m ) {
+  static EveShapeContextMenu s( m );
   return s;
 }
 
 /// Initializing constructor
-EveShapeContextMenu::EveShapeContextMenu(Display* disp)
-  : EveUserContextMenu(disp)
-{
-  InstallGeometryContextMenu(TEveGeoShape::Class());
+EveShapeContextMenu::EveShapeContextMenu( Display* disp ) : EveUserContextMenu( disp ) {
+  InstallGeometryContextMenu( TEveGeoShape::Class() );
 }
 
 /// Default destructor
-EveShapeContextMenu::~EveShapeContextMenu()  {
+EveShapeContextMenu::~EveShapeContextMenu() {
 }

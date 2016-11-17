@@ -22,16 +22,13 @@ using namespace std;
 using namespace DD4hep::Geometry;
 
 /// determine the position based on the cell ID
-Position CartesianGridXY::position(const CellID& id) const   {
-  return Position(access()->implementation->position(id));
+Position CartesianGridXY::position( const CellID& id ) const {
+  return Position( access()->implementation->position( id ) );
 }
 
 /// determine the cell ID based on the position
-DD4hep::CellID CartesianGridXY::cellID(const Position& local,
-                                       const Position& global,
-                                       const VolumeID& volID) const
-{
-  return access()->implementation->cellID(local, global, volID);
+DD4hep::CellID CartesianGridXY::cellID( const Position& local, const Position& global, const VolumeID& volID ) const {
+  return access()->implementation->cellID( local, global, volID );
 }
 
 /// access the grid size in X
@@ -45,13 +42,13 @@ double CartesianGridXY::gridSizeY() const {
 }
 
 /// set the grid size in X
-void CartesianGridXY::setGridSizeX(double cellSize) const   {
-  access()->implementation->setGridSizeX(cellSize);
+void CartesianGridXY::setGridSizeX( double cellSize ) const {
+  access()->implementation->setGridSizeX( cellSize );
 }
 
 /// set the grid size in Y
-void CartesianGridXY::setGridSizeY(double cellSize) const   {
-  access()->implementation->setGridSizeY(cellSize);
+void CartesianGridXY::setGridSizeY( double cellSize ) const {
+  access()->implementation->setGridSizeY( cellSize );
 }
 
 /// access the coordinate offset in X
@@ -65,13 +62,13 @@ double CartesianGridXY::offsetY() const {
 }
 
 /// set the coordinate offset in X
-void CartesianGridXY::setOffsetX(double offset) const   {
-  access()->implementation->setOffsetX(offset);
+void CartesianGridXY::setOffsetX( double offset ) const {
+  access()->implementation->setOffsetX( offset );
 }
 
 /// set the coordinate offset in Y
-void CartesianGridXY::setOffsetY(double offset) const   {
-  access()->implementation->setOffsetY(offset);
+void CartesianGridXY::setOffsetY( double offset ) const {
+  access()->implementation->setOffsetY( offset );
 }
 
 /// access the field name used for X
@@ -93,6 +90,6 @@ const string& CartesianGridXY::fieldNameY() const {
     -# size in x
     -# size in y
 */
-vector<double> CartesianGridXY::cellDimensions(const CellID& id) const  {
-  return access()->implementation->cellDimensions(id);
+vector<double> CartesianGridXY::cellDimensions( const CellID& id ) const {
+  return access()->implementation->cellDimensions( id );
 }

@@ -24,28 +24,27 @@ class TGLOvlSelectRecord;
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /// Class to add annotations to eve viewers
-  /** 
-   * Implements slightly larger text size and one line constructor
-   *
-   * \author  M.Frank
-   * \version 1.0
-   * \ingroup DD4HEP_EVE
-   */
-  class Annotation : public TGLAnnotation   {
-  public:
-    /// Standard constructor with initialization
-    Annotation(TEveViewer* v, const std::string& text, float x, float y, Color_t c);
-    /// Default destructor
-    virtual ~Annotation();
-    /// Mouse has entered overlay area.
-    virtual Bool_t MouseEnter(TGLOvlSelectRecord& selRec);
-    /// Default text size
-    static float DefaultTextSize();
-    /// Default margin for placement in bottom left corner
-    static float DefaultMargin();
-  };
+/// Class to add annotations to eve viewers
+/**
+ * Implements slightly larger text size and one line constructor
+ *
+ * \author  M.Frank
+ * \version 1.0
+ * \ingroup DD4HEP_EVE
+ */
+class Annotation : public TGLAnnotation {
+ public:
+  /// Standard constructor with initialization
+  Annotation( TEveViewer* v, const std::string& text, float x, float y, Color_t c );
+  /// Default destructor
+  virtual ~Annotation();
+  /// Mouse has entered overlay area.
+  virtual Bool_t MouseEnter( TGLOvlSelectRecord& selRec );
+  /// Default text size
+  static float DefaultTextSize();
+  /// Default margin for placement in bottom left corner
+  static float DefaultMargin();
+};
 
-}      /* End namespace DD4hep   */
+} /* End namespace DD4hep   */
 #endif /* DD4HEP_DDEVE_ANNOTATION_H */
-

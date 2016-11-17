@@ -19,22 +19,20 @@
 
 using namespace DD4hep;
 
-ClassImp(RhoPhiProjection)
-DECLARE_VIEW_FACTORY(RhoPhiProjection)
+ClassImp( RhoPhiProjection ) DECLARE_VIEW_FACTORY( RhoPhiProjection )
 
-/// Initializing constructor
-RhoPhiProjection::RhoPhiProjection(Display* eve, const std::string& nam)
-: Projection(eve, nam)
-{
+    /// Initializing constructor
+    RhoPhiProjection::RhoPhiProjection( Display* eve, const std::string& nam )
+    : Projection( eve, nam ) {
 }
 
 /// Default destructor
-RhoPhiProjection::~RhoPhiProjection()  {
+RhoPhiProjection::~RhoPhiProjection() {
 }
 
 /// Build the projection view and map it to the given slot
-View& RhoPhiProjection::Build(TEveWindow* slot)   {
+View& RhoPhiProjection::Build( TEveWindow* slot ) {
   CreateScenes();
   CreateRhoPhiProjection().AddAxis();
-  return Map(slot);
+  return Map( slot );
 }

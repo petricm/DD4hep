@@ -3,7 +3,7 @@
 //  AIDA Detector description implementation for LCD
 //--------------------------------------------------------------------
 //
-//  Generic cylindric shell detector to be used to measure 
+//  Generic cylindric shell detector to be used to measure
 //  e.g. escape energy from calorimeters.
 //
 //  Author     : M.Frank
@@ -46,41 +46,41 @@ using namespace std;
 using namespace DD4hep;
 using namespace DD4hep::Geometry;
 
-static Ref_t create_detector(LCDD& lcdd, xml_h e, SensitiveDetector sensitive)  {
-  xml_det_t  x_det   = e;
-  string     name    = x_det.nameStr();
-  DetElement sdet   (name,x_det.id());
-  Assembly   assembly(name+"_assembly");
-  Material   mat    (lcdd.material(x_det.materialStr()));
+static Ref_t create_detector( LCDD& lcdd, xml_h e, SensitiveDetector sensitive ) {
+  xml_det_t    x_det = e;
+  string       name  = x_det.nameStr();
+  DetElement   sdet( name, x_det.id() );
+  Assembly     assembly( name + "_assembly" );
+  Material     mat( lcdd.material( x_det.materialStr() ) );
   PlacedVolume pv;
 
-  sensitive.setType("escape_counter");
-  for(xml_coll_t m(e,_U(module)); m; ++m)  {
-    xml_comp_t mod = m;
-    vector<double> rmin,rmax,z;
-    string vis = mod.visStr().empty() ? x_det.visStr() : mod.visStr();
-    int num = 0;
-    for(xml_coll_t c(m,_U(zplane)); c; ++c, ++num)  {
-      xml_comp_t dim(c);
-      rmin.push_back(dim.rmin());
-      rmax.push_back(dim.rmax());
-      z.push_back(dim.z()/2);
+  sensitive.setType( "escape_counter" );
+  for ( xml_coll_t m( e, _U( module ) ); m; ++m ) {
+    xml_comp_t     mod = m;
+    vector<double> rmin, rmax, z;
+    string         vis = mod.visStr().empty() ? x_det.visStr() : mod.visStr();
+    int            num = 0;
+    for ( xml_coll_t c( m, _U( zplane ) ); c; ++c, ++num ) {
+      xml_comp_t dim( c );
+      rmin.push_back( dim.rmin() );
+      rmax.push_back( dim.rmax() );
+      z.push_back( dim.z() / 2 );
     }
-    if ( num < 2 )  {
-      throw runtime_error("ZylinderShell["+name+"]> Not enough Z planes. minimum is 2!");
+    if ( num < 2 ) {
+      throw runtime_error( "ZylinderShell[" + name + "]> Not enough Z planes. minimum is 2!" );
     }
-    Polycone   cone  (0.,2*M_PI,rmin,rmax,z);
-    Volume     volume(name, cone, mat);
-    volume.setVisAttributes(lcdd, vis);
-    volume.setSensitiveDetector(sensitive);
-    pv = assembly.placeVolume(volume);
-    pv.addPhysVolID("barrel",mod.id());
+    Polycone cone( 0., 2 * M_PI, rmin, rmax, z );
+    Volume   volume( name, cone, mat );
+    volume.setVisAttributes( lcdd, vis );
+    volume.setSensitiveDetector( sensitive );
+    pv = assembly.placeVolume( volume );
+    pv.addPhysVolID( "barrel", mod.id() );
   }
 
-  pv = lcdd.pickMotherVolume(sdet).placeVolume(assembly);
-  pv.addPhysVolID("system",x_det.id());
-  sdet.setPlacement(pv);
+  pv = lcdd.pickMotherVolume( sdet ).placeVolume( assembly );
+  pv.addPhysVolID( "system", x_det.id() );
+  sdet.setPlacement( pv );
   return sdet;
 }
 
-DECLARE_DETELEMENT(DD4hep_CylinderShell,create_detector)
+DECLARE_DETELEMENT( DD4hep_CylinderShell, create_detector )

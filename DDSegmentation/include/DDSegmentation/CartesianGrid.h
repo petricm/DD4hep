@@ -13,15 +13,16 @@
 namespace DD4hep {
 namespace DDSegmentation {
 
-class CartesianGrid: public Segmentation {
-public:
-	/// Destructor
-	virtual ~CartesianGrid();
-protected:
-	/// Default constructor used by derived classes passing the encoding string
-	CartesianGrid(const std::string& cellEncoding = "");
-	/// Default constructor used by derived classes passing an existing decoder
-	CartesianGrid(BitField64* decoder);
+class CartesianGrid : public Segmentation {
+ public:
+  /// Destructor
+  virtual ~CartesianGrid();
+
+ protected:
+  /// Default constructor used by derived classes passing the encoding string
+  CartesianGrid( const std::string& cellEncoding = "" );
+  /// Default constructor used by derived classes passing an existing decoder
+  CartesianGrid( BitField64* decoder );
 };
 
 } /* namespace DDSegmentation */

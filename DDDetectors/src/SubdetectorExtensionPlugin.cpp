@@ -13,7 +13,7 @@
 //==========================================================================
 //
 // Specialized generic detector plugin
-// 
+//
 //==========================================================================
 // Framework include files
 #include "DDRec/Extensions/SubdetectorExtensionImpl.h"
@@ -21,10 +21,11 @@
 #include "DD4hep/SurfaceInstaller.h"
 
 /// Install volume information. Default implementation only prints!
-template <typename T> void Installer<T>::install(DetElement /* layer */, PlacedVolume /* pv */)   {
+template <typename T>
+void Installer<T>::install( DetElement /* layer */, PlacedVolume /* pv */ ) {
   using namespace DD4hep::DDRec;
-  SubdetectorExtensionImpl* e = new SubdetectorExtensionImpl(m_det);
-  m_det.addExtension<SubdetectorExtension>(e);
+  SubdetectorExtensionImpl* e = new SubdetectorExtensionImpl( m_det );
+  m_det.addExtension<SubdetectorExtension>( e );
   stopScanning();
   std::cout << " Installed subdetector extension:" << m_det.name() << " id: " << m_det.id() << std::endl;
 }

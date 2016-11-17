@@ -19,23 +19,22 @@
 
 using namespace DD4hep;
 
-ClassImp(RhoZProjection)
+ClassImp( RhoZProjection )
 
-DECLARE_VIEW_FACTORY(RhoZProjection)
+    DECLARE_VIEW_FACTORY( RhoZProjection )
 
-/// Initializing constructor
-RhoZProjection::RhoZProjection(Display* eve, const std::string& nam)
-: Projection(eve, nam)
-{
+    /// Initializing constructor
+    RhoZProjection::RhoZProjection( Display* eve, const std::string& nam )
+    : Projection( eve, nam ) {
 }
 
 /// Default destructor
-RhoZProjection::~RhoZProjection()  {
+RhoZProjection::~RhoZProjection() {
 }
 
 /// Build the projection view and map it to the given slot
-View& RhoZProjection::Build(TEveWindow* slot)   {
+View& RhoZProjection::Build( TEveWindow* slot ) {
   CreateScenes();
   CreateRhoZProjection().AddAxis();
-  return Map(slot);
+  return Map( slot );
 }

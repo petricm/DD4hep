@@ -22,27 +22,25 @@
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /// class View3D  View3D.h DDEve/View3D.h
-  /*
-   *  \author  M.Frank
-   *  \version 1.0
-   *  \ingroup DD4HEP_EVE
-   */
-  class View3D : public View  {
-  protected:
+/// class View3D  View3D.h DDEve/View3D.h
+/*
+ *  \author  M.Frank
+ *  \version 1.0
+ *  \ingroup DD4HEP_EVE
+ */
+class View3D : public View {
+ protected:
+ public:
+  /// Initializing constructor
+  View3D( Display* eve, const std::string& name );
+  /// Default destructor
+  virtual ~View3D();
+  /// Build the 3d view and map it to the given slot
+  virtual View& Build( TEveWindow* slot );
 
-  public:
-    /// Initializing constructor
-    View3D(Display* eve, const std::string& name);
-    /// Default destructor
-    virtual ~View3D();
-    /// Build the 3d view and map it to the given slot
-    virtual View& Build(TEveWindow* slot);
-
-    /// Root implementation macro
-    ClassDef(View3D,0);
-  };
+  /// Root implementation macro
+  ClassDef( View3D, 0 );
+};
 } /* End namespace DD4hep   */
-
 
 #endif /* DD4HEP_DDEVE_VIEW3D_H */

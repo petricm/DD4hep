@@ -23,34 +23,35 @@
 // Framework includes
 #include "XML/UriReader.h"
 
-
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /// Namespace of the DDDB conversion stuff
-  namespace DDDB  {
+/// Namespace of the DDDB conversion stuff
+namespace DDDB {
 
-    /// CondDB reader context to support intervals of validity
-    /**
-     *   \author  M.Frank
-     *   \version 1.0
-     *   \date    31/03/2016
-     *   \ingroup DD4HEP_DDDB
-     */
-    class DDDBReaderContext : public XML::UriReader::UserContext  {
-    public:
-      long long int event_time, valid_since, valid_until;
-      std::string doc, channel;
-      /// Standard constructor
-      DDDBReaderContext() : event_time(0), valid_since(0), valid_until(0) {}
-      /// Copy constructor
-      DDDBReaderContext(const DDDBReaderContext& c) 
-        : XML::UriReader::UserContext(c), 
-          event_time(c.event_time),
-          valid_since(c.valid_since),
-          valid_until(c.valid_until),
-          channel(c.channel) {}
-    };
-  }    /* End namespace DDDB              */
-}      /* End namespace DD4hep            */
+/// CondDB reader context to support intervals of validity
+/**
+ *   \author  M.Frank
+ *   \version 1.0
+ *   \date    31/03/2016
+ *   \ingroup DD4HEP_DDDB
+ */
+class DDDBReaderContext : public XML::UriReader::UserContext {
+ public:
+  long long int event_time, valid_since, valid_until;
+  std::string   doc, channel;
+  /// Standard constructor
+  DDDBReaderContext() : event_time( 0 ), valid_since( 0 ), valid_until( 0 ) {
+  }
+  /// Copy constructor
+  DDDBReaderContext( const DDDBReaderContext& c )
+      : XML::UriReader::UserContext( c ),
+        event_time( c.event_time ),
+        valid_since( c.valid_since ),
+        valid_until( c.valid_until ),
+        channel( c.channel ) {
+  }
+};
+} /* End namespace DDDB              */
+} /* End namespace DD4hep            */
 #endif /* DD4HEP_DDDB_DDDBREADERCONTEXT_H */

@@ -22,16 +22,13 @@ using namespace std;
 using namespace DD4hep::Geometry;
 
 /// determine the position based on the cell ID
-Position CartesianGridYZ::position(const CellID& id) const   {
-  return Position(access()->implementation->position(id));
+Position CartesianGridYZ::position( const CellID& id ) const {
+  return Position( access()->implementation->position( id ) );
 }
 
 /// determine the cell ID based on the position
-DD4hep::CellID CartesianGridYZ::cellID(const Position& local,
-                                       const Position& global,
-                                       const VolumeID& volID) const
-{
-  return access()->implementation->cellID(local, global, volID);
+DD4hep::CellID CartesianGridYZ::cellID( const Position& local, const Position& global, const VolumeID& volID ) const {
+  return access()->implementation->cellID( local, global, volID );
 }
 
 /// access the grid size in Y
@@ -45,13 +42,13 @@ double CartesianGridYZ::gridSizeZ() const {
 }
 
 /// set the grid size in Y
-void CartesianGridYZ::setGridSizeY(double cellSize) const   {
-  access()->implementation->setGridSizeY(cellSize);
+void CartesianGridYZ::setGridSizeY( double cellSize ) const {
+  access()->implementation->setGridSizeY( cellSize );
 }
 
 /// set the grid size in Z
-void CartesianGridYZ::setGridSizeZ(double cellSize) const   {
-  access()->implementation->setGridSizeZ(cellSize);
+void CartesianGridYZ::setGridSizeZ( double cellSize ) const {
+  access()->implementation->setGridSizeZ( cellSize );
 }
 
 /// access the coordinate offset in Y
@@ -65,13 +62,13 @@ double CartesianGridYZ::offsetZ() const {
 }
 
 /// set the coordinate offset in Y
-void CartesianGridYZ::setOffsetY(double offset) const   {
-  access()->implementation->setOffsetY(offset);
+void CartesianGridYZ::setOffsetY( double offset ) const {
+  access()->implementation->setOffsetY( offset );
 }
 
 /// set the coordinate offset in Z
-void CartesianGridYZ::setOffsetZ(double offset) const   {
-  access()->implementation->setOffsetZ(offset);
+void CartesianGridYZ::setOffsetZ( double offset ) const {
+  access()->implementation->setOffsetZ( offset );
 }
 
 /// access the field name used for Y
@@ -93,6 +90,6 @@ const string& CartesianGridYZ::fieldNameZ() const {
     -# size in y
     -# size in z
 */
-vector<double> CartesianGridYZ::cellDimensions(const CellID& id) const  {
-  return access()->implementation->cellDimensions(id);
+vector<double> CartesianGridYZ::cellDimensions( const CellID& id ) const {
+  return access()->implementation->cellDimensions( id );
 }

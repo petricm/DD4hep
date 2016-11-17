@@ -17,6 +17,6 @@
 
 // Define unicode tags
 #ifndef UNICODE
-#define UNICODE(x)  DECLARE_UNICODE_TAG(x)
+#define UNICODE( x ) DECLARE_UNICODE_TAG( x )
 #endif
 #include "DDAlign/AlignmentTags.h"

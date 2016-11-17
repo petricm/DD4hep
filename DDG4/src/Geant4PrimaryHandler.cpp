@@ -13,26 +13,25 @@
 //==========================================================================
 
 // Framework include files
-#include "DD4hep/Printout.h"
-#include "DD4hep/InstanceCount.h"
-#include "DDG4/Geant4InputHandling.h"
 #include "DDG4/Geant4PrimaryHandler.h"
+#include "DD4hep/InstanceCount.h"
+#include "DD4hep/Printout.h"
+#include "DDG4/Geant4InputHandling.h"
 
 using namespace DD4hep::Simulation;
 
 /// Standard constructor
-Geant4PrimaryHandler::Geant4PrimaryHandler(Geant4Context* ctxt, const std::string& nam)
-  : Geant4GeneratorAction(ctxt,nam)
-{
-  InstanceCount::increment(this);
+Geant4PrimaryHandler::Geant4PrimaryHandler( Geant4Context* ctxt, const std::string& nam )
+    : Geant4GeneratorAction( ctxt, nam ) {
+  InstanceCount::increment( this );
 }
 
 /// Default destructor
-Geant4PrimaryHandler::~Geant4PrimaryHandler()  {
-  InstanceCount::decrement(this);
+Geant4PrimaryHandler::~Geant4PrimaryHandler() {
+  InstanceCount::decrement( this );
 }
 
 /// Event generation action callback
-void Geant4PrimaryHandler::operator()(G4Event* event)  {
-  generatePrimaries(this, context(), event);
+void Geant4PrimaryHandler::operator()( G4Event* event ) {
+  generatePrimaries( this, context(), event );
 }

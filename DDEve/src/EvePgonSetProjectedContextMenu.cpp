@@ -13,8 +13,8 @@
 //==========================================================================
 
 // Framework include files
-#include "DDEve/ContextMenu.h"
 #include "DDEve/EvePgonSetProjectedContextMenu.h"
+#include "DDEve/ContextMenu.h"
 
 // ROOT include files
 #include "TEvePolygonSetProjected.h"
@@ -25,21 +25,19 @@
 using namespace std;
 using namespace DD4hep;
 
-ClassImp(EvePgonSetProjectedContextMenu)
+ClassImp( EvePgonSetProjectedContextMenu )
 
-/// Instantiator
-EvePgonSetProjectedContextMenu& EvePgonSetProjectedContextMenu::install(Display* m)   {
-  static EvePgonSetProjectedContextMenu s(m);
+    /// Instantiator
+    EvePgonSetProjectedContextMenu& EvePgonSetProjectedContextMenu::install( Display* m ) {
+  static EvePgonSetProjectedContextMenu s( m );
   return s;
 }
 
 /// Initializing constructor
-EvePgonSetProjectedContextMenu::EvePgonSetProjectedContextMenu(Display* mgr)
-  : EveUserContextMenu(mgr)
-{
-  InstallGeometryContextMenu(TEvePolygonSetProjected::Class());
+EvePgonSetProjectedContextMenu::EvePgonSetProjectedContextMenu( Display* mgr ) : EveUserContextMenu( mgr ) {
+  InstallGeometryContextMenu( TEvePolygonSetProjected::Class() );
 }
 
 /// Default destructor
-EvePgonSetProjectedContextMenu::~EvePgonSetProjectedContextMenu()  {
+EvePgonSetProjectedContextMenu::~EvePgonSetProjectedContextMenu() {
 }

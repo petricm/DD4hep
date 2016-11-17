@@ -1,4 +1,5 @@
-// $Id: ParserStandardList_Mapstring_double.cpp 2166 2016-03-17 16:37:06Z /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=sailer/CN=683529/CN=Andre Sailer $
+// $Id: ParserStandardList_Mapstring_double.cpp 2166 2016-03-17 16:37:06Z /DC=ch/DC=cern/OU=Organic
+// Units/OU=Users/CN=sailer/CN=683529/CN=Andre Sailer $
 //==========================================================================
 //  AIDA Detector description implementation for LCD
 //--------------------------------------------------------------------------
@@ -11,6 +12,8 @@
 //==========================================================================
 
 #include "ParsersStandardListCommon.h"
-namespace DD4hep{ namespace Parsers{
-IMPLEMENT_STL_MAP_PARSER(std::map,std::string,double)
-  }}
+namespace DD4hep {
+namespace Parsers {
+IMPLEMENT_STL_MAP_PARSER( std::map, std::string, double )
+}
+}

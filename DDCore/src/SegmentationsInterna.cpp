@@ -23,20 +23,18 @@ using namespace DD4hep;
 using namespace DD4hep::Geometry;
 using DD4hep::DDSegmentation::Parameter;
 using DD4hep::DDSegmentation::Parameters;
-//using DD4hep::DDSegmentation::SegmentationParameter;
+// using DD4hep::DDSegmentation::SegmentationParameter;
 
 /// Standard constructor
-SegmentationObject::SegmentationObject(BaseSegmentation* s)
-  : magic(magic_word()), useForHitPosition(0),
-    detector(0), sensitive(0), segmentation(s)
-{
-  InstanceCount::increment(this);
+SegmentationObject::SegmentationObject( BaseSegmentation* s )
+    : magic( magic_word() ), useForHitPosition( 0 ), detector( 0 ), sensitive( 0 ), segmentation( s ) {
+  InstanceCount::increment( this );
 }
 
 /// Default destructor
 SegmentationObject::~SegmentationObject() {
-  InstanceCount::decrement(this);
-  if (segmentation) {
+  InstanceCount::decrement( this );
+  if ( segmentation ) {
     delete segmentation;
   }
 }
@@ -51,8 +49,8 @@ const string& SegmentationObject::name() const {
   return segmentation->name();
 }
 /// Set the segmentation name
-void SegmentationObject::setName(const string& value) {
-  segmentation->setName(value);
+void SegmentationObject::setName( const string& value ) {
+  segmentation->setName( value );
 }
 
 /// Access the segmentation type
@@ -71,13 +69,13 @@ BitField64* SegmentationObject::decoder() const {
 }
 
 /// Set the underlying decoder
-void SegmentationObject::setDecoder(BitField64* ptr_decoder) const {
-  segmentation->setDecoder(ptr_decoder);
+void SegmentationObject::setDecoder( BitField64* ptr_decoder ) const {
+  segmentation->setDecoder( ptr_decoder );
 }
 
 /// Access to parameter by name
-Parameter SegmentationObject::parameter(const string& parameterName) const {
-  return segmentation->parameter(parameterName);
+Parameter SegmentationObject::parameter( const string& parameterName ) const {
+  return segmentation->parameter( parameterName );
 }
 
 /// Access to all parameters
@@ -86,23 +84,21 @@ Parameters SegmentationObject::parameters() const {
 }
 
 /// Set all parameters from an existing set of parameters
-void SegmentationObject::setParameters(const Parameters& params) {
-  segmentation->setParameters(params);
+void SegmentationObject::setParameters( const Parameters& params ) {
+  segmentation->setParameters( params );
 }
 
 /// Determine the local position based on the cell ID
-Position SegmentationObject::position(const CellID& cell) const  {
-  return Position(segmentation->position(cell));
+Position SegmentationObject::position( const CellID& cell ) const {
+  return Position( segmentation->position( cell ) );
 }
 
 /// Determine the cell ID based on the position
-CellID SegmentationObject::cellID(const Position& local,
-                                  const Position& global,
-                                  const VolumeID& volID) const  {
-  return segmentation->cellID(local, global, volID);
+CellID SegmentationObject::cellID( const Position& local, const Position& global, const VolumeID& volID ) const {
+  return segmentation->cellID( local, global, volID );
 }
 
 /// Determine the volume ID from the full cell ID by removing all local fields
-VolumeID SegmentationObject::volumeID(const CellID& cell) const   {
-  return segmentation->volumeID(cell);
+VolumeID SegmentationObject::volumeID( const CellID& cell ) const {
+  return segmentation->volumeID( cell );
 }

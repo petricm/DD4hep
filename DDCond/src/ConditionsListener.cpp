@@ -18,9 +18,9 @@
 using namespace DD4hep::Conditions;
 
 /// Default constructor
-ConditionsListener::ConditionsListener()   {
+ConditionsListener::ConditionsListener() {
 }
 
 /// Default destructor
-ConditionsListener::~ConditionsListener()   {
+ConditionsListener::~ConditionsListener() {
 }

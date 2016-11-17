@@ -19,8 +19,8 @@
 
 #include <TEveScene.h>
 
-#include <TEveProjectionManager.h>
 #include <TEveProjectionAxes.h>
+#include <TEveProjectionManager.h>
 
 #include <TEveBrowser.h>
 #include <TEveWindow.h>
@@ -33,184 +33,172 @@
  * Includes scenes and projection managers.
  *
  * Should be used in compiled mode.
- * 
+ *
  * @author F.Gaede, DESY (modified original version from Matevz Tadel)
  * @version "$Id: $"
  */
 
 class MultiView {
-public:
+ public:
+  TEveProjectionManager* fRPhiMgr;
+  TEveProjectionManager* fRhoZMgr;
 
-  TEveProjectionManager *fRPhiMgr;
-  TEveProjectionManager *fRhoZMgr;
+  TEveViewer* f3DView;
+  TEveViewer* fRPhiView;
+  TEveViewer* fRhoZView;
 
-  TEveViewer            *f3DView;
-  TEveViewer            *fRPhiView;
-  TEveViewer            *fRhoZView;
-
-  TEveScene             *fRPhiGeomScene;
-  TEveScene             *fRhoZGeomScene;
-  TEveScene             *fRPhiEventScene;
-  TEveScene             *fRhoZEventScene;
+  TEveScene* fRPhiGeomScene;
+  TEveScene* fRhoZGeomScene;
+  TEveScene* fRPhiEventScene;
+  TEveScene* fRhoZEventScene;
 
   //---------------------------------------------------------------------------
 
   static MultiView* instance() {
-    static MultiView mw ;
-    return &mw ;
+    static MultiView mw;
+    return &mw;
   }
 
   MultiView() {
-
     // Constructor --- creates required scenes, projection managers
     // and GL viewers.
 
     // Scenes
     //========
 
-    fRPhiGeomScene  = gEve->SpawnNewScene("RPhi Geometry",
-                                          "Scene holding projected geometry for the RPhi view.");
-    fRhoZGeomScene  = gEve->SpawnNewScene("RhoZ Geometry",
-                                          "Scene holding projected geometry for the RhoZ view.");
-    fRPhiEventScene = gEve->SpawnNewScene("RPhi Event Data",
-                                          "Scene holding projected event-data for the RPhi view.");
-    fRhoZEventScene = gEve->SpawnNewScene("RhoZ Event Data",
-                                          "Scene holding projected event-data for the RhoZ view.");
-
+    fRPhiGeomScene  = gEve->SpawnNewScene( "RPhi Geometry", "Scene holding projected geometry for the RPhi view." );
+    fRhoZGeomScene  = gEve->SpawnNewScene( "RhoZ Geometry", "Scene holding projected geometry for the RhoZ view." );
+    fRPhiEventScene = gEve->SpawnNewScene( "RPhi Event Data", "Scene holding projected event-data for the RPhi view." );
+    fRhoZEventScene = gEve->SpawnNewScene( "RhoZ Event Data", "Scene holding projected event-data for the RhoZ view." );
 
     // Projection managers
     //=====================
 
-    fRPhiMgr = new TEveProjectionManager(TEveProjection::kPT_RPhi);
-    gEve->AddToListTree(fRPhiMgr, kFALSE);
+    fRPhiMgr = new TEveProjectionManager( TEveProjection::kPT_RPhi );
+    gEve->AddToListTree( fRPhiMgr, kFALSE );
     {
-      TEveProjectionAxes* a = new TEveProjectionAxes(fRPhiMgr);
-      a->SetMainColor(kWhite);
-      a->SetTitle("R-Phi");
-      a->SetTitleSize(0.05);
-      a->SetTitleFont(102);
-      a->SetLabelSize(0.025);
-      a->SetLabelFont(102);
-      fRPhiGeomScene->AddElement(a);
+      TEveProjectionAxes* a = new TEveProjectionAxes( fRPhiMgr );
+      a->SetMainColor( kWhite );
+      a->SetTitle( "R-Phi" );
+      a->SetTitleSize( 0.05 );
+      a->SetTitleFont( 102 );
+      a->SetLabelSize( 0.025 );
+      a->SetLabelFont( 102 );
+      fRPhiGeomScene->AddElement( a );
     }
 
-    fRhoZMgr = new TEveProjectionManager(TEveProjection::kPT_RhoZ);
-    gEve->AddToListTree(fRhoZMgr, kFALSE);
+    fRhoZMgr = new TEveProjectionManager( TEveProjection::kPT_RhoZ );
+    gEve->AddToListTree( fRhoZMgr, kFALSE );
     {
-      TEveProjectionAxes* a = new TEveProjectionAxes(fRhoZMgr);
-      a->SetMainColor(kWhite);
-      a->SetTitle("Rho-Z");
-      a->SetTitleSize(0.05);
-      a->SetTitleFont(102);
-      a->SetLabelSize(0.025);
-      a->SetLabelFont(102);
-      fRhoZGeomScene->AddElement(a);
+      TEveProjectionAxes* a = new TEveProjectionAxes( fRhoZMgr );
+      a->SetMainColor( kWhite );
+      a->SetTitle( "Rho-Z" );
+      a->SetTitleSize( 0.05 );
+      a->SetTitleFont( 102 );
+      a->SetLabelSize( 0.025 );
+      a->SetLabelFont( 102 );
+      fRhoZGeomScene->AddElement( a );
     }
-
 
     // Viewers
     //=========
 
-    TEveWindowSlot *slot = 0;
-    TEveWindowPack *pack = 0;
+    TEveWindowSlot* slot = 0;
+    TEveWindowPack* pack = 0;
 
-    slot = TEveWindow::CreateWindowInTab(gEve->GetBrowser()->GetTabRight());
+    slot = TEveWindow::CreateWindowInTab( gEve->GetBrowser()->GetTabRight() );
     pack = slot->MakePack();
-    pack->SetElementName("Multi View");
+    pack->SetElementName( "Multi View" );
     pack->SetHorizontal();
-    pack->SetShowTitleBar(kFALSE);
+    pack->SetShowTitleBar( kFALSE );
     pack->NewSlot()->MakeCurrent();
-    f3DView = gEve->SpawnNewViewer("3D View", "");
-    f3DView->AddScene(gEve->GetGlobalScene());
-    f3DView->AddScene(gEve->GetEventScene());
+    f3DView = gEve->SpawnNewViewer( "3D View", "" );
+    f3DView->AddScene( gEve->GetGlobalScene() );
+    f3DView->AddScene( gEve->GetEventScene() );
 
     pack = pack->NewSlot()->MakePack();
-    pack->SetShowTitleBar(kFALSE);
+    pack->SetShowTitleBar( kFALSE );
     pack->NewSlot()->MakeCurrent();
-    fRPhiView = gEve->SpawnNewViewer("RPhi View", "");
-    fRPhiView->GetGLViewer()->SetCurrentCamera(TGLViewer::kCameraOrthoXOY);
-    fRPhiView->AddScene(fRPhiGeomScene);
-    fRPhiView->AddScene(fRPhiEventScene);
+    fRPhiView = gEve->SpawnNewViewer( "RPhi View", "" );
+    fRPhiView->GetGLViewer()->SetCurrentCamera( TGLViewer::kCameraOrthoXOY );
+    fRPhiView->AddScene( fRPhiGeomScene );
+    fRPhiView->AddScene( fRPhiEventScene );
 
     pack->NewSlot()->MakeCurrent();
-    fRhoZView = gEve->SpawnNewViewer("RhoZ View", "");
-    fRhoZView->GetGLViewer()->SetCurrentCamera(TGLViewer::kCameraOrthoXOY);
-    fRhoZView->AddScene(fRhoZGeomScene);
-    fRhoZView->AddScene(fRhoZEventScene);
- 
+    fRhoZView = gEve->SpawnNewViewer( "RhoZ View", "" );
+    fRhoZView->GetGLViewer()->SetCurrentCamera( TGLViewer::kCameraOrthoXOY );
+    fRhoZView->AddScene( fRhoZGeomScene );
+    fRhoZView->AddScene( fRhoZEventScene );
 
-    //fg: set white background:
-    f3DView->GetGLViewer()->ColorSet().Background().SetColor(kWhite);
-    fRPhiView->GetGLViewer()->ColorSet().Background().SetColor(kWhite);
-    fRhoZView->GetGLViewer()->ColorSet().Background().SetColor(kWhite);
+    // fg: set white background:
+    f3DView->GetGLViewer()->ColorSet().Background().SetColor( kWhite );
+    fRPhiView->GetGLViewer()->ColorSet().Background().SetColor( kWhite );
+    fRhoZView->GetGLViewer()->ColorSet().Background().SetColor( kWhite );
   }
 
   //---------------------------------------------------------------------------
 
-  void SetDepth(Float_t d)
-  {
+  void SetDepth( Float_t d ) {
     // Set current depth on all projection managers.
 
-    fRPhiMgr->SetCurrentDepth(d);
-    fRhoZMgr->SetCurrentDepth(d);
+    fRPhiMgr->SetCurrentDepth( d );
+    fRhoZMgr->SetCurrentDepth( d );
   }
 
   //---------------------------------------------------------------------------
 
-  void ImportGeomRPhi(TEveElement* el)
-  { 
-    fRPhiMgr->ImportElements(el, fRPhiGeomScene);
+  void ImportGeomRPhi( TEveElement* el ) {
+    fRPhiMgr->ImportElements( el, fRPhiGeomScene );
   }
 
-  void ImportGeomRhoZ(TEveElement* el)
-  { 
-    fRhoZMgr->ImportElements(el, fRhoZGeomScene);
+  void ImportGeomRhoZ( TEveElement* el ) {
+    fRhoZMgr->ImportElements( el, fRhoZGeomScene );
   }
 
-  void ImportEventRPhi(TEveElement* el)
-  { 
-    fRPhiMgr->ImportElements(el, fRPhiEventScene);
+  void ImportEventRPhi( TEveElement* el ) {
+    fRPhiMgr->ImportElements( el, fRPhiEventScene );
   }
 
-  void ImportEventRhoZ(TEveElement* el)
-  { 
-    fRhoZMgr->ImportElements(el, fRhoZEventScene);
+  void ImportEventRhoZ( TEveElement* el ) {
+    fRhoZMgr->ImportElements( el, fRhoZEventScene );
   }
 
-
-  void ImportEvent(TEveElement* el)
-  { 
-    gEve->AddElement( el ) ;
-    fRPhiMgr->ImportElements(el, fRPhiEventScene);
-    fRhoZMgr->ImportElements(el, fRhoZEventScene);
+  void ImportEvent( TEveElement* el ) {
+    gEve->AddElement( el );
+    fRPhiMgr->ImportElements( el, fRPhiEventScene );
+    fRhoZMgr->ImportElements( el, fRhoZEventScene );
   }
 
   //---------------------------------------------------------------------------
 
-  void DestroyEventRPhi()
-  {
+  void DestroyEventRPhi() {
     fRPhiEventScene->DestroyElements();
   }
 
-  void DestroyEventRhoZ()
-  {
+  void DestroyEventRhoZ() {
     fRhoZEventScene->DestroyElements();
   }
 
-private:
-  MultiView(const MultiView& /* x */)
-    : fRPhiMgr(0), fRhoZMgr(0), f3DView(0), fRPhiView(0), fRhoZView(0),
-      fRPhiGeomScene(0), fRhoZGeomScene(0), fRPhiEventScene(0), fRhoZEventScene(0)  
-  {
+ private:
+  MultiView( const MultiView& /* x */ )
+      : fRPhiMgr( 0 ),
+        fRhoZMgr( 0 ),
+        f3DView( 0 ),
+        fRPhiView( 0 ),
+        fRhoZView( 0 ),
+        fRPhiGeomScene( 0 ),
+        fRhoZGeomScene( 0 ),
+        fRPhiEventScene( 0 ),
+        fRhoZEventScene( 0 ) {
   }
-  MultiView& operator=(const MultiView& /* x */)  {
-    fRPhiMgr = 0;
-    fRhoZMgr = 0;
-    f3DView = 0;
-    fRPhiView = 0;
-    fRhoZView = 0;
-    fRPhiGeomScene = 0;
-    fRhoZGeomScene = 0;
+  MultiView& operator=( const MultiView& /* x */ ) {
+    fRPhiMgr        = 0;
+    fRhoZMgr        = 0;
+    f3DView         = 0;
+    fRPhiView       = 0;
+    fRhoZView       = 0;
+    fRPhiGeomScene  = 0;
+    fRhoZGeomScene  = 0;
     fRPhiEventScene = 0;
     fRhoZEventScene = 0;
     return *this;
@@ -219,8 +207,4 @@ private:
 
 //=====================================================================================
 
-
-
 #endif
-
-

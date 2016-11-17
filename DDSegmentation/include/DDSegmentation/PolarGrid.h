@@ -13,15 +13,16 @@
 namespace DD4hep {
 namespace DDSegmentation {
 
-class PolarGrid: public Segmentation {
-public:
-	/// Destructor
-	virtual ~PolarGrid();
-protected:
-	/// Default constructor used by derived classes passing the encoding string
-	PolarGrid(const std::string& cellEncoding = "");
-	/// Default constructor used by derived classes passing an existing decoder
-	PolarGrid(BitField64* decoder);
+class PolarGrid : public Segmentation {
+ public:
+  /// Destructor
+  virtual ~PolarGrid();
+
+ protected:
+  /// Default constructor used by derived classes passing the encoding string
+  PolarGrid( const std::string& cellEncoding = "" );
+  /// Default constructor used by derived classes passing an existing decoder
+  PolarGrid( BitField64* decoder );
 };
 
 } /* namespace DDSegmentation */

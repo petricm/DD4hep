@@ -19,38 +19,36 @@
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /// Namespace for the alignment part of the AIDA detector description toolkit
-  namespace Alignments {
+/// Namespace for the alignment part of the AIDA detector description toolkit
+namespace Alignments {
 
-    namespace AlignmentTools   {
+namespace AlignmentTools {
 
-      /// Copy alignment object from source object
-      void copy(Alignment from, Alignment to);
+/// Copy alignment object from source object
+void copy( Alignment from, Alignment to );
 
-      /// Compute the ideal/nominal to-world transformation from the detector element placement
-      /**
-       *  Note: Detector information of the alignment data is filled by the caller!
-       */
-      void computeIdeal(Alignment alignment);
+/// Compute the ideal/nominal to-world transformation from the detector element placement
+/**
+ *  Note: Detector information of the alignment data is filled by the caller!
+ */
+void computeIdeal( Alignment alignment );
 
-      /// Compute the ideal/nominal to-world transformation from the detector element placement
-      /**
-       *  Note: Detector information of the alignment data is filled by the caller!
-       */
-      void computeIdeal(Alignment alignment, const Alignment::NodeList& node_list);
+/// Compute the ideal/nominal to-world transformation from the detector element placement
+/**
+ *  Note: Detector information of the alignment data is filled by the caller!
+ */
+void computeIdeal( Alignment alignment, const Alignment::NodeList& node_list );
 
-      /// Compute the survey to-world transformation.
-      /** Compute the survey to-world transformation from 
-       *  the detector element placement with respect to 
-       *  the survey constants
-       *
-       *  Note: Detector information of the alignment data is filled by the caller!
-       */
-      void computeSurvey(Alignment alignment);
+/// Compute the survey to-world transformation.
+/** Compute the survey to-world transformation from
+ *  the detector element placement with respect to
+ *  the survey constants
+ *
+ *  Note: Detector information of the alignment data is filled by the caller!
+ */
+void computeSurvey( Alignment alignment );
+}
 
-
-    }
-
-  } /* End namespace Aligments               */
+} /* End namespace Aligments               */
 } /* End namespace DD4hep                    */
-#endif    /* DD4HEP_ALIGMENTS_ALIGNMENTTOOLS_H   */
+#endif /* DD4HEP_ALIGMENTS_ALIGNMENTTOOLS_H   */

@@ -22,65 +22,62 @@ using namespace std;
 using namespace DD4hep::Geometry;
 
 /// determine the position based on the cell ID
-Position PolarGridRPhi::position(const CellID& id) const   {
-  return Position(access()->implementation->position(id));
+Position PolarGridRPhi::position( const CellID& id ) const {
+  return Position( access()->implementation->position( id ) );
 }
 
 /// determine the cell ID based on the position
-DD4hep::CellID PolarGridRPhi::cellID(const Position& local,
-                                     const Position& global,
-                                     const VolumeID& volID) const
-{
-  return access()->implementation->cellID(local, global, volID);
+DD4hep::CellID PolarGridRPhi::cellID( const Position& local, const Position& global, const VolumeID& volID ) const {
+  return access()->implementation->cellID( local, global, volID );
 }
 
 /// access the grid size in R
-double PolarGridRPhi::gridSizeR() const  {
+double PolarGridRPhi::gridSizeR() const {
   return access()->implementation->gridSizeR();
 }
 
 /// access the grid size in Phi
-double PolarGridRPhi::gridSizePhi() const  {
+double PolarGridRPhi::gridSizePhi() const {
   return access()->implementation->gridSizePhi();
 }
 
 /// access the coordinate offset in R
-double PolarGridRPhi::offsetR() const  {
+double PolarGridRPhi::offsetR() const {
   return access()->implementation->offsetR();
 }
 
 /// access the coordinate offset in Phi
-double PolarGridRPhi::offsetPhi() const  {
+double PolarGridRPhi::offsetPhi() const {
   return access()->implementation->offsetPhi();
 }
 
 /// set the coordinate offset in R
-void PolarGridRPhi::setOffsetR(double offset) const  {
-  access()->implementation->setOffsetR(offset);
+void PolarGridRPhi::setOffsetR( double offset ) const {
+  access()->implementation->setOffsetR( offset );
 }
 
 /// set the coordinate offset in Phi
-void PolarGridRPhi::setOffsetPhi(double offset) const  {
-  access()->implementation->setOffsetPhi(offset);
+void PolarGridRPhi::setOffsetPhi( double offset ) const {
+  access()->implementation->setOffsetPhi( offset );
 }
 
 /// set the grid size in R
-void PolarGridRPhi::setGridSizeR(double cellSize) const  {
-  access()->implementation->setGridSizeR(cellSize);
+void PolarGridRPhi::setGridSizeR( double cellSize ) const {
+  access()->implementation->setGridSizeR( cellSize );
 }
 
 /// set the grid size in Phi
-void PolarGridRPhi::setGridSizePhi(double cellSize) const  {
-  access()->implementation->setGridSizePhi(cellSize);
+void PolarGridRPhi::setGridSizePhi( double cellSize ) const {
+  access()->implementation->setGridSizePhi( cellSize );
 }
 
 /// access the field name used for R
-const string& PolarGridRPhi::fieldNameR() const  {
+const string& PolarGridRPhi::fieldNameR() const {
   return access()->implementation->fieldNameR();
 }
 
 /// access the field name used for Phi
-const string& PolarGridRPhi::fieldNamePhi() const  {
+const string& PolarGridRPhi::fieldNamePhi() const {
   return access()->implementation->fieldNamePhi();
 }
 
@@ -93,6 +90,6 @@ const string& PolarGridRPhi::fieldNamePhi() const  {
     -# size in x
     -# size in z
 */
-vector<double> PolarGridRPhi::cellDimensions(const CellID& id) const  {
-  return access()->implementation->cellDimensions(id);
+vector<double> PolarGridRPhi::cellDimensions( const CellID& id ) const {
+  return access()->implementation->cellDimensions( id );
 }

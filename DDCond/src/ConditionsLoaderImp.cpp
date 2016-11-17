@@ -13,40 +13,38 @@
 //==========================================================================
 
 // Framework include files
-#include "DDCond/ConditionsPool.h"
-#include "DDCond/ConditionsInterna.h"
 #include "DDCond/ConditionsLoaderImp.h"
+#include "DDCond/ConditionsInterna.h"
+#include "DDCond/ConditionsPool.h"
 
 using namespace DD4hep::Conditions;
 
 /// Default constructor
-ConditionsLoaderImp::ConditionsLoaderImp(ConditionsManager mgr)
-  : m_manager(mgr), m_refCount(1)
-{
+ConditionsLoaderImp::ConditionsLoaderImp( ConditionsManager mgr ) : m_manager( mgr ), m_refCount( 1 ) {
 }
 
 /// Default destructor
-ConditionsLoaderImp::~ConditionsLoaderImp()   {
+ConditionsLoaderImp::~ConditionsLoaderImp() {
 }
 
 /// Addreference count. Use object
-void ConditionsLoaderImp::addRef()   {
+void ConditionsLoaderImp::addRef() {
   ++m_refCount;
 }
 
 /// Release object. The client may not use any reference any further.
-void ConditionsLoaderImp::release()    {
-  if ( --m_refCount <= 0 )   {
+void ConditionsLoaderImp::release() {
+  if ( --m_refCount <= 0 ) {
     delete this;
   }
 }
 
 /// Access the conditions loading mechanism
-Condition ConditionsLoaderImp::get(key_type key, const Condition::iov_type& iov)  {
-  return m_manager.ptr()->get(key, iov);
+Condition ConditionsLoaderImp::get( key_type key, const Condition::iov_type& iov ) {
+  return m_manager.ptr()->get( key, iov );
 }
 
 /// Access the conditions loading mechanism. Only conditions in the user pool will be accessed.
-Condition ConditionsLoaderImp::get(key_type key, const UserPool& pool)   {
-  return pool.get(key);
+Condition ConditionsLoaderImp::get( key_type key, const UserPool& pool ) {
+  return pool.get( key );
 }

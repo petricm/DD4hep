@@ -21,27 +21,28 @@
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace Simulation {
+/// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
+namespace Simulation {
 
-    using Geometry::Transform3D;
-    using Geometry::RotationZYX;
-    using Geometry::Position;
-    using Geometry::LCDD;
-    using Geometry::Readout;
-    using Geometry::DetElement;
-    
-    // Forward declarations;
-    typedef Position Direction;
-    typedef Position Momentum;
+using Geometry::Transform3D;
+using Geometry::RotationZYX;
+using Geometry::Position;
+using Geometry::LCDD;
+using Geometry::Readout;
+using Geometry::DetElement;
 
-    class Geant4StepHandler;
-    class Geant4Hit;
-    class Geant4TrackerHit;
-    class Geant4CalorimeterHit;
-    class Geant4SensitiveDetector;
-    template <class T> class Geant4GenericSD;
+// Forward declarations;
+typedef Position Direction;
+typedef Position Momentum;
 
-  }    // End namespace Simulation
-}      // End namespace DD4hep
-#endif // DDG4_DEFS_H
+class Geant4StepHandler;
+class Geant4Hit;
+class Geant4TrackerHit;
+class Geant4CalorimeterHit;
+class Geant4SensitiveDetector;
+template <class T>
+class Geant4GenericSD;
+
+}  // End namespace Simulation
+}  // End namespace DD4hep
+#endif  // DDG4_DEFS_H

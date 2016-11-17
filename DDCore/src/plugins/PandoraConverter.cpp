@@ -17,57 +17,55 @@
 #define DD4HEP_GEOMETRY_PANDORACONVERTER_H
 
 // Framework include files
-#include "DD4hep/LCDD.h"
-#include "DD4hep/GeoHandler.h"
 #include "DD4hep/DetFactoryHelper.h"
+#include "DD4hep/GeoHandler.h"
+#include "DD4hep/LCDD.h"
 
 /*
  *   DD4hep namespace declaration
  */
 namespace DD4hep {
 
-  /*
-   *   XML namespace declaration
-   */
-  namespace Geometry {
+/*
+ *   XML namespace declaration
+ */
+namespace Geometry {
 
-    /** @class PandoraConverter PandoraConverter.h XML/PandoraConverter.h
-     *
-     * Geometry converter from DD4hep to Geant 4.
-     *
-     * @author  M.Frank
-     * @version 1.0
-     */
-    struct PandoraConverter: public GeoHandler {
-    protected:
-      struct GeometryInfo: public GeoHandler::GeometryInfo {
-        xml_doc_t doc;
-        xml_elt_t doc_root, doc_calorimeters, doc_detector, doc_coil, doc_tracking;
-        /// Helper constructor
-        GeometryInfo();
-      };
+/** @class PandoraConverter PandoraConverter.h XML/PandoraConverter.h
+ *
+ * Geometry converter from DD4hep to Geant 4.
+ *
+ * @author  M.Frank
+ * @version 1.0
+ */
+struct PandoraConverter : public GeoHandler {
+ protected:
+  struct GeometryInfo : public GeoHandler::GeometryInfo {
+    xml_doc_t doc;
+    xml_elt_t doc_root, doc_calorimeters, doc_detector, doc_coil, doc_tracking;
+    /// Helper constructor
+    GeometryInfo();
+  };
 
-      /// Reference to detector description
-      LCDD& m_lcdd;
-      /// Data pointer
-      GeometryInfo* m_dataPtr;
+  /// Reference to detector description
+  LCDD& m_lcdd;
+  /// Data pointer
+  GeometryInfo* m_dataPtr;
 
-    public:
+ public:
+  /// Initializing Constructor
+  PandoraConverter( LCDD& lcdd );
 
-      /// Initializing Constructor
-      PandoraConverter(LCDD& lcdd);
+  /// Standard destructor
+  virtual ~PandoraConverter();
 
-      /// Standard destructor
-      virtual ~PandoraConverter();
+  /// Create geometry conversion in Pandora XML format
+  xml_doc_t create( DetElement top );
+};
+}  // End namespace XML
+}  // End namespace DD4hep
 
-      /// Create geometry conversion in Pandora XML format
-      xml_doc_t create(DetElement top);
-
-    };
-  }    // End namespace XML
-}      // End namespace DD4hep
-
-#endif // DD4HEP_GEOMETRY_PANDORACONVERTER_H
+#endif  // DD4HEP_GEOMETRY_PANDORACONVERTER_H
 //====================================================================
 //  AIDA Detector description implementation for LCD
 //--------------------------------------------------------------------
@@ -78,9 +76,9 @@ namespace DD4hep {
 // $Id$
 
 // Framework includes
-#include "DD4hep/LCDD.h"
-#include "DD4hep/GeoHandler.h"
 #include "DD4hep/DetFactoryHelper.h"
+#include "DD4hep/GeoHandler.h"
+#include "DD4hep/LCDD.h"
 #include "XML/DocumentHandler.h"
 
 // C/C++ include files
@@ -92,54 +90,54 @@ using namespace std;
 
 /// Helper constructor
 PandoraConverter::GeometryInfo::GeometryInfo()
-  : doc(0), doc_root(0), doc_calorimeters(0), doc_detector(0), doc_coil(0), doc_tracking(0) {
+    : doc( 0 ), doc_root( 0 ), doc_calorimeters( 0 ), doc_detector( 0 ), doc_coil( 0 ), doc_tracking( 0 ) {
 }
 
 /// Initializing Constructor
-PandoraConverter::PandoraConverter(LCDD& lcdd)
-  : m_lcdd(lcdd), m_dataPtr(0) {
+PandoraConverter::PandoraConverter( LCDD& lcdd ) : m_lcdd( lcdd ), m_dataPtr( 0 ) {
 }
 
 /// Standard destructor
 PandoraConverter::~PandoraConverter() {
-  if (m_dataPtr)
+  if ( m_dataPtr )
     delete m_dataPtr;
   m_dataPtr = 0;
 }
 
 /// Create geometry conversion in Pandora XML format
-xml_doc_t PandoraConverter::create(DetElement /* top */) {
-  const char empty_xml[] = "<?xml version=\"1.0\" encoding=\"UTF-8\">\n"
-    "<!--                                                               \n"
-    "      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
-    "      ++++   Linear collider detector description in C++       ++++\n"
-    "      ++++   DD4hep Detector description generator.            ++++\n"
-    "      ++++                                                     ++++\n"
-    "      ++++                              M.Frank CERN/LHCb      ++++\n"
-    "      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
-    "-->\n"
-    "<pandoraSetup>\n\0\0";
+xml_doc_t PandoraConverter::create( DetElement /* top */ ) {
+  const char empty_xml[] =
+      "<?xml version=\"1.0\" encoding=\"UTF-8\">\n"
+      "<!--                                                               \n"
+      "      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
+      "      ++++   Linear collider detector description in C++       ++++\n"
+      "      ++++   DD4hep Detector description generator.            ++++\n"
+      "      ++++                                                     ++++\n"
+      "      ++++                              M.Frank CERN/LHCb      ++++\n"
+      "      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
+      "-->\n"
+      "<pandoraSetup>\n\0\0";
   XML::DocumentHandler docH;
-  GeometryInfo& geo = *(m_dataPtr = new GeometryInfo);
+  GeometryInfo&        geo = *( m_dataPtr = new GeometryInfo );
 
-  xml_elt_t elt(0);
-  Header hdr = m_lcdd.header();
-  geo.doc = docH.parse(empty_xml, sizeof(empty_xml));
-  geo.doc_root = geo.doc.root();
-  geo.doc_root.append(geo.doc_calorimeters = xml_elt_t(geo.doc, _Unicode(calorimeters)));
-  geo.doc_root.append(geo.doc_detector = xml_elt_t(geo.doc, _Unicode(detector)));
-  geo.doc_root.append(geo.doc_coil = xml_elt_t(geo.doc, _Unicode(coil)));
-  geo.doc_root.append(geo.doc_tracking = xml_elt_t(geo.doc, _Unicode(tracking)));
-  geo.doc_detector.setAttr(_Unicode(name), hdr.name());
-  geo.doc_tracking.setAttr(_Unicode(innerR), "");
-  geo.doc_tracking.setAttr(_Unicode(outerR), "");
-  geo.doc_tracking.setAttr(_Unicode(z), "");
+  xml_elt_t elt( 0 );
+  Header    hdr = m_lcdd.header();
+  geo.doc       = docH.parse( empty_xml, sizeof( empty_xml ) );
+  geo.doc_root  = geo.doc.root();
+  geo.doc_root.append( geo.doc_calorimeters = xml_elt_t( geo.doc, _Unicode( calorimeters ) ) );
+  geo.doc_root.append( geo.doc_detector = xml_elt_t( geo.doc, _Unicode( detector ) ) );
+  geo.doc_root.append( geo.doc_coil = xml_elt_t( geo.doc, _Unicode( coil ) ) );
+  geo.doc_root.append( geo.doc_tracking = xml_elt_t( geo.doc, _Unicode( tracking ) ) );
+  geo.doc_detector.setAttr( _Unicode( name ), hdr.name() );
+  geo.doc_tracking.setAttr( _Unicode( innerR ), "" );
+  geo.doc_tracking.setAttr( _Unicode( outerR ), "" );
+  geo.doc_tracking.setAttr( _Unicode( z ), "" );
 
   return geo.doc;
 }
 
-static long create_lcdd(LCDD& /* lcdd */, int /* argc */, char** /* argv */) {
-  throw runtime_error("The pandora xml conversion plugin is not yet implemented");
+static long create_lcdd( LCDD& /* lcdd */, int /* argc */, char** /* argv */ ) {
+  throw runtime_error( "The pandora xml conversion plugin is not yet implemented" );
   return 0;
 #if 0
 
@@ -896,4 +894,4 @@ static long create_lcdd(LCDD& /* lcdd */, int /* argc */, char** /* argv */) {
                                                         }
 #endif
 }
-DECLARE_APPLY(DD4hepGeometry2PANDORA,create_lcdd)
+DECLARE_APPLY( DD4hepGeometry2PANDORA, create_lcdd )

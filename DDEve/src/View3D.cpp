@@ -19,19 +19,18 @@
 
 using namespace DD4hep;
 
-ClassImp(View3D)
-DECLARE_VIEW_FACTORY(View3D)
+ClassImp( View3D ) DECLARE_VIEW_FACTORY( View3D )
 
-/// Initializing constructor
-View3D::View3D(Display* eve, const std::string& nam) : View(eve, nam)
-{
+    /// Initializing constructor
+    View3D::View3D( Display* eve, const std::string& nam )
+    : View( eve, nam ) {
 }
 
 /// Default destructor
-View3D::~View3D()  {
+View3D::~View3D() {
 }
 
 /// Build the projection view and map it to the given slot
-View& View3D::Build(TEveWindow* slot)   {
-  return CreateScenes().Map(slot);
+View& View3D::Build( TEveWindow* slot ) {
+  return CreateScenes().Map( slot );
 }

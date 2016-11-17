@@ -15,39 +15,39 @@
 #define DD4HEP_DDCORE_EXCEPTIONS_H
 
 // C/C++ include files
+#include <stdexcept>
 #include <string>
 #include <typeinfo>
-#include <stdexcept>
 
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /// Exception class to signal operations on unrelated classes
-  /**
-   *   \author  M.Frank
-   *   \date    13.08.2013
-   *   \ingroup DD4HEP
-   */
-  struct unrelated_type_error : public std::runtime_error {
-    static std::string msg(const std::type_info& typ1, const std::type_info& typ2, const std::string& text);
-    unrelated_type_error(const std::type_info& typ1, const std::type_info& typ2, const std::string& text = "")
-      : std::runtime_error(msg(typ1, typ2, text)) {
-    }
-  };
+/// Exception class to signal operations on unrelated classes
+/**
+ *   \author  M.Frank
+ *   \date    13.08.2013
+ *   \ingroup DD4HEP
+ */
+struct unrelated_type_error : public std::runtime_error {
+  static std::string msg( const std::type_info& typ1, const std::type_info& typ2, const std::string& text );
+  unrelated_type_error( const std::type_info& typ1, const std::type_info& typ2, const std::string& text = "" )
+      : std::runtime_error( msg( typ1, typ2, text ) ) {
+  }
+};
 
-  /// Exception class to signal operations on unrelated types of values
-  /**
-   *   \author  M.Frank
-   *   \date    13.08.2013
-   *   \ingroup DD4HEP
-   */
-  struct unrelated_value_error : public std::runtime_error {
-    static std::string msg(const std::type_info& typ, const std::string& text);
-    unrelated_value_error(const std::type_info& typ, const std::string& text = "")
-      : std::runtime_error(msg(typ, text)) {
-    }
-  };
+/// Exception class to signal operations on unrelated types of values
+/**
+ *   \author  M.Frank
+ *   \date    13.08.2013
+ *   \ingroup DD4HEP
+ */
+struct unrelated_value_error : public std::runtime_error {
+  static std::string msg( const std::type_info& typ, const std::string& text );
+  unrelated_value_error( const std::type_info& typ, const std::string& text = "" )
+      : std::runtime_error( msg( typ, text ) ) {
+  }
+};
 
-}      // End namespace DD4hep
+}  // End namespace DD4hep
 
-#endif  /* DD4HEP_DDCORE_EXCEPTIONS_H */
+#endif /* DD4HEP_DDCORE_EXCEPTIONS_H */

@@ -22,13 +22,12 @@
 using namespace std;
 using namespace DD4hep::Alignments;
 
-
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
-  
-  /// Namespace for the alignment part of the AIDA detector description toolkit
-  namespace Alignments {
-    
+
+/// Namespace for the alignment part of the AIDA detector description toolkit
+namespace Alignments {
+
 #if 0
     /// Initializing constructor to create a new object (Specialized for AlignmentNamedObject)
     template <> Alignment::Alignment<Alignment::Object>(const string& nam) {
@@ -39,93 +38,92 @@ namespace DD4hep {
     template <> Alignment::Alignment<Interna::AlignmentNamedObject>(const string& nam) {
       assign(new Interna::AlignmentNamedObject(nam, "alignment"), nam, "alignment");
     }
-#endif    
-    /// Initializing constructor to create a new object (Specialized for AlignmentNamedObject)
-    Alignment::Alignment(const string& nam) {
-      assign(new Interna::AlignmentNamedObject(nam, "alignment"), nam, "alignment");
-    }
-    /// Initializing constructor to create a new object (Specialized for AlignmentConditionObject)
-    AlignmentCondition::AlignmentCondition(const string& nam) {
-      assign(new AlignmentCondition::Object(nam, "alignment"), nam, "alignment");
-    }
+#endif
+/// Initializing constructor to create a new object (Specialized for AlignmentNamedObject)
+Alignment::Alignment( const string& nam ) {
+  assign( new Interna::AlignmentNamedObject( nam, "alignment" ), nam, "alignment" );
+}
+/// Initializing constructor to create a new object (Specialized for AlignmentConditionObject)
+AlignmentCondition::AlignmentCondition( const string& nam ) {
+  assign( new AlignmentCondition::Object( nam, "alignment" ), nam, "alignment" );
+}
 #if 0
     /// Initializing constructor to create a new object (Specialized for AlignmentConditionObject)
     template <> AlignmentCondition::AlignmentCondition<AlignmentCondition::Object>(const string& nam) {
       assign(new Object(nam, "alignment"), nam, "alignment");
     }
 #endif
-  } /* End namespace Aligments                  */
+} /* End namespace Aligments                  */
 } /* End namespace DD4hep                       */
 
-
 /// Create cached matrix to transform to world coordinates
-const TGeoHMatrix& Alignment::worldTransformation()  const  {
+const TGeoHMatrix& Alignment::worldTransformation() const {
   return data().worldTransformation();
 }
 
 /// Access the alignment/placement matrix with respect to the world
-const TGeoHMatrix& Alignment::detectorTransformation() const   {
+const TGeoHMatrix& Alignment::detectorTransformation() const {
   return data().detectorTransformation();
 }
 
 /// Access the IOV type
-const DD4hep::IOVType& AlignmentCondition::iovType() const   {
-  return *(access()->iovType());
+const DD4hep::IOVType& AlignmentCondition::iovType() const {
+  return *( access()->iovType() );
 }
 
 /// Access the IOV block
-const DD4hep::IOV& AlignmentCondition::iov() const   {
-  return *(access()->iovData());
+const DD4hep::IOV& AlignmentCondition::iov() const {
+  return *( access()->iovData() );
 }
 
 /// Data accessor for the use of decorators
-AlignmentCondition::Data& AlignmentCondition::data()              {
+AlignmentCondition::Data& AlignmentCondition::data() {
   Object* o = access();
   if ( o->alignment_data )
-    return *(o->alignment_data);
-  Conditions::Condition c(*this);
-  o->alignment_data = c.is_bound() ? &c.get<Data>() : &c.bind<Data>();
+    return *( o->alignment_data );
+  Conditions::Condition c( *this );
+  o->alignment_data            = c.is_bound() ? &c.get<Data>() : &c.bind<Data>();
   o->alignment_data->condition = c;
-  return *(o->alignment_data);
+  return *( o->alignment_data );
 }
 
 /// Data accessor for the use of decorators
-const AlignmentCondition::Data& AlignmentCondition::data() const  {
+const AlignmentCondition::Data& AlignmentCondition::data() const {
   Object* o = access();
   if ( o->alignment_data )
-    return *(o->alignment_data);
-  Conditions::Condition c(*this);
-  o->alignment_data = c.is_bound() ? &c.get<Data>() : &c.bind<Data>();
+    return *( o->alignment_data );
+  Conditions::Condition c( *this );
+  o->alignment_data            = c.is_bound() ? &c.get<Data>() : &c.bind<Data>();
   o->alignment_data->condition = c;
-  return *(o->alignment_data);
+  return *( o->alignment_data );
 }
 
 /// Check if object is already bound....
-bool AlignmentCondition::is_bound()  const  {
+bool AlignmentCondition::is_bound() const {
   return isValid() ? ptr()->data.is_bound() : false;
 }
 
 /// Create cached matrix to transform to world coordinates
-const TGeoHMatrix& AlignmentCondition::worldTransformation()  const  {
+const TGeoHMatrix& AlignmentCondition::worldTransformation() const {
   return data().worldTransformation();
 }
 
 /// Access the alignment/placement matrix with respect to the world
-const TGeoHMatrix& AlignmentCondition::detectorTransformation() const   {
+const TGeoHMatrix& AlignmentCondition::detectorTransformation() const {
   return data().detectorTransformation();
 }
 
 /// Access the number of conditons keys available for this detector element
-size_t Container::numKeys() const   {
+size_t Container::numKeys() const {
   return access()->keys.size();
 }
 
 /// Access to alignment objects
-Alignment Container::get(const string& alignment_key, const iov_type& iov)  {
+Alignment Container::get( const string& alignment_key, const iov_type& iov ) {
   Object* o = ptr();
-  if ( o )  {
-    Alignment c = o->get(alignment_key, iov);
-    if ( c.isValid() )  {
+  if ( o ) {
+    Alignment c = o->get( alignment_key, iov );
+    if ( c.isValid() ) {
       return c;
     }
     invalidHandleError<Alignment>();
@@ -135,11 +133,11 @@ Alignment Container::get(const string& alignment_key, const iov_type& iov)  {
 }
 
 /// Access to alignment objects
-Alignment Container::get(key_type alignment_key, const iov_type& iov)  {
+Alignment Container::get( key_type alignment_key, const iov_type& iov ) {
   Object* o = ptr();
-  if ( o )  {
-    Alignment c = o->get(alignment_key, iov);
-    if ( c.isValid() )  {
+  if ( o ) {
+    Alignment c = o->get( alignment_key, iov );
+    if ( c.isValid() ) {
       return c;
     }
     invalidHandleError<Alignment>();
@@ -149,11 +147,11 @@ Alignment Container::get(key_type alignment_key, const iov_type& iov)  {
 }
 
 /// Access to alignment objects
-Alignment Container::get(const string& alignment_key, const UserPool& pool)  {
+Alignment Container::get( const string& alignment_key, const UserPool& pool ) {
   Object* o = ptr();
-  if ( o )  {
-    Alignment c = o->get(alignment_key, pool);
-    if ( c.isValid() )  {
+  if ( o ) {
+    Alignment c = o->get( alignment_key, pool );
+    if ( c.isValid() ) {
       return c;
     }
     invalidHandleError<Alignment>();
@@ -163,11 +161,11 @@ Alignment Container::get(const string& alignment_key, const UserPool& pool)  {
 }
 
 /// Access to alignment objects
-Alignment Container::get(key_type alignment_key, const UserPool& pool)  {
+Alignment Container::get( key_type alignment_key, const UserPool& pool ) {
   Object* o = ptr();
-  if ( o )  {
-    Alignment c = o->get(alignment_key, pool);
-    if ( c.isValid() )  {
+  if ( o ) {
+    Alignment c = o->get( alignment_key, pool );
+    if ( c.isValid() ) {
       return c;
     }
     invalidHandleError<Alignment>();

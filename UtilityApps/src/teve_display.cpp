@@ -20,28 +20,28 @@
 #include "EvNavHandler.h"
 #include "MultiView.h"
 
-#include "run_plugin.h"
 #include "TRint.h"
+#include "run_plugin.h"
 
-#include "TEveGeoNode.h"
 #include "TEveBrowser.h"
-#include "TGNumberEntry.h"
-#include "TGButton.h"
-#include "TGLabel.h"
-#include "TStyle.h"
-#include "TGComboBox.h"
+#include "TEveGeoNode.h"
 #include "TEveManager.h"
-#include "TSystem.h"
-#include "TGLViewer.h"
-#include "TEveViewer.h"
-#include "TGLPerspectiveCamera.h"
-#include "TGLCamera.h"
 #include "TEveStraightLineSet.h"
+#include "TEveViewer.h"
+#include "TGButton.h"
+#include "TGComboBox.h"
+#include "TGLCamera.h"
+#include "TGLPerspectiveCamera.h"
+#include "TGLViewer.h"
+#include "TGLabel.h"
+#include "TGNumberEntry.h"
+#include "TStyle.h"
 #include "TSysEvtHandler.h"
+#include "TSystem.h"
 //#include "TEvePad.h"
-#include <TEveScene.h>
-#include <TEveProjectionManager.h>
 #include <TEveProjectionAxes.h>
+#include <TEveProjectionManager.h>
+#include <TEveScene.h>
 #include <TEveWindow.h>
 
 #include "TGeoManager.h"
@@ -55,40 +55,38 @@
 
 #include "TGeoShape.h"
 
-
 #include "TGLScenePad.h"
 
-
-using namespace DD4hep ;
-using namespace DDRec ;
-using namespace Geometry ;
-using namespace DDSurfaces ;
+using namespace DD4hep;
+using namespace DDRec;
+using namespace Geometry;
+using namespace DDSurfaces;
 
 //=====================================================================================
-// function declarations: 
+// function declarations:
 void next_event();
 void make_gui();
 
-TEveStraightLineSet* getSurfaces(int col=kRed, const SurfaceType& type=SurfaceType(), TString name="Surfaces" ) ;
-TEveStraightLineSet* getSurfaceVectors(bool addO=true, bool addU= true, bool addV=true, bool addN=true,TString name="SurfaceVectors",int color=kGreen) ;
+TEveStraightLineSet* getSurfaces( int col = kRed, const SurfaceType& type = SurfaceType(), TString name = "Surfaces" );
+TEveStraightLineSet* getSurfaceVectors( bool addO = true, bool addU = true, bool addV = true, bool addN = true,
+                                        TString name = "SurfaceVectors", int color = kGreen );
 
 //=====================================================================================
 
-static long teve_display(LCDD& lcdd, int /* argc */, char** /* argv */) {
-
+static long teve_display( LCDD& lcdd, int /* argc */, char** /* argv */ ) {
   TGeoManager* mgr = &lcdd.manager();
-  mgr->SetNsegments(100); // Increase the visualization resolution.
+  mgr->SetNsegments( 100 );  // Increase the visualization resolution.
   TEveManager::Create();
 
   // mgr->SetVisOption(1) ;
   // mgr->SetVisLevel(4) ;
-  
+
   //  gEve->fGeometries->Add(new TObjString("DefaultGeometry"),mgr);
 
-  TEveGeoTopNode* tn = new TEveGeoTopNode(mgr, mgr->GetTopNode());
+  TEveGeoTopNode* tn = new TEveGeoTopNode( mgr, mgr->GetTopNode() );
   // option 0 in TEve seems to correspond to option 1 in TGeo ( used in geoDisplay ...)
-  tn->SetVisOption(0) ;
-  tn->SetVisLevel(4);
+  tn->SetVisOption( 0 );
+  tn->SetVisLevel( 4 );
 
   /* EvNavHandler *fh = */ new EvNavHandler;
 
@@ -105,153 +103,146 @@ static long teve_display(LCDD& lcdd, int /* argc */, char** /* argv */) {
   // tn->CSCApplyMainTransparencyToAllChildren() ;
   // tn->SetMainTransparency( 80 ) ;
 
-
   gEve->AddGlobalElement( tn );
 
-  TEveElement* surfaces = getSurfaces(  kRed, SurfaceType( SurfaceType::Sensitive ), "SensitiveSurfaces" ) ;
-  TEveElement* helperSurfaces = getSurfaces(  kGray, SurfaceType( SurfaceType::Helper ),"HelperSurfaces" ) ;
-  TEveElement* surfaceVectors = getSurfaceVectors(1,0,0,1,"SurfaceVectorsN",kGreen) ;
+  TEveElement* surfaces       = getSurfaces( kRed, SurfaceType( SurfaceType::Sensitive ), "SensitiveSurfaces" );
+  TEveElement* helperSurfaces = getSurfaces( kGray, SurfaceType( SurfaceType::Helper ), "HelperSurfaces" );
+  TEveElement* surfaceVectors = getSurfaceVectors( 1, 0, 0, 1, "SurfaceVectorsN", kGreen );
 
-  gEve->AddGlobalElement( surfaces ) ;
-  gEve->AddGlobalElement( helperSurfaces ) ;
-  gEve->AddGlobalElement( surfaceVectors ) ;
-  
-  
-  TEveElement* surfaceVectors_u = getSurfaceVectors(0,1,0,0,"SurfaceVectorsU",kMagenta) ;
-  
-  gEve->AddGlobalElement( surfaceVectors_u ) ;
+  gEve->AddGlobalElement( surfaces );
+  gEve->AddGlobalElement( helperSurfaces );
+  gEve->AddGlobalElement( surfaceVectors );
 
-  TEveElement* surfaceVectors_v = getSurfaceVectors(0,0,1,0,"SurfaceVectorsV",kBlack) ;
-  
-  gEve->AddGlobalElement( surfaceVectors_v ) ;
+  TEveElement* surfaceVectors_u = getSurfaceVectors( 0, 1, 0, 0, "SurfaceVectorsU", kMagenta );
 
-  TGLViewer *v = gEve->GetDefaultGLViewer();
+  gEve->AddGlobalElement( surfaceVectors_u );
+
+  TEveElement* surfaceVectors_v = getSurfaceVectors( 0, 0, 1, 0, "SurfaceVectorsV", kBlack );
+
+  gEve->AddGlobalElement( surfaceVectors_v );
+
+  TGLViewer* v = gEve->GetDefaultGLViewer();
   // v->GetClipSet()->SetClipType(TGLClip::kClipPlane);
   //  v->ColorSet().Background().SetColor(kMagenta+4);
-  v->ColorSet().Background().SetColor(kWhite);
-  v->SetGuideState(TGLUtil::kAxesEdge, kTRUE, kFALSE, 0);
-  v->RefreshPadEditor(v);
+  v->ColorSet().Background().SetColor( kWhite );
+  v->SetGuideState( TGLUtil::kAxesEdge, kTRUE, kFALSE, 0 );
+  v->RefreshPadEditor( v );
   //  v->CurrentCamera().RotateRad(-1.2, 0.5);
 
-  gEve->GetGlobalScene()->GetGLScene()->SetSelectable(kFALSE) ; //change for debugging (kTRUE);
-
+  gEve->GetGlobalScene()->GetGLScene()->SetSelectable( kFALSE );  // change for debugging (kTRUE);
 
   MultiView::instance()->ImportGeomRPhi( surfaces );
-  MultiView::instance()->ImportGeomRhoZ( surfaces ) ;
+  MultiView::instance()->ImportGeomRhoZ( surfaces );
   MultiView::instance()->ImportGeomRPhi( helperSurfaces );
-  MultiView::instance()->ImportGeomRhoZ( helperSurfaces ) ;
-
+  MultiView::instance()->ImportGeomRhoZ( helperSurfaces );
 
   make_gui();
 
   next_event();
 
-  gEve->FullRedraw3D(kTRUE);
+  gEve->FullRedraw3D( kTRUE );
 
   return 1;
 }
-DECLARE_APPLY(DD4hepTEveDisplay,teve_display)
-
+DECLARE_APPLY( DD4hepTEveDisplay, teve_display )
 
 //=====================================================================================================================
 
-int main(int argc,char** argv)  {
-  return main_default("DD4hepTEveDisplay",argc,argv);
+int main( int argc, char** argv ) {
+  return main_default( "DD4hepTEveDisplay", argc, argv );
 }
 
 //=====================================================================================================================
 
-
-TEveStraightLineSet* getSurfaceVectors(bool addO, bool addU, bool addV, bool addN, TString name,int color) {
-
-  TEveStraightLineSet* ls = new TEveStraightLineSet(name);
+TEveStraightLineSet* getSurfaceVectors( bool addO, bool addU, bool addV, bool addN, TString name, int color ) {
+  TEveStraightLineSet* ls = new TEveStraightLineSet( name );
 
   LCDD& lcdd = LCDD::getInstance();
 
-  DetElement world = lcdd.world() ;
+  DetElement world = lcdd.world();
 
   // create a list of all surfaces in the detector:
-  SurfaceHelper surfMan(  world ) ;
+  SurfaceHelper surfMan( world );
 
-  const SurfaceList& sL = surfMan.surfaceList() ;
+  const SurfaceList& sL = surfMan.surfaceList();
 
-  for( SurfaceList::const_iterator it = sL.begin() ; it != sL.end() ; ++it ){
+  for ( SurfaceList::const_iterator it = sL.begin(); it != sL.end(); ++it ) {
+    ISurface*                   surf = *it;
+    const DDSurfaces::Vector3D& u    = surf->u();
+    const DDSurfaces::Vector3D& v    = surf->v();
+    const DDSurfaces::Vector3D& n    = surf->normal();
+    const DDSurfaces::Vector3D& o    = surf->origin();
 
-    ISurface* surf = *it ;
-    const DDSurfaces::Vector3D& u = surf->u() ;
-    const DDSurfaces::Vector3D& v = surf->v() ;
-    const DDSurfaces::Vector3D& n = surf->normal() ;
-    const DDSurfaces::Vector3D& o = surf->origin() ;
+    DDSurfaces::Vector3D ou = o + u;
+    DDSurfaces::Vector3D ov = o + v;
+    DDSurfaces::Vector3D on = o + n;
 
-    DDSurfaces::Vector3D ou = o + u ;
-    DDSurfaces::Vector3D ov = o + v ;
-    DDSurfaces::Vector3D on = o + n ;
- 
-    if (addU) ls->AddLine( o.x(), o.y(), o.z(), ou.x() , ou.y() , ou.z()  )->fId ;
-    
-//     TEveStraightLineSet::Marker_t *m = ls->AddMarker(id,1.);
-    
-    if (addV) ls->AddLine( o.x(), o.y(), o.z(), ov.x() , ov.y() , ov.z()  )->fId ;
-    if (addN) ls->AddLine( o.x(), o.y(), o.z(), on.x() , on.y() , on.z()  )->fId ;
-    if (addO) ls->AddMarker(  o.x(), o.y(), o.z() );
+    if ( addU )
+      ls->AddLine( o.x(), o.y(), o.z(), ou.x(), ou.y(), ou.z() )->fId;
+
+    //     TEveStraightLineSet::Marker_t *m = ls->AddMarker(id,1.);
+
+    if ( addV )
+      ls->AddLine( o.x(), o.y(), o.z(), ov.x(), ov.y(), ov.z() )->fId;
+    if ( addN )
+      ls->AddLine( o.x(), o.y(), o.z(), on.x(), on.y(), on.z() )->fId;
+    if ( addO )
+      ls->AddMarker( o.x(), o.y(), o.z() );
   }
-  ls->SetLineColor( color ) ;
-  ls->SetMarkerColor( kBlue ) ;
-  ls->SetMarkerSize(1);
-  ls->SetMarkerStyle(4);
-  
+  ls->SetLineColor( color );
+  ls->SetMarkerColor( kBlue );
+  ls->SetMarkerSize( 1 );
+  ls->SetMarkerStyle( 4 );
+
   //  gEve->AddElement(ls);
 
   return ls;
 }
 //=====================================================================================
-TEveStraightLineSet* getSurfaces(int col, const SurfaceType& type, TString name) {
-
-  TEveStraightLineSet* ls = new TEveStraightLineSet(name);
+TEveStraightLineSet* getSurfaces( int col, const SurfaceType& type, TString name ) {
+  TEveStraightLineSet* ls = new TEveStraightLineSet( name );
 
   LCDD& lcdd = LCDD::getInstance();
 
-  DetElement world = lcdd.world() ;
+  DetElement world = lcdd.world();
 
   // create a list of all surfaces in the detector:
-  SurfaceHelper surfMan(  world ) ;
+  SurfaceHelper surfMan( world );
 
-  const SurfaceList& sL = surfMan.surfaceList() ;
+  const SurfaceList& sL = surfMan.surfaceList();
 
-//    std::cout << " getSurfaces() for "<<name<<" - #surfaces : " << sL.size() << std::endl ;
+  //    std::cout << " getSurfaces() for "<<name<<" - #surfaces : " << sL.size() << std::endl ;
 
-  for( SurfaceList::const_iterator it = sL.begin() ; it != sL.end() ; ++it ){
+  for ( SurfaceList::const_iterator it = sL.begin(); it != sL.end(); ++it ) {
+    Surface* surf = dynamic_cast<Surface*>( *it );
 
-    Surface* surf = dynamic_cast< Surface*> ( *it ) ;
+    if ( !surf )
+      continue;
 
-    if( ! surf ) 
-      continue ;
-    
-    if( ! ( surf->type().isVisible() && ( surf->type().isSimilar( type ) ) ) ) 
-      continue ;
+    if ( !( surf->type().isVisible() && ( surf->type().isSimilar( type ) ) ) )
+      continue;
 
-//     std::cout << " **** drawSurfaces() : empty lines vector for surface " << *surf << std::endl ;
+    //     std::cout << " **** drawSurfaces() : empty lines vector for surface " << *surf << std::endl ;
 
-    const std::vector< std::pair<Vector3D,Vector3D> > lines = surf->getLines() ;
+    const std::vector<std::pair<Vector3D, Vector3D>> lines = surf->getLines();
 
-    if( lines.empty() )
-      std::cout << " **** drawSurfaces() : empty lines vector for surface " << *surf << std::endl ;
+    if ( lines.empty() )
+      std::cout << " **** drawSurfaces() : empty lines vector for surface " << *surf << std::endl;
 
-    unsigned nL = lines.size() ;
+    unsigned nL = lines.size();
 
-    for( unsigned i=0 ; i<nL ; ++i){
+    for ( unsigned i = 0; i < nL; ++i ) {
+      //      std::cout << " **** drawSurfaces() : draw line for surface " <<   lines[i].first << " - " <<
+      //      lines[i].second  << std::endl ;
 
-      //      std::cout << " **** drawSurfaces() : draw line for surface " <<   lines[i].first << " - " <<  lines[i].second  << std::endl ;
-
-      ls->AddLine( lines[i].first.x(),  lines[i].first.y(),  lines[i].first.z(), 
-                   lines[i].second.x(), lines[i].second.y(), lines[i].second.z() ) ;
+      ls->AddLine( lines[ i ].first.x(), lines[ i ].first.y(), lines[ i ].first.z(), lines[ i ].second.x(),
+                   lines[ i ].second.y(), lines[ i ].second.z() );
     }
-    
-    ls->SetLineColor( col ) ;
-    ls->SetMarkerColor( col ) ;
-    ls->SetMarkerSize(.1);
-    ls->SetMarkerStyle(4);
 
+    ls->SetLineColor( col );
+    ls->SetMarkerColor( col );
+    ls->SetMarkerSize( .1 );
+    ls->SetMarkerStyle( 4 );
   }
 
   return ls;
@@ -260,42 +251,39 @@ TEveStraightLineSet* getSurfaces(int col, const SurfaceType& type, TString name)
 //=====================================================================================
 
 void make_gui() {
-
   // Create minimal GUI for event navigation.
 
   TEveBrowser* browser = gEve->GetBrowser();
-  browser->StartEmbedding(TRootBrowser::kLeft);
+  browser->StartEmbedding( TRootBrowser::kLeft );
 
-  TGMainFrame* frmMain = new TGMainFrame(gClient->GetRoot(), 1000, 600);
-  frmMain->SetWindowName("DD4hep GUI");
-  frmMain->SetCleanup(kDeepCleanup);
+  TGMainFrame* frmMain = new TGMainFrame( gClient->GetRoot(), 1000, 600 );
+  frmMain->SetWindowName( "DD4hep GUI" );
+  frmMain->SetCleanup( kDeepCleanup );
 
-  TGHorizontalFrame* hf = new TGHorizontalFrame(frmMain);
+  TGHorizontalFrame* hf = new TGHorizontalFrame( frmMain );
   {
-      
-    TString icondir( Form("%s/icons/", gSystem->Getenv("ROOTSYS")) );
-    TGPictureButton* b = 0;
-    EvNavHandler    *fh = new EvNavHandler;
+    TString          icondir( Form( "%s/icons/", gSystem->Getenv( "ROOTSYS" ) ) );
+    TGPictureButton* b  = 0;
+    EvNavHandler*    fh = new EvNavHandler;
 
-    b = new TGPictureButton(hf, gClient->GetPicture(icondir+"GoBack.gif"));
-    b->SetEnabled(kFALSE);
-    b->SetToolTipText("Go to previous event - not supported.");
-    hf->AddFrame(b);
-    b->Connect("Clicked()", "EvNavHandler", fh, "Bck()");
+    b = new TGPictureButton( hf, gClient->GetPicture( icondir + "GoBack.gif" ) );
+    b->SetEnabled( kFALSE );
+    b->SetToolTipText( "Go to previous event - not supported." );
+    hf->AddFrame( b );
+    b->Connect( "Clicked()", "EvNavHandler", fh, "Bck()" );
 
-    b = new TGPictureButton(hf, gClient->GetPicture(icondir+"GoForward.gif"));
-    b->SetToolTipText("Generate new event.");
-    hf->AddFrame(b);
-    b->Connect("Clicked()", "EvNavHandler", fh, "Fwd()");
+    b = new TGPictureButton( hf, gClient->GetPicture( icondir + "GoForward.gif" ) );
+    b->SetToolTipText( "Generate new event." );
+    hf->AddFrame( b );
+    b->Connect( "Clicked()", "EvNavHandler", fh, "Fwd()" );
   }
-  frmMain->AddFrame(hf);
+  frmMain->AddFrame( hf );
 
   frmMain->MapSubwindows();
   frmMain->Resize();
   frmMain->MapWindow();
 
   browser->StopEmbedding();
-  browser->SetTabTitle("Event Control", 0);
+  browser->SetTabTitle( "Event Control", 0 );
 }
 //=====================================================================================
-

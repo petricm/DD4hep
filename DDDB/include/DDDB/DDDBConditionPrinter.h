@@ -29,64 +29,69 @@ using namespace DD4hep;
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /// Namespace for the AIDA detector description toolkit supporting XML utilities
-  namespace DDDB {
+/// Namespace for the AIDA detector description toolkit supporting XML utilities
+namespace DDDB {
 
-    /// DDDB Conditions data dumper.
-    /**
-     *   \author  M.Frank
-     *   \version 1.0
-     *   \date    31/03/2016
-     *   \ingroup DD4HEP_DDDB
-     */
-    class ConditionPrinter : public Conditions::Condition::Processor {
-    public:
+/// DDDB Conditions data dumper.
+/**
+ *   \author  M.Frank
+ *   \version 1.0
+ *   \date    31/03/2016
+ *   \ingroup DD4HEP_DDDB
+ */
+class ConditionPrinter : public Conditions::Condition::Processor {
+ public:
+  /// DDDB Conditions data dumper helper to output parameter maps.
+  /**
+   *   \author  M.Frank
+   *   \version 1.0
+   *   \date    31/03/2016
+   *   \ingroup DD4HEP_DDDB
+   */
+  class ParamPrinter {
+   protected:
+    /// Printout prefix
+    std::string& m_prefix;
 
-      /// DDDB Conditions data dumper helper to output parameter maps.
-      /**
-       *   \author  M.Frank
-       *   \version 1.0
-       *   \date    31/03/2016
-       *   \ingroup DD4HEP_DDDB
-       */
-      class ParamPrinter {
-      protected:
-	/// Printout prefix
-	std::string& m_prefix;
-      public:
+   public:
+    /// Initializing constructor
+    ParamPrinter( std::string& prefix );
+    /// Default destructor
+    virtual ~ParamPrinter() {
+    }
 
-	/// Initializing constructor
-        ParamPrinter(std::string& prefix);
-	/// Default destructor
-	virtual ~ParamPrinter()  {}
+    /// Set prefix for prinouts
+    void setPrefix( const std::string& value ) {
+      m_prefix = value;
+    }
+    /// Access prefix value
+    const std::string& prefix() const {
+      return m_prefix;
+    }
+    /// Callback to output conditions information
+    virtual void operator()( const Conditions::AbstractMap::Params::value_type& obj ) const;
+  };
 
-	/// Set prefix for prinouts
-	void setPrefix(const std::string& value)  {  m_prefix = value; }
-	/// Access prefix value
-	const std::string& prefix() const         {   return m_prefix; }
-	/// Callback to output conditions information
-	virtual void operator()(const Conditions::AbstractMap::Params::value_type& obj)  const;
-      };
+ protected:
+  std::string   m_prefix;
+  ParamPrinter* m_print;
+  int           m_flag;
 
-    protected:
-      std::string m_prefix;
-      ParamPrinter* m_print;
-      int    m_flag;
+ public:
+  typedef Conditions::Condition Cond;
 
-    public:
-      typedef Conditions::Condition Cond;
+  /// Initializing constructor
+  ConditionPrinter( const std::string& prefix = "", int flag = Cond::NO_NAME | Cond::WITH_IOV | Cond::WITH_ADDRESS,
+                    ParamPrinter* prt = 0 );
+  /// Set prefix for prinouts
+  void setPrefix( const std::string& value ) {
+    m_prefix = value;
+  }
+  /// Callback to output conditions information
+  virtual int operator()( Cond cond );
+};
 
-      /// Initializing constructor
-      ConditionPrinter(const std::string& prefix="", 
-		       int flag=Cond::NO_NAME|Cond::WITH_IOV|Cond::WITH_ADDRESS,
-		       ParamPrinter* prt=0);
-      /// Set prefix for prinouts
-      void setPrefix(const std::string& value)  {  m_prefix = value; }
-      /// Callback to output conditions information
-      virtual int operator()(Cond cond);
-    };
-
-  } /* End namespace DDDB    */
+} /* End namespace DDDB    */
 } /* End namespace DD4hep    */
 
 #endif /* DD4HEP_DDDB_DDDBCONDITIONPRINTER_H  */

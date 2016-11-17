@@ -14,139 +14,148 @@
 #define DD4HEP_GEOMETRY_INSTANCECOUNT_H
 
 // Framework include files
-#include <typeinfo>
 #include <string>
+#include <typeinfo>
 
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /// Helper to support object counting when debugging memory leaks
+/// Helper to support object counting when debugging memory leaks
+/**
+ * Small class to enable object construction/destruction tracing
+ *
+ *  \author  M.Frank
+ *  \version 1.0
+ *  \ingroup DD4HEP
+ */
+struct InstanceCount {
+ public:
+  typedef long long int counter_t;
+  /// Enumeration to steer the output
+  enum { NONE = 1 << 0, STRING = 1 << 1, TYPEINFO = 1 << 2, ALL = STRING | TYPEINFO };
+
+  /// Internal class to could object constructions and destructions
   /**
-   * Small class to enable object construction/destruction tracing
+   * Small class to enable object construction/destruction tracing.
    *
    *  \author  M.Frank
    *  \version 1.0
    *  \ingroup DD4HEP
    */
-  struct InstanceCount {
-  public:
-    typedef long long int counter_t;
-    /// Enumeration to steer the output
-    enum {
-      NONE = 1 << 0, STRING = 1 << 1, TYPEINFO = 1 << 2, ALL = STRING | TYPEINFO
-    };
+  class Counter {
+   private:
+    /// Reference counter value
+    counter_t m_count;
+    /// Increment counter value
+    counter_t m_tot;
+    /// Maximum number of simultaneous instances
+    counter_t m_max;
 
-    /// Internal class to could object constructions and destructions
-    /**
-     * Small class to enable object construction/destruction tracing.
-     *
-     *  \author  M.Frank
-     *  \version 1.0
-     *  \ingroup DD4HEP
-     */
-    class Counter {
-    private:
-      /// Reference counter value
-      counter_t m_count;
-      /// Increment counter value
-      counter_t m_tot;
-      /// Maximum number of simultaneous instances
-      counter_t m_max;
-    public:
-      /// Default constructor
-      Counter()
-        : m_count(0), m_tot(0), m_max(0) {
-      }
-      /// Copy constructor
-      Counter(const Counter& c)
-        : m_count(c.m_count), m_tot(c.m_tot), m_max(c.m_max) {
-      }
-      /// Destructor
-      ~Counter() {
-      }
-      /// Increment counter
-      void increment() {
-        ++m_count;
-        ++m_tot;
-        m_max = std::max(m_max,m_count);
-      }
-      /// Decrement counter
-      void decrement() {
-        --m_count;
-      }
-      /// Access counter value
-      counter_t value() const {
-        return m_count;
-      }
-      /// Access counter value
-      counter_t total() const {
-        return m_tot;
-      }
-      /// Access maximum counter value
-      counter_t maximum() const {
-        return m_max;
-      }
-    };
-  public:
-    /// Standard Constructor - No need to call explicitly
-    InstanceCount();
-    /// Standard Destructor - No need to call explicitly
-    virtual ~InstanceCount();
-    /// Access counter object for local caching on optimizations
-    static Counter* getCounter(const std::type_info& typ);
-    /// Access counter object for local caching on optimizations
-    static Counter* getCounter(const std::string& typ);
-    /// Increment count according to type information
-    template <class T> static void increment(T*) {
-      increment(typeid(T));
+   public:
+    /// Default constructor
+    Counter() : m_count( 0 ), m_tot( 0 ), m_max( 0 ) {
     }
-    /// Decrement count according to type information
-    template <class T> static void decrement(T*) {
-      decrement(typeid(T));
+    /// Copy constructor
+    Counter( const Counter& c ) : m_count( c.m_count ), m_tot( c.m_tot ), m_max( c.m_max ) {
     }
-    /// Access current counter
-    template <class T> static counter_t get(T*) {
-      return getCounter(typeid(T))->value();
+    /// Destructor
+    ~Counter() {
     }
-    /// Increment count according to type information
-    static void increment(const std::type_info& typ);
-    /// Decrement count according to type information
-    static void decrement(const std::type_info& typ);
-    /// Access current counter
-    static counter_t get(const std::type_info& typ) {
-      return getCounter(typ)->value();
+    /// Increment counter
+    void increment() {
+      ++m_count;
+      ++m_tot;
+      m_max = std::max( m_max, m_count );
     }
-    /// Increment count according to string information
-    static void increment(const std::string& typ);
-    /// Decrement count according to string information
-    static void decrement(const std::string& typ);
-    /// Access current counter
-    static counter_t get(const std::string& typ) {
-      return getCounter(typ)->value();
+    /// Decrement counter
+    void decrement() {
+      --m_count;
     }
-    /// Dump list of instance counters
-    static void dump(int which = ALL);
-    /// Clear list of instance counters
-    static void clear(int which = ALL);
-    /// Check if tracing is enabled.
-    static bool doTrace();
-    /// Enable/Disable tracing
-    static void doTracing(bool value);
+    /// Access counter value
+    counter_t value() const {
+      return m_count;
+    }
+    /// Access counter value
+    counter_t total() const {
+      return m_tot;
+    }
+    /// Access maximum counter value
+    counter_t maximum() const {
+      return m_max;
+    }
   };
 
-  /// Helper class to count call stack depths of certain functions
-  /**
-   * Small class to count re-entrancy calls
-   *
-   *  \author  M.Frank
-   *  \version 1.0
-   *  \ingroup DD4HEP
-   */
-  template <typename T> struct Increment {
-    static int& counter() { static int cnt=0; return cnt; }
-    Increment() { ++counter(); }
-    ~Increment() { --counter(); }
-  };
+ public:
+  /// Standard Constructor - No need to call explicitly
+  InstanceCount();
+  /// Standard Destructor - No need to call explicitly
+  virtual ~InstanceCount();
+  /// Access counter object for local caching on optimizations
+  static Counter* getCounter( const std::type_info& typ );
+  /// Access counter object for local caching on optimizations
+  static Counter* getCounter( const std::string& typ );
+  /// Increment count according to type information
+  template <class T>
+  static void increment( T* ) {
+    increment( typeid( T ) );
+  }
+  /// Decrement count according to type information
+  template <class T>
+  static void decrement( T* ) {
+    decrement( typeid( T ) );
+  }
+  /// Access current counter
+  template <class T>
+  static counter_t get( T* ) {
+    return getCounter( typeid( T ) )->value();
+  }
+  /// Increment count according to type information
+  static void increment( const std::type_info& typ );
+  /// Decrement count according to type information
+  static void decrement( const std::type_info& typ );
+  /// Access current counter
+  static counter_t get( const std::type_info& typ ) {
+    return getCounter( typ )->value();
+  }
+  /// Increment count according to string information
+  static void increment( const std::string& typ );
+  /// Decrement count according to string information
+  static void decrement( const std::string& typ );
+  /// Access current counter
+  static counter_t get( const std::string& typ ) {
+    return getCounter( typ )->value();
+  }
+  /// Dump list of instance counters
+  static void dump( int which = ALL );
+  /// Clear list of instance counters
+  static void clear( int which = ALL );
+  /// Check if tracing is enabled.
+  static bool doTrace();
+  /// Enable/Disable tracing
+  static void doTracing( bool value );
+};
+
+/// Helper class to count call stack depths of certain functions
+/**
+ * Small class to count re-entrancy calls
+ *
+ *  \author  M.Frank
+ *  \version 1.0
+ *  \ingroup DD4HEP
+ */
+template <typename T>
+struct Increment {
+  static int& counter() {
+    static int cnt = 0;
+    return cnt;
+  }
+  Increment() {
+    ++counter();
+  }
+  ~Increment() {
+    --counter();
+  }
+};
 
 } /* End namespace DD4hep             */
-#endif    /* DD4HEP_GEOMETRY_INSTANCECOUNT_H     */
+#endif /* DD4HEP_GEOMETRY_INSTANCECOUNT_H     */

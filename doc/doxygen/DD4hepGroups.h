@@ -15,7 +15,6 @@
  */
 /**@}*/
 
-
 /// DD4hep geometry components, classes and functions
 /**
  *  \defgroup DD4HEP_GEOMETRY DD4hep::Geometry components, classes and objects
@@ -56,7 +55,6 @@
 
 /**@}*/
 
-
 /// XercesC internal class. Not described here.
 class ErrorHandler {};
 
@@ -81,9 +79,7 @@ namespace IO {}
 /// LCIO namespace. See http://lcio.desy.de \ingroup LCIO
 namespace UTIL {}
 
-
 /**@}*/
-
 
 /// Plugins of all kinds and purposes
 /**

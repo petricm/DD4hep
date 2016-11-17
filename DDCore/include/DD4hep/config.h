@@ -15,8 +15,8 @@
 
 #define DD4HEP_INSTANCE_COUNTS
 #ifdef DD4HEP_INSTANCE_COUNTS
-#define INCREMENT_COUNTER InstanceCount::increment(this)
-#define DECREMENT_COUNTER InstanceCount::decrement(this)
+#define INCREMENT_COUNTER InstanceCount::increment( this )
+#define DECREMENT_COUNTER InstanceCount::decrement( this )
 #else
 #define INCREMENT_COUNTER
 #define DECREMENT_COUNTER
@@ -25,9 +25,7 @@
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /// Namespace for the geometry part of the AIDA detector description toolkit
-  namespace Geometry {
-
-  } /* End namespace Geometry  */
+/// Namespace for the geometry part of the AIDA detector description toolkit
+namespace Geometry {} /* End namespace Geometry  */
 } /*   End namespace DD4hep    */
-#endif    /* DD4HEP_CONFIG_H         */
+#endif /* DD4HEP_CONFIG_H         */

@@ -16,6 +16,5 @@
 #include "DDG4/Geant4Call.h"
 
 /// Default destructor (keep here to avoid weak linkage to vtable)
-DD4hep::Simulation::Geant4Call::~Geant4Call()   {
+DD4hep::Simulation::Geant4Call::~Geant4Call() {
 }
-

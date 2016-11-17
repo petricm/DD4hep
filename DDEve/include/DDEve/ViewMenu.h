@@ -25,52 +25,50 @@ class TGMenuEntry;
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  // Forward declarations
-  class View;
+// Forward declarations
+class View;
 
-  /// class ViewMenu  ViewMenu.h DDEve/ViewMenu.h
-  /*
-   *  \author  M.Frank
-   *  \version 1.0
-   *  \ingroup DD4HEP_EVE
-   */
-  class ViewMenu : public PopupMenu {
-  public:
+/// class ViewMenu  ViewMenu.h DDEve/ViewMenu.h
+/*
+ *  \author  M.Frank
+ *  \version 1.0
+ *  \ingroup DD4HEP_EVE
+ */
+class ViewMenu : public PopupMenu {
+ public:
+ protected:
+  /// Reference to display manager
+  Display* m_display;
+  /// Menu title
+  std::string m_title;
 
-  protected:
-    /// Reference to display manager
-    Display* m_display;
-    /// Menu title
-    std::string m_title;
-  public:
-    /// Standard constructor
-    ViewMenu(Display* eve, const std::string& title);
-    /// Default destructor
-    virtual ~ViewMenu();
+ public:
+  /// Standard constructor
+  ViewMenu( Display* eve, const std::string& title );
+  /// Default destructor
+  virtual ~ViewMenu();
 
-    /// Add the menu to the menu bar
-    virtual void Build(TGMenuBar* bar, int hints=kLHintsNormal);
+  /// Add the menu to the menu bar
+  virtual void Build( TGMenuBar* bar, int hints = kLHintsNormal );
 
-    /// Import Geometry data and build the view
-    void BuildView(View *view)  const;
-    /// Menu callback: Create a generic view using the user data
-    void CreateView(TGMenuEntry* e, void* ud);
+  /// Import Geometry data and build the view
+  void BuildView( View* view ) const;
+  /// Menu callback: Create a generic view using the user data
+  void CreateView( TGMenuEntry* e, void* ud );
 
-    /// Create a generic view of a given type with title
-    View* CreateView(const std::string& type,const std::string& title);
-    /// Specialization: Create a new 3D view
-    View* CreateView3D(const std::string& title);
-    /// Specialization: Create a new R-Z view
-    View* CreateRhoZProjection(const std::string& title);
-    /// Specialization: Create a new R-Phi view
-    View* CreateRhoPhiProjection(const std::string& title);
+  /// Create a generic view of a given type with title
+  View* CreateView( const std::string& type, const std::string& title );
+  /// Specialization: Create a new 3D view
+  View* CreateView3D( const std::string& title );
+  /// Specialization: Create a new R-Z view
+  View* CreateRhoZProjection( const std::string& title );
+  /// Specialization: Create a new R-Phi view
+  View* CreateRhoPhiProjection( const std::string& title );
 
-    /// ROOT implementation macro
-    ClassDef(ViewMenu,0);
-  };
+  /// ROOT implementation macro
+  ClassDef( ViewMenu, 0 );
+};
 
 } /* End namespace DD4hep   */
 
-
 #endif /* DD4HEP_DDEVE_VIEWMENU_H */
-

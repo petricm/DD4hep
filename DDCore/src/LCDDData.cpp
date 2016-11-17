@@ -15,52 +15,60 @@
 // Framework include files
 #include "DD4hep/LCDDData.h"
 #include "DD4hep/InstanceCount.h"
-#include "DD4hep/objects/ObjectsInterna.h"
 #include "DD4hep/objects/DetectorInterna.h"
+#include "DD4hep/objects/ObjectsInterna.h"
 
 // ROOT include files
 #include "TGeoManager.h"
 
-namespace DD4hep {  namespace Geometry {    class LCDDImp;  }}
+namespace DD4hep {
+namespace Geometry {
+class LCDDImp;
+}
+}
 
 using namespace DD4hep::Geometry;
 using namespace DD4hep;
 
 /// Default constructor
 LCDDData::LCDDData()
-  : m_manager(0), m_world(), m_trackers(), m_worldVol(),
-    m_trackingVol(), m_field("global"),
-    m_extensions(typeid(LCDDData)), m_volManager(),
-    m_inhibitConstants(false)
-{
-  InstanceCount::increment(this);
+    : m_manager( 0 ),
+      m_world(),
+      m_trackers(),
+      m_worldVol(),
+      m_trackingVol(),
+      m_field( "global" ),
+      m_extensions( typeid( LCDDData ) ),
+      m_volManager(),
+      m_inhibitConstants( false ) {
+  InstanceCount::increment( this );
 }
 
 /// Standard destructor
 LCDDData::~LCDDData() {
   clearData();
-  InstanceCount::decrement(this);
+  InstanceCount::decrement( this );
 }
 
 /// Clear data content: releases all allocated resources
-void LCDDData::destroyData(bool destroy_mgr)   {
+void LCDDData::destroyData( bool destroy_mgr ) {
   m_extensions.clear();
   m_motherVolumes.clear();
 
-  destroyHandle(m_world);
-  destroyHandle(m_field);
-  destroyHandle(m_header);
-  destroyHandles(m_readouts);
-  destroyHandles(m_idDict);
-  destroyHandles(m_limits);
-  destroyHandles(m_regions);
-  destroyHandles(m_alignments);
-  destroyHandles(m_sensitive);
-  destroyHandles(m_display);
-  destroyHandles(m_fields);
-  destroyHandles(m_define);
+  destroyHandle( m_world );
+  destroyHandle( m_field );
+  destroyHandle( m_header );
+  destroyHandles( m_readouts );
+  destroyHandles( m_idDict );
+  destroyHandles( m_limits );
+  destroyHandles( m_regions );
+  destroyHandles( m_alignments );
+  destroyHandles( m_sensitive );
+  destroyHandles( m_display );
+  destroyHandles( m_fields );
+  destroyHandles( m_define );
 
-  destroyHandle(m_volManager);
+  destroyHandle( m_volManager );
   m_properties.clear();
   m_trackers.clear();
   m_trackingVol.clear();
@@ -70,17 +78,16 @@ void LCDDData::destroyData(bool destroy_mgr)   {
   m_materialAir.clear();
   m_inhibitConstants = false;
   if ( destroy_mgr )
-    deletePtr(m_manager);
-  else  {
+    deletePtr( m_manager );
+  else {
     gGeoManager = m_manager;
-    m_manager = 0;
+    m_manager   = 0;
   }
 }
 
-
 /// Clear data content: releases all allocated resources
-void LCDDData::clearData()   {
-  m_extensions.clear(false);
+void LCDDData::clearData() {
+  m_extensions.clear( false );
   m_motherVolumes.clear();
   m_world.clear();
   m_field.clear();
@@ -102,14 +109,14 @@ void LCDDData::clearData()   {
   m_materialVacuum.clear();
   m_materialAir.clear();
   m_volManager.clear();
-  m_manager = 0;
+  m_manager          = 0;
   m_inhibitConstants = false;
 }
 
 /// Adopt all data from source structure
-void LCDDData::adoptData(LCDDData& source)   {
+void LCDDData::adoptData( LCDDData& source ) {
   m_inhibitConstants = source.m_inhibitConstants;
-  m_extensions.move(source.m_extensions);
+  m_extensions.move( source.m_extensions );
   m_motherVolumes  = source.m_motherVolumes;
   m_world          = source.m_world;
   m_field          = source.m_field;

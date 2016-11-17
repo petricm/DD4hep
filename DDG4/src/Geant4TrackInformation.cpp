@@ -20,8 +20,7 @@ using namespace DD4hep;
 using namespace DD4hep::Simulation;
 
 /// Default constructor
-Geant4TrackInformation::Geant4TrackInformation()
-  : G4VUserTrackInformation(), m_flags(0) {
+Geant4TrackInformation::Geant4TrackInformation() : G4VUserTrackInformation(), m_flags( 0 ) {
 }
 
 /// Standard destructor
@@ -29,7 +28,7 @@ Geant4TrackInformation::~Geant4TrackInformation() {
 }
 
 /// Access flag if track should be stored
-Geant4TrackInformation& Geant4TrackInformation::storeTrack(bool value) {
+Geant4TrackInformation& Geant4TrackInformation::storeTrack( bool value ) {
   value ? m_flags |= STORE : m_flags &= ~STORE;
   return *this;
 }

@@ -22,32 +22,28 @@ using namespace std;
 using namespace DD4hep::Geometry;
 
 /// access the field name used to discriminate sub-segmentations
-const std::string& MultiSegmentation::discriminatorName() const   {
+const std::string& MultiSegmentation::discriminatorName() const {
   return access()->implementation->discriminatorName();
 }
 
 /// Discriminating bitfield entry
-BitFieldValue* MultiSegmentation::discriminator() const  {
+BitFieldValue* MultiSegmentation::discriminator() const {
   return access()->implementation->discriminator();
 }
 
 /// The underlying sub-segementations
-const MultiSegmentation::Segmentations&
-MultiSegmentation::subSegmentations()  const   {
+const MultiSegmentation::Segmentations& MultiSegmentation::subSegmentations() const {
   return access()->implementation->subSegmentations();
 }
 
 /// determine the position based on the cell ID
-Position MultiSegmentation::position(const CellID& id) const   {
-  return Position(access()->implementation->position(id));
+Position MultiSegmentation::position( const CellID& id ) const {
+  return Position( access()->implementation->position( id ) );
 }
 
 /// determine the cell ID based on the position
-DD4hep::CellID MultiSegmentation::cellID(const Position& local,
-                                   const Position& global,
-                                   const VolumeID& volID) const
-{
-  return access()->implementation->cellID(local, global, volID);
+DD4hep::CellID MultiSegmentation::cellID( const Position& local, const Position& global, const VolumeID& volID ) const {
+  return access()->implementation->cellID( local, global, volID );
 }
 
 /** \brief Returns a vector<double> of the cellDimensions of the given cell ID
@@ -59,6 +55,6 @@ DD4hep::CellID MultiSegmentation::cellID(const Position& local,
     -# size in x
     -# size in y
 */
-vector<double> MultiSegmentation::cellDimensions(const CellID& id) const  {
-  return access()->implementation->cellDimensions(id);
+vector<double> MultiSegmentation::cellDimensions( const CellID& id ) const {
+  return access()->implementation->cellDimensions( id );
 }

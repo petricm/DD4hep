@@ -7,40 +7,38 @@
 
 /// Class of the ROOT toolkit. See http://root.cern.ch/root/htmldoc/ClassIndex.html \ingroup ROOT
 /** \see http://root.cern.ch/root/htmldoc/ClassIndex.html  */
-class TEveElementList	  	{};
+class TEveElementList {};
 
 /// Class of the ROOT toolkit. See http://root.cern.ch/root/htmldoc/ClassIndex.html \ingroup ROOT
 /** \see http://root.cern.ch/root/htmldoc/ClassIndex.html  */
-class TGeoConeSeg	  	{};
+class TGeoConeSeg {};
 
 /// Class of the ROOT toolkit. See http://root.cern.ch/root/htmldoc/ClassIndex.html \ingroup ROOT
 /** \see http://root.cern.ch/root/htmldoc/ClassIndex.html  */
-class TGeoConeSeg	  	{};
+class TGeoConeSeg {};
 
 /// Class of the ROOT toolkit. See http://root.cern.ch/root/htmldoc/ClassIndex.html \ingroup ROOT
 /** \see http://root.cern.ch/root/htmldoc/ClassIndex.html  */
-class TGeoExtension	  	{};
+class TGeoExtension {};
 
 /// Class of the ROOT toolkit. See http://root.cern.ch/root/htmldoc/ClassIndex.html \ingroup ROOT
 /** \see http://root.cern.ch/root/htmldoc/ClassIndex.html  */
-class TGLAnnotation	  	{};
+class TGLAnnotation {};
 
 /// Class of the ROOT toolkit. See http://root.cern.ch/root/htmldoc/ClassIndex.html \ingroup ROOT
 /** \see http://root.cern.ch/root/htmldoc/ClassIndex.html  */
-class TGMainFrame	  	{};
+class TGMainFrame {};
 
 /// Class of the ROOT toolkit. See http://root.cern.ch/root/htmldoc/ClassIndex.html \ingroup ROOT
 /** \see http://root.cern.ch/root/htmldoc/ClassIndex.html  */
-class TNamed    	  	{};
+class TNamed {};
 
 /// Class of the ROOT toolkit. See http://root.cern.ch/root/htmldoc/ClassIndex.html \ingroup ROOT
 /** \see http://root.cern.ch/root/htmldoc/ClassIndex.html  */
-class TObject	  		{};
-
+class TObject {};
 
 /// ROOT utility namespace. See http://root.cern.ch/root/htmldoc/ClassIndex.html
 namespace ROOT {
-  /// ROOT namespace for mathematical operations and corresponding classes.
-  namespace Math {
-  }
+/// ROOT namespace for mathematical operations and corresponding classes.
+namespace Math {}
 }

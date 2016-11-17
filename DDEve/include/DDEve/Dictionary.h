@@ -15,37 +15,36 @@
 #define DD4HEP_DDEVE_DICTIONARY_H
 
 // Framework include files
+#include "DDEve/Calo2DProjection.h"
+#include "DDEve/Calo3DProjection.h"
+#include "DDEve/CaloLego.h"
 #include "DDEve/Display.h"
 #include "DDEve/EventControl.h"
 #include "DDEve/EventHandler.h"
-#include "DDEve/View3D.h"
+#include "DDEve/MultiView.h"
 #include "DDEve/RhoPhiProjection.h"
 #include "DDEve/RhoZProjection.h"
-#include "DDEve/CaloLego.h"
-#include "DDEve/Calo2DProjection.h"
-#include "DDEve/Calo3DProjection.h"
-#include "DDEve/MultiView.h"
+#include "DDEve/View3D.h"
 
-#include "DDEve/ContextMenu.h"
-#include "DDEve/ViewMenu.h"
 #include "DDEve/Annotation.h"
+#include "DDEve/ContextMenu.h"
 #include "DDEve/DD4hepMenu.h"
-#include "DDEve/ElementList.h"
-#include "DDEve/EveShapeContextMenu.h"
-#include "DDEve/EvePgonSetProjectedContextMenu.h"
 #include "DDEve/DisplayConfiguration.h"
+#include "DDEve/ElementList.h"
+#include "DDEve/EvePgonSetProjectedContextMenu.h"
+#include "DDEve/EveShapeContextMenu.h"
+#include "DDEve/ViewMenu.h"
 
-
-#include "DDEve/GenericEventHandler.h"
 #include "DDEve/DDG4EventHandler.h"
+#include "DDEve/GenericEventHandler.h"
 
 namespace DD4hep {
-  void EveDisplay(const char* xmlFile, const char* eventFileName);
-  struct DDEve {
-    static void run(const char* xmlFile)  {
-      EveDisplay(xmlFile, nullptr);
-    }
-  };
+void EveDisplay( const char* xmlFile, const char* eventFileName );
+struct DDEve {
+  static void run( const char* xmlFile ) {
+    EveDisplay( xmlFile, nullptr );
+  }
+};
 }
 
 #ifdef __CINT__
@@ -55,8 +54,7 @@ namespace DD4hep {
 
 #pragma link C++ namespace DD4hep;
 
-#pragma link C++ function DD4hep::EveDisplay(const char* xmlFile, const char* eventFileName);
-
+#pragma link C++ function DD4hep::EveDisplay( const char* xmlFile, const char* eventFileName );
 
 #pragma link C++ class DD4hep::DDEve;
 #pragma link C++ class DD4hep::Display;

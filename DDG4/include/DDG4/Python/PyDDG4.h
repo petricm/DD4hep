@@ -18,13 +18,12 @@
 
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace Simulation {
-    // Forward declarations
-    class Geant4Kernel;
-  }    // End namespace Simulation
-}      // End namespace DD4hep
-
+/// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
+namespace Simulation {
+// Forward declarations
+class Geant4Kernel;
+}  // End namespace Simulation
+}  // End namespace DD4hep
 
 /// Python interface class for Geant4 python involation
 /**
@@ -32,12 +31,12 @@ namespace DD4hep {
  *  \version 1.0
  *  \ingroup DD4HEP_SIMULATION
  */
-struct PyDDG4  {
+struct PyDDG4 {
   typedef DD4hep::Simulation::Geant4Kernel Kernel;
 
   static int execute();
-  static int process(const char* fname);
-  static int run(Kernel& kernel);
-  static int run(const char* fname);
+  static int process( const char* fname );
+  static int run( Kernel& kernel );
+  static int run( const char* fname );
 };
-#endif // DD4HEP_DDG4_PYDDG4_H
+#endif  // DD4HEP_DDG4_PYDDG4_H

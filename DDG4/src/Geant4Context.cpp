@@ -13,9 +13,9 @@
 //==========================================================================
 
 // Framework include files
-#include "DD4hep/Printout.h"
-#include "DD4hep/InstanceCount.h"
 #include "DDG4/Geant4Context.h"
+#include "DD4hep/InstanceCount.h"
+#include "DD4hep/Printout.h"
 #include "DDG4/Geant4Kernel.h"
 
 // C/C++ include files
@@ -26,61 +26,59 @@ using namespace DD4hep;
 using namespace DD4hep::Simulation;
 
 /// Intializing constructor
-Geant4Run::Geant4Run(const G4Run* run_pointer)
-  : ObjectExtensions(typeid(Geant4Run)), m_run(run_pointer)
-{
-  InstanceCount::increment(this);
+Geant4Run::Geant4Run( const G4Run* run_pointer ) : ObjectExtensions( typeid( Geant4Run ) ), m_run( run_pointer ) {
+  InstanceCount::increment( this );
 }
 
 /// Default destructor
-Geant4Run::~Geant4Run()   {
-  InstanceCount::decrement(this);
+Geant4Run::~Geant4Run() {
+  InstanceCount::decrement( this );
 }
 
 /// Intializing constructor
-Geant4Event::Geant4Event(const G4Event* evt, Geant4Random* rnd)
-  : ObjectExtensions(typeid(Geant4Event)), m_event(evt), m_random(rnd)
-{
-  InstanceCount::increment(this);
+Geant4Event::Geant4Event( const G4Event* evt, Geant4Random* rnd )
+    : ObjectExtensions( typeid( Geant4Event ) ), m_event( evt ), m_random( rnd ) {
+  InstanceCount::increment( this );
 }
 
 /// Default destructor
-Geant4Event::~Geant4Event()  {
-  InstanceCount::decrement(this);
+Geant4Event::~Geant4Event() {
+  InstanceCount::decrement( this );
 }
 
 /// Default constructor
-Geant4Context::Geant4Context(Geant4Kernel* kernel_pointer)
-  : m_kernel(kernel_pointer), m_run(0), m_event(0) {
-  InstanceCount::increment(this);
+Geant4Context::Geant4Context( Geant4Kernel* kernel_pointer ) : m_kernel( kernel_pointer ), m_run( 0 ), m_event( 0 ) {
+  InstanceCount::increment( this );
 }
 
 /// Default destructor
 Geant4Context::~Geant4Context() {
   // Do not delete run and event structures here. This is done outside in the framework
-  InstanceCount::decrement(this);
+  InstanceCount::decrement( this );
 }
 
 /// Set the geant4 run reference
-void Geant4Context::setRun(Geant4Run* new_run)    {
+void Geant4Context::setRun( Geant4Run* new_run ) {
   m_run = new_run;
 }
 
 /// Access the geant4 run -- valid only between BeginRun() and EndRun()!
-Geant4Run& Geant4Context::run()  const   {
-  if ( m_run ) return *m_run;
+Geant4Run& Geant4Context::run() const {
+  if ( m_run )
+    return *m_run;
   invalidHandleError<Geant4Run>();
   return *m_run;
 }
 
 /// Set the geant4 event reference
-void Geant4Context::setEvent(Geant4Event* new_event)   {
+void Geant4Context::setEvent( Geant4Event* new_event ) {
   m_event = new_event;
 }
 
 /// Access the geant4 event -- valid only between BeginEvent() and EndEvent()!
-Geant4Event& Geant4Context::event()  const   {
-  if ( m_event ) return *m_event;
+Geant4Event& Geant4Context::event() const {
+  if ( m_event )
+    return *m_event;
   invalidHandleError<Geant4Event>();
   return *m_event;
 }
@@ -91,10 +89,10 @@ Geometry::LCDD& Geant4Context::lcdd() const {
 }
 
 /// Create a user trajectory
-G4VTrajectory* Geant4Context::createTrajectory(const G4Track* /* track */) const {
-  string err = DD4hep::format("Geant4Kernel", "createTrajectory: Purely virtual method. requires overloading!");
-  DD4hep::printout(DD4hep::FATAL, "Geant4Kernel", "createTrajectory: Purely virtual method. requires overloading!");
-  throw runtime_error(err);
+G4VTrajectory* Geant4Context::createTrajectory( const G4Track* /* track */ ) const {
+  string err = DD4hep::format( "Geant4Kernel", "createTrajectory: Purely virtual method. requires overloading!" );
+  DD4hep::printout( DD4hep::FATAL, "Geant4Kernel", "createTrajectory: Purely virtual method. requires overloading!" );
+  throw runtime_error( err );
 }
 
 /// Access the tracking manager

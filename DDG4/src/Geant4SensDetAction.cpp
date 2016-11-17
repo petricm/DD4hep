@@ -13,19 +13,19 @@
 //==========================================================================
 
 // Framework include files
-#include "DD4hep/Printout.h"
-#include "DD4hep/Primitives.h"
+#include "DDG4/Geant4SensDetAction.h"
 #include "DD4hep/InstanceCount.h"
+#include "DD4hep/Primitives.h"
+#include "DD4hep/Printout.h"
 #include "DDG4/Geant4Kernel.h"
 #include "DDG4/Geant4Mapping.h"
-#include "DDG4/Geant4SensDetAction.h"
+#include "DDG4/Geant4MonteCarloTruth.h"
 #include "DDG4/Geant4StepHandler.h"
 #include "DDG4/Geant4VolumeManager.h"
-#include "DDG4/Geant4MonteCarloTruth.h"
 
 // Geant4 include files
-#include <G4Step.hh>
 #include <G4SDManager.hh>
+#include <G4Step.hh>
 #include <G4VSensitiveDetector.hh>
 
 // C/C++ include files
@@ -59,106 +59,111 @@ namespace {
 #endif
 
 /// Standard action constructor
-Geant4ActionSD::Geant4ActionSD(const std::string& nam)
-  : Geant4Action(0, nam) {
-  InstanceCount::increment(this);
+Geant4ActionSD::Geant4ActionSD( const std::string& nam ) : Geant4Action( 0, nam ) {
+  InstanceCount::increment( this );
 }
 
 /// Default destructor
 Geant4ActionSD::~Geant4ActionSD() {
-  InstanceCount::decrement(this);
+  InstanceCount::decrement( this );
 }
 
 /// Standard constructor
-Geant4Filter::Geant4Filter(Geant4Context* ctxt, const std::string& nam)
-  : Geant4Action(ctxt, nam) {
-  InstanceCount::increment(this);
+Geant4Filter::Geant4Filter( Geant4Context* ctxt, const std::string& nam ) : Geant4Action( ctxt, nam ) {
+  InstanceCount::increment( this );
 }
 
 /// Standard destructor
 Geant4Filter::~Geant4Filter() {
-  InstanceCount::decrement(this);
+  InstanceCount::decrement( this );
 }
 
 /// Filter action. Return true if hits should be processed
-bool Geant4Filter::operator()(const G4Step*) const {
+bool Geant4Filter::operator()( const G4Step* ) const {
   return true;
 }
 
 /// Constructor. The detector element is identified by the name
-Geant4Sensitive::Geant4Sensitive(Geant4Context* ctxt, const string& nam, DetElement det, LCDD& lcdd_ref)
-  : Geant4Action(ctxt, nam), m_sensitiveDetector(0), m_sequence(0),
-    m_lcdd(lcdd_ref), m_detector(det), m_sensitive(), m_readout(), m_segmentation()
-{
-  InstanceCount::increment(this);
-  if (!det.isValid()) {
-    throw runtime_error(format("Geant4Sensitive", "DDG4: Detector elemnt for %s is invalid.", nam.c_str()));
+Geant4Sensitive::Geant4Sensitive( Geant4Context* ctxt, const string& nam, DetElement det, LCDD& lcdd_ref )
+    : Geant4Action( ctxt, nam ),
+      m_sensitiveDetector( 0 ),
+      m_sequence( 0 ),
+      m_lcdd( lcdd_ref ),
+      m_detector( det ),
+      m_sensitive(),
+      m_readout(),
+      m_segmentation() {
+  InstanceCount::increment( this );
+  if ( !det.isValid() ) {
+    throw runtime_error( format( "Geant4Sensitive", "DDG4: Detector elemnt for %s is invalid.", nam.c_str() ) );
   }
-  declareProperty("HitCreationMode", m_hitCreationMode = SIMPLE_MODE);
-  m_sequence  = context()->kernel().sensitiveAction(m_detector.name());
-  m_sensitive = lcdd_ref.sensitiveDetector(det.name());
-  m_readout   = m_sensitive.readout();
+  declareProperty( "HitCreationMode", m_hitCreationMode = SIMPLE_MODE );
+  m_sequence     = context()->kernel().sensitiveAction( m_detector.name() );
+  m_sensitive    = lcdd_ref.sensitiveDetector( det.name() );
+  m_readout      = m_sensitive.readout();
   m_segmentation = m_readout.segmentation();
 }
 
 /// Standard destructor
 Geant4Sensitive::~Geant4Sensitive() {
-  m_filters(&Geant4Filter::release);
+  m_filters( &Geant4Filter::release );
   m_filters.clear();
-  InstanceCount::decrement(this);
+  InstanceCount::decrement( this );
 }
 
 /// Add an actor responding to all callbacks. Sequence takes ownership.
-void Geant4Sensitive::adoptFilter(Geant4Action* action)   {
-  Geant4Filter* filter = dynamic_cast<Geant4Filter*>(action);
-  adopt(filter);
+void Geant4Sensitive::adoptFilter( Geant4Action* action ) {
+  Geant4Filter* filter = dynamic_cast<Geant4Filter*>( action );
+  adopt( filter );
 }
 
 /// Add an actor responding to all callbacks. Sequence takes ownership.
-void Geant4Sensitive::adopt(Geant4Filter* filter) {
-  if (filter) {
+void Geant4Sensitive::adopt( Geant4Filter* filter ) {
+  if ( filter ) {
     filter->addRef();
-    m_filters.add(filter);
+    m_filters.add( filter );
     return;
   }
-  throw runtime_error("Geant4Sensitive: Attempt to add invalid sensitive filter!");
+  throw runtime_error( "Geant4Sensitive: Attempt to add invalid sensitive filter!" );
 }
 
 /// Add an actor responding to all callbacks. Sequence takes ownership.
-void Geant4Sensitive::adoptFilter_front(Geant4Action* action)   {
-  Geant4Filter* filter = dynamic_cast<Geant4Filter*>(action);
-  adopt_front(filter);
+void Geant4Sensitive::adoptFilter_front( Geant4Action* action ) {
+  Geant4Filter* filter = dynamic_cast<Geant4Filter*>( action );
+  adopt_front( filter );
 }
 
 /// Add an actor responding to all callbacks. Sequence takes ownership.
-void Geant4Sensitive::adopt_front(Geant4Filter* filter) {
-  if (filter) {
+void Geant4Sensitive::adopt_front( Geant4Filter* filter ) {
+  if ( filter ) {
     filter->addRef();
-    m_filters.add_front(filter);
+    m_filters.add_front( filter );
     return;
   }
-  throw runtime_error("Geant4Sensitive: Attempt to add invalid sensitive filter!");
+  throw runtime_error( "Geant4Sensitive: Attempt to add invalid sensitive filter!" );
 }
 
 /// Callback before hit processing starts. Invoke all filters.
-bool Geant4Sensitive::accept(const G4Step* step) const {
-  bool result = m_filters.filter(&Geant4Filter::operator(), step);
+bool Geant4Sensitive::accept( const G4Step* step ) const {
+  bool result = m_filters.filter( &Geant4Filter::operator(), step );
   return result;
 }
 
 /// Access to the sensitive detector object
-void Geant4Sensitive::setDetector(Geant4ActionSD* sens_det) {
+void Geant4Sensitive::setDetector( Geant4ActionSD* sens_det ) {
   m_sensitiveDetector = sens_det;
 }
 
 /// Access to the sensitive detector object
 Geant4ActionSD& Geant4Sensitive::detector() const {
-  if (m_sensitiveDetector)
+  if ( m_sensitiveDetector )
     return *m_sensitiveDetector;
-  //m_sensitiveDetector = _getSensitiveDetector(m_detector.name());
-  //if (  m_sensitiveDetector ) return *m_sensitiveDetector;
-  throw runtime_error(format("Geant4Sensitive", "DDG4: The sensitive detector for action %s "
-                             "was not properly configured.", name().c_str()));
+  // m_sensitiveDetector = _getSensitiveDetector(m_detector.name());
+  // if (  m_sensitiveDetector ) return *m_sensitiveDetector;
+  throw runtime_error( format( "Geant4Sensitive",
+                               "DDG4: The sensitive detector for action %s "
+                               "was not properly configured.",
+                               name().c_str() ) );
 }
 
 /// Access to the hosting sequence
@@ -167,18 +172,18 @@ Geant4SensDetActionSequence& Geant4Sensitive::sequence() const {
 }
 
 /// Access HitCollection container names
-const string& Geant4Sensitive::hitCollectionName(size_t which) const {
-  return sequence().hitCollectionName(which);
+const string& Geant4Sensitive::hitCollectionName( size_t which ) const {
+  return sequence().hitCollectionName( which );
 }
 
 /// Retrieve the hits collection associated with this detector by its serial number
-Geant4HitCollection* Geant4Sensitive::collection(size_t which) {
-  return sequence().collection(which);
+Geant4HitCollection* Geant4Sensitive::collection( size_t which ) {
+  return sequence().collection( which );
 }
 
 /// Retrieve the hits collection associated with this detector by its collection identifier
-Geant4HitCollection* Geant4Sensitive::collectionByID(size_t id) {
-  return sequence().collectionByID(id);
+Geant4HitCollection* Geant4Sensitive::collectionByID( size_t id ) {
+  return sequence().collectionByID( id );
 }
 
 /// Define collections created by this sensitivie action object
@@ -186,179 +191,181 @@ void Geant4Sensitive::defineCollections() {
 }
 
 /// Method invoked at the begining of each event.
-void Geant4Sensitive::begin(G4HCofThisEvent* /* HCE */) {
+void Geant4Sensitive::begin( G4HCofThisEvent* /* HCE */ ) {
 }
 
 /// Method invoked at the end of each event.
-void Geant4Sensitive::end(G4HCofThisEvent* /* HCE */) {
+void Geant4Sensitive::end( G4HCofThisEvent* /* HCE */ ) {
 }
 
 /// Method for generating hit(s) using the information of G4Step object.
-bool Geant4Sensitive::process(G4Step* /* step */, G4TouchableHistory* /* history */) {
+bool Geant4Sensitive::process( G4Step* /* step */, G4TouchableHistory* /* history */ ) {
   return false;
 }
 
 /// Method is invoked if the event abortion is occured.
-void Geant4Sensitive::clear(G4HCofThisEvent* /* HCE */) {
+void Geant4Sensitive::clear( G4HCofThisEvent* /* HCE */ ) {
 }
 
 /// Mark the track to be kept for MC truth propagation during hit processing
-void Geant4Sensitive::mark(const G4Track* track) const  {
-  Geant4MonteCarloTruth* truth = context()->event().extension<Geant4MonteCarloTruth>(false);
-  if ( truth ) truth->mark(track);
+void Geant4Sensitive::mark( const G4Track* track ) const {
+  Geant4MonteCarloTruth* truth = context()->event().extension<Geant4MonteCarloTruth>( false );
+  if ( truth )
+    truth->mark( track );
 }
 
 /// Mark the track of this step to be kept for MC truth propagation during hit processing
-void Geant4Sensitive::mark(const G4Step* step) const  {
-  Geant4MonteCarloTruth* truth = context()->event().extension<Geant4MonteCarloTruth>(false);
-  if ( truth ) truth->mark(step);
+void Geant4Sensitive::mark( const G4Step* step ) const {
+  Geant4MonteCarloTruth* truth = context()->event().extension<Geant4MonteCarloTruth>( false );
+  if ( truth )
+    truth->mark( step );
 }
 
 /// Returns the volumeID of the sensitive volume corresponding to the step
-long long int Geant4Sensitive::volumeID(const G4Step* s) {
-  Geant4StepHandler step(s);
+long long int Geant4Sensitive::volumeID( const G4Step* s ) {
+  Geant4StepHandler   step( s );
   Geant4VolumeManager volMgr = Geant4Mapping::instance().volumeManager();
-  VolumeID id = volMgr.volumeID(step.preTouchable());
+  VolumeID            id     = volMgr.volumeID( step.preTouchable() );
   return id;
 }
 
 /// Returns the cellID(volumeID+local coordinate encoding) of the sensitive volume corresponding to the step
-long long int Geant4Sensitive::cellID(const G4Step* s) {
-  StepHandler h(s);
+long long int Geant4Sensitive::cellID( const G4Step* s ) {
+  StepHandler         h( s );
   Geant4VolumeManager volMgr = Geant4Mapping::instance().volumeManager();
-  VolumeID volID = volMgr.volumeID(h.preTouchable());
-  if ( m_segmentation.isValid() )  {
-    G4ThreeVector global = 0.5 * ( h.prePosG4()+h.postPosG4());
-    G4ThreeVector local  = h.preTouchable()->GetHistory()->GetTopTransform().TransformPoint(global);
-    Position loc(local.x()*MM_2_CM, local.y()*MM_2_CM, local.z()*MM_2_CM);
-    Position glob(global.x()*MM_2_CM, global.y()*MM_2_CM, global.z()*MM_2_CM);
-    VolumeID cID = m_segmentation.cellID(loc,glob,volID);
+  VolumeID            volID  = volMgr.volumeID( h.preTouchable() );
+  if ( m_segmentation.isValid() ) {
+    G4ThreeVector global = 0.5 * ( h.prePosG4() + h.postPosG4() );
+    G4ThreeVector local  = h.preTouchable()->GetHistory()->GetTopTransform().TransformPoint( global );
+    Position      loc( local.x() * MM_2_CM, local.y() * MM_2_CM, local.z() * MM_2_CM );
+    Position      glob( global.x() * MM_2_CM, global.y() * MM_2_CM, global.z() * MM_2_CM );
+    VolumeID      cID = m_segmentation.cellID( loc, glob, volID );
     return cID;
   }
   return volID;
 }
 
 /// Standard constructor
-Geant4SensDetActionSequence::Geant4SensDetActionSequence(Geant4Context* ctxt, const string& nam)
-  : Geant4Action(ctxt, nam), m_hce(0)
-{
+Geant4SensDetActionSequence::Geant4SensDetActionSequence( Geant4Context* ctxt, const string& nam )
+    : Geant4Action( ctxt, nam ), m_hce( 0 ) {
   m_needsControl = true;
-  context()->sensitiveActions().insert(name(), this);
+  context()->sensitiveActions().insert( name(), this );
   /// Update the sensitive detector type, so that the proper instance is created
-  m_sensitive = context()->lcdd().sensitiveDetector(nam);
+  m_sensitive     = context()->lcdd().sensitiveDetector( nam );
   m_sensitiveType = m_sensitive.type();
-  m_sensitive.setType("Geant4SensDet");
-  InstanceCount::increment(this);
+  m_sensitive.setType( "Geant4SensDet" );
+  InstanceCount::increment( this );
 }
 
 /// Default destructor
 Geant4SensDetActionSequence::~Geant4SensDetActionSequence() {
-  m_filters(&Geant4Filter::release);
-  m_actors(&Geant4Sensitive::release);
+  m_filters( &Geant4Filter::release );
+  m_actors( &Geant4Sensitive::release );
   m_filters.clear();
   m_actors.clear();
-  InstanceCount::decrement(this);
+  InstanceCount::decrement( this );
 }
 
 /// Set or update client context
-void Geant4SensDetActionSequence::updateContext(Geant4Context* ctxt)    {
+void Geant4SensDetActionSequence::updateContext( Geant4Context* ctxt ) {
   m_context = ctxt;
-  m_actors.updateContext(ctxt);
-  m_filters.updateContext(ctxt);
+  m_actors.updateContext( ctxt );
+  m_filters.updateContext( ctxt );
 }
 
 /// Add an actor responding to all callbacks. Sequence takes ownership.
-void Geant4SensDetActionSequence::adoptFilter(Geant4Action* action)   {
-  Geant4Filter* filter = dynamic_cast<Geant4Filter*>(action);
-  adopt(filter);
+void Geant4SensDetActionSequence::adoptFilter( Geant4Action* action ) {
+  Geant4Filter* filter = dynamic_cast<Geant4Filter*>( action );
+  adopt( filter );
 }
 
 /// Add an actor responding to all callbacks
-void Geant4SensDetActionSequence::adopt(Geant4Sensitive* sensitive) {
-  if (sensitive) {
+void Geant4SensDetActionSequence::adopt( Geant4Sensitive* sensitive ) {
+  if ( sensitive ) {
     sensitive->addRef();
-    m_actors.add(sensitive);
+    m_actors.add( sensitive );
     return;
   }
-  throw runtime_error("Geant4SensDetActionSequence: Attempt to add invalid sensitive actor!");
+  throw runtime_error( "Geant4SensDetActionSequence: Attempt to add invalid sensitive actor!" );
 }
 
 /// Add an actor responding to all callbacks. Sequence takes ownership.
-void Geant4SensDetActionSequence::adopt(Geant4Filter* filter) {
-  if (filter) {
+void Geant4SensDetActionSequence::adopt( Geant4Filter* filter ) {
+  if ( filter ) {
     filter->addRef();
-    m_filters.add(filter);
+    m_filters.add( filter );
     return;
   }
-  throw runtime_error("Geant4SensDetActionSequence: Attempt to add invalid sensitive filter!");
+  throw runtime_error( "Geant4SensDetActionSequence: Attempt to add invalid sensitive filter!" );
 }
 
 /// Initialize the usage of a hit collection. Returns the collection identifier
-size_t Geant4SensDetActionSequence::defineCollection(Geant4Sensitive* owner, const std::string& collection_name, create_t func) {
-  m_collections.push_back(make_pair(collection_name, make_pair(owner,func)));
+size_t Geant4SensDetActionSequence::defineCollection( Geant4Sensitive* owner, const std::string& collection_name,
+                                                      create_t func ) {
+  m_collections.push_back( make_pair( collection_name, make_pair( owner, func ) ) );
   return m_collections.size() - 1;
 }
 
 /// Called at construction time of the sensitive detector to declare all hit collections
-size_t Geant4SensDetActionSequence::Geant4SensDetActionSequence::defineCollections(Geant4ActionSD* sens_det) {
+size_t Geant4SensDetActionSequence::Geant4SensDetActionSequence::defineCollections( Geant4ActionSD* sens_det ) {
   size_t count = 0;
-  m_detector = sens_det;
-  m_actors(&Geant4Sensitive::setDetector, sens_det);
-  m_actors(&Geant4Sensitive::defineCollections);
-  for (HitCollections::const_iterator i = m_collections.begin(); i != m_collections.end(); ++i) {
-    sens_det->defineCollection((*i).first);
+  m_detector   = sens_det;
+  m_actors( &Geant4Sensitive::setDetector, sens_det );
+  m_actors( &Geant4Sensitive::defineCollections );
+  for ( HitCollections::const_iterator i = m_collections.begin(); i != m_collections.end(); ++i ) {
+    sens_det->defineCollection( ( *i ).first );
     ++count;
   }
   return count;
 }
 
 /// Access HitCollection container names
-const std::string& Geant4SensDetActionSequence::hitCollectionName(size_t which) const {
-  if (which < m_collections.size()) {
-    return m_collections[which].first;
+const std::string& Geant4SensDetActionSequence::hitCollectionName( size_t which ) const {
+  if ( which < m_collections.size() ) {
+    return m_collections[ which ].first;
   }
   static string blank = "";
-  except("The collection name index for subdetector %s is out of range!", c_name());
+  except( "The collection name index for subdetector %s is out of range!", c_name() );
   return blank;
 }
 
 /// Retrieve the hits collection associated with this detector by its serial number
-Geant4HitCollection* Geant4SensDetActionSequence::collection(size_t which) const {
-  if (which < m_collections.size()) {
-    int hc_id = m_detector->GetCollectionID(which);
-    Geant4HitCollection* c = (Geant4HitCollection*) m_hce->GetHC(hc_id);
-    if (c)
+Geant4HitCollection* Geant4SensDetActionSequence::collection( size_t which ) const {
+  if ( which < m_collections.size() ) {
+    int                  hc_id = m_detector->GetCollectionID( which );
+    Geant4HitCollection* c     = (Geant4HitCollection*)m_hce->GetHC( hc_id );
+    if ( c )
       return c;
-    except("The collection index for subdetector %s is wrong!", c_name());
+    except( "The collection index for subdetector %s is wrong!", c_name() );
   }
-  except("The collection name index for subdetector %s is out of range!", c_name());
+  except( "The collection name index for subdetector %s is out of range!", c_name() );
   return 0;
 }
 
 /// Retrieve the hits collection associated with this detector by its collection identifier
-Geant4HitCollection* Geant4SensDetActionSequence::collectionByID(size_t id) const {
-  Geant4HitCollection* c = (Geant4HitCollection*) m_hce->GetHC(id);
-  if (c)
+Geant4HitCollection* Geant4SensDetActionSequence::collectionByID( size_t id ) const {
+  Geant4HitCollection* c = (Geant4HitCollection*)m_hce->GetHC( id );
+  if ( c )
     return c;
-  except("The collection index for subdetector %s is wrong!", c_name());
+  except( "The collection index for subdetector %s is wrong!", c_name() );
   return 0;
 }
 
 /// Callback before hit processing starts. Invoke all filters.
-bool Geant4SensDetActionSequence::accept(const G4Step* step) const {
-  bool result = m_filters.filter(&Geant4Filter::operator(), step);
+bool Geant4SensDetActionSequence::accept( const G4Step* step ) const {
+  bool result = m_filters.filter( &Geant4Filter::operator(), step );
   return result;
 }
 
 /// Function to process hits
-bool Geant4SensDetActionSequence::process(G4Step* step, G4TouchableHistory* hist) {
+bool Geant4SensDetActionSequence::process( G4Step* step, G4TouchableHistory* hist ) {
   bool result = false;
-  for (vector<Geant4Sensitive*>::iterator i = m_actors->begin(); i != m_actors->end(); ++i) {
+  for ( vector<Geant4Sensitive*>::iterator i = m_actors->begin(); i != m_actors->end(); ++i ) {
     Geant4Sensitive* s = *i;
-    if (s->accept(step))
-      result |= s->process(step, hist);
+    if ( s->accept( step ) )
+      result |= s->process( step, hist );
   }
-  m_process(step, hist);
+  m_process( step, hist );
   return result;
 }
 
@@ -366,22 +373,22 @@ bool Geant4SensDetActionSequence::process(G4Step* step, G4TouchableHistory* hist
  *  The hits collection(s) created by this sensitive detector must
  *  be set to the G4HCofThisEvent object at one of these two methods.
  */
-void Geant4SensDetActionSequence::begin(G4HCofThisEvent* hce) {
+void Geant4SensDetActionSequence::begin( G4HCofThisEvent* hce ) {
   m_hce = hce;
-  for (size_t count = 0; count < m_collections.size(); ++count) {
-    const HitCollection& cr = m_collections[count];
-    Geant4HitCollection* c = (*cr.second.second)(name(), cr.first, cr.second.first);
-    int id = m_detector->GetCollectionID(count);
-    m_hce->AddHitsCollection(id, c);
+  for ( size_t count = 0; count < m_collections.size(); ++count ) {
+    const HitCollection& cr = m_collections[ count ];
+    Geant4HitCollection* c  = ( *cr.second.second )( name(), cr.first, cr.second.first );
+    int                  id = m_detector->GetCollectionID( count );
+    m_hce->AddHitsCollection( id, c );
   }
-  m_actors(&Geant4Sensitive::begin, m_hce);
-  m_begin (m_hce);
+  m_actors( &Geant4Sensitive::begin, m_hce );
+  m_begin( m_hce );
 }
 
 /// G4VSensitiveDetector interface: Method invoked at the end of each event.
-void Geant4SensDetActionSequence::end(G4HCofThisEvent* hce) {
-  m_end(hce);
-  m_actors(&Geant4Sensitive::end, hce);
+void Geant4SensDetActionSequence::end( G4HCofThisEvent* hce ) {
+  m_end( hce );
+  m_actors( &Geant4Sensitive::end, hce );
   // G4HCofThisEvent must be availible until end-event. m_hce = 0;
 }
 
@@ -392,8 +399,8 @@ void Geant4SensDetActionSequence::end(G4HCofThisEvent* hce) {
  *  will be deleted automatically.
  */
 void Geant4SensDetActionSequence::clear() {
-  m_clear (m_hce);
-  m_actors(&Geant4Sensitive::clear, m_hce);
+  m_clear( m_hce );
+  m_actors( &Geant4Sensitive::clear, m_hce );
 }
 
 /// Default constructor
@@ -402,41 +409,43 @@ Geant4SensDetSequences::Geant4SensDetSequences() {
 
 /// Default destructor
 Geant4SensDetSequences::~Geant4SensDetSequences() {
-  releaseObjects(m_sequences);
+  releaseObjects( m_sequences );
   m_sequences.clear();
 }
 
 /// Access sequence member by name
-Geant4SensDetActionSequence* Geant4SensDetSequences::operator[](const string& name) const {
-  string nam = "SD_Seq_" + name;
-  Members::const_iterator i = m_sequences.find(nam);
-  if (i != m_sequences.end())
-    return (*i).second;
-  throw runtime_error("Attempt to access undefined SensDetActionSequence!");
+Geant4SensDetActionSequence* Geant4SensDetSequences::operator[]( const string& name ) const {
+  string                  nam = "SD_Seq_" + name;
+  Members::const_iterator i   = m_sequences.find( nam );
+  if ( i != m_sequences.end() )
+    return ( *i ).second;
+  throw runtime_error( "Attempt to access undefined SensDetActionSequence!" );
 }
 
 /// Access sequence member by name
-Geant4SensDetActionSequence* Geant4SensDetSequences::find(const std::string& name) const {
-  string nam = "SD_Seq_" + name;
-  Members::const_iterator i = m_sequences.find(nam);
-  if (i != m_sequences.end())
-    return (*i).second;
+Geant4SensDetActionSequence* Geant4SensDetSequences::find( const std::string& name ) const {
+  string                  nam = "SD_Seq_" + name;
+  Members::const_iterator i   = m_sequences.find( nam );
+  if ( i != m_sequences.end() )
+    return ( *i ).second;
   return 0;
 }
 
 /// Insert sequence member
-void Geant4SensDetSequences::insert(const string& name, Geant4SensDetActionSequence* seq) {
-  if (seq) {
+void Geant4SensDetSequences::insert( const string& name, Geant4SensDetActionSequence* seq ) {
+  if ( seq ) {
     string nam = "SD_Seq_" + name;
     seq->addRef();
-    m_sequences[nam] = seq;
+    m_sequences[ nam ] = seq;
     return;
   }
-  throw runtime_error(format("Geant4SensDetSequences", "Attempt to add invalid sensitive "
-                             "sequence with name:%s", name.c_str()));
+  throw runtime_error( format( "Geant4SensDetSequences",
+                               "Attempt to add invalid sensitive "
+                               "sequence with name:%s",
+                               name.c_str() ) );
 }
 
 /// Clear the sequence list
-void Geant4SensDetSequences::clear()   {
+void Geant4SensDetSequences::clear() {
   m_sequences.clear();
 }

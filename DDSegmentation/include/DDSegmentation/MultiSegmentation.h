@@ -19,81 +19,86 @@
 /// Main handle class to hold a TGeo alignment object of type TGeoPhysicalNode
 namespace DD4hep {
 
-  namespace DDSegmentation {
+namespace DDSegmentation {
 
-    /// Wrapper to support multiple segmentations
-    /**
-     *  \author  M.Frank
-     *  \version 1.0
-     *  \ingroup DD4HEP_DDSEGMENTATION
-     */
-    class MultiSegmentation : public Segmentation {
-    public:
-      
-      struct Entry {
-        long key_min, key_max;
-        Segmentation* segmentation;
-      };
-      typedef std::vector<Entry> Segmentations;
+/// Wrapper to support multiple segmentations
+/**
+ *  \author  M.Frank
+ *  \version 1.0
+ *  \ingroup DD4HEP_DDSEGMENTATION
+ */
+class MultiSegmentation : public Segmentation {
+ public:
+  struct Entry {
+    long          key_min, key_max;
+    Segmentation* segmentation;
+  };
+  typedef std::vector<Entry> Segmentations;
 
-    protected:
-      /// Sub-segmentaion container
-      Segmentations  m_segmentations;
+ protected:
+  /// Sub-segmentaion container
+  Segmentations m_segmentations;
 
-      /// the field name used to discriminate sub-segmentations
-      std::string    m_discriminatorId;
+  /// the field name used to discriminate sub-segmentations
+  std::string m_discriminatorId;
 
-      /// Bitfield corresponding to dicriminator identifier
-      BitFieldValue* m_discriminator;
+  /// Bitfield corresponding to dicriminator identifier
+  BitFieldValue* m_discriminator;
 
-      /// Debug flags
-      int m_debug;
+  /// Debug flags
+  int m_debug;
 
-    public:
-      /// Default constructor passing the encoding string
-      MultiSegmentation(const std::string& cellEncoding = "");
+ public:
+  /// Default constructor passing the encoding string
+  MultiSegmentation( const std::string& cellEncoding = "" );
 
-      /// Default constructor used by derived classes passing an existing decoder
-      MultiSegmentation(BitField64* decoder);
+  /// Default constructor used by derived classes passing an existing decoder
+  MultiSegmentation( BitField64* decoder );
 
-      /// Default destructor
-      virtual ~MultiSegmentation();
+  /// Default destructor
+  virtual ~MultiSegmentation();
 
-      /// Add subsegmentation.
-      virtual void addSubsegmentation(long key_min, long key_max, Segmentation* entry);
+  /// Add subsegmentation.
+  virtual void addSubsegmentation( long key_min, long key_max, Segmentation* entry );
 
-      /// Access subsegmentation by cell identifier
-      const Segmentation& subsegmentation(const CellID& cellID) const;
+  /// Access subsegmentation by cell identifier
+  const Segmentation& subsegmentation( const CellID& cellID ) const;
 
-      /// determine the position based on the cell ID
-      virtual Vector3D position(const CellID& cellID) const;
+  /// determine the position based on the cell ID
+  virtual Vector3D position( const CellID& cellID ) const;
 
-      /// determine the cell ID based on the position
-      virtual CellID cellID(const Vector3D& localPosition, const Vector3D& globalPosition, const VolumeID& volumeID) const;
+  /// determine the cell ID based on the position
+  virtual CellID cellID( const Vector3D& localPosition, const Vector3D& globalPosition,
+                         const VolumeID& volumeID ) const;
 
-      /** \brief Returns a vector<double> of the cellDimensions of the given cell ID
-          in natural order of dimensions, e.g., dx/dy/dz, or dr/r*dPhi
+  /** \brief Returns a vector<double> of the cellDimensions of the given cell ID
+      in natural order of dimensions, e.g., dx/dy/dz, or dr/r*dPhi
 
-          \param cellID cellID of the cell for which parameters are returned
-          \return vector<double> in natural order of dimensions, e.g., dx/dy/dz, or dr/r*dPhi
-      */
-      virtual std::vector<double> cellDimensions(const CellID& cellID) const;
+      \param cellID cellID of the cell for which parameters are returned
+      \return vector<double> in natural order of dimensions, e.g., dx/dy/dz, or dr/r*dPhi
+  */
+  virtual std::vector<double> cellDimensions( const CellID& cellID ) const;
 
-      /// access the field name used to discriminate sub-segmentations
-      const std::string& discriminatorName() const {  return m_discriminatorId;  }
+  /// access the field name used to discriminate sub-segmentations
+  const std::string& discriminatorName() const {
+    return m_discriminatorId;
+  }
 
-      /// Discriminating bitfield entry
-      BitFieldValue* discriminator() const         {  return m_discriminator;    }
+  /// Discriminating bitfield entry
+  BitFieldValue* discriminator() const {
+    return m_discriminator;
+  }
 
-      /// Set the underlying decoder
-      virtual void setDecoder(BitField64* decoder);
+  /// Set the underlying decoder
+  virtual void setDecoder( BitField64* decoder );
 
-      /// The underlying sub-segementations
-      const Segmentations& subSegmentations()  const { return m_segmentations;   }
+  /// The underlying sub-segementations
+  const Segmentations& subSegmentations() const {
+    return m_segmentations;
+  }
+};
 
-    };
-
-  } /* namespace DDSegmentation */
+} /* namespace DDSegmentation */
 } /* namespace DD4hep */
 
 #endif /* DDSegmentation_MULITSEGMENTATION_H_ */

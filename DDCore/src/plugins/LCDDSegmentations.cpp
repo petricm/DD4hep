@@ -13,48 +13,48 @@
 //==========================================================================
 
 // Framework includes
-#include "DD4hep/objects/SegmentationsInterna.h"
 #include "DD4hep/Factories.h"
+#include "DD4hep/objects/SegmentationsInterna.h"
 
 using namespace DD4hep::Geometry;
 using namespace DD4hep::DDSegmentation;
 
 namespace {
-  template<typename T> DD4hep::Geometry::SegmentationObject*
-  create_segmentation(DD4hep::Geometry::BitField64* decoder)  {
-    return new DD4hep::Geometry::SegmentationWrapper<T>(decoder);
-  }
+template <typename T>
+DD4hep::Geometry::SegmentationObject* create_segmentation( DD4hep::Geometry::BitField64* decoder ) {
+  return new DD4hep::Geometry::SegmentationWrapper<T>( decoder );
+}
 }
 
 #include "DDSegmentation/CartesianGridXY.h"
-DECLARE_SEGMENTATION(CartesianGridXY,create_segmentation<DD4hep::DDSegmentation::CartesianGridXY>)
+DECLARE_SEGMENTATION( CartesianGridXY, create_segmentation<DD4hep::DDSegmentation::CartesianGridXY> )
 
 #include "DDSegmentation/CartesianGridXZ.h"
-DECLARE_SEGMENTATION(CartesianGridXZ,create_segmentation<DD4hep::DDSegmentation::CartesianGridXZ>)
+DECLARE_SEGMENTATION( CartesianGridXZ, create_segmentation<DD4hep::DDSegmentation::CartesianGridXZ> )
 
 #include "DDSegmentation/CartesianGridYZ.h"
-DECLARE_SEGMENTATION(CartesianGridYZ,create_segmentation<DD4hep::DDSegmentation::CartesianGridYZ>)
+DECLARE_SEGMENTATION( CartesianGridYZ, create_segmentation<DD4hep::DDSegmentation::CartesianGridYZ> )
 
 #include "DDSegmentation/CartesianGridXYZ.h"
-DECLARE_SEGMENTATION(CartesianGridXYZ,create_segmentation<DD4hep::DDSegmentation::CartesianGridXYZ>)
+DECLARE_SEGMENTATION( CartesianGridXYZ, create_segmentation<DD4hep::DDSegmentation::CartesianGridXYZ> )
 
 #include "DDSegmentation/TiledLayerGridXY.h"
-DECLARE_SEGMENTATION(TiledLayerGridXY,create_segmentation<DD4hep::DDSegmentation::TiledLayerGridXY>)
+DECLARE_SEGMENTATION( TiledLayerGridXY, create_segmentation<DD4hep::DDSegmentation::TiledLayerGridXY> )
 
 #include "DDSegmentation/MegatileLayerGridXY.h"
-DECLARE_SEGMENTATION(MegatileLayerGridXY,create_segmentation<DD4hep::DDSegmentation::MegatileLayerGridXY>)
+DECLARE_SEGMENTATION( MegatileLayerGridXY, create_segmentation<DD4hep::DDSegmentation::MegatileLayerGridXY> )
 
 #include "DDSegmentation/WaferGridXY.h"
-DECLARE_SEGMENTATION(WaferGridXY,create_segmentation<DD4hep::DDSegmentation::WaferGridXY>)
+DECLARE_SEGMENTATION( WaferGridXY, create_segmentation<DD4hep::DDSegmentation::WaferGridXY> )
 
 #include "DDSegmentation/PolarGridRPhi.h"
-DECLARE_SEGMENTATION(PolarGridRPhi,create_segmentation<DD4hep::DDSegmentation::PolarGridRPhi>)
+DECLARE_SEGMENTATION( PolarGridRPhi, create_segmentation<DD4hep::DDSegmentation::PolarGridRPhi> )
 
 #include "DDSegmentation/PolarGridRPhi2.h"
-DECLARE_SEGMENTATION(PolarGridRPhi2,create_segmentation<DD4hep::DDSegmentation::PolarGridRPhi2>)
+DECLARE_SEGMENTATION( PolarGridRPhi2, create_segmentation<DD4hep::DDSegmentation::PolarGridRPhi2> )
 
 #include "DDSegmentation/ProjectiveCylinder.h"
-DECLARE_SEGMENTATION(ProjectiveCylinder,create_segmentation<DD4hep::DDSegmentation::ProjectiveCylinder>)
+DECLARE_SEGMENTATION( ProjectiveCylinder, create_segmentation<DD4hep::DDSegmentation::ProjectiveCylinder> )
 
 #include "DDSegmentation/MultiSegmentation.h"
-DECLARE_SEGMENTATION(MultiSegmentation,create_segmentation<DD4hep::DDSegmentation::MultiSegmentation>)
+DECLARE_SEGMENTATION( MultiSegmentation, create_segmentation<DD4hep::DDSegmentation::MultiSegmentation> )

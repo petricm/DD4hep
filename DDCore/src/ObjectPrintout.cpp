@@ -13,11 +13,11 @@
 //==========================================================================
 
 // Framework include files
+#include "DD4hep/Conditions.h"
 #include "DD4hep/LCDD.h"
 #include "DD4hep/Objects.h"
-#include "DD4hep/Conditions.h"
-#include "DD4hep/objects/ObjectsInterna.h"
 #include "DD4hep/Printout.h"
+#include "DD4hep/objects/ObjectsInterna.h"
 
 // C/C++ include files
 #include <cstdarg>
@@ -25,60 +25,72 @@
 
 using namespace std;
 
+#include "TColor.h"
 #include "TMap.h"
 #include "TROOT.h"
-#include "TColor.h"
 using namespace std;
 namespace DD4hep {
-  using namespace Geometry;
-  using Conditions::Condition;
+using namespace Geometry;
+using Conditions::Condition;
 
-  template <typename T> void PrintMap<T>::operator()() const {
-    Printer < T > p(lcdd, os);
-    os << "++" << endl << "++          " << text << endl << "++" << endl;
-    for (LCDD::HandleMap::const_iterator i = cont.begin(); i != cont.end(); ++i)
-      p((*i).second);
-  }
+template <typename T>
+void PrintMap<T>::operator()() const {
+  Printer<T> p( lcdd, os );
+  os << "++" << endl << "++          " << text << endl << "++" << endl;
+  for ( LCDD::HandleMap::const_iterator i = cont.begin(); i != cont.end(); ++i )
+    p( ( *i ).second );
+}
 
-  template <> void Printer<Handle<NamedObject> >::operator()(const Handle<NamedObject>& val) const {
-    printout(INFO, "Printer", "++ %s Handle:%s %s", prefix.c_str(), val->GetName(), val->GetTitle());
-  }
-  template <> void Printer<Handle<TNamed> >::operator()(const Handle<TNamed>& val) const {
-    printout(INFO, "Printer", "++ %s Handle:%s %s", prefix.c_str(), val->GetName(), val->GetTitle());
-  }
+template <>
+void Printer<Handle<NamedObject>>::operator()( const Handle<NamedObject>& val ) const {
+  printout( INFO, "Printer", "++ %s Handle:%s %s", prefix.c_str(), val->GetName(), val->GetTitle() );
+}
+template <>
+void Printer<Handle<TNamed>>::operator()( const Handle<TNamed>& val ) const {
+  printout( INFO, "Printer", "++ %s Handle:%s %s", prefix.c_str(), val->GetName(), val->GetTitle() );
+}
 
-  template <> void Printer<Constant>::operator()(const Constant& val) const {
-    printout(INFO, "Printer", "++ %s Constant:%s %s", prefix.c_str(), val->GetName(), val.toString().c_str());
-  }
+template <>
+void Printer<Constant>::operator()( const Constant& val ) const {
+  printout( INFO, "Printer", "++ %s Constant:%s %s", prefix.c_str(), val->GetName(), val.toString().c_str() );
+}
 
-  template <> void Printer<Material>::operator()(const Material& val) const {
-    printout(INFO, "Printer", "++ %s Material:%s %s", prefix.c_str(), val->GetName(), val.toString().c_str());
-  }
+template <>
+void Printer<Material>::operator()( const Material& val ) const {
+  printout( INFO, "Printer", "++ %s Material:%s %s", prefix.c_str(), val->GetName(), val.toString().c_str() );
+}
 
-  template <> void Printer<VisAttr>::operator()(const VisAttr& val) const {
-    printout(INFO, "Printer", "++ %s VisAttr: %s", prefix.c_str(), val.toString().c_str());
-  }
+template <>
+void Printer<VisAttr>::operator()( const VisAttr& val ) const {
+  printout( INFO, "Printer", "++ %s VisAttr: %s", prefix.c_str(), val.toString().c_str() );
+}
 
-  template <> void Printer<Readout>::operator()(const Readout& val) const {
-    printout(INFO, "Printer", "++ %s Readout: %s of type %s", prefix.c_str(), val->GetName(), val->GetTitle());
-  }
+template <>
+void Printer<Readout>::operator()( const Readout& val ) const {
+  printout( INFO, "Printer", "++ %s Readout: %s of type %s", prefix.c_str(), val->GetName(), val->GetTitle() );
+}
 
-  template <> void Printer<Region>::operator()(const Region& val) const {
-    printout(INFO, "Printer", "++ %s Region:  %s of type %s", prefix.c_str(), val->GetName(), val->GetTitle());
-  }
+template <>
+void Printer<Region>::operator()( const Region& val ) const {
+  printout( INFO, "Printer", "++ %s Region:  %s of type %s", prefix.c_str(), val->GetName(), val->GetTitle() );
+}
 
-  template <> void Printer<RotationZYX>::operator()(const RotationZYX& val) const {
-    printout(INFO, "Printer", "++ %s ZYXRotation: phi: %7.3 rad theta: %7.3 rad psi: %7.3 rad", prefix.c_str(), val.Phi(),
-             val.Theta(), val.Psi());
-  }
+template <>
+void Printer<RotationZYX>::operator()( const RotationZYX& val ) const {
+  printout( INFO, "Printer", "++ %s ZYXRotation: phi: %7.3 rad theta: %7.3 rad psi: %7.3 rad", prefix.c_str(),
+            val.Phi(), val.Theta(), val.Psi() );
+}
 
-  template <> void Printer<Position>::operator()(const Position& val) const {
-    printout(INFO, "Printer", "++ %s Position:    x: %9.3 mm y: %9.3 mm z: %9.3 mm", prefix.c_str(), val.X(), val.Y(), val.Z());
-  }
-  template <> void Printer<Condition>::operator()(const Condition& val) const {
-    int flg = Condition::WITH_IOV|Condition::WITH_ADDRESS;
-    printout(INFO, "Printer", "++ %s %s", prefix.c_str(), val.str(flg).c_str());
-  }
+template <>
+void Printer<Position>::operator()( const Position& val ) const {
+  printout( INFO, "Printer", "++ %s Position:    x: %9.3 mm y: %9.3 mm z: %9.3 mm", prefix.c_str(), val.X(), val.Y(),
+            val.Z() );
+}
+template <>
+void Printer<Condition>::operator()( const Condition& val ) const {
+  int flg = Condition::WITH_IOV | Condition::WITH_ADDRESS;
+  printout( INFO, "Printer", "++ %s %s", prefix.c_str(), val.str( flg ).c_str() );
+}
 #if 0
   template <> void Printer<LimitSet>::operator()(const LimitSet& val) const {
     const set<Limit>& o = val.limits();
@@ -131,12 +143,13 @@ namespace DD4hep {
     }
   }
 #endif
-  template <> void Printer<const LCDD*>::operator()(const LCDD* const &) const {
-    //Header(lcdd.header()).fromCompact(doc,compact.child(Tag_info),Strng_t("In memory"));
-    PrintMap < Constant > (lcdd, os, lcdd->constants(), "List of Constants")();
-    //PrintMap < VisAttr > (lcdd, os, lcdd->visAttributes(), "List of Visualization attributes")();
-    //PrintMap < LimitSet > (lcdd, os, lcdd->readouts(), "List of Readouts")();
-    //PrintMap < Region > (lcdd, os, lcdd->regions(), "List of Regions")();
-    //PrintMap < DetElement > (lcdd, os, lcdd->detectors(), "List of DetElements")();
-  }
+template <>
+void Printer<const LCDD*>::operator()( const LCDD* const& ) const {
+  // Header(lcdd.header()).fromCompact(doc,compact.child(Tag_info),Strng_t("In memory"));
+  PrintMap<Constant>( lcdd, os, lcdd->constants(), "List of Constants" )();
+  // PrintMap < VisAttr > (lcdd, os, lcdd->visAttributes(), "List of Visualization attributes")();
+  // PrintMap < LimitSet > (lcdd, os, lcdd->readouts(), "List of Readouts")();
+  // PrintMap < Region > (lcdd, os, lcdd->regions(), "List of Regions")();
+  // PrintMap < DetElement > (lcdd, os, lcdd->detectors(), "List of DetElements")();
+}
 }

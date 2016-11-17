@@ -26,37 +26,38 @@
 /// Namespace for the AIDA detector description toolkit
 namespace DD4hep {
 
-  /// Namespace of the DDDB conversion stuff
-  namespace DDDB  {
-    
-    /// Specialized conditions update callback for DDDB alignments
-    /**
-     *  Used by clients to update an alignment condition.
-     *  The input data, a condition with an AbstractMap data structure
-     *  containing the alignment delta data.
-     *
-     *  The condition must be fully computed in two steps:
-     *  - firstly it is created here and the alignment delta copied.
-     *  - secondly, once all updates are processed, the world-transformations
-     *    for the alignment object(s) are computed by the AlignmentManager
-     *    objects.
-     *  The AlignmentManager also keeps track of newly created alignment 
-     *  conditions and is informed in the callback.
-     *
-     *  \author  M.Frank
-     *  \version 1.0
-     *  \ingroup DD4HEP_CONDITIONS
-     */
-    class DDDBAlignmentUpdateCall : public Alignments::AlignmentUpdateCall  {
-    public:
-      /// Default constructor
-      DDDBAlignmentUpdateCall() : Alignments::AlignmentUpdateCall()  {}
-      /// Default destructor
-      virtual ~DDDBAlignmentUpdateCall();
-      /// Interface to client Callback in order to update the condition
-      virtual Condition operator()(const ConditionKey& key, const UpdateContext& context);
-    };
+/// Namespace of the DDDB conversion stuff
+namespace DDDB {
 
-  }    /* End namespace DDDB                   */
-}      /* End namespace DD4hep                  */
+/// Specialized conditions update callback for DDDB alignments
+/**
+ *  Used by clients to update an alignment condition.
+ *  The input data, a condition with an AbstractMap data structure
+ *  containing the alignment delta data.
+ *
+ *  The condition must be fully computed in two steps:
+ *  - firstly it is created here and the alignment delta copied.
+ *  - secondly, once all updates are processed, the world-transformations
+ *    for the alignment object(s) are computed by the AlignmentManager
+ *    objects.
+ *  The AlignmentManager also keeps track of newly created alignment
+ *  conditions and is informed in the callback.
+ *
+ *  \author  M.Frank
+ *  \version 1.0
+ *  \ingroup DD4HEP_CONDITIONS
+ */
+class DDDBAlignmentUpdateCall : public Alignments::AlignmentUpdateCall {
+ public:
+  /// Default constructor
+  DDDBAlignmentUpdateCall() : Alignments::AlignmentUpdateCall() {
+  }
+  /// Default destructor
+  virtual ~DDDBAlignmentUpdateCall();
+  /// Interface to client Callback in order to update the condition
+  virtual Condition operator()( const ConditionKey& key, const UpdateContext& context );
+};
+
+} /* End namespace DDDB                   */
+} /* End namespace DD4hep                  */
 #endif /* DD4HEP_DDDB_DDDBALIGNMENTUPDATECALL_H */

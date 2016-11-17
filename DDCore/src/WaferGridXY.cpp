@@ -22,16 +22,13 @@ using namespace std;
 using namespace DD4hep::Geometry;
 
 /// determine the position based on the cell ID
-Position WaferGridXY::position(const CellID& id) const   {
-  return Position(access()->implementation->position(id));
+Position WaferGridXY::position( const CellID& id ) const {
+  return Position( access()->implementation->position( id ) );
 }
 
 /// determine the cell ID based on the position
-DD4hep::CellID WaferGridXY::cellID(const Position& local,
-                                   const Position& global,
-                                   const VolumeID& volID) const
-{
-  return access()->implementation->cellID(local, global, volID);
+DD4hep::CellID WaferGridXY::cellID( const Position& local, const Position& global, const VolumeID& volID ) const {
+  return access()->implementation->cellID( local, global, volID );
 }
 
 /// access the grid size in X
@@ -54,13 +51,13 @@ double WaferGridXY::offsetY() const {
   return access()->implementation->offsetY();
 }
 /// access the coordinate waferOffset for inGroup in X
-double WaferGridXY::waferOffsetX(int inGroup, int inWafer) const  {
-  return access()->implementation->waferOffsetX(inGroup,inWafer);
+double WaferGridXY::waferOffsetX( int inGroup, int inWafer ) const {
+  return access()->implementation->waferOffsetX( inGroup, inWafer );
 }
 
 /// access the coordinate waferOffset for inGroup in Y
-double WaferGridXY::waferOffsetY(int inGroup, int inWafer) const  {
-  return access()->implementation->waferOffsetY(inGroup,inWafer);
+double WaferGridXY::waferOffsetY( int inGroup, int inWafer ) const {
+  return access()->implementation->waferOffsetY( inGroup, inWafer );
 }
 
 /// access the field name used for X
@@ -82,6 +79,6 @@ const string& WaferGridXY::fieldNameY() const {
     -# size in x
     -# size in y
 */
-vector<double> WaferGridXY::cellDimensions(const CellID& id) const  {
-  return access()->implementation->cellDimensions(id);
+vector<double> WaferGridXY::cellDimensions( const CellID& id ) const {
+  return access()->implementation->cellDimensions( id );
 }
