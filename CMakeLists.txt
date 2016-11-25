@@ -39,6 +39,7 @@ dd4hep_configure_output( OUTPUT "${PROJECT_BINARY_DIR}" INSTALL "${CMAKE_INSTALL
 #  No Reflex library present for ROOT 6
 #
 find_package ( ROOT REQUIRED COMPONENTS Geom GenVector )
+include(${ROOT_USE_FILE} )
 if ( ${ROOT_VERSION_MAJOR} GREATER 5 )
   set ( DD4HEP_USE_CXX11 ON ) 
   message ( STATUS "ROOT_VERSION_MAJOR: ${ROOT_VERSION_MAJOR} --> Using GaudiPluginService..." )
