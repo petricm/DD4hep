@@ -1394,3 +1394,21 @@ function ( dd4hep_add_test_reg test_name )
     endif()
   endif()
 endfunction()
+
+
+#---------------------------------------------------------------------------------------------------
+#  fill_dd4hep_library_path
+#
+#
+#  \author  M.Petric
+#  \version 1.0
+#
+#---------------------------------------------------------------------------------------------------
+function ( fill_dd4hep_library_path )
+  string(REGEX REPLACE "/lib/Geant4.*" "" Geant4_ROOT ${Geant4_DIR})
+
+  string(REGEX REPLACE "/lib/libCore.*" "" ROOT_ROOT ${ROOT_Core_LIBRARY})
+
+  SET ( ENV{DD4HEP_LIBRARY_PATH} ${ROOT_ROOT}/lib:${Geant4_ROOT}/lib )
+
+endfunction()
