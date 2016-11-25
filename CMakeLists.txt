@@ -40,7 +40,7 @@ dd4hep_configure_output( OUTPUT "${PROJECT_BINARY_DIR}" INSTALL "${CMAKE_INSTALL
 #
 find_package ( ROOT REQUIRED COMPONENTS Geom GenVector )
 include(${ROOT_USE_FILE} )
-if ( ROOT_VERSION GREATER 5 )
+if ( ${ROOT_VERSION} GREATER 5 )
   set ( DD4HEP_USE_CXX11 ON ) 
   message ( STATUS "ROOT_VERSION: ${ROOT_VERSION} --> Using GaudiPluginService..." )
   add_subdirectory ( GaudiPluginService)  
