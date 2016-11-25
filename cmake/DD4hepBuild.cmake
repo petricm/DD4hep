@@ -1405,7 +1405,10 @@ endfunction()
 #
 #---------------------------------------------------------------------------------------------------
 function ( fill_dd4hep_library_path )
-  string(REGEX REPLACE "/lib/Geant4.*" "" Geant4_ROOT ${Geant4_DIR})
+
+  if ( ${DD4HEP_USE_GEANT4} )
+    string(REGEX REPLACE "/lib/Geant4.*" "" Geant4_ROOT ${Geant4_DIR})
+  endif()
 
   string(REGEX REPLACE "/lib/libCore.*" "" ROOT_ROOT ${ROOT_Core_LIBRARY})
 
