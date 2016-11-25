@@ -18,14 +18,14 @@ dd4hep_package(    DDG4
 dd4hep_add_package_library(DDG4 SOURCES src/*.cpp )
 #---------------------------  Legacy libraries (for Frank) -------------------------
 dd4hep_add_plugin(DDG4Legacy    SOURCES legacy/*.cpp
-                                LINK_LIBRARIES CLHEP )
+                                USES  CLHEP )
 #-----------------------------------------------------------------------------------
 dd4hep_add_dictionary( G__DDG4  SOURCES python/DDG4Dict.C )
 #---------------------------  Plugin library for the simulation framework  ---------
 dd4hep_add_plugin(DDG4Plugins
   GENERATED   G__DDG4.cxx
   SOURCES     plugins/*.cpp
-  LINK_LIBRARIES CLHEP)
+  USES  CLHEP)
 #---------------------------  Plugin library for the simulation framework  ---------
 dd4hep_add_dictionary(G__DDG4Python SOURCES src/python/DDG4Python.C
   OPTIONAL    [PYTHON REQUIRED] )
@@ -42,15 +42,15 @@ dd4hep_add_plugin(DDG4Python
   GENERATED   G__DDG4Python.cxx
   LINK_LIBRARIES DDPython
   OPTIONAL    [PYTHON REQUIRED SOURCES src/python/*.cpp]
-  LINK_LIBRARIES CLHEP)
+  USES  CLHEP)
 #---------------------------  LCIO Plugins for new simulation framework  -----------
 dd4hep_add_plugin(DDG4LCIO 
   OPTIONAL [LCIO REQUIRED SOURCES lcio/*.cpp]
-  LINK_LIBRARIES CLHEP )
+  USES  CLHEP )
 #---------------------------  DDRec dependent Plugins  -----------------------------
 dd4hep_add_plugin(DDG4Reco
   OPTIONAL [DDRec REQUIRED SOURCES reco/*.cpp]
-  LINK_LIBRARIES CLHEP )
+  USES  CLHEP )
 #-----------------------------------------------------------------------------------
 dd4hep_add_executable(g4gdmlDisplay SOURCES g4gdmlDisplay.cpp)
 #-----------------------------------------------------------------------------------
