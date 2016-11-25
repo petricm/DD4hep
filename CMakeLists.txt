@@ -159,6 +159,7 @@ display_std_variables()
 generate_package_configuration_files( DD4hepConfig.cmake DD4hepConfigVersion.cmake )
 if(APPLE)
   fill_dd4hep_library_path()
+  message(STATUS "DD4HEP_LIBRARY_PATH= $ENV{DD4HEP_LIBRARY_PATH}")
 endif()
 
-message(STATUS "DD4HEP_LIBRARY_PATH= $ENV{DD4HEP_LIBRARY_PATH}")
+
