@@ -25,7 +25,6 @@
 #include "DD4hep/Primitives.h"
 #include "DD4hep/BasicGrammar.h"
 
-#ifdef DD4HEP_USE_BOOST
 #if defined(DD4HEP_PARSER_HEADER)
 
 #define DD4HEP_NEED_EVALUATOR
@@ -39,7 +38,6 @@
 #include "DD4hep/Parsers.h"
 #include "DD4hep/ToStream.h"
 namespace DD4hep { XmlTools::Evaluator& g4Evaluator();  }
-#endif
 #endif
 namespace {  static XmlTools::Evaluator& s__eval(DD4hep::g4Evaluator());  }
 

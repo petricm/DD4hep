@@ -10,8 +10,6 @@
 // Author     : M.Frank
 //
 //==========================================================================
-#ifdef DD4HEP_USE_BOOST
-
 // Framework include files
 #include "JSON/Elements.h"
 #include "JSON/DocumentHandler.h"
@@ -32,5 +30,3 @@ static long json_dump(Geometry::LCDD& /* lcdd */, int argc, char** argv)   {
   return 1;
 }
 DECLARE_APPLY(DD4hep_JsonDumper,json_dump)
-
-#endif

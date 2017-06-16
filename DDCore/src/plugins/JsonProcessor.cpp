@@ -10,7 +10,6 @@
 // Author     : M.Frank
 //
 //==========================================================================
-#ifdef DD4HEP_USE_BOOST
 
 /**
    Note:
@@ -158,5 +157,4 @@ static long handle_json(lcdd_t& lcdd, int argc, char** argv) {
 }
 DECLARE_APPLY(DD4hep_JsonProcessor,handle_json)
 
-#endif  // DD4HEP_USE_BOOST
 
