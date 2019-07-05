@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /DD4hep/.dd4hep-ci.d/init_x86_64.sh
+source /DD4hep/.dd4hep-ci.d/init_lcg.sh
 
 cd /DD4hep
 mkdir build
