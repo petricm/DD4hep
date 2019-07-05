@@ -37,7 +37,7 @@ install:
 # command to run tests
 script:
   - docker run -ti --name CI_container -v $PKGDIR:/DD4hep -e COMPILER_VERSION=$COMPILER_VERSION -v /cvmfs/sft.cern.ch:/cvmfs/sft.cern.ch -d cern/cc7-base /bin/bash
-  - docker exec -ti CI_container /bin/bash -c "yum install which make glibc-devel -y"
+  - docker exec -ti CI_container /bin/bash -c "yum install which make glibc-devel openmotif-devel mesa-libGL-devel mesa-libGLU-devel -y"
   - docker exec -ti CI_container /bin/bash -c "./DD4hep/.dd4hep-ci.d/compile_and_test.sh"
   - if [[ "${TRAVIS_EVENT_TYPE}" != "cron" && "${TRAVIS_EVENT_TYPE}" != "pull_request" && "${COMPILER}" == "gcc" && "${TRAVIS_REPO_SLUG%/*}" == "AIDASoft" ]];
     then curl -X POST -F token=$GITLAB_TOKEN -F ref=master https://gitlab.cern.ch/api/v4/projects/7828/trigger/pipeline;
