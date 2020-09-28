@@ -39,7 +39,7 @@ namespace dd4hep  {
     /// Default destructor
     ~VisVolNameProcessor() override;
     /// Callback to output PlacedVolume information of an single Placement
-    int operator()(PlacedVolume pv, int level) override;
+    auto operator()(PlacedVolume pv, int level) -> int override;
   };
 }
 #endif //  DD4HEP_DDCORE_VISVOLNAMEPROCESSOR_H
@@ -80,7 +80,7 @@ VisVolNameProcessor::~VisVolNameProcessor()   {
 }
 
 /// Callback to output PlacedVolume information of an single Placement
-int VisVolNameProcessor::operator()(PlacedVolume pv, int /* level */)   {
+auto VisVolNameProcessor::operator()(PlacedVolume pv, int /* level */) -> int   {
   Volume   vol = pv.volume();
   VisAttr  vis = description.visAttributes(vol.name());
   if ( vol.visAttributes().ptr() != vis.ptr() )  {
@@ -90,7 +90,7 @@ int VisVolNameProcessor::operator()(PlacedVolume pv, int /* level */)   {
   return 1;
 }
 
-static void* create_object(Detector& description, int argc, char** argv)   {
+static auto create_object(Detector& description, int argc, char** argv) -> void*   {
   DetectorHelper helper(description);
   auto*  proc = new VisVolNameProcessor(description);
   for ( int i=0; i<argc; ++i )   {

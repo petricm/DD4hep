@@ -36,7 +36,7 @@ namespace dd4hep::rec{
     */
 
 
-    static long createSurfaceManager(Detector& description, int /*argc*/, char** /*argv*/) {
+    static auto createSurfaceManager(Detector& description, int /*argc*/, char** /*argv*/) -> long {
 
       printout(INFO,"InstallSurfaceManager","**** running plugin InstallSurfaceManager ! " );
 

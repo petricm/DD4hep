@@ -41,16 +41,16 @@ Annotation::~Annotation() {
 }
 
 /// Mouse has entered overlay area.
-Bool_t Annotation::MouseEnter(TGLOvlSelectRecord& )   {
+auto Annotation::MouseEnter(TGLOvlSelectRecord& ) -> Bool_t   {
   fActive = kFALSE;
   return kTRUE;
 }
 
 /// Default text size
-float Annotation::DefaultTextSize() {
+auto Annotation::DefaultTextSize() -> float {
   return 0.04; 
 }
 /// Default margin for placement in bottom left corner
-float Annotation::DefaultMargin()   { 
+auto Annotation::DefaultMargin() -> float   {
   return 0.01; 
 }

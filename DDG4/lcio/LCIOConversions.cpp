@@ -212,8 +212,8 @@ namespace dd4hep::sim   {
     }
 
     template <typename T>
-    lcio::LCCollectionVec* moveEntries(Geant4HitCollection* coll,
-                                       lcio::LCCollectionVec* lc_coll)
+    auto moveEntries(Geant4HitCollection* coll,
+                                       lcio::LCCollectionVec* lc_coll) -> lcio::LCCollectionVec*
     {
       size_t nhits = coll->GetSize();
       lc_coll->reserve(nhits);
@@ -240,10 +240,10 @@ namespace dd4hep::sim   {
      *  @author M.Frank
      *  @version 1.0
      */
-    template <> lcio::LCCollectionVec*
+    template <> auto
     Geant4DataConversion<lcio::LCCollectionVec,
                          pair<const Geant4Context*,Geant4HitCollection*>,
-                         lcio::SimTrackerHitImpl>::operator()(const arg_t& args)  const
+                         lcio::SimTrackerHitImpl>::operator()(const arg_t& args)  const -> lcio::LCCollectionVec*
     {
       Geant4Sensitive* sd  = args.second->sensitive();
       string           dsc = encoding(sd->sensitiveDetector());
@@ -271,10 +271,10 @@ namespace dd4hep::sim   {
      *  @author M.Frank
      *  @version 1.0
      */
-    template <> lcio::LCCollectionVec*
+    template <> auto
     Geant4DataConversion<lcio::LCCollectionVec,
                          pair<const Geant4Context*,Geant4HitCollection*>,
-                         lcio::SimCalorimeterHitImpl>::operator()(const arg_t& args)  const
+                         lcio::SimCalorimeterHitImpl>::operator()(const arg_t& args)  const -> lcio::LCCollectionVec*
     {
       Geant4Sensitive*  sd  = args.second->sensitive();
       //string          dsc = encoding(args.second->sensitive()->sensitiveDetector());
@@ -294,10 +294,10 @@ namespace dd4hep::sim   {
      *  @author M.Frank
      *  @version 1.0
      */
-    template <> lcio::LCCollectionVec*
+    template <> auto
     Geant4DataConversion<lcio::LCCollectionVec,
                          pair<const Geant4Context*,Geant4HitCollection*>,
-                         lcio::ClusterImpl>::operator()(const arg_t& args)  const
+                         lcio::ClusterImpl>::operator()(const arg_t& args)  const -> lcio::LCCollectionVec*
     {
       auto* lc = new lcio::LCCollectionVec(lcio::LCIO::CLUSTER);
       return moveEntries<tag_t>(args.second,lc);

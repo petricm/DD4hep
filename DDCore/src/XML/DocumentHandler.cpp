@@ -32,7 +32,7 @@ using namespace dd4hep;
 using namespace dd4hep::xml;
 
 namespace {
-  string undressed_file_name(const string& fn)   {
+  auto undressed_file_name(const string& fn) -> string   {
     if ( !fn.empty() )   {
       TString tfn(fn);
       gSystem->ExpandPathName(tfn);
@@ -432,7 +432,7 @@ namespace dd4hep::xml {
   }
 
 namespace {
-  static string _clean_fname(const string& s) {
+  static auto _clean_fname(const string& s) -> string {
     std::string const& temp = getEnviron(s);
     std::string temp2 = undressed_file_name(temp.empty() ? s : temp);
     if ( strncmp(temp2.c_str(),"file:",5)==0 ) return temp2.substr(5);
@@ -441,7 +441,7 @@ namespace {
 }
 
 /// System ID of a given XML entity
-string DocumentHandler::system_path(Handle_t base, const string& fname)   {
+auto DocumentHandler::system_path(Handle_t base, const string& fname) -> string   {
   string fn, clean = _clean_fname(fname);
   struct stat st;
   Element elt(base);
@@ -470,7 +470,7 @@ string DocumentHandler::system_path(Handle_t base, const string& fname)   {
 }
 
 /// System ID of a given XML entity
-string DocumentHandler::system_path(Handle_t base)   {
+auto DocumentHandler::system_path(Handle_t base) -> string   {
   string fn;
   Element elt(base);
   // Poor man's URI handling. Xerces is much much better here
@@ -481,7 +481,7 @@ string DocumentHandler::system_path(Handle_t base)   {
 }
 
 /// Load XML file and parse it using URI resolver to read data.
-Document DocumentHandler::load(const std::string& fname, UriReader* reader) const  {
+auto DocumentHandler::load(const std::string& fname, UriReader* reader) const -> Document  {
   string clean = _clean_fname(fname);
   if ( reader )   {
     printout(WARNING,"DocumentHandler","+++ Loading document URI: %s %s",
@@ -523,13 +523,13 @@ Document DocumentHandler::load(const std::string& fname, UriReader* reader) cons
 }
 
 /// Load XML file and parse it using URI resolver to read data.
-Document DocumentHandler::load(Handle_t base, const XmlChar* fname, UriReader* reader) const  {
+auto DocumentHandler::load(Handle_t base, const XmlChar* fname, UriReader* reader) const -> Document  {
   string path = system_path(base, fname);
   return load(path,reader);
 }
 
 /// Parse a standalong XML string into a document.
-Document DocumentHandler::parse(const char* bytes, size_t length, const char* /* sys_id */, UriReader* reader) const {
+auto DocumentHandler::parse(const char* bytes, size_t length, const char* /* sys_id */, UriReader* reader) const -> Document {
   if ( reader )   {
     printout(WARNING,"DocumentHandler","+++ Parsing memory document %s",
              "[URI Resolution is not supported by TiXML]");
@@ -579,7 +579,7 @@ Document DocumentHandler::parse(const char* bytes, size_t length, const char* /*
 }
 
 /// Write xml document to output file (stdout if file name empty)
-int DocumentHandler::output(Document doc, const string& fname) const {
+auto DocumentHandler::output(Document doc, const string& fname) const -> int {
   string fn = undressed_file_name(fname);
   FILE* file = fn.empty() ? stdout : ::fopen(fn.c_str(),"w");
   if ( !file ) {
@@ -619,14 +619,14 @@ DocumentHandler::DocumentHandler() = default;
 DocumentHandler::~DocumentHandler() = default;
 
 /// Set minimum print level
-int DocumentHandler::setMinimumPrintLevel(int level)    {
+auto DocumentHandler::setMinimumPrintLevel(int level) -> int    {
   int tmp = s_minPrintLevel;
   s_minPrintLevel = level;
   return tmp;
 }
 
 /// Default comment string
-std::string DocumentHandler::defaultComment()  {
+auto DocumentHandler::defaultComment() -> std::string  {
   const char comment[] = "\n"
     "      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
     "      ++++   dd4hep generated alignment file using the         ++++\n"
@@ -642,42 +642,42 @@ std::string DocumentHandler::defaultComment()  {
 }
 
 /// Load XML file and parse it.
-Document DocumentHandler::load(const std::string& fname) const {
+auto DocumentHandler::load(const std::string& fname) const -> Document {
   return load(fname, nullptr);
 }
 
 /// Load secondary XML file with relative addressing with respect to handle
-Document DocumentHandler::load(Handle_t base, const XmlChar* fname) const {
+auto DocumentHandler::load(Handle_t base, const XmlChar* fname) const -> Document {
   return load(base, fname, nullptr);
 }
 
 /// Parse a standalong XML string into a document.
-Document DocumentHandler::parse(const char* bytes, size_t length) const {
+auto DocumentHandler::parse(const char* bytes, size_t length) const -> Document {
   return parse(bytes, length, "xml-memory-buffer", nullptr);
 }
 
 /// System ID of a given XML entity
-string DocumentHandler::system_path(Handle_t base, const XmlChar* fname)   {
+auto DocumentHandler::system_path(Handle_t base, const XmlChar* fname) -> string   {
   string fn = _toString(fname);
   return system_path(base, fn);
 }
 
 /// System directory of a given XML entity
-string DocumentHandler::system_directory(Handle_t base, const XmlChar* fname)   {
+auto DocumentHandler::system_directory(Handle_t base, const XmlChar* fname) -> string   {
   string path = system_path(base,fname);
   string dir = ::dirname((char*)path.c_str());
   return dir;
 }
 
 /// System directory of a given XML entity
-string DocumentHandler::system_directory(Handle_t base)   {
+auto DocumentHandler::system_directory(Handle_t base) -> string   {
   string path = system_path(base);
   string dir = ::dirname((char*)path.c_str());
   return dir;
 }
 
 /// Create new XML document by parsing empty xml buffer
-Document DocumentHandler::create(const char* tag, const char* comment) const {
+auto DocumentHandler::create(const char* tag, const char* comment) const -> Document {
   string top(tag);
   string empty = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
   empty += "<" + top + "/>\0\0";
@@ -690,7 +690,7 @@ Document DocumentHandler::create(const char* tag, const char* comment) const {
 }
 
 // Create new XML document by parsing empty xml buffer
-Document DocumentHandler::create(const std::string& tag, const std::string& comment) const   {
+auto DocumentHandler::create(const std::string& tag, const std::string& comment) const -> Document   {
   return create(tag.c_str(), comment.c_str());
 }
 

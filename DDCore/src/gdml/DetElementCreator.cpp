@@ -44,7 +44,7 @@ namespace dd4hep {
       Data() = default;
       Data(PlacedVolume v) : pv(v) {}
       Data(const Data& d) = default;
-      Data& operator=(const Data& d) = default;
+      auto operator=(const Data& d) -> Data& = default;
     };
     struct Count {
       int elements = 0;
@@ -52,7 +52,7 @@ namespace dd4hep {
       int sensitives = 0;
       Count() = default;
       Count(const Count&) = default;
-      Count& operator=(const Count&) = default;
+      auto operator=(const Count&) -> Count& = default;
     };
     typedef std::vector<Data> VolumeStack;
     typedef std::map<std::string,DetElement> Detectors;
@@ -78,13 +78,13 @@ namespace dd4hep {
     AllPlacements     all_placements;
     
     /// Add new subdetector to the detector description
-    DetElement addSubdetector(const std::string& nam, PlacedVolume pv, bool volid);
+    auto addSubdetector(const std::string& nam, PlacedVolume pv, bool volid) -> DetElement;
     /// Create a new detector element
-    DetElement createElement(const char* debug_tag, PlacedVolume pv, int id);
+    auto createElement(const char* debug_tag, PlacedVolume pv, int id) -> DetElement;
     /// Create the top level detectors
     void createTopLevelDetectors(PlacedVolume pv);
     /// Generate the name of the DetElement object from the placed volume
-    [[nodiscard]] std::string detElementName(PlacedVolume pv)  const;
+    [[nodiscard]] auto detElementName(PlacedVolume pv)  const -> std::string;
   public:
     /// Initializing constructor
     DetElementCreator(Detector& desc,
@@ -98,9 +98,9 @@ namespace dd4hep {
     /// Default destructor
     ~DetElementCreator() override;
     /// Callback to output PlacedVolume information of an single Placement
-    int operator()(PlacedVolume pv, int level) override;
+    auto operator()(PlacedVolume pv, int level) -> int override;
     /// Callback to output PlacedVolume information of an entire Placement
-    int process(PlacedVolume pv, int level, bool recursive) override;
+    auto process(PlacedVolume pv, int level, bool recursive) -> int override;
   };
 }
 #endif   /* DD4HEP_DETELEMENTCREATOR_H  */
@@ -242,7 +242,7 @@ DetElementCreator::~DetElementCreator()  {
 }
 
 /// Generate the name of the DetElement object from the placed volume
-string DetElementCreator::detElementName(PlacedVolume pv)  const    {
+auto DetElementCreator::detElementName(PlacedVolume pv)  const -> string    {
   if ( pv.isValid() )  {
     string nam = pv.name();
     size_t idx = string::npos; // nam.rfind('_');
@@ -254,7 +254,7 @@ string DetElementCreator::detElementName(PlacedVolume pv)  const    {
 }
 
 /// Create a new detector element
-DetElement DetElementCreator::createElement(const char* /* debug_tag */, PlacedVolume pv, int id) {
+auto DetElementCreator::createElement(const char* /* debug_tag */, PlacedVolume pv, int id) -> DetElement {
   string     name = detElementName(pv);
   DetElement det(name, id);
   det.setPlacement(pv);
@@ -272,7 +272,7 @@ void DetElementCreator::createTopLevelDetectors(PlacedVolume pv)   {
 }
 
 /// Add new subdetector to the detector description
-DetElement DetElementCreator::addSubdetector(const std::string& nam, PlacedVolume pv, bool volid)  {
+auto DetElementCreator::addSubdetector(const std::string& nam, PlacedVolume pv, bool volid) -> DetElement  {
   auto idet = subdetectors.find(nam);
   if ( idet == subdetectors.end() )   {
     DetElement det(nam, description.detectors().size()+1);
@@ -288,7 +288,7 @@ DetElement DetElementCreator::addSubdetector(const std::string& nam, PlacedVolum
 }
 
 /// Callback to output PlacedVolume information of an single Placement
-int DetElementCreator::operator()(PlacedVolume pv, int vol_level)   {
+auto DetElementCreator::operator()(PlacedVolume pv, int vol_level) -> int   {
   if ( detector_volume_level > 0 )   {
     Material mat = pv.volume().material();
     if ( mat == sensitive_material )  {
@@ -308,7 +308,7 @@ int DetElementCreator::operator()(PlacedVolume pv, int vol_level)   {
 }
 
 /// Callback to output PlacedVolume information of an entire Placement
-int DetElementCreator::process(PlacedVolume pv, int lvl, bool recursive)   {
+auto DetElementCreator::process(PlacedVolume pv, int lvl, bool recursive) -> int   {
   int ret = 0;
   string pv_nam = pv.name();
   if ( detector_volume_level > 0 ||
@@ -420,7 +420,7 @@ int DetElementCreator::process(PlacedVolume pv, int lvl, bool recursive)   {
   return ret;
 }
 
-static void* create_object(Detector& description, int argc, char** argv)   {
+static auto create_object(Detector& description, int argc, char** argv) -> void*   {
   PrintLevel prt  = DEBUG;
   size_t sd_level = 99999;
   string sd_mat, sd_match, sd_veto, sd_type, detector;

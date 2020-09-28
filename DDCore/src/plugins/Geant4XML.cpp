@@ -36,13 +36,13 @@ template <> void Converter<Geant4>::operator()(xml_h element) const {
   xml_coll_t(compact, _U(sensitive_detectors)).for_each(_U(sd), Converter < SensitiveDetector > (description, param));
 }
 
-static long create_Geant4(Detector& description, const xml_h& element) {
+static auto create_Geant4(Detector& description, const xml_h& element) -> long {
   (Converter < Geant4 > (description))(element);
   return 1;
 }
 DECLARE_XML_DOC_READER(geant4,create_Geant4)
 
-static Ref_t handle_Geant4(Detector& description, const xml_h& element) {
+static auto handle_Geant4(Detector& description, const xml_h& element) -> Ref_t {
   (Converter < Geant4 > (description))(element);
   return Ref_t(nullptr);
 }

@@ -28,23 +28,23 @@ namespace {
   using namespace dd4hep::detail;
   
   /// Helper class to bind string values to C++ data objects (primitive or complex)
-  template <typename T, typename Q> bool __bind__(const ValueBinder&, T& object, const string& val, const Q*)
+  template <typename T, typename Q> auto __bind__(const ValueBinder&, T& object, const string& val, const Q*) -> bool
   {  object.template bind<Q>(val);            return true;  }
 
   /// Helper class to bind string values to a STL vector of data objects (primitive or complex)
-  template <typename T, typename Q> bool __bind__(const VectorBinder&, T& object, const string& val, const Q*)
+  template <typename T, typename Q> auto __bind__(const VectorBinder&, T& object, const string& val, const Q*) -> bool
   {  object.template bind<vector<Q> >(val);   return true;  }
 
   /// Helper class to bind string values to a STL list of data objects (primitive or complex)
-  template <typename T, typename Q> bool __bind__(const ListBinder&, T& object, const string& val, const Q*)
+  template <typename T, typename Q> auto __bind__(const ListBinder&, T& object, const string& val, const Q*) -> bool
   {  object.template bind<list<Q> >(val);     return true;  }
 
   /// Helper class to bind string values to a STL set of data objects (primitive or complex)
-  template <typename T, typename Q> bool __bind__(const SetBinder&, T& object, const string& val, const Q*)
+  template <typename T, typename Q> auto __bind__(const SetBinder&, T& object, const string& val, const Q*) -> bool
   {  object.template bind<set<Q> >(val);      return true;  }
 
   /// Helper class to bind STL map objects
-  template <typename T, typename Q> bool __bind__(const MapBinder&, T& object, const Q*)
+  template <typename T, typename Q> auto __bind__(const MapBinder&, T& object, const Q*) -> bool
   {  object.template bind<Q>();               return true;  }
 
 }
@@ -54,7 +54,7 @@ namespace dd4hep::detail  {
 
     /// Binding function for scalar items. See the implementation function for the concrete instantiations
     template <typename BINDER, typename T> 
-    bool OpaqueDataBinder::bind(const BINDER& b, T& object, const string& typ, const string& val)  {
+    auto OpaqueDataBinder::bind(const BINDER& b, T& object, const string& typ, const string& val) -> bool  {
 #if defined(DD4HEP_HAVE_ALL_PARSERS)
       if ( typ.substr(0,4) == "char" )
         return __bind__(b,object,val,Primitive<char>::null_pointer());
@@ -115,7 +115,7 @@ namespace dd4hep::detail  {
   
     /// Binding function for sequences (unmapped STL containers)
     template <typename T> 
-    bool OpaqueDataBinder::bind_sequence(T& object, const string& typ, const string& val)
+    auto OpaqueDataBinder::bind_sequence(T& object, const string& typ, const string& val) -> bool
     {
       size_t idx = typ.find('[');
       size_t idq = typ.find(']');
@@ -269,8 +269,8 @@ namespace dd4hep::detail  {
   
     /// Binding function for STL maps
     template <typename BINDER, typename OBJECT> 
-    bool OpaqueDataBinder::bind_map(const BINDER& b, OBJECT& object,
-                                    const string& key_type, const string& val_type)   {
+    auto OpaqueDataBinder::bind_map(const BINDER& b, OBJECT& object,
+                                    const string& key_type, const string& val_type) -> bool   {
       // Short and char is not part of the standard dictionaries. Fall back to 'int'.
       if ( key_type.substr(0,3) == "int" )
         bind_mapping(b, val_type, object, Primitive<int>::null_pointer());
@@ -299,9 +299,9 @@ namespace dd4hep::detail  {
 
     /// Filling function for STL maps.
     template <typename BINDER, typename OBJECT>
-    bool OpaqueDataBinder::insert_map(const BINDER& b, OBJECT& object,
+    auto OpaqueDataBinder::insert_map(const BINDER& b, OBJECT& object,
                                       const string& key_type, const string& key,
-                                      const string& val_type, const string& val)
+                                      const string& val_type, const string& val) -> bool
     {
       if ( key_type.substr(0,3) == "int" )
         emplace_map_key(b, object, key, val_type, val, Primitive<int>::null_pointer());
@@ -331,9 +331,9 @@ namespace dd4hep::detail  {
 
     /// Filling function for STL maps.
     template <typename BINDER, typename OBJECT> 
-    bool OpaqueDataBinder::insert_map(const BINDER& b, OBJECT& object,
+    auto OpaqueDataBinder::insert_map(const BINDER& b, OBJECT& object,
                                       const std::string& key_type, const std::string& val_type,
-                                      const std::string& pair_data)
+                                      const std::string& pair_data) -> bool
     {
       if ( key_type.substr(0,3) == "int" )
         emplace_map_data(b, object, val_type, pair_data, Primitive<int>::null_pointer());
@@ -375,18 +375,18 @@ namespace dd4hep::detail  {
     template bool OpaqueDataBinder::bind_sequence<Condition>(   Condition& object,
                                                                 const string& typ,const string& val);
     /// Conditions binding function for STL maps
-    template <> bool OpaqueDataBinder::bind_map(const MapBinder& b, Condition& object,
-                                                const string& key_type, const string& val_type)
+    template <> auto OpaqueDataBinder::bind_map(const MapBinder& b, Condition& object,
+                                                const string& key_type, const string& val_type) -> bool
     {    return bind_map(b, object->data, key_type, val_type);  }
 
     /// Conditions: Filling function for STL maps.
-    template <> bool OpaqueDataBinder::insert_map(const MapBinder& b, Condition& object,
+    template <> auto OpaqueDataBinder::insert_map(const MapBinder& b, Condition& object,
                                                   const string& key_type, const string& key,
-                                                  const string& val_type, const string& val)
+                                                  const string& val_type, const string& val) -> bool
     {    return insert_map(b, object->data, key_type, key, val_type, val);    }
 
     /// Conditions: Filling function for STL maps.
-    template <> bool OpaqueDataBinder::insert_map(const MapBinder& b, Condition& object,
-                                                  const string& key_type, const string& val_type, const string& pair_data)
+    template <> auto OpaqueDataBinder::insert_map(const MapBinder& b, Condition& object,
+                                                  const string& key_type, const string& val_type, const string& pair_data) -> bool
     {    return insert_map(b, object->data, key_type, val_type, pair_data);   }  
   }

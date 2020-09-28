@@ -36,7 +36,7 @@ DECLARE_GEANT4ACTION(LCIOInputAction)
 
 
 namespace {
-  inline int GET_ENTRY(const map<EVENT::MCParticle*,int>& mcparts, EVENT::MCParticle* part)  {
+  inline auto GET_ENTRY(const map<EVENT::MCParticle*,int>& mcparts, EVENT::MCParticle* part) -> int  {
     auto ip=mcparts.find(part);
     if ( ip == mcparts.end() )  {
       throw runtime_error("Unknown particle identifier look-up!");
@@ -57,10 +57,10 @@ LCIOEventReader::~LCIOEventReader()   = default;
 
 
 /// Read an event and fill a vector of MCParticles.
-LCIOEventReader::EventReaderStatus
+auto
 LCIOEventReader::readParticles(int event_number, 
                                Vertices& vertices,
-                               vector<Particle*>& particles)
+                               vector<Particle*>& particles) -> LCIOEventReader::EventReaderStatus
 {
   EVENT::LCCollection*        primaries = nullptr;
   map<EVENT::MCParticle*,int> mcparts;

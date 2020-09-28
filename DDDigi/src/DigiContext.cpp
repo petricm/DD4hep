@@ -46,34 +46,34 @@ void DigiContext::setEvent(DigiEvent* new_event)   {
 }
 
 /// Access the geant4 event -- valid only between BeginEvent() and EndEvent()!
-DigiEvent& DigiContext::event()  const   {
+auto DigiContext::event()  const -> DigiEvent&   {
   if ( m_event ) return *m_event;
   invalidHandleError<DigiEvent>();
   return *m_event;
 }
 
 /// Access to detector description
-Detector& DigiContext::detectorDescription()  const {
+auto DigiContext::detectorDescription()  const -> Detector& {
   return m_kernel->detectorDescription();
 }
 
 /// Generic framework access
-DigiContext::UserFramework& DigiContext::userFramework()  const  {
+auto DigiContext::userFramework()  const -> DigiContext::UserFramework&  {
   return m_kernel->userFramework();
 }
 
 /// Access to the main input action sequence from the kernel object
-DigiActionSequence& DigiContext::inputAction() const    {
+auto DigiContext::inputAction() const -> DigiActionSequence&    {
   return m_kernel->inputAction();
 }
 
 /// Access to the main event action sequence from the kernel object
-DigiActionSequence& DigiContext::eventAction()  const  {
+auto DigiContext::eventAction()  const -> DigiActionSequence&  {
   return m_kernel->eventAction();
 }
 
 /// Access to the main output action sequence from the kernel object
-DigiActionSequence& DigiContext::outputAction() const    {
+auto DigiContext::outputAction() const -> DigiActionSequence&    {
   return m_kernel->outputAction();
 }
 

@@ -68,7 +68,7 @@ namespace {
 }
 
 /// Dump logical volume in GDML format to output stream
-void* GeometryTreeDump::handleVolume(const string& name, Volume vol) const {
+auto GeometryTreeDump::handleVolume(const string& name, Volume vol) const -> void* {
   VisAttr vis = vol.visAttributes();
   TGeoShape* shape = vol->GetShape();
   TGeoMedium* medium = vol->GetMedium();
@@ -103,7 +103,7 @@ void* GeometryTreeDump::handleVolume(const string& name, Volume vol) const {
 }
 
 /// Dump solid in GDML format to output stream
-void* GeometryTreeDump::handleSolid(const string& name, const TGeoShape* shape) const {
+auto GeometryTreeDump::handleSolid(const string& name, const TGeoShape* shape) const -> void* {
   if (shape) {
     if (shape->IsA() == TGeoBBox::Class()) {
       const auto* sh = (const TGeoBBox*) shape;
@@ -196,7 +196,7 @@ void GeometryTreeDump::handleStructure(const std::set<Volume>& volset) const {
 }
 
 /// Dump single volume transformation in GDML format to output stream
-void* GeometryTreeDump::handleTransformation(const string& name, const TGeoMatrix* mat) const {
+auto GeometryTreeDump::handleTransformation(const string& name, const TGeoMatrix* mat) const -> void* {
   if (mat) {
     if (mat->IsTranslation()) {
       const Double_t* f = mat->GetTranslation();

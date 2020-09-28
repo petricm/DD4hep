@@ -38,7 +38,7 @@ GenericEventHandler::~GenericEventHandler()  {
   detail::deletePtr(m_current);
 }
 
-EventHandler* GenericEventHandler::current() const   {
+auto GenericEventHandler::current() const -> EventHandler*   {
   if ( m_current )  {
     return m_current;
   }
@@ -63,17 +63,17 @@ void GenericEventHandler::Unsubscribe(EventConsumer* consumer)  {
 }
 
 /// Access the number of events on the current input data source (-1 if no data source connected)
-long GenericEventHandler::numEvents() const   {
+auto GenericEventHandler::numEvents() const -> long   {
   return current()->numEvents();
 }
 
 /// Access the data source name
-string GenericEventHandler::datasourceName() const {
+auto GenericEventHandler::datasourceName() const -> string {
   return current()->datasourceName();
 }
 
 /// Access to the collection type by name
-EventHandler::CollectionType GenericEventHandler::collectionType(const string& collection) const   {
+auto GenericEventHandler::collectionType(const string& collection) const -> EventHandler::CollectionType   {
   if ( m_current && m_current->hasEvent() )  {
     return m_current->collectionType(collection);
   }
@@ -81,7 +81,7 @@ EventHandler::CollectionType GenericEventHandler::collectionType(const string& c
 }
 
 /// Loop over collection and extract data
-size_t GenericEventHandler::collectionLoop(const string& collection, DDEveHitActor& actor) {
+auto GenericEventHandler::collectionLoop(const string& collection, DDEveHitActor& actor) -> size_t {
   if ( m_current && m_current->hasEvent() )  {
     return m_current->collectionLoop(collection,actor);
   }
@@ -89,7 +89,7 @@ size_t GenericEventHandler::collectionLoop(const string& collection, DDEveHitAct
 }
 
 /// Loop over collection and extract particle data
-size_t GenericEventHandler::collectionLoop(const string& collection, DDEveParticleActor& actor)    {
+auto GenericEventHandler::collectionLoop(const string& collection, DDEveParticleActor& actor) -> size_t    {
   if ( m_current && m_current->hasEvent() )  {
     return m_current->collectionLoop(collection,actor);
   }
@@ -97,7 +97,7 @@ size_t GenericEventHandler::collectionLoop(const string& collection, DDEvePartic
 }
 
 /// Open a new event data file
-bool GenericEventHandler::Open(const string& file_type, const string& file_name)   {
+auto GenericEventHandler::Open(const string& file_type, const string& file_name) -> bool   {
   size_t idx = file_name.find("lcio");
   size_t idr = file_name.find("root");
   string err;
@@ -144,7 +144,7 @@ bool GenericEventHandler::Open(const string& file_type, const string& file_name)
 }
 
 /// Load the next event
-bool GenericEventHandler::NextEvent()   {
+auto GenericEventHandler::NextEvent() -> bool   {
   m_hasEvent = false;
   try {
     if ( m_hasFile )   {
@@ -168,7 +168,7 @@ bool GenericEventHandler::NextEvent()   {
 }
 
 /// User overloadable function: Load the previous event
-bool GenericEventHandler::PreviousEvent()    {
+auto GenericEventHandler::PreviousEvent() -> bool    {
   m_hasEvent = false;
   if ( m_hasFile && current()->PreviousEvent() > 0 )   {
     m_hasEvent = true;
@@ -179,7 +179,7 @@ bool GenericEventHandler::PreviousEvent()    {
 }
 
 /// Goto a specified event in the file
-bool GenericEventHandler::GotoEvent(long event_number)   {
+auto GenericEventHandler::GotoEvent(long event_number) -> bool   {
   m_hasEvent = false;
   if ( m_hasFile && current()->GotoEvent(event_number) > 0 )   {
     m_hasEvent = true;

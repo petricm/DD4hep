@@ -45,7 +45,7 @@ namespace  {
     struct FND {
       const string& test;
       FND(const string& c) : test(c) {}
-      bool operator()(const PlacedVolume::VolIDs::value_type& c) const { return c.first == test; }
+      auto operator()(const PlacedVolume::VolIDs::value_type& c) const -> bool { return c.first == test; }
     };
     VolumeManager m_mgr;
     DetElement    m_det;
@@ -59,7 +59,7 @@ namespace  {
     /// Printout volume information
     void print(DetElement e, PlacedVolume pv, const PlacedVolume::VolIDs& child_ids)  const;
     /// Action routine to execute the test
-    static long run(Detector& description,int argc,char** argv);
+    static auto run(Detector& description,int argc,char** argv) -> long;
   };
 }
 
@@ -113,7 +113,7 @@ void GeometryWalk::walk(DetElement e, PlacedVolume::VolIDs ids)  const   {
 }
 
 /// Action routine to execute the test
-long GeometryWalk::run(Detector& description,int argc,char** argv)    {
+auto GeometryWalk::run(Detector& description,int argc,char** argv) -> long    {
   cout << "++ Processing plugin....GeometryWalker.." << endl;
   for(int in=1; in < argc; ++in)  {
     string name = argv[in]+1;

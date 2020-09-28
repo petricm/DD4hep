@@ -34,7 +34,7 @@
 #include <stdexcept>
 
 namespace dd4hep {
-  dd4hep::tools::Evaluator& g4Evaluator();
+  auto g4Evaluator() -> dd4hep::tools::Evaluator&;
 }
 namespace {
   dd4hep::tools::Evaluator& eval(dd4hep::g4Evaluator());
@@ -42,11 +42,11 @@ namespace {
 
 //==============================================================================
 namespace dd4hep::Parsers {
-    template <typename T> T evaluate_string(const std::string& /* value */)   {
+    template <typename T> auto evaluate_string(const std::string& /* value */) -> T   {
       throw "Bad undefined call";
     }
 
-    template <> double evaluate_string<double>(const std::string& value)   {
+    template <> auto evaluate_string<double>(const std::string& value) -> double   {
       double result = eval.evaluate(value.c_str());
       if (eval.status() != tools::Evaluator::OK) {
         std::cerr << value << ": ";
@@ -55,7 +55,7 @@ namespace dd4hep::Parsers {
       }
       return result;
     }
-    template <> float evaluate_string<float>(const std::string& value)   {
+    template <> auto evaluate_string<float>(const std::string& value) -> float   {
       double result = eval.evaluate(value.c_str());
       if (eval.status() != tools::Evaluator::OK) {
         std::cerr << value << ": ";

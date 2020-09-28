@@ -21,7 +21,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::detail;
 
-static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector sens)  {
+static auto create_detector(Detector& description, xml_h e, SensitiveDetector sens) -> Ref_t  {
   typedef vector<PlacedVolume> Placements;
   xml_det_t   x_det     = e;
   Material    air       = description.air();

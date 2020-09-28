@@ -22,20 +22,20 @@ namespace dd4hep::rec {
 
     using std::set;
 
-    const VolumeManagerContext*
-    CellIDPositionConverter::findContext(const CellID& cellID) const {
+    auto
+    CellIDPositionConverter::findContext(const CellID& cellID) const -> const VolumeManagerContext* {
       return _volumeManager.lookupContext( cellID ) ;
     }
     
 
-    Position CellIDPositionConverter::position(const CellID& cell) const {
+    auto CellIDPositionConverter::position(const CellID& cell) const -> Position {
 
       // untill we have the alignment map object, we return the nominal position
 
       return positionNominal( cell ) ;
     }
 
-    Position CellIDPositionConverter::positionNominal(const CellID& cell) const {
+    auto CellIDPositionConverter::positionNominal(const CellID& cell) const -> Position {
 
       double l[3], e[3], g[3];
 
@@ -83,7 +83,7 @@ namespace dd4hep::rec {
 
 
 
-    CellID CellIDPositionConverter::cellID(const Position& global) const {
+    auto CellIDPositionConverter::cellID(const Position& global) const -> CellID {
 
       CellID result(0) ;
       
@@ -188,7 +188,7 @@ namespace dd4hep::rec {
 
     namespace {
       
-      bool containsPoint( const DetElement& det, const Position& global ) {
+      auto containsPoint( const DetElement& det, const Position& global ) -> bool {
 	
 	if( det.volume().isValid() and det.volume().solid().isValid() ) {
 	  
@@ -205,8 +205,8 @@ namespace dd4hep::rec {
       
     }
 
-    DetElement CellIDPositionConverter::findDetElement(const Position& global,
-						       const DetElement& d) const {
+    auto CellIDPositionConverter::findDetElement(const Position& global,
+						       const DetElement& d) const -> DetElement {
 
       DetElement det = ( d.isValid() ? d : _description->world() ) ;
       
@@ -244,7 +244,7 @@ namespace dd4hep::rec {
       return DetElement() ;
     } 
 
-    PlacedVolume CellIDPositionConverter::findPlacement(const Position& pos, const  PlacedVolume& pv , double locPos[3], PlacedVolume::VolIDs& volIDs) const {
+    auto CellIDPositionConverter::findPlacement(const Position& pos, const  PlacedVolume& pv , double locPos[3], PlacedVolume::VolIDs& volIDs) const -> PlacedVolume {
 
       
       double l[3] ;
@@ -298,7 +298,7 @@ namespace dd4hep::rec {
     } 
 
     
-    Readout CellIDPositionConverter::findReadout(const DetElement& det) const {
+    auto CellIDPositionConverter::findReadout(const DetElement& det) const -> Readout {
 
       // first check if top level is a sensitive detector
       if (det.volume().isValid() and det.volume().isSensitive()) {
@@ -317,7 +317,7 @@ namespace dd4hep::rec {
       return Readout();
     }
 
-    Readout CellIDPositionConverter::findReadout(const PlacedVolume& pv) const {
+    auto CellIDPositionConverter::findReadout(const PlacedVolume& pv) const -> Readout {
       
       // first check if we are in a sensitive volume
       if( pv.volume().isSensitive() ){
@@ -338,7 +338,7 @@ namespace dd4hep::rec {
       return Readout() ;
     }
 
-    std::vector<double> CellIDPositionConverter::cellDimensions(const CellID& cell) const {
+    auto CellIDPositionConverter::cellDimensions(const CellID& cell) const -> std::vector<double> {
       auto context = findContext( cell ) ;
       if( context == nullptr ) return { };
       dd4hep::Readout r  = findReadout( context->element ) ;

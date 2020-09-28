@@ -47,7 +47,7 @@ namespace {
 namespace dd4hep::sim {
 
 
-    template <typename TYPE> static inline TYPE* checked_value(TYPE* p) {
+    template <typename TYPE> static inline auto checked_value(TYPE* p) -> TYPE* {
       if (p) {
         return p;
       }
@@ -72,7 +72,7 @@ namespace dd4hep::sim {
       handle.value = nullptr;
     }
 
-    template <typename TYPE> TYPE* _create_object(Geant4Kernel& kernel, const TypeName& typ)    {
+    template <typename TYPE> auto _create_object(Geant4Kernel& kernel, const TypeName& typ) -> TYPE*    {
       Geant4Context* ctxt = kernel.workerContext();
       auto* object = PluginService::Create<Geant4Action*>(typ.first, ctxt, typ.second);
       if (!object && typ.first == typ.second) {
@@ -101,11 +101,11 @@ namespace dd4hep::sim {
     }
 
     template <typename TYPE, typename CONT> 
-    TYPE* _create_share(Geant4Kernel& kernel,
+    auto _create_share(Geant4Kernel& kernel,
                         CONT& (Geant4ActionContainer::*pmf)(), 
                         const string& type_name, 
                         const string& shared_typ, 
-                        bool shared, TYPE*)
+                        bool shared, TYPE*) -> TYPE*
     {
       TypeName typ = TypeName::split(type_name);
       Geant4Kernel& k = shared ? kernel.master() : kernel;
@@ -149,7 +149,7 @@ namespace dd4hep::sim {
       value = nullptr;
     }
 
-    template <typename TYPE> TYPE* Geant4Handle<TYPE>::release() {
+    template <typename TYPE> auto Geant4Handle<TYPE>::release() -> TYPE* {
       TYPE* temp = value;
       value = nullptr;
       return temp;
@@ -163,7 +163,7 @@ namespace dd4hep::sim {
         value->addRef();
     }
 
-    template <typename TYPE> Property& Geant4Handle<TYPE>::operator[](const string& property_name) const {
+    template <typename TYPE> auto Geant4Handle<TYPE>::operator[](const string& property_name) const -> Property& {
       PropertyManager& pm = checked_value(value)->properties();
       return pm[property_name];
     }
@@ -172,24 +172,24 @@ namespace dd4hep::sim {
       return checked_value(value);
     }
 
-    template <typename TYPE> bool Geant4Handle<TYPE>::operator!() const {
+    template <typename TYPE> auto Geant4Handle<TYPE>::operator!() const -> bool {
       return nullptr == value;
     }
 
-    template <typename TYPE> TYPE* Geant4Handle<TYPE>::get() const {
+    template <typename TYPE> auto Geant4Handle<TYPE>::get() const -> TYPE* {
       return checked_value(value);
     }
 
-    template <typename TYPE> TYPE* Geant4Handle<TYPE>::operator->() const {
+    template <typename TYPE> auto Geant4Handle<TYPE>::operator->() const -> TYPE* {
       return checked_value(value);
     }
 
-    template <typename TYPE> Geant4Action* Geant4Handle<TYPE>::action() const {
+    template <typename TYPE> auto Geant4Handle<TYPE>::action() const -> Geant4Action* {
       return checked_value(value);
     }
 
     /// Assignment operator
-    template <typename TYPE> Geant4Handle<TYPE>& Geant4Handle<TYPE>::operator=(const Geant4Handle& handle) {
+    template <typename TYPE> auto Geant4Handle<TYPE>::operator=(const Geant4Handle& handle) -> Geant4Handle<TYPE>& {
       if ( &handle != this )  {
         TYPE* point = value;
         value = handle.get();
@@ -200,14 +200,14 @@ namespace dd4hep::sim {
     }
 
     /// Assignment move operator
-    template <typename TYPE> Geant4Handle<TYPE>& Geant4Handle<TYPE>::operator=(Geant4Handle&& handle) {
+    template <typename TYPE> auto Geant4Handle<TYPE>::operator=(Geant4Handle&& handle) -> Geant4Handle<TYPE>& {
       if ( value ) value->release();
       value = handle.get();
       handle.value = nullptr;
       return *this;
     }
 
-    template <typename TYPE> Geant4Handle<TYPE>& Geant4Handle<TYPE>::operator=(TYPE* pointer) {
+    template <typename TYPE> auto Geant4Handle<TYPE>::operator=(TYPE* pointer) -> Geant4Handle<TYPE>& {
       if ( pointer != value )  {
         TYPE* point = value;
         value = pointer;
@@ -225,7 +225,7 @@ namespace dd4hep::sim {
     }
     KernelHandle::KernelHandle(Geant4Kernel* k) : value(k)  {
     }
-    KernelHandle KernelHandle::worker()  {
+    auto KernelHandle::worker() -> KernelHandle  {
       Geant4Kernel* k = value ? &value->worker(Geant4Kernel::thread_self()) : nullptr;
       if ( k ) return KernelHandle(k);
       except("KernelHandle", "Cannot access worker context [Invalid Handle]");

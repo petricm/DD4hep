@@ -15,7 +15,7 @@
 #include "DDG4/Python/DDPython.h"
 #include <vector>
 
-static int load_libs(const std::vector<char*>& libs)  {
+static auto load_libs(const std::vector<char*>& libs) -> int  {
   for(auto lib : libs)   {
     int ret = gSystem->Load(lib);
     if ( 0 != ret )   {
@@ -29,7 +29,7 @@ static int load_libs(const std::vector<char*>& libs)  {
   return 0;
 }
 
-int main(int argc, char** argv)   {
+auto main(int argc, char** argv) -> int   {
   bool have_prompt = false;
   bool do_execute = false;
   std::vector<char*> args;

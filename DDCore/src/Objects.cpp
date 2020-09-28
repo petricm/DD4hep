@@ -40,7 +40,7 @@ Author::Author(Detector& /* description */) {
 }
 
 /// Access the auhor's name
-string Author::authorName() const {
+auto Author::authorName() const -> string {
   return m_element->GetName();
 }
 
@@ -50,7 +50,7 @@ void Author::setAuthorName(const string& nam) {
 }
 
 /// Access the auhor's email address
-string Author::authorEmail() const {
+auto Author::authorEmail() const -> string {
   return m_element->GetTitle();
 }
 
@@ -66,7 +66,7 @@ Header::Header(const string& author_name, const string& descr_url) {
 }
 
 /// Accessor to object name
-const string Header::name() const {
+auto Header::name() const -> const string {
   return m_element->GetName();
 }
 
@@ -76,7 +76,7 @@ void Header::setName(const string& new_name) {
 }
 
 /// Accessor to object title
-const string Header::title() const {
+auto Header::title() const -> const string {
   return m_element->GetTitle();
 }
 
@@ -86,7 +86,7 @@ void Header::setTitle(const string& new_title) {
 }
 
 /// Accessor to object url
-const string& Header::url() const {
+auto Header::url() const -> const string& {
   return data<Object>()->url;
 }
 
@@ -96,7 +96,7 @@ void Header::setUrl(const string& new_url) {
 }
 
 /// Accessor to object author
-const string& Header::author() const {
+auto Header::author() const -> const string& {
   return data<Object>()->author;
 }
 
@@ -106,7 +106,7 @@ void Header::setAuthor(const string& new_author) {
 }
 
 /// Accessor to object status
-const string& Header::status() const {
+auto Header::status() const -> const string& {
   return data<Object>()->status;
 }
 
@@ -116,7 +116,7 @@ void Header::setStatus(const string& new_status) {
 }
 
 /// Accessor to object version
-const string& Header::version() const {
+auto Header::version() const -> const string& {
   return data<Object>()->version;
 }
 
@@ -126,7 +126,7 @@ void Header::setVersion(const string& new_version) {
 }
 
 /// Accessor to object comment
-const string& Header::comment() const {
+auto Header::comment() const -> const string& {
   return data<Object>()->comment;
 }
 
@@ -146,7 +146,7 @@ Constant::Constant(const string& nam) {
 }
 
 /// Access the constant
-string Constant::dataType() const   {
+auto Constant::dataType() const -> string   {
   if ( isValid() )  {
     return m_element->dataType;
   }
@@ -154,7 +154,7 @@ string Constant::dataType() const   {
 }
 
 /// String representation of this object
-string Constant::toString() const {
+auto Constant::toString() const -> string {
   stringstream os;
   os << m_element->GetName() << "  \"" << m_element->GetTitle() << "\"  ";
   if ( m_element->dataType == "string" ) os << "Value:" << m_element->GetTitle();
@@ -174,7 +174,7 @@ Atom::Atom(const string& nam, const string& formula, int Z, int N, double densit
 }
 
 /// proton number of the underlying material
-double  Material::Z() const {
+auto  Material::Z() const -> double {
   Handle < TGeoMedium > val(*this);
   if (val.isValid()) {
     TGeoMaterial* mat = val->GetMaterial();
@@ -186,7 +186,7 @@ double  Material::Z() const {
 }
 
 /// atomic number of the underlying material
-double  Material::A() const {
+auto  Material::A() const -> double {
   if ( isValid() ) {
     TGeoMaterial* mat = ptr()->GetMaterial();
     if ( mat )
@@ -197,7 +197,7 @@ double  Material::A() const {
 }
 
 /// density of the underlying material
-double  Material::density() const {
+auto  Material::density() const -> double {
   if ( isValid() )  {
     TGeoMaterial* mat = ptr()->GetMaterial();
     if ( mat )
@@ -208,7 +208,7 @@ double  Material::density() const {
 }
 
 /// Access the radiation length of the underlying material
-double Material::radLength() const {
+auto Material::radLength() const -> double {
   if ( isValid() ) {
     TGeoMaterial* mat = ptr()->GetMaterial();
     if ( mat )
@@ -219,7 +219,7 @@ double Material::radLength() const {
 }
 
 /// Access the radiation length of the underlying material
-double Material::intLength() const {
+auto Material::intLength() const -> double {
   if ( isValid() ) {
     TGeoMaterial* mat = ptr()->GetMaterial();
     if ( mat )
@@ -230,7 +230,7 @@ double Material::intLength() const {
 }
 
 /// Access the fraction of an element within the material
-double Material::fraction(Atom atom) const    {
+auto Material::fraction(Atom atom) const -> double    {
   double frac = 0e0, tot = 0e0;
   TGeoElement*  elt = atom.access();
   TGeoMaterial* mat = access()->GetMaterial();
@@ -258,18 +258,18 @@ double Material::fraction(Atom atom) const    {
 
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,17,0)
 /// Access to tabular properties of the optical surface
-Material::Property Material::property(const char* nam)  const    {
+auto Material::property(const char* nam)  const -> Material::Property    {
   return access()->GetMaterial()->GetProperty(nam);
 }
 
 /// Access to tabular properties of the optical surface
-Material::Property Material::property(const std::string& nam)  const   {
+auto Material::property(const std::string& nam)  const -> Material::Property   {
   return access()->GetMaterial()->GetProperty(nam.c_str());
 }
 #endif
 
 /// String representation of this object
-string Material::toString() const {
+auto Material::toString() const -> string {
   if ( isValid() ) {
     TGeoMedium*  val = ptr();
     stringstream out;
@@ -304,7 +304,7 @@ VisAttr::VisAttr(const char* nam) {
 }
 
 /// Get Flag to show/hide daughter elements
-bool VisAttr::showDaughters() const {
+auto VisAttr::showDaughters() const -> bool {
   return object<Object>().showDaughters;
 }
 
@@ -314,7 +314,7 @@ void VisAttr::setShowDaughters(bool value) {
 }
 
 /// Get visibility flag
-bool VisAttr::visible() const {
+auto VisAttr::visible() const -> bool {
   return object<Object>().visible;
 }
 
@@ -324,7 +324,7 @@ void VisAttr::setVisible(bool value) {
 }
 
 /// Get line style
-int VisAttr::lineStyle() const {
+auto VisAttr::lineStyle() const -> int {
   return object<Object>().lineStyle;
 }
 
@@ -334,7 +334,7 @@ void VisAttr::setLineStyle(int value) {
 }
 
 /// Get drawing style
-int VisAttr::drawingStyle() const {
+auto VisAttr::drawingStyle() const -> int {
   return object<Object>().drawingStyle;
 }
 
@@ -344,7 +344,7 @@ void VisAttr::setDrawingStyle(int value) {
 }
 
 /// Get alpha value
-float VisAttr::alpha() const {
+auto VisAttr::alpha() const -> float {
   //NamedObject* obj = first_value<NamedObject>(*this);
   //obj->SetAlpha(value);
   return object<Object>().alpha;
@@ -358,7 +358,7 @@ void VisAttr::setAlpha(float value) {
 }
 
 /// Get object color
-int VisAttr::color() const {
+auto VisAttr::color() const -> int {
   return object<Object>().color;
 }
 
@@ -370,7 +370,7 @@ void VisAttr::setColor(float red, float green, float blue) {
 }
 
 /// Get RGB values of the color (if valid)
-bool VisAttr::rgb(float& red, float& green, float& blue) const {
+auto VisAttr::rgb(float& red, float& green, float& blue) const -> bool {
   auto& o = object<Object>();
   if (o.col) {
     auto* c = (TColor*) o.col;
@@ -381,7 +381,7 @@ bool VisAttr::rgb(float& red, float& green, float& blue) const {
 }
 
 /// String representation of this object
-string VisAttr::toString() const {
+auto VisAttr::toString() const -> string {
   const VisAttr::Object* obj = &object<Object>();
   TColor* col = gROOT->GetColor(obj->color);
   char text[256];
@@ -392,12 +392,12 @@ string VisAttr::toString() const {
 }
 
 /// Equality operator
-bool Limit::operator==(const Limit& c) const {
+auto Limit::operator==(const Limit& c) const -> bool {
   return value == c.value && name == c.name && particles == c.particles;
 }
 
 /// operator less
-bool Limit::operator<(const Limit& c) const {
+auto Limit::operator<(const Limit& c) const -> bool {
   if (name < c.name)
     return true;
   if (value < c.value)
@@ -408,7 +408,7 @@ bool Limit::operator<(const Limit& c) const {
 }
 
 /// Conversion to a string representation
-string Limit::toString() const {
+auto Limit::toString() const -> string {
   string res = name + " = " + content;
   if (!unit.empty())
     res += unit + " ";
@@ -422,25 +422,25 @@ LimitSet::LimitSet(const string& nam) {
 }
 
 /// Add new limit. Returns true if the new limit was added, false if it already existed.
-bool LimitSet::addLimit(const Limit& limit) {
+auto LimitSet::addLimit(const Limit& limit) -> bool {
   pair<Object::iterator, bool> ret = data<Object>()->limits.insert(limit);
   return ret.second;
 }
 
 /// Accessor to limits container
-const set<Limit>& LimitSet::limits() const {
+auto LimitSet::limits() const -> const set<Limit>& {
   const Object* o = data<Object>();
   return o->limits;
 }
 
 /// Add new limit. Returns true if the new limit was added, false if it already existed.
-bool LimitSet::addCut(const Limit& cut_obj)   {
+auto LimitSet::addCut(const Limit& cut_obj) -> bool   {
   pair<Object::iterator, bool> ret = data<Object>()->cuts.insert(cut_obj);
   return ret.second;
 }
 
 /// Accessor to limits container
-const std::set<Limit>& LimitSet::cuts() const    {
+auto LimitSet::cuts() const -> const std::set<Limit>&    {
   return data<Object>()->cuts;
 }
 
@@ -456,48 +456,48 @@ Region::Region(const string& nam) {
   p->was_threshold_set = false;
 }
 
-Region& Region::setStoreSecondaries(bool value) {
+auto Region::setStoreSecondaries(bool value) -> Region& {
   object<Object>().store_secondaries = value;
   return *this;
 }
 
-Region& Region::setThreshold(double value) {
+auto Region::setThreshold(double value) -> Region& {
   object<Object>().threshold = value;
   object<Object>().was_threshold_set = true;
   return *this;
 }
 
-Region& Region::setCut(double value) {
+auto Region::setCut(double value) -> Region& {
   object<Object>().cut = value;
   object<Object>().use_default_cut = false;
   return *this;
 }
 
 /// Access references to user limits
-vector<string>& Region::limits() const {
+auto Region::limits() const -> vector<string>& {
   return object<Object>().user_limits;
 }
 
 /// Access cut value
-double Region::cut() const {
+auto Region::cut() const -> double {
   return object<Object>().cut;
 }
 
 /// Access production threshold
-double Region::threshold() const {
+auto Region::threshold() const -> double {
   return object<Object>().threshold;
 }
 
 /// Access secondaries flag
-bool Region::storeSecondaries() const {
+auto Region::storeSecondaries() const -> bool {
   return object<Object>().store_secondaries;
 }
 
-bool Region::useDefaultCut() const {
+auto Region::useDefaultCut() const -> bool {
   return object<Object>().use_default_cut;
 }
 
-bool Region::wasThresholdSet() const {
+auto Region::wasThresholdSet() const -> bool {
   return object<Object>().was_threshold_set;
 }
 

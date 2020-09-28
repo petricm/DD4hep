@@ -42,7 +42,7 @@ Geant4Vertex::~Geant4Vertex()  {
 }
 
 /// Assignment operator
-Geant4Vertex& Geant4Vertex::operator=(const Geant4Vertex& c)   {
+auto Geant4Vertex::operator=(const Geant4Vertex& c) -> Geant4Vertex&   {
   if ( this != &c )  {
     mask = c.mask;
     x = c.x;
@@ -55,7 +55,7 @@ Geant4Vertex& Geant4Vertex::operator=(const Geant4Vertex& c)   {
   return *this;
 }
 
-Geant4Vertex* Geant4Vertex::addRef()   {
+auto Geant4Vertex::addRef() -> Geant4Vertex*   {
   ++ref;
   return this;
 }

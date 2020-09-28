@@ -33,9 +33,9 @@ using dd4hep::PlacedVolume;
 using dd4hep::Assembly;
 namespace units = dd4hep;
 
-static dd4hep::Ref_t create_element(dd4hep::Detector& description,
+static auto create_element(dd4hep::Detector& description,
 					      xml_h xmlHandle,
-					      dd4hep::SensitiveDetector /*sens*/) {
+					      dd4hep::SensitiveDetector /*sens*/) -> dd4hep::Ref_t {
 
   printout(dd4hep::DEBUG,"DD4hep_Mask", "Creating Mask" ) ;
 

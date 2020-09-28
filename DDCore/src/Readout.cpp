@@ -40,7 +40,7 @@ HitCollection::HitCollection(string  n, string  k, long k_min, long k_max)
 }
 
 /// Assignment operator
-HitCollection& HitCollection::operator=(const HitCollection& c)   {
+auto HitCollection::operator=(const HitCollection& c) -> HitCollection&   {
   if ( this != &c )   {
     name = c.name;
     key = c.key;
@@ -56,7 +56,7 @@ Readout::Readout(const string& nam) {
 }
 
 /// Access number of hit collections
-size_t Readout::numCollections() const   {
+auto Readout::numCollections() const -> size_t   {
   if ( isValid() ) {
     auto& ro = object<Object>();
     return ro.hits.size();
@@ -65,7 +65,7 @@ size_t Readout::numCollections() const   {
 }
 
 /// Access names of hit collections
-vector<string> Readout::collectionNames()  const   {
+auto Readout::collectionNames()  const -> vector<string>   {
   vector<string> colls;
   if ( isValid() ) {
     auto& ro = object<Object>();
@@ -79,7 +79,7 @@ vector<string> Readout::collectionNames()  const   {
 }
 
 /// Access hit collectionsy
-vector<const HitCollection*> Readout::collections()  const   {
+auto Readout::collections()  const -> vector<const HitCollection*>   {
   vector<const HitCollection*> colls;
   if ( isValid() ) {
     auto& ro = object<Object>();
@@ -109,7 +109,7 @@ void Readout::setIDDescriptor(const Ref_t& new_descriptor) const {
 }
 
 /// Access IDDescription structure
-IDDescriptor Readout::idSpec() const {
+auto Readout::idSpec() const -> IDDescriptor {
   return object<Object>().id;
 }
 
@@ -130,7 +130,7 @@ void Readout::setSegmentation(const Segmentation& seg) const {
 }
 
 /// Access segmentation structure
-Segmentation Readout::segmentation() const {
+auto Readout::segmentation() const -> Segmentation {
   return object<Object>().segmentation;
 }
 

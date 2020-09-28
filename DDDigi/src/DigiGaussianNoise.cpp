@@ -35,7 +35,7 @@ DigiGaussianNoise::~DigiGaussianNoise() {
 }
 
 /// Callback to read event gaussiannoise
-double DigiGaussianNoise::operator()(DigiCellContext& context)  const  {
+auto DigiGaussianNoise::operator()(DigiCellContext& context)  const -> double  {
   if ( context.data.signal < m_cutoff )
     return 0;
   return context.context.randomGenerator().gaussian(m_mean,m_sigma);

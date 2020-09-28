@@ -118,7 +118,7 @@ template <> void Converter<plugins>::operator()(xml_h e)  const  {
   xml_coll_t(e, _U(plugin)).for_each(               Converter<plugin>(description,param));
 }
 
-static long handle_plugins(Detector& description, const xml_h& element) {
+static auto handle_plugins(Detector& description, const xml_h& element) -> long {
   (dd4hep::Converter < plugins > (description))(element);
   return 1;
 }

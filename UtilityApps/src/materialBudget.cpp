@@ -54,7 +54,7 @@ namespace {
   };
 
   /// comput a point on a cylinder (r,z) for a given direction (theta,phi) from the IP
-  Vector3D pointOnCylinder( double theta, double r, double z, double phi){
+  auto pointOnCylinder( double theta, double r, double z, double phi) -> Vector3D{
     
     double  theta0 = atan2( r, z ) ;
 
@@ -66,7 +66,7 @@ namespace {
 
 }
 
-int main_wrapper(int argc, char** argv)   {
+auto main_wrapper(int argc, char** argv) -> int   {
   
   struct Handler  {
     Handler() { SetErrorHandler(Handler::print); }

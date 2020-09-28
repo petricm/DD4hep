@@ -36,7 +36,7 @@ Geant4Mapping::~Geant4Mapping() {
 }
 
 /// Possibility to define a singleton instance
-Geant4Mapping& Geant4Mapping::instance() {
+auto Geant4Mapping::instance() -> Geant4Mapping& {
   static Geant4Mapping inst(Detector::getInstance());
   return inst;
 }
@@ -49,7 +49,7 @@ void Geant4Mapping::checkValidity() const {
 }
 
 /// Create new data block. Delete old data block if present.
-Geant4GeometryInfo& Geant4Mapping::init() {
+auto Geant4Mapping::init() -> Geant4GeometryInfo& {
   Geant4GeometryInfo* p = detach();
   if (p)
     delete p;
@@ -58,7 +58,7 @@ Geant4GeometryInfo& Geant4Mapping::init() {
 }
 
 /// Release data and pass over the ownership
-Geant4GeometryInfo* Geant4Mapping::detach() {
+auto Geant4Mapping::detach() -> Geant4GeometryInfo* {
   Geant4GeometryInfo* p = m_dataPtr;
   m_dataPtr = nullptr;
   return p;
@@ -70,7 +70,7 @@ void Geant4Mapping::attach(Geant4GeometryInfo* data_ptr) {
 }
 
 /// Access the volume manager
-Geant4VolumeManager Geant4Mapping::volumeManager() const {
+auto Geant4Mapping::volumeManager() const -> Geant4VolumeManager {
   if ( m_dataPtr ) {
     if ( m_dataPtr->g4Paths.empty() ) {
       return Geant4VolumeManager(m_detDesc, m_dataPtr);
@@ -81,7 +81,7 @@ Geant4VolumeManager Geant4Mapping::volumeManager() const {
 }
 
 /// Accessor to resolve geometry placements
-PlacedVolume Geant4Mapping::placement(const G4VPhysicalVolume* node) const {
+auto Geant4Mapping::placement(const G4VPhysicalVolume* node) const -> PlacedVolume {
   checkValidity();
   const Geant4GeometryMaps::PlacementMap& pm = m_dataPtr->g4Placements;
   for (auto i : pm)

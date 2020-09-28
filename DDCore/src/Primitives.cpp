@@ -139,20 +139,20 @@ namespace {
 
   struct FNV1a_64 {
     static const unsigned long long int hashinit = 14695981039346656037ull;
-    static constexpr unsigned long long int doByte(unsigned long long int hash,unsigned char val)
+    static constexpr auto doByte(unsigned long long int hash,unsigned char val) -> unsigned long long int
     { return (hash ^ val) * 1099511628211ull; }
   };
 }
 
 /// Convert volumeID to string format (016X)
-std::string dd4hep::volumeID(VolumeID vid)   {
+auto dd4hep::volumeID(VolumeID vid) -> std::string   {
   char text[32];
   ::snprintf(text,sizeof(text),"%016llx",vid);
   return text;
 }
 
 /// We need it so often: one-at-time 64 bit hash function
-unsigned long long int dd4hep::detail::hash64(const char* key)   {
+auto dd4hep::detail::hash64(const char* key) -> unsigned long long int   {
   //return murmur_hash_64(key, strlen(key));
   auto* str = (unsigned char*)key;
   unsigned long long int hash = FNV1a_64::hashinit;
@@ -160,13 +160,13 @@ unsigned long long int dd4hep::detail::hash64(const char* key)   {
   return hash;
 }
 
-unsigned long long int dd4hep::detail::hash64(const std::string& key)  {
+auto dd4hep::detail::hash64(const std::string& key) -> unsigned long long int  {
   //return murmur_hash_64(key.data(), key.length());
   return std::accumulate(begin(key),end(key),FNV1a_64::hashinit,FNV1a_64::doByte);
 }
 
-long int dd4hep::detail::makeTime(int year, int month, int day,
-                          int hour, int minutes, int seconds)
+auto dd4hep::detail::makeTime(int year, int month, int day,
+                          int hour, int minutes, int seconds) -> long int
 {
   struct tm tm_init;
   ::memset(&tm_init,0,sizeof(tm_init));
@@ -185,7 +185,7 @@ long int dd4hep::detail::makeTime(int year, int month, int day,
 }
 
 /// Convert date into epoch time (seconds since 1970)
-long int dd4hep::detail::makeTime(const std::string& date, const char* fmt)  {
+auto dd4hep::detail::makeTime(const std::string& date, const char* fmt) -> long int  {
   struct tm tm;
   char* c = ::strptime(date.c_str(),fmt,&tm);
   if ( nullptr == c )   {
@@ -201,7 +201,7 @@ long int dd4hep::detail::makeTime(const std::string& date, const char* fmt)  {
   return ti;
 }
 
-static const std::string __typeinfoName(const std::type_info& tinfo) {
+static auto __typeinfoName(const std::type_info& tinfo) -> const std::string {
   const char* class_name = tinfo.name();
   std::string result;
 #ifdef WIN32
@@ -319,7 +319,7 @@ static const std::string __typeinfoName(const std::type_info& tinfo) {
   return result;
 }
 
-std::string dd4hep::typeName(const std::type_info& typ) {
+auto dd4hep::typeName(const std::type_info& typ) -> std::string {
   return __typeinfoName(typ);
 }
 
@@ -356,21 +356,21 @@ void dd4hep::typeinfoCheck(const std::type_info& typ1, const std::type_info& typ
 namespace dd4hep::detail  {
     template<> const char* Primitive<bool>::default_format()           { return "%d"; }
     template<> const char* Primitive<char>::default_format()           { return "%c"; }
-    template<> const char* Primitive<unsigned char>::default_format()  { return "%02X"; }
-    template<> const char* Primitive<short>::default_format()          { return "%d"; }
-    template<> const char* Primitive<unsigned short>::default_format() { return "%04X"; }
-    template<> const char* Primitive<int>::default_format()            { return "%d"; }
-    template<> const char* Primitive<unsigned int>::default_format()   { return "%08X"; }
-    template<> const char* Primitive<long>::default_format()           { return "%ld"; }
-    template<> const char* Primitive<unsigned long>::default_format()  { return "%016X"; }
+    template<> auto Primitive<unsigned char>::default_format() -> const char*  { return "%02X"; }
+    template<> auto Primitive<short>::default_format() -> const char*          { return "%d"; }
+    template<> auto Primitive<unsigned short>::default_format() -> const char* { return "%04X"; }
+    template<> auto Primitive<int>::default_format() -> const char*            { return "%d"; }
+    template<> auto Primitive<unsigned int>::default_format() -> const char*   { return "%08X"; }
+    template<> auto Primitive<long>::default_format() -> const char*           { return "%ld"; }
+    template<> auto Primitive<unsigned long>::default_format() -> const char*  { return "%016X"; }
     template<> const char* Primitive<float>::default_format()          { return "%f"; }
     template<> const char* Primitive<double>::default_format()         { return "%g"; }
     template<> const char* Primitive<char*>::default_format()          { return "%s"; }
-    template<> const char* Primitive<const char*>::default_format()    { return "%s"; }
+    template<> auto Primitive<const char*>::default_format() -> const char*    { return "%s"; }
     template<> const char* Primitive<std::string>::default_format()    { return "%s"; }
 
     /// Generic function to convert to string
-    template <typename T> std::string Primitive<T>::toString(T value) {
+    template <typename T> auto Primitive<T>::toString(T value) -> std::string {
       char text[1024];
       ::snprintf(text,sizeof(text),default_format(),value);
       return text;
@@ -451,7 +451,7 @@ static inline void* cast_wrap(const void* p,
 #endif
 
 /// Apply cast using typeinfo instead of dynamic_cast
-void* dd4hep::ComponentCast::apply_dynCast(const ComponentCast& to, const void* ptr) const
+auto dd4hep::ComponentCast::apply_dynCast(const ComponentCast& to, const void* ptr) const -> void*
 {
   if (&to == this) {
     return (void*) ptr;
@@ -491,7 +491,7 @@ void* dd4hep::ComponentCast::apply_dynCast(const ComponentCast& to, const void* 
 }
 
 /// Apply cast using typeinfo instead of dynamic_cast
-void* dd4hep::ComponentCast::apply_upCast(const ComponentCast& to, const void* ptr) const
+auto dd4hep::ComponentCast::apply_upCast(const ComponentCast& to, const void* ptr) const -> void*
 {
   if (&to == this) {
     return (void*) ptr;
@@ -500,7 +500,7 @@ void* dd4hep::ComponentCast::apply_upCast(const ComponentCast& to, const void* p
 }
   
 /// Apply cast using typeinfo instead of dynamic_cast
-void* dd4hep::ComponentCast::apply_downCast(const ComponentCast& to, const void* ptr) const
+auto dd4hep::ComponentCast::apply_downCast(const ComponentCast& to, const void* ptr) const -> void*
 {
   if (&to == this) {
     return (void*) ptr;

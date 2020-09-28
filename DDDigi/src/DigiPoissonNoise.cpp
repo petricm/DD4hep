@@ -34,7 +34,7 @@ DigiPoissonNoise::~DigiPoissonNoise() {
 }
 
 /// Callback to read event poissonnoise
-double DigiPoissonNoise::operator()(DigiCellContext& context)  const  {
+auto DigiPoissonNoise::operator()(DigiCellContext& context)  const -> double  {
   if ( context.data.signal >= m_cutoff )
     return 0;
   return context.context.randomGenerator().poisson(m_mean);

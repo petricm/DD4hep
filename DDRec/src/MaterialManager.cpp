@@ -29,12 +29,12 @@ namespace dd4hep::rec {
     
     MaterialManager::~MaterialManager()= default;
     
-    const PlacementVec& MaterialManager::placementsBetween(const Vector3D& p0, const Vector3D& p1 , double epsilon) {
+    auto MaterialManager::placementsBetween(const Vector3D& p0, const Vector3D& p1 , double epsilon) -> const PlacementVec& {
       materialsBetween(p0,p1,epsilon);
       return _placeV;
     }
 
-    const MaterialVec& MaterialManager::materialsBetween(const Vector3D& p0, const Vector3D& p1 , double epsilon) {
+    auto MaterialManager::materialsBetween(const Vector3D& p0, const Vector3D& p1 , double epsilon) -> const MaterialVec& {
       if( ( p0 != _p0 ) || ( p1 != _p1 ) ) {	
         //---------------------------------------	
         _mV.clear() ;
@@ -160,7 +160,7 @@ namespace dd4hep::rec {
     }
 
     
-    const Material& MaterialManager::materialAt(const Vector3D& pos )   {
+    auto MaterialManager::materialAt(const Vector3D& pos ) -> const Material&   {
       if( pos != _pos ) {
         TGeoNode *node = _tgeoMgr->FindNode( pos[0], pos[1], pos[2] ) ;	
         if( ! node ) {
@@ -175,7 +175,7 @@ namespace dd4hep::rec {
       return _m ;
     }
     
-    PlacedVolume MaterialManager::placementAt(const Vector3D& pos )   {
+    auto MaterialManager::placementAt(const Vector3D& pos ) -> PlacedVolume   {
       if( pos != _pos ) {	
         TGeoNode *node = _tgeoMgr->FindNode( pos[0], pos[1], pos[2] ) ;	
         if( ! node ) {
@@ -190,7 +190,7 @@ namespace dd4hep::rec {
       return _pv;
     }
     
-    MaterialData MaterialManager::createAveragedMaterial( const MaterialVec& materials ) {
+    auto MaterialManager::createAveragedMaterial( const MaterialVec& materials ) -> MaterialData {
       
       std::stringstream sstr ;
       

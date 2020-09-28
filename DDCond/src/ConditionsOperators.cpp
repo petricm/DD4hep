@@ -27,13 +27,13 @@ using namespace dd4hep;
 using namespace dd4hep::cond;
 
 /// Select all condition from the conditions manager registered at the Detector object
-size_t Operators::collectAllConditions(Detector& description, RangeConditions& conditions)   {
+auto Operators::collectAllConditions(Detector& description, RangeConditions& conditions) -> size_t   {
   ConditionsManager manager = ConditionsManager::from(description);
   return collectAllConditions(manager, conditions);
 }
 
 /// Select all condition from the conditions manager registered at the Detector object
-size_t Operators::collectAllConditions(ConditionsManager manager, RangeConditions& conditions)   {
+auto Operators::collectAllConditions(ConditionsManager manager, RangeConditions& conditions) -> size_t   {
   const auto types = manager.iovTypesUsed();
   size_t num_conditions = 0;
   for( auto type : types )  {
@@ -54,13 +54,13 @@ size_t Operators::collectAllConditions(ConditionsManager manager, RangeCondition
 }
 
 /// Select all condition from the conditions manager registered at the Detector object
-size_t Operators::collectAllConditions(Detector& description, std::map<int,Condition>& conditions)   {
+auto Operators::collectAllConditions(Detector& description, std::map<int,Condition>& conditions) -> size_t   {
   ConditionsManager manager = ConditionsManager::from(description);
   return collectAllConditions(manager, conditions);
 }
 
 /// Select all condition from the conditions manager registered at the Detector object
-size_t Operators::collectAllConditions(ConditionsManager manager, std::map<int,Condition>& conditions)   {
+auto Operators::collectAllConditions(ConditionsManager manager, std::map<int,Condition>& conditions) -> size_t   {
   const auto types = manager.iovTypesUsed();
   size_t num_conditions = 0;
   for( auto type : types )  {

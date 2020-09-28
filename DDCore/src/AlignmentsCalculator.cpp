@@ -53,7 +53,7 @@ namespace dd4hep::align {
         /// Default destructor
         ~Calculator() = default;
         /// Compute all alignment conditions of the lower levels
-        Result compute(Context& context, Entry& entry) const;
+        auto compute(Context& context, Entry& entry) const -> Result;
         /// Resolve child dependencies for a given context
         void resolve(Context& context, DetElement child) const;
       };
@@ -102,7 +102,7 @@ namespace dd4hep::align {
 static PrintLevel s_PRINT = WARNING;
 
 /// Callback to output alignments information
-int AlignmentsCalculator::Scanner::operator()(DetElement de, int)  const  {
+auto AlignmentsCalculator::Scanner::operator()(DetElement de, int)  const -> int  {
   if ( de.isValid() )  {
     Condition::key_type key(ConditionKey::KeyMaker(de.key(),align::Keys::deltaKey).hash);
     Condition c = context.condition(key, false);
@@ -117,7 +117,7 @@ int AlignmentsCalculator::Scanner::operator()(DetElement de, int)  const  {
 }
 
 /// Compute all alignment conditions of the lower levels
-Result Calculator::compute(Context& context, Entry& e)   const  {
+auto Calculator::compute(Context& context, Entry& e)   const -> Result  {
   Result result;
   DetElement det = e.det;
 
@@ -195,8 +195,8 @@ void Calculator::resolve(Context& context, DetElement detector) const   {
 }
 
 /// Optimized call using already properly ordered Deltas
-Result AlignmentsCalculator::compute(const OrderedDeltas& deltas,
-                                     ConditionsMap& alignments)  const
+auto AlignmentsCalculator::compute(const OrderedDeltas& deltas,
+                                     ConditionsMap& alignments)  const -> Result
 {
   Result  result;
   Calculator obj;
@@ -211,8 +211,8 @@ Result AlignmentsCalculator::compute(const OrderedDeltas& deltas,
 }
 
 /// Compute all alignment conditions of the internal dependency list
-Result AlignmentsCalculator::compute(const std::map<DetElement, Delta>& deltas,
-                                     ConditionsMap& alignments)  const
+auto AlignmentsCalculator::compute(const std::map<DetElement, Delta>& deltas,
+                                     ConditionsMap& alignments)  const -> Result
 {
   Calculator::Context context(alignments);
   // This is a tricky one. We absolutely need the detector elements ordered
@@ -231,8 +231,8 @@ Result AlignmentsCalculator::compute(const std::map<DetElement, Delta>& deltas,
 }
 
 /// Compute all alignment conditions of the internal dependency list
-Result AlignmentsCalculator::compute(const std::map<DetElement, const Delta*>& deltas,
-                                     ConditionsMap& alignments)  const
+auto AlignmentsCalculator::compute(const std::map<DetElement, const Delta*>& deltas,
+                                     ConditionsMap& alignments)  const -> Result
 {
   Calculator::Context context(alignments);
   // This is a tricky one. We absolutely need the detector elements ordered
@@ -251,20 +251,20 @@ Result AlignmentsCalculator::compute(const std::map<DetElement, const Delta*>& d
 }
 
 /// Helper: Extract all Delta-conditions from the conditions map
-size_t AlignmentsCalculator::extract_deltas(cond::ConditionUpdateContext& ctxt,
+auto AlignmentsCalculator::extract_deltas(cond::ConditionUpdateContext& ctxt,
                                             ExtractContext& extract_context,
                                             OrderedDeltas& deltas,
-                                            IOV* effective_iov)   const
+                                            IOV* effective_iov)   const -> size_t
 {
   return extract_deltas(ctxt.world(), ctxt, extract_context, deltas, effective_iov);
 }
 
 /// Helper: Extract all Delta-conditions from the conditions map starting at a certain sub-tree
-size_t AlignmentsCalculator::extract_deltas(DetElement start,
+auto AlignmentsCalculator::extract_deltas(DetElement start,
                                             cond::ConditionUpdateContext& ctxt,
                                             ExtractContext& extract_context,
                                             OrderedDeltas& deltas,
-                                            IOV* effective_iov)   const
+                                            IOV* effective_iov)   const -> size_t
 {
   if ( !extract_context.empty() )   {
     struct DeltaScanner : public Condition::Processor   {
@@ -275,7 +275,7 @@ size_t AlignmentsCalculator::extract_deltas(DetElement start,
       DeltaScanner(OrderedDeltas& d, ExtractContext& e, IOV* eff_iov)
         : delta_conditions(d), extract_context(e), effective_iov(eff_iov) {}
       /// Conditions callback for object processing
-      [[nodiscard]] int process(Condition c)  const override  {
+      [[nodiscard]] auto process(Condition c)  const -> int override  {
         ConditionKey::KeyMaker key_maker(c->hash);
         if ( key_maker.values.item_key == align::Keys::deltaKey )   {
           auto idd = extract_context.find(key_maker.values.det_key);
@@ -302,19 +302,19 @@ size_t AlignmentsCalculator::extract_deltas(DetElement start,
 }
 
 /// Helper: Extract all Delta-conditions from the conditions map
-size_t AlignmentsCalculator::extract_deltas(cond::ConditionUpdateContext& ctxt,
+auto AlignmentsCalculator::extract_deltas(cond::ConditionUpdateContext& ctxt,
                                             OrderedDeltas& deltas,
-                                            IOV* effective_iov)   const
+                                            IOV* effective_iov)   const -> size_t
 {
   return extract_deltas(ctxt.world(), ctxt, deltas, effective_iov);
 }
 
 
 /// Helper: Extract all Delta-conditions from the conditions map
-size_t AlignmentsCalculator::extract_deltas(DetElement start,
+auto AlignmentsCalculator::extract_deltas(DetElement start,
                                             cond::ConditionUpdateContext& ctxt,
                                             OrderedDeltas& deltas,
-                                            IOV* effective_iov)   const
+                                            IOV* effective_iov)   const -> size_t
 {
   DetectorScanner().scan(AlignmentsCalculator::Scanner(ctxt,deltas,effective_iov),start);
   return deltas.size();

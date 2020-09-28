@@ -37,7 +37,7 @@ namespace dd4hep::cond  {
 
       Loaders m_loaders;
       OpenSources m_openSources;
-      ConditionsDataLoader* load_source(const std::string& nam,const IOV& req_validity);
+      auto load_source(const std::string& nam,const IOV& req_validity) -> ConditionsDataLoader*;
 
     public:
       /// Default constructor
@@ -55,10 +55,10 @@ namespace dd4hep::cond  {
                                  RangeConditions& conditions);
 #endif
       /// Optimized update using conditions slice data
-      size_t load_many(  const IOV& /* req_validity */,
+      auto load_many(  const IOV& /* req_validity */,
                                  RequiredItems&  /* work         */,
                                  LoadedItems&    /* loaded       */,
-                                 IOV&       /* conditions_validity */) override
+                                 IOV&       /* conditions_validity */) -> size_t override
       {
         except("ConditionsLoader","+++ update: Invalid call!");
         return 0;
@@ -93,7 +93,7 @@ using std::string;
 using namespace dd4hep::cond;
 
 namespace {
-  void* create_loader(dd4hep::Detector& description, int argc, char** argv)   {
+  auto create_loader(dd4hep::Detector& description, int argc, char** argv) -> void*   {
     const char* name = argc>0 ? argv[0] : "MULTILoader";
     auto* mgr = (ConditionsManager::Object*)(argc>0 ? argv[1] : nullptr);
     return new ConditionsMultiLoader(description,ConditionsManager(mgr),name);
@@ -110,9 +110,9 @@ ConditionsMultiLoader::ConditionsMultiLoader(Detector& description, ConditionsMa
 /// Default Destructor
 ConditionsMultiLoader::~ConditionsMultiLoader() = default;
 
-ConditionsDataLoader* 
+auto
 ConditionsMultiLoader::load_source(const std::string& nam,
-                                   const IOV& req_validity)
+                                   const IOV& req_validity) -> ConditionsDataLoader*
 {
   auto iop = m_openSources.find(nam);
   if ( iop == m_openSources.end() )  {

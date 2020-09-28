@@ -22,7 +22,7 @@ using namespace dd4hep;
 DetectorProcessor::~DetectorProcessor()   = default;
 
 /// Callback to output detector information of an entire DetElement
-int DetectorProcessor::process(DetElement de, int level, bool recursive)  const  {
+auto DetectorProcessor::process(DetElement de, int level, bool recursive)  const -> int  {
   if ( de.isValid() )  {
     int ret = (*this)(de, level);
     if ( recursive )  {
@@ -37,7 +37,7 @@ int DetectorProcessor::process(DetElement de, int level, bool recursive)  const 
 
 /// Callback to output conditions information
 template <typename T>
-int DetElementsCollector<T>::operator()(DetElement de, int level)  const  {
+auto DetElementsCollector<T>::operator()(DetElement de, int level)  const -> int  {
   insert_item(elements, de, level);
   return 1;
 }

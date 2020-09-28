@@ -44,7 +44,7 @@ Geant4HitWrapper::~Geant4HitWrapper() {
 }
 
 /// Geant4 required object allocator
-void* Geant4HitWrapper::operator new(size_t) {
+auto Geant4HitWrapper::operator new(size_t) -> void* {
   if ( HitWrapperAllocator )
     return HitWrapperAllocator->MallocSingle();
   HitWrapperAllocator = new G4Allocator<Geant4HitWrapper>;
@@ -57,7 +57,7 @@ void Geant4HitWrapper::operator delete(void *p) {
 }
 
 /// Pointer/Object release
-void* Geant4HitWrapper::release() {
+auto Geant4HitWrapper::release() -> void* {
   void* p = m_data.first;
   m_data.first = 0;
   m_data.second = manipulator<InvalidHit>();
@@ -65,7 +65,7 @@ void* Geant4HitWrapper::release() {
 }
 
 /// Pointer/Object release
-Geant4HitWrapper::Wrapper Geant4HitWrapper::releaseData() {
+auto Geant4HitWrapper::releaseData() -> Geant4HitWrapper::Wrapper {
   Wrapper w = m_data;
   m_data.first = 0;
   m_data.second = manipulator<InvalidHit>();
@@ -83,12 +83,12 @@ Geant4HitCollection::~Geant4HitCollection() {
 }
 
 /// Type information of the object stored
-const ComponentCast& Geant4HitCollection::type() const {
+auto Geant4HitCollection::type() const -> const ComponentCast& {
   return m_manipulator->cast;
 }
 
 /// Type information of the vector type for extracting data
-const ComponentCast& Geant4HitCollection::vector_type() const {
+auto Geant4HitCollection::vector_type() const -> const ComponentCast& {
   return m_manipulator->vec_type;
 }
 
@@ -105,7 +105,7 @@ void Geant4HitCollection::clear()   {
 }
 
 /// Find hit in a collection by comparison of attributes
-void* Geant4HitCollection::findHit(const Compare& cmp)  {
+auto Geant4HitCollection::findHit(const Compare& cmp) -> void*  {
   void* p = nullptr;
   auto i = m_hits.begin();
   if ( m_flags.bits.repeatedLookup && m_lastHit < m_hits.size() )  {
@@ -121,7 +121,7 @@ void* Geant4HitCollection::findHit(const Compare& cmp)  {
 }
 
 /// Find hit in a collection by comparison of the key
-Geant4HitWrapper* Geant4HitCollection::findHitByKey(VolumeID key)   {
+auto Geant4HitCollection::findHitByKey(VolumeID key) -> Geant4HitWrapper*   {
   auto i=m_keys.find(key);
   if ( i == m_keys.end() ) return nullptr;
   m_lastHit = (*i).second;

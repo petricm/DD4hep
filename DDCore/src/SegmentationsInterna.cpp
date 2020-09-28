@@ -35,12 +35,12 @@ SegmentationObject::~SegmentationObject() {
 }
 
 /// Access the encoding string
-string SegmentationObject::fieldDescription() const {
+auto SegmentationObject::fieldDescription() const -> string {
   return segmentation->fieldDescription();
 }
 
 /// Access the segmentation name
-const string& SegmentationObject::name() const {
+auto SegmentationObject::name() const -> const string& {
   return segmentation->name();
 }
 /// Set the segmentation name
@@ -49,17 +49,17 @@ void SegmentationObject::setName(const string& value) {
 }
 
 /// Access the segmentation type
-const string& SegmentationObject::type() const {
+auto SegmentationObject::type() const -> const string& {
   return segmentation->type();
 }
 
 /// Access the description of the segmentation
-const string& SegmentationObject::description() const {
+auto SegmentationObject::description() const -> const string& {
   return segmentation->description();
 }
 
 /// Access the underlying decoder
-const BitFieldCoder* SegmentationObject::decoder() const {
+auto SegmentationObject::decoder() const -> const BitFieldCoder* {
   return segmentation->decoder();
 }
 
@@ -69,12 +69,12 @@ void SegmentationObject::setDecoder(const BitFieldCoder* ptr_decoder) const {
 }
 
 /// Access to parameter by name
-DDSegmentation::Parameter SegmentationObject::parameter(const string& parameterName) const {
+auto SegmentationObject::parameter(const string& parameterName) const -> DDSegmentation::Parameter {
   return segmentation->parameter(parameterName);
 }
 
 /// Access to all parameters
-DDSegmentation::Parameters SegmentationObject::parameters() const {
+auto SegmentationObject::parameters() const -> DDSegmentation::Parameters {
   return segmentation->parameters();
 }
 
@@ -84,18 +84,18 @@ void SegmentationObject::setParameters(const DDSegmentation::Parameters& params)
 }
 
 /// Determine the local position based on the cell ID
-Position SegmentationObject::position(const CellID& cell) const  {
+auto SegmentationObject::position(const CellID& cell) const -> Position  {
   return Position(segmentation->position(cell));
 }
 
 /// Determine the cell ID based on the position
-CellID SegmentationObject::cellID(const Position& local,
+auto SegmentationObject::cellID(const Position& local,
                                   const Position& global,
-                                  const VolumeID& volID) const  {
+                                  const VolumeID& volID) const -> CellID  {
   return segmentation->cellID(local, global, volID);
 }
 
 /// Determine the volume ID from the full cell ID by removing all local fields
-VolumeID SegmentationObject::volumeID(const CellID& cell) const   {
+auto SegmentationObject::volumeID(const CellID& cell) const -> VolumeID   {
   return segmentation->volumeID(cell);
 }

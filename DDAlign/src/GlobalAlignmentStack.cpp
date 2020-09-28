@@ -26,11 +26,11 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::align;
 
-static dd4hep_ptr<GlobalAlignmentStack>& _stack()  {
+static auto _stack() -> dd4hep_ptr<GlobalAlignmentStack>&  {
   static dd4hep_ptr<GlobalAlignmentStack> s;
   return s;
 }
-static dd4hep_ptr<GlobalAlignmentStack>& _stack(GlobalAlignmentStack* obj)  {
+static auto _stack(GlobalAlignmentStack* obj) -> dd4hep_ptr<GlobalAlignmentStack>&  {
   dd4hep_ptr<GlobalAlignmentStack>& stk = _stack();
   stk.adopt(obj);
   return stk;
@@ -98,7 +98,7 @@ GlobalAlignmentStack::~GlobalAlignmentStack()   {
 }
 
 /// Static client accessor
-GlobalAlignmentStack& GlobalAlignmentStack::get()  {
+auto GlobalAlignmentStack::get() -> GlobalAlignmentStack&  {
   if ( _stack().get() ) return *_stack();
   throw runtime_error("GlobalAlignmentStack> Stack not allocated -- may not be retrieved!");
 }
@@ -112,7 +112,7 @@ void GlobalAlignmentStack::create()   {
 }
 
 /// Check existence of alignment stack
-bool GlobalAlignmentStack::exists()   {
+auto GlobalAlignmentStack::exists() -> bool   {
   return _stack().get() != nullptr;
 }
 
@@ -126,7 +126,7 @@ void GlobalAlignmentStack::release()    {
 }
 
 /// Add a new entry to the cache. The key is the placement path
-bool GlobalAlignmentStack::insert(const string& full_path, dd4hep_ptr<StackEntry>& entry)  {
+auto GlobalAlignmentStack::insert(const string& full_path, dd4hep_ptr<StackEntry>& entry) -> bool  {
   if ( entry.get() && !full_path.empty() )  {
     entry->path = full_path;
     return add(entry);
@@ -135,12 +135,12 @@ bool GlobalAlignmentStack::insert(const string& full_path, dd4hep_ptr<StackEntry
 }
 
 /// Add a new entry to the cache. The key is the placement path
-bool GlobalAlignmentStack::insert(dd4hep_ptr<StackEntry>& entry)  {
+auto GlobalAlignmentStack::insert(dd4hep_ptr<StackEntry>& entry) -> bool  {
   return add(entry);
 }
 
 /// Add a new entry to the cache. The key is the placement path
-bool GlobalAlignmentStack::add(dd4hep_ptr<StackEntry>& entry)  {
+auto GlobalAlignmentStack::add(dd4hep_ptr<StackEntry>& entry) -> bool  {
   if ( entry.get() && !entry->path.empty() )  {
     auto i = m_stack.find(entry->path);
     if ( i == m_stack.end() )   {
@@ -160,7 +160,7 @@ bool GlobalAlignmentStack::add(dd4hep_ptr<StackEntry>& entry)  {
 }
 
 /// Retrieve an alignment entry of the current stack
-dd4hep_ptr<GlobalAlignmentStack::StackEntry> GlobalAlignmentStack::pop()   {
+auto GlobalAlignmentStack::pop() -> dd4hep_ptr<GlobalAlignmentStack::StackEntry>   {
   auto i = m_stack.begin();
   if ( i != m_stack.end() )   {
     dd4hep_ptr<StackEntry> e((*i).second);
@@ -172,7 +172,7 @@ dd4hep_ptr<GlobalAlignmentStack::StackEntry> GlobalAlignmentStack::pop()   {
 }
 
 /// Get all pathes to be aligned
-vector<const GlobalAlignmentStack::StackEntry*> GlobalAlignmentStack::entries() const    {
+auto GlobalAlignmentStack::entries() const -> vector<const GlobalAlignmentStack::StackEntry*>    {
   vector<const StackEntry*> result;
   result.reserve(m_stack.size());
   transform(begin(m_stack),end(m_stack),back_inserter(result),detail::select2nd(m_stack));

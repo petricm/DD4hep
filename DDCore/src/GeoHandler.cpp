@@ -63,25 +63,25 @@ GeoHandler::~GeoHandler() {
   m_data = nullptr;
 }
 
-map<int,set<const TGeoNode*> >* GeoHandler::release() {
+auto GeoHandler::release() -> map<int,set<const TGeoNode*> >* {
   map<int,set<const TGeoNode*> >* d = m_data;
   m_data = nullptr;
   return d;
 }
 
 /// Propagate regions. Returns the previous value
-bool GeoHandler::setPropagateRegions(bool value)   {
+auto GeoHandler::setPropagateRegions(bool value) -> bool   {
   bool old = m_propagateRegions;
   m_propagateRegions = value;
   return old;
 }
 
-GeoHandler& GeoHandler::collect(DetElement element) {
+auto GeoHandler::collect(DetElement element) -> GeoHandler& {
   m_data->clear();
   return i_collect(element.placement().ptr(), 0, Region(), LimitSet());
 }
 
-GeoHandler& GeoHandler::collect(DetElement element, GeometryInfo& info) {
+auto GeoHandler::collect(DetElement element, GeometryInfo& info) -> GeoHandler& {
   m_data->clear();
   i_collect(element.placement().ptr(), 0, Region(), LimitSet());
   for (auto i = m_data->rbegin(); i != m_data->rend(); ++i) {
@@ -117,7 +117,7 @@ GeoHandler& GeoHandler::collect(DetElement element, GeometryInfo& info) {
   return *this;
 }
 
-GeoHandler& GeoHandler::i_collect(const TGeoNode* current, int level, Region rg, LimitSet ls) {
+auto GeoHandler::i_collect(const TGeoNode* current, int level, Region rg, LimitSet ls) -> GeoHandler& {
   TGeoVolume* volume = current->GetVolume();
   TObjArray* nodes = volume->GetNodes();
   int num_children = nodes ? nodes->GetEntriesFast() : 0;
@@ -166,7 +166,7 @@ GeoScan::~GeoScan() {
 }
 
 /// Work callback
-GeoScan& GeoScan::operator()() {
+auto GeoScan::operator()() -> GeoScan& {
   return *this;
 }
 

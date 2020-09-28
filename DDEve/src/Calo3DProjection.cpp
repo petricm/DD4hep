@@ -34,7 +34,7 @@ Calo3DProjection::~Calo3DProjection()  {
 }
 
 /// Build the projection view and map it to the given slot
-View& Calo3DProjection::Build(TEveWindow* slot)   {
+auto Calo3DProjection::Build(TEveWindow* slot) -> View&   {
   CreateScenes();
   AddToGlobalItems(name());
   return Map(slot);

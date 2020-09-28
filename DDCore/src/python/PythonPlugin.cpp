@@ -51,7 +51,7 @@ namespace  {
    *  \version 1.0
    *  \date    01/04/2014
    */
-  long call_python(Detector& /* description */, int argc, char** argv) {
+  auto call_python(Detector& /* description */, int argc, char** argv) -> long {
     if ( argc > 0 )   {
       vector<pair<string, string> > commands;
       for(int i = 0; i < argc && argv[i]; ++i)  {

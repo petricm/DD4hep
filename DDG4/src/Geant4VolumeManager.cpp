@@ -196,14 +196,14 @@ Geant4VolumeManager::Geant4VolumeManager(const Detector& description, Geant4Geom
 }
 
 /// Helper: Generate placement path from touchable object
-vector<const G4VPhysicalVolume*>
-Geant4VolumeManager::placementPath(const G4VTouchable* touchable, bool exception) const {
+auto
+Geant4VolumeManager::placementPath(const G4VTouchable* touchable, bool exception) const -> vector<const G4VPhysicalVolume*> {
   Geant4TouchableHandler handler(touchable);
   return handler.placementPath(exception);
 }
 
 /// Check the validity of the information before accessing it.
-bool Geant4VolumeManager::checkValidity() const {
+auto Geant4VolumeManager::checkValidity() const -> bool {
   if (m_isValid) {
     return true;
   }
@@ -218,7 +218,7 @@ bool Geant4VolumeManager::checkValidity() const {
 }
 
 /// Access CELLID by placement path
-VolumeID Geant4VolumeManager::volumeID(const vector<const G4VPhysicalVolume*>& path) const {
+auto Geant4VolumeManager::volumeID(const vector<const G4VPhysicalVolume*>& path) const -> VolumeID {
   if (!path.empty() && checkValidity()) {
     const auto& mapping = ptr()->g4Paths;
     auto i = mapping.find(path);
@@ -235,7 +235,7 @@ VolumeID Geant4VolumeManager::volumeID(const vector<const G4VPhysicalVolume*>& p
 }
 
 /// Access CELLID by Geant4 touchable object
-VolumeID Geant4VolumeManager::volumeID(const G4VTouchable* touchable) const {
+auto Geant4VolumeManager::volumeID(const G4VTouchable* touchable) const -> VolumeID {
   Geant4TouchableHandler handler(touchable);
   return volumeID(handler.placementPath());
 }

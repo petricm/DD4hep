@@ -38,7 +38,7 @@ DigiSynchronize::~DigiSynchronize() {
 }
 
 /// Get an action sequence member by name
-DigiEventAction* DigiSynchronize::get(const string& nam) const   {
+auto DigiSynchronize::get(const string& nam) const -> DigiEventAction*   {
   return m_actors.get(FindByName(TypeName::split(nam).second));
 }
 

@@ -46,7 +46,7 @@ void usage( std::string argv0 ) {
             << std::endl;
 }
 
-int main( int argc, char* argv[] ) {
+auto main( int argc, char* argv[] ) -> int {
   auto& reg2 = Gaudi::PluginService::v2::Details::Registry::instance();
   auto& reg1 = Gaudi::PluginService::v1::Details::Registry::instance();
 

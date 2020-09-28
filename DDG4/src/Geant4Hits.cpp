@@ -34,7 +34,7 @@ G4ThreadLocal G4Allocator<Geant4CalorimeterHit>* CalorimeterHitAllocator = nullp
 
 
 /// Check if the Geant4 track is a Geantino
-bool Geant4Hit::isGeantino(G4Track* track) {
+auto Geant4Hit::isGeantino(G4Track* track) -> bool {
   if (track) {
     G4ParticleDefinition* def = track->GetDefinition();
     if (def == G4ChargedGeantino::Definition())
@@ -46,7 +46,7 @@ bool Geant4Hit::isGeantino(G4Track* track) {
   return false;
 }
 
-Geant4Hit::Contribution Geant4Hit::extractContribution(G4Step* step) {
+auto Geant4Hit::extractContribution(G4Step* step) -> Geant4Hit::Contribution {
   G4Track* trk = step->GetTrack();
   double energy_deposit =
     (trk->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) ?
@@ -66,7 +66,7 @@ Geant4TrackerHit::Geant4TrackerHit(int track_id, int pdg_id, double deposit, dou
 }
 
 /// Assignment operator
-Geant4TrackerHit& Geant4TrackerHit::operator=(const Geant4TrackerHit& c) {
+auto Geant4TrackerHit::operator=(const Geant4TrackerHit& c) -> Geant4TrackerHit& {
   if ( this != &c )  {
     position = c.position;
     momentum = c.momentum;
@@ -78,7 +78,7 @@ Geant4TrackerHit& Geant4TrackerHit::operator=(const Geant4TrackerHit& c) {
 }
 
 /// Clear hit content
-Geant4TrackerHit& Geant4TrackerHit::clear() {
+auto Geant4TrackerHit::clear() -> Geant4TrackerHit& {
   position.SetXYZ(0, 0, 0);
   momentum.SetXYZ(0, 0, 0);
   length = 0.0;
@@ -88,7 +88,7 @@ Geant4TrackerHit& Geant4TrackerHit::clear() {
 }
 
 /// Store Geant4 point and step information into tracker hit structure.
-Geant4TrackerHit& Geant4TrackerHit::storePoint(G4Step* step, G4StepPoint* pnt) {
+auto Geant4TrackerHit::storePoint(G4Step* step, G4StepPoint* pnt) -> Geant4TrackerHit& {
   G4Track* trk = step->GetTrack();
   G4ThreeVector pos = pnt->GetPosition();
   G4ThreeVector mom = pnt->GetMomentum();
@@ -105,7 +105,7 @@ Geant4TrackerHit& Geant4TrackerHit::storePoint(G4Step* step, G4StepPoint* pnt) {
 }
 
 /// Geant4 required object allocator
-void* Geant4TrackerHit::operator new(size_t) {
+auto Geant4TrackerHit::operator new(size_t) -> void* {
   if ( TrackerHitAllocator )
     return TrackerHitAllocator->MallocSingle();
   TrackerHitAllocator = new G4Allocator<Geant4TrackerHit>;
@@ -123,7 +123,7 @@ Geant4CalorimeterHit::Geant4CalorimeterHit(Position  pos)
 }
 
 /// Geant4 required object allocator
-void* Geant4CalorimeterHit::operator new(size_t) {
+auto Geant4CalorimeterHit::operator new(size_t) -> void* {
   if ( CalorimeterHitAllocator )
     return CalorimeterHitAllocator->MallocSingle();
   CalorimeterHitAllocator = new G4Allocator<Geant4CalorimeterHit>;

@@ -54,7 +54,7 @@ Geant4Output2ROOT::~Geant4Output2ROOT() {
 }
 
 /// Create/access tree by name
-TTree* Geant4Output2ROOT::section(const string& nam) {
+auto Geant4Output2ROOT::section(const string& nam) -> TTree* {
   auto i = m_sections.find(nam);
   if (i == m_sections.end()) {
     TDirectory::TContext ctxt(m_file);
@@ -80,7 +80,7 @@ void Geant4Output2ROOT::beginRun(const G4Run* run) {
 }
 
 /// Fill single EVENT branch entry (Geant4 collection data)
-int Geant4Output2ROOT::fill(const string& nam, const ComponentCast& type, void* ptr) {
+auto Geant4Output2ROOT::fill(const string& nam, const ComponentCast& type, void* ptr) -> int {
   if (m_file) {
     TBranch* b = nullptr;
     auto i = m_branches.find(nam);

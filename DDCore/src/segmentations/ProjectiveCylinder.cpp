@@ -52,12 +52,12 @@ ProjectiveCylinder::ProjectiveCylinder(const BitFieldCoder* decode) :	Cylindrica
 ProjectiveCylinder::~ProjectiveCylinder() = default;
 
 /// determine the local based on the cell ID
-Vector3D ProjectiveCylinder::position(const CellID& cID) const {
+auto ProjectiveCylinder::position(const CellID& cID) const -> Vector3D {
 	return Util::positionFromRThetaPhi(1.0, theta(cID), phi(cID));
 }
 
 /// determine the cell ID based on the position
-CellID ProjectiveCylinder::cellID(const Vector3D& /* localPosition */, const Vector3D& globalPosition, const VolumeID& vID) const {
+auto ProjectiveCylinder::cellID(const Vector3D& /* localPosition */, const Vector3D& globalPosition, const VolumeID& vID) const -> CellID {
         CellID cID = vID ;
 	double lTheta = thetaFromXYZ(globalPosition);
 	double lPhi = phiFromXYZ(globalPosition);
@@ -67,12 +67,12 @@ CellID ProjectiveCylinder::cellID(const Vector3D& /* localPosition */, const Vec
 }
 
 /// determine the polar angle theta based on the cell ID
-double ProjectiveCylinder::theta(const CellID& cID) const {
+auto ProjectiveCylinder::theta(const CellID& cID) const -> double {
         CellID thetaIndex = _decoder->get(cID,_thetaID);
 	return M_PI * ((double) thetaIndex + 0.5) / (double) _thetaBins;
 }
 /// determine the azimuthal angle phi based on the cell ID
-double ProjectiveCylinder::phi(const CellID& cID) const {
+auto ProjectiveCylinder::phi(const CellID& cID) const -> double {
         CellID phiIndex = _decoder->get(cID,_phiID);
 	return 2. * M_PI * ((double) phiIndex + 0.5) / (double) _phiBins;
 }

@@ -41,7 +41,7 @@ namespace dd4hep  {
     /// Default destructor
     ~VisDensityProcessor() override;
     /// Callback to output PlacedVolume information of an single Placement
-    int operator()(PlacedVolume pv, int level) override;
+    auto operator()(PlacedVolume pv, int level) -> int override;
   };
 }
 #endif //  DD4HEP_DDCORE_VISDENSITYPROCESSOR_H
@@ -91,7 +91,7 @@ void VisDensityProcessor::_show()   {
 }
 
 /// Callback to output PlacedVolume information of an single Placement
-int VisDensityProcessor::operator()(PlacedVolume pv, int /* level */)   {
+auto VisDensityProcessor::operator()(PlacedVolume pv, int /* level */) -> int   {
   Volume   vol = pv.volume();
   Material mat = vol.material();
   if ( vol.visAttributes().ptr() != minVis.ptr() )  {
@@ -103,7 +103,7 @@ int VisDensityProcessor::operator()(PlacedVolume pv, int /* level */)   {
   return 1;
 }
 
-static void* create_object(Detector& description, int argc, char** argv)   {
+static auto create_object(Detector& description, int argc, char** argv) -> void*   {
   DetectorHelper helper(description);
   auto*  proc = new VisDensityProcessor(description);
   for ( int i=0; i<argc; ++i )   {

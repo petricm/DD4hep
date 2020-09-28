@@ -22,7 +22,7 @@ using namespace dd4hep;
 using namespace dd4hep::cond;
 
 namespace {
-  std::string dependency_name(const ConditionDependency* d)  {
+  auto dependency_name(const ConditionDependency* d) -> std::string  {
 #ifdef DD4HEP_CONDITIONS_DEBUG
     return d->target.name;
 #else
@@ -46,7 +46,7 @@ void ConditionsDependencyHandler::Work::do_intersection(const IOV* iov_ptr)   {
   }
 }
 
-Condition ConditionsDependencyHandler::Work::resolve(Work*& current)   {
+auto ConditionsDependencyHandler::Work::resolve(Work*& current) -> Condition   {
   Work* previous = current;
   current = this;
   state = RESOLVED;
@@ -83,7 +83,7 @@ ConditionsDependencyHandler::~ConditionsDependencyHandler()   {
 }
 
 /// ConditionResolver implementation: Access to the detector description instance
-Detector& ConditionsDependencyHandler::detectorDescription() const  {
+auto ConditionsDependencyHandler::detectorDescription() const -> Detector&  {
   return m_manager->detectorDescription();
 }
 
@@ -154,28 +154,28 @@ void ConditionsDependencyHandler::resolve()    {
 }
 
 /// Interface to handle multi-condition inserts by callbacks: One single insert
-bool ConditionsDependencyHandler::registerOne(const IOV& iov, Condition cond)    {
+auto ConditionsDependencyHandler::registerOne(const IOV& iov, Condition cond) -> bool    {
   return m_pool.registerOne(iov, cond);
 }
 
 /// Handle multi-condition inserts by callbacks: block insertions of conditions with identical IOV
-size_t ConditionsDependencyHandler::registerMany(const IOV& iov, const std::vector<Condition>& values)   {
+auto ConditionsDependencyHandler::registerMany(const IOV& iov, const std::vector<Condition>& values) -> size_t   {
   return m_pool.registerMany(iov, values);
 }
 
 /// Interface to access conditions by hash value of the DetElement (only valid at resolve!)
-std::vector<Condition> ConditionsDependencyHandler::get(DetElement de)   {
+auto ConditionsDependencyHandler::get(DetElement de) -> std::vector<Condition>   {
   return this->get(de.key());
 }
 
 /// Interface to access conditions by hash value of the item (only valid at resolve!)
-std::vector<Condition> ConditionsDependencyHandler::getByItem(Condition::itemkey_type key)   {
+auto ConditionsDependencyHandler::getByItem(Condition::itemkey_type key) -> std::vector<Condition>   {
   if ( m_state == RESOLVED )   {
     struct item_selector {
       std::vector<Condition>  conditions;
       Condition::itemkey_type key;
       item_selector(Condition::itemkey_type k) : key(k) {}
-      int operator()(Condition cond)   {
+      auto operator()(Condition cond) -> int   {
         ConditionKey::KeyMaker maker(cond->hash);
         if ( maker.values.item_key == key ) conditions.emplace_back(cond);
         return 1;
@@ -192,7 +192,7 @@ std::vector<Condition> ConditionsDependencyHandler::getByItem(Condition::itemkey
 }
 
 /// Interface to access conditions by hash value of the DetElement (only valid at resolve!)
-std::vector<Condition> ConditionsDependencyHandler::get(Condition::detkey_type det_key)   {
+auto ConditionsDependencyHandler::get(Condition::detkey_type det_key) -> std::vector<Condition>   {
   if ( m_state == RESOLVED )   {
     ConditionKey::KeyMaker lower(det_key, Condition::FIRST_ITEM_KEY);
     ConditionKey::KeyMaker upper(det_key, Condition::LAST_ITEM_KEY);
@@ -206,7 +206,7 @@ std::vector<Condition> ConditionsDependencyHandler::get(Condition::detkey_type d
 }
 
 /// ConditionResolver implementation: Interface to access conditions
-Condition ConditionsDependencyHandler::get(Condition::key_type key, bool throw_if_not)  {
+auto ConditionsDependencyHandler::get(Condition::key_type key, bool throw_if_not) -> Condition  {
   /// If we are not already resolving here, we follow the normal procedure
   Condition c = m_pool.get(key);
   if ( c.isValid() )  {

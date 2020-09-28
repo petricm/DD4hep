@@ -28,7 +28,7 @@ using namespace dd4hep;
 ClassImp(EveShapeContextMenu)
 
 /// Instantiator
-EveShapeContextMenu& EveShapeContextMenu::install(Display* m)   {
+auto EveShapeContextMenu::install(Display* m) -> EveShapeContextMenu&   {
   static EveShapeContextMenu s(m);
   return s;
 }

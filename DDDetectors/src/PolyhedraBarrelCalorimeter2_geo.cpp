@@ -45,7 +45,7 @@ static void placeStaves(DetElement& parent, DetElement& stave, double rmin, int 
   }
 }
 
-static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector sens) {
+static auto create_detector(Detector& description, xml_h e, SensitiveDetector sens) -> Ref_t {
   xml_det_t x_det = e;
   Layering layering(x_det);
   xml_comp_t staves = x_det.staves();

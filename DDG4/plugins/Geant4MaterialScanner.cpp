@@ -50,7 +50,7 @@ namespace dd4hep::sim   {
         /// Default destructor
         ~StepInfo() = default;
         /// Assignment operator
-        StepInfo& operator=(const StepInfo& c);
+        auto operator=(const StepInfo& c) -> StepInfo&;
       };
       typedef std::vector<StepInfo*> Steps;
 
@@ -112,7 +112,7 @@ Geant4MaterialScanner::StepInfo::StepInfo(const StepInfo& c)
 = default;
 
 /// Assignment operator
-Geant4MaterialScanner::StepInfo& Geant4MaterialScanner::StepInfo::operator=(const StepInfo& c)  = default;
+auto Geant4MaterialScanner::StepInfo::operator=(const StepInfo& c) -> Geant4MaterialScanner::StepInfo&  = default;
 
 /// Standard constructor
 Geant4MaterialScanner::Geant4MaterialScanner(Geant4Context* ctxt, const string& nam)

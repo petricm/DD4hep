@@ -65,6 +65,6 @@ void Geant4UserParticleHandler::combine(Particle& /* to_be_deleted */, Particle&
 }
 
 /// Callback to be answered if the particle MUST be kept during recombination step
-bool Geant4UserParticleHandler::keepParticle(Particle& particle)   {
+auto Geant4UserParticleHandler::keepParticle(Particle& particle) -> bool   {
   return Geant4ParticleHandler::defaultKeepParticle(particle);
 }

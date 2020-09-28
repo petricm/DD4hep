@@ -21,7 +21,7 @@ using namespace dd4hep;
 PlacedVolumeProcessor::~PlacedVolumeProcessor()   = default;
 
 /// Callback to output PlacedVolume information of an entire DetElement
-int PlacedVolumeProcessor::process(PlacedVolume pv, int level, bool recursive)  {
+auto PlacedVolumeProcessor::process(PlacedVolume pv, int level, bool recursive) -> int  {
   if ( pv.isValid() )  {
     int ret = (*this)(pv, level);
     TGeoNode* node = pv.ptr();

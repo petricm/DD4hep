@@ -53,11 +53,11 @@ namespace dd4hep::sim {
       /// Default destructor
       ~Geant4EventReaderHepEvt() override;
       /// Read an event and fill a vector of MCParticles.
-      EventReaderStatus readParticles(int event_number,
+      auto readParticles(int event_number,
                                               Vertices& vertices,
-                                              std::vector<Particle*>& particles) override;
-      EventReaderStatus moveToEvent(int event_number) override;
-      EventReaderStatus skipEvent() override { return EVENT_READER_OK; }
+                                              std::vector<Particle*>& particles) -> EventReaderStatus override;
+      auto moveToEvent(int event_number) -> EventReaderStatus override;
+      auto skipEvent() -> EventReaderStatus override { return EVENT_READER_OK; }
     };
   }       /* End namespace dd4hep       */
 
@@ -135,8 +135,8 @@ Geant4EventReaderHepEvt::~Geant4EventReaderHepEvt()    {
 }
 
 /// skipEvents if required
-Geant4EventReader::EventReaderStatus
-Geant4EventReaderHepEvt::moveToEvent(int event_number) {
+auto
+Geant4EventReaderHepEvt::moveToEvent(int event_number) -> Geant4EventReader::EventReaderStatus {
   if( m_currEvent == 0 && event_number != 0 ) {
     printout(INFO,"EventReaderHepEvt::moveToEvent","Skipping the first %d events ", event_number );
     printout(INFO,"EventReaderHepEvt::moveToEvent","Event number before skipping: %d", m_currEvent );
@@ -156,10 +156,10 @@ Geant4EventReaderHepEvt::moveToEvent(int event_number) {
 }
 
 /// Read an event and fill a vector of MCParticles.
-Geant4EventReader::EventReaderStatus
+auto
 Geant4EventReaderHepEvt::readParticles(int /* event_number */, 
                                        Vertices& vertices,
-                                       vector<Particle*>& particles)   {
+                                       vector<Particle*>& particles) -> Geant4EventReader::EventReaderStatus   {
 
 
   // First check the input file status
@@ -295,7 +295,7 @@ Geant4EventReaderHepEvt::readParticles(int /* event_number */,
           m_part->daughters.insert(p->id);
         }
       }
-      Particle* findParent(const Particle* p)  {
+      auto findParent(const Particle* p) -> Particle*  {
         return m_part->parents.find(p->id)==m_part->parents.end() ? nullptr : m_part;
       }
     };

@@ -30,6 +30,6 @@ View3D::View3D(Display* eve, const std::string& nam) : View(eve, nam)
 View3D::~View3D()  = default;
 
 /// Build the projection view and map it to the given slot
-View& View3D::Build(TEveWindow* slot)   {
+auto View3D::Build(TEveWindow* slot) -> View&   {
   return CreateScenes().Map(slot);
 }

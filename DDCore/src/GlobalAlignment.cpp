@@ -43,19 +43,19 @@ GlobalAlignment::GlobalAlignment(const string& path) {
 }
 
 /// Number of nodes in this branch
-int GlobalAlignment::numNodes() const  {
+auto GlobalAlignment::numNodes() const -> int  {
   CheckHandle verify_handle(*this);
   return ptr()->GetLevel();
 }
 
 /// Access the placement of this node
-PlacedVolume GlobalAlignment::placement()   const   {
+auto GlobalAlignment::placement()   const -> PlacedVolume   {
   CheckHandle verify_handle(*this);
   return ptr()->GetNode(0);
 }
 
 /// Access the placement of a node in the chain of placements for this branch
-PlacedVolume GlobalAlignment::nodePlacement(int level)   const   {
+auto GlobalAlignment::nodePlacement(int level)   const -> PlacedVolume   {
   CheckHandle verify_handle(*this);
   TGeoNode* n = ptr()->GetNode(level);
   if ( n ) return n;
@@ -64,7 +64,7 @@ PlacedVolume GlobalAlignment::nodePlacement(int level)   const   {
 }
 
 /// Access the placement of the mother of this node
-PlacedVolume GlobalAlignment::motherPlacement(int level_up)   const    {
+auto GlobalAlignment::motherPlacement(int level_up)   const -> PlacedVolume    {
   CheckHandle verify_handle(*this);
   Int_t ind = ptr()->GetLevel()-level_up;
   if ( ind >= 0 )  {
@@ -74,13 +74,13 @@ PlacedVolume GlobalAlignment::motherPlacement(int level_up)   const    {
 }
 
 /// Access the currently applied alignment/placement matrix
-Transform3D GlobalAlignment::toGlobal(int level) const   {
+auto GlobalAlignment::toGlobal(int level) const -> Transform3D   {
   CheckHandle verify_handle(*this);
   return detail::matrix::_transform(ptr()->GetMatrix(level));
 }
 
 /// Transform a point from local coordinates of a given level to global coordinates
-Position GlobalAlignment::toGlobal(const Position& localPoint, int level) const   {
+auto GlobalAlignment::toGlobal(const Position& localPoint, int level) const -> Position   {
   CheckHandle verify_handle(*this);
   Position result;
   TGeoHMatrix* matrix = ptr()->GetMatrix(level);
@@ -89,7 +89,7 @@ Position GlobalAlignment::toGlobal(const Position& localPoint, int level) const 
 }
 
 /// Transform a point from local coordinates of a given level to global coordinates
-Position GlobalAlignment::globalToLocal(const Position& globalPoint, int level) const   {
+auto GlobalAlignment::globalToLocal(const Position& globalPoint, int level) const -> Position   {
   CheckHandle verify_handle(*this);
   Position result;
   TGeoHMatrix* matrix = ptr()->GetMatrix(level);
@@ -98,19 +98,19 @@ Position GlobalAlignment::globalToLocal(const Position& globalPoint, int level) 
 }
 
 /// Access the currently applied alignment/placement matrix
-Transform3D GlobalAlignment::toMother(int level) const   {
+auto GlobalAlignment::toMother(int level) const -> Transform3D   {
   CheckHandle verify_handle(*this);
   return detail::matrix::_transform(ptr()->GetNode(level)->GetMatrix());
 }
 
 /// Access the currently applied alignment/placement matrix
-Transform3D GlobalAlignment::nominal() const   {
+auto GlobalAlignment::nominal() const -> Transform3D   {
   CheckHandle verify_handle(*this);
   return detail::matrix::_transform(ptr()->GetOriginalMatrix());
 }
 
 /// Access the currently applied correction matrix (delta)
-Transform3D GlobalAlignment::delta() const   {
+auto GlobalAlignment::delta() const -> Transform3D   {
   // It may be useful at some point to cache some of these matrices....
   CheckHandle verify_handle(*this);
   TGeoPhysicalNode* n = ptr();
@@ -121,7 +121,7 @@ Transform3D GlobalAlignment::delta() const   {
 }
 
 /// Access the inverse of the currently applied correction matrix (delta) (mother to daughter)
-Transform3D GlobalAlignment::invDelta() const   {
+auto GlobalAlignment::invDelta() const -> Transform3D   {
   // It may be useful at some point to cache some of these matrices....
   CheckHandle verify_handle(*this);
   TGeoPhysicalNode* n = ptr();

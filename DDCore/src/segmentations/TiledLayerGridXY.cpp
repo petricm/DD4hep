@@ -65,7 +65,7 @@ TiledLayerGridXY::TiledLayerGridXY(const BitFieldCoder* decode) : CartesianGrid(
 TiledLayerGridXY::~TiledLayerGridXY() = default;
 
 /// determine the position based on the cell ID
-Vector3D TiledLayerGridXY::position(const CellID& cID) const {
+auto TiledLayerGridXY::position(const CellID& cID) const -> Vector3D {
 	unsigned int _layerIndex;
 	Vector3D cellPosition;
 
@@ -92,7 +92,7 @@ Vector3D TiledLayerGridXY::position(const CellID& cID) const {
 }
 
 /// determine the cell ID based on the position
-  CellID TiledLayerGridXY::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */, const VolumeID& vID) const {
+  auto TiledLayerGridXY::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */, const VolumeID& vID) const -> CellID {
 	CellID cID = vID ;
 	unsigned int _layerIndex;
 
@@ -108,7 +108,7 @@ Vector3D TiledLayerGridXY::position(const CellID& cID) const {
 	return cID;
 }
 
-std::vector<double> TiledLayerGridXY::cellDimensions(const CellID&) const {
+auto TiledLayerGridXY::cellDimensions(const CellID&) const -> std::vector<double> {
 #if __cplusplus >= 201103L
   return {_gridSizeX, _gridSizeY};
 #else

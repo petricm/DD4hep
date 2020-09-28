@@ -57,13 +57,13 @@ namespace dd4hep::sim {
       std::string m_dumpGDML;
 
       /// Write GDML file
-      int writeGDML(const char* gdml_output);
+      auto writeGDML(const char* gdml_output) -> int;
       /// Print geant4 volume
-      int printVolume(const char* vol_path);
+      auto printVolume(const char* vol_path) -> int;
       /// Check geant4 volume
-      int checkVolume(const char* vol_path);
+      auto checkVolume(const char* vol_path) -> int;
       /// Print geant4 material
-      int printMaterial(const char* mat_name);
+      auto printMaterial(const char* mat_name) -> int;
 
     public:
       /// Initializing constructor for DDG4
@@ -168,7 +168,7 @@ void Geant4DetectorGeometryConstruction::constructGeo(Geant4DetectorConstruction
 }
 
 /// Print geant4 material
-int Geant4DetectorGeometryConstruction::printMaterial(const char* mat_name)  {
+auto Geant4DetectorGeometryConstruction::printMaterial(const char* mat_name) -> int  {
   if ( mat_name )   {
     auto& g4map = Geant4Mapping::instance().data();
     for (auto & g4Material : g4map.g4Materials)  {
@@ -196,7 +196,7 @@ int Geant4DetectorGeometryConstruction::printMaterial(const char* mat_name)  {
 }
 
 /// Print geant4 volume
-int Geant4DetectorGeometryConstruction::printVolume(const char* vol_path)  {
+auto Geant4DetectorGeometryConstruction::printVolume(const char* vol_path) -> int  {
   if ( vol_path )   {
     Detector& det = context()->kernel().detectorDescription();
     PlacedVolume top = det.world().placement();
@@ -234,7 +234,7 @@ int Geant4DetectorGeometryConstruction::printVolume(const char* vol_path)  {
 }
 
 /// Check geant4 volume
-int Geant4DetectorGeometryConstruction::checkVolume(const char* vol_path)  {
+auto Geant4DetectorGeometryConstruction::checkVolume(const char* vol_path) -> int  {
   if ( vol_path )   {
     Detector& det = context()->kernel().detectorDescription();
     PlacedVolume top = det.world().placement();
@@ -268,7 +268,7 @@ int Geant4DetectorGeometryConstruction::checkVolume(const char* vol_path)  {
 }
 
 /// Write GDML file
-int Geant4DetectorGeometryConstruction::writeGDML(const char* output)  {
+auto Geant4DetectorGeometryConstruction::writeGDML(const char* output) -> int  {
   G4VPhysicalVolume* w  = context()->world();
   if ( output && ::strlen(output) > 0 && output != m_dumpGDML.c_str() )
     m_dumpGDML = output;

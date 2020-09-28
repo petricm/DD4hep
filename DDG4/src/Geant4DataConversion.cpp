@@ -23,20 +23,20 @@ Geant4ConversionHelper::Geant4ConversionHelper() = default;
 Geant4ConversionHelper::~Geant4ConversionHelper() = default;
 
 /// Access to the data encoding using the volume manager and a specified volume id
-std::string Geant4ConversionHelper::encoding(VolumeManager vm, VolumeID vid) {
+auto Geant4ConversionHelper::encoding(VolumeManager vm, VolumeID vid) -> std::string {
   PlacedVolume      pv = vm.lookupVolumePlacement(vid);
   SensitiveDetector sd = pv.volume().sensitiveDetector();
   return encoding(sd);
 }
 
 /// Access to the hit encoding in this sensitive detector
-std::string Geant4ConversionHelper::encoding(Handle<SensitiveDetectorObject> sd)   {
+auto Geant4ConversionHelper::encoding(Handle<SensitiveDetectorObject> sd) -> std::string   {
   IDDescriptor id = SensitiveDetector(sd).readout().idSpec();
   return id.fieldDescription();
 }
 
 /// Access to the hit encoding in this readout object
-std::string Geant4ConversionHelper::encoding(Readout ro)   {
+auto Geant4ConversionHelper::encoding(Readout ro) -> std::string   {
   IDDescriptor id = ro.idSpec();
   return id.fieldDescription();
 }

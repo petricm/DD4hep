@@ -29,7 +29,7 @@ dd4hep::digi::DigiEventAction::~DigiEventAction() {
 }
 
 /// Set the parallization flag; returns previous value
-bool dd4hep::digi::DigiEventAction::setExecuteParallel(bool new_value)    {
+auto dd4hep::digi::DigiEventAction::setExecuteParallel(bool new_value) -> bool    {
   bool old = m_parallel;
   m_parallel = new_value;
   return old;

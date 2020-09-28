@@ -16,9 +16,9 @@ static dd4hep::DDTest test( "CellDimensions" ) ;
 using dd4hep::DDSegmentation::Segmentation;
 using dd4hep::DDSegmentation::CellID;
 
-Segmentation* createPolarGridRPhi2();
-Segmentation* createPolarGridRPhi(double rSize, double phiSize);
-CellID getCellID(Segmentation* seg, long long rId, long long pId);
+auto createPolarGridRPhi2() -> Segmentation*;
+auto createPolarGridRPhi(double rSize, double phiSize) -> Segmentation*;
+auto getCellID(Segmentation* seg, long long rId, long long pId) -> CellID;
 
 class TestTuple {
 public:
@@ -31,7 +31,7 @@ public:
 void testRPhi2();
 void testRPhi();
 
-int main() {
+auto main() -> int {
   using namespace dd4hep;
   try   {
     testRPhi2();
@@ -47,7 +47,7 @@ int main() {
 }
 
 
-Segmentation* createPolarGridRPhi(double rSize, double phiSize) {
+auto createPolarGridRPhi(double rSize, double phiSize) -> Segmentation* {
 
   auto* seg = new dd4hep::DDSegmentation::PolarGridRPhi("system:8,barrel:3,layer:8,slice:13,r:16,phi:16");
 
@@ -57,7 +57,7 @@ Segmentation* createPolarGridRPhi(double rSize, double phiSize) {
 
 }
 
-Segmentation* createPolarGridRPhi2() {
+auto createPolarGridRPhi2() -> Segmentation* {
 
   auto* seg = new dd4hep::DDSegmentation::PolarGridRPhi2("system:8,barrel:3,layer:8,slice:13,r:16,phi:16");
 
@@ -107,7 +107,7 @@ Segmentation* createPolarGridRPhi2() {
   return seg;
 }
 
-CellID getCellID(dd4hep::DDSegmentation::Segmentation* seg, long long rB, long long pB){
+auto getCellID(dd4hep::DDSegmentation::Segmentation* seg, long long rB, long long pB) -> CellID{
   CellID cID ;
   seg->decoder()->set(cID,"r",rB) ;
   seg->decoder()->set(cID,"phi",pB);

@@ -22,54 +22,54 @@ using namespace std;
 using namespace dd4hep;
 
 /// determine the position based on the cell ID
-Position WaferGridXY::position(const CellID& id) const   {
+auto WaferGridXY::position(const CellID& id) const -> Position   {
   return Position(access()->implementation->position(id));
 }
 
 /// determine the cell ID based on the position
-dd4hep::CellID WaferGridXY::cellID(const Position& local,
+auto WaferGridXY::cellID(const Position& local,
                                    const Position& global,
-                                   const VolumeID& volID) const
+                                   const VolumeID& volID) const -> dd4hep::CellID
 {
   return access()->implementation->cellID(local, global, volID);
 }
 
 /// access the grid size in X
-double WaferGridXY::gridSizeX() const {
+auto WaferGridXY::gridSizeX() const -> double {
   return access()->implementation->gridSizeX();
 }
 
 /// access the grid size in Y
-double WaferGridXY::gridSizeY() const {
+auto WaferGridXY::gridSizeY() const -> double {
   return access()->implementation->gridSizeY();
 }
 
 /// access the coordinate offset in X
-double WaferGridXY::offsetX() const {
+auto WaferGridXY::offsetX() const -> double {
   return access()->implementation->offsetX();
 }
 
 /// access the coordinate offset in Y
-double WaferGridXY::offsetY() const {
+auto WaferGridXY::offsetY() const -> double {
   return access()->implementation->offsetY();
 }
 /// access the coordinate waferOffset for inGroup in X
-double WaferGridXY::waferOffsetX(int inGroup, int inWafer) const  {
+auto WaferGridXY::waferOffsetX(int inGroup, int inWafer) const -> double  {
   return access()->implementation->waferOffsetX(inGroup,inWafer);
 }
 
 /// access the coordinate waferOffset for inGroup in Y
-double WaferGridXY::waferOffsetY(int inGroup, int inWafer) const  {
+auto WaferGridXY::waferOffsetY(int inGroup, int inWafer) const -> double  {
   return access()->implementation->waferOffsetY(inGroup,inWafer);
 }
 
 /// access the field name used for X
-const string& WaferGridXY::fieldNameX() const {
+auto WaferGridXY::fieldNameX() const -> const string& {
   return access()->implementation->fieldNameX();
 }
 
 /// access the field name used for Y
-const string& WaferGridXY::fieldNameY() const {
+auto WaferGridXY::fieldNameY() const -> const string& {
   return access()->implementation->fieldNameY();
 }
 
@@ -82,6 +82,6 @@ const string& WaferGridXY::fieldNameY() const {
     -# size in x
     -# size in y
 */
-vector<double> WaferGridXY::cellDimensions(const CellID& id) const  {
+auto WaferGridXY::cellDimensions(const CellID& id) const -> vector<double>  {
   return access()->implementation->cellDimensions(id);
 }

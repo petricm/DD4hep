@@ -25,7 +25,7 @@ using namespace dd4hep;
 using namespace dd4hep::detail;
 
 namespace dd4hep {
-  template <> const char* Handle<NamedObject>::name() const  {
+  template <> auto Handle<NamedObject>::name() const -> const char*  {
     return this->m_element ? this->m_element->name.c_str() : "";
   }
   template <> void

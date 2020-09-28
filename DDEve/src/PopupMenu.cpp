@@ -57,7 +57,7 @@ void PopupMenu::AddPopup(const char* s, TGPopupMenu* popup, TGMenuEntry* before,
 }
 
 /// Add a new popup menu entry with a callback
-int PopupMenu::AddEntry(const char* name, Callback cb, void* ud, const TGPicture* p, TGMenuEntry* before)   {
+auto PopupMenu::AddEntry(const char* name, Callback cb, void* ud, const TGPicture* p, TGMenuEntry* before) -> int   {
   m_calls[++m_cmd] = cb;
   m_popup.AddEntry(name, m_cmd, ud, p, before);
   return m_cmd;
@@ -88,7 +88,7 @@ void PopupMenu::UnCheckEntry(int id)   {
 }
 
 /// Get check-value
-bool PopupMenu::IsEntryChecked(int id)  {
+auto PopupMenu::IsEntryChecked(int id) -> bool  {
   return m_popup.IsEntryChecked(id);
 }
 

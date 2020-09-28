@@ -385,7 +385,7 @@ namespace dd4hep::sim   {
       }
 
       /// Helper function to decide if the hit has to be extracted and saved in the collection
-      bool mustSaveTrack(const G4Track* tr)  const   {
+      auto mustSaveTrack(const G4Track* tr)  const -> bool   {
         return current > 0 && current != tr->GetTrackID();
       }
 
@@ -416,7 +416,7 @@ namespace dd4hep::sim   {
 
 
       /// Method for generating hit(s) using the information of G4Step object.
-      G4bool process(G4Step* step, G4TouchableHistory* ) {
+      auto process(G4Step* step, G4TouchableHistory* ) -> G4bool {
         Geant4StepHandler h(step);
 
 	// std::cout << " process called - pre pos: " << h.prePos() << " post pos " << h.postPos() 

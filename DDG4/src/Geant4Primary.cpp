@@ -41,13 +41,13 @@ void Geant4PrimaryMap::insert(G4PrimaryParticle* g4,Geant4Particle* p)   {
 }
 
 /// Access DDG4 particle by G4 primary particle
-Geant4Particle* Geant4PrimaryMap::get(const G4PrimaryParticle* particle)   {
+auto Geant4PrimaryMap::get(const G4PrimaryParticle* particle) -> Geant4Particle*   {
   auto i=m_primaryMap.find(particle);
   return i != m_primaryMap.end() ? (*i).second : 0;
 }
 
 /// Access DDG4 particle by G4 primary particle (const)
-const Geant4Particle* Geant4PrimaryMap::get(const G4PrimaryParticle* particle) const   {
+auto Geant4PrimaryMap::get(const G4PrimaryParticle* particle) const -> const Geant4Particle*   {
   auto i=m_primaryMap.find(particle);
   return i != m_primaryMap.end() ? (*i).second : 0;
 }
@@ -62,7 +62,7 @@ Geant4PrimaryInteraction::~Geant4PrimaryInteraction()   {
 }
 
 /// Access a new particle identifier within the interaction
-int Geant4PrimaryInteraction::nextPID()   {
+auto Geant4PrimaryInteraction::nextPID() -> int   {
   return ++next_particle_identifier;
 }
 
@@ -72,7 +72,7 @@ void Geant4PrimaryInteraction::setNextPID(int new_value)   {
 }
 
 /// Apply mask to all contained vertices and particles
-bool Geant4PrimaryInteraction::applyMask()   {
+auto Geant4PrimaryInteraction::applyMask() -> bool   {
   for(auto& ip : particles)
     ip.second->mask = mask;
   
@@ -104,13 +104,13 @@ void Geant4PrimaryEvent::add(int id, Geant4PrimaryInteraction* interaction)   {
 }
 
 /// Retrieve an interaction by it's ID
-Geant4PrimaryEvent::Interaction* Geant4PrimaryEvent::get(int mask) const   {
+auto Geant4PrimaryEvent::get(int mask) const -> Geant4PrimaryEvent::Interaction*   {
   auto i = m_interactions.find(mask);
   return (i != m_interactions.end()) ? (*i).second : 0;
 }
 
 /// Retrieve all intractions
-std::vector<Geant4PrimaryEvent::Interaction*> Geant4PrimaryEvent::interactions() const   {
+auto Geant4PrimaryEvent::interactions() const -> std::vector<Geant4PrimaryEvent::Interaction*>   {
   std::vector<Interaction*> v;
   v.reserve(m_interactions.size());
   for(const auto& i : m_interactions)

@@ -29,7 +29,7 @@ DocumentHandler::DocumentHandler()  = default;
 DocumentHandler::~DocumentHandler()   = default;
 
 /// Load XML file and parse it.
-Document DocumentHandler::load(const string& fname) const   {
+auto DocumentHandler::load(const string& fname) const -> Document   {
   string fn = fname;
   if ( fname.find("://") != string::npos ) fn = fname.substr(fname.find("://")+3);
   //string cmd = "cat "+fn;
@@ -41,7 +41,7 @@ Document DocumentHandler::load(const string& fname) const   {
 }
 
 /// Parse a standalong XML string into a document.
-Document DocumentHandler::parse(const char* doc_string, size_t length) const   {
+auto DocumentHandler::parse(const char* doc_string, size_t length) const -> Document   {
   if ( doc_string && length ) {}
   throw runtime_error("Bla");
 }

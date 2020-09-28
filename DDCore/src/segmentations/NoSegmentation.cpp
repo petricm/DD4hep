@@ -25,13 +25,13 @@ namespace dd4hep::DDSegmentation {
     NoSegmentation::~NoSegmentation()
     = default;
 
-    Vector3D NoSegmentation::position(const CellID& /*cID*/) const
+    auto NoSegmentation::position(const CellID& /*cID*/) const -> Vector3D
     {
       Vector3D cellPosition{0,0,0};
       return cellPosition;
     }
 
-    CellID NoSegmentation::cellID(const Vector3D& /*localPosition*/, const Vector3D& /* globalPosition */, const VolumeID& vID) const {
+    auto NoSegmentation::cellID(const Vector3D& /*localPosition*/, const Vector3D& /* globalPosition */, const VolumeID& vID) const -> CellID {
       return vID;
     }
 

@@ -54,7 +54,7 @@ Condition::Condition(const string& nam,const string& typ, size_t memory)
 }
 
 /// Output method
-string Condition::str(int flags)  const   {
+auto Condition::str(int flags)  const -> string   {
   stringstream output;
   Object* o = access(); 
 #if defined(DD4HEP_CONDITIONS_HAVE_NAME)
@@ -83,22 +83,22 @@ string Condition::str(int flags)  const   {
 }
 
 /// Access the data type
-int Condition::dataType() const   {
+auto Condition::dataType() const -> int   {
   return access()->data.type;
 }
 
 /// Access the IOV block
-dd4hep::OpaqueDataBlock& Condition::data() const   {
+auto Condition::data() const -> dd4hep::OpaqueDataBlock&   {
   return access()->data;
 }
 
 /// Access the IOV type
-const dd4hep::IOVType& Condition::iovType() const   {
+auto Condition::iovType() const -> const dd4hep::IOVType&   {
   return *(access()->iovType());
 }
 
 /// Access the IOV block
-const dd4hep::IOV& Condition::iov() const   {
+auto Condition::iov() const -> const dd4hep::IOV&   {
   return *(access()->iovData());
 }
 
@@ -125,27 +125,27 @@ const string& Condition::address()  const   {
 #endif
 
 /// Access to the type information
-const type_info& Condition::typeInfo() const   {
+auto Condition::typeInfo() const -> const type_info&   {
   return descriptor().type();
 }
 
 /// Hash identifier
-Condition::key_type Condition::key()  const    {
+auto Condition::key()  const -> Condition::key_type    {
   return access()->hash;
 }
 
 /// DetElement part of the identifier
-Condition::detkey_type Condition::detector_key()  const   {
+auto Condition::detector_key()  const -> Condition::detkey_type   {
   return ConditionKey::KeyMaker(access()->hash).values.det_key;
 }
 
 /// Item part of the identifier
-Condition::itemkey_type Condition::item_key()  const   {
+auto Condition::item_key()  const -> Condition::itemkey_type   {
   return ConditionKey::KeyMaker(access()->hash).values.item_key;
 }
 
 /// Flag operations: Get flags
-Condition::mask_type Condition::flags()  const    {
+auto Condition::flags()  const -> Condition::mask_type    {
   return access()->flags;
 }
 
@@ -160,12 +160,12 @@ void Condition::unFlag(mask_type option)   {
 }
 
 /// Flag operations: Test for a given a conditons flag
-bool Condition::testFlag(mask_type option) const {
+auto Condition::testFlag(mask_type option) const -> bool {
   return access()->testFlag(option);
 }
 
 /// Access to the grammar type
-const dd4hep::BasicGrammar& Condition::descriptor() const   {
+auto Condition::descriptor() const -> const dd4hep::BasicGrammar&   {
   const BasicGrammar* grammar = access()->data.grammar;
   if ( !grammar ) {
     invalidHandleError<Condition>();
@@ -223,27 +223,27 @@ ConditionKey::ConditionKey(DetElement detector, Condition::itemkey_type item_key
 }
 
 /// Hash code generation from input string
-Condition::key_type ConditionKey::hashCode(DetElement detector, const char* value)  {
+auto ConditionKey::hashCode(DetElement detector, const char* value) -> Condition::key_type  {
   return KeyMaker(detector.key(), value).hash;
 }
 
 /// Hash code generation from input string
-Condition::key_type ConditionKey::hashCode(DetElement detector, const string& value)  {
+auto ConditionKey::hashCode(DetElement detector, const string& value) -> Condition::key_type  {
   return KeyMaker(detector, value).hash;
 }
 
 /// 32 bit hashcode of the item
-Condition::itemkey_type ConditionKey::itemCode(const char* value)  {
+auto ConditionKey::itemCode(const char* value) -> Condition::itemkey_type  {
   return detail::hash32(value);
 }
 
 /// 32 bit hashcode of the item
-Condition::itemkey_type ConditionKey::itemCode(const std::string& value)   {
+auto ConditionKey::itemCode(const std::string& value) -> Condition::itemkey_type   {
   return detail::hash32(value);
 }
 
 /// Conversion to string
-string ConditionKey::toString()  const    {
+auto ConditionKey::toString()  const -> string    {
   dd4hep::ConditionKey::KeyMaker key(hash);
   char text[64];
   ::snprintf(text,sizeof(text),"%08X-%08X",key.values.det_key, key.values.item_key);

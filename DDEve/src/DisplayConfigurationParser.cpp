@@ -304,7 +304,7 @@ template <> void Converter<ddeve>::operator()(xml_h e)  const  {
  *  @version 1.0
  *  @date    01/06/2014
  */
-static long setup_DDEve(Detector& description, const xml_h& e) {
+static auto setup_DDEve(Detector& description, const xml_h& e) -> long {
   auto* display = description.extension<Display>();
   static bool first = true;
   if ( first )   {

@@ -95,11 +95,11 @@ namespace dd4hep::sim {
         }
       }
       /// Access reference to the current active Geant4Context structure
-      Geant4Context* context() const  {  
+      auto context() const -> Geant4Context*  {
         return m_activeContext;
       }
       /// Access reference to the current active Geant4Kernel structure
-      Geant4Kernel& kernel()  const  {
+      auto kernel()  const -> Geant4Kernel&  {
         return context()->kernel();
       }
       /// G4 callback in multi threaded mode to configure thread fiber
@@ -325,7 +325,7 @@ namespace dd4hep::sim {
       /// Call the actions for the construction of the sensitive detectors and the field
       void ConstructSDandField()  final;
       /// Call the actions to construct the detector geometry
-      G4VPhysicalVolume* Construct()  final;
+      auto Construct() -> G4VPhysicalVolume*  final;
     };
 
     /// Concrete implementation of the Geant4 user initialization action sequence
@@ -401,7 +401,7 @@ namespace dd4hep::sim {
     }
 
     /// Construct electro magnetic field entity from the dd4hep field
-    G4VPhysicalVolume* Geant4UserDetectorConstruction::Construct()    {
+    auto Geant4UserDetectorConstruction::Construct() -> G4VPhysicalVolume*    {
       // The G4TransportationManager is thread-local. 
       // Thus, regardless of whether the field class object is global or local 
       // to a certain volume, a field object must be assigned to G4FieldManager.
@@ -501,11 +501,11 @@ public:
   /// Default destructor
   virtual ~Geant4Compatibility() = default;
   /// Detector construction invocation in compatibility mode
-  Geant4DetectorConstructionSequence* buildDefaultDetectorConstruction(Geant4Kernel& kernel);
+  auto buildDefaultDetectorConstruction(Geant4Kernel& kernel) -> Geant4DetectorConstructionSequence*;
 };
 
 /// Detector construction invocation in compatibility mode
-Geant4DetectorConstructionSequence* Geant4Compatibility::buildDefaultDetectorConstruction(Geant4Kernel& kernel)  {
+auto Geant4Compatibility::buildDefaultDetectorConstruction(Geant4Kernel& kernel) -> Geant4DetectorConstructionSequence*  {
   Geant4Action* cr;
   Geant4DetectorConstruction* det_cr;
   Geant4Context* ctx = kernel.workerContext();
@@ -530,7 +530,7 @@ Geant4DetectorConstructionSequence* Geant4Compatibility::buildDefaultDetectorCon
 }
 
 /// Configure the simulation
-int Geant4Exec::configure(Geant4Kernel& kernel) {
+auto Geant4Exec::configure(Geant4Kernel& kernel) -> int {
   Detector& description = kernel.detectorDescription();
   Geant4Context* ctx = kernel.workerContext();
   Geant4Random* rndm = Geant4Random::instance(false);
@@ -600,7 +600,7 @@ int Geant4Exec::configure(Geant4Kernel& kernel) {
 }
 
 /// Initialize the simulation
-int Geant4Exec::initialize(Geant4Kernel& kernel) {
+auto Geant4Exec::initialize(Geant4Kernel& kernel) -> int {
   // Construct the default run manager
   G4RunManager& runManager = kernel.runManager();
   //
@@ -612,7 +612,7 @@ int Geant4Exec::initialize(Geant4Kernel& kernel) {
 }
 
 /// Run the simulation
-int Geant4Exec::run(Geant4Kernel& kernel) {
+auto Geant4Exec::run(Geant4Kernel& kernel) -> int {
   Property& p = kernel.property("UI");
   auto value = p.value<string>();
 
@@ -637,7 +637,7 @@ int Geant4Exec::run(Geant4Kernel& kernel) {
 }
 
 /// Run the simulation
-int Geant4Exec::terminate(Geant4Kernel& kernel) {
+auto Geant4Exec::terminate(Geant4Kernel& kernel) -> int {
   kernel.executePhase("terminate",nullptr);
   return 1;
 }

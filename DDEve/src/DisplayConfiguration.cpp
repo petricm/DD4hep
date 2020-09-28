@@ -46,7 +46,7 @@ DisplayConfiguration::ViewConfig::ViewConfig(const ViewConfig& c)
 DisplayConfiguration::ViewConfig::~ViewConfig()  = default;
 
 /// Assignment operator
-DisplayConfiguration::ViewConfig& DisplayConfiguration::ViewConfig::operator=(const ViewConfig& c)  {
+auto DisplayConfiguration::ViewConfig::operator=(const ViewConfig& c) -> DisplayConfiguration::ViewConfig&  {
   if ( this == &c ) return *this;
   this->Config::operator=(c);
   show_sensitive = c.show_sensitive;
@@ -78,7 +78,7 @@ DisplayConfiguration::Config::Config(const Config& c)  {
 DisplayConfiguration::Config::~Config()  = default;
 
 /// Assignment operator
-DisplayConfiguration::Config& DisplayConfiguration::Config::operator=(const Config& c)  {
+auto DisplayConfiguration::Config::operator=(const Config& c) -> DisplayConfiguration::Config&  {
   if ( this == &c ) return *this;
   name = c.name;
   type = c.type;

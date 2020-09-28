@@ -55,7 +55,7 @@ namespace dd4hep::detail {
       ~PandoraConverter() override;
 
       /// Create geometry conversion in Pandora XML format
-      xml_doc_t create(DetElement top);
+      auto create(DetElement top) -> xml_doc_t;
 
     };
   }      // End namespace dd4hep
@@ -106,7 +106,7 @@ PandoraConverter::~PandoraConverter() {
 }
 
 /// Create geometry conversion in Pandora XML format
-xml_doc_t PandoraConverter::create(DetElement /* top */) {
+auto PandoraConverter::create(DetElement /* top */) -> xml_doc_t {
   const char empty_xml[] = "<?xml version=\"1.0\" encoding=\"UTF-8\">\n"
     "<!--                                                               \n"
     "      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
@@ -136,7 +136,7 @@ xml_doc_t PandoraConverter::create(DetElement /* top */) {
   return geo.doc;
 }
 
-static long create_description(Detector& /* description */, int /* argc */, char** /* argv */) {
+static auto create_description(Detector& /* description */, int /* argc */, char** /* argv */) -> long {
   throw runtime_error("The pandora xml conversion plugin is not yet implemented");
   return 0;
 #if 0

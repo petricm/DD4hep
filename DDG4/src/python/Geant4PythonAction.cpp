@@ -36,22 +36,22 @@ Geant4PythonAction::Geant4PythonAction(Geant4Context* ctxt, const string& nam)
 }
 
 /// Execute command in the python interpreter. Directly forwarded to TPython.
-int Geant4PythonAction::exec(const std::string& cmd)   {
+auto Geant4PythonAction::exec(const std::string& cmd) -> int   {
   return DDPython::instance().execute(cmd);
 }
 
 /// Execute command in the python interpreter.
-int Geant4PythonAction::eval(const std::string& cmd)   {
+auto Geant4PythonAction::eval(const std::string& cmd) -> int   {
   return DDPython::instance().evaluate(cmd);
 }
  
 /// Execute command in the python interpreter.
-int Geant4PythonAction::runFile(const std::string& cmd)   {
+auto Geant4PythonAction::runFile(const std::string& cmd) -> int   {
   return DDPython::instance().runFile(cmd);
 }
 
 /// Execute command in the python interpreter.
-int Geant4PythonAction::call(PyObject* method, PyObject* args)  {
+auto Geant4PythonAction::call(PyObject* method, PyObject* args) -> int  {
   return Geant4PythonCall().execute<int>(method,args);
 }
 

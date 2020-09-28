@@ -33,11 +33,11 @@ namespace {
     ~MyTFile() override = default;
   public:
     /// Basic write call
-    Int_t SysWrite(Int_t fd, const void* buf, Int_t len) override  { return TFile::SysWrite(fd, buf, len);  }
+    auto SysWrite(Int_t fd, const void* buf, Int_t len) -> Int_t override  { return TFile::SysWrite(fd, buf, len);  }
     /// Basic read call
-    Int_t SysRead(Int_t fd, void* buf, Int_t len) override         { return TFile::SysRead(fd,buf,len);     }
+    auto SysRead(Int_t fd, void* buf, Int_t len) -> Int_t override         { return TFile::SysRead(fd,buf,len);     }
     /// Basic seek call
-    Long64_t SysSeek(Int_t fd, Long64_t off, Int_t way) override   { return TFile::SysSeek(fd, off, way);   }
+    auto SysSeek(Int_t fd, Long64_t off, Int_t way) -> Long64_t override   { return TFile::SysSeek(fd, off, way);   }
   };
 }
 

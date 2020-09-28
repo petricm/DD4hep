@@ -19,7 +19,7 @@
 using std::string;
 using namespace dd4hep::cond;
 
-std::string dd4hep::cond::cond_name(const dd4hep::Condition::Object* c)  {
+auto dd4hep::cond::cond_name(const dd4hep::Condition::Object* c) -> std::string  {
 #if defined(DD4HEP_MINIMAL_CONDITIONS)
   dd4hep::ConditionKey::KeyMaker key(c->hash);
   char text[64];
@@ -30,6 +30,6 @@ std::string dd4hep::cond::cond_name(const dd4hep::Condition::Object* c)  {
 #endif
 }
 
-string dd4hep::cond::cond_name(Condition c)    {
+auto dd4hep::cond::cond_name(Condition c) -> string    {
   return cond_name(c.ptr());
 }

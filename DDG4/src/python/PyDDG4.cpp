@@ -18,7 +18,7 @@
 #include "DDG4/Python/DDPython.h"
 #include "DDG4/Geant4Kernel.h"
 
-int PyDDG4::run(Kernel& kernel)  {
+auto PyDDG4::run(Kernel& kernel) -> int  {
   int ret;
   dd4hep::DDPython::AllowThreads allow(0);
   if ( 1 != (ret=kernel.configure()) )
@@ -33,16 +33,16 @@ int PyDDG4::run(Kernel& kernel)  {
   return ret;
 }
 
-int PyDDG4::execute()  {
+auto PyDDG4::execute() -> int  {
   Kernel& k = Kernel::instance(dd4hep::Detector::getInstance());
   return run(k);
 }
 
-int PyDDG4::process(const char* fname)  {
+auto PyDDG4::process(const char* fname) -> int  {
   return dd4hep::DDPython::instance().runFile(fname);
 }
 
-int PyDDG4::run(const char* fname)  {
+auto PyDDG4::run(const char* fname) -> int  {
   int ret = dd4hep::DDPython::instance().runFile(fname);
   if ( 1 != ret ) return ret;
   return execute();

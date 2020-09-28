@@ -56,7 +56,7 @@ namespace dd4hep::sim {
     static const double CM_2_MM = (CLHEP::centimeter/dd4hep::centimeter);
 
     /// Convert a specific TGeo shape into the geant4 equivalent
-    template <typename T> G4VSolid* convertShape(const TGeoShape* shape)    {
+    template <typename T> auto convertShape(const TGeoShape* shape) -> G4VSolid*    {
       if ( shape )   {
         dd4hep::except("convertShape","Unsupported shape: %s",shape->IsA()->GetName());
       }
@@ -64,27 +64,27 @@ namespace dd4hep::sim {
       return nullptr;
     }
 
-    template <> G4VSolid* convertShape<TGeoShapeAssembly>(const TGeoShape* /* shape */)  {
+    template <> auto convertShape<TGeoShapeAssembly>(const TGeoShape* /* shape */) -> G4VSolid*  {
       return nullptr;
     }
 
-    template <> G4VSolid* convertShape<TGeoBBox>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoBBox>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoBBox*) shape;
       return new G4Box(sh->GetName(), sh->GetDX() * CM_2_MM, sh->GetDY() * CM_2_MM, sh->GetDZ() * CM_2_MM);
     }
 
-    template <> G4VSolid* convertShape<TGeoTube>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoTube>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoTube*) shape;
       return new G4Tubs(sh->GetName(), sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM, sh->GetDz() * CM_2_MM, 0, 2. * M_PI);
     }
 
-    template <> G4VSolid* convertShape<TGeoTubeSeg>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoTubeSeg>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoTubeSeg*) shape;
       return new G4Tubs(sh->GetName(), sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM, sh->GetDz() * CM_2_MM,
                         sh->GetPhi1() * DEGREE_2_RAD, (sh->GetPhi2()-sh->GetPhi1()) * DEGREE_2_RAD);
     }
 
-    template <> G4VSolid* convertShape<TGeoCtub>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoCtub>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoCtub*) shape;
       const Double_t* ln = sh->GetNlow();
       const Double_t* hn = sh->GetNhigh();
@@ -95,12 +95,12 @@ namespace dd4hep::sim {
                            sh->GetPhi1() * DEGREE_2_RAD, (sh->GetPhi2()-sh->GetPhi1()) * DEGREE_2_RAD, lowNorm, highNorm);
     }
 
-    template <> G4VSolid* convertShape<TGeoEltu>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoEltu>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoEltu*) shape;
       return new G4EllipticalTube(sh->GetName(),sh->GetA() * CM_2_MM, sh->GetB() * CM_2_MM, sh->GetDz() * CM_2_MM);
     }
 
-    template <> G4VSolid* convertShape<TwistedTubeObject>(const TGeoShape* shape)  {
+    template <> auto convertShape<TwistedTubeObject>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TwistedTubeObject*) shape;
       return new G4TwistedTubs(sh->GetName(),sh->GetPhiTwist() * DEGREE_2_RAD,
                                sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM,
@@ -108,7 +108,7 @@ namespace dd4hep::sim {
                                sh->GetNsegments(), (sh->GetPhi2()-sh->GetPhi1()) * DEGREE_2_RAD);
     }
 
-    template <> G4VSolid* convertShape<TGeoTrd1>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoTrd1>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoTrd1*) shape;
       return new G4Trd(sh->GetName(),
                        sh->GetDx1() * CM_2_MM, sh->GetDx2() * CM_2_MM,
@@ -116,7 +116,7 @@ namespace dd4hep::sim {
                        sh->GetDz() * CM_2_MM);
     }
 
-    template <> G4VSolid* convertShape<TGeoTrd2>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoTrd2>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoTrd2*) shape;
       return new G4Trd(sh->GetName(),
                        sh->GetDx1() * CM_2_MM, sh->GetDx2() * CM_2_MM,
@@ -124,14 +124,14 @@ namespace dd4hep::sim {
                        sh->GetDz() * CM_2_MM);
     }
 
-    template <> G4VSolid* convertShape<TGeoHype>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoHype>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoHype*) shape;
       return new G4Hype(sh->GetName(), sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM,
                         sh->GetStIn() * DEGREE_2_RAD, sh->GetStOut() * DEGREE_2_RAD,
                         sh->GetDz() * CM_2_MM);
     }
 
-    template <> G4VSolid* convertShape<TGeoArb8>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoArb8>(const TGeoShape* shape) -> G4VSolid*  {
       vector<G4TwoVector> vertices;
       auto* sh = (TGeoArb8*) shape;
       Double_t* vtx_xy = sh->GetVertices();
@@ -140,7 +140,7 @@ namespace dd4hep::sim {
       return new G4GenericTrap(sh->GetName(), sh->GetDz() * CM_2_MM, vertices);
     }
 
-    template <> G4VSolid* convertShape<TGeoXtru>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoXtru>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoXtru*) shape;
       size_t nz = sh->GetNz();
       vector<G4ExtrudedSolid::ZSection> z;
@@ -154,7 +154,7 @@ namespace dd4hep::sim {
       return new G4ExtrudedSolid(sh->GetName(), polygon, z);
     }
 
-    template <> G4VSolid* convertShape<TGeoPgon>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoPgon>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoPgon*) shape;
       vector<double> rmin, rmax, z;
       for (Int_t i = 0; i < sh->GetNz(); ++i) {
@@ -166,7 +166,7 @@ namespace dd4hep::sim {
                              sh->GetNedges(), sh->GetNz(), &z[0], &rmin[0], &rmax[0]);
     }
 
-    template <> G4VSolid* convertShape<TGeoPcon>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoPcon>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoPcon*) shape;
       vector<double> rmin, rmax, z;
       for (Int_t i = 0; i < sh->GetNz(); ++i) {
@@ -178,13 +178,13 @@ namespace dd4hep::sim {
                             sh->GetNz(), &z[0], &rmin[0], &rmax[0]);
     }
 
-    template <> G4VSolid* convertShape<TGeoCone>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoCone>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoCone*) shape;
       return new G4Cons(sh->GetName(), sh->GetRmin1() * CM_2_MM, sh->GetRmax1() * CM_2_MM, sh->GetRmin2() * CM_2_MM,
                         sh->GetRmax2() * CM_2_MM, sh->GetDz() * CM_2_MM, 0.0, 2.*M_PI);
     }
 
-    template <> G4VSolid* convertShape<TGeoConeSeg>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoConeSeg>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoConeSeg*) shape;
       return new G4Cons(sh->GetName(), sh->GetRmin1() * CM_2_MM, sh->GetRmax1() * CM_2_MM,
                         sh->GetRmin2() * CM_2_MM, sh->GetRmax2() * CM_2_MM,
@@ -192,31 +192,31 @@ namespace dd4hep::sim {
                         sh->GetPhi1() * DEGREE_2_RAD, (sh->GetPhi2()-sh->GetPhi1()) * DEGREE_2_RAD);
     }
 
-    template <> G4VSolid* convertShape<TGeoParaboloid>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoParaboloid>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoParaboloid*) shape;
       return new G4Paraboloid(sh->GetName(), sh->GetDz() * CM_2_MM, sh->GetRlo() * CM_2_MM, sh->GetRhi() * CM_2_MM);
     }
 
-    template <> G4VSolid* convertShape<TGeoSphere>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoSphere>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoSphere*) shape;
       return new G4Sphere(sh->GetName(), sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM, sh->GetPhi1() * DEGREE_2_RAD,
                           sh->GetPhi2() * DEGREE_2_RAD, sh->GetTheta1() * DEGREE_2_RAD, sh->GetTheta2() * DEGREE_2_RAD);
     }
 
-    template <> G4VSolid* convertShape<TGeoTorus>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoTorus>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoTorus*) shape;
       return new G4Torus(sh->GetName(), sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM, sh->GetR() * CM_2_MM,
                          sh->GetPhi1() * DEGREE_2_RAD, sh->GetDphi() * DEGREE_2_RAD);
     }
 
-    template <> G4VSolid* convertShape<TGeoTrap>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoTrap>(const TGeoShape* shape) -> G4VSolid*  {
       const auto* sh = (const TGeoTrap*) shape;
       return new G4Trap(sh->GetName(), sh->GetDz() * CM_2_MM, sh->GetTheta() * DEGREE_2_RAD, sh->GetPhi() * DEGREE_2_RAD,
                         sh->GetH1() * CM_2_MM, sh->GetBl1() * CM_2_MM, sh->GetTl1() * CM_2_MM, sh->GetAlpha1() * DEGREE_2_RAD,
                         sh->GetH2() * CM_2_MM, sh->GetBl2() * CM_2_MM, sh->GetTl2() * CM_2_MM, sh->GetAlpha2() * DEGREE_2_RAD);
     }
 
-    template <> G4VSolid* convertShape<G4GenericTrap>(const TGeoShape* shape)  {
+    template <> auto convertShape<G4GenericTrap>(const TGeoShape* shape) -> G4VSolid*  {
       vector<G4TwoVector> vertices;
       auto* sh = (TGeoTrap*) shape;
       Double_t* vtx_xy = sh->GetVertices();
@@ -234,7 +234,7 @@ namespace dd4hep::sim {
 /// Namespace for the AIDA detector description toolkit
 namespace dd4hep::sim {
 
-    template <> G4VSolid* convertShape<TGeoTessellated>(const TGeoShape* shape)  {
+    template <> auto convertShape<TGeoTessellated>(const TGeoShape* shape) -> G4VSolid*  {
       auto*   sh  = (TGeoTessellated*) shape;
       auto* g4 = new G4TessellatedSolid(sh->GetName());
       int num_facet = sh->GetNfacets();

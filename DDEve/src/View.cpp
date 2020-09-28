@@ -34,7 +34,7 @@ using namespace std;
 using namespace dd4hep;
 
 template <typename T>
-static inline typename T::const_iterator find(const T& cont,const string& str)  {
+static inline auto find(const T& cont,const string& str) -> typename T::const_iterator  {
   for(typename T::const_iterator i=cont.begin(); i!=cont.end(); ++i)  
     if ( (*i).name == str ) return i;
   return cont.end();
@@ -60,7 +60,7 @@ View::~View() {
 }
 
 /// Build the projection view and map it to the given slot
-View& View::Build(TEveWindow* /* slot */)   {
+auto View::Build(TEveWindow* /* slot */) -> View&   {
   return *this;
 }
 
@@ -83,7 +83,7 @@ void View::Initialize()  {
 }
 
 /// Add the view to the global list of eve objects
-TEveElementList* View::AddToGlobalItems(const string& nam)   {
+auto View::AddToGlobalItems(const string& nam) -> TEveElementList*   {
   if ( nullptr == m_global )   {
     m_global = new ElementList(nam.c_str(), nam.c_str(), true, true);
     if ( m_geoScene ) m_global->AddElement(geoScene());
@@ -94,7 +94,7 @@ TEveElementList* View::AddToGlobalItems(const string& nam)   {
 }
 
 /// Call an element to a event element list
-TEveElement* View::ImportGeoElement(TEveElement* el, TEveElementList* list)  { 
+auto View::ImportGeoElement(TEveElement* el, TEveElementList* list) -> TEveElement*  {
   auto* scene = dynamic_cast<TEveScene*>(el);
   if ( scene )   {
     printf("ERROR: Adding a Scene [%s] to a list. This is BAD and causes crashes!\n",scene->GetName());
@@ -104,12 +104,12 @@ TEveElement* View::ImportGeoElement(TEveElement* el, TEveElementList* list)  {
 }
 
 /// Call an element to a geometry element list
-TEveElement* View::ImportGeoTopic(TEveElement* element, TEveElementList* list)   {
+auto View::ImportGeoTopic(TEveElement* element, TEveElementList* list) -> TEveElement*   {
   return ImportGeoElement(element, list);
 }
 
 /// Call an element to a event element list
-TEveElement* View::ImportEventElement(TEveElement* el, TEveElementList* list)  { 
+auto View::ImportEventElement(TEveElement* el, TEveElementList* list) -> TEveElement*  {
   auto* scene = dynamic_cast<TEveScene*>(el);
   if ( scene )   {
     printf("ERROR: Adding a Scene [%s] to a list. This is BAD and causes crashes!\n",scene->GetName());
@@ -123,8 +123,8 @@ TEveElement* View::ImportEventElement(TEveElement* el, TEveElementList* list)  {
 }
 
 /// Access the global instance of the subdetector geometry
-pair<bool,TEveElement*> 
-View::GetGlobalGeometry(DetElement de, const DisplayConfiguration::Config& /* cfg */)   {
+auto
+View::GetGlobalGeometry(DetElement de, const DisplayConfiguration::Config& /* cfg */) -> pair<bool,TEveElement*>   {
   SensitiveDetector sd = m_eve->detectorDescription().sensitiveDetector(de.name());
   TEveElementList& global = m_eve->GetGeoTopic(sd.isValid() ? "Sensitive" : "Structure");
   TEveElement* elt = global.FindChild(de.name());
@@ -132,8 +132,8 @@ View::GetGlobalGeometry(DetElement de, const DisplayConfiguration::Config& /* cf
 }
 
 /// Create a new instance of the geometry of a sub-detector
-pair<bool,TEveElement*> 
-View::CreateGeometry(DetElement de, const DisplayConfiguration::Config& cfg)   {
+auto
+View::CreateGeometry(DetElement de, const DisplayConfiguration::Config& cfg) -> pair<bool,TEveElement*>   {
   SensitiveDetector sd = m_eve->detectorDescription().sensitiveDetector(de.name());
   TEveElementList& topic = GetGeoTopic(sd.isValid() ? "Sensitive" : "Structure");
   return Utilities::LoadDetElement(de,cfg.data.defaults.load_geo,&topic);
@@ -296,7 +296,7 @@ void View::ImportEvent(TEveElement* el)  {
 }
 
 /// Access/Create a topic by name
-TEveElementList& View::GetGeoTopic(const string& nam)    {
+auto View::GetGeoTopic(const string& nam) -> TEveElementList&    {
   auto i=m_geoTopics.find(nam);
   if ( i == m_geoTopics.end() )  {
     TEveElementList* topic = new ElementList(nam.c_str(), nam.c_str(), true, true);
@@ -307,7 +307,7 @@ TEveElementList& View::GetGeoTopic(const string& nam)    {
 }
 
 /// Create the geometry and the event scene
-View& View::CreateScenes()  {
+auto View::CreateScenes() -> View&  {
   // Scenes
   CreateGeoScene();
   CreateEventScene();
@@ -315,7 +315,7 @@ View& View::CreateScenes()  {
 }
 
 /// Create the event scene
-View& View::CreateEventScene()   {
+auto View::CreateEventScene() -> View&   {
   if ( nullptr == m_eveScene ) {
     string nam  = m_name+" - Event Data";
     string tool = m_name+" - Scene holding projected event-data for the view.";
@@ -325,7 +325,7 @@ View& View::CreateEventScene()   {
 }
 
 /// Create the geometry scene
-View& View::CreateGeoScene()  {
+auto View::CreateGeoScene() -> View&  {
   if ( nullptr == m_geoScene )   {
     string nam  = m_name+" - Geometry";
     string tool = m_name+" - Scene holding projected geometry for the view.";
@@ -335,7 +335,7 @@ View& View::CreateGeoScene()  {
 }
  
 /// Map the projection view to the slot
-View& View::Map(TEveWindow* slot)  {
+auto View::Map(TEveWindow* slot) -> View&  {
   slot->MakeCurrent();
   m_view = m_eve->manager().SpawnNewViewer(m_name.c_str(), "");
   if ( m_geoScene ) m_view->AddScene(m_geoScene);

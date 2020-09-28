@@ -54,7 +54,7 @@ using namespace dd4hep::detail;
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long dummy(Detector&, int, char**) {
+static auto dummy(Detector&, int, char**) -> long {
   return 0;
 }
 DECLARE_APPLY(DDDigi_dummy,dummy)

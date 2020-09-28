@@ -31,7 +31,7 @@ using namespace dd4hep::digi;
 /// Namespace for the AIDA detector description toolkit
 namespace dd4hep::digi {
  
-    template <typename TYPE> static inline TYPE* checked_value(TYPE* p) {
+    template <typename TYPE> static inline auto checked_value(TYPE* p) -> TYPE* {
       if (p) {
         return p;
       }
@@ -56,17 +56,17 @@ namespace dd4hep::digi {
       handle.value = nullptr;
     }
 
-    template <typename T> T* _raw_create(const std::string& t, const DigiKernel& kernel, const std::string& n)    {
+    template <typename T> auto _raw_create(const std::string& t, const DigiKernel& kernel, const std::string& n) -> T*    {
       auto* object = PluginService::Create<DigiEventAction*>(t, &kernel, n);
       return object ? dynamic_cast<T*>(object) : nullptr;
     }
-    template <> DigiAction* _raw_create<DigiAction>(const std::string& t, const DigiKernel& kernel, const std::string& n)    {
+    template <> auto _raw_create<DigiAction>(const std::string& t, const DigiKernel& kernel, const std::string& n) -> DigiAction*    {
       return PluginService::Create<DigiAction*>(t, &kernel, n);
     }
-    template <> DigiSignalProcessor* _raw_create<DigiSignalProcessor>(const std::string& t, const DigiKernel& kernel, const std::string& n)    {
+    template <> auto _raw_create<DigiSignalProcessor>(const std::string& t, const DigiKernel& kernel, const std::string& n) -> DigiSignalProcessor*    {
       return PluginService::Create<DigiSignalProcessor*>(t, &kernel, n);
     }
-    template <typename TYPE> TYPE* _create_object(const DigiKernel& kernel, const TypeName& typ)    {
+    template <typename TYPE> auto _create_object(const DigiKernel& kernel, const TypeName& typ) -> TYPE*    {
       TYPE* object = _raw_create<TYPE>(typ.first, kernel, typ.second);
       if (!object && typ.first == typ.second) {
         string _t = typeName(typeid(TYPE));
@@ -104,7 +104,7 @@ namespace dd4hep::digi {
       value = nullptr;
     }
 
-    template <typename TYPE> TYPE* DigiHandle<TYPE>::release() {
+    template <typename TYPE> auto DigiHandle<TYPE>::release() -> TYPE* {
       TYPE* temp = value;
       value = nullptr;
       return temp;
@@ -118,7 +118,7 @@ namespace dd4hep::digi {
         value->addRef();
     }
 
-    template <typename TYPE> Property& DigiHandle<TYPE>::operator[](const string& property_name) const {
+    template <typename TYPE> auto DigiHandle<TYPE>::operator[](const string& property_name) const -> Property& {
       PropertyManager& pm = checked_value(value)->properties();
       return pm[property_name];
     }
@@ -127,24 +127,24 @@ namespace dd4hep::digi {
       return checked_value(value);
     }
 
-    template <typename TYPE> bool DigiHandle<TYPE>::operator!() const {
+    template <typename TYPE> auto DigiHandle<TYPE>::operator!() const -> bool {
       return nullptr == value;
     }
 
-    template <typename TYPE> TYPE* DigiHandle<TYPE>::get() const {
+    template <typename TYPE> auto DigiHandle<TYPE>::get() const -> TYPE* {
       return checked_value(value);
     }
 
-    template <typename TYPE> TYPE* DigiHandle<TYPE>::operator->() const {
+    template <typename TYPE> auto DigiHandle<TYPE>::operator->() const -> TYPE* {
       return checked_value(value);
     }
 
-    template <typename TYPE> DigiAction* DigiHandle<TYPE>::action() const {
+    template <typename TYPE> auto DigiHandle<TYPE>::action() const -> DigiAction* {
       return checked_value(value);
     }
 
     /// Assignment operator
-    template <typename TYPE> DigiHandle<TYPE>& DigiHandle<TYPE>::operator=(const DigiHandle& handle) {
+    template <typename TYPE> auto DigiHandle<TYPE>::operator=(const DigiHandle& handle) -> DigiHandle<TYPE>& {
       if ( &handle != this )  {
         TYPE* point = value;
         value = handle.get();
@@ -155,14 +155,14 @@ namespace dd4hep::digi {
     }
 
     /// Assignment move operator
-    template <typename TYPE> DigiHandle<TYPE>& DigiHandle<TYPE>::operator=(DigiHandle&& handle) {
+    template <typename TYPE> auto DigiHandle<TYPE>::operator=(DigiHandle&& handle) -> DigiHandle<TYPE>& {
       if ( value ) value->release();
       value = handle.get();
       handle.value = nullptr;
       return *this;
     }
 
-    template <typename TYPE> DigiHandle<TYPE>& DigiHandle<TYPE>::operator=(TYPE* pointer) {
+    template <typename TYPE> auto DigiHandle<TYPE>::operator=(TYPE* pointer) -> DigiHandle<TYPE>& {
       if ( pointer != value )  {
         TYPE* point = value;
         value = pointer;

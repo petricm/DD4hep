@@ -46,7 +46,7 @@ ConditionsRepository::~ConditionsRepository()   = default;
 
 namespace {
 
-  int createXML(const string& output, const AllConditions& all) {
+  auto createXML(const string& output, const AllConditions& all) -> int {
     const char comment[] = "\n"
       "      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
       "      ++++   Linear collider detector description Detector in C++  ++++\n"
@@ -77,7 +77,7 @@ namespace {
   }
 
   /// Load the repository from file and fill user passed data structory
-  int readXML(const string& input, ConditionsRepository::Data& data)    {
+  auto readXML(const string& input, ConditionsRepository::Data& data) -> int    {
     struct Conv {
       /// Reference to optional user defined parameter
       ConditionsRepository::Data& data;
@@ -102,7 +102,7 @@ namespace {
   }
   
 #if defined(DD4HEP_MINIMAL_CONDITIONS)
-  int createText(const string& output, const AllConditions&, char)
+  auto createText(const string& output, const AllConditions&, char) -> int
 #else
   int createText(const string& output, const AllConditions& all, char sep)
 #endif
@@ -146,7 +146,7 @@ namespace {
   }
 
   /// Load the repository from file and fill user passed data structory
-  int readText(const string& input, ConditionsRepository::Data& data)    {
+  auto readText(const string& input, ConditionsRepository::Data& data) -> int    {
     size_t idx;
     ConditionsRepository::Entry e;
     long siz_nam, siz_add, siz_tot;
@@ -199,7 +199,7 @@ namespace {
 }
 
 /// Save the repository to file
-int ConditionsRepository::save(ConditionsManager manager, const string& output)  const  {
+auto ConditionsRepository::save(ConditionsManager manager, const string& output)  const -> int  {
   AllConditions all;
   const auto types = manager.iovTypesUsed();
   for( const IOVType* type : types )  {
@@ -236,7 +236,7 @@ int ConditionsRepository::save(ConditionsManager manager, const string& output) 
 }
 
 /// Load the repository from file and fill user passed data structory
-int ConditionsRepository::load(const string& input, Data& data)  const  {
+auto ConditionsRepository::load(const string& input, Data& data)  const -> int  {
   if ( input.find(".xml") != string::npos )   {
     return readXML(input, data);
   }

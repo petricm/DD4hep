@@ -37,21 +37,21 @@ CartesianStripZ::CartesianStripZ(const BitFieldCoder* decode) : CartesianStrip(d
 CartesianStripZ::~CartesianStripZ() = default;
 
 /// determine the position based on the cell ID
-Vector3D CartesianStripZ::position(const CellID& cID) const {
+auto CartesianStripZ::position(const CellID& cID) const -> Vector3D {
     Vector3D cellPosition;
     cellPosition.Z = binToPosition(_decoder->get(cID, _xId), _stripSizeZ, _offsetZ);
     return cellPosition;
 }
 
 /// determine the cell ID based on the position
-CellID CartesianStripZ::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */,
-                               const VolumeID& vID) const {
+auto CartesianStripZ::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */,
+                               const VolumeID& vID) const -> CellID {
     CellID cID = vID;
     _decoder->set(cID, _xId, positionToBin(localPosition.Z, _stripSizeZ, _offsetZ));
     return cID;
 }
 
-std::vector<double> CartesianStripZ::cellDimensions(const CellID&) const {
+auto CartesianStripZ::cellDimensions(const CellID&) const -> std::vector<double> {
 #if __cplusplus >= 201103L
     return {_stripSizeZ};
 #else

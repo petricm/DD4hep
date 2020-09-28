@@ -50,12 +50,12 @@ ElementList::~ElementList()  {
 }
 
 /// Clone object
-TEveElementList* ElementList::CloneElement() const  {
+auto ElementList::CloneElement() const -> TEveElementList*  {
   return new ElementList(*this);
 }
 
 /// Instantiator
-ElementListContextMenu& ElementListContextMenu::install(Display* disp)   {
+auto ElementListContextMenu::install(Display* disp) -> ElementListContextMenu&   {
   static ElementListContextMenu s(disp);
   return s;
 }

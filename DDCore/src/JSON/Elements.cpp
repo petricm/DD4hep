@@ -30,12 +30,12 @@ static const size_t INVALID_NODE = ~0U;
 
 // Forward declarations
 namespace dd4hep {
-  dd4hep::tools::Evaluator& evaluator();
+  auto evaluator() -> dd4hep::tools::Evaluator&;
 }
 // Static storage
 namespace {
   dd4hep::tools::Evaluator& eval(dd4hep::evaluator());
-  string _checkEnviron(const string& env)  {
+  auto _checkEnviron(const string& env) -> string  {
     string r = getEnviron(env);
     return r.empty() ? env : r;
   }
@@ -45,11 +45,11 @@ namespace {
 
   // This should ensure we are not passing temporaries of std::string and then
   // returning the "const char*" content calling .c_str()
-  const ptree::data_type& value_data(const ptree& entry)  {
+  auto value_data(const ptree& entry) -> const ptree::data_type&  {
     return entry.data();
   }
 
-  JsonElement* node_first(JsonElement* e, const char* tag) {
+  auto node_first(JsonElement* e, const char* tag) -> JsonElement* {
     if ( e )  {
       string t(tag);
       if ( t == "*" )  {
@@ -62,11 +62,11 @@ namespace {
     return nullptr;
   }
 
-  size_t node_count(JsonElement* e, const string& t) {
+  auto node_count(JsonElement* e, const string& t) -> size_t {
     return e ? (t=="*" ? e->second.size() : e->second.count(t)) : 0;
   }
 
-  Attribute attribute_node(JsonElement* n, const char* t)  {
+  auto attribute_node(JsonElement* n, const char* t) -> Attribute  {
     if ( n )  {
       auto i = n->second.find(t);
       return i != n->second.not_found() ? &(*i) : nullptr;
@@ -74,73 +74,73 @@ namespace {
     return nullptr;
   }
 
-  const char* attribute_value(Attribute a) {
+  auto attribute_value(Attribute a) -> const char* {
     return value_data(a->second).c_str();
   }
 }
 
-string dd4hep::json::_toString(Attribute attr) {
+auto dd4hep::json::_toString(Attribute attr) -> string {
   if (attr)
     return _toString(attribute_value(attr));
   return "";
 }
 
-template <typename T> static inline string __to_string(T value, const char* fmt) {
+template <typename T> static inline auto __to_string(T value, const char* fmt) -> string {
   char text[128];
   ::snprintf(text, sizeof(text), fmt, value);
   return text;
 }
 
 /// Do-nothing version. Present for completeness and argument interchangeability
-string dd4hep::json::_toString(const char* s) {
+auto dd4hep::json::_toString(const char* s) -> string {
   if ( !s || *s == 0 ) return "";
   else if ( !(*s == '$' && *(s+1) == '{') ) return s;
   return _checkEnviron(s);
 }
 
 /// Do-nothing version. Present for completeness and argument interchangeability
-string dd4hep::json::_toString(const string& s) {
+auto dd4hep::json::_toString(const string& s) -> string {
   if ( s.length() < 3 || s[0] != '$' ) return s;
   else if ( !(s[0] == '$' && s[1] == '{') ) return s;
   return _checkEnviron(s);
 }
 
 /// Format unsigned long integer to string with arbitrary format
-string dd4hep::json::_toString(unsigned long v, const char* fmt) {
+auto dd4hep::json::_toString(unsigned long v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
 /// Format unsigned integer (32 bits) to string with arbitrary format
-string dd4hep::json::_toString(unsigned int v, const char* fmt) {
+auto dd4hep::json::_toString(unsigned int v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
 /// Format signed integer (32 bits) to string with arbitrary format
-string dd4hep::json::_toString(int v, const char* fmt) {
+auto dd4hep::json::_toString(int v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
 /// Format signed long integer to string with arbitrary format
-string dd4hep::json::_toString(long v, const char* fmt)   {
+auto dd4hep::json::_toString(long v, const char* fmt) -> string   {
   return __to_string(v, fmt);
 }
 
 /// Format single procision float number (32 bits) to string with arbitrary format
-string dd4hep::json::_toString(float v, const char* fmt) {
+auto dd4hep::json::_toString(float v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
 /// Format double procision float number (64 bits) to string with arbitrary format
-string dd4hep::json::_toString(double v, const char* fmt) {
+auto dd4hep::json::_toString(double v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
 /// Format pointer to string with arbitrary format
-string dd4hep::json::_ptrToString(const void* v, const char* fmt) {
+auto dd4hep::json::_ptrToString(const void* v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
-long dd4hep::json::_toLong(const char* value) {
+auto dd4hep::json::_toLong(const char* value) -> long {
   if (value) {
     string s = _toString(value);
     size_t idx = s.find("(int)");
@@ -162,7 +162,7 @@ long dd4hep::json::_toLong(const char* value) {
   return -1;
 }
 
-int dd4hep::json::_toInt(const char* value) {
+auto dd4hep::json::_toInt(const char* value) -> int {
   if (value) {
     string s = _toString(value);
     size_t idx = s.find("(int)");
@@ -181,7 +181,7 @@ int dd4hep::json::_toInt(const char* value) {
   return -1;
 }
 
-bool dd4hep::json::_toBool(const char* value) {
+auto dd4hep::json::_toBool(const char* value) -> bool {
   if (value) {
     string s = _toString(value);
     return s == "true";
@@ -189,7 +189,7 @@ bool dd4hep::json::_toBool(const char* value) {
   return false;
 }
 
-float dd4hep::json::_toFloat(const char* value) {
+auto dd4hep::json::_toFloat(const char* value) -> float {
   if (value) {
     string s = _toString(value);
     double result = eval.evaluate(s.c_str());
@@ -204,7 +204,7 @@ float dd4hep::json::_toFloat(const char* value) {
   return 0.0;
 }
 
-double dd4hep::json::_toDouble(const char* value) {
+auto dd4hep::json::_toDouble(const char* value) -> double {
   if (value) {
     string s = _toString(value);
     double result = eval.evaluate(s.c_str());
@@ -251,7 +251,7 @@ template void dd4hep::json::_toDictionary(const char* name, float value);
 template void dd4hep::json::_toDictionary(const char* name, double value);
 
 /// Evaluate string constant using environment stored in the evaluator
-string dd4hep::json::getEnviron(const string& env)   {
+auto dd4hep::json::getEnviron(const string& env) -> string   {
   size_t id1 = env.find("${");
   size_t id2 = env.rfind("}");
   if ( id1 == string::npos || id2 == string::npos )   {
@@ -290,7 +290,7 @@ NodeList::NodeList(JsonElement* node, string  tag_value)
 NodeList::~NodeList() = default;
 
 /// Reset the nodelist
-JsonElement* NodeList::reset() {
+auto NodeList::reset() -> JsonElement* {
   if ( m_tag == "*" )
     m_ptr = make_pair(m_node->second.ordered_begin(), m_node->second.not_found());
   else
@@ -301,7 +301,7 @@ JsonElement* NodeList::reset() {
 }
 
 /// Advance to next element
-JsonElement* NodeList::next() const {
+auto NodeList::next() const -> JsonElement* {
   if ( m_ptr.first != m_ptr.second )  {
     m_ptr.first = ++m_ptr.first;
     if ( m_ptr.first != m_ptr.second ) return &(*m_ptr.first);
@@ -310,7 +310,7 @@ JsonElement* NodeList::next() const {
 }
 
 /// Go back to previous element
-JsonElement* NodeList::previous() const {
+auto NodeList::previous() const -> JsonElement* {
   if ( m_ptr.first != m_ptr.second )  {
     m_ptr.first = --m_ptr.first;
     if ( m_ptr.first != m_ptr.second ) return &(*m_ptr.first);
@@ -319,7 +319,7 @@ JsonElement* NodeList::previous() const {
 }
 
 /// Assignment operator
-NodeList& NodeList::operator=(const NodeList& l) {
+auto NodeList::operator=(const NodeList& l) -> NodeList& {
   if ( this != &l ) {
     m_tag  = l.m_tag;
     m_node = l.m_node;
@@ -329,32 +329,32 @@ NodeList& NodeList::operator=(const NodeList& l) {
 }
 
 /// Unicode text access to the element's tag. This must be wrong ....
-const char* Handle_t::rawTag() const {
+auto Handle_t::rawTag() const -> const char* {
   return m_node->first.c_str();
 }
 
 /// Unicode text access to the element's text
-const char* Handle_t::rawText() const {
+auto Handle_t::rawText() const -> const char* {
   return value_data(m_node->second).c_str();
 }
 
 /// Unicode text access to the element's value
-const char* Handle_t::rawValue() const {
+auto Handle_t::rawValue() const -> const char* {
   return value_data(m_node->second).c_str();
 }
 
 /// Access attribute pointer by the attribute's unicode name (no exception thrown if not present)
-Attribute Handle_t::attr_nothrow(const char* tag_value) const {
+auto Handle_t::attr_nothrow(const char* tag_value) const -> Attribute {
   return attribute_node(m_node, tag_value);
 }
 
 /// Check for the existence of a named attribute
-bool Handle_t::hasAttr(const char* tag_value) const {
+auto Handle_t::hasAttr(const char* tag_value) const -> bool {
   return m_node && nullptr != node_first(m_node, tag_value);
 }
 
 /// Retrieve a collection of all attributes of this DOM element
-vector<Attribute> Handle_t::attributes() const {
+auto Handle_t::attributes() const -> vector<Attribute> {
   vector < Attribute > attrs;
   if (m_node) {
     for(ptree::iterator i=m_node->second.begin(); i!=m_node->second.end(); ++i)  {
@@ -365,7 +365,7 @@ vector<Attribute> Handle_t::attributes() const {
   return attrs;
 }
 
-size_t Handle_t::numChildren(const char* t, bool throw_exception) const {
+auto Handle_t::numChildren(const char* t, bool throw_exception) const -> size_t {
   size_t n = node_count(m_node, t);
   if (n == INVALID_NODE && !throw_exception)
     return 0;
@@ -380,7 +380,7 @@ size_t Handle_t::numChildren(const char* t, bool throw_exception) const {
 }
 
 /// Remove a single child node identified by it's handle from the tree of the element
-Handle_t Handle_t::child(const char* t, bool throw_exception) const {
+auto Handle_t::child(const char* t, bool throw_exception) const -> Handle_t {
   Elt_t e = node_first(m_node, t);
   if (e || !throw_exception)
     return e;
@@ -392,16 +392,16 @@ Handle_t Handle_t::child(const char* t, bool throw_exception) const {
   throw runtime_error(msg);
 }
 
-NodeList Handle_t::children(const char* tag_value) const {
+auto Handle_t::children(const char* tag_value) const -> NodeList {
   return NodeList(m_node, tag_value);
 }
 
-bool Handle_t::hasChild(const char* tag_value) const {
+auto Handle_t::hasChild(const char* tag_value) const -> bool {
   return node_first(m_node, tag_value) != nullptr;
 }
 
 /// Access attribute pointer by the attribute's unicode name (throws exception if not present)
-Attribute Handle_t::attr_ptr(const char* t) const {
+auto Handle_t::attr_ptr(const char* t) const -> Attribute {
   Attribute a = attribute_node(m_node, t);
   if (nullptr != a)
     return a;
@@ -414,7 +414,7 @@ Attribute Handle_t::attr_ptr(const char* t) const {
 }
 
 /// Access attribute name (throws exception if not present)
-const char* Handle_t::attr_name(const Attribute a) const {
+auto Handle_t::attr_name(const Attribute a) const -> const char* {
   if (a) {
     return a->first.c_str();
   }
@@ -422,24 +422,24 @@ const char* Handle_t::attr_name(const Attribute a) const {
 }
 
 /// Access attribute value by the attribute's unicode name (throws exception if not present)
-const char* Handle_t::attr_value(const char* attr_tag) const {
+auto Handle_t::attr_value(const char* attr_tag) const -> const char* {
   return attribute_value(attr_ptr(attr_tag));
 }
 
 /// Access attribute value by the attribute  (throws exception if not present)
-const char* Handle_t::attr_value(const Attribute attr_val) const {
+auto Handle_t::attr_value(const Attribute attr_val) const -> const char* {
   return attribute_value(attr_val);
 }
 
 /// Access attribute value by the attribute's unicode name (no exception thrown if not present)
-const char* Handle_t::attr_value_nothrow(const char* attr_tag) const {
+auto Handle_t::attr_value_nothrow(const char* attr_tag) const -> const char* {
   Attribute a = attr_nothrow(attr_tag);
   return a ? attribute_value(a) : nullptr;
 }
 
 
 /// Access the ROOT eleemnt of the DOM document
-Handle_t Document::root() const   {
+auto Document::root() const -> Handle_t   {
   if ( m_doc )   {
     return m_doc;
   }
@@ -447,7 +447,7 @@ Handle_t Document::root() const   {
 }
 
 /// Assign new document. Old document is dropped.
-DocumentHolder& DocumentHolder::assign(DOC d)   {
+auto DocumentHolder::assign(DOC d) -> DocumentHolder&   {
   if ( m_doc )   {
     printout(DEBUG,"DocumentHolder","+++ Release JSON document....");
     delete m_doc;
@@ -461,7 +461,7 @@ DocumentHolder::~DocumentHolder()   {
   assign(nullptr);
 }
 
-Attribute Element::getAttr(const char* name) const {
+auto Element::getAttr(const char* name) const -> Attribute {
   return m_element ? attribute_node(m_element, name) : nullptr;
 }
 
@@ -477,13 +477,13 @@ Collection_t::Collection_t(NodeList node_list)
 }
 
 /// Reset the collection object to restart the iteration
-Collection_t& Collection_t::reset() {
+auto Collection_t::reset() -> Collection_t& {
   m_node = m_children.reset();
   return *this;
 }
 
 /// Access the collection size. Avoid this call -- sloooow!
-size_t Collection_t::size() const {
+auto Collection_t::size() const -> size_t {
   return Handle_t(m_children.m_node).numChildren(m_children.m_tag.c_str(), false);
 }
 

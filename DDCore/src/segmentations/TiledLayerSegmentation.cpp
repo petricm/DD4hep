@@ -64,13 +64,13 @@ TiledLayerSegmentation::TiledLayerSegmentation(const BitFieldCoder* decode) :	Se
 TiledLayerSegmentation::~TiledLayerSegmentation() = default;
 
 /// access the actual grid size in X for a given layer
-double TiledLayerSegmentation::layerGridSizeX(int layerIndex) const {
+auto TiledLayerSegmentation::layerGridSizeX(int layerIndex) const -> double {
 	// should be cached in a map if calculateOptimalCellSize is expensive
 	return calculateOptimalCellSize(_gridSizeX, layerDimensions(layerIndex).x);
 }
 
 /// access the actual grid size in Y for a given layer
-double TiledLayerSegmentation::layerGridSizeY(int layerIndex) const {
+auto TiledLayerSegmentation::layerGridSizeY(int layerIndex) const -> double {
 	// should be cached in a map if calculateOptimalCellSize is expensive
 	return calculateOptimalCellSize(_gridSizeY, layerDimensions(layerIndex).y);
 }
@@ -95,7 +95,7 @@ void TiledLayerSegmentation::setLayerDimensions(int layerIndex, double x, double
 }
 
 /// access to the dimensions of the given layer
-TiledLayerSegmentation::LayerDimensions TiledLayerSegmentation::layerDimensions(int layerIndex) const {
+auto TiledLayerSegmentation::layerDimensions(int layerIndex) const -> TiledLayerSegmentation::LayerDimensions {
 	// a bit clumsy since we use three vectors instead of a map<int, LayerDimensions>
 	if (_layerIndices.size() != _layerDimensionsX.size() or _layerIndices.size() != _layerDimensionsY.size()) {
 		throw runtime_error(
@@ -113,7 +113,7 @@ TiledLayerSegmentation::LayerDimensions TiledLayerSegmentation::layerDimensions(
 }
 
 /// determine the position based on the cell ID
-Vector3D TiledLayerSegmentation::position(const CellID& cID) const {
+auto TiledLayerSegmentation::position(const CellID& cID) const -> Vector3D {
 	int layerIndex = _decoder->get(cID,_identifierLayer);
 	double cellSizeX = layerGridSizeX(layerIndex);
 	double cellSizeY = layerGridSizeY(layerIndex);
@@ -125,8 +125,8 @@ Vector3D TiledLayerSegmentation::position(const CellID& cID) const {
 	return Vector3D(localX, localY, 0.);
 }
 /// determine the cell ID based on the position
-  CellID TiledLayerSegmentation::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */,
-		const VolumeID& vID) const {
+  auto TiledLayerSegmentation::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */,
+		const VolumeID& vID) const -> CellID {
 	CellID cID = vID ;
 	int layerIndex = _decoder->get(cID,_identifierLayer);
 	double cellSizeX = layerGridSizeX(layerIndex);
@@ -140,13 +140,13 @@ Vector3D TiledLayerSegmentation::position(const CellID& cID) const {
 }
 
 /// helper method to calculate optimal cell size based on total size
-  double TiledLayerSegmentation::calculateOptimalCellSize(double /* nominalCellSize */, double /* totalSize */) {
+  auto TiledLayerSegmentation::calculateOptimalCellSize(double /* nominalCellSize */, double /* totalSize */) -> double {
 	// TODO: implement algorithm to calculate optimal cell size
 	return 1.;
 }
 
 /// helper method to calculate offset of bin 0 based on the total size
-double TiledLayerSegmentation::calculateOffset(double /* cellSize */, double /* totalSize */) {
+auto TiledLayerSegmentation::calculateOffset(double /* cellSize */, double /* totalSize */) -> double {
 	// TODO: implement algorithm to calculate placement of bin 0
 	return 0.;
 }

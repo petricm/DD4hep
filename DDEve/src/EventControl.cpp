@@ -57,7 +57,7 @@ EventControl::~EventControl()   {
 }
 
 /// Create the frame for this control structure. Default: create horizontal frame
-TGCompositeFrame* EventControl::CreateFrame()    {
+auto EventControl::CreateFrame() -> TGCompositeFrame*    {
   return new TGVerticalFrame(this);
 }
 
@@ -78,7 +78,7 @@ void EventControl::GotoEvent()   {
 }
 
 /// Open a new event data file
-bool EventControl::Open()   {
+auto EventControl::Open() -> bool   {
   // e- shots:
   //m_display->eventHandler().Open("/home/frankm/SW/DD4hep_head_dbg.root_v5.34.10/build/CLICSiD_2014-06-10_15-26.root");
   // pi- shots:

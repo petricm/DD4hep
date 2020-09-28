@@ -15,7 +15,7 @@
 #include "run_plugin.h"
 
 //______________________________________________________________________________
-int main(int argc,char** argv)  {
+auto main(int argc,char** argv) -> int  {
   std::vector<const char*> av;
   std::string level, visopt, opt, detector;
   bool dry = false;

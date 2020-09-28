@@ -61,7 +61,7 @@ Geant4Context::~Geant4Context() {
 }
 
 /// Access to geometry world
-G4VPhysicalVolume* Geant4Context::world()  const  {
+auto Geant4Context::world()  const -> G4VPhysicalVolume*  {
   return m_kernel->world();
 }
 
@@ -71,7 +71,7 @@ void Geant4Context::setRun(Geant4Run* new_run)    {
 }
 
 /// Access the geant4 run -- valid only between BeginRun() and EndRun()!
-Geant4Run& Geant4Context::run()  const   {
+auto Geant4Context::run()  const -> Geant4Run&   {
   if ( m_run ) return *m_run;
   invalidHandleError<Geant4Run>();
   return *m_run;
@@ -83,65 +83,65 @@ void Geant4Context::setEvent(Geant4Event* new_event)   {
 }
 
 /// Access the geant4 event -- valid only between BeginEvent() and EndEvent()!
-Geant4Event& Geant4Context::event()  const   {
+auto Geant4Context::event()  const -> Geant4Event&   {
   if ( m_event ) return *m_event;
   invalidHandleError<Geant4Event>();
   return *m_event;
 }
 
 /// Access to detector description
-Detector& Geant4Context::detectorDescription() const {
+auto Geant4Context::detectorDescription() const -> Detector& {
   return m_kernel->detectorDescription();
 }
 
 /// Generic framework access
-Geant4Context::UserFramework& Geant4Context::userFramework() const  {
+auto Geant4Context::userFramework() const -> Geant4Context::UserFramework&  {
   return m_kernel->userFramework();
 }
 
 /// Create a user trajectory
-G4VTrajectory* Geant4Context::createTrajectory(const G4Track* /* track */) const {
+auto Geant4Context::createTrajectory(const G4Track* /* track */) const -> G4VTrajectory* {
   string err = dd4hep::format("Geant4Kernel", "createTrajectory: Purely virtual method. requires overloading!");
   dd4hep::printout(dd4hep::FATAL, "Geant4Kernel", "createTrajectory: Purely virtual method. requires overloading!");
   throw runtime_error(err);
 }
 
 /// Access the tracking manager
-G4TrackingManager* Geant4Context::trackMgr() const {
+auto Geant4Context::trackMgr() const -> G4TrackingManager* {
   return m_kernel->trackMgr();
 }
 
 /// Access to the main run action sequence from the kernel object
-Geant4RunActionSequence& Geant4Context::runAction() const {
+auto Geant4Context::runAction() const -> Geant4RunActionSequence& {
   return m_kernel->runAction();
 }
 
 /// Access to the main event action sequence from the kernel object
-Geant4EventActionSequence& Geant4Context::eventAction() const {
+auto Geant4Context::eventAction() const -> Geant4EventActionSequence& {
   return m_kernel->eventAction();
 }
 
 /// Access to the main stepping action sequence from the kernel object
-Geant4SteppingActionSequence& Geant4Context::steppingAction() const {
+auto Geant4Context::steppingAction() const -> Geant4SteppingActionSequence& {
   return m_kernel->steppingAction();
 }
 
 /// Access to the main tracking action sequence from the kernel object
-Geant4TrackingActionSequence& Geant4Context::trackingAction() const {
+auto Geant4Context::trackingAction() const -> Geant4TrackingActionSequence& {
   return m_kernel->trackingAction();
 }
 
 /// Access to the main stacking action sequence from the kernel object
-Geant4StackingActionSequence& Geant4Context::stackingAction() const {
+auto Geant4Context::stackingAction() const -> Geant4StackingActionSequence& {
   return m_kernel->stackingAction();
 }
 
 /// Access to the main generator action sequence from the kernel object
-Geant4GeneratorActionSequence& Geant4Context::generatorAction() const {
+auto Geant4Context::generatorAction() const -> Geant4GeneratorActionSequence& {
   return m_kernel->generatorAction();
 }
 
 /// Access to the main generator action sequence from the kernel object
-Geant4SensDetSequences& Geant4Context::sensitiveActions() const {
+auto Geant4Context::sensitiveActions() const -> Geant4SensDetSequences& {
   return m_kernel->sensitiveActions();
 }

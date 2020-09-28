@@ -86,7 +86,7 @@ void Geant4UIMessenger::exportProperties(PropertyManager& mgr) {
 }
 
 /// Pass current property value to Geant4 UI
-G4String Geant4UIMessenger::GetCurrentValue(G4UIcommand * c) {
+auto Geant4UIMessenger::GetCurrentValue(G4UIcommand * c) -> G4String {
   auto i = m_propertyCmd.find(c);
   if (m_properties && i != m_propertyCmd.end()) {
     const string& n = (*i).second;

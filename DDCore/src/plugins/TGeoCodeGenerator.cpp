@@ -59,21 +59,21 @@ namespace {
 
     Actor() = default;
     ~Actor() = default;
-    ostream& handleHeader   (ostream& log);
-    ostream& handleTrailer  (ostream& log);
-    ostream& handleSolid    (ostream& log, const TGeoShape*  sh);
-    ostream& handleMatrix   (ostream& log, TGeoMatrix* mat);
-    ostream& handleElement  (ostream& log, TGeoElement* elt);
-    ostream& handleMaterial (ostream& log, TGeoMedium* mat);
-    ostream& handlePlacement(ostream& log, TGeoNode*   parent, TGeoNode* node);
+    auto handleHeader   (ostream& log) -> ostream&;
+    auto handleTrailer  (ostream& log) -> ostream&;
+    auto handleSolid    (ostream& log, const TGeoShape*  sh) -> ostream&;
+    auto handleMatrix   (ostream& log, TGeoMatrix* mat) -> ostream&;
+    auto handleElement  (ostream& log, TGeoElement* elt) -> ostream&;
+    auto handleMaterial (ostream& log, TGeoMedium* mat) -> ostream&;
+    auto handlePlacement(ostream& log, TGeoNode*   parent, TGeoNode* node) -> ostream&;
   };
   typedef void* pvoid_t;
 
-  ostream& newline(ostream& log)    {
+  auto newline(ostream& log) -> ostream&    {
     return log << endl << prefix;
   }
 
-  ostream& Actor::handleHeader   (ostream& log)    {
+  auto Actor::handleHeader   (ostream& log) -> ostream&    {
     log << "#include \"TClass.h\"" << endl
         << "#include \"TGeoNode.h\"" << endl
         << "#include \"TGeoExtension.h\"" << endl
@@ -109,7 +109,7 @@ namespace {
     return log;
   }
 
-  ostream& Actor::handleTrailer   (ostream& log)    {
+  auto Actor::handleTrailer   (ostream& log) -> ostream&    {
     log << endl << "}" << endl << endl;
     log << "void " << function << "() {" << newline
         << "if ( !gGeoManager ) gGeoManager = new TGeoManager();" << newline
@@ -120,7 +120,7 @@ namespace {
     return log;
   }
 
-  ostream& Actor::handlePlacement(ostream& log, TGeoNode* parent, TGeoNode* node)  {
+  auto Actor::handlePlacement(ostream& log, TGeoNode* parent, TGeoNode* node) -> ostream&  {
     if ( node && nodes.find(node) == nodes.end() )  {
       TGeoVolume* vol = node->GetVolume();
       TGeoMatrix* mat = node->GetMatrix();
@@ -171,7 +171,7 @@ namespace {
     return log;
   }
 
-  ostream& Actor::handleElement  (ostream& log, TGeoElement* elt)   {
+  auto Actor::handleElement  (ostream& log, TGeoElement* elt) -> ostream&   {
     if ( elt && elements.find(elt) == elements.end() )  {
       elements.insert(elt);
       log << "TGeoElement* elt_" << pvoid_t(elt) << " = new TGeoElement(\""
@@ -193,7 +193,7 @@ namespace {
     return log;
   }
 
-  ostream& Actor::handleMaterial(ostream& log, TGeoMedium* medium)   {
+  auto Actor::handleMaterial(ostream& log, TGeoMedium* medium) -> ostream&   {
     if ( medium && materials.find(medium) == materials.end() )  {
       materials.insert(medium);
       if ( !dump_mat )    {
@@ -247,7 +247,7 @@ namespace {
     return log;
   }
   
-  ostream& Actor::handleMatrix(ostream& log, TGeoMatrix* mat)   {
+  auto Actor::handleMatrix(ostream& log, TGeoMatrix* mat) -> ostream&   {
     if ( mat && matrices.find(mat) == matrices.end() )  {
       const Double_t*	rot = mat->GetRotationMatrix();
       const Double_t*	tra = mat->GetTranslation();
@@ -284,7 +284,7 @@ namespace {
   }
   
   /// Pretty print of solid attributes
-  ostream& Actor::handleSolid(ostream& log,  const TGeoShape* shape)    {
+  auto Actor::handleSolid(ostream& log,  const TGeoShape* shape) -> ostream&    {
     if ( !shape || solids.find(shape) != solids.end() )  {
       return log;
     }
@@ -535,7 +535,7 @@ namespace {
 
 }
 
-static long generate_cxx(Detector& description, int argc, char** argv) {
+static auto generate_cxx(Detector& description, int argc, char** argv) -> long {
   string output;
   Actor actor;
 

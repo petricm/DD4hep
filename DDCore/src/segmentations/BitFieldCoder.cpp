@@ -41,7 +41,7 @@ namespace dd4hep::DDSegmentation {
       }
     }
   
-    long64 BitFieldElement::value(long64 id) const { 
+    auto BitFieldElement::value(long64 id) const -> long64 {
       if(  _isSigned   ) {
         long64 val = ( id & _mask ) >> _offset ;
         if( ( val  & ( 1LL << ( _width - 1 ) ) ) != 0 ) { // negative value
@@ -70,7 +70,7 @@ namespace dd4hep::DDSegmentation {
 
 
 
-    size_t BitFieldCoder::index( const std::string& name) const {
+    auto BitFieldCoder::index( const std::string& name) const -> size_t {
     
       auto it = _map.find( name ) ;
     
@@ -82,7 +82,7 @@ namespace dd4hep::DDSegmentation {
         throw std::runtime_error(" BitFieldElement: unknown name: " + name ) ;
     }
   
-    unsigned BitFieldCoder::highestBit() const {
+    auto BitFieldCoder::highestBit() const -> unsigned {
     
       unsigned hb(0) ;
     
@@ -95,7 +95,7 @@ namespace dd4hep::DDSegmentation {
     }
 
 
-    std::string BitFieldCoder::valueString(ulong64 bitfield) const {
+    auto BitFieldCoder::valueString(ulong64 bitfield) const -> std::string {
 
       std::stringstream  os ;
 
@@ -109,7 +109,7 @@ namespace dd4hep::DDSegmentation {
       return os.str() ;
     }
   
-    std::string BitFieldCoder::fieldDescription() const {
+    auto BitFieldCoder::fieldDescription() const -> std::string {
     
       std::stringstream  os ;
     

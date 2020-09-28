@@ -22,25 +22,25 @@ using namespace std;
 using namespace dd4hep;
 
 /// determine the position based on the cell ID
-Position CartesianGridXY::position(const CellID& id) const   {
+auto CartesianGridXY::position(const CellID& id) const -> Position   {
   return Position(access()->implementation->position(id));
 }
 
 /// determine the cell ID based on the position
-dd4hep::CellID CartesianGridXY::cellID(const Position& local,
+auto CartesianGridXY::cellID(const Position& local,
                                        const Position& global,
-                                       const VolumeID& volID) const
+                                       const VolumeID& volID) const -> dd4hep::CellID
 {
   return access()->implementation->cellID(local, global, volID);
 }
 
 /// access the grid size in X
-double CartesianGridXY::gridSizeX() const {
+auto CartesianGridXY::gridSizeX() const -> double {
   return access()->implementation->gridSizeX();
 }
 
 /// access the grid size in Y
-double CartesianGridXY::gridSizeY() const {
+auto CartesianGridXY::gridSizeY() const -> double {
   return access()->implementation->gridSizeY();
 }
 
@@ -55,12 +55,12 @@ void CartesianGridXY::setGridSizeY(double cellSize) const   {
 }
 
 /// access the coordinate offset in X
-double CartesianGridXY::offsetX() const {
+auto CartesianGridXY::offsetX() const -> double {
   return access()->implementation->offsetX();
 }
 
 /// access the coordinate offset in Y
-double CartesianGridXY::offsetY() const {
+auto CartesianGridXY::offsetY() const -> double {
   return access()->implementation->offsetY();
 }
 
@@ -75,12 +75,12 @@ void CartesianGridXY::setOffsetY(double offset) const   {
 }
 
 /// access the field name used for X
-const string& CartesianGridXY::fieldNameX() const {
+auto CartesianGridXY::fieldNameX() const -> const string& {
   return access()->implementation->fieldNameX();
 }
 
 /// access the field name used for Y
-const string& CartesianGridXY::fieldNameY() const {
+auto CartesianGridXY::fieldNameY() const -> const string& {
   return access()->implementation->fieldNameY();
 }
 
@@ -93,6 +93,6 @@ const string& CartesianGridXY::fieldNameY() const {
     -# size in x
     -# size in y
 */
-vector<double> CartesianGridXY::cellDimensions(const CellID& id) const  {
+auto CartesianGridXY::cellDimensions(const CellID& id) const -> vector<double>  {
   return access()->implementation->cellDimensions(id);
 }

@@ -42,7 +42,7 @@ using namespace dd4hep::cond;
  *  \version 1.0
  *  \date    01/04/2016
  */
-static int ddcond_install_cond_mgr (Detector& description, int argc, char** argv)  {
+static auto ddcond_install_cond_mgr (Detector& description, int argc, char** argv) -> int  {
   Handle<NamedObject>* h = nullptr;
   Handle<ConditionsManagerObject> mgr(description.extension<ConditionsManagerObject>(false));
   if ( !mgr.isValid() )  {
@@ -99,7 +99,7 @@ DECLARE_APPLY(DD4hep_ConditionsManagerInstaller,ddcond_install_cond_mgr)
  *  \version 1.0
  *  \date    01/04/2016
  */
-static ConditionsSlice* ddcond_prepare(Detector& description, const string& iov_typ, long iov_val, int argc, char** argv)  {
+static auto ddcond_prepare(Detector& description, const string& iov_typ, long iov_val, int argc, char** argv) -> ConditionsSlice*  {
   const IOVType*    iovtype  = nullptr;
   long              iovvalue = iov_val;
   ConditionsManager manager  = ConditionsManager::from(description);
@@ -138,7 +138,7 @@ static ConditionsSlice* ddcond_prepare(Detector& description, const string& iov_
  *  \version 1.0
  *  \date    01/04/2016
  */
-static int ddcond_conditions_pool_processor(Detector& description, bool process_pool, bool process_conditions, int argc, char** argv)   {
+static auto ddcond_conditions_pool_processor(Detector& description, bool process_pool, bool process_conditions, int argc, char** argv) -> int   {
   unique_ptr<Condition::Processor> proc(createProcessor<Condition::Processor>(description,argc,argv));
   ConditionsManager manager = ConditionsManager::from(description);
   const auto types = manager.iovTypesUsed();
@@ -175,7 +175,7 @@ static int ddcond_conditions_pool_processor(Detector& description, bool process_
   }
   return 1;
 }
-static int ddcond_conditions_pool_process(Detector& description, int argc, char** argv)   {
+static auto ddcond_conditions_pool_process(Detector& description, int argc, char** argv) -> int   {
   return ddcond_conditions_pool_processor(description, false, true, argc, argv);
 }
 DECLARE_APPLY(DD4hep_ConditionsPoolProcessor,ddcond_conditions_pool_process)
@@ -190,7 +190,7 @@ DECLARE_APPLY(DD4hep_ConditionsPoolProcessor,ddcond_conditions_pool_process)
  *  \version 1.0
  *  \date    01/04/2016
  */
-static int ddcond_conditions_pool_print(Detector& description, bool print_conditions, int argc, char** argv)   {
+static auto ddcond_conditions_pool_print(Detector& description, bool print_conditions, int argc, char** argv) -> int   {
   if ( argc > 0 )   {
     for(int i = 0; i < argc; ++i)  {
       if ( argv[i] && 0 == ::strncmp(argv[i],"-processor",3) )  {
@@ -208,10 +208,10 @@ static int ddcond_conditions_pool_print(Detector& description, bool print_condit
   return ddcond_conditions_pool_processor(description,true,print_conditions,2,(char**)args);
 }
 
-static int ddcond_dump_pools(Detector& description, int argc, char** argv)   {
+static auto ddcond_dump_pools(Detector& description, int argc, char** argv) -> int   {
   return ddcond_conditions_pool_print(description, false, argc, argv);
 }
-static int ddcond_dump_conditions(Detector& description, int argc, char** argv)   {
+static auto ddcond_dump_conditions(Detector& description, int argc, char** argv) -> int   {
   return ddcond_conditions_pool_print(description, true, argc, argv);
 }
 DECLARE_APPLY(DD4hep_ConditionsPoolDump,ddcond_dump_pools)
@@ -226,7 +226,7 @@ DECLARE_APPLY(DD4hep_ConditionsDump,ddcond_dump_conditions)
  *  \version 1.0
  *  \date    01/04/2016
  */
-static int ddcond_detelement_dump(Detector& description, int argc, char** argv)   {
+static auto ddcond_detelement_dump(Detector& description, int argc, char** argv) -> int   {
 
   /// Internal class to perform recursive printout
   /*
@@ -241,7 +241,7 @@ static int ddcond_detelement_dump(Detector& description, int argc, char** argv) 
     /// Default destructor
     ~Actor()   override = default;
     /// Dump method.
-    int operator()(DetElement de,int level)  const override  {
+    auto operator()(DetElement de,int level)  const -> int override  {
       const DetElement::Children& children = de.children();
       PlacedVolume place = de.placement();
       char sens = place.volume().isSensitive() ? 'S' : ' ';
@@ -275,7 +275,7 @@ DECLARE_APPLY(DD4hep_DetElementConditionsDump,ddcond_detelement_dump)
  *  \version 1.0
  *  \date    01/04/2016
  */
-static void* ddcond_prepare_plugin(Detector& description, int argc, char** argv)   {
+static auto ddcond_prepare_plugin(Detector& description, int argc, char** argv) -> void*   {
   dd4hep_ptr<ConditionsSlice> slice(ddcond_prepare(description,"",-1,argc,argv));
   UserPool* p = slice->pool.get();
   return p && p->size() > 0 ? slice.release() : nullptr;
@@ -337,7 +337,7 @@ DECLARE_APPLY(DD4hep_DetElementConditionsProcessor,ddcond_detelement_processor)
  *  \version 1.0
  *  \date    01/04/2016
  */
-static long ddcond_synchronize_conditions(Detector& description, int argc, char** argv) {
+static auto ddcond_synchronize_conditions(Detector& description, int argc, char** argv) -> long {
   if ( argc >= 2 )   {
     string iov_typ = argv[0];
     IOV::Key::first_type iov_key = *(IOV::Key::first_type*)argv[1];
@@ -363,7 +363,7 @@ DECLARE_APPLY(DD4hep_ConditionsSynchronize,ddcond_synchronize_conditions)
  *  \version 1.0
  *  \date    01/04/2016
  */
-static long ddcond_clean_conditions(Detector& description, int argc, char** argv) {
+static auto ddcond_clean_conditions(Detector& description, int argc, char** argv) -> long {
   if ( argc > 0 )   {
     string iov_type = argv[0];
     int    max_age  = *(int*)argv[1];
@@ -391,7 +391,7 @@ DECLARE_APPLY(DD4hep_ConditionsClean,ddcond_clean_conditions)
  */
 #include "DD4hep/PluginTester.h"
 template <typename WRAPPER,typename PRINTER>
-static void* create_printer(Detector& description, int argc,char** argv)  {
+static auto create_printer(Detector& description, int argc,char** argv) -> void*  {
   PrintLevel print_level = INFO;
   string prefix = "", name = "";
   int    flags = 0, have_pool = 0, arg_error = false;
@@ -438,7 +438,7 @@ static void* create_printer(Detector& description, int argc,char** argv)  {
 }
 #include "DD4hep/ConditionsPrinter.h"
 #include "DD4hep/AlignmentsPrinter.h"
-static void* create_cond_printer(Detector& description, int argc,char** argv)
+static auto create_cond_printer(Detector& description, int argc,char** argv) -> void*
 {  return create_printer<Condition::Processor,ConditionsPrinter>(description,argc,argv);  }
                                                                         
 DECLARE_DD4HEP_CONSTRUCTOR(DD4hep_ConditionsPrinter,create_cond_printer)
@@ -454,7 +454,7 @@ DECLARE_DD4HEP_CONSTRUCTOR(DD4hep_ConditionsPrinter,create_cond_printer)
  *  \version 1.0
  *  \date    01/04/2016
  */
-static long ddcond_create_repository(Detector& description, int argc, char** argv) {
+static auto ddcond_create_repository(Detector& description, int argc, char** argv) -> long {
   bool arg_error = false;
   string output = "";
   for(int i=0; i<argc && argv[i]; ++i)  {      
@@ -489,7 +489,7 @@ DECLARE_APPLY(DD4hep_ConditionsCreateRepository,ddcond_create_repository)
  *  \version 1.0
  *  \date    01/04/2016
  */
-static long ddcond_dump_repository(Detector& /* description */, int argc, char** argv)   {
+static auto ddcond_dump_repository(Detector& /* description */, int argc, char** argv) -> long   {
   typedef ConditionsRepository::Data Data;
   bool arg_error = false;
   string input = "";
@@ -535,7 +535,7 @@ TO BE DONE!!!
  *  \version 1.0
  *  \date    01/04/2016
  */
-static long ddcond_load_repository(Detector& /* description */, int argc, char** argv) {
+static auto ddcond_load_repository(Detector& /* description */, int argc, char** argv) -> long {
   if ( argc > 0 )   {
     string input = argv[0];
     printout(INFO,"Conditions","+++ ConditionsRepository: Loading %s",input.c_str());

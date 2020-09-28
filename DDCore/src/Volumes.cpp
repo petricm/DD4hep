@@ -53,7 +53,7 @@ using namespace dd4hep::detail;
 typedef TGeoNode                geo_node_t;
 typedef TGeoVolume              geo_volume_t;
 typedef TGeoVolumeAssembly      geo_assembly_t;
-template <typename T> static typename T::Object* _userExtension(const T& v)  {
+template <typename T> static auto _userExtension(const T& v) -> typename T::Object*  {
   typedef typename T::Object O;
   O* o = (O*)(v.ptr()->GetUserExtension());
   return o;
@@ -61,28 +61,28 @@ template <typename T> static typename T::Object* _userExtension(const T& v)  {
 
 ClassImp(PlacedVolumeExtension)
 namespace {
-  TGeoVolume* _createTGeoVolume(const string& name, TGeoShape* s, TGeoMedium* m)  {
+  auto _createTGeoVolume(const string& name, TGeoShape* s, TGeoMedium* m) -> TGeoVolume*  {
     auto* e = new geo_volume_t(name.c_str(),s,m);
     e->SetUserExtension(new Volume::Object());
     return e;
   }
-  TGeoVolume* _createTGeoVolumeAssembly(const string& name)  {
+  auto _createTGeoVolumeAssembly(const string& name) -> TGeoVolume*  {
     auto* e = new geo_assembly_t(name.c_str()); // It is important to use the correct constructor!!
     e->SetUserExtension(new Assembly::Object());
     return e;
   }
-  TGeoVolumeMulti* _createTGeoVolumeMulti(const string& name, TGeoMedium* medium)  {
+  auto _createTGeoVolumeMulti(const string& name, TGeoMedium* medium) -> TGeoVolumeMulti*  {
     auto* e = new TGeoVolumeMulti(name.c_str(), medium);
     e->SetUserExtension(new VolumeMulti::Object());
     return e;
   }
-  PlacedVolume::Object* _data(const PlacedVolume& v) {
+  auto _data(const PlacedVolume& v) -> PlacedVolume::Object* {
     PlacedVolume::Object* o = _userExtension(v);
     if (o) return o;
     throw runtime_error("dd4hep: Attempt to access invalid handle of type: PlacedVolume");
   }
   /// Accessor to the data part of the Volume
-  Volume::Object* _data(const Volume& v, bool throw_exception = true) {
+  auto _data(const Volume& v, bool throw_exception = true) -> Volume::Object* {
     //if ( v.ptr() && v.ptr()->IsA() == TGeoVolume::Class() ) return v.data<Volume::Object>();
     Volume::Object* o = _userExtension(v);
     if (o)
@@ -178,7 +178,7 @@ namespace {
     }
   };
 
-  TGeoVolume* MakeReflection(TGeoVolume* v, const char* newname=nullptr)  {
+  auto MakeReflection(TGeoVolume* v, const char* newname=nullptr) -> TGeoVolume*  {
     static TMap map(100);
     auto* vol = (TGeoVolume*)map.GetValue(v);
     if ( vol ) {
@@ -300,7 +300,7 @@ PlacedVolumeExtension::~PlacedVolumeExtension() {
 }
 
 /// TGeoExtension overload: Method called whenever requiring a pointer to the extension
-TGeoExtension* PlacedVolumeExtension::Grab()   {
+auto PlacedVolumeExtension::Grab() -> TGeoExtension*   {
   ++this->refCount;
 #ifdef ___print_vols
   else  cout << "Placement grabbed....." << endl;
@@ -316,8 +316,8 @@ void PlacedVolumeExtension::Release() const  {
 }
 
 /// Lookup volume ID
-vector<PlacedVolumeExtension::VolID>::const_iterator
-PlacedVolumeExtension::VolIDs::find(const string& name) const {
+auto
+PlacedVolumeExtension::VolIDs::find(const string& name) const -> vector<PlacedVolumeExtension::VolID>::const_iterator {
   for (auto i = this->Base::begin(); i != this->Base::end(); ++i)
     if (name == (*i).first)
       return i;
@@ -325,8 +325,8 @@ PlacedVolumeExtension::VolIDs::find(const string& name) const {
 }
 
 /// Insert a new value into the volume ID container
-std::pair<vector<PlacedVolumeExtension::VolID>::iterator, bool>
-PlacedVolumeExtension::VolIDs::insert(const string& name, int value) {
+auto
+PlacedVolumeExtension::VolIDs::insert(const string& name, int value) -> std::pair<vector<PlacedVolumeExtension::VolID>::iterator, bool> {
   auto i = this->Base::begin();
   for (; i != this->Base::end(); ++i)
     if (name == (*i).first)
@@ -340,7 +340,7 @@ PlacedVolumeExtension::VolIDs::insert(const string& name, int value) {
 }
 
 /// String representation for debugging
-string PlacedVolumeExtension::VolIDs::str()  const   {
+auto PlacedVolumeExtension::VolIDs::str()  const -> string   {
   stringstream str;
   str << hex;
   for(const auto& i : *this )   {
@@ -351,44 +351,44 @@ string PlacedVolumeExtension::VolIDs::str()  const   {
 }
 
 /// Check if placement is properly instrumented
-PlacedVolume::Object* PlacedVolume::data() const   {
+auto PlacedVolume::data() const -> PlacedVolume::Object*   {
   PlacedVolume::Object* o = _userExtension(*this);
   return o;
 }
 
 /// Access the copy number of this placement within its mother
-int PlacedVolume::copyNumber() const   {
+auto PlacedVolume::copyNumber() const -> int   {
   return m_element ? m_element->GetNumber() : -1;
 }
 
 /// Volume material
-Material PlacedVolume::material() const {
+auto PlacedVolume::material() const -> Material {
   return Material(m_element ? m_element->GetMedium() : nullptr);
 }
 
 /// Logical volume of this placement
-Volume PlacedVolume::volume() const {
+auto PlacedVolume::volume() const -> Volume {
   return Volume(m_element ? m_element->GetVolume() : nullptr);
 }
 
 /// Parent volume (envelope)
-Volume PlacedVolume::motherVol() const {
+auto PlacedVolume::motherVol() const -> Volume {
   return Volume(m_element ? m_element->GetMotherVolume() : nullptr);
 }
 
 /// Access to the volume IDs
-const PlacedVolume::VolIDs& PlacedVolume::volIDs() const {
+auto PlacedVolume::volIDs() const -> const PlacedVolume::VolIDs& {
   return _data(*this)->volIDs;
 }
 
 /// Add identifier
-PlacedVolume& PlacedVolume::addPhysVolID(const string& nam, int value) {
+auto PlacedVolume::addPhysVolID(const string& nam, int value) -> PlacedVolume& {
   _data(*this)->volIDs.emplace_back(nam, value);
   return *this;
 }
 
 /// Translation vector within parent volume
-const TGeoMatrix& PlacedVolume::matrix()  const    {
+auto PlacedVolume::matrix()  const -> const TGeoMatrix&    {
   if ( !isValid() )  {
     except("PlacedVolume","+++ matrix: Failed to access invalid PlacedVolume! [Invalid handle]");
   }
@@ -396,13 +396,13 @@ const TGeoMatrix& PlacedVolume::matrix()  const    {
 }
 
 /// Translation vector within parent volume
-Position PlacedVolume::position()  const    {
+auto PlacedVolume::position()  const -> Position    {
   const double* ptr = matrix().GetTranslation();
   return Position(ptr[0],ptr[1],ptr[2]);
 }
 
 /// String dump
-string PlacedVolume::toString() const {
+auto PlacedVolume::toString() const -> string {
   stringstream str;
   Object* obj = _data(*this);
   str << m_element->GetName() << ":  vol='" << m_element->GetVolume()->GetName()
@@ -433,7 +433,7 @@ VolumeExtension::~VolumeExtension() {
 }
 
 /// TGeoExtension overload: Method called whenever requiring a pointer to the extension
-TGeoExtension* VolumeExtension::Grab()  {
+auto VolumeExtension::Grab() -> TGeoExtension*  {
   auto* ext = const_cast<VolumeExtension*>(this);
   ++ext->refCount;
 #ifdef ___print_vols
@@ -485,18 +485,18 @@ Volume::Volume(const string& nam, const string& title, const Solid& sol, const M
 }
 
 /// Check if placement is properly instrumented
-Volume::Object* Volume::data() const   {
+auto Volume::data() const -> Volume::Object*   {
   Volume::Object* o = _userExtension(*this);
   return o;
 }
 
 /// Create a reflected volume tree. The reflected volume has left-handed coordinates
-Volume Volume::reflect()  const   {
+auto Volume::reflect()  const -> Volume   {
   return reflect(SensitiveDetector(nullptr));
 }
     
 /// Create a reflected volume tree. The reflected volume has left-handed coordinates
-Volume Volume::reflect(SensitiveDetector sd)  const   {
+auto Volume::reflect(SensitiveDetector sd)  const -> Volume   {
   if ( m_element )   {
     VolumeImport imp;
     Object* o = data();
@@ -512,7 +512,7 @@ Volume Volume::reflect(SensitiveDetector sd)  const   {
 }
 
 /// If we import volumes from external sources, we have to attach the extensions to the tree
-Volume& Volume::import()    {
+auto Volume::import() -> Volume&    {
   if ( m_element )   {
     VolumeImport imp;
     imp(m_element);
@@ -532,7 +532,7 @@ void Volume::setFlagBit(unsigned int bit)   {
 }
 
 /// Test the user flag bit
-bool Volume::testFlagBit(unsigned int bit)   const    {
+auto Volume::testFlagBit(unsigned int bit)   const -> bool    {
   if ( bit <= 31 )   {
     return (data()->flags & 1<<bit) != 0;
   }
@@ -541,13 +541,13 @@ bool Volume::testFlagBit(unsigned int bit)   const    {
 }    
 
 /// Test if this volume was reflected
-bool Volume::isReflected()   const    {
+auto Volume::isReflected()   const -> bool    {
   return testFlagBit(REFLECTED);
 }
 
 /// Divide volume into subsections (See the ROOT manuloa for details)
-Volume Volume::divide(const std::string& divname, int iaxis, int ndiv,
-                      double start, double step, int numed, const char* option)   {
+auto Volume::divide(const std::string& divname, int iaxis, int ndiv,
+                      double start, double step, int numed, const char* option) -> Volume   {
   TGeoVolume* p = m_element;
   if ( p )  {
     VolumeImport imp;
@@ -559,13 +559,13 @@ Volume Volume::divide(const std::string& divname, int iaxis, int ndiv,
   return nullptr;
 }
 
-Int_t get_copy_number(TGeoVolume* par)    {
+auto get_copy_number(TGeoVolume* par) -> Int_t    {
   TObjArray* a = par ? par->GetNodes() : nullptr;
   Int_t copy_nr = (a ? a->GetEntries() : 0);
   return copy_nr;
 }
 
-PlacedVolume _addNode(TGeoVolume* par, TGeoVolume* daughter, int id, TGeoMatrix* transform) {
+auto _addNode(TGeoVolume* par, TGeoVolume* daughter, int id, TGeoMatrix* transform) -> PlacedVolume {
   TGeoVolume* parent = par;
   if ( !parent )   {
     except("dd4hep","Volume: Attempt to assign daughters to an invalid physical parent volume.");
@@ -609,7 +609,7 @@ PlacedVolume _addNode(TGeoVolume* par, TGeoVolume* daughter, int id, TGeoMatrix*
   return PlacedVolume(n);
 }
 
-PlacedVolume _addNode(TGeoVolume* par, Volume daughter, int copy_nr, const Rotation3D& rot3D)   {
+auto _addNode(TGeoVolume* par, Volume daughter, int copy_nr, const Rotation3D& rot3D) -> PlacedVolume   {
   Position   x,y,z;
   Rotation3D rot = rot3D;
   rot.GetComponents(x,y,z);
@@ -629,7 +629,7 @@ PlacedVolume _addNode(TGeoVolume* par, Volume daughter, int copy_nr, const Rotat
   return _addNode(par, daughter, copy_nr, matrix.release());
 }
 
-PlacedVolume _addNode(TGeoVolume* par, Volume daughter, int copy_nr, const Transform3D& tr)   {
+auto _addNode(TGeoVolume* par, Volume daughter, int copy_nr, const Transform3D& tr) -> PlacedVolume   {
   Position   x, y, z, pos3D;
   Rotation3D rot3D;
   tr.GetRotation(rot3D);
@@ -652,52 +652,52 @@ PlacedVolume _addNode(TGeoVolume* par, Volume daughter, int copy_nr, const Trans
 }
 
 /// Place daughter volume according to generic Transform3D
-PlacedVolume Volume::placeVolume(const Volume& volume, const Transform3D& trans) const {
+auto Volume::placeVolume(const Volume& volume, const Transform3D& trans) const -> PlacedVolume {
   return _addNode(m_element, volume, get_copy_number(m_element), trans);
 }
 
 /// Place daughter volume. The position and rotation are the identity
-PlacedVolume Volume::placeVolume(const Volume& volume) const {
+auto Volume::placeVolume(const Volume& volume) const -> PlacedVolume {
   return _addNode(m_element, volume, get_copy_number(m_element), detail::matrix::_identity());
 }
 
 /// Place un-rotated daughter volume at the given position.
-PlacedVolume Volume::placeVolume(const Volume& volume, const Position& pos) const {
+auto Volume::placeVolume(const Volume& volume, const Position& pos) const -> PlacedVolume {
   return _addNode(m_element, volume, get_copy_number(m_element), detail::matrix::_translation(pos));
 }
 
 /// Place rotated daughter volume. The position is automatically the identity position
-PlacedVolume Volume::placeVolume(const Volume& volume, const RotationZYX& rot) const {
+auto Volume::placeVolume(const Volume& volume, const RotationZYX& rot) const -> PlacedVolume {
   return _addNode(m_element, volume, get_copy_number(m_element), detail::matrix::_rotationZYX(rot));
 }
 
 /// Place rotated daughter volume. The position is automatically the identity position
-PlacedVolume Volume::placeVolume(const Volume& volume, const Rotation3D& rot) const {
+auto Volume::placeVolume(const Volume& volume, const Rotation3D& rot) const -> PlacedVolume {
   return _addNode(m_element, volume, get_copy_number(m_element), rot);
 }
 
 /// Place daughter volume according to generic Transform3D
-PlacedVolume Volume::placeVolume(const Volume& volume, int copy_no, const Transform3D& trans) const {
+auto Volume::placeVolume(const Volume& volume, int copy_no, const Transform3D& trans) const -> PlacedVolume {
   return _addNode(m_element, volume, copy_no, trans);
 }
 
 /// Place daughter volume. The position and rotation are the identity
-PlacedVolume Volume::placeVolume(const Volume& volume, int copy_no) const {
+auto Volume::placeVolume(const Volume& volume, int copy_no) const -> PlacedVolume {
   return _addNode(m_element, volume, copy_no, detail::matrix::_identity());
 }
 
 /// Place un-rotated daughter volume at the given position.
-PlacedVolume Volume::placeVolume(const Volume& volume, int copy_no, const Position& pos) const {
+auto Volume::placeVolume(const Volume& volume, int copy_no, const Position& pos) const -> PlacedVolume {
   return _addNode(m_element, volume, copy_no, detail::matrix::_translation(pos));
 }
 
 /// Place rotated daughter volume. The position is automatically the identity position
-PlacedVolume Volume::placeVolume(const Volume& volume, int copy_no, const RotationZYX& rot) const {
+auto Volume::placeVolume(const Volume& volume, int copy_no, const RotationZYX& rot) const -> PlacedVolume {
   return _addNode(m_element, volume, copy_no, detail::matrix::_rotationZYX(rot));
 }
 
 /// Place rotated daughter volume. The position is automatically the identity position
-PlacedVolume Volume::placeVolume(const Volume& volume, int copy_no, const Rotation3D& rot) const {
+auto Volume::placeVolume(const Volume& volume, int copy_no, const Rotation3D& rot) const -> PlacedVolume {
   return _addNode(m_element, volume, copy_no, rot);
 }
 
@@ -735,12 +735,12 @@ void Volume::setOption(const string& opt) const {
 }
 
 /// Access the volume's option value
-string Volume::option() const {
+auto Volume::option() const -> string {
   return m_element->GetOption();
 }
 
 /// Set the volume's material
-const Volume& Volume::setMaterial(const Material& mat) const {
+auto Volume::setMaterial(const Material& mat) const -> const Volume& {
   if (mat.isValid()) {
     auto* medium = mat._ptr<TGeoMedium>();
     if (medium) {
@@ -753,14 +753,14 @@ const Volume& Volume::setMaterial(const Material& mat) const {
 }
 
 /// Access to the Volume material
-Material Volume::material() const {
+auto Volume::material() const -> Material {
   return Material(m_element->GetMedium());
 }
 
 #include "TROOT.h"
 
 /// Set Visualization attributes to the volume
-const Volume& Volume::setVisAttributes(const VisAttr& attr) const {
+auto Volume::setVisAttributes(const VisAttr& attr) const -> const Volume& {
   if ( attr.isValid() ) {
     auto* vis = attr.data<VisAttr::Object>();
     Color_t bright = vis->color;//kBlue;//TColor::GetColorBright(vis->color);
@@ -842,7 +842,7 @@ const Volume& Volume::setVisAttributes(const VisAttr& attr) const {
 }
 
 /// Set Visualization attributes to the volume
-const Volume& Volume::setVisAttributes(const Detector& description, const string& nam) const {
+auto Volume::setVisAttributes(const Detector& description, const string& nam) const -> const Volume& {
   if (!nam.empty()) {
     VisAttr attr = description.visAttributes(nam);
     setVisAttributes(attr);
@@ -864,7 +864,7 @@ const Volume& Volume::setVisAttributes(const Detector& description, const string
 }
 
 /// Attach attributes to the volume
-const Volume& Volume::setAttributes(const Detector& description, const string& rg, const string& ls, const string& vis) const {
+auto Volume::setAttributes(const Detector& description, const string& rg, const string& ls, const string& vis) const -> const Volume& {
   if (!rg.empty())
     setRegion(description.region(rg));
   if (!ls.empty())
@@ -874,7 +874,7 @@ const Volume& Volume::setAttributes(const Detector& description, const string& r
 }
 
 /// Access the visualisation attributes
-VisAttr Volume::visAttributes() const {
+auto Volume::visAttributes() const -> VisAttr {
   Object* o = _data(*this, false);
   if (o)
     return o->vis;
@@ -882,18 +882,18 @@ VisAttr Volume::visAttributes() const {
 }
 
 /// Set the volume's solid shape
-const Volume& Volume::setSolid(const Solid& sol) const {
+auto Volume::setSolid(const Solid& sol) const -> const Volume& {
   m_element->SetShape(sol);
   return *this;
 }
 
 /// Access to Solid (Shape)
-Solid Volume::solid() const {
+auto Volume::solid() const -> Solid {
   return Solid((*this)->GetShape());
 }
 
 /// Access the bounding box of the volume (if available)
-Box Volume::boundingBox() const {
+auto Volume::boundingBox() const -> Box {
   Box box = this->solid();
   if ( box.isValid() )   {
     return box;
@@ -907,7 +907,7 @@ Box Volume::boundingBox() const {
 }
 
 /// Set the regional attributes to the volume
-const Volume& Volume::setRegion(const Detector& description, const string& nam) const {
+auto Volume::setRegion(const Detector& description, const string& nam) const -> const Volume& {
   if (!nam.empty()) {
     return setRegion(description.region(nam));
   }
@@ -915,18 +915,18 @@ const Volume& Volume::setRegion(const Detector& description, const string& nam) 
 }
 
 /// Set the regional attributes to the volume
-const Volume& Volume::setRegion(const Region& obj) const {
+auto Volume::setRegion(const Region& obj) const -> const Volume& {
   _data(*this)->region = obj;
   return *this;
 }
 
 /// Access to the handle to the region structure
-Region Volume::region() const {
+auto Volume::region() const -> Region {
   return _data(*this)->region;
 }
 
 /// Set the limits to the volume
-const Volume& Volume::setLimitSet(const Detector& description, const string& nam) const {
+auto Volume::setLimitSet(const Detector& description, const string& nam) const -> const Volume& {
   if (!nam.empty()) {
     return setLimitSet(description.limitSet(nam));
   }
@@ -934,31 +934,31 @@ const Volume& Volume::setLimitSet(const Detector& description, const string& nam
 }
 
 /// Set the limits to the volume
-const Volume& Volume::setLimitSet(const LimitSet& obj) const {
+auto Volume::setLimitSet(const LimitSet& obj) const -> const Volume& {
   _data(*this)->limits = obj;
   return *this;
 }
 
 /// Access to the limit set
-LimitSet Volume::limitSet() const {
+auto Volume::limitSet() const -> LimitSet {
   return _data(*this)->limits;
 }
 
 /// Assign the sensitive detector structure
-const Volume& Volume::setSensitiveDetector(const SensitiveDetector& obj) const {
+auto Volume::setSensitiveDetector(const SensitiveDetector& obj) const -> const Volume& {
   //cout << "Setting sensitive detector '" << obj.name() << "' to volume:" << ptr() << " " << name() << endl;
   _data(*this)->sens_det = obj;
   return *this;
 }
 
 /// Access to the handle to the sensitive detector
-Ref_t Volume::sensitiveDetector() const {
+auto Volume::sensitiveDetector() const -> Ref_t {
   const Object* o = _data(*this);
   return o->sens_det;
 }
 
 /// Accessor if volume is sensitive (ie. is attached to a sensitive detector)
-bool Volume::isSensitive() const {
+auto Volume::isSensitive() const -> bool {
   return _data(*this)->sens_det.isValid();
 }
 
@@ -988,7 +988,7 @@ void VolumeMulti::verifyVolumeMulti()   {
 }
 
 /// Output mesh vertices to string
-std::string dd4hep::toStringMesh(PlacedVolume place, int prec)   {
+auto dd4hep::toStringMesh(PlacedVolume place, int prec) -> std::string   {
   Volume       vol   = place->GetVolume();
   TGeoMatrix*  mat   = place->GetMatrix();
   Solid        sol   = vol.solid();

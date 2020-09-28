@@ -53,12 +53,12 @@ namespace {
   };
 }
 
-static const char* get_arg(int argc, char**  argv,int which)  {
+static auto get_arg(int argc, char**  argv,int which) -> const char*  {
   if ( which>0 && which < argc ) return argv[which];
   throw runtime_error("Invalid argument sequence");
 }
 
-int main_wrapper(int argc, char** argv)   {
+auto main_wrapper(int argc, char** argv) -> int   {
   string gdml = argv[1];
   string setup = argv[2];
   const char* args[] = {"cmd"};
@@ -100,7 +100,7 @@ int main_wrapper(int argc, char** argv)   {
 }
 
 //______________________________________________________________________________
-int main(int argc, char** argv)  {
+auto main(int argc, char** argv) -> int  {
   try {
     return main_wrapper(argc,argv);
   }

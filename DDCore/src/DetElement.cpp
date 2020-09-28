@@ -62,12 +62,12 @@ DetElement::DetElement(DetElement det_parent, const string& det_name, int det_id
 }
 
 /// Add an extension object to the detector element
-void* DetElement::addExtension(ExtensionEntry* e) const  {
+auto DetElement::addExtension(ExtensionEntry* e) const -> void*  {
   return access()->addExtension(e->hash64(), e);
 }
 
 /// Access an existing extension object from the detector element
-void* DetElement::extension(unsigned long long int k, bool alert) const {
+auto DetElement::extension(unsigned long long int k, bool alert) const -> void* {
   return access()->extension(k, alert);
 }
 
@@ -82,7 +82,7 @@ void DetElement::removeAtUpdate(unsigned int typ, void* pointer)  const {
 }
 
 /// Access to the full path to the placed object
-const string& DetElement::placementPath() const {
+auto DetElement::placementPath() const -> const string& {
   Object* o = ptr();
   if ( o ) {
     if (o->placementPath.empty()) {
@@ -94,22 +94,22 @@ const string& DetElement::placementPath() const {
 }
 
 /// Access detector type (structure, tracker, calorimeter, etc.).
-string DetElement::type() const {
+auto DetElement::type() const -> string {
   return m_element ? m_element->GetTitle() : "";
 }
 
 /// Set the type of the sensitive detector
-DetElement& DetElement::setType(const string& typ) {
+auto DetElement::setType(const string& typ) -> DetElement& {
   access()->SetTitle(typ.c_str());
   return *this;
 }
 
-unsigned int DetElement::typeFlag() const {
+auto DetElement::typeFlag() const -> unsigned int {
   return m_element ? m_element->typeFlag :  0 ;
 }
 
 /// Set the type of the sensitive detector
-DetElement& DetElement::setTypeFlag(unsigned int types) {
+auto DetElement::setTypeFlag(unsigned int types) -> DetElement& {
   access()->typeFlag = types ;
   return *this;
 }
@@ -130,7 +130,7 @@ namespace {
 }
 
 /// Access hash key of this detector element (Only valid once geometry is closed!)
-unsigned int DetElement::key()  const   {
+auto DetElement::key()  const -> unsigned int   {
   Object* o = ptr();
   if ( o )  {
     if ( o->key != 0 )
@@ -142,7 +142,7 @@ unsigned int DetElement::key()  const   {
 }
 
 /// Access the hierarchical level of the detector element
-int DetElement::level()  const   {
+auto DetElement::level()  const -> int   {
   Object* o = ptr();
   if ( o )  {
     if ( o->level >= 0 )
@@ -154,7 +154,7 @@ int DetElement::level()  const   {
 }
 
 /// Access the full path of the detector element
-const string& DetElement::path() const {
+auto DetElement::path() const -> const string& {
   Object* o = ptr();
   if ( o ) {
     if ( !o->path.empty() )
@@ -165,15 +165,15 @@ const string& DetElement::path() const {
   return s_empty_string;
 }
 
-int DetElement::id() const {
+auto DetElement::id() const -> int {
   return access()->id;
 }
 
-bool DetElement::combineHits() const {
+auto DetElement::combineHits() const -> bool {
   return access()->combineHits != 0;
 }
 
-DetElement& DetElement::setCombineHits(bool value, SensitiveDetector& sens) {
+auto DetElement::setCombineHits(bool value, SensitiveDetector& sens) -> DetElement& {
   access()->combineHits = value;
   if (sens.isValid())
     sens.setCombineHits(value);
@@ -181,7 +181,7 @@ DetElement& DetElement::setCombineHits(bool value, SensitiveDetector& sens) {
 }
 
 /// Access to the alignment information
-Alignment DetElement::nominal() const   {
+auto DetElement::nominal() const -> Alignment   {
   Object* o = access();
   if ( !o->nominal.isValid() )   {
     o->nominal = AlignmentCondition("nominal");
@@ -194,7 +194,7 @@ Alignment DetElement::nominal() const   {
 }
 
 /// Access to the survey alignment information
-Alignment DetElement::survey() const  {
+auto DetElement::survey() const -> Alignment  {
   Object* o = access();
   if ( !o->survey.isValid() )   {
     o->survey = AlignmentCondition("survey");
@@ -203,12 +203,12 @@ Alignment DetElement::survey() const  {
   return o->survey;
 }
 
-const DetElement::Children& DetElement::children() const {
+auto DetElement::children() const -> const DetElement::Children& {
   return access()->children;
 }
 
 /// Access to individual children by name
-DetElement DetElement::child(const string& child_name) const {
+auto DetElement::child(const string& child_name) const -> DetElement {
   if (isValid()) {
     const Children& c = ptr()->children;
     auto i = c.find(child_name);
@@ -218,13 +218,13 @@ DetElement DetElement::child(const string& child_name) const {
 }
 
 /// Access to the detector elements's parent
-DetElement DetElement::parent() const {
+auto DetElement::parent() const -> DetElement {
   Object* o = ptr();
   return (o) ? o->parent : DetElement();
 }
 
 /// Access to the world object. Only possible once the geometry is closed.
-DetElement DetElement::world()  const   {
+auto DetElement::world()  const -> DetElement   {
   Object* o = ptr();
   return (o) ? o->world() : World();
 }
@@ -237,7 +237,7 @@ void DetElement::check(bool cond, const string& msg) const {
 }
 
 /// Add a new child subdetector element
-DetElement& DetElement::add(DetElement sdet) {
+auto DetElement::add(DetElement sdet) -> DetElement& {
   if (isValid()) {
     pair<Children::iterator, bool> r = object<Object>().children.emplace(sdet.name(), sdet);
     if (r.second) {
@@ -251,7 +251,7 @@ DetElement& DetElement::add(DetElement sdet) {
 }
 
 /// Clone (Deep copy) the DetElement structure
-DetElement DetElement::clone(int flg) const   {
+auto DetElement::clone(int flg) const -> DetElement   {
   Object* o = access();
   Object* n = o->clone(o->id, flg);
   n->SetName(o->GetName());
@@ -259,11 +259,11 @@ DetElement DetElement::clone(int flg) const   {
   return n;
 }
 
-DetElement DetElement::clone(const string& new_name) const {
+auto DetElement::clone(const string& new_name) const -> DetElement {
   return clone(new_name, access()->id);
 }
 
-DetElement DetElement::clone(const string& new_name, int new_id) const {
+auto DetElement::clone(const string& new_name, int new_id) const -> DetElement {
   Object* o = access();
   Object* n = o->clone(new_id, COPY_PLACEMENT);
   n->SetName(new_name.c_str());
@@ -271,15 +271,15 @@ DetElement DetElement::clone(const string& new_name, int new_id) const {
   return n;
 }
 
-pair<DetElement,Volume> DetElement::reflect(const string& new_name) const {
+auto DetElement::reflect(const string& new_name) const -> pair<DetElement,Volume> {
   return reflect(new_name, access()->id);
 }
 
-pair<DetElement,Volume> DetElement::reflect(const string& new_name, int new_id) const {
+auto DetElement::reflect(const string& new_name, int new_id) const -> pair<DetElement,Volume> {
   return reflect(new_name, new_id, SensitiveDetector(nullptr));
 }
 
-pair<DetElement,Volume> DetElement::reflect(const string& new_name, int new_id, SensitiveDetector sd) const {
+auto DetElement::reflect(const string& new_name, int new_id, SensitiveDetector sd) const -> pair<DetElement,Volume> {
   if ( placement().isValid() )   {
     return m_element->reflect(new_name, new_id, sd);
   }
@@ -289,7 +289,7 @@ pair<DetElement,Volume> DetElement::reflect(const string& new_name, int new_id, 
 }
 
 /// Access to the ideal physical volume of this detector element
-PlacedVolume DetElement::idealPlacement() const    {
+auto DetElement::idealPlacement() const -> PlacedVolume    {
   if (isValid()) {
     auto& o = object<Object>();
     return o.idealPlace;
@@ -298,7 +298,7 @@ PlacedVolume DetElement::idealPlacement() const    {
 }
 
 /// Access to the physical volume of this detector element
-PlacedVolume DetElement::placement() const {
+auto DetElement::placement() const -> PlacedVolume {
   if (isValid()) {
     auto& o = object<Object>();
     return o.placement;
@@ -307,7 +307,7 @@ PlacedVolume DetElement::placement() const {
 }
 
 /// Set the physical volumes of the detector element
-DetElement& DetElement::setPlacement(const PlacedVolume& pv) {
+auto DetElement::setPlacement(const PlacedVolume& pv) -> DetElement& {
   if (pv.isValid()) {
     Object* o = access();
     o->placement = pv;
@@ -320,7 +320,7 @@ DetElement& DetElement::setPlacement(const PlacedVolume& pv) {
 }
 
 /// The cached VolumeID of this subdetector element
-dd4hep::VolumeID DetElement::volumeID() const   {
+auto DetElement::volumeID() const -> dd4hep::VolumeID   {
   if (isValid()) {
     return object<Object>().volumeID;
   }
@@ -328,39 +328,39 @@ dd4hep::VolumeID DetElement::volumeID() const   {
 }
 
 /// Access to the logical volume of the placements (all daughters have the same!)
-Volume DetElement::volume() const {
+auto DetElement::volume() const -> Volume {
   return access()->placement.volume();
 }
 
 /// Access to the shape of the detector element's placement
-Solid DetElement::solid() const    {
+auto DetElement::solid() const -> Solid    {
   return volume()->GetShape();
 }
 
-DetElement& DetElement::setVisAttributes(const Detector& description, const string& nam, const Volume& vol) {
+auto DetElement::setVisAttributes(const Detector& description, const string& nam, const Volume& vol) -> DetElement& {
   vol.setVisAttributes(description, nam);
   return *this;
 }
 
-DetElement& DetElement::setRegion(const Detector& description, const string& nam, const Volume& vol) {
+auto DetElement::setRegion(const Detector& description, const string& nam, const Volume& vol) -> DetElement& {
   if (!nam.empty()) {
     vol.setRegion(description.region(nam));
   }
   return *this;
 }
 
-DetElement& DetElement::setLimitSet(const Detector& description, const string& nam, const Volume& vol) {
+auto DetElement::setLimitSet(const Detector& description, const string& nam, const Volume& vol) -> DetElement& {
   if (!nam.empty()) {
     vol.setLimitSet(description.limitSet(nam));
   }
   return *this;
 }
 
-DetElement& DetElement::setAttributes(const Detector& description,
+auto DetElement::setAttributes(const Detector& description,
                                       const Volume& vol,
                                       const string& region,
                                       const string& limits,
-                                      const string& vis)
+                                      const string& vis) -> DetElement&
 {
   return setRegion(description, region, vol).setLimitSet(description, limits, vol).setVisAttributes(description, vis, vol);
 }
@@ -379,112 +379,112 @@ SensitiveDetector::SensitiveDetector(const string& nam, const string& typ) {
 }
 
 /// Set the type of the sensitive detector
-SensitiveDetector& SensitiveDetector::setType(const string& typ) {
+auto SensitiveDetector::setType(const string& typ) -> SensitiveDetector& {
   access()->SetTitle(typ.c_str());
   return *this;
 }
 
 /// Access the type of the sensitive detector
-string SensitiveDetector::type() const {
+auto SensitiveDetector::type() const -> string {
   return m_element ? m_element->GetTitle() : s_empty_string;
 }
 
 /// Assign the IDDescriptor reference
-SensitiveDetector& SensitiveDetector::setReadout(Readout ro) {
+auto SensitiveDetector::setReadout(Readout ro) -> SensitiveDetector& {
   access()->readout = ro;
   return *this;
 }
 
 /// Assign the IDDescriptor reference
-Readout SensitiveDetector::readout() const {
+auto SensitiveDetector::readout() const -> Readout {
   return access()->readout;
 }
 
 /// Assign the IDDescriptor reference
-IDDescriptor SensitiveDetector::idSpec() const {
+auto SensitiveDetector::idSpec() const -> IDDescriptor {
   return readout().idSpec();
 }
 
 /// Set energy cut off
-SensitiveDetector& SensitiveDetector::setEnergyCutoff(double value) {
+auto SensitiveDetector::setEnergyCutoff(double value) -> SensitiveDetector& {
   access()->ecut = value;
   return *this;
 }
 
 /// Access energy cut off
-double SensitiveDetector::energyCutoff() const {
+auto SensitiveDetector::energyCutoff() const -> double {
   return access()->ecut;
 }
 
 /// Assign the name of the hits collection
-SensitiveDetector& SensitiveDetector::setHitsCollection(const string& collection) {
+auto SensitiveDetector::setHitsCollection(const string& collection) -> SensitiveDetector& {
   access()->hitsCollection = collection;
   return *this;
 }
 
 /// Access the hits collection name
-const string& SensitiveDetector::hitsCollection() const {
+auto SensitiveDetector::hitsCollection() const -> const string& {
   return access()->hitsCollection;
 }
 
 /// Assign the name of the hits collection
-SensitiveDetector& SensitiveDetector::setVerbose(bool value) {
+auto SensitiveDetector::setVerbose(bool value) -> SensitiveDetector& {
   int v = value ? 1 : 0;
   access()->verbose = v;
   return *this;
 }
 
 /// Access flag to combine hist
-bool SensitiveDetector::verbose() const {
+auto SensitiveDetector::verbose() const -> bool {
   return access()->verbose == 1;
 }
 
 /// Assign the name of the hits collection
-SensitiveDetector& SensitiveDetector::setCombineHits(bool value) {
+auto SensitiveDetector::setCombineHits(bool value) -> SensitiveDetector& {
   int v = value ? 1 : 0;
   access()->combineHits = v;
   return *this;
 }
 
 /// Access flag to combine hist
-bool SensitiveDetector::combineHits() const {
+auto SensitiveDetector::combineHits() const -> bool {
   return access()->combineHits == 1;
 }
 
 /// Set the regional attributes to the sensitive detector
-SensitiveDetector& SensitiveDetector::setRegion(Region reg) {
+auto SensitiveDetector::setRegion(Region reg) -> SensitiveDetector& {
   access()->region = reg;
   return *this;
 }
 
 /// Access to the region setting of the sensitive detector (not mandatory)
-Region SensitiveDetector::region() const {
+auto SensitiveDetector::region() const -> Region {
   return access()->region;
 }
 
 /// Set the limits to the sensitive detector
-SensitiveDetector& SensitiveDetector::setLimitSet(LimitSet ls) {
+auto SensitiveDetector::setLimitSet(LimitSet ls) -> SensitiveDetector& {
   access()->limits = ls;
   return *this;
 }
 
 /// Access to the limit set of the sensitive detector (not mandatory).
-LimitSet SensitiveDetector::limits() const {
+auto SensitiveDetector::limits() const -> LimitSet {
   return access()->limits;
 }
 
 /// Add an extension object to the detector element
-void* SensitiveDetector::addExtension(unsigned long long int k,ExtensionEntry* e)  const
+auto SensitiveDetector::addExtension(unsigned long long int k,ExtensionEntry* e)  const -> void*
 {
   return access()->addExtension(k,e);
 }
 
 /// Access an existing extension object from the detector element
-void* SensitiveDetector::extension(unsigned long long int k) const {
+auto SensitiveDetector::extension(unsigned long long int k) const -> void* {
   return access()->extension(k);
 }
 
 /// Access an existing extension object from the detector element
-void* SensitiveDetector::extension(unsigned long long int k, bool alert) const {
+auto SensitiveDetector::extension(unsigned long long int k, bool alert) const -> void* {
   return access()->extension(k, alert);
 }

@@ -19,7 +19,7 @@
 #include "TRint.h"
 #include "DDEve.C"
 
-int main(int argc, char** argv)    {
+auto main(int argc, char** argv) -> int    {
   std::string config, data;
   for(int i=1; i<argc; ++i)  {
     if ( 0 == ::strncmp(argv[i],"-config",4) )

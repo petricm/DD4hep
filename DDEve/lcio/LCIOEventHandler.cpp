@@ -36,7 +36,7 @@ using namespace dd4hep;
 using namespace EVENT;
 using namespace IMPL;
 
-const void* _fill(const SimTrackerHit* hit, DDEveHit* target)   {
+auto _fill(const SimTrackerHit* hit, DDEveHit* target) -> const void*   {
   const double* p = hit->getPosition();
   target->x = p[0];
   target->y = p[1];
@@ -44,7 +44,7 @@ const void* _fill(const SimTrackerHit* hit, DDEveHit* target)   {
   target->deposit = hit->getEDep();
   return hit;
 }
-const void* _fill(const SimCalorimeterHit* hit, DDEveHit* target)   {
+auto _fill(const SimCalorimeterHit* hit, DDEveHit* target) -> const void*   {
   const float* p = hit->getPosition();
   target->x = p[0];
   target->y = p[1];
@@ -53,19 +53,19 @@ const void* _fill(const SimCalorimeterHit* hit, DDEveHit* target)   {
   return hit;
 }
 
-static const void* _convertHitFunc(const LCObject* source, DDEveHit* target)  {
+static auto _convertHitFunc(const LCObject* source, DDEveHit* target) -> const void*  {
   const auto* t = dynamic_cast<const SimTrackerHit*>(source);
   if (t && _fill(t,target)) return t;
   const auto* c = dynamic_cast<const SimCalorimeterHit*>(source);
   if (c && _fill(c,target)) return c;
   return nullptr;
 }
-static const void* _convertParticleFunc(const LCObject* source, DDEveParticle* target)  {
+static auto _convertParticleFunc(const LCObject* source, DDEveParticle* target) -> const void*  {
   if ( source && target )  {}
   return nullptr;
 }
 
-static void* _create(const char*)  {
+static auto _create(const char*) -> void*  {
   EventHandler* eh = new LCIOEventHandler();
   return eh;
 }
@@ -83,7 +83,7 @@ LCIOEventHandler::~LCIOEventHandler()   {
 }
 
 /// Access the number of events on the current input data source (-1 if no data source connected)
-long LCIOEventHandler::numEvents() const   {
+auto LCIOEventHandler::numEvents() const -> long   {
   if ( hasFile() )  {
     return m_lcReader->getNumberOfEvents();
   }
@@ -91,7 +91,7 @@ long LCIOEventHandler::numEvents() const   {
 }
 
 /// Access to the collection type by name
-EventHandler::CollectionType LCIOEventHandler::collectionType(const std::string& /* collection */) const {
+auto LCIOEventHandler::collectionType(const std::string& /* collection */) const -> EventHandler::CollectionType {
   return CALO_HIT_COLLECTION;
 #if 0
   if ( cl == cl_calo ) return CALO_HIT_COLLECTION;
@@ -102,7 +102,7 @@ EventHandler::CollectionType LCIOEventHandler::collectionType(const std::string&
 }
 
 /// Call functor on hit collection
-size_t LCIOEventHandler::collectionLoop(const std::string& collection, DDEveHitActor& actor)   {
+auto LCIOEventHandler::collectionLoop(const std::string& collection, DDEveHitActor& actor) -> size_t   {
   auto ibr = m_branches.find(collection);
   if ( ibr != m_branches.end() )   {
     LCCollection* c = (*ibr).second;
@@ -123,7 +123,7 @@ size_t LCIOEventHandler::collectionLoop(const std::string& collection, DDEveHitA
 }
 
 /// Loop over collection and extract particle data
-size_t LCIOEventHandler::collectionLoop(const std::string& collection, DDEveParticleActor& actor)    {
+auto LCIOEventHandler::collectionLoop(const std::string& collection, DDEveParticleActor& actor) -> size_t    {
   auto ibr = m_branches.find(collection);
   if ( ibr != m_branches.end() )   {
     LCCollection* c = (*ibr).second;
@@ -144,7 +144,7 @@ size_t LCIOEventHandler::collectionLoop(const std::string& collection, DDEvePart
 }
 
 /// Open new data file
-bool LCIOEventHandler::Open(const std::string&, const std::string& name)   {
+auto LCIOEventHandler::Open(const std::string&, const std::string& name) -> bool   {
   if ( m_hasFile ) m_lcReader->close();
   m_hasFile = false;
   m_hasEvent = false;
@@ -156,7 +156,7 @@ bool LCIOEventHandler::Open(const std::string&, const std::string& name)   {
 }
 
 /// Load the next event
-bool LCIOEventHandler::NextEvent()   {
+auto LCIOEventHandler::NextEvent() -> bool   {
   m_data.clear();
   m_hasEvent = false;
   m_branches.clear();
@@ -180,13 +180,13 @@ bool LCIOEventHandler::NextEvent()   {
 }
 
 /// Load the previous event
-bool LCIOEventHandler::PreviousEvent()   {
+auto LCIOEventHandler::PreviousEvent() -> bool   {
   throw runtime_error("+++ This version of the LCIO reader can only access files sequentially!\n"
                       "+++ Access to the previous event is not supported.");
 }
 
 /// Goto a specified event in the file
-bool LCIOEventHandler::GotoEvent(long /* event_number */)   {
+auto LCIOEventHandler::GotoEvent(long /* event_number */) -> bool   {
   throw runtime_error("+++ This version of the LCIO reader can only access files sequentially!\n"
                       "+++ Random access is not supported.");
 }

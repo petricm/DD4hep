@@ -23,7 +23,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::detail;
 
-static Ref_t create_element(Detector& description, xml_h e, Ref_t sens)  {
+static auto create_element(Detector& description, xml_h e, Ref_t sens) -> Ref_t  {
   xml_det_t  x_det  (e);
   SensitiveDetector sd = sens;
   xml_dim_t  x_pos   = x_det.child(_U(position),false);

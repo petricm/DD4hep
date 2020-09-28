@@ -21,14 +21,14 @@
 using namespace std;
 using namespace dd4hep;
 
-Position NoSegmentation::position(const CellID& id) const   {
+auto NoSegmentation::position(const CellID& id) const -> Position   {
   return Position(access()->implementation->position(id));
 }
 
 /// determine the cell ID based on the position
-dd4hep::CellID NoSegmentation::cellID(const Position& local,
+auto NoSegmentation::cellID(const Position& local,
                                        const Position& global,
-                                       const VolumeID& volID) const
+                                       const VolumeID& volID) const -> dd4hep::CellID
 {
   return access()->implementation->cellID(local, global, volID);
 }

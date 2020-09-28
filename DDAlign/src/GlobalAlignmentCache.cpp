@@ -27,7 +27,7 @@ using namespace dd4hep::align;
 using namespace dd4hep::align::DDAlign_standard_operations;
 typedef GlobalAlignmentStack::StackEntry Entry;
 
-DetElement _detector(DetElement child)   {
+auto _detector(DetElement child) -> DetElement   {
   if ( child.isValid() )   {
     DetElement p(child.parent());
     if ( p.isValid() && !p.parent().isValid() )
@@ -57,12 +57,12 @@ GlobalAlignmentCache::~GlobalAlignmentCache()   {
 }
 
 /// Add reference count
-int GlobalAlignmentCache::addRef()   {
+auto GlobalAlignmentCache::addRef() -> int   {
   return ++m_refCount;
 }
 
 /// Release object. If reference count goes to NULL, automatic deletion is triggered.
-int GlobalAlignmentCache::release()   {
+auto GlobalAlignmentCache::release() -> int   {
   int value = --m_refCount;
   if ( value == 0 )  {
     delete this;
@@ -71,7 +71,7 @@ int GlobalAlignmentCache::release()   {
 }
 
 /// Create and install a new instance tree
-GlobalAlignmentCache* GlobalAlignmentCache::install(Detector& description)   {
+auto GlobalAlignmentCache::install(Detector& description) -> GlobalAlignmentCache*   {
   auto* cache = description.extension<GlobalAlignmentCache>(false);
   if ( !cache )  {
     cache = new GlobalAlignmentCache(description,"world",true);
@@ -89,7 +89,7 @@ void GlobalAlignmentCache::uninstall(Detector& description)   {
 }
 
 /// Add a new entry to the cache. The key is the placement path
-bool GlobalAlignmentCache::insert(GlobalAlignment alignment)  {
+auto GlobalAlignmentCache::insert(GlobalAlignment alignment) -> bool  {
   TGeoPhysicalNode* pn = alignment.ptr();
   unsigned int index = detail::hash32(pn->GetName()+m_sdPathLen);
   auto i = m_cache.find(index);
@@ -103,7 +103,7 @@ bool GlobalAlignmentCache::insert(GlobalAlignment alignment)  {
 }
 
 /// Retrieve the cache section corresponding to the path of an entry.
-GlobalAlignmentCache* GlobalAlignmentCache::section(const string& path_name) const   {
+auto GlobalAlignmentCache::section(const string& path_name) const -> GlobalAlignmentCache*   {
   size_t idx, idq;
   if ( path_name[0] != '/' )   {
     return section(m_detDesc.world().placementPath()+'/'+path_name);
@@ -121,7 +121,7 @@ GlobalAlignmentCache* GlobalAlignmentCache::section(const string& path_name) con
 }
 
 /// Retrieve an alignment entry by its placement path
-GlobalAlignment GlobalAlignmentCache::get(const string& path_name) const   {
+auto GlobalAlignmentCache::get(const string& path_name) const -> GlobalAlignment   {
   size_t idx, idq;
   unsigned int index = detail::hash32(path_name.c_str()+m_sdPathLen);
   auto i = m_cache.find(index);
@@ -146,7 +146,7 @@ GlobalAlignment GlobalAlignmentCache::get(const string& path_name) const   {
 }
 
 /// Return all entries matching a given path.
-vector<GlobalAlignment> GlobalAlignmentCache::matches(const string& match, bool exclude_exact) const   {
+auto GlobalAlignmentCache::matches(const string& match, bool exclude_exact) const -> vector<GlobalAlignment>   {
   vector<GlobalAlignment> result;
   GlobalAlignmentCache* c = section(match);
   if ( c )  {
@@ -173,7 +173,7 @@ void GlobalAlignmentCache::commit(GlobalAlignmentStack& stack)   {
 }
 
 /// Retrieve branch cache by name. If not present it will be created
-GlobalAlignmentCache* GlobalAlignmentCache::subdetectorAlignments(const string& nam)    {
+auto GlobalAlignmentCache::subdetectorAlignments(const string& nam) -> GlobalAlignmentCache*    {
   auto i = m_detectors.find(nam);
   if ( i == m_detectors.end() )   {
     auto* ptr = new GlobalAlignmentCache(m_detDesc,nam,false);

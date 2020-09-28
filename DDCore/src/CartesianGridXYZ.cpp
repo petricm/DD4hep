@@ -22,30 +22,30 @@ using namespace std;
 using namespace dd4hep;
 
 /// determine the position based on the cell ID
-Position CartesianGridXYZ::position(const CellID& id) const   {
+auto CartesianGridXYZ::position(const CellID& id) const -> Position   {
   return Position(access()->implementation->position(id));
 }
 
 /// determine the cell ID based on the position
-dd4hep::CellID CartesianGridXYZ::cellID(const Position& local,
+auto CartesianGridXYZ::cellID(const Position& local,
                                         const Position& global,
-                                        const VolumeID& volID) const
+                                        const VolumeID& volID) const -> dd4hep::CellID
 {
   return access()->implementation->cellID(local, global, volID);
 }
 
 /// access the grid size in X
-double CartesianGridXYZ::gridSizeX() const {
+auto CartesianGridXYZ::gridSizeX() const -> double {
   return access()->implementation->gridSizeX();
 }
 
 /// access the grid size in Y
-double CartesianGridXYZ::gridSizeY() const {
+auto CartesianGridXYZ::gridSizeY() const -> double {
   return access()->implementation->gridSizeY();
 }
 
 /// access the grid size in Z
-double CartesianGridXYZ::gridSizeZ() const {
+auto CartesianGridXYZ::gridSizeZ() const -> double {
   return access()->implementation->gridSizeZ();
 }
 
@@ -65,17 +65,17 @@ void CartesianGridXYZ::setGridSizeZ(double cellSize) const   {
 }
 
 /// access the coordinate offset in X
-double CartesianGridXYZ::offsetX() const {
+auto CartesianGridXYZ::offsetX() const -> double {
   return access()->implementation->offsetX();
 }
 
 /// access the coordinate offset in Y
-double CartesianGridXYZ::offsetY() const {
+auto CartesianGridXYZ::offsetY() const -> double {
   return access()->implementation->offsetY();
 }
 
 /// access the coordinate offset in Z
-double CartesianGridXYZ::offsetZ() const {
+auto CartesianGridXYZ::offsetZ() const -> double {
   return access()->implementation->offsetZ();
 }
 
@@ -95,17 +95,17 @@ void CartesianGridXYZ::setOffsetZ(double offset) const   {
 }
 
 /// access the field name used for X
-const string& CartesianGridXYZ::fieldNameX() const {
+auto CartesianGridXYZ::fieldNameX() const -> const string& {
   return access()->implementation->fieldNameX();
 }
 
 /// access the field name used for Y
-const string& CartesianGridXYZ::fieldNameY() const {
+auto CartesianGridXYZ::fieldNameY() const -> const string& {
   return access()->implementation->fieldNameY();
 }
 
 /// access the field name used for Z
-const string& CartesianGridXYZ::fieldNameZ() const {
+auto CartesianGridXYZ::fieldNameZ() const -> const string& {
   return access()->implementation->fieldNameZ();
 }
 
@@ -119,6 +119,6 @@ const string& CartesianGridXYZ::fieldNameZ() const {
     -# size in y
     -# size in z
 */
-vector<double> CartesianGridXYZ::cellDimensions(const CellID& id) const  {
+auto CartesianGridXYZ::cellDimensions(const CellID& id) const -> vector<double>  {
   return access()->implementation->cellDimensions(id);
 }

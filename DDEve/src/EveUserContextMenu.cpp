@@ -37,7 +37,7 @@ EveUserContextMenu::EveUserContextMenu(Display* disp) : m_display(disp)  {
 EveUserContextMenu::~EveUserContextMenu()  = default;
 
 /// EVE manager
-TEveManager& EveUserContextMenu::manager() const   {
+auto EveUserContextMenu::manager() const -> TEveManager&   {
   return m_display->manager();
 }
 

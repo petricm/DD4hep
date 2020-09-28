@@ -22,7 +22,7 @@ using namespace dd4hep;
 using namespace dd4hep::sim;
 
 /// Returns the step status in form of a string
-const char* Geant4StepHandler::stepStatus(G4StepStatus status) {
+auto Geant4StepHandler::stepStatus(G4StepStatus status) -> const char* {
   switch (status) {
     // Step reached the world boundary
   case fWorldBoundary:
@@ -53,68 +53,68 @@ const char* Geant4StepHandler::stepStatus(G4StepStatus status) {
 }
 
 /// Returns the pre-step status in form of a string
-const char* Geant4StepHandler::preStepStatus() const {
+auto Geant4StepHandler::preStepStatus() const -> const char* {
   return stepStatus(pre ? pre->GetStepStatus() : fUndefined);
 }
 
 /// Returns the post-step status in form of a string
-const char* Geant4StepHandler::postStepStatus() const {
+auto Geant4StepHandler::postStepStatus() const -> const char* {
   return stepStatus(post ? post->GetStepStatus() : fUndefined);
 }
 
 /// Coordinate transformation to global coordinate.
-Position Geant4StepHandler::localToGlobal(const DDSegmentation::Vector3D& local)  const   {
+auto Geant4StepHandler::localToGlobal(const DDSegmentation::Vector3D& local)  const -> Position   {
   return localToGlobal(G4ThreeVector(local.X / dd4hep::mm,local.Y / dd4hep::mm,local.Z / dd4hep::mm));
 }
 
 /// Coordinate transformation to global coordinates.
-Position Geant4StepHandler::localToGlobal(const Position& local)  const   {
+auto Geant4StepHandler::localToGlobal(const Position& local)  const -> Position   {
   return localToGlobal(G4ThreeVector(local.X(),local.Y(),local.Z()));
 }
 
 /// Coordinate transformation to global coordinates
-Position Geant4StepHandler::localToGlobal(double x, double y, double z)  const    {
+auto Geant4StepHandler::localToGlobal(double x, double y, double z)  const -> Position    {
   return localToGlobal(G4ThreeVector(x,y,z));
 }
 
 /// Coordinate transformation to global coordinates
-Position Geant4StepHandler::localToGlobal(const G4ThreeVector& loc)  const    {
+auto Geant4StepHandler::localToGlobal(const G4ThreeVector& loc)  const -> Position    {
   G4TouchableHandle t = step->GetPreStepPoint()->GetTouchableHandle();
   G4ThreeVector p = t->GetHistory()->GetTopTransform().Inverse().TransformPoint(loc);
   return Position(p.x(),p.y(),p.z());
 }
 
 /// Coordinate transformation to local coordinates
-Position Geant4StepHandler::globalToLocal(double x, double y, double z)  const    {
+auto Geant4StepHandler::globalToLocal(double x, double y, double z)  const -> Position    {
   G4ThreeVector p = globalToLocalG4(G4ThreeVector(x,y,z));
   return Position(p.x(),p.y(),p.z());
 }
 
 /// Coordinate transformation to local coordinates
-Position Geant4StepHandler::globalToLocal(const Position& global)  const    {
+auto Geant4StepHandler::globalToLocal(const Position& global)  const -> Position    {
   G4ThreeVector p = globalToLocalG4(G4ThreeVector(global.X(),global.Y(),global.Z()));
   return Position(p.x(),p.y(),p.z());
 }
 
 /// Coordinate transformation to local coordinates
-Position Geant4StepHandler::globalToLocal(const G4ThreeVector& global)  const    {
+auto Geant4StepHandler::globalToLocal(const G4ThreeVector& global)  const -> Position    {
   G4ThreeVector p = globalToLocalG4(global);
   return Position(p.x(),p.y(),p.z());
 }
 
 /// Coordinate transformation to local coordinates
-G4ThreeVector Geant4StepHandler::globalToLocalG4(double x, double y, double z)  const    {
+auto Geant4StepHandler::globalToLocalG4(double x, double y, double z)  const -> G4ThreeVector    {
   return globalToLocalG4(G4ThreeVector(x,y,z));
 }
 
 /// Coordinate transformation to local coordinates
-G4ThreeVector Geant4StepHandler::globalToLocalG4(const G4ThreeVector& global)  const    {
+auto Geant4StepHandler::globalToLocalG4(const G4ThreeVector& global)  const -> G4ThreeVector    {
   G4TouchableHandle t = step->GetPreStepPoint()->GetTouchableHandle();
   return t->GetHistory()->GetTopTransform().TransformPoint(global);
 }
 
 /// Apply BirksLaw
-double Geant4StepHandler::birkAttenuation() const    {
+auto Geant4StepHandler::birkAttenuation() const -> double    {
 #if G4VERSION_NUMBER >= 1001
   static G4EmSaturation s_emSaturation(1);
 #else

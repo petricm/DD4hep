@@ -45,7 +45,7 @@ Key::Key(mask_type mask, const std::string& item)  {
   values.item = detail::hash32(item);
 }
 
-Key& Key::operator=(const Key& copy)   {
+auto Key::operator=(const Key& copy) -> Key&   {
   key = copy.key;
   return *this;
 }

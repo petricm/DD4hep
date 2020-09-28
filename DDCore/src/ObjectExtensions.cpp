@@ -24,7 +24,7 @@ using namespace std;
 using namespace dd4hep;
 
 namespace {
-  std::string obj_type(void* ptr)  {
+  auto obj_type(void* ptr) -> std::string  {
     auto* o = (ObjectExtensions*)ptr;
     return typeName(typeid(*o));
   }
@@ -66,7 +66,7 @@ void ObjectExtensions::copyFrom(const map<unsigned long long int,ExtensionEntry*
 }
 
 /// Add an extension object to the detector element
-void* ObjectExtensions::addExtension(unsigned long long int key, ExtensionEntry* e)  {
+auto ObjectExtensions::addExtension(unsigned long long int key, ExtensionEntry* e) -> void*  {
   if ( e )   {
     if ( e->object() )  {
       auto j = extensions.find(key);
@@ -83,7 +83,7 @@ void* ObjectExtensions::addExtension(unsigned long long int key, ExtensionEntry*
 }
 
 /// Remove an existing extension object from the instance
-void* ObjectExtensions::removeExtension(unsigned long long int key, bool destroy)  {
+auto ObjectExtensions::removeExtension(unsigned long long int key, bool destroy) -> void*  {
   auto j = extensions.find(key);
   if ( j != extensions.end() )   {
     void* ptr = (*j).second->object();
@@ -99,7 +99,7 @@ void* ObjectExtensions::removeExtension(unsigned long long int key, bool destroy
 }
 
 /// Access an existing extension object from the detector element
-void* ObjectExtensions::extension(unsigned long long int key) const {
+auto ObjectExtensions::extension(unsigned long long int key) const -> void* {
   const auto j = extensions.find(key);
   if (j != extensions.end()) {
     return (*j).second->object();
@@ -109,7 +109,7 @@ void* ObjectExtensions::extension(unsigned long long int key) const {
 }
 
 /// Access an existing extension object from the detector element
-void* ObjectExtensions::extension(unsigned long long int key, bool alert) const {
+auto ObjectExtensions::extension(unsigned long long int key, bool alert) const -> void* {
   const auto j = extensions.find(key);
   if (j != extensions.end()) {
     return (*j).second->object();

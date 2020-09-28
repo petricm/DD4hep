@@ -38,7 +38,7 @@ namespace {
 }
 
 /// Set debug level for this module. Default is OFF
-bool dd4hep::xml::setXMLParserDebug(bool value)   {
+auto dd4hep::xml::setXMLParserDebug(bool value) -> bool   {
   bool old = s_print==ALWAYS;
   s_print = value ? ALWAYS : DEBUG;
   return old;

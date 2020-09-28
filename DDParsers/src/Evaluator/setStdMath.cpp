@@ -22,46 +22,46 @@ namespace units = dd4hep;
 
 using namespace std;
 
-static double eval_abs  (double a)           { return (a < 0) ? -a : a;        }
-static double eval_fabs (double a)           { return std::fabs(a);            }
-static double eval_fmod (double a, double b) { return std::fmod(a,b);          }
-static double eval_min  (double a, double b) { return (a < b) ?  a : b;        }
-static double eval_max  (double a, double b) { return (a > b) ?  a : b;        }
-static double eval_sqrt (double a)           { return std::sqrt(a);            }
-static double eval_cbrt (double a)           { return ::cbrt(a);               }
-static double eval_pow  (double a, double b) { return std::pow(a,b);           }
-static double eval_sin  (double a)           { return std::sin(a);             }
-static double eval_cos  (double a)           { return std::cos(a);             }
-static double eval_tan  (double a)           { return std::tan(a);             }
-static double eval_asin (double a)           { return std::asin(a);            }
-static double eval_acos (double a)           { return std::acos(a);            }
-static double eval_atan (double a)           { return std::atan(a);            }
-static double eval_atan2(double a, double b) { return std::atan2(a,b);         }
-static double eval_sinh (double a)           { return std::sinh(a);            }
-static double eval_cosh (double a)           { return std::cosh(a);            }
-static double eval_tanh (double a)           { return std::tanh(a);            }
-static double eval_exp  (double a)           { return std::exp(a);             }
-static double eval_exp2 (double a)           { return ::exp2(a);               }
+static auto eval_abs  (double a) -> double           { return (a < 0) ? -a : a;        }
+static auto eval_fabs (double a) -> double           { return std::fabs(a);            }
+static auto eval_fmod (double a, double b) -> double { return std::fmod(a,b);          }
+static auto eval_min  (double a, double b) -> double { return (a < b) ?  a : b;        }
+static auto eval_max  (double a, double b) -> double { return (a > b) ?  a : b;        }
+static auto eval_sqrt (double a) -> double           { return std::sqrt(a);            }
+static auto eval_cbrt (double a) -> double           { return ::cbrt(a);               }
+static auto eval_pow  (double a, double b) -> double { return std::pow(a,b);           }
+static auto eval_sin  (double a) -> double           { return std::sin(a);             }
+static auto eval_cos  (double a) -> double           { return std::cos(a);             }
+static auto eval_tan  (double a) -> double           { return std::tan(a);             }
+static auto eval_asin (double a) -> double           { return std::asin(a);            }
+static auto eval_acos (double a) -> double           { return std::acos(a);            }
+static auto eval_atan (double a) -> double           { return std::atan(a);            }
+static auto eval_atan2(double a, double b) -> double { return std::atan2(a,b);         }
+static auto eval_sinh (double a) -> double           { return std::sinh(a);            }
+static auto eval_cosh (double a) -> double           { return std::cosh(a);            }
+static auto eval_tanh (double a) -> double           { return std::tanh(a);            }
+static auto eval_exp  (double a) -> double           { return std::exp(a);             }
+static auto eval_exp2 (double a) -> double           { return ::exp2(a);               }
 //static double eval_exp10(double a)           { return ::exp10(a);              }
-static double eval_exp10(double a)           { return ::pow(10.,a) ;           }
-static double eval_expm1(double a)           { return ::expm1(a);              }
-static double eval_log  (double a)           { return std::log(a);             }
-static double eval_logb (double a)           { return ::logb(a);               }
-static double eval_log10(double a)           { return std::log10(a);           }
-static double eval_log1p(double a)           { return ::log1p(a);              }
-static double eval_hypot(double a, double b) { return ::hypot(a,b);            }
-static double eval_erf  (double a)           { return ::erf(a);                }
-static double eval_erfc (double a)           { return ::erfc(a);               }
-static double eval_gamma(double a)           { return ::tgamma(a);             }
-static double eval_double(double a)          { return a;                       }
-static double eval_int  (double a)           { return (double)int(a);          }
-static double eval_nint (double a)           { return std::floor(a);           }
-static double eval_floor(double a)           { return std::floor(a);           }
-static double eval_round(double a)           { return ::round(a);              }
-static double eval_ceil (double a)           { return std::ceil(a);            }
-static double eval_isnan(double a)           { return std::isnan(a);           }
-static double eval_isinf(double a)           { return std::isinf(a);           }
-static double eval_nearbyint(double a)       { return ::nearbyint(a);          }
+static auto eval_exp10(double a) -> double           { return ::pow(10.,a) ;           }
+static auto eval_expm1(double a) -> double           { return ::expm1(a);              }
+static auto eval_log  (double a) -> double           { return std::log(a);             }
+static auto eval_logb (double a) -> double           { return ::logb(a);               }
+static auto eval_log10(double a) -> double           { return std::log10(a);           }
+static auto eval_log1p(double a) -> double           { return ::log1p(a);              }
+static auto eval_hypot(double a, double b) -> double { return ::hypot(a,b);            }
+static auto eval_erf  (double a) -> double           { return ::erf(a);                }
+static auto eval_erfc (double a) -> double           { return ::erfc(a);               }
+static auto eval_gamma(double a) -> double           { return ::tgamma(a);             }
+static auto eval_double(double a) -> double          { return a;                       }
+static auto eval_int  (double a) -> double           { return (double)int(a);          }
+static auto eval_nint (double a) -> double           { return std::floor(a);           }
+static auto eval_floor(double a) -> double           { return std::floor(a);           }
+static auto eval_round(double a) -> double           { return ::round(a);              }
+static auto eval_ceil (double a) -> double           { return std::ceil(a);            }
+static auto eval_isnan(double a) -> double           { return std::isnan(a);           }
+static auto eval_isinf(double a) -> double           { return std::isinf(a);           }
+static auto eval_nearbyint(double a) -> double       { return ::nearbyint(a);          }
 
 /// Namespace for the AIDA detector description toolkit
 namespace dd4hep::tools {

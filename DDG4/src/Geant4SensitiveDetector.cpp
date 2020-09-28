@@ -54,7 +54,7 @@ Geant4SensitiveDetector::Geant4SensitiveDetector(const string& nam, Detector& de
 Geant4SensitiveDetector::~Geant4SensitiveDetector() = default;
 
 /// Initialize the sensitive detector for the usage of a single hit collection
-bool Geant4SensitiveDetector::defineCollection(const string& coll_name) {
+auto Geant4SensitiveDetector::defineCollection(const string& coll_name) -> bool {
   if (coll_name.empty()) {
     throw runtime_error("Geant4SensitiveDetector: No collection defined for "+name()+" of type "+string(m_sensitive.type()));
   }
@@ -63,7 +63,7 @@ bool Geant4SensitiveDetector::defineCollection(const string& coll_name) {
 }
 
 /// Access HitCollection container names
-const string& Geant4SensitiveDetector::hitCollectionName(int which) const {
+auto Geant4SensitiveDetector::hitCollectionName(int which) const -> const string& {
   size_t w = which;
   if (w >= collectionName.size()) {
     throw runtime_error("The collection name index for subdetector " + name() + " is out of range!");
@@ -72,12 +72,12 @@ const string& Geant4SensitiveDetector::hitCollectionName(int which) const {
 }
 
 /// Create single hits collection
-Geant4SensitiveDetector::HitCollection* Geant4SensitiveDetector::createCollection(const string& coll_name) const {
+auto Geant4SensitiveDetector::createCollection(const string& coll_name) const -> Geant4SensitiveDetector::HitCollection* {
   return new G4THitsCollection<Geant4Hit>(GetName(), coll_name);
 }
 namespace dd4hep::sim {
-    template <> Geant4CalorimeterHit*
-    Geant4SensitiveDetector::find<Geant4CalorimeterHit>(const HitCollection* c, const HitCompare<Geant4CalorimeterHit>& cmp) {
+    template <> auto
+    Geant4SensitiveDetector::find<Geant4CalorimeterHit>(const HitCollection* c, const HitCompare<Geant4CalorimeterHit>& cmp) -> Geant4CalorimeterHit* {
       typedef vector<Geant4CalorimeterHit*> _V;
       const _V* v = (const _V*) c->GetVector();
       for (auto i : *v)
@@ -104,12 +104,12 @@ void Geant4SensitiveDetector::EndOfEvent(G4HCofThisEvent* /* HCE */) {
 }
 
 /// Method for generating hit(s) using the information of G4Step object.
-G4bool Geant4SensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* hist) {
+auto Geant4SensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* hist) -> G4bool {
   return process(step, hist);
 }
 
 /// Method for generating hit(s) using the information of G4Step object.
-G4bool Geant4SensitiveDetector::process(G4Step* step, G4TouchableHistory* hist) {
+auto Geant4SensitiveDetector::process(G4Step* step, G4TouchableHistory* hist) -> G4bool {
   double ene_cut = m_sensitive.energyCutoff();
   if (step->GetTotalEnergyDeposit() > ene_cut) {
     if (!Geant4Hit::isGeantino(step->GetTrack())) {
@@ -127,7 +127,7 @@ G4bool Geant4SensitiveDetector::process(G4Step* step, G4TouchableHistory* hist) 
 }
 
 /// Retrieve the hits collection associated with this detector by its collection identifier
-Geant4SensitiveDetector::HitCollection* Geant4SensitiveDetector::collectionByID(int id) {
+auto Geant4SensitiveDetector::collectionByID(int id) -> Geant4SensitiveDetector::HitCollection* {
   auto* hc = (HitCollection*) m_hce->GetHC(id);
   if (hc)
     return hc;
@@ -135,7 +135,7 @@ Geant4SensitiveDetector::HitCollection* Geant4SensitiveDetector::collectionByID(
 }
 
 /// Retrieve the hits collection associated with this detector by its serial number
-Geant4SensitiveDetector::HitCollection* Geant4SensitiveDetector::collection(int which) {
+auto Geant4SensitiveDetector::collection(int which) -> Geant4SensitiveDetector::HitCollection* {
   size_t w = which;
   if (w < collectionName.size()) {
     auto* hc = (HitCollection*) m_hce->GetHC(GetCollectionID(which));
@@ -182,7 +182,7 @@ void Geant4SensitiveDetector::dumpStep(G4Step* st, G4TouchableHistory* /* histor
   }
 }
 
-long long Geant4SensitiveDetector::getVolumeID(G4Step* aStep) {
+auto Geant4SensitiveDetector::getVolumeID(G4Step* aStep) -> long long {
   Geant4StepHandler step(aStep);
   Geant4VolumeManager volMgr = Geant4Mapping::instance().volumeManager();
   VolumeID id = volMgr.volumeID(step.preTouchable());
@@ -215,7 +215,7 @@ long long Geant4SensitiveDetector::getVolumeID(G4Step* aStep) {
 }
 
 
-long long Geant4SensitiveDetector::getCellID(G4Step* step) {
+auto Geant4SensitiveDetector::getCellID(G4Step* step) -> long long {
   StepHandler h(step);
   Geant4VolumeManager volMgr = Geant4Mapping::instance().volumeManager();
   VolumeID            volID  = volMgr.volumeID(h.preTouchable());

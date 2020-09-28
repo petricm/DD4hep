@@ -19,7 +19,7 @@
 using namespace dd4hep::cond;
 
 /// print Conditions object
-std::ostream& operator << (std::ostream& s, const AbstractMap& data)   {
+auto operator << (std::ostream& s, const AbstractMap& data) -> std::ostream&   {
   struct _Print {
     void operator()(const AbstractMap::Params::value_type& obj)  const {
       if ( obj.second.typeInfo() == typeid(AbstractMap) )  {
@@ -66,7 +66,7 @@ AbstractMap::~AbstractMap()  {
 }
 
 /// Assignment operator
-AbstractMap& AbstractMap::operator=(const AbstractMap& c)  {
+auto AbstractMap::operator=(const AbstractMap& c) -> AbstractMap&  {
   if ( this != &c )   {
     clientData = c.clientData;
     params = c.params;

@@ -26,7 +26,7 @@
 #endif
 
 namespace dd4hep {
-  dd4hep::tools::Evaluator& evaluator();
+  auto evaluator() -> dd4hep::tools::Evaluator&;
 }
 
 namespace {
@@ -49,7 +49,7 @@ namespace   {
 
 namespace dd4hep  {
   
-  short _toShort(const string& value) {
+  auto _toShort(const string& value) -> short {
     string s(value);
     size_t idx = s.find("(int)");
     if (idx != string::npos)
@@ -61,7 +61,7 @@ namespace dd4hep  {
     return (short) result;
   }
 
-  int _toInt(const string& value) {
+  auto _toInt(const string& value) -> int {
     string s(value);
     size_t idx = s.find("(int)");
     if (idx != string::npos)
@@ -73,7 +73,7 @@ namespace dd4hep  {
     return (int) result;
   }
 
-  long _toLong(const string& value) {
+  auto _toLong(const string& value) -> long {
     string s(value);
     size_t idx = s.find("(int)");
     if (idx != string::npos)
@@ -85,81 +85,81 @@ namespace dd4hep  {
     return (long) result;
   }
 
-  bool _toBool(const string& value) {
+  auto _toBool(const string& value) -> bool {
     return value == "true" || value == "yes";
   }
 
   /// String conversions: string to float value
-  float _toFloat(const string& value) {
+  auto _toFloat(const string& value) -> float {
     double result = eval.evaluate(value.c_str());
     check_evaluation(value, eval.status());
     return (float) result;
   }
 
   /// String conversions: string to double value
-  double _toDouble(const string& value) {
+  auto _toDouble(const string& value) -> double {
     double result = eval.evaluate(value.c_str());
     check_evaluation(value, eval.status());
     return result;
   }
 
   /// Generic type conversion from string to primitive value  \ingroup DD4HEP_CORE
-  template <typename T> T _toType(const string& value)    {
+  template <typename T> auto _toType(const string& value) -> T    {
     notImplemented("Value "+value+" cannot be converted to type "+typeName(typeid(T)));
     return T();
   }
 
   /// Generic type conversion from string to primitive value
-  template <> bool _toType<bool>(const string& value)  {
+  template <> auto _toType<bool>(const string& value) -> bool  {
     return _toBool(value);
   }
 
   /// Generic type conversion from string to primitive value
-  template <> short _toType<short>(const string& value)  {
+  template <> auto _toType<short>(const string& value) -> short  {
     return _toShort(value);
   }
 
   /// Generic type conversion from string to primitive value
-  template <> unsigned short _toType<unsigned short>(const string& value)  {
+  template <> auto _toType<unsigned short>(const string& value) -> unsigned short  {
     return (unsigned short)_toShort(value);
   }
 
   /// Generic type conversion from string to primitive value
-  template <> int _toType<int>(const string& value)  {
+  template <> auto _toType<int>(const string& value) -> int  {
     return _toInt(value);
   }
 
   /// Generic type conversion from string to primitive value
-  template <> unsigned int _toType<unsigned int>(const string& value)  {
+  template <> auto _toType<unsigned int>(const string& value) -> unsigned int  {
     return (unsigned int)_toInt(value);
   }
 
   /// Generic type conversion from string to primitive value
-  template <> long _toType<long>(const string& value)  {
+  template <> auto _toType<long>(const string& value) -> long  {
     return _toLong(value);
   }
 
   /// Generic type conversion from string to primitive value
-  template <> unsigned long _toType<unsigned long>(const string& value)  {
+  template <> auto _toType<unsigned long>(const string& value) -> unsigned long  {
     return (unsigned long)_toLong(value);
   }
 
   /// Generic type conversion from string to primitive value
-  template <> float _toType<float>(const string& value)  {
+  template <> auto _toType<float>(const string& value) -> float  {
     return _toFloat(value);
   }
 
   /// Generic type conversion from string to primitive value
-  template <> double _toType<double>(const string& value)  {
+  template <> auto _toType<double>(const string& value) -> double  {
     return _toDouble(value);
   }
 
   /// Generic type conversion from string to primitive value
-  template <> string _toType<string>(const string& value)  {
+  template <> auto _toType<string>(const string& value) -> string  {
     return value;
   }
 
-  template <> char _multiply<char>(const string& left, const string& right) {
+  template <> auto _multiply<char>(const string& left, const string& right) -> char {
     double val = _toDouble(left + "*" + right);
     if ( val >= double(SCHAR_MIN) && val <= double(SCHAR_MAX) )
       return (char) (int)val;
@@ -169,7 +169,7 @@ namespace dd4hep  {
     return 0;
   }
 
-  template <> unsigned char _multiply<unsigned char>(const string& left, const string& right) {
+  template <> auto _multiply<unsigned char>(const string& left, const string& right) -> unsigned char {
     double val = _toDouble(left + "*" + right);
     if ( val >= 0 && val <= double(UCHAR_MAX) )
       return (unsigned char) (int)val;
@@ -179,7 +179,7 @@ namespace dd4hep  {
     return 0;
   }
 
-  template <> short _multiply<short>(const string& left, const string& right) {
+  template <> auto _multiply<short>(const string& left, const string& right) -> short {
     double val = _toDouble(left + "*" + right);
     if ( val >= double(SHRT_MIN) && val <= double(SHRT_MAX) )
       return (short) val;
@@ -189,7 +189,7 @@ namespace dd4hep  {
     return 0;
   }
 
-  template <> unsigned short _multiply<unsigned short>(const string& left, const string& right) {
+  template <> auto _multiply<unsigned short>(const string& left, const string& right) -> unsigned short {
     double val = _toDouble(left + "*" + right);
     if ( val >= 0 && val <= double(USHRT_MAX) )
       return (unsigned short)val;
@@ -199,27 +199,27 @@ namespace dd4hep  {
     return 0;
   }
 
-  template <> int _multiply<int>(const string& left, const string& right) {
+  template <> auto _multiply<int>(const string& left, const string& right) -> int {
     return (int) _toDouble(left + "*" + right);
   }
 
-  template <> unsigned int _multiply<unsigned int>(const string& left, const string& right) {
+  template <> auto _multiply<unsigned int>(const string& left, const string& right) -> unsigned int {
     return (unsigned int) _toDouble(left + "*" + right);
   }
 
-  template <> long _multiply<long>(const string& left, const string& right) {
+  template <> auto _multiply<long>(const string& left, const string& right) -> long {
     return (long) _toDouble(left + "*" + right);
   }
 
-  template <> unsigned long _multiply<unsigned long>(const string& left, const string& right) {
+  template <> auto _multiply<unsigned long>(const string& left, const string& right) -> unsigned long {
     return (unsigned long) _toDouble(left + "*" + right);
   }
 
-  template <> float _multiply<float>(const string& left, const string& right) {
+  template <> auto _multiply<float>(const string& left, const string& right) -> float {
     return _toFloat(left + "*" + right);
   }
 
-  template <> double _multiply<double>(const string& left, const string& right) {
+  template <> auto _multiply<double>(const string& left, const string& right) -> double {
     return _toDouble(left + "*" + right);
   }
 
@@ -250,7 +250,7 @@ namespace dd4hep  {
   }
 
   /// String manipulations: Remove unconditionally all white spaces
-  string remove_whitespace(const string& v)    {
+  auto remove_whitespace(const string& v) -> string    {
     string value;
     value.reserve(v.length()+1);
     for(const char* p = v.c_str(); *p; ++p)   {
@@ -259,40 +259,40 @@ namespace dd4hep  {
     return value;
   }
 
-  template <typename T> static inline string __to_string(T value, const char* fmt) {
+  template <typename T> static inline auto __to_string(T value, const char* fmt) -> string {
     char text[128];
     ::snprintf(text, sizeof(text), fmt, value);
     return text;
   }
 
-  string _toString(bool value) {
+  auto _toString(bool value) -> string {
     return value ? "true" : "false";
   }
 
-  string _toString(short value, const char* fmt) {
+  auto _toString(short value, const char* fmt) -> string {
     return __to_string((int)value, fmt);
   }
 
-  string _toString(int value, const char* fmt) {
+  auto _toString(int value, const char* fmt) -> string {
     return __to_string(value, fmt);
   }
 
-  string _toString(float value, const char* fmt) {
+  auto _toString(float value, const char* fmt) -> string {
     return __to_string(value, fmt);
   }
 
-  string _toString(double value, const char* fmt) {
+  auto _toString(double value, const char* fmt) -> string {
     return __to_string(value, fmt);
   }
 
-  string _ptrToString(const void* value, const char* fmt) {
+  auto _ptrToString(const void* value, const char* fmt) -> string {
     return __to_string(value, fmt);
   }
 
   // ==================================================================================
   static long s_numVerifies = 0;
 
-  long num_object_validations() {
+  auto num_object_validations() -> long {
     return s_numVerifies;
   }
   void increment_object_validations() {
@@ -316,7 +316,7 @@ namespace dd4hep {
     this->m_element = s;
     s->setName(n);
   }
-  template <> const char* Handle<_Segmentation>::name() const {
+  template <> auto Handle<_Segmentation>::name() const -> const char* {
     return this->m_element ? this->m_element->name().c_str() : "";
   }
   template class dd4hep::Handle<_Segmentation>;

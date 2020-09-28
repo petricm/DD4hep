@@ -63,7 +63,7 @@ using namespace dd4hep::sim;
 using namespace dd4hep;
 using namespace std;
 
-static const char* _T(const std::string& str) {
+static auto _T(const std::string& str) -> const char* {
   return str.c_str();
 }
 

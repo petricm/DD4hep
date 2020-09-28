@@ -84,7 +84,7 @@ void Geant4DetectorConstructionSequence::adopt(Geant4DetectorConstruction* actio
 }
 
 /// Access an actor by name
-Geant4DetectorConstruction* Geant4DetectorConstructionSequence::get(const std::string& nam)  const   {
+auto Geant4DetectorConstructionSequence::get(const std::string& nam)  const -> Geant4DetectorConstruction*   {
   for(auto* i : m_actors)  {
     if ( i->name() == nam )  {
       return i;
@@ -110,7 +110,7 @@ void Geant4DetectorConstructionSequence::constructSensitives(Geant4DetectorConst
 }
 
 /// Access to the converted regions
-const map<Region, G4Region*>& Geant4DetectorConstructionSequence::regions() const   {
+auto Geant4DetectorConstructionSequence::regions() const -> const map<Region, G4Region*>&   {
   Geant4GeometryInfo* p = Geant4Mapping::instance().ptr();
   if ( p ) return p->g4Regions;
   throw runtime_error("+++ Geant4DetectorConstructionSequence::regions: Access not possible. Geometry is not yet converted!");
@@ -124,49 +124,49 @@ const Geant4GeometryMaps::SensDetMap& Geant4DetectorConstructionSequence::sensit
 }
 #endif
 /// Access to the converted volumes
-const map<Volume, G4LogicalVolume*>& Geant4DetectorConstructionSequence::volumes() const   {
+auto Geant4DetectorConstructionSequence::volumes() const -> const map<Volume, G4LogicalVolume*>&   {
   Geant4GeometryInfo* p = Geant4Mapping::instance().ptr();
   if ( p ) return p->g4Volumes;
   throw runtime_error("+++ Geant4DetectorConstructionSequence::volumes: Access not possible. Geometry is not yet converted!");
 }
 
 /// Access to the converted shapes
-const map<const TGeoShape*, G4VSolid*>& Geant4DetectorConstructionSequence::shapes() const   {
+auto Geant4DetectorConstructionSequence::shapes() const -> const map<const TGeoShape*, G4VSolid*>&   {
   Geant4GeometryInfo* p = Geant4Mapping::instance().ptr();
   if ( p ) return p->g4Solids;
   throw runtime_error("+++ Geant4DetectorConstructionSequence::shapes: Access not possible. Geometry is not yet converted!");
 }
 
 /// Access to the converted limit sets
-const map<LimitSet, G4UserLimits*>& Geant4DetectorConstructionSequence::limits() const   {
+auto Geant4DetectorConstructionSequence::limits() const -> const map<LimitSet, G4UserLimits*>&   {
   Geant4GeometryInfo* p = Geant4Mapping::instance().ptr();
   if ( p ) return p->g4Limits;
   throw runtime_error("+++ Geant4DetectorConstructionSequence::limits: Access not possible. Geometry is not yet converted!");
 }
 
 /// Access to the converted assemblies
-const map<PlacedVolume, Geant4AssemblyVolume*>& Geant4DetectorConstructionSequence::assemblies() const   {
+auto Geant4DetectorConstructionSequence::assemblies() const -> const map<PlacedVolume, Geant4AssemblyVolume*>&   {
   Geant4GeometryInfo* p = Geant4Mapping::instance().ptr();
   if ( p ) return p->g4AssemblyVolumes;
   throw runtime_error("+++ Geant4DetectorConstructionSequence::assemblies: Access not possible. Geometry is not yet converted!");
 }
 
 /// Access to the converted placements
-const map<PlacedVolume, G4VPhysicalVolume*>& Geant4DetectorConstructionSequence::placements() const   {
+auto Geant4DetectorConstructionSequence::placements() const -> const map<PlacedVolume, G4VPhysicalVolume*>&   {
   Geant4GeometryInfo* p = Geant4Mapping::instance().ptr();
   if ( p ) return p->g4Placements;
   throw runtime_error("+++ Geant4DetectorConstructionSequence::placements: Access not possible. Geometry is not yet converted!");
 }
 
 /// Access to the converted materials
-const Geant4GeometryMaps::MaterialMap& Geant4DetectorConstructionSequence::materials() const   {
+auto Geant4DetectorConstructionSequence::materials() const -> const Geant4GeometryMaps::MaterialMap&   {
   Geant4GeometryInfo* p = Geant4Mapping::instance().ptr();
   if ( p ) return p->g4Materials;
   throw runtime_error("+++ Geant4DetectorConstructionSequence::materials: Access not possible. Geometry is not yet converted!");
 }
 
 /// Access to the converted elements
-const Geant4GeometryMaps::ElementMap& Geant4DetectorConstructionSequence::elements() const   {
+auto Geant4DetectorConstructionSequence::elements() const -> const Geant4GeometryMaps::ElementMap&   {
   Geant4GeometryInfo* p = Geant4Mapping::instance().ptr();
   if ( p ) return p->g4Elements;
   throw runtime_error("+++ Geant4DetectorConstructionSequence::elements: Access not possible. Geometry is not yet converted!");

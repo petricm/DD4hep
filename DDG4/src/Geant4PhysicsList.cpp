@@ -74,7 +74,7 @@ Geant4PhysicsList::Process::Process(const Process& p)
     = default;
 
 /// Assignment operator
-Geant4PhysicsList::Process& Geant4PhysicsList::Process::operator=(const Process& p)  {
+auto Geant4PhysicsList::Process::operator=(const Process& p) -> Geant4PhysicsList::Process&  {
   if ( this != &p )  {
     name = p.name;
     ordAtRestDoIt     = p.ordAtRestDoIt;
@@ -170,7 +170,7 @@ void Geant4PhysicsList::addPhysicsConstructor(const std::string& phys_name)  {
 }
 
 /// Access processes for one particle type
-Geant4PhysicsList::ParticleProcesses& Geant4PhysicsList::processes(const string& nam)  {
+auto Geant4PhysicsList::processes(const string& nam) -> Geant4PhysicsList::ParticleProcesses&  {
   auto i = m_processes.find(nam);
   if (i != m_processes.end())  {
     return (*i).second;
@@ -180,7 +180,7 @@ Geant4PhysicsList::ParticleProcesses& Geant4PhysicsList::processes(const string&
 }
 
 /// Access processes for one particle type (CONST)
-const Geant4PhysicsList::ParticleProcesses& Geant4PhysicsList::processes(const string& nam) const {
+auto Geant4PhysicsList::processes(const string& nam) const -> const Geant4PhysicsList::ParticleProcesses& {
   auto i = m_processes.find(nam);
   if (i != m_processes.end())  {
     return (*i).second;
@@ -190,7 +190,7 @@ const Geant4PhysicsList::ParticleProcesses& Geant4PhysicsList::processes(const s
 }
 
 /// Access discrete processes for one particle type
-Geant4PhysicsList::ParticleProcesses& Geant4PhysicsList::discreteProcesses(const string& nam)  {
+auto Geant4PhysicsList::discreteProcesses(const string& nam) -> Geant4PhysicsList::ParticleProcesses&  {
   auto i = m_discreteProcesses.find(nam);
   if (i != m_discreteProcesses.end())  {
     return (*i).second;
@@ -200,7 +200,7 @@ Geant4PhysicsList::ParticleProcesses& Geant4PhysicsList::discreteProcesses(const
 }
 
 /// Access discrete processes for one particle type (CONST)
-const Geant4PhysicsList::ParticleProcesses& Geant4PhysicsList::discreteProcesses(const string& nam) const {
+auto Geant4PhysicsList::discreteProcesses(const string& nam) const -> const Geant4PhysicsList::ParticleProcesses& {
   auto i = m_discreteProcesses.find(nam);
   if (i != m_discreteProcesses.end())  {
     return (*i).second;
@@ -340,7 +340,7 @@ Geant4PhysicsListActionSequence::~Geant4PhysicsListActionSequence()  {
 }
 
 /// Extend physics list from factory:
-G4VUserPhysicsList* Geant4PhysicsListActionSequence::extensionList()    {
+auto Geant4PhysicsListActionSequence::extensionList() -> G4VUserPhysicsList*    {
   G4VModularPhysicsList* physics = ( m_extends.empty() )
     ? new EmptyPhysics()
     : G4PhysListFactory().GetReferencePhysList(m_extends);

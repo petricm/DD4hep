@@ -35,7 +35,7 @@ namespace dd4hep {
     DetNominalCreator(Detector& d) : description(d) {}
     DetNominalCreator(const DetNominalCreator& c)  = default;
     virtual ~DetNominalCreator() = default;
-    int operator()(DetElement de, int /* level */)  const  {
+    auto operator()(DetElement de, int /* level */)  const -> int  {
       if ( de.nominal().isValid() )  return 1;
       return 0;
     }
@@ -53,7 +53,7 @@ namespace dd4hep {
 using namespace std;
 using namespace dd4hep;
 
-static void* create_object(Detector& description, int argc, char** argv)   {
+static auto create_object(Detector& description, int argc, char** argv) -> void*   {
   for(int i = 0; i < argc && argv[i]; ++i)  {  }
   shared_ptr<DetNominalCreator> obj(new DetNominalCreator(description));
   auto* proc =

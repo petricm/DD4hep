@@ -61,7 +61,7 @@ using namespace std;
 namespace {
   typedef Position XYZRotation;
 
-  XYZRotation getXYZangles(const Double_t* r) {
+  auto getXYZangles(const Double_t* r) -> XYZRotation {
     Double_t cosb = std::sqrt(r[0]*r[0] + r[1]*r[1]);
     if (cosb > 0.00001) {
       return XYZRotation(atan2(r[5], r[8]), atan2(-r[2], cosb), atan2(r[1], r[0]));
@@ -92,16 +92,16 @@ namespace {
   }
 #endif
 
-  bool is_volume(const TGeoVolume* volume)  {
+  auto is_volume(const TGeoVolume* volume) -> bool  {
     Volume v(volume);
     return v.data() != nullptr;
   }
-  bool is_placement(PlacedVolume node)  {
+  auto is_placement(PlacedVolume node) -> bool  {
     return node.data() != nullptr;
   }
 
-  string genName(const string& n)  {  return n; }
-  string genName(const string& n, const void* ptr)  {
+  auto genName(const string& n) -> string  {  return n; }
+  auto genName(const string& n, const void* ptr) -> string  {
     string nn = genName(n);
     char text[32];
     ::snprintf(text,sizeof(text),"%p",ptr);
@@ -132,7 +132,7 @@ LCDDConverter::~LCDDConverter() {
 }
 
 /// Dump element in GDML format to output stream
-xml_h LCDDConverter::handleElement(const string& /* name */, Atom element) const {
+auto LCDDConverter::handleElement(const string& /* name */, Atom element) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h e = geo.xmlElements[element];
   if (!e) {
@@ -155,7 +155,7 @@ xml_h LCDDConverter::handleElement(const string& /* name */, Atom element) const
 }
 
 /// Dump material in GDML format to output stream
-xml_h LCDDConverter::handleMaterial(const string& name, Material medium) const {
+auto LCDDConverter::handleMaterial(const string& name, Material medium) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h mat = geo.xmlMaterials[medium];
   if (!mat) {
@@ -216,7 +216,7 @@ xml_h LCDDConverter::handleMaterial(const string& name, Material medium) const {
 }
 
 /// Dump solid in GDML format to output stream
-xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) const {
+auto LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) const -> xml_h {
   GeometryInfo& geo = data();
   auto sit = geo.xmlSolids.find(shape);
   if (!shape) {
@@ -599,7 +599,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
 }
 
 /// Convert the Position into the corresponding Xml object(s).
-xml_h LCDDConverter::handlePosition(const std::string& name, const TGeoMatrix* trafo) const {
+auto LCDDConverter::handlePosition(const std::string& name, const TGeoMatrix* trafo) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h pos = geo.xmlPositions[trafo];
   if (!pos) {
@@ -633,7 +633,7 @@ xml_h LCDDConverter::handlePosition(const std::string& name, const TGeoMatrix* t
 }
 
 /// Convert the Rotation into the corresponding Xml object(s).
-xml_h LCDDConverter::handleRotation(const std::string& name, const TGeoMatrix* trafo) const {
+auto LCDDConverter::handleRotation(const std::string& name, const TGeoMatrix* trafo) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h rot = geo.xmlRotations[trafo];
   if (!rot) {
@@ -667,7 +667,7 @@ xml_h LCDDConverter::handleRotation(const std::string& name, const TGeoMatrix* t
 }
 
 /// Dump logical volume in GDML format to output stream
-xml_h LCDDConverter::handleVolume(const string& /* name */, Volume volume) const {
+auto LCDDConverter::handleVolume(const string& /* name */, Volume volume) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h vol = geo.xmlVolumes[volume];
   if (!vol) {
@@ -734,7 +734,7 @@ xml_h LCDDConverter::handleVolume(const string& /* name */, Volume volume) const
 }
 
 /// Dump logical volume in GDML format to output stream
-xml_h LCDDConverter::handleVolumeVis(const string& /* name */, const TGeoVolume* volume) const {
+auto LCDDConverter::handleVolumeVis(const string& /* name */, const TGeoVolume* volume) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h         vol = geo.xmlVolumes[volume];
   if (!vol) {
@@ -798,7 +798,7 @@ void LCDDConverter::checkVolumes(const string& /* name */, Volume v) const {
 }
 
 /// Dump volume placement in GDML format to output stream
-xml_h LCDDConverter::handlePlacement(const string& name,PlacedVolume node) const {
+auto LCDDConverter::handlePlacement(const string& name,PlacedVolume node) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h place = geo.xmlPlacements[node];
   if (!place) {
@@ -840,7 +840,7 @@ xml_h LCDDConverter::handlePlacement(const string& name,PlacedVolume node) const
 }
 
 /// Convert the geometry type region into the corresponding Detector object(s).
-xml_h LCDDConverter::handleRegion(const std::string& /* name */, Region region) const {
+auto LCDDConverter::handleRegion(const std::string& /* name */, Region region) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h reg = geo.xmlRegions[region];
   if (!reg) {
@@ -856,7 +856,7 @@ xml_h LCDDConverter::handleRegion(const std::string& /* name */, Region region) 
 }
 
 /// Convert the geometry type LimitSet into the corresponding Detector object(s)
-xml_h LCDDConverter::handleLimitSet(const std::string& /* name */, LimitSet lim) const {
+auto LCDDConverter::handleLimitSet(const std::string& /* name */, LimitSet lim) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h xml = geo.xmlLimits[lim];
   if (!xml) {
@@ -877,7 +877,7 @@ xml_h LCDDConverter::handleLimitSet(const std::string& /* name */, LimitSet lim)
 }
 
 /// Convert the segmentation of a SensitiveDetector into the corresponding Detector object
-xml_h LCDDConverter::handleSegmentation(Segmentation seg) const {
+auto LCDDConverter::handleSegmentation(Segmentation seg) const -> xml_h {
   xml_h xml;
   if (seg.isValid()) {
     typedef DDSegmentation::Parameters _P;
@@ -908,7 +908,7 @@ xml_h LCDDConverter::handleSegmentation(Segmentation seg) const {
 }
 
 /// Convert the geometry type SensitiveDetector into the corresponding Detector object(s).
-xml_h LCDDConverter::handleSensitive(const string& /* name */, SensitiveDetector sd) const {
+auto LCDDConverter::handleSensitive(const string& /* name */, SensitiveDetector sd) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h sensdet = geo.xmlSensDets[sd];
   if (!sensdet) {
@@ -934,7 +934,7 @@ xml_h LCDDConverter::handleSensitive(const string& /* name */, SensitiveDetector
 }
 
 /// Convert the geometry id dictionary entry to the corresponding Xml object(s).
-xml_h LCDDConverter::handleIdSpec(const std::string& name, IDDescriptor id_spec) const {
+auto LCDDConverter::handleIdSpec(const std::string& name, IDDescriptor id_spec) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h id = geo.xmlIdSpecs[id_spec];
   if (!id) {
@@ -969,7 +969,7 @@ xml_h LCDDConverter::handleIdSpec(const std::string& name, IDDescriptor id_spec)
 }
 
 /// Convert the geometry visualisation attributes to the corresponding Detector object(s).
-xml_h LCDDConverter::handleVis(const string& /* name */, VisAttr attr) const {
+auto LCDDConverter::handleVis(const string& /* name */, VisAttr attr) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h vis = geo.xmlVis[attr];
   if (!vis) {
@@ -1003,7 +1003,7 @@ xml_h LCDDConverter::handleVis(const string& /* name */, VisAttr attr) const {
 }
 
 /// Convert the electric or magnetic fields into the corresponding Xml object(s).
-xml_h LCDDConverter::handleField(const std::string& /* name */, OverlayedField f) const {
+auto LCDDConverter::handleField(const std::string& /* name */, OverlayedField f) const -> xml_h {
   GeometryInfo& geo = data();
   xml_h field = geo.xmlFields[f];
   if (!field) {
@@ -1111,7 +1111,7 @@ template <typename O, typename C, typename F> void handleRMap(const O* o, const 
 }
 
 /// Create geometry conversion
-xml_doc_t LCDDConverter::createGDML(DetElement top) {
+auto LCDDConverter::createGDML(DetElement top) -> xml_doc_t {
   Detector& description = m_detDesc;
   if (!top.isValid()) {
     throw runtime_error("Attempt to call createGDML with an invalid geometry!");
@@ -1167,7 +1167,7 @@ xml_doc_t LCDDConverter::createGDML(DetElement top) {
 }
 
 /// Create geometry conversion
-xml_doc_t LCDDConverter::createVis(DetElement top) {
+auto LCDDConverter::createVis(DetElement top) -> xml_doc_t {
   if (!top.isValid()) {
     throw runtime_error("Attempt to call createDetector with an invalid geometry!");
   }
@@ -1191,7 +1191,7 @@ xml_doc_t LCDDConverter::createVis(DetElement top) {
 }
 
 /// Create geometry conversion
-xml_doc_t LCDDConverter::createDetector(DetElement top) {
+auto LCDDConverter::createDetector(DetElement top) -> xml_doc_t {
   Detector& description = m_detDesc;
   if (!top.isValid()) {
     throw runtime_error("Attempt to call createDetector with an invalid geometry!");
@@ -1280,27 +1280,27 @@ LCDDConverter::GeometryInfo::GeometryInfo()
 {
 }
 
-static long dump_output(xml_doc_t doc, int argc, char** argv) {
+static auto dump_output(xml_doc_t doc, int argc, char** argv) -> long {
   xml::DocumentHandler docH;
   return docH.output(doc, argc > 0 ? argv[0] : "");
 }
 
-long create_gdml_from_dd4hep(Detector& description, int argc, char** argv) {
+auto create_gdml_from_dd4hep(Detector& description, int argc, char** argv) -> long {
   LCDDConverter wr(description);
   return dump_output(wr.createGDML(description.world()), argc, argv);
 }
 
-static long create_description(Detector& description, int argc, char** argv) {
+static auto create_description(Detector& description, int argc, char** argv) -> long {
   LCDDConverter wr(description);
   return dump_output(wr.createDetector(description.world()), argc, argv);
 }
 
-static long create_vis(Detector& description, int argc, char** argv) {
+static auto create_vis(Detector& description, int argc, char** argv) -> long {
   LCDDConverter wr(description);
   return dump_output(wr.createVis(description.world()), argc, argv);
 }
 
-static long create_visASCII(Detector& description, int /* argc */, char** argv) {
+static auto create_visASCII(Detector& description, int /* argc */, char** argv) -> long {
   LCDDConverter wr(description);
   /* xml_doc_t doc = */ wr.createVis(description.world());
   LCDDConverter::GeometryInfo& geo = wr.data();

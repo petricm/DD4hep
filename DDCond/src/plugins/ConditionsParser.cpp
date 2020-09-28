@@ -75,7 +75,7 @@ namespace dd4hep {
   };
 
   /// Helper: Extract the validity from the xml element
-  string _getValidity(xml_h elt)  {
+  auto _getValidity(xml_h elt) -> string  {
     if ( !elt.ptr() )
       return "Infinite";
     else if ( !elt.hasAttr(_UC(validity)) )
@@ -84,7 +84,7 @@ namespace dd4hep {
   }
 
   /// Helper: Extract the required detector element from the parsing information
-  DetElement _getDetector(void* param, xml_h e)  {
+  auto _getDetector(void* param, xml_h e) -> DetElement  {
     auto* arg  = static_cast<ConversionArg*>(param);
     DetElement detector = arg ? arg->detector : DetElement();
     string     subpath  = e.hasAttr(_U(path)) ? e.attr<string>(_U(path)) : string();
@@ -92,7 +92,7 @@ namespace dd4hep {
   }
 
   /// Helper: Extract the string value from the xml element 
-  Entry* _createStackEntry(void* param, xml_h element)  {
+  auto _createStackEntry(void* param, xml_h element) -> Entry*  {
     xml_comp_t e(element);
     DetElement elt = _getDetector(param, element);
     string name = e.hasAttr(_U(name)) ? e.nameStr() : e.tag();
@@ -210,7 +210,7 @@ namespace dd4hep {
  *  @version 1.0
  *  @date    01/04/2014
  */
-static void* setup_global_Conditions(Detector& description, int argc, char** argv)  {
+static auto setup_global_Conditions(Detector& description, int argc, char** argv) -> void*  {
   if ( argc == 2 )  {
     xml_h e = xml_h::Elt_t(argv[0]);
     auto* stack = (ConditionsStack*)argv[1];

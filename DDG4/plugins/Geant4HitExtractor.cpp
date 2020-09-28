@@ -44,7 +44,7 @@ namespace dd4hep::DDEve  {
       /// Standard Destructor
       ~SimulationHit()  = default;
       /// Assignment operator
-      SimulationHit& operator=(const SimulationHit& c)  {
+      auto operator=(const SimulationHit& c) -> SimulationHit&  {
         if ( this != &c )  {
           position = c.position;
           deposit = c.deposit;
@@ -55,7 +55,7 @@ namespace dd4hep::DDEve  {
   }
 
 /// Hit conversion function  \ingroup DD4HEP_EVE
-static void* _convertHitCollection(const char* source)  {
+static auto _convertHitCollection(const char* source) -> void*  {
   typedef dd4hep::DDEve::SimulationHit SimulationHit;
   const std::vector<SimpleHit*>* c = (std::vector<SimpleHit*>*)source;
   auto* pv = new std::vector<SimulationHit>();

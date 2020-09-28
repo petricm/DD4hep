@@ -36,7 +36,7 @@ struct FindString {
   FindString(const std::string& n)
     : m_name(n) {
   }
-  bool operator()(const std::string& n) const {
+  auto operator()(const std::string& n) const -> bool {
     return m_name == n;
   }
   //template <class T> bool operator==(const std::pair<std::string,T>& cmp)  const

@@ -46,12 +46,12 @@ OpticalSurface::OpticalSurface(Detector& detector,
 }
 
 /// Access to tabular properties of the surface
-OpticalSurface::Property OpticalSurface::property(const char* nam)  const   {
+auto OpticalSurface::property(const char* nam)  const -> OpticalSurface::Property   {
   return access()->GetProperty(nam);
 }
 
 /// Access to tabular properties of the surface
-OpticalSurface::Property OpticalSurface::property(const std::string& nam)  const   {
+auto OpticalSurface::property(const std::string& nam)  const -> OpticalSurface::Property   {
   return access()->GetProperty(nam.c_str());
 }
 
@@ -74,24 +74,24 @@ SkinSurface::SkinSurface(Detector& detector, DetElement de, const string& nam, O
 }
 
 /// Access surface data
-OpticalSurface SkinSurface::surface()  const    {
+auto SkinSurface::surface()  const -> OpticalSurface    {
   return (TGeoOpticalSurface*)(access()->GetSurface());
 }
 
 /// Access to tabular properties of the optical surface
-BorderSurface::Property SkinSurface::property(const char* nam)  const    {
+auto SkinSurface::property(const char* nam)  const -> BorderSurface::Property    {
   OpticalSurface surf(surface());
   return surf.property(nam);
 }
 
 /// Access to tabular properties of the optical surface
-BorderSurface::Property SkinSurface::property(const std::string& nam)  const   {
+auto SkinSurface::property(const std::string& nam)  const -> BorderSurface::Property   {
   OpticalSurface surf(surface());
   return surf.property(nam.c_str());
 }
 
 /// Access the node of the skin surface
-Volume   SkinSurface::volume()   const    {
+auto   SkinSurface::volume()   const -> Volume    {
   return access()->GetVolume();
 }
 
@@ -119,29 +119,29 @@ BorderSurface::BorderSurface(Detector&      detector,
 }
 
 /// Access surface data
-OpticalSurface BorderSurface::surface()  const    {
+auto BorderSurface::surface()  const -> OpticalSurface    {
   return (TGeoOpticalSurface*)(access()->GetSurface());
 }
 
 /// Access to tabular properties of the optical surface
-BorderSurface::Property BorderSurface::property(const char* nam)  const    {
+auto BorderSurface::property(const char* nam)  const -> BorderSurface::Property    {
   OpticalSurface surf(surface());
   return surf.property(nam);
 }
 
 /// Access to tabular properties of the optical surface
-BorderSurface::Property BorderSurface::property(const std::string& nam)  const   {
+auto BorderSurface::property(const std::string& nam)  const -> BorderSurface::Property   {
   OpticalSurface surf(surface());
   return surf.property(nam.c_str());
 }
 
 /// Access the left node of the border surface
-PlacedVolume   BorderSurface::left()   const    {
+auto   BorderSurface::left()   const -> PlacedVolume    {
   return (TGeoNode*)access()->GetNode1();
 }
 
 /// Access the right node of the border surface
-PlacedVolume   BorderSurface::right()  const    {
+auto   BorderSurface::right()  const -> PlacedVolume    {
   return access()->GetNode2();
 }
 #endif

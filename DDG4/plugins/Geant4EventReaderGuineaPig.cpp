@@ -56,12 +56,12 @@ namespace dd4hep::sim {
       /// Default destructor
       ~Geant4EventReaderGuineaPig() override;
       /// Read an event and fill a vector of MCParticles.
-      EventReaderStatus readParticles(int event_number,
+      auto readParticles(int event_number,
                                               Vertices& vertices,
-                                              std::vector<Particle*>& particles) override ;
-      EventReaderStatus moveToEvent(int event_number) override ;
-      EventReaderStatus skipEvent() override  { return EVENT_READER_OK; }
-      EventReaderStatus setParameters( std::map< std::string, std::string > & parameters ) override ;
+                                              std::vector<Particle*>& particles) -> EventReaderStatus override ;
+      auto moveToEvent(int event_number) -> EventReaderStatus override ;
+      auto skipEvent() -> EventReaderStatus override  { return EVENT_READER_OK; }
+      auto setParameters( std::map< std::string, std::string > & parameters ) -> EventReaderStatus override ;
     };
   }       /* End namespace dd4hep       */
 
@@ -102,8 +102,8 @@ Geant4EventReaderGuineaPig::~Geant4EventReaderGuineaPig()    {
 }
 
 
-Geant4EventReader::EventReaderStatus
-Geant4EventReaderGuineaPig::setParameters( std::map< std::string, std::string > & parameters ) {
+auto
+Geant4EventReaderGuineaPig::setParameters( std::map< std::string, std::string > & parameters ) -> Geant4EventReader::EventReaderStatus {
 
   _getParameterValue( parameters, "ParticlesPerEvent", m_part_num, -1);
   
@@ -115,8 +115,8 @@ Geant4EventReaderGuineaPig::setParameters( std::map< std::string, std::string > 
   return EVENT_READER_OK;
 }
 
-Geant4EventReader::EventReaderStatus
-Geant4EventReaderGuineaPig::moveToEvent(int event_number) {
+auto
+Geant4EventReaderGuineaPig::moveToEvent(int event_number) -> Geant4EventReader::EventReaderStatus {
   
   printout(DEBUG,"EventReader"," move to event_number: %d , m_currEvent %d",
            event_number,m_currEvent ) ;
@@ -156,10 +156,10 @@ Geant4EventReaderGuineaPig::moveToEvent(int event_number) {
 }
 
 /// Read an event and fill a vector of MCParticles.
-Geant4EventReader::EventReaderStatus
+auto
 Geant4EventReaderGuineaPig::readParticles(int /* event_number */, 
                                           Vertices& vertices,
-                                          vector<Particle*>& particles)   {
+                                          vector<Particle*>& particles) -> Geant4EventReader::EventReaderStatus   {
 
 
   // if no number of particles per event set, we will read the whole file

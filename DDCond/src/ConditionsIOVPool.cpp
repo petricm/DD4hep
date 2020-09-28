@@ -39,7 +39,7 @@ ConditionsIOVPool::~ConditionsIOVPool()  {
   InstanceCount::decrement(this);
 }
 
-size_t ConditionsIOVPool::select(Condition::key_type key, const IOV& req_validity, RangeConditions& result)
+auto ConditionsIOVPool::select(Condition::key_type key, const IOV& req_validity, RangeConditions& result) -> size_t
 {
   if ( !elements.empty() )  {
     size_t len = result.size();
@@ -54,7 +54,7 @@ size_t ConditionsIOVPool::select(Condition::key_type key, const IOV& req_validit
   return 0;
 }
 
-size_t ConditionsIOVPool::selectRange(Condition::key_type key, const IOV& req_validity, RangeConditions& result)
+auto ConditionsIOVPool::selectRange(Condition::key_type key, const IOV& req_validity, RangeConditions& result) -> size_t
 {
   size_t len = result.size();
   const IOV::Key range = req_validity.key();
@@ -74,7 +74,7 @@ size_t ConditionsIOVPool::selectRange(Condition::key_type key, const IOV& req_va
 }
 
 /// Invoke cache cleanup with user defined policy
-int ConditionsIOVPool::clean(const ConditionsCleanup& cleaner)   {
+auto ConditionsIOVPool::clean(const ConditionsCleanup& cleaner) -> int   {
  Elements rest;
   int count = 0;
   for( const auto& e : elements )  {
@@ -91,7 +91,7 @@ int ConditionsIOVPool::clean(const ConditionsCleanup& cleaner)   {
 }
 
 /// Remove all key based pools with an age beyon the minimum age
-int ConditionsIOVPool::clean(int max_age)   {
+auto ConditionsIOVPool::clean(int max_age) -> int   {
   Elements rest;
   int count = 0;
   for( const auto& e : elements )  {
@@ -108,9 +108,9 @@ int ConditionsIOVPool::clean(int max_age)   {
 }
 
 /// Select all ACTIVE conditions, which do match the IOV requirement
-size_t ConditionsIOVPool::select(const IOV&        req_validity, 
+auto ConditionsIOVPool::select(const IOV&        req_validity,
                                  RangeConditions&  valid,
-                                 IOV&              cond_validity)
+                                 IOV&              cond_validity) -> size_t
 {
   size_t num_selected = 0;
   if ( !elements.empty() )  {
@@ -129,9 +129,9 @@ size_t ConditionsIOVPool::select(const IOV&        req_validity,
 }
 
 /// Select all ACTIVE conditions, which do match the IOV requirement
-size_t ConditionsIOVPool::select(const IOV&              req_validity, 
+auto ConditionsIOVPool::select(const IOV&              req_validity,
                                  const ConditionsSelect& predicate_processor,
-                                 IOV&                    cond_validity)
+                                 IOV&                    cond_validity) -> size_t
 {
   size_t num_selected = 0, pool_selected = 0;
   if ( !elements.empty() )  {
@@ -151,9 +151,9 @@ size_t ConditionsIOVPool::select(const IOV&              req_validity,
 }
 
 /// Select all ACTIVE conditions, which do match the IOV requirement
-size_t ConditionsIOVPool::select(const IOV& req_validity, 
+auto ConditionsIOVPool::select(const IOV& req_validity,
                                  Elements&  valid,
-                                 IOV&       cond_validity)
+                                 IOV&       cond_validity) -> size_t
 {
   size_t num_selected = select(req_validity, valid);
   cond_validity.invert().reset();
@@ -163,7 +163,7 @@ size_t ConditionsIOVPool::select(const IOV& req_validity,
 }
 
 /// Select all ACTIVE conditions, which do match the IOV requirement
-size_t ConditionsIOVPool::select(const IOV& req_validity, Elements&  valid)
+auto ConditionsIOVPool::select(const IOV& req_validity, Elements&  valid) -> size_t
 {
   size_t num_selected = 0;
   if ( !elements.empty() )   {
@@ -180,9 +180,9 @@ size_t ConditionsIOVPool::select(const IOV& req_validity, Elements&  valid)
 }
 
 /// Select all ACTIVE conditions, which do match the IOV requirement
-size_t ConditionsIOVPool::select(const IOV&        req_validity, 
+auto ConditionsIOVPool::select(const IOV&        req_validity,
                                  std::vector<Element>&  valid,
-                                 IOV&              cond_validity)
+                                 IOV&              cond_validity) -> size_t
 {
   size_t num_selected = select(req_validity, valid);
   cond_validity.invert().reset();
@@ -192,7 +192,7 @@ size_t ConditionsIOVPool::select(const IOV&        req_validity,
 }
 
 /// Select all ACTIVE conditions, which do match the IOV requirement
-size_t ConditionsIOVPool::select(const IOV& req_validity, std::vector<Element>& valid)
+auto ConditionsIOVPool::select(const IOV& req_validity, std::vector<Element>& valid) -> size_t
 {
   size_t num_selected = 0;
   if ( !elements.empty() )   {

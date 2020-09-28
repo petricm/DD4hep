@@ -92,14 +92,14 @@ namespace dd4hep::sim {
         : Geant4GenericSD<Calorimeter>(nam,description_ref) {          }
 
       /// Initialize the sensitive detector for the usage of a single hit collection
-      bool defineCollection(const string& coll_name) override {
+      auto defineCollection(const string& coll_name) -> bool override {
         Geant4SensitiveDetector::defineCollection("Edep_" + coll_name);
         Geant4SensitiveDetector::defineCollection("Ceren_" + coll_name);
         return true;
       }
 
       /// Method for generating hit(s) using the information of G4Step object.
-      G4bool ProcessHits(G4Step* step,G4TouchableHistory* history) override {
+      auto ProcessHits(G4Step* step,G4TouchableHistory* history) -> G4bool override {
         G4Track * track =  step->GetTrack();
 
         // check that particle is optical photon:

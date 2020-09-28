@@ -26,12 +26,12 @@ using namespace dd4hep::cond;
 ConditionUpdateUserContext::~ConditionUpdateUserContext()   = default;
 
 /// Access to the top level detector element
-DetElement ConditionUpdateContext::world()  const   {
+auto ConditionUpdateContext::world()  const -> DetElement   {
   return resolver->detectorDescription().world();
 }
 
 /// Access to all conditions of a detector element. Careful: This limits the validity!
-std::vector<Condition> ConditionUpdateContext::conditions(Condition::detkey_type det_key)  const   {
+auto ConditionUpdateContext::conditions(Condition::detkey_type det_key)  const -> std::vector<Condition>   {
   std::vector<Condition> v = resolver->get(det_key);
   /// Update result IOV according by and'ing the new iov structure
   for(Condition c : v) iov->iov_intersection(c.iov());
@@ -39,7 +39,7 @@ std::vector<Condition> ConditionUpdateContext::conditions(Condition::detkey_type
 }
 
 /// Access conditions by the condition item key
-std::vector<Condition> ConditionUpdateContext::getByItem(Condition::itemkey_type item_key)   const    {
+auto ConditionUpdateContext::getByItem(Condition::itemkey_type item_key)   const -> std::vector<Condition>    {
   std::vector<Condition> v = resolver->getByItem(item_key);
   /// Update result IOV according by and'ing the new iov structure
   for(Condition c : v) iov->iov_intersection(c.iov());
@@ -47,7 +47,7 @@ std::vector<Condition> ConditionUpdateContext::getByItem(Condition::itemkey_type
 }
 
 /// Access to condition object by dependency key
-Condition ConditionUpdateContext::condition(const ConditionKey& key_value)  const  {
+auto ConditionUpdateContext::condition(const ConditionKey& key_value)  const -> Condition  {
   Condition c = resolver->get(key_value);
   if ( c.isValid() )  {
     /// Update result IOV according by and'ing the new iov structure
@@ -65,7 +65,7 @@ Condition ConditionUpdateContext::condition(const ConditionKey& key_value)  cons
 }
    
 /// Access to condition object by dependency key
-Condition ConditionUpdateContext::condition(Condition::key_type key_value)  const   {
+auto ConditionUpdateContext::condition(Condition::key_type key_value)  const -> Condition   {
   Condition c = resolver->get(key_value);
   if ( c.isValid() )  {
     /// Update result IOV according by and'ing the new iov structure
@@ -76,8 +76,8 @@ Condition ConditionUpdateContext::condition(Condition::key_type key_value)  cons
 }
 
 /// Access to condition object by dependency key
-Condition ConditionUpdateContext::condition(Condition::key_type key_value,
-                                            bool throw_if_not)  const   {
+auto ConditionUpdateContext::condition(Condition::key_type key_value,
+                                            bool throw_if_not)  const -> Condition   {
   Condition c = resolver->get(key_value, throw_if_not);
   if ( c.isValid() )  {
     /// Update result IOV according by and'ing the new iov structure
@@ -91,12 +91,12 @@ Condition ConditionUpdateContext::condition(Condition::key_type key_value,
 }
 
 /// Interface to handle multi-condition inserts by callbacks: One single insert
-bool ConditionUpdateContext::registerOne(const IOV& iov_val, Condition cond)   {
+auto ConditionUpdateContext::registerOne(const IOV& iov_val, Condition cond) -> bool   {
   return resolver->registerOne(iov_val, cond);
 }
 
 /// Handle multi-condition inserts by callbacks: block insertions of conditions with identical IOV
-size_t ConditionUpdateContext::registerMany(const IOV& iov_val, const std::vector<Condition>& values)  {
+auto ConditionUpdateContext::registerMany(const IOV& iov_val, const std::vector<Condition>& values) -> size_t  {
   return resolver->registerMany(iov_val, values);
 }
 
@@ -213,7 +213,7 @@ void DependencyBuilder::add(const ConditionKey& source)   {
 }
 
 /// Release the created dependency and take ownership.
-ConditionDependency* DependencyBuilder::release()   {
+auto DependencyBuilder::release() -> ConditionDependency*   {
   if ( m_dependency )   {
     return m_dependency.release();
   }

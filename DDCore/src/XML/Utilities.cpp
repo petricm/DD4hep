@@ -28,7 +28,7 @@ using namespace dd4hep::detail;
 using namespace dd4hep::xml::tools;
 
 /// Create layered transformation from xml information
-Transform3D dd4hep::xml::createTransformation(xml::Element e)   {
+auto dd4hep::xml::createTransformation(xml::Element e) -> Transform3D   {
   int flag = 0;
   Transform3D position, rotation, result;
   for( xml_coll_t c(e,_U(star)); c; ++c )    {
@@ -70,9 +70,9 @@ Transform3D dd4hep::xml::createTransformation(xml::Element e)   {
 }
 
 /// Create a solid shape using the plugin mechanism from the attributes of the XML element
-Solid dd4hep::xml::createShape(Detector& description,
+auto dd4hep::xml::createShape(Detector& description,
                                const std::string& shape_type,
-                               xml::Element element)   {
+                               xml::Element element) -> Solid   {
   string fac  = shape_type + "__shape_constructor";
   xml::Handle_t solid_elt = element;
   Solid solid = Solid(PluginService::Create<TObject*>(fac, &description, &solid_elt));
@@ -86,7 +86,7 @@ Solid dd4hep::xml::createShape(Detector& description,
 }
 
 /// Create a volume using the plugin mechanism from the attributes of the XML element
-Volume dd4hep::xml::createStdVolume(Detector& description, xml::Element element)    {
+auto dd4hep::xml::createStdVolume(Detector& description, xml::Element element) -> Volume    {
   xml_dim_t e(element);
   if ( e.hasAttr(_U(material)) )   {
     xml_dim_t x_s = e.child(_U(shape));
@@ -114,9 +114,9 @@ Volume dd4hep::xml::createStdVolume(Detector& description, xml::Element element)
 }
 
 /// Create a volume using the plugin mechanism from the attributes of the XML element
-Volume dd4hep::xml::createVolume(Detector& description,
+auto dd4hep::xml::createVolume(Detector& description,
                                  const std::string& typ,
-                                 xml::Element element)   {
+                                 xml::Element element) -> Volume   {
   if ( !typ.empty() )   {
     xml_dim_t e(element);
     string fac = typ + "__volume_constructor";
@@ -137,9 +137,9 @@ Volume dd4hep::xml::createVolume(Detector& description,
   return Volume();
 }
 
-Volume dd4hep::xml::createPlacedEnvelope( dd4hep::Detector& description,
+auto dd4hep::xml::createPlacedEnvelope( dd4hep::Detector& description,
                                           dd4hep::xml::Handle_t e, 
-                                          dd4hep::DetElement sdet)
+                                          dd4hep::DetElement sdet) -> Volume
 {  
   xml_det_t     x_det     = e;
   string        det_name  = x_det.nameStr();

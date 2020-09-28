@@ -19,7 +19,7 @@ namespace units = dd4hep;
 
 using namespace dd4hep::sim;
 
-G4bool Geant4Field::DoesFieldChangeEnergy() const {
+auto Geant4Field::DoesFieldChangeEnergy() const -> G4bool {
   return m_field.changesEnergy();
 }
 

@@ -16,6 +16,6 @@
 #include "DD4hep/detail/DetectorInterna.h"
 
 /// Access the detector descrion tree
-dd4hep::Detector& dd4hep::World::detectorDescription() const   {
+auto dd4hep::World::detectorDescription() const -> dd4hep::Detector&   {
   return *(access()->description);
 }

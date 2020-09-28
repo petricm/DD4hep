@@ -79,7 +79,7 @@ void ConditionsContent::merge(const ConditionsContent& to_add)    {
 }
 
 /// Remove a new shared condition
-bool ConditionsContent::remove(Condition::key_type hash)   {
+auto ConditionsContent::remove(Condition::key_type hash) -> bool   {
   auto i = m_conditions.find(hash);
   if ( i != m_conditions.end() )  {
     detail::releasePtr((*i).second);
@@ -95,8 +95,8 @@ bool ConditionsContent::remove(Condition::key_type hash)   {
   return false;
 }
 
-pair<Condition::key_type, ConditionsLoadInfo*>
-ConditionsContent::insertKey(Condition::key_type hash)   {
+auto
+ConditionsContent::insertKey(Condition::key_type hash) -> pair<Condition::key_type, ConditionsLoadInfo*>   {
   auto ret = m_conditions.emplace(hash,(ConditionsLoadInfo*)nullptr);
   //printout(DEBUG,"ConditionsContent","++ Insert key: %016X",hash);
   if ( ret.second )  return pair<Condition::key_type, ConditionsLoadInfo*>(hash,0);
@@ -104,8 +104,8 @@ ConditionsContent::insertKey(Condition::key_type hash)   {
 }
 
 /// Add a new conditions key. T must inherit from class ConditionsContent::Info
-pair<Condition::key_type, ConditionsLoadInfo*>
-ConditionsContent::addLocationInfo(Condition::key_type hash, ConditionsLoadInfo* info)   {
+auto
+ConditionsContent::addLocationInfo(Condition::key_type hash, ConditionsLoadInfo* info) -> pair<Condition::key_type, ConditionsLoadInfo*>   {
   if ( info )   {
     //printout(DEBUG,"ConditionsContent","++ Add location key: %016X",hash);
     auto ret = m_conditions.emplace(hash,info);
@@ -119,8 +119,8 @@ ConditionsContent::addLocationInfo(Condition::key_type hash, ConditionsLoadInfo*
 }
 
 /// Add a new shared conditions dependency
-pair<Condition::key_type, ConditionDependency*>
-ConditionsContent::addDependency(ConditionDependency* dep)
+auto
+ConditionsContent::addDependency(ConditionDependency* dep) -> pair<Condition::key_type, ConditionDependency*>
 {
   auto ret = m_derived.emplace(dep->key(),dep);
   if ( ret.second )  {
@@ -143,10 +143,10 @@ ConditionsContent::addDependency(ConditionDependency* dep)
 }
 
 /// Add a new conditions dependency (Built internally from arguments)
-std::pair<Condition::key_type, ConditionDependency*>
+auto
 ConditionsContent::addDependency(DetElement de,
                                  Condition::itemkey_type item,
-                                 std::shared_ptr<ConditionUpdateCall> callback)
+                                 std::shared_ptr<ConditionUpdateCall> callback) -> std::pair<Condition::key_type, ConditionDependency*>
 {
   auto* dep = new ConditionDependency(de, item, callback);
   return addDependency(dep);

@@ -23,7 +23,7 @@ using namespace dd4hep;
 
 namespace {
   static int s_extensionID = 0;
-  PluginTester::ExtensionMap* extensionContainer(const std::type_info& typ) {
+  auto extensionContainer(const std::type_info& typ) -> PluginTester::ExtensionMap* {
     static std::map<const std::type_info*, PluginTester::ExtensionMap> s_map;
     return &s_map[&typ];
   }
@@ -58,7 +58,7 @@ void PluginTester::clear(bool destroy)    {
 }
 
 /// Add an extension object to the detector element
-void* PluginTester::addExtension(void* ptr, const std::string& name, const std::type_info& info, destruct_t dtor)  {
+auto PluginTester::addExtension(void* ptr, const std::string& name, const std::type_info& info, destruct_t dtor) -> void*  {
   key_type key(&info,name);
   auto j = extensions.find(key);
   if (j == extensions.end()) {
@@ -76,7 +76,7 @@ void* PluginTester::addExtension(void* ptr, const std::string& name, const std::
 }
 
 /// Remove an existing extension object from the instance
-void* PluginTester::removeExtension(const std::string& name, const std::type_info& info, bool destroy)  {
+auto PluginTester::removeExtension(const std::string& name, const std::type_info& info, bool destroy) -> void*  {
   key_type key(&info,name);
   auto j = extensions.find(key);
   if (j != extensions.end()) {
@@ -97,7 +97,7 @@ void* PluginTester::removeExtension(const std::string& name, const std::type_inf
 }
 
 /// Access an existing extension object from the detector element
-void* PluginTester::extension(const std::string& name, const std::type_info& info, bool alert) const {
+auto PluginTester::extension(const std::string& name, const std::type_info& info, bool alert) const -> void* {
   key_type key(&info,name);
   auto j = extensions.find(key);
   if (j != extensions.end()) {

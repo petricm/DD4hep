@@ -43,7 +43,7 @@ namespace dd4hep {
 
   // Local, anonymous stuff
   namespace {
-    template <typename T> inline T* get_ptr(const TGeoShape* shape)    {
+    template <typename T> inline auto get_ptr(const TGeoShape* shape) -> T*    {
       if ( shape && shape->IsA() == T::Class() ) return (T*)shape;
       except("Dimension","Invalid shape pointer!");
       return nullptr;
@@ -52,13 +52,13 @@ namespace dd4hep {
       except("Solid","+++ Shape:%s setDimension: Invalid number of parameters: %ld",
              (sh ? typeName(typeid(*sh)) : typeName(typeid(sh))).c_str(), params.size());
     }
-    template <typename T> inline bool check_shape_type(const Handle<TGeoShape>& solid)   {
+    template <typename T> inline auto check_shape_type(const Handle<TGeoShape>& solid) -> bool   {
       return solid.isValid() && solid->IsA() == T::Class();
     }
   }
   
   /// Type check of various shapes. Result like dynamic_cast. Compare with python's isinstance(obj,type)
-  template <typename SOLID> bool isInstance(const Handle<TGeoShape>& solid)   {
+  template <typename SOLID> auto isInstance(const Handle<TGeoShape>& solid) -> bool   {
     return check_shape_type<typename SOLID::Object>(solid);
   }
   template bool isInstance<Box>               (const Handle<TGeoShape>& solid);
@@ -82,53 +82,53 @@ namespace dd4hep {
 #endif
   template bool isInstance<BooleanSolid>      (const Handle<TGeoShape>& solid);
 
-  template <> bool isInstance<Cone>(const Handle<TGeoShape>& solid)  {
+  template <> auto isInstance<Cone>(const Handle<TGeoShape>& solid) -> bool  {
     return check_shape_type<TGeoConeSeg>(solid) || check_shape_type<TGeoCone>(solid);
   }
-  template <> bool isInstance<Tube>(const Handle<TGeoShape>& solid)  {
+  template <> auto isInstance<Tube>(const Handle<TGeoShape>& solid) -> bool  {
     return check_shape_type<TGeoTubeSeg>(solid)
       || check_shape_type<TGeoCtub>(solid)
       || check_shape_type<TwistedTubeObject>(solid);
   }
-  template <> bool isInstance<Polycone>(const Handle<TGeoShape>& solid)   {
+  template <> auto isInstance<Polycone>(const Handle<TGeoShape>& solid) -> bool   {
     return check_shape_type<TGeoPcon>(solid)    || check_shape_type<TGeoPgon>(solid);
   }
-  template <> bool isInstance<EightPointSolid>(const Handle<TGeoShape>& solid)   {
+  template <> auto isInstance<EightPointSolid>(const Handle<TGeoShape>& solid) -> bool   {
     if ( solid.isValid() )   {
       TClass* c = solid->IsA();
       return c==TGeoArb8::Class() || c==TGeoTrap::Class() || c==TGeoGtra::Class();
     }
     return false;
   }
-  template <> bool isInstance<TwistedTube>(const Handle<TGeoShape>& solid)  {
+  template <> auto isInstance<TwistedTube>(const Handle<TGeoShape>& solid) -> bool  {
     return check_shape_type<TwistedTubeObject>(solid);
   }
-  template <> bool isInstance<TruncatedTube>(const Handle<TGeoShape>& solid)   {
+  template <> auto isInstance<TruncatedTube>(const Handle<TGeoShape>& solid) -> bool   {
     return check_shape_type<TGeoCompositeShape>(solid)
       &&   ::strcmp(solid->GetTitle(), TRUNCATEDTUBE_TAG) == 0;
   }
-  template <> bool isInstance<PseudoTrap>(const Handle<TGeoShape>& solid)   {
+  template <> auto isInstance<PseudoTrap>(const Handle<TGeoShape>& solid) -> bool   {
     return check_shape_type<TGeoCompositeShape>(solid)
       &&   ::strcmp(solid->GetTitle(), PSEUDOTRAP_TAG) == 0;
   }
-  template <> bool isInstance<SubtractionSolid>(const Handle<TGeoShape>& solid)   {
+  template <> auto isInstance<SubtractionSolid>(const Handle<TGeoShape>& solid) -> bool   {
     auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoSubtraction;
   }
-  template <> bool isInstance<UnionSolid>(const Handle<TGeoShape>& solid)   {
+  template <> auto isInstance<UnionSolid>(const Handle<TGeoShape>& solid) -> bool   {
     auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoUnion;
   }
-  template <> bool isInstance<IntersectionSolid>(const Handle<TGeoShape>& solid)   {
+  template <> auto isInstance<IntersectionSolid>(const Handle<TGeoShape>& solid) -> bool   {
     auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoIntersection;
   }
 
   /// Type check of various shapes. Do not allow for polymorphism. Types must match exactly
-  template <typename SOLID> bool isA(const Handle<TGeoShape>& solid)   {
+  template <typename SOLID> auto isA(const Handle<TGeoShape>& solid) -> bool   {
     return check_shape_type<typename SOLID::Object>(solid);
   }
   template bool isA<Box>(const Handle<TGeoShape>& solid);
@@ -154,38 +154,38 @@ namespace dd4hep {
 #if ROOT_VERSION_CODE > ROOT_VERSION(6,21,0)
   template bool isA<TessellatedSolid>(const Handle<TGeoShape>& solid);
 #endif
-  template <> bool isA<TwistedTube>(const Handle<TGeoShape>& solid)   {
+  template <> auto isA<TwistedTube>(const Handle<TGeoShape>& solid) -> bool   {
     return check_shape_type<TwistedTubeObject>(solid)
       &&   ::strcmp(solid->GetTitle(), TWISTEDTUBE_TAG) == 0;
   }
-  template <> bool isA<TruncatedTube>(const Handle<TGeoShape>& solid)   {
+  template <> auto isA<TruncatedTube>(const Handle<TGeoShape>& solid) -> bool   {
     return check_shape_type<TGeoCompositeShape>(solid)
       &&   ::strcmp(solid->GetTitle(), TRUNCATEDTUBE_TAG) == 0;
   }
-  template <> bool isA<PseudoTrap>(const Handle<TGeoShape>& solid)   {
+  template <> auto isA<PseudoTrap>(const Handle<TGeoShape>& solid) -> bool   {
     return check_shape_type<TGeoCompositeShape>(solid)
       &&   ::strcmp(solid->GetTitle(), PSEUDOTRAP_TAG) == 0;
   }
-  template <> bool isA<SubtractionSolid>(const Handle<TGeoShape>& solid)   {
+  template <> auto isA<SubtractionSolid>(const Handle<TGeoShape>& solid) -> bool   {
     auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoSubtraction
       &&   ::strcmp(sh->GetTitle(), SUBTRACTION_TAG) == 0;
   }
-  template <> bool isA<UnionSolid>(const Handle<TGeoShape>& solid)   {
+  template <> auto isA<UnionSolid>(const Handle<TGeoShape>& solid) -> bool   {
     auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoUnion
       &&   ::strcmp(sh->GetTitle(), UNION_TAG) == 0;
   }
-  template <> bool isA<IntersectionSolid>(const Handle<TGeoShape>& solid)   {
+  template <> auto isA<IntersectionSolid>(const Handle<TGeoShape>& solid) -> bool   {
     auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoIntersection
       &&   ::strcmp(sh->GetTitle(), INTERSECTION_TAG) == 0;
   }
 
-  template <typename T> vector<double> dimensions(const TGeoShape* shape)    {
+  template <typename T> auto dimensions(const TGeoShape* shape) -> vector<double>    {
     stringstream str;
     if ( shape )
       str << "Shape: dimension(" << typeName(typeid(*shape)) << "): Invalid call!";
@@ -193,20 +193,20 @@ namespace dd4hep {
       str << "Shape: dimension<TGeoShape): Invalid call && pointer!";
     throw runtime_error(str.str());
   }
-  template <> vector<double> dimensions<TGeoShapeAssembly>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoShapeAssembly>(const TGeoShape* shape) -> vector<double>    {
     const auto* sh = get_ptr<TGeoShapeAssembly>(shape);
     return { sh->GetDX(), sh->GetDY(), sh->GetDZ() };
   }
-  template <> vector<double> dimensions<TGeoBBox>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoBBox>(const TGeoShape* shape) -> vector<double>    {
     const auto* sh = get_ptr<TGeoBBox>(shape);
     return { sh->GetDX(), sh->GetDY(), sh->GetDZ() };
   }
-  template <> vector<double> dimensions<TGeoHalfSpace>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoHalfSpace>(const TGeoShape* shape) -> vector<double>    {
     auto* sh = get_ptr<TGeoHalfSpace>(shape);
     return { sh->GetPoint()[0], sh->GetPoint()[1], sh->GetPoint()[2],
         sh->GetNorm()[0], sh->GetNorm()[1], sh->GetNorm()[2] };
   }
-  template <> vector<double> dimensions<TGeoPcon>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoPcon>(const TGeoShape* shape) -> vector<double>    {
     const TGeoPcon* sh = get_ptr<TGeoPcon>(shape);
     vector<double> pars { sh->GetPhi1()*units::deg, sh->GetDphi()*units::deg, double(sh->GetNz()) };
     pars.reserve(3+3*sh->GetNz());
@@ -217,30 +217,30 @@ namespace dd4hep {
     }
     return pars;
   }
-  template <> vector<double> dimensions<TGeoConeSeg>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoConeSeg>(const TGeoShape* shape) -> vector<double>    {
     const TGeoConeSeg* sh = get_ptr<TGeoConeSeg>(shape);
     return { sh->GetDz(), sh->GetRmin1(), sh->GetRmax1(), sh->GetRmin2(), sh->GetRmax2(),
         sh->GetPhi1()*units::deg, sh->GetPhi2()*units::deg };
   }
-  template <> vector<double> dimensions<TGeoCone>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoCone>(const TGeoShape* shape) -> vector<double>    {
     const TGeoCone* sh = get_ptr<TGeoCone>(shape);
     return { sh->GetDz(), sh->GetRmin1(), sh->GetRmax1(), sh->GetRmin2(), sh->GetRmax2() };
   }  
-  template <> vector<double> dimensions<TGeoTube>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoTube>(const TGeoShape* shape) -> vector<double>    {
     const TGeoTube* sh = get_ptr<TGeoTube>(shape);
     return { sh->GetRmin(), sh->GetRmax(), sh->GetDz() };
   }
-  template <> vector<double> dimensions<TGeoTubeSeg>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoTubeSeg>(const TGeoShape* shape) -> vector<double>    {
     const TGeoTubeSeg* sh = get_ptr<TGeoTubeSeg>(shape);
     return { sh->GetRmin(), sh->GetRmax(), sh->GetDz(), sh->GetPhi1()*units::deg, sh->GetPhi2()*units::deg };
   }
-  template <> vector<double> dimensions<TwistedTubeObject>(const TGeoShape* shape)    {
+  template <> auto dimensions<TwistedTubeObject>(const TGeoShape* shape) -> vector<double>    {
     const TwistedTubeObject* sh = get_ptr<TwistedTubeObject>(shape);
     return { sh->GetPhiTwist(), sh->GetRmin(), sh->GetRmax(),
         sh->GetNegativeEndZ(), sh->GetPositiveEndZ(),
         double(sh->GetNsegments()), sh->GetPhi2()*units::deg };
   }
-  template <> vector<double> dimensions<TGeoCtub>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoCtub>(const TGeoShape* shape) -> vector<double>    {
     const TGeoCtub* sh = get_ptr<TGeoCtub>(shape);
     const Double_t*	lo = sh->GetNlow();
     const Double_t*	hi = sh->GetNhigh();
@@ -248,40 +248,40 @@ namespace dd4hep {
         sh->GetPhi1()*units::deg, sh->GetPhi2()*units::deg,
         lo[0], lo[1], lo[2], hi[0], hi[1], hi[2] };
   }
-  template <> vector<double> dimensions<TGeoEltu>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoEltu>(const TGeoShape* shape) -> vector<double>    {
     const TGeoEltu* sh = get_ptr<TGeoEltu>(shape);
     return { sh->GetA(), sh->GetB(), sh->GetDz() };
   }
-  template <> vector<double> dimensions<TGeoTrd1>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoTrd1>(const TGeoShape* shape) -> vector<double>    {
     const TGeoTrd1* sh = get_ptr<TGeoTrd1>(shape);
     return { sh->GetDx1(), sh->GetDx2(), sh->GetDy(), sh->GetDz() };
   }
-  template <> vector<double> dimensions<TGeoTrd2>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoTrd2>(const TGeoShape* shape) -> vector<double>    {
     const TGeoTrd2* sh = get_ptr<TGeoTrd2>(shape);
     return { sh->GetDx1(), sh->GetDx2(), sh->GetDy1(), sh->GetDy2(), sh->GetDz() };
   }
-  template <> vector<double> dimensions<TGeoParaboloid>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoParaboloid>(const TGeoShape* shape) -> vector<double>    {
     const TGeoParaboloid* sh = get_ptr<TGeoParaboloid>(shape);
     return { sh->GetRlo(), sh->GetRhi(), sh->GetDz() };
   }
-  template <> vector<double> dimensions<TGeoHype>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoHype>(const TGeoShape* shape) -> vector<double>    {
     const TGeoHype* sh = get_ptr<TGeoHype>(shape);
     return { sh->GetDz(),
         sh->GetRmin(), sh->GetStIn()*units::deg,
         sh->GetRmax(), sh->GetStOut()*units::deg };
   }
-  template <> vector<double> dimensions<TGeoSphere>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoSphere>(const TGeoShape* shape) -> vector<double>    {
     const TGeoSphere* sh = get_ptr<TGeoSphere>(shape);
     return { sh->GetRmin(), sh->GetRmax(),
         sh->GetTheta1()*units::deg, sh->GetTheta2()*units::deg,
         sh->GetPhi1()*units::deg,   sh->GetPhi2()*units::deg };
   }
-  template <> vector<double> dimensions<TGeoTorus>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoTorus>(const TGeoShape* shape) -> vector<double>    {
     const TGeoTorus* sh = get_ptr<TGeoTorus>(shape);
     return { sh->GetR(), sh->GetRmin(), sh->GetRmax(),
         sh->GetPhi1()*units::deg, sh->GetDphi()*units::deg };
   }
-  template <> vector<double> dimensions<TGeoPgon>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoPgon>(const TGeoShape* shape) -> vector<double>    {
     const TGeoPgon* sh = get_ptr<TGeoPgon>(shape);
     vector<double> pars { sh->GetPhi1()*units::deg, sh->GetDphi()*units::deg, double(sh->GetNedges()), double(sh->GetNz()) };
     pars.reserve(4+3*sh->GetNz());
@@ -292,7 +292,7 @@ namespace dd4hep {
     }
     return pars;
   }
-  template <> vector<double> dimensions<TGeoXtru>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoXtru>(const TGeoShape* shape) -> vector<double>    {
     const TGeoXtru* sh = get_ptr<TGeoXtru>(shape);
     Int_t nz = sh->GetNz();
     vector<double> pars { double(nz) };
@@ -305,7 +305,7 @@ namespace dd4hep {
     }
     return pars;
   }
-  template <> vector<double> dimensions<TGeoArb8>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoArb8>(const TGeoShape* shape) -> vector<double>    {
     auto* sh = get_ptr<TGeoArb8>(shape);
     struct _V { double xy[8][2]; } *vtx = (_V*)sh->GetVertices();
     vector<double> pars { sh->GetDz() };
@@ -315,20 +315,20 @@ namespace dd4hep {
     }
     return pars;
   }
-  template <> vector<double> dimensions<TGeoTrap>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoTrap>(const TGeoShape* shape) -> vector<double>    {
     const TGeoTrap* sh = get_ptr<TGeoTrap>(shape);
     return { sh->GetDz(), sh->GetTheta()*units::deg, sh->GetPhi()*units::deg,
         sh->GetH1(), sh->GetBl1(), sh->GetTl1(), sh->GetAlpha1()*units::deg,
         sh->GetH2(), sh->GetBl2(), sh->GetTl2(), sh->GetAlpha2()*units::deg };
   }
-  template <> vector<double> dimensions<TGeoGtra>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoGtra>(const TGeoShape* shape) -> vector<double>    {
     const TGeoGtra* sh = get_ptr<TGeoGtra>(shape);
     return { sh->GetDz(), sh->GetTheta()*units::deg, sh->GetPhi()*units::deg,
         sh->GetH1(), sh->GetBl1(), sh->GetTl1(), sh->GetAlpha1()*units::deg,
         sh->GetH2(), sh->GetBl2(), sh->GetTl2(), sh->GetAlpha2()*units::deg,
         sh->GetTwistAngle()*units::deg };
   }
-  template <> vector<double> dimensions<TGeoScaledShape>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoScaledShape>(const TGeoShape* shape) -> vector<double>    {
     auto* sh = get_ptr<TGeoScaledShape>(shape);
     TGeoShape*       s_sh = sh->GetShape();
     const Double_t*  scale = sh->GetScale()->GetScale();
@@ -339,7 +339,7 @@ namespace dd4hep {
   }
   
 #if ROOT_VERSION_CODE > ROOT_VERSION(6,21,0)
-  template <> vector<double> dimensions<TGeoTessellated>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoTessellated>(const TGeoShape* shape) -> vector<double>    {
     auto* sh = get_ptr<TGeoTessellated>(shape);
     int num_facet = sh->GetNfacets();
     int num_vtx   = sh->GetNvertices();
@@ -365,7 +365,7 @@ namespace dd4hep {
   }
 #endif
   
-  template <> vector<double> dimensions<TGeoCompositeShape>(const TGeoShape* shape)    {
+  template <> auto dimensions<TGeoCompositeShape>(const TGeoShape* shape) -> vector<double>    {
     const TGeoCompositeShape* sh = get_ptr<TGeoCompositeShape>(shape);
     const TGeoBoolNode*  boolean = sh->GetBoolNode();
     TGeoMatrix*    right_matrix  = boolean->GetRightMatrix();
@@ -393,7 +393,7 @@ namespace dd4hep {
     return pars;
   }
 
-  template <typename T> vector<double> dimensions(const Handle<TGeoShape>& shape)
+  template <typename T> auto dimensions(const Handle<TGeoShape>& shape) -> vector<double>
   {  return dimensions<typename T::Object>(get_ptr<typename T::Object>(shape.ptr()));  }
   template vector<double> dimensions<ShapelessSolid>   (const Handle<TGeoShape>& shape);
   template vector<double> dimensions<Box>              (const Handle<TGeoShape>& shape);
@@ -424,7 +424,7 @@ namespace dd4hep {
   template vector<double> dimensions<UnionSolid>       (const Handle<TGeoShape>& shape);
   template vector<double> dimensions<IntersectionSolid>(const Handle<TGeoShape>& shape);
 
-  template <> vector<double> dimensions<PseudoTrap>(const Handle<TGeoShape>& shape)   {
+  template <> auto dimensions<PseudoTrap>(const Handle<TGeoShape>& shape) -> vector<double>   {
     const TGeoCompositeShape* sh = get_ptr<TGeoCompositeShape>(shape.ptr());
     TGeoMatrix*    right_matrix  = sh->GetBoolNode()->GetRightMatrix();
     stringstream params(right_matrix->GetTitle());
@@ -445,7 +445,7 @@ namespace dd4hep {
     return pars;
   }
 
-  template <> vector<double> dimensions<TruncatedTube>(const Handle<TGeoShape>& shape)   {
+  template <> auto dimensions<TruncatedTube>(const Handle<TGeoShape>& shape) -> vector<double>   {
     const TGeoCompositeShape* sh = get_ptr<TGeoCompositeShape>(shape.ptr());
     TGeoMatrix* right_matrix  = sh->GetBoolNode()->GetRightMatrix();
     stringstream params(right_matrix->GetTitle());
@@ -462,7 +462,7 @@ namespace dd4hep {
     return pars;
   }
   
-  template <> vector<double> dimensions<Solid>(const Handle<TGeoShape>& shape)   {
+  template <> auto dimensions<Solid>(const Handle<TGeoShape>& shape) -> vector<double>   {
     if ( shape.ptr() )   {
       TClass* cl = shape->IsA();
       if (cl == TGeoShapeAssembly::Class())
@@ -532,11 +532,11 @@ namespace dd4hep {
   }
 
   /// Access Shape dimension parameters (As in TGeo, but angles in radians rather than degrees)
-  vector<double> get_shape_dimensions(const Handle<TGeoShape>& shape)    {
+  auto get_shape_dimensions(const Handle<TGeoShape>& shape) -> vector<double>    {
     return dimensions<Solid>(shape);
   }
   /// Access Shape dimension parameters (As in TGeo, but angles in radians rather than degrees)
-  vector<double> get_shape_dimensions(TGeoShape* shape)   {
+  auto get_shape_dimensions(TGeoShape* shape) -> vector<double>   {
     return dimensions<Solid>(Solid(shape));
   }
 
@@ -1081,7 +1081,7 @@ namespace dd4hep {
   }
 
   /// Pretty print of solid attributes
-  string toStringSolid(const TGeoShape* shape, int precision)   {
+  auto toStringSolid(const TGeoShape* shape, int precision) -> string   {
     if ( !shape )  {
       return "[Invalid shape]";
     }
@@ -1228,7 +1228,7 @@ namespace dd4hep {
   }
 
   /// Output mesh vertices to string
-  string toStringMesh(const TGeoShape* shape, int prec)  {
+  auto toStringMesh(const TGeoShape* shape, int prec) -> string  {
     Solid sol(shape);
     stringstream os;
 

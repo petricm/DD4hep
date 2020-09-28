@@ -94,7 +94,7 @@ namespace dd4hep::sim   {
       TrackerWeighted() = default;
 
       /// Clear collected information and restart for new hit
-      TrackerWeighted& clear()   {
+      auto clear() -> TrackerWeighted&   {
         mean_pos.SetXYZ(0,0,0);
         distance_to_inside = 0;
         distance_to_outside = 0;
@@ -114,7 +114,7 @@ namespace dd4hep::sim   {
       }
 
       /// Start a new hit
-      TrackerWeighted& start(const G4Step* step, const G4StepPoint* point)   {
+      auto start(const G4Step* step, const G4StepPoint* point) -> TrackerWeighted&   {
         if( DEBUG == printLevel() ) {
           std::cout<<" DEBUG: Geant4TrackerWeightedSD::start(const G4Step* step, const G4StepPoint* point) ...."<<std::endl;
           Geant4StepHandler h(step);
@@ -138,7 +138,7 @@ namespace dd4hep::sim   {
       }
 
       /// Update energy and track information during hit info accumulation
-      TrackerWeighted& update(const G4Step* step)   {
+      auto update(const G4Step* step) -> TrackerWeighted&   {
         if( DEBUG == printLevel() ) {
           std::cout<<" DEBUG: Geant4TrackerWeightedSD::update(const G4Step* step) ...."<<std::endl;
           Geant4StepHandler h(step);
@@ -166,7 +166,7 @@ namespace dd4hep::sim   {
       }
 
       /// Helper function to decide if the hit has to be extracted and saved in the collection
-      bool mustSaveTrack(const G4Track* tr)  const   {
+      auto mustSaveTrack(const G4Track* tr)  const -> bool   {
         return current > 0 && current != tr->GetTrackID();
       }
 
@@ -176,7 +176,7 @@ namespace dd4hep::sim   {
         extractHit(collection, ended);
       }
 
-      TrackerWeighted& calc_dist_out(const G4VSolid* solid)    {
+      auto calc_dist_out(const G4VSolid* solid) -> TrackerWeighted&    {
         Position v(pre.momentum.unit()), &p=post.position;
         double dist = solid->DistanceToOut(G4ThreeVector(p.X(),p.Y(),p.Z()),
                                            G4ThreeVector(v.X(),v.Y(),v.Z()));
@@ -184,7 +184,7 @@ namespace dd4hep::sim   {
         return *this;
       }
 
-      TrackerWeighted& calc_dist_in(const G4VSolid* solid)    {
+      auto calc_dist_in(const G4VSolid* solid) -> TrackerWeighted&    {
         Position v(pre.momentum.unit()), &p=pre.position;
         double dist = solid->DistanceToOut(G4ThreeVector(p.X(),p.Y(),p.Z()),
                                            G4ThreeVector(v.X(),v.Y(),v.Z()));
@@ -262,7 +262,7 @@ namespace dd4hep::sim   {
       }
 
       /// Method for generating hit(s) using the information of G4Step object.
-      G4bool process(const G4Step* step, G4TouchableHistory* )   {
+      auto process(const G4Step* step, G4TouchableHistory* ) -> G4bool   {
         Geant4StepHandler h(step);
         if( DEBUG == printLevel() ) {
           std::cout<<" DEBUG: Geant4TrackerWeightedSD::process(const G4Step* step, G4TouchableHistory* ) ...."<<std::endl;

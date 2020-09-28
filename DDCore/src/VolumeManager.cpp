@@ -64,7 +64,7 @@ namespace dd4hep::detail {
       }
 
       /// Access node count
-      [[nodiscard]] size_t numNodes()  const  {   return m_numNodes;  }
+      [[nodiscard]] auto numNodes()  const -> size_t  {   return m_numNodes;  }
 
       /// Populate the Volume manager
       void populate(DetElement e) {
@@ -90,9 +90,9 @@ namespace dd4hep::detail {
         }
       }
       /// Scan a single physical volume and look for sensitive elements below
-      size_t scanPhysicalVolume(DetElement& parent, DetElement e, PlacedVolume pv, 
+      auto scanPhysicalVolume(DetElement& parent, DetElement e, PlacedVolume pv,
                                 Encoding parent_encoding,
-                                SensitiveDetector& sd, Chain& chain)
+                                SensitiveDetector& sd, Chain& chain) -> size_t
       {
         TGeoNode* node = pv.ptr();
         size_t count = 0;
@@ -205,7 +205,7 @@ namespace dd4hep::detail {
       }
 
       /// Compute the encoding for a set of VolIDs within a readout descriptor
-      static Encoding update_encoding(const IDDescriptor iddesc, const VolIDs& ids, const Encoding& initial)  {
+      static auto update_encoding(const IDDescriptor iddesc, const VolIDs& ids, const Encoding& initial) -> Encoding  {
         VolumeID volume_id = initial.first, mask = initial.second;
         for (const auto & id : ids) {
           const BitFieldElement* f = iddesc.field(id.first);
@@ -218,7 +218,7 @@ namespace dd4hep::detail {
         return make_pair(volume_id, mask);
       }
       /// Compute the encoding for a set of VolIDs within a readout descriptor
-      static Encoding encoding(const IDDescriptor iddesc, const VolIDs& ids)  {
+      static auto encoding(const IDDescriptor iddesc, const VolIDs& ids) -> Encoding  {
         VolumeID volume_id = 0, mask = 0;
         for (const auto & id : ids) {
           const BitFieldElement* f = iddesc.field(id.first);
@@ -301,12 +301,12 @@ VolumeManagerContext::~VolumeManagerContext() {
 }
 
 /// Acces the sensitive volume placement
-PlacedVolume VolumeManagerContext::elementPlacement()  const   {
+auto VolumeManagerContext::elementPlacement()  const -> PlacedVolume   {
   return element.placement();
 }
 
 /// Acces the sensitive volume placement
-PlacedVolume VolumeManagerContext::volumePlacement()  const   {
+auto VolumeManagerContext::volumePlacement()  const -> PlacedVolume   {
   if ( 0 == flag )
     return element.placement();
   const auto* ext = (const detail::VolumeManagerContextExtension*)this;
@@ -314,7 +314,7 @@ PlacedVolume VolumeManagerContext::volumePlacement()  const   {
 }
 
 /// Access the transformation to the closest detector element
-const TGeoHMatrix& VolumeManagerContext::toElement()  const   {
+auto VolumeManagerContext::toElement()  const -> const TGeoHMatrix&   {
   static TGeoHMatrix identity;
   if ( 0 == flag ) return identity;
   const auto* ext = (const detail::VolumeManagerContextExtension*)this;
@@ -347,7 +347,7 @@ VolumeManager::VolumeManager(DetElement sub_detector, Readout ro)  {
   assign(obj_ptr, sub_detector.name(), "VolumeManager");
 }
 
-VolumeManager VolumeManager::getVolumeManager(const Detector& description) {
+auto VolumeManager::getVolumeManager(const Detector& description) -> VolumeManager {
   if( not description.volumeManager().isValid() ) {
     description.apply("DD4hepVolumeManager", 0, nullptr);
   }
@@ -355,7 +355,7 @@ VolumeManager VolumeManager::getVolumeManager(const Detector& description) {
 }
 
 /// Add a new Volume manager section according to a new subdetector
-VolumeManager VolumeManager::addSubdetector(DetElement det, Readout ro) {
+auto VolumeManager::addSubdetector(DetElement det, Readout ro) -> VolumeManager {
   if (isValid()) {
     Object& o = _data();
     if (!det.isValid()) {
@@ -406,7 +406,7 @@ VolumeManager VolumeManager::addSubdetector(DetElement det, Readout ro) {
 }
 
 /// Access the volume manager by cell id
-VolumeManager VolumeManager::subdetector(VolumeID id) const {
+auto VolumeManager::subdetector(VolumeID id) const -> VolumeManager {
   if (isValid()) {
     const Object& o = _data();
     /// Need to perform a linear search, because the "system" tag width may vary between subdetectors
@@ -424,7 +424,7 @@ VolumeManager VolumeManager::subdetector(VolumeID id) const {
 }
 
 /// Access the top level detector element
-DetElement VolumeManager::detector() const {
+auto VolumeManager::detector() const -> DetElement {
   if (isValid()) {
     return _data().detector;
   }
@@ -432,12 +432,12 @@ DetElement VolumeManager::detector() const {
 }
 
 /// Access IDDescription structure
-IDDescriptor VolumeManager::idSpec() const {
+auto VolumeManager::idSpec() const -> IDDescriptor {
   return _data().id;
 }
 
 /// Register physical volume with the manager (normally: section manager)
-bool VolumeManager::adoptPlacement(VolumeID sys_id, VolumeManagerContext* context) {
+auto VolumeManager::adoptPlacement(VolumeID sys_id, VolumeManagerContext* context) -> bool {
   stringstream err;
   Object&  o      = _data();
   VolumeID vid    = context->identifier;
@@ -495,7 +495,7 @@ bool VolumeManager::adoptPlacement(VolumeID sys_id, VolumeManagerContext* contex
 }
 
 /// Register physical volume with the manager (normally: section manager)
-bool VolumeManager::adoptPlacement(VolumeManagerContext* context) {
+auto VolumeManager::adoptPlacement(VolumeManagerContext* context) -> bool {
   stringstream err;
   if ( isValid() ) {
     Object& o = _data();
@@ -532,7 +532,7 @@ bool VolumeManager::adoptPlacement(VolumeManagerContext* context) {
 }
 
 /// Lookup the context, which belongs to a registered physical volume.
-VolumeManagerContext* VolumeManager::lookupContext(VolumeID volume_id) const {
+auto VolumeManager::lookupContext(VolumeID volume_id) const -> VolumeManagerContext* {
   if (isValid()) {
     VolumeManagerContext* c = nullptr;
     const Object& o = _data();
@@ -560,19 +560,19 @@ VolumeManagerContext* VolumeManager::lookupContext(VolumeID volume_id) const {
 }
 
 /// Lookup a physical (placed) volume identified by its 64 bit hit ID
-PlacedVolume VolumeManager::lookupDetElementPlacement(VolumeID volume_id) const {
+auto VolumeManager::lookupDetElementPlacement(VolumeID volume_id) const -> PlacedVolume {
   VolumeManagerContext* c = lookupContext(volume_id); // Throws exception if not found!
   return c->elementPlacement();
 }
 
 /// Lookup a physical (placed) volume identified by its 64 bit hit ID
-PlacedVolume VolumeManager::lookupVolumePlacement(VolumeID volume_id) const {
+auto VolumeManager::lookupVolumePlacement(VolumeID volume_id) const -> PlacedVolume {
   VolumeManagerContext* c = lookupContext(volume_id); // Throws exception if not found!
   return c->volumePlacement();
 }
 
 /// Lookup a top level subdetector detector element according to a contained 64 bit hit ID
-DetElement VolumeManager::lookupDetector(VolumeID volume_id) const {
+auto VolumeManager::lookupDetector(VolumeID volume_id) const -> DetElement {
   if (isValid()) {
     const Object& o = _data();
     VolumeID      sys_id = 0;
@@ -599,15 +599,15 @@ DetElement VolumeManager::lookupDetector(VolumeID volume_id) const {
 }
 
 /// Lookup the closest subdetector detector element in the hierarchy according to a contained 64 bit hit ID
-DetElement VolumeManager::lookupDetElement(VolumeID volume_id) const {
+auto VolumeManager::lookupDetElement(VolumeID volume_id) const -> DetElement {
   VolumeManagerContext* c = lookupContext(volume_id); // Throws exception if not found!
   return c->element;
 }
 
 /// Access the transformation of a physical volume to the world coordinate system
-const TGeoMatrix&
+auto
 VolumeManager::worldTransformation(const ConditionsMap& mapping,
-                                   VolumeID volume_id) const
+                                   VolumeID volume_id) const -> const TGeoMatrix&
 {
   VolumeManagerContext* c = lookupContext(volume_id); // Throws exception if not found!
   Alignment a = mapping.get(c->element,align::Keys::alignmentKey);
@@ -615,7 +615,7 @@ VolumeManager::worldTransformation(const ConditionsMap& mapping,
 }
 
 /// Enable printouts for debugging
-std::ostream& dd4hep::operator<<(std::ostream& os, const VolumeManager& mgr) {
+auto dd4hep::operator<<(std::ostream& os, const VolumeManager& mgr) -> std::ostream& {
   const VolumeManager::Object& o = *mgr.data<VolumeManager::Object>();
   auto* top = dynamic_cast<VolumeManager::Object*>(o.top);
   bool isTop = top == &o;
@@ -665,7 +665,7 @@ void VolumeManagerObject::update(unsigned long tags, DetElement& det, void* para
 }
 
 /// Search the locally cached volumes for a matching ID
-VolumeManagerContext* VolumeManagerObject::search(const VolumeID& vol_id) const {
+auto VolumeManagerObject::search(const VolumeID& vol_id) const -> VolumeManagerContext* {
   auto i = volumes.find(vol_id&detMask);
   return (i == volumes.end()) ? 0 : (*i).second;
 }

@@ -75,7 +75,7 @@ static void printDetectorSets( std::string name, unsigned int includeFlag,  unsi
 
 //=============================================================================
 
-static int invoke_dump_detector(int argc, char** argv ){
+static auto invoke_dump_detector(int argc, char** argv ) -> int{
     
   if( argc < 2 ) {
     std::cout << " usage: dumpdetector compact.xml [-s]" 
@@ -228,7 +228,7 @@ static int invoke_dump_detector(int argc, char** argv ){
 }
 
 
-int main(int argc, char** argv ){
+auto main(int argc, char** argv ) -> int{
   try {
     return invoke_dump_detector(argc,argv);
   }

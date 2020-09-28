@@ -24,7 +24,7 @@ using namespace std;
 using namespace dd4hep::sim;
 
 
-string Geant4GeometryInfo::placementPath(const Geant4PlacementPath& path, bool reverse)   {
+auto Geant4GeometryInfo::placementPath(const Geant4PlacementPath& path, bool reverse) -> string   {
   string path_name;
   if ( reverse )  {
     for (auto pIt = path.rbegin(); pIt != path.rend(); ++pIt) {
@@ -48,7 +48,7 @@ Geant4GeometryInfo::Geant4GeometryInfo()
 Geant4GeometryInfo::~Geant4GeometryInfo() = default;
 
 /// The world placement
-G4VPhysicalVolume* Geant4GeometryInfo::world() const   {
+auto Geant4GeometryInfo::world() const -> G4VPhysicalVolume*   {
   if ( m_world ) return m_world;
   throw runtime_error("Geant4GeometryInfo: Attempt to access invalid world placement");
 }

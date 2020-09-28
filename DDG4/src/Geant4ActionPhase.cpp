@@ -31,7 +31,7 @@ Geant4PhaseAction::~Geant4PhaseAction()   = default;
 void Geant4PhaseAction::operator()() {
 }
 
-dd4hep::Callback Geant4PhaseAction::callback()    {
+auto Geant4PhaseAction::callback() -> dd4hep::Callback    {
   return Callback(this).make(&Geant4PhaseAction::operator());
 }
 
@@ -54,14 +54,14 @@ Geant4ActionPhase::~Geant4ActionPhase() {
 }
 
 /// Add a new member to the phase
-bool Geant4ActionPhase::add(Geant4Action* action, Callback callback) {
+auto Geant4ActionPhase::add(Geant4Action* action, Callback callback) -> bool {
   action->addRef();
   m_members.emplace_back(action,callback);
   return true;
 }
 
 /// Remove an existing member from the phase. If not existing returns false
-bool Geant4ActionPhase::remove(Geant4Action* action, Callback callback) {
+auto Geant4ActionPhase::remove(Geant4Action* action, Callback callback) -> bool {
   if (action && callback.func.first) {
     auto i = find(m_members.begin(), m_members.end(), make_pair(action,callback));
     if (i != m_members.end()) {

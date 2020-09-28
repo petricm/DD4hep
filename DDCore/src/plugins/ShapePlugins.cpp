@@ -27,7 +27,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::detail;
 
-static Handle<TObject> create_Assembly(Detector&, xml_h e)   {
+static auto create_Assembly(Detector&, xml_h e) -> Handle<TObject>   {
   xml_dim_t dim(e);
   Solid solid = Handle<TNamed>(new TGeoShapeAssembly());
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
@@ -35,7 +35,7 @@ static Handle<TObject> create_Assembly(Detector&, xml_h e)   {
 }
 DECLARE_XML_SHAPE(Assembly__shape_constructor,create_Assembly)
 
-static Handle<TObject> create_Box(Detector&, xml_h e)   {
+static auto create_Box(Detector&, xml_h e) -> Handle<TObject>   {
   xml_dim_t dim(e);
   Solid solid = Box(dim.dx(),dim.dy(),dim.dz());
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
@@ -43,7 +43,7 @@ static Handle<TObject> create_Box(Detector&, xml_h e)   {
 }
 DECLARE_XML_SHAPE(Box__shape_constructor,create_Box)
 
-static Handle<TObject> create_HalfSpace(Detector&, xml_h e)   {
+static auto create_HalfSpace(Detector&, xml_h e) -> Handle<TObject>   {
   xml_dim_t dim(e);
   xml_dim_t point  = e.child(_U(point));
   xml_dim_t normal = e.child(_U(normal));
@@ -55,7 +55,7 @@ static Handle<TObject> create_HalfSpace(Detector&, xml_h e)   {
 }
 DECLARE_XML_SHAPE(HalfSpace__shape_constructor,create_HalfSpace)
 
-static Handle<TObject> create_Polycone(Detector&, xml_h element)   {
+static auto create_Polycone(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   int num = 0;
   vector<double> rmin,rmax,z;
@@ -75,7 +75,7 @@ static Handle<TObject> create_Polycone(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(Polycone__shape_constructor,create_Polycone)
 
-static Handle<TObject> create_ConeSegment(Detector&, xml_h element)   {
+static auto create_ConeSegment(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid = ConeSegment(e.dz(),e.rmin1(0.0),e.rmax1(),e.rmin2(0.0),e.rmax2(),e.phi1(0.0),e.phi2(2*M_PI));
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
@@ -83,7 +83,7 @@ static Handle<TObject> create_ConeSegment(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(ConeSegment__shape_constructor,create_ConeSegment)
 
-static Handle<TObject> create_Tube(Detector&, xml_h element)   {
+static auto create_Tube(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid;
   xml_attr_t aphi = element.attr_nothrow(_U(phi1));
@@ -102,7 +102,7 @@ static Handle<TObject> create_Tube(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(Tube__shape_constructor,create_Tube)
 
-static Handle<TObject> create_TwistedTube(Detector&, xml_h element)   {
+static auto create_TwistedTube(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid;
   int nseg = 1;
@@ -124,7 +124,7 @@ static Handle<TObject> create_TwistedTube(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(TwistedTube__shape_constructor,create_TwistedTube)
 
-static Handle<TObject> create_CutTube(Detector&, xml_h element)   {
+static auto create_CutTube(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid = CutTube(e.rmin(0.0),e.rmax(),e.dz(),
                         e.attr<double>(_U(phi1)),
@@ -140,7 +140,7 @@ static Handle<TObject> create_CutTube(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(CutTube__shape_constructor,create_CutTube)
 
-static Handle<TObject> create_EllipticalTube(Detector&, xml_h element)   {
+static auto create_EllipticalTube(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid = EllipticalTube(e.a(),e.b(),e.dz());
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
@@ -148,7 +148,7 @@ static Handle<TObject> create_EllipticalTube(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(EllipticalTube__shape_constructor,create_EllipticalTube)
 
-static Handle<TObject> create_TruncatedTube(Detector&, xml_h element)   {
+static auto create_TruncatedTube(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   double sp = e.startphi(0.0), dp = e.deltaphi(2*M_PI);
   Solid solid = TruncatedTube(e.dz(), e.rmin(0.0), e.rmax(), sp, dp,
@@ -160,7 +160,7 @@ static Handle<TObject> create_TruncatedTube(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(TruncatedTube__shape_constructor,create_TruncatedTube)
 
-static Handle<TObject> create_Cone(Detector&, xml_h element)   {
+static auto create_Cone(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   double rmi1 = e.rmin1(0.0), rma1 = e.rmax1();
   Solid solid = Cone(e.z(0.0),rmi1,rma1,e.rmin2(rmi1),e.rmax2(rma1));
@@ -169,7 +169,7 @@ static Handle<TObject> create_Cone(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(Cone__shape_constructor,create_Cone)
 
-static Handle<TObject> create_Trap(Detector&, xml_h element)   {
+static auto create_Trap(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid;
   if ( e.hasAttr(_U(dz)) )   {
@@ -190,7 +190,7 @@ static Handle<TObject> create_Trap(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(Trap__shape_constructor,create_Trap)
 
-static Handle<TObject> create_PseudoTrap(Detector&, xml_h element)   {
+static auto create_PseudoTrap(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid = PseudoTrap(e.x1(),e.x2(),e.y1(),e.y2(),e.z(),e.radius(),e.attr<bool>(xml_tag_t("minusZ")));
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
@@ -198,7 +198,7 @@ static Handle<TObject> create_PseudoTrap(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(PseudoTrap__shape_constructor,create_PseudoTrap)
 
-static Handle<TObject> create_Trd1(Detector&, xml_h element)   {
+static auto create_Trd1(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid = Trd1(e.x1(),e.x2(),e.y(),e.z(0.0));
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
@@ -206,7 +206,7 @@ static Handle<TObject> create_Trd1(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(Trd1__shape_constructor,create_Trd1)
 
-static Handle<TObject> create_Trd2(Detector&, xml_h element)   {
+static auto create_Trd2(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid = Trd2(e.x1(),e.x2(),e.y1(),e.y2(),e.z(0.0));
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
@@ -215,7 +215,7 @@ static Handle<TObject> create_Trd2(Detector&, xml_h element)   {
 DECLARE_XML_SHAPE(Trapezoid__shape_constructor,create_Trd2)
 DECLARE_XML_SHAPE(Trd2__shape_constructor,create_Trd2)
 
-static Handle<TObject> create_Torus(Detector&, xml_h element)   {
+static auto create_Torus(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid = Torus(e.r(),e.rmin(),e.rmax(),e.phi(M_PI),e.deltaphi(2.*M_PI));
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
@@ -238,7 +238,7 @@ DECLARE_XML_SHAPE(Torus__shape_constructor,create_Torus)
  *  \date   04/09/2020
  *  \author M.Frank
  */
-static Handle<TObject> create_Sphere(Detector&, xml_h element)   {
+static auto create_Sphere(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   double startphi   = e.phi(0e0);
   double endphi     = startphi + 2.*M_PI;
@@ -269,7 +269,7 @@ static Handle<TObject> create_Sphere(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(Sphere__shape_constructor,create_Sphere)
 
-static Handle<TObject> create_Paraboloid(Detector&, xml_h element)   {
+static auto create_Paraboloid(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid = Paraboloid(e.rmin(0.0),e.rmax(),e.dz());
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
@@ -277,7 +277,7 @@ static Handle<TObject> create_Paraboloid(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(Paraboloid__shape_constructor,create_Paraboloid)
 
-static Handle<TObject> create_Hyperboloid(Detector&, xml_h element)   {
+static auto create_Hyperboloid(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid = Hyperboloid(e.rmin(), e.inner_stereo(), e.rmax(), e.outer_stereo(), e.dz());
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
@@ -285,7 +285,7 @@ static Handle<TObject> create_Hyperboloid(Detector&, xml_h element)   {
 }
 DECLARE_XML_SHAPE(Hyperboloid__shape_constructor,create_Hyperboloid)
 
-static Handle<TObject> create_PolyhedraRegular(Detector&, xml_h element)   {
+static auto create_PolyhedraRegular(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   Solid solid = PolyhedraRegular(e.numsides(),e.rmin(),e.rmax(),e.dz());
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
@@ -294,7 +294,7 @@ static Handle<TObject> create_PolyhedraRegular(Detector&, xml_h element)   {
 DECLARE_XML_SHAPE(PolyhedraRegular__shape_constructor,create_PolyhedraRegular)
 
 /// Plugin factory to created polyhedra shapes
-static Handle<TObject> create_Polyhedra(Detector&, xml_h element)   {
+static auto create_Polyhedra(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   std::vector<double> z, rmin, rmax;
   for ( xml_coll_t c(e,_U(plane)); c; ++c )  {
@@ -310,7 +310,7 @@ static Handle<TObject> create_Polyhedra(Detector&, xml_h element)   {
 DECLARE_XML_SHAPE(Polyhedra__shape_constructor,create_Polyhedra)
 
 /// Plugin factory to created extruded polygons
-static Handle<TObject> create_ExtrudedPolygon(Detector&, xml_h element)   {
+static auto create_ExtrudedPolygon(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   std::vector<double> pt_x, pt_y, sec_z, sec_x, sec_y, sec_scale;
   for ( xml_coll_t sec(element, _U(section)); sec; ++sec )   {
@@ -332,7 +332,7 @@ static Handle<TObject> create_ExtrudedPolygon(Detector&, xml_h element)   {
 DECLARE_XML_SHAPE(ExtrudedPolygon__shape_constructor,create_ExtrudedPolygon)
 
 /// Plugin factory to created arbitrary 8-point solids
-static Handle<TObject> create_EightPointSolid(Detector&, xml_h element)   {
+static auto create_EightPointSolid(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   double v[8][2];
   int num = 0;
@@ -350,7 +350,7 @@ DECLARE_XML_SHAPE(EightPointSolid__shape_constructor,create_EightPointSolid)
 
 #if ROOT_VERSION_CODE > ROOT_VERSION(6,21,0)
 /// Plugin factory to created tessellated shapes
-static Handle<TObject> create_TessellatedSolid(Detector&, xml_h element)   {
+static auto create_TessellatedSolid(Detector&, xml_h element) -> Handle<TObject>   {
   xml_dim_t e(element);
   std::vector<TessellatedSolid::Vertex_t> vertices;
   for ( xml_coll_t vtx(element, _U(vertex)); vtx; ++vtx )   {
@@ -385,7 +385,7 @@ DECLARE_XML_SHAPE(TessellatedSolid__shape_constructor,create_TessellatedSolid)
  * @date 03/2015
  * @author F.Gaede, CERN/DESY
  */
-static Handle<TObject> create_BooleanShape(Detector&, xml_h element)   {
+static auto create_BooleanShape(Detector&, xml_h element) -> Handle<TObject>   {
 
   xml_det_t e(element);
 
@@ -478,7 +478,7 @@ static Handle<TObject> create_BooleanShape(Detector&, xml_h element)   {
 DECLARE_XML_SHAPE(BooleanShapeOld__shape_constructor,create_BooleanShape)
 
 
-static Handle<TObject> create_BooleanMulti(Detector& description, xml_h element)   {
+static auto create_BooleanMulti(Detector& description, xml_h element) -> Handle<TObject>   {
   xml_det_t e(element);
   // get the two shape elements
   Solid tmp, solid, result;
@@ -579,19 +579,19 @@ static Handle<TObject> create_BooleanMulti(Detector& description, xml_h element)
 }
 DECLARE_XML_SHAPE(BooleanShape__shape_constructor,create_BooleanMulti)
 
-static Handle<TObject> create_std_volume(Detector& description, xml_h e)   {
+static auto create_std_volume(Detector& description, xml_h e) -> Handle<TObject>   {
   return xml::createStdVolume(description, e);
 }
 DECLARE_XML_VOLUME(DD4hep_StdVolume,create_std_volume)
 
-static Handle<TObject> create_gen_volume(Detector& description, xml_h e)   {
+static auto create_gen_volume(Detector& description, xml_h e) -> Handle<TObject>   {
   xml_dim_t elt = e;
   auto    typ = elt.attr<string>(_U(type));
   return xml::createVolume(description, typ, e);
 }
 DECLARE_XML_VOLUME(DD4hep_GenericVolume,create_gen_volume)
 
-TGeoCombiTrans* createPlacement(const Rotation3D& iRot, const Position& iTrans) {
+auto createPlacement(const Rotation3D& iRot, const Position& iTrans) -> TGeoCombiTrans* {
   double elements[9];
   iRot.GetComponents(elements);
   TGeoRotation r;
@@ -600,7 +600,7 @@ TGeoCombiTrans* createPlacement(const Rotation3D& iRot, const Position& iTrans) 
   return new TGeoCombiTrans(t, r);
 }
 
-static Ref_t create_shape(Detector& description, xml_h e, Ref_t /* sens */)  {
+static auto create_shape(Detector& description, xml_h e, Ref_t /* sens */) -> Ref_t  {
   xml_det_t    x_det     = e;
   string       name      = x_det.nameStr();
   xml_dim_t    x_reflect = x_det.child(_U(reflect), false);
@@ -828,7 +828,7 @@ static Ref_t create_shape(Detector& description, xml_h e, Ref_t /* sens */)  {
 // first argument is the type from the xml file
 DECLARE_DETELEMENT(DD4hep_TestShape_Creator,create_shape)
 
-void* shape_mesh_verifier(Detector& description, int argc, char** argv)    {
+auto shape_mesh_verifier(Detector& description, int argc, char** argv) -> void*    {
   if ( argc != 2 )   {  }
   xml_det_t    x_det  = *(xml_h*)argv[0];
   PlacedVolume pv     = *(PlacedVolume*)argv[1];

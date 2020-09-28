@@ -106,10 +106,10 @@ static const char sss[MAX_N_PAR+2] = "012345";
 enum { ENDL, LBRA, OR, AND, EQ, NE, GE, GT, LE, LT,
        PLUS, MINUS, MULT, DIV, POW, RBRA, VALUE };
 
-static int engine(pchar, pchar, double &, pchar &, const dic_type &);
+static auto engine(pchar, pchar, double &, pchar &, const dic_type &) -> int;
 
-static int variable(const string & name, double & result,
-                    const dic_type & dictionary)
+static auto variable(const string & name, double & result,
+                    const dic_type & dictionary) -> int
 /***********************************************************************
  *                                                                     *
  * Name: variable                                    Date:    03.10.00 *
@@ -145,8 +145,8 @@ static int variable(const string & name, double & result,
   }
 }
 
-static int function(const string & name, stack<double> & par,
-                    double & result, const dic_type & dictionary)
+static auto function(const string & name, stack<double> & par,
+                    double & result, const dic_type & dictionary) -> int
 /***********************************************************************
  *                                                                     *
  * Name: function                                    Date:    03.10.00 *
@@ -198,8 +198,8 @@ static int function(const string & name, stack<double> & par,
   return (errno == 0) ? EVAL::OK : EVAL::ERROR_CALCULATION_ERROR;
 }
 
-static int operand(pchar begin, pchar end, double & result,
-                   pchar & endp, const dic_type & dictionary)
+static auto operand(pchar begin, pchar end, double & result,
+                   pchar & endp, const dic_type & dictionary) -> int
 /***********************************************************************
  *                                                                     *
  * Name: operand                                     Date:    03.10.00 *
@@ -325,7 +325,7 @@ static int operand(pchar begin, pchar end, double & result,
  *   val - stack of values.                                            *
  *                                                                     *
  ***********************************************************************/
-static int maker(int op, stack<double> & val)
+static auto maker(int op, stack<double> & val) -> int
 {
   if (val.size() < 2) return EVAL::ERROR_SYNTAX_ERROR;
   double val2 = val.top(); val.pop();
@@ -394,8 +394,8 @@ static int maker(int op, stack<double> & val)
  *   dictionary - dictionary of available variables and functions.     *
  *                                                                     *
  ***********************************************************************/
-static int engine(pchar begin, pchar end, double & result,
-                  pchar & endp, const dic_type & dictionary)
+static auto engine(pchar begin, pchar end, double & result,
+                  pchar & endp, const dic_type & dictionary) -> int
 {
   static const int SyntaxTable[17][17] = {
     //E  (  || && == != >= >  <= <  +  -  *  /  ^  )  V - current token
@@ -630,7 +630,7 @@ Evaluator::~Evaluator() {
 }
 
 //---------------------------------------------------------------------------
-double Evaluator::evaluate(const char * expression) {
+auto Evaluator::evaluate(const char * expression) -> double {
   auto * s = reinterpret_cast<Struct*>(p);
   if (s->theExpression != nullptr) { delete[] s->theExpression; }
   s->theExpression = nullptr;
@@ -650,12 +650,12 @@ double Evaluator::evaluate(const char * expression) {
 }
 
 //---------------------------------------------------------------------------
-int Evaluator::status() const {
+auto Evaluator::status() const -> int {
   return (reinterpret_cast<Struct*>(p))->theStatus;
 }
 
 //---------------------------------------------------------------------------
-int Evaluator::error_position() const {
+auto Evaluator::error_position() const -> int {
   return (reinterpret_cast<Struct*>(p))->thePosition - (reinterpret_cast<Struct*>(p))->theExpression;
 }
 
@@ -727,7 +727,7 @@ void Evaluator::setEnviron(const char* name, const char* value)  {
   }
 }
 //---------------------------------------------------------------------------
-const char* Evaluator::getEnviron(const char* name)  {
+auto Evaluator::getEnviron(const char* name) -> const char*  {
   auto* s = reinterpret_cast<Struct*>(p);
   string item_name = name;
   //std::cout << " ++++++++++++++++++++++++++++ Try to resolve env:" << name << std::endl;
@@ -788,7 +788,7 @@ void Evaluator::setFunction(const char * name, double (*fun)(double,double,doubl
 }
 
 //---------------------------------------------------------------------------
-bool Evaluator::findVariable(const char * name) const {
+auto Evaluator::findVariable(const char * name) const -> bool {
   if (name == nullptr || *name == '\0') return false;
   const char * pointer; int n; REMOVE_BLANKS;
   if (n == 0) return false;
@@ -799,7 +799,7 @@ bool Evaluator::findVariable(const char * name) const {
 }
 
 //---------------------------------------------------------------------------
-bool Evaluator::findFunction(const char * name, int npar) const {
+auto Evaluator::findFunction(const char * name, int npar) const -> bool {
   if (name == nullptr || *name == '\0')    return false;
   if (npar < 0  || npar > MAX_N_PAR) return false;
   const char * pointer; int n; REMOVE_BLANKS;

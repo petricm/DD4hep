@@ -61,7 +61,7 @@ void Geant4Particle::release()  {
 }
 
 /// Assignment operator
-Geant4Particle& Geant4Particle::get_data(Geant4Particle& c)   {
+auto Geant4Particle::get_data(Geant4Particle& c) -> Geant4Particle&   {
   if ( this != &c )  {
     id = c.id;
     originalG4ID = c.originalG4ID;
@@ -110,7 +110,7 @@ void Geant4Particle::removeDaughter(int id_daughter)  {
 }
 
 /// Access the Geant4 particle definition object (expensive!)
-const G4ParticleDefinition* Geant4ParticleHandle::definition() const   {
+auto Geant4ParticleHandle::definition() const -> const G4ParticleDefinition*   {
   G4ParticleTable*      tab = G4ParticleTable::GetParticleTable();
   G4ParticleDefinition* def = tab->FindParticle(particle->pdgID);
   if ( nullptr == def && 0 == particle->pdgID )   {
@@ -122,7 +122,7 @@ const G4ParticleDefinition* Geant4ParticleHandle::definition() const   {
 }
 
 /// Access to the Geant4 particle name
-std::string Geant4ParticleHandle::particleName() const   {
+auto Geant4ParticleHandle::particleName() const -> std::string   {
   const G4ParticleDefinition* def = definition();
   if ( def )   {
     //particle->definition = def;
@@ -139,7 +139,7 @@ std::string Geant4ParticleHandle::particleName() const   {
 }
 
 /// Access to the Geant4 particle type
-std::string Geant4ParticleHandle::particleType() const   {
+auto Geant4ParticleHandle::particleType() const -> std::string   {
   const G4ParticleDefinition* def = definition();
   if ( def )   {
     //particle->definition = def;
@@ -156,7 +156,7 @@ std::string Geant4ParticleHandle::particleType() const   {
 }
 
 /// Access Geant4 particle definitions by regular expression
-std::vector<G4ParticleDefinition*> Geant4ParticleHandle::g4DefinitionsRegEx(const std::string& expression)   {
+auto Geant4ParticleHandle::g4DefinitionsRegEx(const std::string& expression) -> std::vector<G4ParticleDefinition*>   {
   std::vector<G4ParticleDefinition*> results;
   std::string exp = expression;   //'^'+expression+"$";
   G4ParticleTable* pt = G4ParticleTable::GetParticleTable();
@@ -187,14 +187,14 @@ std::vector<G4ParticleDefinition*> Geant4ParticleHandle::g4DefinitionsRegEx(cons
 }
 
 /// Access Geant4 particle definitions by exact match
-G4ParticleDefinition* Geant4ParticleHandle::g4DefinitionsExact(const std::string& expression)   {
+auto Geant4ParticleHandle::g4DefinitionsExact(const std::string& expression) -> G4ParticleDefinition*   {
   G4ParticleTable*      tab = G4ParticleTable::GetParticleTable();
   G4ParticleDefinition* def = tab->FindParticle(expression);
   return def;
 }
 
 /// Access to the creator process name
-std::string Geant4ParticleHandle::processName() const   {
+auto Geant4ParticleHandle::processName() const -> std::string   {
   if ( particle->process ) return particle->process->GetProcessName();
   else if ( particle->reason&G4PARTICLE_PRIMARY ) return "Primary";
   else if ( particle->status&G4PARTICLE_GEN_EMPTY ) return "Gen.Empty";
@@ -207,7 +207,7 @@ std::string Geant4ParticleHandle::processName() const   {
 }
 
 /// Access to the creator process type name
-std::string Geant4ParticleHandle::processTypeName() const   {
+auto Geant4ParticleHandle::processTypeName() const -> std::string   {
   if ( particle->process )   {
     return G4VProcess::GetProcessTypeName(particle->process->GetProcessType());
   }
@@ -504,12 +504,12 @@ void Geant4ParticleMap::adopt(ParticleMap& pm, TrackEquivalents& equiv)    {
 }
 
 /// Check if the particle map was ever filled (ie. some particle handler was present)
-  bool Geant4ParticleMap::isValid() const   {
+  auto Geant4ParticleMap::isValid() const -> bool   {
   return !equivalentTracks.empty();
 }
 
 /// Access the equivalent track id (shortcut to the usage of TrackEquivalents)
-int Geant4ParticleMap::particleID(int g4_id, bool) const   {
+auto Geant4ParticleMap::particleID(int g4_id, bool) const -> int   {
   auto iequiv = equivalentTracks.find(g4_id);
   if ( iequiv != equivalentTracks.end() ) return (*iequiv).second;
   printout(ERROR,"Geant4ParticleMap","+++ No Equivalent particle for track:%d."

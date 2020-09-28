@@ -54,21 +54,21 @@ void Geant4PythonCall::set(PyObject* callable)   {
 namespace dd4hep::sim {
 
     /// Execute command in the python interpreter.
-    template <typename RETURN> RETURN Geant4PythonCall::execute() const   {
+    template <typename RETURN> auto Geant4PythonCall::execute() const -> RETURN   {
       DDPython::GILState state(0);
       TPyReturn ret(DDPython::instance().callC(m_callable, m_arguments));
       return (RETURN)ret;
     }
 
     /// Execute command in the python interpreter.
-    template <typename RETURN> RETURN Geant4PythonCall::execute(PyObject* method) const   {
+    template <typename RETURN> auto Geant4PythonCall::execute(PyObject* method) const -> RETURN   {
       DDPython::GILState state(0);
       TPyReturn ret(DDPython::instance().callC(method,nullptr));
       return (RETURN)ret;
     }
 
     /// Execute command in the python interpreter.
-    template <typename RETURN> RETURN Geant4PythonCall::execute(PyObject* method, PyObject* args) const   {
+    template <typename RETURN> auto Geant4PythonCall::execute(PyObject* method, PyObject* args) const -> RETURN   {
       DDPython::GILState state(0);
       TPyReturn ret(DDPython::instance().callC(method,args));
       return (RETURN)ret;

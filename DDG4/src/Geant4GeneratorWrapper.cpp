@@ -49,7 +49,7 @@ Geant4GeneratorWrapper::~Geant4GeneratorWrapper()  {
   InstanceCount::decrement(this);
 }
 
-G4VPrimaryGenerator* Geant4GeneratorWrapper::generator()   {
+auto Geant4GeneratorWrapper::generator() -> G4VPrimaryGenerator*   {
   if ( nullptr == m_generator )  {
     m_generator = PluginService::Create<G4VPrimaryGenerator*>(m_generatorType);
     if ( nullptr == m_generator )  {

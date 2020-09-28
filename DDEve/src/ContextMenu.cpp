@@ -26,7 +26,7 @@ using namespace std;
 using namespace dd4hep;
 
 typedef map<string,ContextMenu*> Contexts;
-static Contexts& mapped_entries()  {
+static auto mapped_entries() -> Contexts&  {
   static Contexts e;
   return e;
 }
@@ -62,7 +62,7 @@ ContextMenu::ContextMenu(TClass* cl) : m_class(cl)  {
 ContextMenu::~ContextMenu()   = default;
 
 /// Instantiator
-ContextMenu& ContextMenu::instance(TClass* cl)  {
+auto ContextMenu::instance(TClass* cl) -> ContextMenu&  {
   auto i = mapped_entries().find(cl->GetName());
   if ( i != mapped_entries().end() ) return *((*i).second);
   auto* m = new ContextMenu(cl);
@@ -71,7 +71,7 @@ ContextMenu& ContextMenu::instance(TClass* cl)  {
 }
 
 /// Clear all existing items
-ContextMenu& ContextMenu::Clear()   {
+auto ContextMenu::Clear() -> ContextMenu&   {
   if ( m_class->GetMenuList() )  {
     m_class->GetMenuList()->Delete();
   }
@@ -79,15 +79,15 @@ ContextMenu& ContextMenu::Clear()   {
 }
 
 /// Add a separator
-ContextMenu& ContextMenu::AddSeparator()   {
+auto ContextMenu::AddSeparator() -> ContextMenu&   {
   auto* item =
     new TClassMenuItem(TClassMenuItem::kPopupSeparator,ContextMenuHandler::Class(),"seperator");
   m_class->GetMenuList()->AddFirst(item);
   return *this;
 }
 
-/// Add user callback 
-ContextMenu& ContextMenu::Add(const string& title, Callback cb, void* ud)   {
+/// Add user callback
+auto ContextMenu::Add(const string& title, Callback cb, void* ud) -> ContextMenu&   {
   auto* handler = new ContextMenuHandler(cb, ud);
   auto* item =
     new TClassMenuItem(TClassMenuItem::kPopupUserFunction,

@@ -62,7 +62,7 @@ namespace dd4hep::sim {
       /// Default destructor
       virtual ~Geant4FieldTrackingSetup();
       /// Perform the setup of the magnetic field tracking in Geant4
-      virtual int execute(Detector& description);
+      virtual auto execute(Detector& description) -> int;
     };
 
     /// Phase action to perform the setup of the Geant4 tracking in magnetic fields
@@ -154,17 +154,17 @@ namespace {
   struct Geant4SetupPropertyMap {
     const map<string,string>& vals;
     Geant4SetupPropertyMap(const map<string,string>& v) : vals(v) {}
-    [[nodiscard]] string value(const string& key) const;
-    [[nodiscard]] double toDouble(const string& key) const;
-    bool operator[](const string& key) const  { return vals.find(key) != vals.end(); }
+    [[nodiscard]] auto value(const string& key) const -> string;
+    [[nodiscard]] auto toDouble(const string& key) const -> double;
+    auto operator[](const string& key) const -> bool  { return vals.find(key) != vals.end(); }
   };
   
-  string Geant4SetupPropertyMap::value(const string& key) const {
+  auto Geant4SetupPropertyMap::value(const string& key) const -> string {
     auto iV = vals.find(key);
     return iV == vals.end() ? "" : (*iV).second;
   }
 
-  double Geant4SetupPropertyMap::toDouble(const string& key) const {
+  auto Geant4SetupPropertyMap::toDouble(const string& key) const -> double {
     return _toDouble(this->value(key));
   }
 
@@ -185,7 +185,7 @@ Geant4FieldTrackingSetup::Geant4FieldTrackingSetup() : eq_typ(), stepper_typ() {
 Geant4FieldTrackingSetup::~Geant4FieldTrackingSetup()   = default;
 
 /// Perform the setup of the magnetic field tracking in Geant4
-int Geant4FieldTrackingSetup::execute(Detector& description)   {
+auto Geant4FieldTrackingSetup::execute(Detector& description) -> int   {
   OverlayedField fld  = description.field();
   G4ChordFinder*           chordFinder;
   G4TransportationManager* transportMgr;
@@ -234,7 +234,7 @@ int Geant4FieldTrackingSetup::execute(Detector& description)   {
   return 1;
 }
 
-static long setup_fields(Detector& description, const dd4hep::detail::GeoHandler& /* cnv */, const map<string,string>& vals) {
+static auto setup_fields(Detector& description, const dd4hep::detail::GeoHandler& /* cnv */, const map<string,string>& vals) -> long {
   struct XMLFieldTrackingSetup : public Geant4FieldTrackingSetup {
     XMLFieldTrackingSetup(const map<string,string>& values) : Geant4FieldTrackingSetup() {
       Geant4SetupPropertyMap pm(values);

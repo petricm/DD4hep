@@ -26,14 +26,14 @@ using namespace std;
 using namespace dd4hep;
 
 /// static accessor calling DD4hepOpticalSurfaceManagerPlugin if necessary
-OpticalSurfaceManager OpticalSurfaceManager::getOpticalSurfaceManager(Detector& description)  {
+auto OpticalSurfaceManager::getOpticalSurfaceManager(Detector& description) -> OpticalSurfaceManager  {
   return description.surfaceManager();
 }
 
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,17,0)
 
 /// Access skin surface by its identifier
-SkinSurface  OpticalSurfaceManager::skinSurface(DetElement de, const string& nam)  const   {
+auto  OpticalSurfaceManager::skinSurface(DetElement de, const string& nam)  const -> SkinSurface   {
   if ( de.isValid() )  {
     Object* o = access();
     string  n = de.path() + '#' + nam;
@@ -49,12 +49,12 @@ SkinSurface  OpticalSurfaceManager::skinSurface(DetElement de, const string& nam
 }
 
 /// Access skin surface by its full name
-SkinSurface  OpticalSurfaceManager::skinSurface(const string& full_nam)  const   {
+auto  OpticalSurfaceManager::skinSurface(const string& full_nam)  const -> SkinSurface   {
   return access()->detector.manager().GetSkinSurface(full_nam.c_str());
 }
 
 /// Access border surface by its identifier
-BorderSurface  OpticalSurfaceManager::borderSurface(DetElement de, const string& nam)  const   {
+auto  OpticalSurfaceManager::borderSurface(DetElement de, const string& nam)  const -> BorderSurface   {
   if ( de.isValid() )  {
     Object* o = access();
     string  n = de.path() + '#' + nam;
@@ -70,12 +70,12 @@ BorderSurface  OpticalSurfaceManager::borderSurface(DetElement de, const string&
 }
 
 /// Access border surface by its full name
-BorderSurface  OpticalSurfaceManager::borderSurface(const string& full_nam)  const   {
+auto  OpticalSurfaceManager::borderSurface(const string& full_nam)  const -> BorderSurface   {
   return access()->detector.manager().GetBorderSurface(full_nam.c_str());
 }
 
 /// Access optical surface data by its identifier
-OpticalSurface OpticalSurfaceManager::opticalSurface(DetElement de, const string& nam)  const   {
+auto OpticalSurfaceManager::opticalSurface(DetElement de, const string& nam)  const -> OpticalSurface   {
   if ( de.isValid() )  {
     Object* o = access();
     string  n = de.path() + '#' + nam;
@@ -91,7 +91,7 @@ OpticalSurface OpticalSurfaceManager::opticalSurface(DetElement de, const string
 }
 
 /// Access optical surface data by its identifier
-OpticalSurface OpticalSurfaceManager::opticalSurface(const string& full_nam)  const   {
+auto OpticalSurfaceManager::opticalSurface(const string& full_nam)  const -> OpticalSurface   {
   return access()->detector.manager().GetOpticalSurface(full_nam.c_str());
 }
 

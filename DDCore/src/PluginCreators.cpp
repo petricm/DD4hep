@@ -24,9 +24,9 @@
 /// Namespace for the AIDA detector description toolkit
 namespace dd4hep {
 
-  static inline ComponentCast* component(void* p) { return (ComponentCast*)p; }
+  static inline auto component(void* p) -> ComponentCast* { return (ComponentCast*)p; }
 
-  void* createProcessor(Detector& description, int argc, char** argv, void* (*cast)(void*))  {
+  auto createProcessor(Detector& description, int argc, char** argv, void* (*cast)(void*)) -> void*  {
     void* processor = nullptr;
     if ( argc < 2 )   {
       except("createProcessor","++ dd4hep-plugins: No processor creator name given!");
@@ -67,7 +67,7 @@ namespace dd4hep {
     return processor;
   }
 
-  void* createPlugin(const std::string& factory, Detector& description, int argc, char** argv, void* (*cast)(void*))  {
+  auto createPlugin(const std::string& factory, Detector& description, int argc, char** argv, void* (*cast)(void*)) -> void*  {
     void* object = PluginService::Create<void*>(factory, &description, argc, argv);
     if ( !object ) {
       PluginDebug dbg;
@@ -87,16 +87,16 @@ namespace dd4hep {
   }
 
   /// Handler for factories of type: ConstructionFactory
-  void* createPlugin(const std::string& factory, Detector& description, void* (*cast)(void*))  {
+  auto createPlugin(const std::string& factory, Detector& description, void* (*cast)(void*)) -> void*  {
     char* argv[] = {nullptr};
     int   argc = 0;
     return createPlugin(factory, description, argc, argv, cast);
   }
   /// Handler for factories of type: ConstructionFactory
-  void* createPlugin(const std::string& factory, 
+  auto createPlugin(const std::string& factory,
                      Detector& description, 
                      const std::string& arg,
-                     void* (*cast)(void*))   {
+                     void* (*cast)(void*)) -> void*   {
     char* argv[] = { (char*)arg.c_str(), nullptr };
     int   argc = 1;
     return createPlugin(factory, description, argc, argv, cast);

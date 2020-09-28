@@ -19,8 +19,8 @@ using namespace dd4hep;
 using namespace dd4hep::DDSegmentation;
 
 namespace {
-  template<typename T> dd4hep::SegmentationObject*
-  create_segmentation(const dd4hep::BitFieldCoder* decoder)  {
+  template<typename T> auto
+  create_segmentation(const dd4hep::BitFieldCoder* decoder) -> dd4hep::SegmentationObject*  {
     return new dd4hep::SegmentationWrapper<T>(decoder);
   }
 }

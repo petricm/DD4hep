@@ -21,7 +21,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::detail;
 
-static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector sens)  {
+static auto create_detector(Detector& description, xml_h e, SensitiveDetector sens) -> Ref_t  {
   xml_det_t   x_det      = e;
   xml_dim_t   dim        = x_det.dimensions();
   bool        reflect    = x_det.reflect();

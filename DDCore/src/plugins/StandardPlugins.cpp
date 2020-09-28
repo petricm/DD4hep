@@ -95,7 +95,7 @@ namespace  {
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long dummy_plugin(Detector& , int, char**) {
+static auto dummy_plugin(Detector& , int, char**) -> long {
   return 1;
 }
 DECLARE_APPLY(DD4hep_DummyPlugin,dummy_plugin)
@@ -108,7 +108,7 @@ DECLARE_APPLY(DD4hep_DummyPlugin,dummy_plugin)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static void* create_description_instance(const char* /* name */) {
+static auto create_description_instance(const char* /* name */) -> void* {
   return &Detector::getInstance();
 }
 DECLARE_CONSTRUCTOR(Detector_constructor,create_description_instance)
@@ -121,7 +121,7 @@ DECLARE_CONSTRUCTOR(Detector_constructor,create_description_instance)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long display(Detector& description, int argc, char** argv) {
+static auto display(Detector& description, int argc, char** argv) -> long {
   TGeoManager& mgr = description.manager();
   int vislevel = 6, visopt = 1;
   string detector = "/world";
@@ -175,7 +175,7 @@ DECLARE_APPLY(DD4hep_GeometryDisplay,display)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long run_function(Detector&, int argc, char** argv) {
+static auto run_function(Detector&, int argc, char** argv) -> long {
   string lib, func;
   std::vector<char*> args;
   for(int i = 0; i < argc && argv[i]; ++i)  {
@@ -222,7 +222,7 @@ DECLARE_APPLY(DD4hep_Function,run_function)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long run_interpreter(Detector& /* description */, int argc, char** argv) {
+static auto run_interpreter(Detector& /* description */, int argc, char** argv) -> long {
   if ( nullptr == gApplication )  {
     pair<int, char**> a(argc,argv);
     gApplication = new TRint("DD4hepRint", &a.first, a.second);
@@ -251,7 +251,7 @@ DECLARE_APPLY(DD4hep_Rint,run_interpreter)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long root_ui(Detector& description, int /* argc */, char** /* argv */) {
+static auto root_ui(Detector& description, int /* argc */, char** /* argv */) -> long {
   char cmd[256];
   //DD4hepUI* ui = new DD4hepUI(description);
   //::snprintf(cmd,sizeof(cmd),"dd4hep::detail::DD4hepUI* gDD4hepUI = (dd4hep::detail::DD4hepUI*)%p;",(void*)ui);
@@ -276,7 +276,7 @@ DECLARE_APPLY(DD4hep_InteractiveUI,root_ui)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long root_dump_gdml_tables(Detector& description, int /* argc */, char** /* argv */) {
+static auto root_dump_gdml_tables(Detector& description, int /* argc */, char** /* argv */) -> long {
   size_t num_tables = 0;
   size_t num_elements = 0;
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,17,0)
@@ -306,7 +306,7 @@ DECLARE_APPLY(DD4hep_Dump_GDMLTables,root_dump_gdml_tables)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long root_dump_optical_surfaces(Detector& description, int /* argc */, char** /* argv */) {
+static auto root_dump_optical_surfaces(Detector& description, int /* argc */, char** /* argv */) -> long {
   size_t num_surfaces = 0;
   printout(ALWAYS,"","");
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,17,0)
@@ -334,7 +334,7 @@ DECLARE_APPLY(DD4hep_Dump_OpticalSurfaces,root_dump_optical_surfaces)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long root_dump_skin_surfaces(Detector& description, int /* argc */, char** /* argv */) {
+static auto root_dump_skin_surfaces(Detector& description, int /* argc */, char** /* argv */) -> long {
   size_t num_surfaces = 0;
   printout(ALWAYS,"","");
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,17,0)
@@ -362,7 +362,7 @@ DECLARE_APPLY(DD4hep_Dump_SkinSurfaces,root_dump_skin_surfaces)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long root_dump_border_surfaces(Detector& description, int /* argc */, char** /* argv */) {
+static auto root_dump_border_surfaces(Detector& description, int /* argc */, char** /* argv */) -> long {
   size_t num_surfaces = 0;
   printout(ALWAYS,"","");
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,17,0)
@@ -391,7 +391,7 @@ DECLARE_APPLY(DD4hep_Dump_BorderSurfaces,root_dump_border_surfaces)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long root_elements(Detector& description, int argc, char** argv) {
+static auto root_elements(Detector& description, int argc, char** argv) -> long {
   struct ElementPrint {
     ElementPrint() = default;
     virtual ~ElementPrint() = default;
@@ -496,13 +496,13 @@ DECLARE_APPLY(DD4hep_ElementTable,root_elements)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long root_materials(Detector& description, int argc, char** argv) {
+static auto root_materials(Detector& description, int argc, char** argv) -> long {
   struct MaterialPrint {
     typedef xml::Element elt_h;
     Detector& description;
     MaterialPrint(Detector& desc) : description(desc) {}
     virtual ~MaterialPrint() = default;
-    virtual elt_h print(TGeoMaterial* mat)  {
+    virtual auto print(TGeoMaterial* mat) -> elt_h  {
       const char* st = "Undefined";
       switch(mat->GetState())  {
       case TGeoMaterial::kMatStateSolid:  st = "solid"; break;
@@ -552,7 +552,7 @@ static long root_materials(Detector& description, int argc, char** argv) {
     elt_h root;
     MaterialPrintXML(elt_h elt, Detector& desc) : MaterialPrint(desc), root(elt) {}
     ~MaterialPrintXML() override = default;
-    elt_h print(TGeoMaterial* mat) override  {
+    auto print(TGeoMaterial* mat) -> elt_h override  {
       elt_h elt = root.addChild(_U(material));
       elt.setAttr(_U(name),mat->GetName());
       if ( ::strlen(mat->GetTitle())>0 )   {
@@ -673,7 +673,7 @@ DECLARE_APPLY(DD4hep_MaterialTable,root_materials)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long load_compact(Detector& description, int argc, char** argv) {
+static auto load_compact(Detector& description, int argc, char** argv) -> long {
   if ( argc > 0 )   {
     DetectorBuildType type = BUILD_DEFAULT;
     string input = argv[0];
@@ -707,7 +707,7 @@ DECLARE_APPLY(DD4hep_CompactLoader,load_compact)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long load_xml(Detector& description, int argc, char** argv) {
+static auto load_xml(Detector& description, int argc, char** argv) -> long {
   if ( argc > 0 )   {
     DetectorBuildType type = BUILD_DEFAULT;
     string input = argv[0];
@@ -741,7 +741,7 @@ DECLARE_APPLY(DD4hep_XMLLoader,load_xml)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long process_xml_doc(Detector& description, int argc, char** argv) {
+static auto process_xml_doc(Detector& description, int argc, char** argv) -> long {
   if ( argc > 0 )   {
     DetectorBuildType type = BUILD_DEFAULT;
     auto* imp = dynamic_cast<DetectorImp*>(&description);
@@ -773,7 +773,7 @@ DECLARE_APPLY(DD4hep_XMLProcessor,process_xml_doc)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long load_volmgr(Detector& description, int, char**) {
+static auto load_volmgr(Detector& description, int, char**) -> long {
   printout(INFO,"DD4hepVolumeManager","**** running plugin DD4hepVolumeManager ! " );
   try {
     auto* imp = dynamic_cast<DetectorImp*>(&description);
@@ -803,7 +803,7 @@ DECLARE_APPLY(DD4hepVolumeManager,load_volmgr)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long dump_geometry2root(Detector& description, int argc, char** argv) {
+static auto dump_geometry2root(Detector& description, int argc, char** argv) -> long {
   if ( argc > 0 )   {
     string output;
     for(int i = 0; i < argc && argv[i]; ++i)  {
@@ -837,7 +837,7 @@ DECLARE_APPLY(DD4hep_Geometry2ROOT,dump_geometry2root)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long load_geometryFromroot(Detector& description, int argc, char** argv) {
+static auto load_geometryFromroot(Detector& description, int argc, char** argv) -> long {
   if ( argc > 0 )   {
     string input = argv[0];  // <-- for backwards compatibility
     for(int i = 0; i < argc && argv[i]; ++i)  {
@@ -870,7 +870,7 @@ DECLARE_APPLY(DD4hep_RootLoader,load_geometryFromroot)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long check_detectors(Detector& description, int /* argc */, char** /* argv */) {
+static auto check_detectors(Detector& description, int /* argc */, char** /* argv */) -> long {
   DD4hepRootCheck check(&description);
   return check.checkDetectors();
 }
@@ -884,7 +884,7 @@ DECLARE_APPLY(DD4hep_CheckDetectors,check_detectors)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long check_sensitives(Detector& description, int /* argc */, char** /* argv */) {
+static auto check_sensitives(Detector& description, int /* argc */, char** /* argv */) -> long {
   DD4hepRootCheck check(&description);
   return check.checkSensitives();
 }
@@ -898,7 +898,7 @@ DECLARE_APPLY(DD4hep_CheckSensitives,check_sensitives)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long check_segmentations(Detector& description, int /* argc */, char** /* argv */) {
+static auto check_segmentations(Detector& description, int /* argc */, char** /* argv */) -> long {
   DD4hepRootCheck check(&description);
   return check.checkSegmentations();
 }
@@ -912,7 +912,7 @@ DECLARE_APPLY(DD4hep_CheckSegmentations,check_segmentations)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long check_readouts(Detector& description, int /* argc */, char** /* argv */) {
+static auto check_readouts(Detector& description, int /* argc */, char** /* argv */) -> long {
   DD4hepRootCheck check(&description);
   return check.checkReadouts();
 }
@@ -926,7 +926,7 @@ DECLARE_APPLY(DD4hep_CheckReadouts,check_readouts)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long check_idspecs(Detector& description, int /* argc */, char** /* argv */) {
+static auto check_idspecs(Detector& description, int /* argc */, char** /* argv */) -> long {
   DD4hepRootCheck check(&description);
   return check.checkIdSpecs();
 }
@@ -940,7 +940,7 @@ DECLARE_APPLY(DD4hep_CheckIdspecs,check_idspecs)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long check_volumemanager(Detector& description, int /* argc */, char** /* argv */) {
+static auto check_volumemanager(Detector& description, int /* argc */, char** /* argv */) -> long {
   DD4hepRootCheck check(&description);
   return check.checkVolManager();
 }
@@ -954,7 +954,7 @@ DECLARE_APPLY(DD4hep_CheckVolumeManager,check_volumemanager)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long check_nominals(Detector& description, int /* argc */, char** /* argv */) {
+static auto check_nominals(Detector& description, int /* argc */, char** /* argv */) -> long {
   DD4hepRootCheck check(&description);
   return check.checkNominals();
 }
@@ -968,7 +968,7 @@ DECLARE_APPLY(DD4hep_CheckNominals,check_nominals)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long dump_volume_tree(Detector& description, int argc, char** argv) {
+static auto dump_volume_tree(Detector& description, int argc, char** argv) -> long {
   struct Actor {
     Detector&        description;
     bool             m_printPathes         = false;
@@ -1057,7 +1057,7 @@ static long dump_volume_tree(Detector& description, int argc, char** argv) {
       }
     }
 
-    long dump(string prefix, TGeoNode* ideal, TGeoNode* aligned, int level, PlacedVolume::VolIDs volids)  {
+    auto dump(string prefix, TGeoNode* ideal, TGeoNode* aligned, int level, PlacedVolume::VolIDs volids) -> long  {
       char fmt[128];
       stringstream log;
       PlacedVolume pv(ideal);
@@ -1191,7 +1191,7 @@ static long dump_volume_tree(Detector& description, int argc, char** argv) {
       }
       return 1;
     }
-    int operator()()   {
+    auto operator()() -> int   {
       PlacedVolume pv;
       DetElement   top = description.world();
       detail::tools::PlacementPath path;
@@ -1232,7 +1232,7 @@ DECLARE_APPLY(DD4hep_VolumeDump,dump_volume_tree)
  *  \version 1.0
  *  \date    18/11/2016
  */
-static int detelement_processor(Detector& description, int argc, char** argv)   {
+static auto detelement_processor(Detector& description, int argc, char** argv) -> int   {
   bool       recursive = true;
   ProcessorArgs args(argc, argv);
   DetElement det = description.world();
@@ -1276,7 +1276,7 @@ DECLARE_APPLY(DD4hep_DetElementProcessor,detelement_processor)
  *  \version 1.0
  *  \date    18/11/2016
  */
-static int placed_volume_processor(Detector& description, int argc, char** argv)   {
+static auto placed_volume_processor(Detector& description, int argc, char** argv) -> int   {
   bool         recursive = true;
   PlacedVolume pv = description.world().placement();
   ProcessorArgs args(argc, argv);
@@ -1321,7 +1321,7 @@ DECLARE_APPLY(DD4hep_PlacedVolumeProcessor,placed_volume_processor)
  *  \version 1.0
  *  \date    01/04/2014
  */
-template <int flag> long dump_detelement_tree(Detector& description, int argc, char** argv) {
+template <int flag> auto dump_detelement_tree(Detector& description, int argc, char** argv) -> long {
   struct Actor {
     string path;
     long count = 0;
@@ -1334,7 +1334,7 @@ template <int flag> long dump_detelement_tree(Detector& description, int argc, c
     ~Actor() {
       printout(ALWAYS,"DetectorDump", "+++ Scanned a total of %ld elements.",count);
     }
-    long dump(DetElement de,int level)   {
+    auto dump(DetElement de,int level) -> long   {
       const DetElement::Children& c = de.children();
       bool  use_elt = path.empty() || de.path().find(path) != string::npos;
       if ( have_match<0 && use_elt ) have_match = level;
@@ -1460,9 +1460,9 @@ DECLARE_APPLY(DD4hep_DetectorVolumeDump,dump_detelement_tree<1>)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long detelement_cache(Detector& description, int , char** ) {
+static auto detelement_cache(Detector& description, int , char** ) -> long {
   struct Actor {
-    static long cache(DetElement de) {
+    static auto cache(DetElement de) -> long {
       const DetElement::Children& c = de.children();
       de.nominal().worldTransformation();
       de.nominal().detectorTransformation();
@@ -1485,7 +1485,7 @@ DECLARE_APPLY(DD4hep_DetElementCache,detelement_cache)
  *  \date    01/04/2014
  */
 #include "../GeometryTreeDump.h"
-static long exec_GeometryTreeDump(Detector& description, int, char** ) {
+static auto exec_GeometryTreeDump(Detector& description, int, char** ) -> long {
   GeometryTreeDump dmp;
   dmp.create(description.world());
   return 1;
@@ -1500,7 +1500,7 @@ DECLARE_APPLY(DD4hep_GeometryTreeDump,exec_GeometryTreeDump)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long detectortype_cache(Detector& description, int , char** ) {
+static auto detectortype_cache(Detector& description, int , char** ) -> long {
   vector<string> v = description.detectorTypes();
   printout(INFO,"DetectorTypes","Detector type dump:  %ld types:",long(v.size()));
   for(const auto & i : v)   {
@@ -1534,7 +1534,7 @@ DECLARE_SURFACE_INSTALLER(TestSurfaces,TestSurfacesPlugin)
  *  \date    01/04/2014
  */
 #include "DD4hep/PluginTester.h"
-static long install_plugin_tester(Detector& description, int , char** ) {
+static auto install_plugin_tester(Detector& description, int , char** ) -> long {
   auto* test = description.extension<PluginTester>(false);
   if ( !test )  {
     description.addExtension<PluginTester>(new PluginTester());

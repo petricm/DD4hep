@@ -129,7 +129,7 @@ namespace {
   } s_debug;
 }
 
-static Ref_t create_ConstantField(Detector& /* description */, xml_h e) {
+static auto create_ConstantField(Detector& /* description */, xml_h e) -> Ref_t {
   CartesianField obj;
   xml_comp_t field(e), strength(e.child(_U(strength)));
   string t = e.attr<string>(_U(field));
@@ -143,7 +143,7 @@ static Ref_t create_ConstantField(Detector& /* description */, xml_h e) {
 }
 DECLARE_XMLELEMENT(ConstantField,create_ConstantField)
 
-static Ref_t create_SolenoidField(Detector& description, xml_h e) {
+static auto create_SolenoidField(Detector& description, xml_h e) -> Ref_t {
   xml_comp_t c(e);
   bool has_inner_radius = c.hasAttr(_U(inner_radius));
   bool has_outer_radius = c.hasAttr(_U(outer_radius));
@@ -192,7 +192,7 @@ DECLARE_XMLELEMENT(SolenoidMagnet,create_SolenoidField)
 // This is the plugin required for slic: note the different name
 DECLARE_XMLELEMENT(solenoid,create_SolenoidField)
 
-static Ref_t create_DipoleField(Detector& /* description */, xml_h e) {
+static auto create_DipoleField(Detector& /* description */, xml_h e) -> Ref_t {
   xml_comp_t c(e);
   CartesianField obj;
   auto* ptr = new DipoleField();
@@ -221,7 +221,7 @@ static Ref_t create_DipoleField(Detector& /* description */, xml_h e) {
 }
 DECLARE_XMLELEMENT(DipoleMagnet,create_DipoleField)
 
-static Ref_t create_MultipoleField(Detector& description, xml_h e) {
+static auto create_MultipoleField(Detector& description, xml_h e) -> Ref_t {
   xml_dim_t c(e), child;
   CartesianField obj;
   auto* ptr = new MultipoleField();
@@ -259,7 +259,7 @@ static Ref_t create_MultipoleField(Detector& description, xml_h e) {
 }
 DECLARE_XMLELEMENT(MultipoleMagnet,create_MultipoleField)
 
-static long load_Compact(Detector& description, xml_h element) {
+static auto load_Compact(Detector& description, xml_h element) -> long {
   Converter<Compact>converter(description);
   converter(element);
   return 1;

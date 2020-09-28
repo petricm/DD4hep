@@ -57,11 +57,11 @@ public:
   void setID( dd4hep::long64 id ) { _id = id ;
   }
   // overwrite to include points inside the inner radius of the barrel
-  bool insideBounds(const Vector3D& point, double epsilon) const override {
+  auto insideBounds(const Vector3D& point, double epsilon) const -> bool override {
     return ( std::abs( point.rho() - origin().rho() ) < epsilon && std::abs( point.z() ) < _half_length ) ;
   }
 
-  std::vector< std::pair<Vector3D, Vector3D> > getLines(unsigned nMax=100) override{
+  auto getLines(unsigned nMax=100) -> std::vector< std::pair<Vector3D, Vector3D> > override{
 
     std::vector< std::pair<Vector3D, Vector3D> >  lines ;
 
@@ -98,13 +98,13 @@ public:
 		  double thickness_outer,  Vector3D origin ) :
     dd4hep::rec::VolSurface( new SimpleCylinderImpl( vol,  type,  thickness_inner , thickness_outer, origin ) ) {
   }
-  SimpleCylinderImpl* operator->() { return static_cast<SimpleCylinderImpl*>( _surf ) ; }
+  auto operator->() -> SimpleCylinderImpl* { return static_cast<SimpleCylinderImpl*>( _surf ) ; }
 } ;
 
 
-static dd4hep::Ref_t create_element(dd4hep::Detector& description,
+static auto create_element(dd4hep::Detector& description,
 					      xml_h element,
-					      dd4hep::SensitiveDetector /*sens*/) {
+					      dd4hep::SensitiveDetector /*sens*/) -> dd4hep::Ref_t {
 
   printout(dd4hep::DEBUG,"DD4hep_Beampipe", "Creating Beampipe" ) ;
 

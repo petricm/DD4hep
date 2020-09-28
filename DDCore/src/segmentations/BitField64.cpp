@@ -7,7 +7,7 @@
 namespace dd4hep::DDSegmentation {
   
 
-  std::string BitField64::valueString() const {
+  auto BitField64::valueString() const -> std::string {
 
     std::stringstream  os ;
 
@@ -22,7 +22,7 @@ namespace dd4hep::DDSegmentation {
   }
   
 
-  std::ostream& operator<<(std::ostream& os, const BitField64& b){
+  auto operator<<(std::ostream& os, const BitField64& b) -> std::ostream&{
 
     os << " bitfield:  0x" << std::hex // << std::ios::width(16) << std::ios::fill('0') <<
        << b._value << std::dec << std::endl ;

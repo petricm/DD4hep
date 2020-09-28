@@ -38,6 +38,6 @@ void DigiRandomNoise::initialize()   {
 }
 
 /// Callback to read event randomnoise
-double DigiRandomNoise::operator()(DigiCellContext& /* context */)  const {
+auto DigiRandomNoise::operator()(DigiCellContext& /* context */)  const -> double {
   return 0.0;
 }

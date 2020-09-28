@@ -42,17 +42,17 @@ CartesianField::Object::~Object() {
 }
 
 /// Access the field type (string)
-const char* CartesianField::type() const {
+auto CartesianField::type() const -> const char* {
   return m_element->GetTitle();
 }
 
 /// Does the field change the energy of charged particles?
-bool CartesianField::changesEnergy() const {
+auto CartesianField::changesEnergy() const -> bool {
   return ELECTRIC == (fieldType() & ELECTRIC);
 }
 
 /// Access to properties container
-CartesianField::Properties& CartesianField::properties() const {
+auto CartesianField::properties() const -> CartesianField::Properties& {
   return data<Object>()->properties;
 }
 
@@ -89,12 +89,12 @@ OverlayedField::OverlayedField(const string& nam)
 }
 
 /// Access to properties container
-OverlayedField::Properties& OverlayedField::properties() const {
+auto OverlayedField::properties() const -> OverlayedField::Properties& {
   return data<Object>()->properties;
 }
 
 /// Does the field change the energy of charged particles?
-bool OverlayedField::changesEnergy() const {
+auto OverlayedField::changesEnergy() const -> bool {
   int field = data<Object>()->type;
   return CartesianField::ELECTRIC == (field & CartesianField::ELECTRIC);
 }

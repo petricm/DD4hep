@@ -24,7 +24,7 @@ using namespace dd4hep::align;
 
 /// Callback to output alignments information
 template <typename T>
-int DeltaCollector<T>::operator()(DetElement de, int level)  const  {
+auto DeltaCollector<T>::operator()(DetElement de, int level)  const -> int  {
   if ( de.isValid() )  {
     int count = 0;
     vector<Condition> conditions;
@@ -43,7 +43,7 @@ int DeltaCollector<T>::operator()(DetElement de, int level)  const  {
 
 /// Callback to output alignments information
 template <typename T>
-int AlignmentsCollector<T>::operator()(DetElement de, int level)  const  {
+auto AlignmentsCollector<T>::operator()(DetElement de, int level)  const -> int  {
   if ( de.isValid() )  {
     int count = 0;
     vector<Condition> conditions;

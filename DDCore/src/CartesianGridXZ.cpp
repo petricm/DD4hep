@@ -22,25 +22,25 @@ using namespace std;
 using namespace dd4hep;
 
 /// determine the position based on the cell ID
-Position CartesianGridXZ::position(const CellID& id) const   {
+auto CartesianGridXZ::position(const CellID& id) const -> Position   {
   return Position(access()->implementation->position(id));
 }
 
 /// determine the cell ID based on the position
-dd4hep::CellID CartesianGridXZ::cellID(const Position& local,
+auto CartesianGridXZ::cellID(const Position& local,
                                const Position& global,
-                               const VolumeID& volID) const
+                               const VolumeID& volID) const -> dd4hep::CellID
 {
   return access()->implementation->cellID(local, global, volID);
 }
 
 /// access the grid size in X
-double CartesianGridXZ::gridSizeX() const {
+auto CartesianGridXZ::gridSizeX() const -> double {
   return access()->implementation->gridSizeX();
 }
 
 /// access the grid size in Z
-double CartesianGridXZ::gridSizeZ() const {
+auto CartesianGridXZ::gridSizeZ() const -> double {
   return access()->implementation->gridSizeZ();
 }
 
@@ -55,12 +55,12 @@ void CartesianGridXZ::setGridSizeZ(double cellSize) const   {
 }
 
 /// access the coordinate offset in X
-double CartesianGridXZ::offsetX() const {
+auto CartesianGridXZ::offsetX() const -> double {
   return access()->implementation->offsetX();
 }
 
 /// access the coordinate offset in Z
-double CartesianGridXZ::offsetZ() const {
+auto CartesianGridXZ::offsetZ() const -> double {
   return access()->implementation->offsetZ();
 }
 
@@ -75,12 +75,12 @@ void CartesianGridXZ::setOffsetZ(double offset) const   {
 }
 
 /// access the field name used for X
-const string& CartesianGridXZ::fieldNameX() const {
+auto CartesianGridXZ::fieldNameX() const -> const string& {
   return access()->implementation->fieldNameX();
 }
 
 /// access the field name used for Z
-const string& CartesianGridXZ::fieldNameZ() const {
+auto CartesianGridXZ::fieldNameZ() const -> const string& {
   return access()->implementation->fieldNameZ();
 }
 
@@ -93,6 +93,6 @@ const string& CartesianGridXZ::fieldNameZ() const {
     -# size in x
     -# size in z
 */
-vector<double> CartesianGridXZ::cellDimensions(const CellID& id) const  {
+auto CartesianGridXZ::cellDimensions(const CellID& id) const -> vector<double>  {
   return access()->implementation->cellDimensions(id);
 }

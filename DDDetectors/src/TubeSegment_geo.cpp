@@ -20,7 +20,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::detail;
 
-static Ref_t create_element(Detector& description, xml_h e, Ref_t sens)  {
+static auto create_element(Detector& description, xml_h e, Ref_t sens) -> Ref_t  {
   xml_det_t  x_det  (e);
   xml_comp_t x_tube = x_det.tubs();
   xml_dim_t  pos    = x_det.position();

@@ -15,7 +15,7 @@
 #include "Parsers/spirit/ParsersStandardListCommon.h"
 
 namespace ROOT::Math {
-    bool operator<(const XYZPoint& a, const XYZPoint& b)  {
+    auto operator<(const XYZPoint& a, const XYZPoint& b) -> bool  {
       if ( a.X() < b.X() ) return true;
       if ( a.Y() < b.Y() ) return true;
       if ( a.Z() < b.Z() ) return true;
@@ -26,7 +26,7 @@ namespace ROOT::Math {
 namespace dd4hep::Parsers {
 
     // ==========================================================================
-    template <> int parse(ROOT::Math::XYZPoint& result,const std::string& input) {
+    template <> auto parse(ROOT::Math::XYZPoint& result,const std::string& input) -> int {
       return parse_(result, input);
     }
     // ==========================================================================

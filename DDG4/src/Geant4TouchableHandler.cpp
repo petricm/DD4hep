@@ -35,12 +35,12 @@ Geant4TouchableHandler::Geant4TouchableHandler(const G4Step* step)  {
 }
 
 /// Touchable history depth
-int Geant4TouchableHandler::depth() const   {
+auto Geant4TouchableHandler::depth() const -> int   {
   return touchable->GetHistoryDepth();
 }
 
 /// Helper: Generate placement path from touchable object
-Geant4TouchableHandler::Geant4PlacementPath Geant4TouchableHandler::placementPath(bool exception) const {
+auto Geant4TouchableHandler::placementPath(bool exception) const -> Geant4TouchableHandler::Geant4PlacementPath {
   Geant4PlacementPath path_val;
   if ( touchable )   {
     int i, n=touchable->GetHistoryDepth();
@@ -58,7 +58,7 @@ Geant4TouchableHandler::Geant4PlacementPath Geant4TouchableHandler::placementPat
 }
 
 /// Helper: Access the placement path of a Geant4 touchable object as a string
-std::string Geant4TouchableHandler::path()  const   {
+auto Geant4TouchableHandler::path()  const -> std::string   {
   return Geant4GeometryInfo::placementPath(this->placementPath());
 }
 

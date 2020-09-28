@@ -28,7 +28,7 @@
 /// Namespace for the AIDA detector description toolkit
 namespace dd4hep::detail::tools  {
       /// Assemble the path of the PlacedVolume selection
-      std::string elementPath(const PlacementPath& nodes, bool reverse);
+      auto elementPath(const PlacementPath& nodes, bool reverse) -> std::string;
       /// Collect detector elements to any parent detector element
       void elementPath(DetElement parent, DetElement elt, ElementPath& detectors);
       /// Collect detector elements placements to the top detector element (world) [fast, but may have holes!]
@@ -36,7 +36,7 @@ namespace dd4hep::detail::tools  {
       /// Collect detector elements placements to the parent detector element [no holes!]
       void elementPath(DetElement parent, DetElement element, PlacementPath& nodes);
       /// Find Child of PlacedVolume and assemble on the fly the path of PlacedVolumes
-      bool findChild(PlacedVolume parent, PlacedVolume child, PlacementPath& path);
+      auto findChild(PlacedVolume parent, PlacedVolume child, PlacementPath& path) -> bool;
 
 
       // Internal helper
@@ -47,7 +47,7 @@ using namespace std;
 using namespace dd4hep;
 
 /// Find path between the child element and the parent element
-bool detail::tools::isParentElement(DetElement parent, DetElement child)   {
+auto detail::tools::isParentElement(DetElement parent, DetElement child) -> bool   {
   if ( parent.isValid() && child.isValid() )  {
     if ( parent.ptr() == child.ptr() ) return true;
     for(DetElement par=child; par.isValid(); par=par.parent())  {
@@ -58,7 +58,7 @@ bool detail::tools::isParentElement(DetElement parent, DetElement child)   {
 }
 
 /// Find Child of PlacedVolume and assemble on the fly the path of PlacedVolumes
-bool detail::tools::findChild(PlacedVolume parent, PlacedVolume child, PlacementPath& path) {
+auto detail::tools::findChild(PlacedVolume parent, PlacedVolume child, PlacementPath& path) -> bool {
   if ( parent.isValid() && child.isValid() ) {
     // Check self
     if ( parent.ptr() == child.ptr() ) {
@@ -89,7 +89,7 @@ bool detail::tools::findChild(PlacedVolume parent, PlacedVolume child, Placement
 }
 
 /// Find Child of PlacedVolume and assemble on the fly the path of PlacedVolumes
-static bool findChildByName(PlacedVolume parent, PlacedVolume child, detail::tools::PlacementPath& path) {
+static auto findChildByName(PlacedVolume parent, PlacedVolume child, detail::tools::PlacementPath& path) -> bool {
   if ( parent.isValid() && child.isValid() ) {
     // Check self
     if ( 0 == ::strcmp(parent.ptr()->GetName(),child.ptr()->GetName()) ) {
@@ -169,7 +169,7 @@ void detail::tools::elementPath(DetElement element, PlacementPath& det_nodes) {
 }
 
 /// Assemble the path of the PlacedVolume selection
-string detail::tools::elementPath(const PlacementPath& nodes, bool reverse)   {
+auto detail::tools::elementPath(const PlacementPath& nodes, bool reverse) -> string   {
   string path = "";
   if ( reverse )  {
     for(auto i=nodes.rbegin(); i != nodes.rend(); ++i)
@@ -183,7 +183,7 @@ string detail::tools::elementPath(const PlacementPath& nodes, bool reverse)   {
 }
 
 /// Assemble the path of the PlacedVolume selection
-string detail::tools::elementPath(const ElementPath& nodes, bool reverse)  {
+auto detail::tools::elementPath(const ElementPath& nodes, bool reverse) -> string  {
   string path = "";
   if ( reverse )  {
     for(auto i=nodes.rbegin();i!=nodes.rend();++i)
@@ -197,19 +197,19 @@ string detail::tools::elementPath(const ElementPath& nodes, bool reverse)  {
 }
 
 /// Assemble the path of a particular detector element
-string detail::tools::elementPath(DetElement element)  {
+auto detail::tools::elementPath(DetElement element) -> string  {
   ElementPath nodes;
   elementPath(element,nodes);
   return elementPath(nodes);
 }
 
 /// Find DetElement as child of the top level volume by it's absolute path
-DetElement detail::tools::findElement(const Detector& description, const string& path)   {
+auto detail::tools::findElement(const Detector& description, const string& path) -> DetElement   {
   return findDaughterElement(description.world(),path);
 }
 
 /// Find DetElement as child of a parent by it's relative or absolute path
-DetElement detail::tools::findDaughterElement(DetElement parent, const string& subpath)  {
+auto detail::tools::findDaughterElement(DetElement parent, const string& subpath) -> DetElement  {
   if ( parent.isValid() )   {
     size_t idx = subpath.find('/',1);
     if ( subpath[0] == '/' )   {
@@ -230,7 +230,7 @@ DetElement detail::tools::findDaughterElement(DetElement parent, const string& s
 }
 
 /// Determine top level element (=world) for any element walking up the detector element tree
-DetElement detail::tools::topElement(DetElement child)   {
+auto detail::tools::topElement(DetElement child) -> DetElement   {
   if ( child.isValid() )   {
     if ( child.parent().isValid() )
       return topElement(child.parent());
@@ -266,14 +266,14 @@ void detail::tools::placementPath(DetElement parent, DetElement element, Placeme
 }
 
 /// Assemble the path of the PlacedVolume selection
-string detail::tools::placementPath(DetElement element)  {
+auto detail::tools::placementPath(DetElement element) -> string  {
   PlacementPath path;
   placementPath(element,path);
   return placementPath(path);
 }
 
 /// Assemble the path of the PlacedVolume selection
-string detail::tools::placementPath(const PlacementPath& nodes, bool reverse)  {
+auto detail::tools::placementPath(const PlacementPath& nodes, bool reverse) -> string  {
   string path = "";
   if ( reverse )  {
     for(auto i=nodes.rbegin();i!=nodes.rend();++i)
@@ -287,7 +287,7 @@ string detail::tools::placementPath(const PlacementPath& nodes, bool reverse)  {
 }
 
 /// Assemble the path of the PlacedVolume selection
-string detail::tools::placementPath(const vector<const TGeoNode*>& nodes, bool reverse)   {
+auto detail::tools::placementPath(const vector<const TGeoNode*>& nodes, bool reverse) -> string   {
   string path = "";
   if ( reverse )  {
     for(auto i=nodes.rbegin();i!=nodes.rend();++i)
@@ -319,7 +319,7 @@ void detail::tools::placementTrafo(const PlacementPath& nodes, bool inverse, TGe
 }
 
 /// Find a given node in the hierarchy starting from the top node (absolute placement!)
-PlacedVolume detail::tools::findNode(PlacedVolume top_place, const string& place)   {
+auto detail::tools::findNode(PlacedVolume top_place, const string& place) -> PlacedVolume   {
   TGeoNode* top = top_place.ptr();
   const char* path = place.c_str();
   // Check if a geometry path is valid without changing the state of the navigator.
@@ -369,7 +369,7 @@ PlacedVolume detail::tools::findNode(PlacedVolume top_place, const string& place
 }
 
 /// Convert VolumeID to string
-string detail::tools::toString(const PlacedVolume::VolIDs& ids)   {
+auto detail::tools::toString(const PlacedVolume::VolIDs& ids) -> string   {
   stringstream log;
   for( const auto& v : ids )
     log << v.first << "=" << v.second << "; ";
@@ -377,7 +377,7 @@ string detail::tools::toString(const PlacedVolume::VolIDs& ids)   {
 }
 
 /// Convert VolumeID to string
-string detail::tools::toString(const IDDescriptor& dsc, const PlacedVolume::VolIDs& ids, VolumeID code)   {
+auto detail::tools::toString(const IDDescriptor& dsc, const PlacedVolume::VolIDs& ids, VolumeID code) -> string   {
   stringstream log;
   for( const auto& id : ids )  {
     const BitFieldElement* f = dsc.field(id.first);
@@ -388,7 +388,7 @@ string detail::tools::toString(const IDDescriptor& dsc, const PlacedVolume::VolI
 }
 
 /// Extract all the path elements from a path
-vector<string> detail::tools::pathElements(const string& path)   {
+auto detail::tools::pathElements(const string& path) -> vector<string>   {
   vector<string> result;
   if ( !path.empty() )  {
     string tmp = path[0]=='/' ? path.substr(1) : path;

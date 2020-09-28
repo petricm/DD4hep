@@ -32,7 +32,7 @@ using namespace dd4hep::sim;
 using namespace std;
 
 namespace   {
-  string make_cmd(const string& cmd)  {
+  auto make_cmd(const string& cmd) -> string  {
     return string( "/control/execute "+cmd);
   }
 }
@@ -68,7 +68,7 @@ void Geant4UIManager::forceExit()   {
 }
 
 /// Start visualization
-G4VisManager* Geant4UIManager::startVis()  {
+auto Geant4UIManager::startVis() -> G4VisManager*  {
   // Initialize visualization
   printout(INFO,"Geant4UIManager","+++ Starting G4VisExecutive ....");
   G4VisManager* vis = new G4VisExecutive();
@@ -77,7 +77,7 @@ G4VisManager* Geant4UIManager::startVis()  {
 }
 
 /// Start UI
-G4UIExecutive* Geant4UIManager::startUI()   {
+auto Geant4UIManager::startUI() -> G4UIExecutive*   {
   G4UIExecutive* ui = nullptr;
   const char* args[] = {"DDG4","",""};
   printout(INFO,"Geant4UIManager","+++ Starting G4UIExecutive '%s' of type %s....",

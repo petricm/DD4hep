@@ -50,9 +50,9 @@ namespace dd4hep::sim  {
       /// Default destructor
       ~LCIOStdHepReader() override;
       /// Read an event and fill a vector of MCParticles.
-      EventReaderStatus readParticleCollection(int event_number, EVENT::LCCollection** particles) override;
-      EventReaderStatus moveToEvent(int event_number) override;
-      EventReaderStatus skipEvent() override { return EVENT_READER_OK; }
+      auto readParticleCollection(int event_number, EVENT::LCCollection** particles) -> EventReaderStatus override;
+      auto moveToEvent(int event_number) -> EventReaderStatus override;
+      auto skipEvent() -> EventReaderStatus override { return EVENT_READER_OK; }
 
     };
   }       /* End namespace dd4hep */
@@ -92,8 +92,8 @@ LCIOStdHepReader::~LCIOStdHepReader()    {
 
 
 /// skipEvents if required
-Geant4EventReader::EventReaderStatus
-LCIOStdHepReader::moveToEvent(int event_number) {
+auto
+LCIOStdHepReader::moveToEvent(int event_number) -> Geant4EventReader::EventReaderStatus {
   if( m_currEvent == 0 && event_number != 0 ) {
     printout(INFO,"LCIOStdHepReader::moveToEvent","Skipping the first %d events ", event_number );
     printout(INFO,"LCIOStdHepReader::moveToEvent","Event number before skipping: %d", m_currEvent );
@@ -109,8 +109,8 @@ LCIOStdHepReader::moveToEvent(int event_number) {
 }
 
 /// Read an event and fill a vector of MCParticles.
-Geant4EventReader::EventReaderStatus
-LCIOStdHepReader::readParticleCollection(int /*event_number*/, EVENT::LCCollection** particles)  {
+auto
+LCIOStdHepReader::readParticleCollection(int /*event_number*/, EVENT::LCCollection** particles) -> Geant4EventReader::EventReaderStatus  {
 
   *particles = m_reader->readEvent();
   ++m_currEvent;

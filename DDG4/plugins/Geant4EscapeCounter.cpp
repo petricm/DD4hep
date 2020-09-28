@@ -40,7 +40,7 @@ namespace dd4hep::sim {
       /// Default destructor
       ~Geant4EscapeCounter() override;
       /// G4VSensitiveDetector interface: Method for generating hit(s) using the information of G4Step object.
-      bool process(G4Step* step, G4TouchableHistory* history)  override;
+      auto process(G4Step* step, G4TouchableHistory* history) -> bool  override;
     };
 
   }      // End namespace dd4hep
@@ -92,7 +92,7 @@ Geant4EscapeCounter::~Geant4EscapeCounter() {
 }
 
 /// G4VSensitiveDetector interface: Method for generating hit(s) using the information of G4Step object.
-bool Geant4EscapeCounter::process(G4Step* step, G4TouchableHistory* /* history */)   {
+auto Geant4EscapeCounter::process(G4Step* step, G4TouchableHistory* /* history */) -> bool   {
   Geant4StepHandler  h(step);
   Geant4TrackHandler th(h.track);
   Geant4TouchableHandler handler(step);

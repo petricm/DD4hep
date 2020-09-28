@@ -57,7 +57,7 @@ PointsetCreator::PointsetCreator(const std::string& collection, size_t length, c
   pointset->SetMainColor(cfg.data.hits.color);
 }
 /// Return eve element
-TEveElement* PointsetCreator::element() const   {
+auto PointsetCreator::element() const -> TEveElement*   {
   return pointset;
 }
 
@@ -115,7 +115,7 @@ BoxsetCreator::~BoxsetCreator()  {
 }
 
 /// Return eve element
-TEveElement* BoxsetCreator::element() const   {
+auto BoxsetCreator::element() const -> TEveElement*   {
   return boxset;
 }
 

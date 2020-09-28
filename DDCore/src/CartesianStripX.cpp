@@ -20,18 +20,18 @@ using namespace std;
 using namespace dd4hep;
 
 /// determine the position based on the cell ID
-Position CartesianStripX::position(const CellID& id) const {
+auto CartesianStripX::position(const CellID& id) const -> Position {
     return Position(access()->implementation->position(id));
 }
 
 /// determine the cell ID based on the position
-dd4hep::CellID CartesianStripX::cellID(const Position& local, const Position& global,
-                                       const VolumeID& volID) const {
+auto CartesianStripX::cellID(const Position& local, const Position& global,
+                                       const VolumeID& volID) const -> dd4hep::CellID {
     return access()->implementation->cellID(local, global, volID);
 }
 
 /// access the strip size in X
-double CartesianStripX::stripSizeX() const { return access()->implementation->stripSizeX(); }
+auto CartesianStripX::stripSizeX() const -> double { return access()->implementation->stripSizeX(); }
 
 /// set the strip size in X
 void CartesianStripX::setStripSizeX(double cellSize) const {
@@ -39,13 +39,13 @@ void CartesianStripX::setStripSizeX(double cellSize) const {
 }
 
 /// access the coordinate offset in X
-double CartesianStripX::offsetX() const { return access()->implementation->offsetX(); }
+auto CartesianStripX::offsetX() const -> double { return access()->implementation->offsetX(); }
 
 /// set the coordinate offset in X
 void CartesianStripX::setOffsetX(double offset) const { access()->implementation->setOffsetX(offset); }
 
 /// access the field name used for X
-const string& CartesianStripX::fieldNameX() const { return access()->implementation->fieldNameX(); }
+auto CartesianStripX::fieldNameX() const -> const string& { return access()->implementation->fieldNameX(); }
 
 /** \brief Returns a vector<double> of the cellDimensions of the given cell ID
     in natural order of dimensions, e.g., dx/dy/dz, or dr/r*dPhi
@@ -56,6 +56,6 @@ const string& CartesianStripX::fieldNameX() const { return access()->implementat
     -# size in x
     -# size in y
 */
-vector<double> CartesianStripX::cellDimensions(const CellID& id) const {
+auto CartesianStripX::cellDimensions(const CellID& id) const -> vector<double> {
     return access()->implementation->cellDimensions(id);
 }

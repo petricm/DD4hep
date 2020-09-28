@@ -57,7 +57,7 @@ namespace dd4hep::DDSegmentation {
 
 
     /// determine the position based on the cell ID
-    Vector3D MegatileLayerGridXY::position(const CellID& cID) const {
+    auto MegatileLayerGridXY::position(const CellID& cID) const -> Vector3D {
       // this is local position within the megatile
 
       unsigned int layerIndex = _decoder->get(cID,_identifierLayer);
@@ -84,9 +84,9 @@ namespace dd4hep::DDSegmentation {
 
 
     /// determine the cell ID based on the position
-    CellID MegatileLayerGridXY::cellID(const Vector3D& localPosition,
+    auto MegatileLayerGridXY::cellID(const Vector3D& localPosition,
                                        const Vector3D& /* globalPosition */,
-                                       const VolumeID& vID) const
+                                       const VolumeID& vID) const -> CellID
     {
       // this is the local position within a megatile, local coordinates
 
@@ -116,7 +116,7 @@ namespace dd4hep::DDSegmentation {
     }
 
 
-    std::vector<double> MegatileLayerGridXY::cellDimensions(const CellID& cID) const {
+    auto MegatileLayerGridXY::cellDimensions(const CellID& cID) const -> std::vector<double> {
       unsigned int layerIndex = _decoder->get(cID,_identifierLayer);
       unsigned int waferIndex = _decoder->get(cID,_identifierWafer);
       return cellDimensions(layerIndex, waferIndex);
@@ -162,7 +162,7 @@ namespace dd4hep::DDSegmentation {
       }
     }
 
-    std::vector<double> MegatileLayerGridXY::cellDimensions(const unsigned int layerIndex, const unsigned int waferIndex) const {
+    auto MegatileLayerGridXY::cellDimensions(const unsigned int layerIndex, const unsigned int waferIndex) const -> std::vector<double> {
       // calculate the cell size for a given wafer in a given layer
 
       getSegInfo(layerIndex, waferIndex);

@@ -36,7 +36,7 @@ using namespace dd4hep::detail;
  *  Factory: DD4hep_GeometryWebDisplay
  *
  */
-static long webdisplay(Detector& description, int argc, char** argv) {
+static auto webdisplay(Detector& description, int argc, char** argv) -> long {
   TGeoManager& mgr = description.manager();
   int vislevel = 6, visopt = 1;
   string detector = "/world";

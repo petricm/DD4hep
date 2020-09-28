@@ -24,7 +24,7 @@ using namespace std;
 using namespace dd4hep;
 
 /// Create data block from string representation
-bool OpaqueData::fromString(const string& rep)   {
+auto OpaqueData::fromString(const string& rep) -> bool   {
   if ( pointer && grammar )  {
     return grammar->fromString(pointer,rep);
   }
@@ -32,7 +32,7 @@ bool OpaqueData::fromString(const string& rep)   {
 }
 
 /// Create string representation of the data block
-string OpaqueData::str()  const  {
+auto OpaqueData::str()  const -> string  {
   if ( pointer && grammar )  {
     return grammar->str(pointer);
   }
@@ -40,7 +40,7 @@ string OpaqueData::str()  const  {
 }
 
 /// Access type id of the condition
-const type_info& OpaqueData::typeInfo() const  {
+auto OpaqueData::typeInfo() const -> const type_info&  {
   if ( pointer && grammar ) {
     return grammar->type();
   }
@@ -48,7 +48,7 @@ const type_info& OpaqueData::typeInfo() const  {
 }
 
 /// Access type name of the condition data block
-const string& OpaqueData::dataType() const   {
+auto OpaqueData::dataType() const -> const string&   {
   if ( pointer && grammar ) {
     return grammar->type_name();
   }
@@ -88,7 +88,7 @@ OpaqueDataBlock::~OpaqueDataBlock()   {
 }
 
 /// Copy constructor
-OpaqueDataBlock& OpaqueDataBlock::operator=(const OpaqueDataBlock& c)   {
+auto OpaqueDataBlock::operator=(const OpaqueDataBlock& c) -> OpaqueDataBlock&   {
   if ( this != &c )  {
     if ( grammar == c.grammar )   {
       if ( pointer )  {
@@ -122,7 +122,7 @@ OpaqueDataBlock& OpaqueDataBlock::operator=(const OpaqueDataBlock& c)   {
 }
 
 /// Bind data value
-void* OpaqueDataBlock::bind(const BasicGrammar* g)   {
+auto OpaqueDataBlock::bind(const BasicGrammar* g) -> void*   {
   if ( (type&EXTERN_DATA) == EXTERN_DATA )  {
     except("OpaqueData","Extern data may not be bound!");
   }
@@ -156,7 +156,7 @@ void OpaqueDataBlock::bindExtern(void* ptr, const BasicGrammar* gr)    {
 }
 
 /// Set data value
-void* OpaqueDataBlock::bind(void* ptr, size_t size, const BasicGrammar* g)   {
+auto OpaqueDataBlock::bind(void* ptr, size_t size, const BasicGrammar* g) -> void*   {
   if ( (type&EXTERN_DATA) == EXTERN_DATA )  {
     except("OpaqueData","Extern data may not be bound!");
   }

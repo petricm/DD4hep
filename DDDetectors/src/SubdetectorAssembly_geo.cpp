@@ -22,7 +22,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::detail;
 
-static Ref_t create_element(Detector& description, xml_h e, Ref_t)  {
+static auto create_element(Detector& description, xml_h e, Ref_t) -> Ref_t  {
   xml_det_t  x_det  (e);
   string     det_name = x_det.nameStr();
   DetElement sdet(det_name, x_det.id());

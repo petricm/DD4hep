@@ -79,7 +79,7 @@ namespace dd4hep {
       std::map< std::string, std::string > m_eventParametersString;
 
       /// Data conversion interface for MC particles to LCIO format
-      lcio::LCCollectionVec* saveParticles(Geant4ParticleMap* particles);
+      auto saveParticles(Geant4ParticleMap* particles) -> lcio::LCCollectionVec*;
     public:
       /// Standard constructor
       Geant4Output2LCIO(Geant4Context* ctxt, const std::string& nam);
@@ -256,7 +256,7 @@ void Geant4Output2LCIO::begin(const G4Event* /* event */)  {
 }
 
 /// Data conversion interface for MC particles to LCIO format
-lcio::LCCollectionVec* Geant4Output2LCIO::saveParticles(Geant4ParticleMap* particles)    {
+auto Geant4Output2LCIO::saveParticles(Geant4ParticleMap* particles) -> lcio::LCCollectionVec*    {
   typedef detail::ReferenceBitMask<const int> PropertyMask;
   typedef Geant4ParticleMap::ParticleMap ParticleMap;
   const ParticleMap& pm = particles->particleMap;

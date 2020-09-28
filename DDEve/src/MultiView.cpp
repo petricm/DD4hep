@@ -43,7 +43,7 @@ MultiView::MultiView(Display* eve, const string& nam) : View(eve, nam)
 MultiView::~MultiView()  = default;
 
 /// Build the projection view and map it to the given slot
-View& MultiView::Build(TEveWindow* slot)   {
+auto MultiView::Build(TEveWindow* slot) -> View&   {
   typedef DisplayConfiguration::Configurations _C;
   typedef Display::ViewConfigurations _V;
   TEveWindowSlot* new_slot;

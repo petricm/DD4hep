@@ -47,7 +47,7 @@ CartesianGridYZ::CartesianGridYZ(const BitFieldCoder* decode) : CartesianGrid(de
 CartesianGridYZ::~CartesianGridYZ() = default;
 
 /// determine the position based on the cell ID
-Vector3D CartesianGridYZ::position(const CellID& cID) const {
+auto CartesianGridYZ::position(const CellID& cID) const -> Vector3D {
 	Vector3D cellPosition;
 	cellPosition.Y = binToPosition( _decoder->get(cID,_yId ), _gridSizeY, _offsetY);
 	cellPosition.Z = binToPosition( _decoder->get(cID,_zId ), _gridSizeZ, _offsetZ);
@@ -55,14 +55,14 @@ Vector3D CartesianGridYZ::position(const CellID& cID) const {
 }
 
 /// determine the cell ID based on the position
-  CellID CartesianGridYZ::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */, const VolumeID& vID) const {
+  auto CartesianGridYZ::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */, const VolumeID& vID) const -> CellID {
         CellID cID = vID ;
 	_decoder->set( cID,_yId, positionToBin(localPosition.Y, _gridSizeY, _offsetY) );
 	_decoder->set( cID,_zId, positionToBin(localPosition.Z, _gridSizeZ, _offsetZ) );
 	return cID ;
 }
 
-std::vector<double> CartesianGridYZ::cellDimensions(const CellID&) const {
+auto CartesianGridYZ::cellDimensions(const CellID&) const -> std::vector<double> {
 #if __cplusplus >= 201103L
   return {_gridSizeY, _gridSizeZ};
 #else

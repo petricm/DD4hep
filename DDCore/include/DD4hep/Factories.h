@@ -56,7 +56,7 @@ namespace dd4hep {
    */
   template <typename T> class ConstructionFactory {
   public:
-    static void* create(const char* arg);
+    static auto create(const char* arg) -> void*;
   };
 
   /// Template class for a generic dd4hep object constructor
@@ -68,7 +68,7 @@ namespace dd4hep {
    */
   template <typename T> class DetectorConstructionFactory : public PluginFactoryBase {
   public:
-    static void* create(Detector& description, int argc, char** argv);
+    static auto create(Detector& description, int argc, char** argv) -> void*;
   };
 
   /// Template class for a generic segmentation object constructor
@@ -95,7 +95,7 @@ namespace dd4hep {
    */
   template <typename T> class ApplyFactory : public PluginFactoryBase {
   public:
-    static long create(Detector& description, int argc, char** argv);
+    static auto create(Detector& description, int argc, char** argv) -> long;
   };
 
   /// Specialized factory to translate objects, which can be retrieved from Detector

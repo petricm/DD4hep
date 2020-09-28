@@ -69,7 +69,7 @@ void Geant4IsotropeGenerator::getParticleDirectionCosTheta(int, ROOT::Math::XYZV
 /// Particle distribution flat in eta (pseudo rapidity)
 void Geant4IsotropeGenerator::getParticleDirectionEta(int, ROOT::Math::XYZVector& direction, double& momentum) const   {
   struct Distribution {
-    static double eta(double x)  { return -1.0*std::log(std::tan(x/2.0)); }
+    static auto eta(double x) -> double  { return -1.0*std::log(std::tan(x/2.0)); }
   };
   Geant4Event&  evt = context()->event();
   Geant4Random& rnd = evt.random();
@@ -90,7 +90,7 @@ void Geant4IsotropeGenerator::getParticleDirectionEta(int, ROOT::Math::XYZVector
 /// e+e- --> ffbar particle distribution ~ 1 + cos^2(theta)
 void Geant4IsotropeGenerator::getParticleDirectionFFbar(int, ROOT::Math::XYZVector& direction, double& momentum) const   {
   struct Distribution {
-    static double ffbar(double x)  { double c = std::cos(x); return 1 + c*c; }
+    static auto ffbar(double x) -> double  { double c = std::cos(x); return 1 + c*c; }
     //static double integral(double x)  { return 1.5*x + sin(2.*x)/4.0; }
   };
   Geant4Event&  evt = context()->event();

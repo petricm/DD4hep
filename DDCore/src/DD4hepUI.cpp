@@ -21,7 +21,7 @@ using namespace dd4hep;
 using namespace dd4hep::detail;
 
 namespace {
-  string _visLevel(int lvl)    {
+  auto _visLevel(int lvl) -> string    {
     char text[32];
     ::snprintf(text,sizeof(text),"%d",lvl);
     return text;
@@ -36,29 +36,29 @@ DD4hepUI::DD4hepUI(Detector& instance) : m_detDesc(instance)  {
 DD4hepUI::~DD4hepUI()   = default;
 
 /// Access to the Detector instance
-Detector* DD4hepUI::instance()  const   {
+auto DD4hepUI::instance()  const -> Detector*   {
   return &m_detDesc;
 }
 
 /// Access to the Detector instance
-Detector* DD4hepUI::detectorDescription()  const   {
+auto DD4hepUI::detectorDescription()  const -> Detector*   {
   return &m_detDesc;
 }
 
 /// Set the printout level from the interactive prompt
-PrintLevel DD4hepUI::setPrintLevel(PrintLevel level)   const   {
+auto DD4hepUI::setPrintLevel(PrintLevel level)   const -> PrintLevel   {
   return dd4hep::setPrintLevel(level);
 }
 
 /// Set the visualization level when invoking the display
-int DD4hepUI::setVisLevel(int value)     {
+auto DD4hepUI::setVisLevel(int value) -> int     {
   int old_value = visLevel;
   visLevel = value;
   return old_value;
 }
 
 /// Install the dd4hep conditions manager object
-Handle<NamedObject> DD4hepUI::conditionsMgr()  const  {
+auto DD4hepUI::conditionsMgr()  const -> Handle<NamedObject>  {
   if ( !m_condMgr.isValid() )  {
     const void* argv[] = {"-handle",&m_condMgr,nullptr};
     if ( 1 != apply("DD4hep_ConditionsManagerInstaller",2,(char**)argv) )  {
@@ -72,7 +72,7 @@ Handle<NamedObject> DD4hepUI::conditionsMgr()  const  {
 }
 
 /// Load conditions from file
-long DD4hepUI::loadConditions(const std::string& fname)  const  {
+auto DD4hepUI::loadConditions(const std::string& fname)  const -> long  {
   Handle<NamedObject> h = conditionsMgr();
   if ( h.isValid() )  {
     m_detDesc.fromXML(fname, BUILD_DEFAULT);
@@ -82,7 +82,7 @@ long DD4hepUI::loadConditions(const std::string& fname)  const  {
 }
 
 /// Install the dd4hep alignment manager object
-Handle<NamedObject> DD4hepUI::alignmentMgr()  const  {
+auto DD4hepUI::alignmentMgr()  const -> Handle<NamedObject>  {
   if ( !m_alignMgr.isValid() )  {
     const void* argv[] = {"-handle",&m_alignMgr,nullptr};
     if ( 1 != apply("DD4hep_AlignmentsManagerInstaller",2,(char**)argv) )  {
@@ -96,7 +96,7 @@ Handle<NamedObject> DD4hepUI::alignmentMgr()  const  {
 }
 
 /// Detector interface: Manipulate geometry using facroy converter
-long DD4hepUI::apply(const char* factory, int argc, char** argv) const   {
+auto DD4hepUI::apply(const char* factory, int argc, char** argv) const -> long   {
   return m_detDesc.apply(factory, argc, argv);
 }
 
@@ -130,7 +130,7 @@ void DD4hepUI::redrawSubtree(const char* path) const    {
 }
 
 /// Dump the volume tree
-long DD4hepUI::dumpVols(int argc, char** argv)  const   {
+auto DD4hepUI::dumpVols(int argc, char** argv)  const -> long   {
   if ( argc==0 )  {
     const void* av[] = {"-positions","-pointers",nullptr};
     return m_detDesc.apply("DD4hep_VolumeDump",2,(char**)av);
@@ -139,25 +139,25 @@ long DD4hepUI::dumpVols(int argc, char** argv)  const   {
 }
 
 /// Dump the DetElement tree with placements
-long DD4hepUI::dumpDet(const char* path)  const   {
+auto DD4hepUI::dumpDet(const char* path)  const -> long   {
   const void* args[] = {"--detector", path ? path : "/world", nullptr};
   return m_detDesc.apply("DD4hep_DetectorVolumeDump",2,(char**)args);
 }
 
 /// Dump the DetElement tree with placements
-long DD4hepUI::dumpDetMaterials(const char* path)  const   {
+auto DD4hepUI::dumpDetMaterials(const char* path)  const -> long   {
   const void* args[] = {"--detector", path ? path : "/world", "--materials", "--shapes", nullptr};
   return m_detDesc.apply("DD4hep_DetectorVolumeDump",4,(char**)args);
 }
 
 /// Dump the DetElement tree with placements
-long DD4hepUI::dumpStructure(const char* path)  const   {
+auto DD4hepUI::dumpStructure(const char* path)  const -> long   {
   const void* args[] = {"--detector", path ? path : "/world", nullptr};
   return m_detDesc.apply("DD4hep_DetectorDump",2,(char**)args);
 }
 
 /// Dump the entire detector description object to a root file
-long DD4hepUI::saveROOT(const char* file_name)    const     {
+auto DD4hepUI::saveROOT(const char* file_name)    const -> long     {
   if ( file_name )  {
     const void* av[] = {"-output",file_name,nullptr};
     return m_detDesc.apply("DD4hep_Geometry2ROOT",2,(char**)av);
@@ -167,7 +167,7 @@ long DD4hepUI::saveROOT(const char* file_name)    const     {
 }
 
 /// Import the entire detector description object from a root file
-long DD4hepUI::importROOT(const char* file_name)    const    {
+auto DD4hepUI::importROOT(const char* file_name)    const -> long    {
   if ( file_name )  {
     const void* av[] = {"-input",file_name,nullptr};
     return m_detDesc.apply("DD4hep_RootLoader",2,(char**)av);
@@ -177,7 +177,7 @@ long DD4hepUI::importROOT(const char* file_name)    const    {
 }
 
 /// Create ROOT interpreter instance
-long DD4hepUI::createInterpreter(int argc, char** argv)  {
+auto DD4hepUI::createInterpreter(int argc, char** argv) -> long  {
   if ( nullptr == gApplication )  {
     pair<int, char**> a(argc,argv);
     gApplication = new TRint("DD4hepUI", &a.first, a.second);
@@ -190,7 +190,7 @@ long DD4hepUI::createInterpreter(int argc, char** argv)  {
 }
 
 /// Execute ROOT interpreter instance
-long DD4hepUI::runInterpreter()  const   {
+auto DD4hepUI::runInterpreter()  const -> long   {
   if ( nullptr != gApplication )  {
     if ( !gApplication->IsRunning() )  {
       gApplication->Run();

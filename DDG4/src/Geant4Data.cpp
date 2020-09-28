@@ -67,7 +67,7 @@ Geant4HitData::~Geant4HitData() {
 }
 
 /// Extract the MC contribution for a given hit from the step information
-Geant4HitData::Contribution Geant4HitData::extractContribution(const G4Step* step) {
+auto Geant4HitData::extractContribution(const G4Step* step) -> Geant4HitData::Contribution {
   Geant4StepHandler h(step);
   double deposit =
     (h.trackDef() == G4OpticalPhoton::OpticalPhotonDefinition()) ? h.trkEnergy() : h.totalEnergy();
@@ -80,7 +80,7 @@ Geant4HitData::Contribution Geant4HitData::extractContribution(const G4Step* ste
 }
 
 /// Extract the MC contribution for a given hit from the step information with BirksLaw effect option
-Geant4HitData::Contribution Geant4HitData::extractContribution(const G4Step* step, bool ApplyBirksLaw) {
+auto Geant4HitData::extractContribution(const G4Step* step, bool ApplyBirksLaw) -> Geant4HitData::Contribution {
   Geant4StepHandler h(step);
   if ( ApplyBirksLaw == true ) h.doApplyBirksLaw();
   double deposit =
@@ -111,7 +111,7 @@ Geant4Tracker::Hit::~Hit() {
 }
 
 /// Assignment operator
-Geant4Tracker::Hit& Geant4Tracker::Hit::operator=(const Hit& c) {
+auto Geant4Tracker::Hit::operator=(const Hit& c) -> Geant4Tracker::Hit& {
   if ( &c != this )  {
     position = c.position;
     momentum = c.momentum;
@@ -122,7 +122,7 @@ Geant4Tracker::Hit& Geant4Tracker::Hit::operator=(const Hit& c) {
 }
 
 /// Clear hit content
-Geant4Tracker::Hit& Geant4Tracker::Hit::clear() {
+auto Geant4Tracker::Hit::clear() -> Geant4Tracker::Hit& {
   position.SetXYZ(0, 0, 0);
   momentum.SetXYZ(0, 0, 0);
   length = 0.0;
@@ -131,7 +131,7 @@ Geant4Tracker::Hit& Geant4Tracker::Hit::clear() {
 }
 
 /// Store Geant4 point and step information into tracker hit structure.
-Geant4Tracker::Hit& Geant4Tracker::Hit::storePoint(const G4Step* step, const G4StepPoint* pnt) {
+auto Geant4Tracker::Hit::storePoint(const G4Step* step, const G4StepPoint* pnt) -> Geant4Tracker::Hit& {
   G4Track* trk = step->GetTrack();
   G4ThreeVector pos = pnt->GetPosition();
   G4ThreeVector mom = pnt->GetMomentum();

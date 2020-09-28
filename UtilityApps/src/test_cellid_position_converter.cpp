@@ -43,7 +43,7 @@ const double epsilon = dd4hep::micrometer ;
 const int maxHit = 100 ;
 
 
-double dist( const Position& p0, const Position& p1 ){
+auto dist( const Position& p0, const Position& p1 ) -> double{
   Position p2 = p1 - p0 ;
   return p2.r() ;
 } 
@@ -63,7 +63,7 @@ typedef std::map<std::string, TestCounters > TestMap ;
 
 
 
-int main_wrapper(int argc, char** argv ){
+auto main_wrapper(int argc, char** argv ) -> int{
 
   if( argc < 3 ) {
     std::cout << " usage: test_cellid_position_converter compact.xml lcio_file.slcio" << std::endl ;

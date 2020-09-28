@@ -47,7 +47,7 @@ using namespace dd4hep::rec;
 using std::cout;
 using std::endl;
 
-int main_wrapper(int argc, char** argv)   {
+auto main_wrapper(int argc, char** argv) -> int   {
   struct Handler  {
     Handler() { SetErrorHandler(Handler::print); }
     static void print(int level, Bool_t abort, const char *location, const char *msg)  {
@@ -336,7 +336,7 @@ int main_wrapper(int argc, char** argv)   {
 }
 
 /// Main entry point as a program
-int main(int argc, char** argv)   {
+auto main(int argc, char** argv) -> int   {
   try  {
     return main_wrapper(argc, argv);
   }

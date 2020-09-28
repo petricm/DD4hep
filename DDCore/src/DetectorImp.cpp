@@ -78,7 +78,7 @@ namespace {
     map<string, Detector*> detectors;
     Instances() = default;
     ~Instances() = default;
-    Detector* get(const string& name)   {
+    auto get(const string& name) -> Detector*   {
       auto i = detectors.find(name);
       return i == detectors.end() ? 0 : (*i).second;
     }
@@ -90,7 +90,7 @@ namespace {
       }
       except("DD4hep","Cannot insert detector instance %s [Already present]",name.c_str());
     }
-    Detector* remove(const string& name)   {
+    auto remove(const string& name) -> Detector*   {
       auto i = detectors.find(name);
       if ( i != detectors.end() )  {
         Detector* det = (*i).second;
@@ -100,7 +100,7 @@ namespace {
       return nullptr;
     }
   };
-  static Instances& detector_instances()    {
+  static auto detector_instances() -> Instances&    {
     static Instances s_inst;
     return s_inst;
   }
@@ -124,18 +124,18 @@ namespace {
   }
 }
 
-string dd4hep::versionString(){
+auto dd4hep::versionString() -> string{
   string vs("vXX-YY") ;
   sprintf( &vs[0] , "v%2.2d-%2.2d", DD4HEP_MAJOR_VERSION, DD4HEP_MINOR_VERSION  ) ;
   return vs;
 }
 
-unique_ptr<Detector> Detector::make_unique(const std::string& name)   {
+auto Detector::make_unique(const std::string& name) -> unique_ptr<Detector>   {
   Detector* description = new DetectorImp(name);
   return unique_ptr<Detector>(description);
 }
 
-Detector& Detector::getInstance(const std::string& name)   {
+auto Detector::getInstance(const std::string& name) -> Detector&   {
   lock_guard<recursive_mutex> lock(detector_instances().lock);
   Detector* description = detector_instances().get(name);
   if ( nullptr == description )   {
@@ -221,7 +221,7 @@ DetectorImp::~DetectorImp() {
 }
 
 /// ROOT I/O call
-Int_t DetectorImp::saveObject(const char *name, Int_t option, Int_t bufsize) const   {
+auto DetectorImp::saveObject(const char *name, Int_t option, Int_t bufsize) const -> Int_t   {
   Int_t nbytes = 0;
   try  {
     DetectorData::patchRootStreamer(TGeoVolume::Class());
@@ -251,17 +251,17 @@ void DetectorImp::imp_loadVolumeManager()   {
 }
 
 /// Add an extension object to the Detector instance
-void* DetectorImp::addUserExtension(unsigned long long int key, ExtensionEntry* entry) {
+auto DetectorImp::addUserExtension(unsigned long long int key, ExtensionEntry* entry) -> void* {
   return m_extensions.addExtension(key,entry);
 }
 
 /// Remove an existing extension object from the Detector instance
-void* DetectorImp::removeUserExtension(unsigned long long int key, bool destroy)  {
+auto DetectorImp::removeUserExtension(unsigned long long int key, bool destroy) -> void*  {
   return m_extensions.removeExtension(key,destroy);
 }
 
 /// Access an existing extension object from the Detector instance
-void* DetectorImp::userExtension(unsigned long long int key, bool alert) const {
+auto DetectorImp::userExtension(unsigned long long int key, bool alert) const -> void* {
   return m_extensions.extension(key,alert);
 }
 
@@ -292,7 +292,7 @@ void DetectorImp::declareParent(const string& detector_name, const DetElement& p
 }
 
 /// Access mother volume by detector element
-Volume DetectorImp::pickMotherVolume(const DetElement& de) const {
+auto DetectorImp::pickMotherVolume(const DetElement& de) const -> Volume {
   if ( de.isValid() )   {
     string de_name = de.name();
     auto i = m_detectorParents.find(de_name);
@@ -321,7 +321,7 @@ Volume DetectorImp::pickMotherVolume(const DetElement& de) const {
 }
 
 /// Access default conditions (temperature and pressure
-const STD_Conditions& DetectorImp::stdConditions()   const   {
+auto DetectorImp::stdConditions()   const -> const STD_Conditions&   {
   if ( (m_std_conditions.convention&STD_Conditions::USER_SET) == 0 &&
        (m_std_conditions.convention&STD_Conditions::USER_NOTIFIED) == 0 )
   {
@@ -363,7 +363,7 @@ void DetectorImp::setStdConditions(const std::string& type)   {
 }
 
 /// Retrieve a subdetector element by it's name from the detector description
-DetElement DetectorImp::detector(const std::string& name) const  {
+auto DetectorImp::detector(const std::string& name) const -> DetElement  {
   auto i = m_detectors.find(name);
   if (i != m_detectors.end()) {
     return (*i).second;
@@ -372,7 +372,7 @@ DetElement DetectorImp::detector(const std::string& name) const  {
   return de;
 }
 
-Detector& DetectorImp::addDetector(const Handle<NamedObject>& ref_det) {
+auto DetectorImp::addDetector(const Handle<NamedObject>& ref_det) -> Detector& {
   DetElement det_element(ref_det);
   DetectorHelper helper(this);
   DetElement existing_det = helper.detectorByID(det_element.id());
@@ -421,7 +421,7 @@ Detector& DetectorImp::addDetector(const Handle<NamedObject>& ref_det) {
 }
 
 /// Add a new constant by named reference to the detector description
-Detector& DetectorImp::addConstant(const Handle<NamedObject>& x) {
+auto DetectorImp::addConstant(const Handle<NamedObject>& x) -> Detector& {
   if ( strcmp(x.name(),"Detector_InhibitConstants") == 0 )   {
     const char* title = x->GetTitle();
     char c = ::toupper(title[0]);
@@ -432,7 +432,7 @@ Detector& DetectorImp::addConstant(const Handle<NamedObject>& x) {
 }
 
 /// Retrieve a constant by it's name from the detector description
-Constant DetectorImp::constant(const string& name) const {
+auto DetectorImp::constant(const string& name) const -> Constant {
   if ( !m_inhibitConstants )   {
     return getRefChild(m_define, name);
   }
@@ -440,7 +440,7 @@ Constant DetectorImp::constant(const string& name) const {
 }
 
 /// Typed access to constants: access string values
-string DetectorImp::constantAsString(const string& name) const {
+auto DetectorImp::constantAsString(const string& name) const -> string {
   if ( !m_inhibitConstants )   {
     Handle<NamedObject> c = constant(name);
     if (c.isValid())
@@ -451,7 +451,7 @@ string DetectorImp::constantAsString(const string& name) const {
 }
 
 /// Typed access to constants: long values
-long DetectorImp::constantAsLong(const string& name) const {
+auto DetectorImp::constantAsLong(const string& name) const -> long {
   if ( !m_inhibitConstants )   {
     return _toLong(constantAsString(name));
   }
@@ -459,7 +459,7 @@ long DetectorImp::constantAsLong(const string& name) const {
 }
 
 /// Typed access to constants: double values
-double DetectorImp::constantAsDouble(const string& name) const {
+auto DetectorImp::constantAsDouble(const string& name) const -> double {
   if ( !m_inhibitConstants )   {
     return _toDouble(constantAsString(name));
   }
@@ -467,14 +467,14 @@ double DetectorImp::constantAsDouble(const string& name) const {
 }
 
 /// Add a field component by named reference to the detector description
-Detector& DetectorImp::addField(const Handle<NamedObject>& x) {
+auto DetectorImp::addField(const Handle<NamedObject>& x) -> Detector& {
   m_field.add(x);
   m_fields.append(x);
   return *this;
 }
 
 /// Retrieve a matrial by it's name from the detector description
-Material DetectorImp::material(const string& name) const {
+auto DetectorImp::material(const string& name) const -> Material {
   TGeoMedium* mat = m_manager->GetMedium(name.c_str());
   if (mat) {
     return Material(mat);
@@ -503,7 +503,7 @@ void DetectorImp::mapDetectorTypes()  {
 }
 
 /// Access the availible detector types
-vector<string> DetectorImp::detectorTypes() const  {
+auto DetectorImp::detectorTypes() const -> vector<string>  {
   if ( m_manager->IsClosed() ) {
     vector<string> v;
     v.reserve(m_detectorTypes.size());
@@ -515,7 +515,7 @@ vector<string> DetectorImp::detectorTypes() const  {
 }
 
 /// Access a set of subdetectors according to the sensitive type.
-const vector<DetElement>& DetectorImp::detectors(const string& type, bool throw_exc)  {
+auto DetectorImp::detectors(const string& type, bool throw_exc) -> const vector<DetElement>&  {
   if ( m_manager->IsClosed() ) {
     if ( throw_exc )  {
       auto i=m_detectorTypes.find(type);
@@ -528,7 +528,7 @@ const vector<DetElement>& DetectorImp::detectors(const string& type, bool throw_
   throw runtime_error("detectors("+type+"): Detectors can only selected by type once the geometry is closed!");
 }
 
-vector<DetElement> DetectorImp::detectors(unsigned int includeFlag, unsigned int excludeFlag ) const  {
+auto DetectorImp::detectors(unsigned int includeFlag, unsigned int excludeFlag ) const -> vector<DetElement>  {
   if( ! m_manager->IsClosed() ) {
     throw runtime_error("detectors(typeFlag): Detectors can only selected by typeFlag once the geometry is closed!");
   }
@@ -551,11 +551,11 @@ vector<DetElement> DetectorImp::detectors(unsigned int includeFlag, unsigned int
 }
 
 /// Access a set of subdetectors according to several sensitive types.
-vector<DetElement> DetectorImp::detectors(const string& type1,
+auto DetectorImp::detectors(const string& type1,
                                           const string& type2,
                                           const string& type3,
                                           const string& type4,
-                                          const string& type5 )  {
+                                          const string& type5 ) -> vector<DetElement>  {
   if ( m_manager->IsClosed() ) {
     vector<DetElement> v;
     DetectorTypeMap::const_iterator i, end=m_detectorTypes.end();
@@ -574,7 +574,7 @@ vector<DetElement> DetectorImp::detectors(const string& type1,
   throw runtime_error("detectors("+type1+","+type2+",...): Detectors can only selected by type once the geometry is closed!");
 }
 
-Handle<NamedObject> DetectorImp::getRefChild(const HandleMap& e, const string& name, bool do_throw) const {
+auto DetectorImp::getRefChild(const HandleMap& e, const string& name, bool do_throw) const -> Handle<NamedObject> {
   auto i = e.find(name);
   if (i != e.end()) {
     return (*i).second;
@@ -763,7 +763,7 @@ void DetectorImp::dump() const {
 }
 
 /// Manipulate geometry using facroy converter
-long DetectorImp::apply(const char* factory_type, int argc, char** argv)   const   {
+auto DetectorImp::apply(const char* factory_type, int argc, char** argv)   const -> long   {
   lock_guard<recursive_mutex> lock(s_detector_apply_lock);
   string fac = factory_type;
   try {

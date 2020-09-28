@@ -21,7 +21,7 @@
 
 using namespace dd4hep::sim::Setup;
 
-int setupG4_XML()  {
+auto setupG4_XML() -> int  {
   dd4hep::Detector& description = dd4hep::Detector::getInstance();
   Kernel& kernel = Kernel::instance(description);
   kernel.loadGeometry("file:../DD4hep.trunk/DDExamples/CLICSiD/compact/compact.xml");
@@ -37,7 +37,7 @@ int setupG4_XML()  {
 }
 
 /// Main entry point as a program
-int main(int, char**)   {
+auto main(int, char**) -> int   {
   try  {
     return setupG4_XML();
   }

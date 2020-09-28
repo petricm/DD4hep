@@ -53,7 +53,7 @@ Geant4Kernel::PhaseSelector::PhaseSelector(const PhaseSelector& c)
    = default;
 
 /// Assignment operator
-Geant4Kernel::PhaseSelector& Geant4Kernel::PhaseSelector::operator=(const PhaseSelector& c) {
+auto Geant4Kernel::PhaseSelector::operator=(const PhaseSelector& c) -> Geant4Kernel::PhaseSelector& {
   if ( this != &c )  {
     m_kernel = c.m_kernel;
   }
@@ -61,7 +61,7 @@ Geant4Kernel::PhaseSelector& Geant4Kernel::PhaseSelector::operator=(const PhaseS
 }
 
 /// Phase access to the map
-Geant4ActionPhase& Geant4Kernel::PhaseSelector::operator[](const std::string& nam) const {
+auto Geant4Kernel::PhaseSelector::operator[](const std::string& nam) const -> Geant4ActionPhase& {
   Geant4ActionPhase* action_phase = m_kernel->getPhase(nam);
   if ( action_phase ) {
     return *action_phase;
@@ -144,7 +144,7 @@ Geant4Kernel::~Geant4Kernel() {
 }
 
 /// Instance accessor
-Geant4Kernel& Geant4Kernel::instance(Detector& description) {
+auto Geant4Kernel::instance(Detector& description) -> Geant4Kernel& {
   if ( nullptr == s_main_instance.get() )   {
     G4AutoLock protection_lock(&kernel_mutex);    {
       if ( nullptr == s_main_instance.get() )   { // Need to check again!
@@ -156,13 +156,13 @@ Geant4Kernel& Geant4Kernel::instance(Detector& description) {
 }
 
 /// Access thread identifier
-unsigned long int Geant4Kernel::thread_self()    {
+auto Geant4Kernel::thread_self() -> unsigned long int    {
   auto thr_id = (unsigned long int)::pthread_self();
   return thr_id;
 }
 
 /// Create identified worker instance
-Geant4Kernel& Geant4Kernel::createWorker()   {
+auto Geant4Kernel::createWorker() -> Geant4Kernel&   {
   if ( isMaster() )   {
     unsigned long identifier = thread_self();
     auto* w = new Geant4Kernel(this, identifier);
@@ -174,7 +174,7 @@ Geant4Kernel& Geant4Kernel::createWorker()   {
 }
 
 /// Access worker instance by it's identifier
-Geant4Kernel& Geant4Kernel::worker(unsigned long identifier, bool create_if)    {
+auto Geant4Kernel::worker(unsigned long identifier, bool create_if) -> Geant4Kernel&    {
   auto i = m_workers.find(identifier);
   if ( i != m_workers.end() )   {
     return *((*i).second);
@@ -195,12 +195,12 @@ Geant4Kernel& Geant4Kernel::worker(unsigned long identifier, bool create_if)    
 }
 
 /// Access number of workers
-int Geant4Kernel::numWorkers() const   {
+auto Geant4Kernel::numWorkers() const -> int   {
   return m_workers.size();
 }
 
 /// Access to geometry world
-G4VPhysicalVolume* Geant4Kernel::world()  const   {
+auto Geant4Kernel::world()  const -> G4VPhysicalVolume*   {
   if ( this != m_master ) return m_master->world();
   return m_world;
 }
@@ -222,12 +222,12 @@ void Geant4Kernel::printProperties()  const  {
 }
 
 /// Check property for existence
-bool Geant4Kernel::hasProperty(const std::string& name) const    {
+auto Geant4Kernel::hasProperty(const std::string& name) const -> bool    {
   return m_properties.exists(name);
 }
 
 /// Access single property
-dd4hep::Property& Geant4Kernel::property(const std::string& name)   {
+auto Geant4Kernel::property(const std::string& name) -> dd4hep::Property&   {
   return properties()[name];
 }
 
@@ -237,21 +237,21 @@ void Geant4Kernel::setOutputLevel(const std::string object, PrintLevel new_level
 }
 
 /// Retrieve the global output level of a named object.
-dd4hep::PrintLevel Geant4Kernel::getOutputLevel(const std::string object) const   {
+auto Geant4Kernel::getOutputLevel(const std::string object) const -> dd4hep::PrintLevel   {
   auto i=m_clientLevels.find(object);
   if ( i != m_clientLevels.end() ) return (PrintLevel)(*i).second;
   return dd4hep::PrintLevel(dd4hep::printLevel()-1);
 }
 
 /// Set the output level; returns previous value
-dd4hep::PrintLevel Geant4Kernel::setOutputLevel(PrintLevel new_level)  {
+auto Geant4Kernel::setOutputLevel(PrintLevel new_level) -> dd4hep::PrintLevel  {
   int old = m_outputLevel;
   m_outputLevel = new_level;
   return (PrintLevel)old;
 }
 
 /// Access to the Geant4 run manager
-G4RunManager& Geant4Kernel::runManager() {
+auto Geant4Kernel::runManager() -> G4RunManager& {
   if ( m_runManager )  {
     return *m_runManager;
   }
@@ -293,15 +293,15 @@ void Geant4Kernel::loadXML(const char* fname) {
   m_detDesc->apply("DD4hep_XMLLoader", 1, (char**) args);
 }
 
-int Geant4Kernel::configure() {
+auto Geant4Kernel::configure() -> int {
   return Geant4Exec::configure(*this);
 }
 
-int Geant4Kernel::initialize() {
+auto Geant4Kernel::initialize() -> int {
   return Geant4Exec::initialize(*this);
 }
 
-int Geant4Kernel::run() {
+auto Geant4Kernel::run() -> int {
   try  {
     return Geant4Exec::run(*this);
   }
@@ -314,12 +314,12 @@ int Geant4Kernel::run() {
   return 0;
 }
 
-int Geant4Kernel::runEvents(int num_events) {
+auto Geant4Kernel::runEvents(int num_events) -> int {
   m_numEvent = num_events;
   return Geant4Exec::run(*this);
 }
 
-int Geant4Kernel::terminate() {
+auto Geant4Kernel::terminate() -> int {
   const Geant4Kernel* ptr = s_main_instance.get();
   printout(INFO,"Geant4Kernel","++ Terminate Geant4 and delete associated actions.");
   if ( ptr == this )  {
@@ -345,7 +345,7 @@ int Geant4Kernel::terminate() {
  *  However, not all actions need to registered....
  *  Only register those, you later need to retrieve by name.
  */
-Geant4Kernel& Geant4Kernel::registerGlobalAction(Geant4Action* action) {
+auto Geant4Kernel::registerGlobalAction(Geant4Action* action) -> Geant4Kernel& {
   if (action) {
     string nam = action->name();
     auto i = m_globalActions.find(nam);
@@ -365,7 +365,7 @@ Geant4Kernel& Geant4Kernel::registerGlobalAction(Geant4Action* action) {
 }
 
 /// Retrieve action from repository
-Geant4Action* Geant4Kernel::globalAction(const std::string& action_name, bool throw_if_not_present) {
+auto Geant4Kernel::globalAction(const std::string& action_name, bool throw_if_not_present) -> Geant4Action* {
   auto i = m_globalActions.find(action_name);
   if (i == m_globalActions.end()) {
     if (throw_if_not_present) {
@@ -382,7 +382,7 @@ Geant4Action* Geant4Kernel::globalAction(const std::string& action_name, bool th
  *  However, not all filters need to registered....
  *  Only register those, you later need to retrieve by name.
  */
-Geant4Kernel& Geant4Kernel::registerGlobalFilter(Geant4Action* filter) {
+auto Geant4Kernel::registerGlobalFilter(Geant4Action* filter) -> Geant4Kernel& {
   if (filter) {
     string nam = filter->name();
     auto i = m_globalFilters.find(nam);
@@ -400,7 +400,7 @@ Geant4Kernel& Geant4Kernel::registerGlobalFilter(Geant4Action* filter) {
 }
 
 /// Retrieve filter from repository
-Geant4Action* Geant4Kernel::globalFilter(const std::string& filter_name, bool throw_if_not_present) {
+auto Geant4Kernel::globalFilter(const std::string& filter_name, bool throw_if_not_present) -> Geant4Action* {
   auto i = m_globalFilters.find(filter_name);
   if (i == m_globalFilters.end()) {
     if (throw_if_not_present) {
@@ -413,7 +413,7 @@ Geant4Action* Geant4Kernel::globalFilter(const std::string& filter_name, bool th
 }
 
 /// Execute phase action if it exists
-bool Geant4Kernel::executePhase(const std::string& nam, const void** arguments)  const   {
+auto Geant4Kernel::executePhase(const std::string& nam, const void** arguments)  const -> bool   {
   auto i = m_phases.find(nam);
   if (i != m_phases.end())   {
     (*i).second->execute(arguments);
@@ -423,7 +423,7 @@ bool Geant4Kernel::executePhase(const std::string& nam, const void** arguments) 
 }
 
 /// Access phase by name
-Geant4ActionPhase* Geant4Kernel::getPhase(const std::string& nam) {
+auto Geant4Kernel::getPhase(const std::string& nam) -> Geant4ActionPhase* {
   auto i = m_phases.find(nam);
   if (i != m_phases.end()) {
     return (*i).second;
@@ -433,13 +433,13 @@ Geant4ActionPhase* Geant4Kernel::getPhase(const std::string& nam) {
 }
 
 /// Add a new phase to the phase
-Geant4ActionPhase* Geant4Kernel::addSimplePhase(const std::string& name, bool throw_on_exist)   {
+auto Geant4Kernel::addSimplePhase(const std::string& name, bool throw_on_exist) -> Geant4ActionPhase*   {
   return addPhase(name,typeid(void),typeid(void),typeid(void),throw_on_exist);
 }
 
 /// Add a new phase
-Geant4ActionPhase* Geant4Kernel::addPhase(const std::string& nam, const type_info& arg0, const type_info& arg1,
-                                          const type_info& arg2, bool throw_on_exist) {
+auto Geant4Kernel::addPhase(const std::string& nam, const type_info& arg0, const type_info& arg1,
+                                          const type_info& arg2, bool throw_on_exist) -> Geant4ActionPhase* {
   auto i = m_phases.find(nam);
   if (i == m_phases.end()) {
     auto* p = new Geant4ActionPhase(workerContext(), nam, arg0, arg1, arg2);
@@ -453,7 +453,7 @@ Geant4ActionPhase* Geant4Kernel::addPhase(const std::string& nam, const type_inf
 }
 
 /// Remove an existing phase from the phase. If not existing returns false
-bool Geant4Kernel::removePhase(const std::string& nam) {
+auto Geant4Kernel::removePhase(const std::string& nam) -> bool {
   auto i = m_phases.find(nam);
   if (i != m_phases.end()) {
     delete (*i).second;

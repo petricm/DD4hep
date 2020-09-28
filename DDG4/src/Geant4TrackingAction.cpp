@@ -66,7 +66,7 @@ void Geant4TrackingActionSequence::configureFiber(Geant4Context* thread_context)
 }
 
 /// Get an action by name
-Geant4TrackingAction* Geant4TrackingActionSequence::get(const string& nam) const   {
+auto Geant4TrackingActionSequence::get(const string& nam) const -> Geant4TrackingAction*   {
   return m_actors.get(FindByName(TypeName::split(nam).second));
 }
 

@@ -38,7 +38,7 @@ using namespace dd4hep;
  *  \version 1.0
  *  \date    01/07/2014
  */
-static long plain_root_dump(Detector& description, int argc, char** argv) {
+static auto plain_root_dump(Detector& description, int argc, char** argv) -> long {
   struct TGeoManip  {
     DetectorData* detector;
     size_t        num_nodes = 0;

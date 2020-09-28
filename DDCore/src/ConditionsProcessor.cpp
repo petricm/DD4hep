@@ -23,14 +23,14 @@ using namespace dd4hep::cond;
 
 /// Callback to output conditions information
 template <typename T>
-int ConditionsCollector<T>::operator()(DetElement de, int)  const  {
+auto ConditionsCollector<T>::operator()(DetElement de, int)  const -> int  {
   struct Collector : public Condition::Processor  {
     DetElement det;
     T&         container;
     /// Constructor
     Collector(DetElement d, T& c) : det(d), container(c) {}
     /// Processing callback
-    [[nodiscard]] int process(Condition c)  const override { insert_item(container, det, c); return 1; }
+    [[nodiscard]] auto process(Condition c)  const -> int override { insert_item(container, det, c); return 1; }
   };
   if ( de.isValid() )  {
     mapping.scan(de, ConditionsMap::FIRST_ITEM, ConditionsMap::LAST_ITEM, Collector(de,conditions));

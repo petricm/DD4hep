@@ -42,7 +42,7 @@ Geant4EventReader::Geant4EventReader(std::string  nam)
 Geant4EventReader::~Geant4EventReader()   = default;
 
 /// Get the context (from the input action)
-Geant4Context* Geant4EventReader::context() const {
+auto Geant4EventReader::context() const -> Geant4Context* {
   if( nullptr == m_inputAction ) {
     printout(FATAL,"Geant4EventReader", "No input action registered!");
     throw std::runtime_error("Geant4EventReader: No input action registered!");
@@ -56,7 +56,7 @@ void Geant4EventReader::setInputAction(Geant4InputAction* action) {
 }
 
 /// Skip event. To be implemented for sequential sources
-Geant4EventReader::EventReaderStatus Geant4EventReader::skipEvent()  {
+auto Geant4EventReader::skipEvent() -> Geant4EventReader::EventReaderStatus  {
   if ( hasDirectAccess() )   {
     ++m_currEvent;
     return EVENT_READER_OK;
@@ -113,8 +113,8 @@ Geant4EventReader::moveToEvent(int event_number)   {
 }
 #else
 /// Move to the indicated event number.
-Geant4EventReader::EventReaderStatus
-Geant4EventReader::moveToEvent(int /* event_number */)   {
+auto
+Geant4EventReader::moveToEvent(int /* event_number */) -> Geant4EventReader::EventReaderStatus   {
   return EVENT_READER_OK;
 }
 #endif
@@ -136,16 +136,16 @@ Geant4InputAction::Geant4InputAction(Geant4Context* ctxt, const string& nam)
 Geant4InputAction::~Geant4InputAction()   = default;
 
 /// helper to report Geant4 exceptions
-string Geant4InputAction::issue(int i)  const  {
+auto Geant4InputAction::issue(int i)  const -> string  {
   stringstream str;
   str << "Geant4InputAction[" << name() << "]: Event " << i << " ";
   return str.str();
 }
 
 /// Read an event and return a LCCollection of MCParticles.
-int Geant4InputAction::readParticles(int evt_number,
+auto Geant4InputAction::readParticles(int evt_number,
                                      Vertices& vertices,
-                                     std::vector<Particle*>& particles)
+                                     std::vector<Particle*>& particles) -> int
 {
   int evid = evt_number + m_firstEvent;
   if ( nullptr == m_reader )  {

@@ -33,6 +33,6 @@ DigiExponentialNoise::~DigiExponentialNoise() {
 }
 
 /// Callback to read event exponentialnoise
-double DigiExponentialNoise::operator()(DigiCellContext& context)  const  {
+auto DigiExponentialNoise::operator()(DigiCellContext& context)  const -> double  {
   return context.context.randomGenerator().exponential(m_tau);
 }

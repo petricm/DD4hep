@@ -21,14 +21,14 @@ using namespace std;
 using namespace dd4hep;
 
 /// Access the sensitive detector of a given subdetector (if the sub-detector is sensitive!)
-SensitiveDetector DetectorHelper::sensitiveDetector(const std::string& detector) const    {
+auto DetectorHelper::sensitiveDetector(const std::string& detector) const -> SensitiveDetector    {
   const string& det_name = detector;
   SensitiveDetector sensitive = ptr()->sensitiveDetector(det_name);
   return sensitive;
 }
 
 /// Given a detector element, access it's sensitive detector (if the sub-detector is sensitive!)
-SensitiveDetector DetectorHelper::sensitiveDetector(DetElement detector) const    {
+auto DetectorHelper::sensitiveDetector(DetElement detector) const -> SensitiveDetector    {
   for(DetElement par = detector; par.isValid(); par = par.parent())  {
     if ( par.ptr() != ptr()->world().ptr() )  {
       PlacedVolume pv = par.placement();
@@ -46,7 +46,7 @@ SensitiveDetector DetectorHelper::sensitiveDetector(DetElement detector) const  
 }
 
 /// Find a detector element by it's system ID
-DetElement DetectorHelper::detectorByID(int id)  const    {
+auto DetectorHelper::detectorByID(int id)  const -> DetElement    {
   const Detector::HandleMap& detectors = ptr()->detectors();
   for(const auto& det : detectors )  {
     DetElement de(det.second);
@@ -56,7 +56,7 @@ DetElement DetectorHelper::detectorByID(int id)  const    {
 }
 
 /// Access an element from the element table by name
-Atom DetectorHelper::element(const std::string& nam)  const   {
+auto DetectorHelper::element(const std::string& nam)  const -> Atom   {
   TGeoManager&      mgr = access()->manager();
   TGeoElementTable* tab = mgr.GetElementTable();
   TGeoElement*      elt = tab->FindElement(nam.c_str());
@@ -77,7 +77,7 @@ Atom DetectorHelper::element(const std::string& nam)  const   {
 }
 
 /// Access a material from the material table by name
-Material DetectorHelper::material(const std::string& nam)  const   {
+auto DetectorHelper::material(const std::string& nam)  const -> Material   {
   TGeoManager& mgr = access()->manager();
   TGeoMedium*  med = mgr.GetMedium(nam.c_str());
   if ( !med )    {

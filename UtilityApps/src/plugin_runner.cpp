@@ -19,7 +19,7 @@
 #include <cerrno>
 
 /// Main entry point as a program
-int main(int argc, char** argv)   {
+auto main(int argc, char** argv) -> int   {
   try  {
     return dd4hep::execute::invoke_plugin_runner("", argc, argv);
   }

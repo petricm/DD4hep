@@ -40,7 +40,7 @@ static DDTest test( "surfaces" ) ;
 
 //=============================================================================
 
-int main_wrapper(int argc, char** argv ){
+auto main_wrapper(int argc, char** argv ) -> int{
 
   if( argc < 3 ) {
     std::cout << " usage: test_surfaces compact.xml lcio_file.slcio" << std::endl ;

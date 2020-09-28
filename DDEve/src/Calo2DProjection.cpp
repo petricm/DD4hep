@@ -42,7 +42,7 @@ Calo2DProjection::~Calo2DProjection()  {
 }
 
 /// Build the projection view and map it to the given slot
-View& Calo2DProjection::Build(TEveWindow* slot)   {
+auto Calo2DProjection::Build(TEveWindow* slot) -> View&   {
   CreateGeoScene();
   CreateEventScene();
   CreateRhoPhiProjection().AddAxis();

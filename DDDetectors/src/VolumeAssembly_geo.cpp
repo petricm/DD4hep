@@ -24,7 +24,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::detail;
 
-static Ref_t create_element(Detector& description, xml_h e, SensitiveDetector sens)  {
+static auto create_element(Detector& description, xml_h e, SensitiveDetector sens) -> Ref_t  {
   //Builder  b(description);
   //return b.create(e, sens);
   xml_comp_t  x_det(e);

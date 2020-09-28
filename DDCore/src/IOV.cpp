@@ -43,7 +43,7 @@ IOVType& IOVType::operator=(const IOVType& copy)  {
 #endif
 
 /// Conversion to string
-std::string IOVType::str()  const   {
+auto IOVType::str()  const -> std::string   {
   char text[256];
   ::snprintf(text,sizeof(text),"%s(%d)",name.c_str(),int(type));
   return text;
@@ -85,14 +85,14 @@ void IOV::set(Key::first_type val_1, Key::second_type val_2)  {
 }
 
 /// Set keys to unphysical values (LONG_MAX, LONG_MIN)
-IOV& IOV::reset()  {
+auto IOV::reset() -> IOV&  {
   keyData.first  = LONG_MAX;
   keyData.second = LONG_MIN;
   return *this;
 }
 
 /// Set keys to unphysical values (LONG_MAX, LONG_MIN)
-IOV& IOV::invert()  {
+auto IOV::invert() -> IOV&  {
   Key::first_type tmp = keyData.first;
   keyData.first  = keyData.second;
   keyData.second = tmp;
@@ -141,7 +141,7 @@ void IOV::move(IOV& from)   {
 }
 
 /// Create string representation of the IOV
-string IOV::str()  const  {
+auto IOV::str()  const -> string  {
   char text[256];
   if ( iovType )  {
     /// Need the long(x) casts for compatibility with Apple MAC
@@ -180,7 +180,7 @@ string IOV::str()  const  {
 }
 
 /// Check for validity containment
-bool IOV::contains(const IOV& iov)  const   {
+auto IOV::contains(const IOV& iov)  const -> bool   {
   if ( key_is_contained(iov.keyData,keyData) )  {
     unsigned int typ1 = iov.iovType ? iov.iovType->type : iov.type;
     unsigned int typ2 = iovType ? iovType->type : type;

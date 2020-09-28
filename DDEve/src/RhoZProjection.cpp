@@ -32,7 +32,7 @@ RhoZProjection::RhoZProjection(Display* eve, const std::string& nam)
 RhoZProjection::~RhoZProjection()  = default;
 
 /// Build the projection view and map it to the given slot
-View& RhoZProjection::Build(TEveWindow* slot)   {
+auto RhoZProjection::Build(TEveWindow* slot) -> View&   {
   CreateScenes();
   CreateRhoZProjection().AddAxis();
   return Map(slot);

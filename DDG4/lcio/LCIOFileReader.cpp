@@ -81,10 +81,10 @@ namespace dd4hep::sim  {
       ~LCIOFileReader() override;
 
       /// Read an event and fill a vector of MCParticles.
-      EventReaderStatus readParticleCollection(int event_number, EVENT::LCCollection** particles) override;
-      EventReaderStatus moveToEvent(int event_number) override;
-      EventReaderStatus skipEvent() override { return EVENT_READER_OK; }
-      EventReaderStatus setParameters(std::map< std::string, std::string >& parameters) override;
+      auto readParticleCollection(int event_number, EVENT::LCCollection** particles) -> EventReaderStatus override;
+      auto moveToEvent(int event_number) -> EventReaderStatus override;
+      auto skipEvent() -> EventReaderStatus override { return EVENT_READER_OK; }
+      auto setParameters(std::map< std::string, std::string >& parameters) -> EventReaderStatus override;
     };
   }
 #endif // DD4HEP_DDG4_LCIOFILEREADER_H
@@ -116,8 +116,8 @@ dd4hep::sim::LCIOFileReader::~LCIOFileReader()    {
 
 
 /// moveToSpecifiedEvent, a.k.a. skipNEvents
-Geant4EventReader::EventReaderStatus
-dd4hep::sim::LCIOFileReader::moveToEvent(int event_number) {
+auto
+dd4hep::sim::LCIOFileReader::moveToEvent(int event_number) -> Geant4EventReader::EventReaderStatus {
   // ::lcio::LCEvent* evt = m_reader->readEvent(/*runNumber*/ 0, event_number);
   // fg: direct access does not work if run number is different from 0 and/or event numbers are not stored consecutively
   if( m_currEvent == 0 && event_number != 0 ) {
@@ -131,8 +131,8 @@ dd4hep::sim::LCIOFileReader::moveToEvent(int event_number) {
 }
 
 /// Read an event and fill a vector of MCParticles.
-Geant4EventReader::EventReaderStatus
-dd4hep::sim::LCIOFileReader::readParticleCollection(int /*event_number*/, EVENT::LCCollection** particles)  {
+auto
+dd4hep::sim::LCIOFileReader::readParticleCollection(int /*event_number*/, EVENT::LCCollection** particles) -> Geant4EventReader::EventReaderStatus  {
 
   ::lcio::LCEvent* evt = m_reader->readNextEvent(); // simply read the events sequentially 
   ++m_currEvent ;
@@ -163,8 +163,8 @@ dd4hep::sim::LCIOFileReader::readParticleCollection(int /*event_number*/, EVENT:
 
 /// Set the parameters for the class, in particular the name of the MCParticle
 /// list
-Geant4EventReader::EventReaderStatus
-dd4hep::sim::LCIOFileReader::setParameters( std::map< std::string, std::string > & parameters ) {
+auto
+dd4hep::sim::LCIOFileReader::setParameters( std::map< std::string, std::string > & parameters ) -> Geant4EventReader::EventReaderStatus {
   _getParameterValue( parameters, "MCParticleCollectionName", m_collectionName, std::string(LCIO::MCPARTICLE));
   return EVENT_READER_OK;
 }

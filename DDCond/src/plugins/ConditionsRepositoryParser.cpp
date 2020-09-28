@@ -92,7 +92,7 @@ namespace {
     ConversionArg(const ConversionArg&) = delete;
     ConversionArg(DetElement det, ConditionsManager m) : detector(det), pool(nullptr), manager(m)
     { }
-    ConversionArg& operator=(const ConversionArg&) = delete;
+    auto operator=(const ConversionArg&) -> ConversionArg& = delete;
   };
 
   /// Local helper class to interprete XML conditions
@@ -142,7 +142,7 @@ namespace {
    *  \version 1.0
    *  \date    01/11/2016
    */
-  Condition create_condition(DetElement det, xml_h e)  {
+  auto create_condition(DetElement det, xml_h e) -> Condition  {
     xml_dim_t elt(e);
     string tag = elt.tag();
     string typ = elt.hasAttr(_U(type)) ? elt.typeStr() : tag;
@@ -172,10 +172,10 @@ namespace {
    *  \version 1.0
    *  \date    01/11/2016
    */
-  template <typename BINDER> Condition bind_condition(const BINDER& bnd,
+  template <typename BINDER> auto bind_condition(const BINDER& bnd,
                                                       DetElement det,
                                                       xml_h e,
-                                                      const std::string& type="")
+                                                      const std::string& type="") -> Condition
   {
     xml_dim_t elt(e);
     string    typ  = type.empty() ? elt.typeStr() : type;
@@ -430,7 +430,7 @@ namespace dd4hep {
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long setup_repository_loglevel(Detector& /* description */, int argc, char** argv)  {
+static auto setup_repository_loglevel(Detector& /* description */, int argc, char** argv) -> long  {
   if ( argc == 1 )  {
     s_parseLevel = printLevel(argv[0]);
     return 1;
@@ -449,7 +449,7 @@ DECLARE_APPLY(DD4hep_ConditionsXMLRepositoryPrintLevel,setup_repository_loglevel
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long setup_repository_Conditions(Detector& description, int argc, char** argv)  {
+static auto setup_repository_Conditions(Detector& description, int argc, char** argv) -> long  {
   if ( argc == 1 )  {
     detail::DD4hepUI ui(description);
     string fname(argv[0]);

@@ -36,21 +36,21 @@ using namespace dd4hep::digi;
 static constexpr double PIOVER2 = M_PI / 2.0;
 static constexpr double TWOPI   = M_PI * 2.0;
 
-double DigiRandomGenerator::random()  const   {
+auto DigiRandomGenerator::random()  const -> double   {
   return engine();
 }
 
-double DigiRandomGenerator::uniform(double x1)   const   {
+auto DigiRandomGenerator::uniform(double x1)   const -> double   {
   double ans = engine();
   return x1*ans;
 }
 
-double DigiRandomGenerator::uniform(double x1, double x2)   const   {
+auto DigiRandomGenerator::uniform(double x1, double x2)   const -> double   {
   double ans= engine();
   return x1 + (x2-x1)*ans;
 }
 
-int    DigiRandomGenerator::binomial(int ntot, double prob)  const   {
+auto    DigiRandomGenerator::binomial(int ntot, double prob)  const -> int   {
   if (prob < 0 || prob > 1) return 0;
   int n = 0;
   for (int i=0;i<ntot;i++) {
@@ -60,13 +60,13 @@ int    DigiRandomGenerator::binomial(int ntot, double prob)  const   {
   return n;
 }
 
-double DigiRandomGenerator::exponential(double tau)  const   {
+auto DigiRandomGenerator::exponential(double tau)  const -> double   {
   double x = engine();              // uniform on ] 0, 1 ]
   double t = -tau * std::log( x ); // convert to exponential distribution
   return t;
 }
 
-double DigiRandomGenerator::gaussian(double mean, double sigma)  const   {
+auto DigiRandomGenerator::gaussian(double mean, double sigma)  const -> double   {
   const double kC1 = 1.448242853;
   const double kC2 = 3.307147487;
   const double kC3 = 1.46754004;
@@ -147,20 +147,20 @@ double DigiRandomGenerator::gaussian(double mean, double sigma)  const   {
   return mean + sigma * result;
 }
 
-double DigiRandomGenerator::landau  (double mu, double sigma)  const   {
+auto DigiRandomGenerator::landau  (double mu, double sigma)  const -> double   {
   if (sigma <= 0) return 0;
   double x = engine();
   double res = mu + ROOT::Math::landau_quantile(x, sigma);
   return res;
 }
 
-double DigiRandomGenerator::breitWigner(double mean, double gamma)  const   {
+auto DigiRandomGenerator::breitWigner(double mean, double gamma)  const -> double   {
   double rval = 2*engine() - 1;
   double displ = 0.5*gamma*std::tan(rval*PIOVER2);
   return (mean+displ);
 }
 
-double DigiRandomGenerator::poisson(double mean)  const   {
+auto DigiRandomGenerator::poisson(double mean)  const -> double   {
   int n;
   if (mean <= 0) return 0;
   if (mean < 25) {

@@ -66,31 +66,31 @@ void detail::ConditionObject::release()  {
 }
 
 /// Data offset from the opaque data block pointer to the condition
-size_t detail::ConditionObject::offset()   {
+auto detail::ConditionObject::offset() -> size_t   {
   static _P p((void*)0x1000);
   static size_t off = _P(&p.o->data.grammar).character - p.character + sizeof(OpaqueData::grammar);
   return off;
 }
 
 /// Access the bound data payload. Exception id object is unbound
-void* detail::ConditionObject::payload() const   {
+auto detail::ConditionObject::payload() const -> void*   {
   return *(_P(_P(this).character+offset()).pp_void);
 }
 
 /// Move data content: 'from' will be reset to NULL
-detail::ConditionObject& detail::ConditionObject::move(ConditionObject& /* from */)   {
+auto detail::ConditionObject::move(ConditionObject& /* from */) -> detail::ConditionObject&   {
   return *this;
 }
 
 /// Access safely the IOV
-const dd4hep::IOV* detail::ConditionObject::iovData() const    {
+auto detail::ConditionObject::iovData() const -> const dd4hep::IOV*    {
   if ( iov ) return iov;
   invalidHandleError<IOV>();
   return nullptr;
 }
 
 /// Access safely the IOV-type
-const dd4hep::IOVType* detail::ConditionObject::iovType() const    {
+auto detail::ConditionObject::iovType() const -> const dd4hep::IOVType*    {
   if ( iov && iov->iovType ) return iov->iovType;
   invalidHandleError<IOVType>();
   return nullptr;

@@ -55,17 +55,17 @@ namespace dd4hep::cond {
       virtual ~ConditionsXMLRepositoryWriter();
      
       /// Dump the tree content into a XML document structure
-      xml::Document dump(ConditionsSlice& slice);
+      auto dump(ConditionsSlice& slice) -> xml::Document;
       /// Dump the ConditionsManager configuration properties into a XML document structure
-      xml::Document dump(ConditionsManager manager);
+      auto dump(ConditionsManager manager) -> xml::Document;
       /// Dump the tree content into an existing XML document structure
-      size_t collect(xml::Element root,ConditionsSlice& slice,DetElement detector);
+      auto collect(xml::Element root,ConditionsSlice& slice,DetElement detector) -> size_t;
       /// Dump the ConditionsManager configuration properties into an existing XML document structure
-      size_t collect(xml::Element root, ConditionsManager manager);
+      auto collect(xml::Element root, ConditionsManager manager) -> size_t;
       /// Dump the conditions tree content into a XML document structure
-      size_t collect(xml::Element root, ConditionsSlice& slice);
+      auto collect(xml::Element root, ConditionsSlice& slice) -> size_t;
       /// Write the XML document structure to a file.
-      [[nodiscard]] long write(xml::Document doc, const std::string& output)  const;
+      [[nodiscard]] auto write(xml::Document doc, const std::string& output)  const -> long;
     };
     
   }          /* End namespace dd4hep                              */
@@ -141,9 +141,9 @@ namespace {
     }
   };
   
-  template <typename T> xml::Element _convert(xml::Element par, Condition c);
+  template <typename T> auto _convert(xml::Element par, Condition c) -> xml::Element;
   
-  xml::Element make(xml::Element e, Condition c)  {
+  auto make(xml::Element e, Condition c) -> xml::Element  {
     char hash[64];
     std::string nam = c.name();
     std::string cn = nam.substr(nam.find('#')+1);
@@ -152,7 +152,7 @@ namespace {
     e.setAttr(_U(key),hash);
     return e;
   }
-  xml::Element _convert(xml::Element par, const Translation3D& tr)  {
+  auto _convert(xml::Element par, const Translation3D& tr) -> xml::Element  {
     xml::Element e = xml::Element(par.document(),_U(pivot));
     const Translation3D::Vector& v = tr.Vect();
     e.setAttr(_U(x),v.X());
@@ -160,14 +160,14 @@ namespace {
     e.setAttr(_U(z),v.Z());
     return e;
   }
-  xml::Element _convert(xml::Element par, const Position& pos)  {
+  auto _convert(xml::Element par, const Position& pos) -> xml::Element  {
     xml::Element e = xml::Element(par.document(),_U(position));
     e.setAttr(_U(x),pos.X());
     e.setAttr(_U(y),pos.Y());
     e.setAttr(_U(z),pos.Z());
     return e;
   }
-  xml::Element _convert(xml::Element par, const RotationZYX& rot)  {
+  auto _convert(xml::Element par, const RotationZYX& rot) -> xml::Element  {
     xml::Element e = xml::Element(par.document(),_U(rotation));
     double z, y, x;
     rot.GetComponents(z,y,x);
@@ -176,26 +176,26 @@ namespace {
     e.setAttr(_U(z),z);
     return e;
   }
-  template <> xml::Element _convert<value>(xml::Element par, Condition c)  {
+  template <> auto _convert<value>(xml::Element par, Condition c) -> xml::Element  {
     xml::Element v = make(xml::Element(par.document(),_U(value)),c);
     OpaqueData& data = c.data();
     v.setAttr(_U(type),data.dataType());
     v.setAttr(_U(value),data.str());
     return v;
   }
-  template <> xml::Element _convert<pressure>(xml::Element par, Condition c)  {
+  template <> auto _convert<pressure>(xml::Element par, Condition c) -> xml::Element  {
     xml::Element press = make(xml::Element(par.document(),_UC(pressure)),c);
     press.setAttr(_U(value),c.get<double>()/(100e0*units::pascal));
     press.setAttr(_U(unit),"hPa");
     return press;
   }
-  template <> xml::Element _convert<temperature>(xml::Element par, Condition c)  {
+  template <> auto _convert<temperature>(xml::Element par, Condition c) -> xml::Element  {
     xml::Element temp = make(xml::Element(par.document(),_UC(temperature)),c);
     temp.setAttr(_U(value),c.get<double>()/units::kelvin);
     temp.setAttr(_U(unit),"kelvin");
     return temp;
   }
-  template <> xml::Element _convert<Delta>(xml::Element par, Condition c)  {
+  template <> auto _convert<Delta>(xml::Element par, Condition c) -> xml::Element  {
     xml::Element       align = make(xml::Element(par.document(),_UC(alignment_delta)),c);
     const Delta&       delta = c.get<Delta>();
     if ( delta.flags&Delta::HAVE_TRANSLATION )
@@ -206,7 +206,7 @@ namespace {
       align.append(_convert(align,delta.pivot));
     return align;
   }
-  template <> xml::Element _convert<Alignment>(xml::Element par, Condition c)  {
+  template <> auto _convert<Alignment>(xml::Element par, Condition c) -> xml::Element  {
     char hash[64];
     typedef ConditionKey::KeyMaker KM;
     AlignmentCondition  acond = c;
@@ -225,7 +225,7 @@ namespace {
       align.append(_convert(align,delta.pivot));
     return align;
   }
-  xml::Element _seq(xml::Element v, Condition c, const char* tag, const char* match)  {
+  auto _seq(xml::Element v, Condition c, const char* tag, const char* match) -> xml::Element  {
     OpaqueData& data = c.data();
     string typ = data.dataType();
     size_t len = ::strlen(match);
@@ -241,15 +241,15 @@ namespace {
     except("Writer","++ Unknwon XML conversion to type: %s",typ.c_str());
     return v;
   }
-  template <> xml::Element _convert<std::vector<void*> >(xml::Element par, Condition c)  {
+  template <> auto _convert<std::vector<void*> >(xml::Element par, Condition c) -> xml::Element  {
     xml::Element v = make(xml::Element(par.document(),_UC(sequence)),c);
     return _seq(v,c,"vector","::vector<");
   }
-  template <> xml::Element _convert<std::list<void*> >(xml::Element par, Condition c)  {
+  template <> auto _convert<std::list<void*> >(xml::Element par, Condition c) -> xml::Element  {
     xml::Element v = make(xml::Element(par.document(),_UC(sequence)),c);
     return _seq(v,c,"list","::list<");
   }
-  template <> xml::Element _convert<std::set<void*> >(xml::Element par, Condition c)  {
+  template <> auto _convert<std::set<void*> >(xml::Element par, Condition c) -> xml::Element  {
     xml::Element v = make(xml::Element(par.document(),_UC(sequence)),c);
     return _seq(v,c,"set","::set<");
   }
@@ -262,7 +262,7 @@ ConditionsXMLRepositoryWriter::~ConditionsXMLRepositoryWriter()    {
 }
 
 /// Dump the tree content into a XML document structure
-xml::Document ConditionsXMLRepositoryWriter::dump(ConditionsSlice& slice) {
+auto ConditionsXMLRepositoryWriter::dump(ConditionsSlice& slice) -> xml::Document {
   xml::DocumentHandler docH;
   xml::Document doc = docH.create("conditions", docH.defaultComment());
   collect(doc.root(),slice);
@@ -270,7 +270,7 @@ xml::Document ConditionsXMLRepositoryWriter::dump(ConditionsSlice& slice) {
 }
 
 /// Dump the ConditionsManager configuration properties into a XML document structure
-xml::Document ConditionsXMLRepositoryWriter::dump(ConditionsManager manager)  {
+auto ConditionsXMLRepositoryWriter::dump(ConditionsManager manager) -> xml::Document  {
   xml::DocumentHandler docH;
   xml::Document doc  = docH.create("conditions", docH.defaultComment());
   xml::Element  root = doc.root();
@@ -279,7 +279,7 @@ xml::Document ConditionsXMLRepositoryWriter::dump(ConditionsManager manager)  {
 }
 
 /// Dump the conditions tree content into a XML document structure
-size_t ConditionsXMLRepositoryWriter::collect(xml::Element root, ConditionsSlice& slice)    {
+auto ConditionsXMLRepositoryWriter::collect(xml::Element root, ConditionsSlice& slice) -> size_t    {
   xml::Element  repo(root.document(),_UC(repository));
   xml::Element  iov (repo.document(),_UC(iov));
   const IOV&    validity = slice.pool->validity();
@@ -295,8 +295,8 @@ size_t ConditionsXMLRepositoryWriter::collect(xml::Element root, ConditionsSlice
 }
 
 /// Dump the ConditionsManager configuration properties into an existing XML document structure
-size_t ConditionsXMLRepositoryWriter::collect(xml::Element root,
-                                              ConditionsManager manager)  
+auto ConditionsXMLRepositoryWriter::collect(xml::Element root,
+                                              ConditionsManager manager) -> size_t
 {
   size_t count = 0;
   if ( manager.isValid() )  {
@@ -321,9 +321,9 @@ size_t ConditionsXMLRepositoryWriter::collect(xml::Element root,
 }
 
 /// Dump the conditions tree content into a XML document structure
-size_t ConditionsXMLRepositoryWriter::collect(xml::Element root,
+auto ConditionsXMLRepositoryWriter::collect(xml::Element root,
                                               ConditionsSlice& slice,
-                                              DetElement detector)  
+                                              DetElement detector) -> size_t
 {
   size_t count = 0;
   if ( detector.isValid() )  {
@@ -424,7 +424,7 @@ size_t ConditionsXMLRepositoryWriter::collect(xml::Element root,
 // ======================================================================================
 
 /// Write the XML document structure to a file.
-long ConditionsXMLRepositoryWriter::write(xml::Document doc, const string& output)   const {
+auto ConditionsXMLRepositoryWriter::write(xml::Document doc, const string& output)   const -> long {
   xml::DocumentHandler docH;
   long ret = docH.output(doc, output);
   if ( !output.empty() )  {
@@ -440,7 +440,7 @@ long ConditionsXMLRepositoryWriter::write(xml::Document doc, const string& outpu
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long write_repository_conditions(Detector& description, int argc, char** argv)  {
+static auto write_repository_conditions(Detector& description, int argc, char** argv) -> long  {
   ConditionsManager manager  =  ConditionsManager::from(description);
   const IOVType*    iovtype  =  nullptr;
   long              iovvalue = -1;
@@ -503,7 +503,7 @@ DECLARE_APPLY(DD4hep_ConditionsXMLRepositoryWriter,write_repository_conditions)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long write_repository_manager(Detector& description, int argc, char** argv)  {
+static auto write_repository_manager(Detector& description, int argc, char** argv) -> long  {
   ConditionsManager manager  =  ConditionsManager::from(description);
   string            output;
 

@@ -29,7 +29,7 @@
 using namespace dd4hep;
 using namespace dd4hep::rec;
 
-int main_wrapper(int argc, char** argv)   {
+auto main_wrapper(int argc, char** argv) -> int   {
   struct Handler  {
     Handler() { SetErrorHandler(Handler::print); }
     static void print(int level, Bool_t abort, const char *location, const char *msg)  {

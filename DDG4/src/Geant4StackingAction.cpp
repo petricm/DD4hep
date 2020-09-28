@@ -125,7 +125,7 @@ void Geant4StackingActionSequence::configureFiber(Geant4Context* thread_context)
 }
 
 /// Get an action by name
-Geant4StackingAction* Geant4StackingActionSequence::get(const string& nam) const   {
+auto Geant4StackingActionSequence::get(const string& nam) const -> Geant4StackingAction*   {
   return m_actors.get(FindByName(TypeName::split(nam).second));
 }
 

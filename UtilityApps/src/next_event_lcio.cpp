@@ -31,7 +31,7 @@ using namespace lcio;
 //=====================================================================================
 
 template <class T>
-TEveElement* createPointSet( lcio::LCCollection* col, const std::string& name, unsigned color=kMagenta, unsigned size=1, unsigned style=4 ) ;
+auto createPointSet( lcio::LCCollection* col, const std::string& name, unsigned color=kMagenta, unsigned size=1, unsigned style=4 ) -> TEveElement* ;
 
 //=====================================================================================
 
@@ -136,7 +136,7 @@ void next_event(){
 
 //=====================================================================================
 template <class T>
-TEveElement* createPointSet( lcio::LCCollection* col, const std::string& name, unsigned color, unsigned size, unsigned style ) {
+auto createPointSet( lcio::LCCollection* col, const std::string& name, unsigned color, unsigned size, unsigned style ) -> TEveElement* {
    
   auto* ps = new TEvePointSet( name.c_str()  );
   ps->SetOwnIds(kTRUE);

@@ -44,7 +44,7 @@ namespace dd4hep::cond {
       MAPPING m_entries;
 
       /// Helper function to loop over the conditions container and apply a functor
-      template <typename R,typename T> size_t loop(R& result, T functor) {
+      template <typename R,typename T> auto loop(R& result, T functor) -> size_t {
         size_t len = result.size();
         for_each(m_entries.begin(),m_entries.end(),functor);
         return result.size() - len;
@@ -57,7 +57,7 @@ namespace dd4hep::cond {
       ~ConditionsLinearPool() override;
 
       /// Total entry count
-      [[nodiscard]] size_t size()  const   final  {
+      [[nodiscard]] auto size()  const -> size_t   final  {
         return m_entries.size();
       }
 
@@ -68,13 +68,13 @@ namespace dd4hep::cond {
       }
 
       /// Check if a condition exists in the pool
-      [[nodiscard]] Condition exists(Condition::key_type key)  const  final   {
+      [[nodiscard]] auto exists(Condition::key_type key)  const -> Condition  final   {
         auto i = find_if(m_entries.begin(), m_entries.end(), Operators::keyFind(key));
         return i==m_entries.end() ? Condition() : (*i);
       }
 
       /// Register a new condition to this pool
-      bool insert(Condition condition)  final
+      auto insert(Condition condition) -> bool  final
       {  m_entries.emplace(m_entries.end(),condition.access()); return true;     }
 
       /// Register a new condition to this pool. May overload for performance reasons.
@@ -82,19 +82,19 @@ namespace dd4hep::cond {
       {  for_each(rc.begin(), rc.end(), Operators::sequenceSelect(m_entries));  }
 
       /// Select the conditions matching the DetElement and the conditions name
-      size_t select(Condition::key_type key, RangeConditions& result)  final
+      auto select(Condition::key_type key, RangeConditions& result) -> size_t  final
       {  return loop(result, Operators::keyedSelect(key, result));              }
 
       /// Select the conditons, used also by the DetElement of the condition
-      size_t select_all(const ConditionsSelect& result)  final
+      auto select_all(const ConditionsSelect& result) -> size_t  final
       {  return loop(result, Operators::operatorWrapper(result));               }
 
       /// Select the conditons, used also by the DetElement of the condition
-      size_t select_all(RangeConditions& result)  final
+      auto select_all(RangeConditions& result) -> size_t  final
       {  return loop(result, Operators::sequenceSelect(result));                }
 
       /// Select the conditons, used also by the DetElement of the condition
-      size_t select_all(ConditionsPool& result)  final
+      auto select_all(ConditionsPool& result) -> size_t  final
       {  return loop(result, Operators::poolSelect(result));                    }
     };
 
@@ -120,7 +120,7 @@ namespace dd4hep::cond {
       ~ConditionsLinearUpdatePool()  override = default;
 
       /// Adopt all entries sorted by IOV. Entries will be removed from the pool
-      size_t popEntries(UpdatePool::UpdateEntries& entries)   final  {
+      auto popEntries(UpdatePool::UpdateEntries& entries) -> size_t   final  {
         MAPPING& m = this->ConditionsLinearPool<MAPPING,BASE>::m_entries;
         size_t len = entries.size();
         if ( !m.empty() )  {
@@ -214,7 +214,7 @@ ConditionsLinearPool<MAPPING,BASE>::~ConditionsLinearPool()  {
 namespace {
   using namespace dd4hep;
   
-  ConditionsManager _mgr(int argc, char** argv)  {
+  auto _mgr(int argc, char** argv) -> ConditionsManager  {
     if ( argc > 0 )  {
       auto* m = (ConditionsManager::Object*)argv[0];
       return m;
@@ -222,7 +222,7 @@ namespace {
     dd4hep::except("ConditionsLinearPool","++ Insufficient arguments: arg[0] = ConditionManager!");
     return ConditionsManager(nullptr);
   }
-  IOV* _iov(int argc, char** argv)  {
+  auto _iov(int argc, char** argv) -> IOV*  {
     if ( argc > 1 )  {
       IOV* i = (IOV*)argv[1];
       return i;

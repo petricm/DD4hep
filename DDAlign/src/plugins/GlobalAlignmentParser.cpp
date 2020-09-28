@@ -58,7 +58,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::align;
 
-static long setup_Alignment(Detector& description, const xml_h& e);
+static auto setup_Alignment(Detector& description, const xml_h& e) -> long;
 
 /** Convert to enable/disable debugging.
  *
@@ -236,7 +236,7 @@ template <> void Converter<alignment>::operator()(xml_h e)  const  {
  *  @version 1.0
  *  @date    01/04/2014
  */
-static long setup_Alignment(Detector& description, const xml_h& e) {
+static auto setup_Alignment(Detector& description, const xml_h& e) -> long {
   static dd4hep_mutex_t s_mutex;
   dd4hep_lock_t lock(s_mutex);
   bool open_trans  = e.hasChild(_ALU(open_transaction));
@@ -277,7 +277,7 @@ DECLARE_XML_DOC_READER(global_alignment,setup_Alignment)
  *  @version 1.0
  *  @date    01/04/2014
  */
-static long install_Alignment(Detector& description, int, char**) {
+static auto install_Alignment(Detector& description, int, char**) -> long {
   GlobalAlignmentCache::install(description);
   return 1;
 }

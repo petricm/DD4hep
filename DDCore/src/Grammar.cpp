@@ -35,18 +35,18 @@ namespace {
   typedef std::pair<grammar_create_t, dd4hep::BasicGrammar::specialization_t> grammar_args_t;
 
   // This static object needs to be in function to trick out static constructors populating this registry....
-  static std::map<dd4hep::BasicGrammar::key_type, dd4hep::BasicGrammar*>& active_registry()  {
+  static auto active_registry() -> std::map<dd4hep::BasicGrammar::key_type, dd4hep::BasicGrammar*>&  {
     static std::map<dd4hep::BasicGrammar::key_type, dd4hep::BasicGrammar*> s_registry;
     return s_registry;
   }
-  static std::map<dd4hep::BasicGrammar::key_type, grammar_args_t>& prenote_registry()  {
+  static auto prenote_registry() -> std::map<dd4hep::BasicGrammar::key_type, grammar_args_t>&  {
     static std::map<dd4hep::BasicGrammar::key_type, grammar_args_t> s_registry;
     return s_registry;
   }
 }
 
 /// Equality operator
-bool dd4hep::BasicGrammar::specialization_t::operator==(const specialization_t& cp)  const  {
+auto dd4hep::BasicGrammar::specialization_t::operator==(const specialization_t& cp)  const -> bool  {
   return this->bind  == cp.bind &&
     this->copy       == cp.copy && this->str == cp.str &&
     this->fromString == cp.fromString && this->eval == cp.eval;
@@ -85,7 +85,7 @@ void dd4hep::BasicGrammar::pre_note(const std::type_info& info,
 }
 
 /// Lookup existing grammar using hash code (reading objects)
-const dd4hep::BasicGrammar& dd4hep::BasicGrammar::get(key_type hash)   {
+auto dd4hep::BasicGrammar::get(key_type hash) -> const dd4hep::BasicGrammar&   {
   auto i = active_registry().find(hash);
   if ( i != active_registry().end() )
     return *(i->second);
@@ -97,7 +97,7 @@ const dd4hep::BasicGrammar& dd4hep::BasicGrammar::get(key_type hash)   {
 }
 
 /// Lookup existing grammar using hash code (reading objects)
-const dd4hep::BasicGrammar& dd4hep::BasicGrammar::get(const std::type_info& info)    {
+auto dd4hep::BasicGrammar::get(const std::type_info& info) -> const dd4hep::BasicGrammar&    {
   key_type hash = dd4hep::detail::hash64(typeName(info));
   auto i = active_registry().find(hash);
   if ( i != active_registry().end() )
@@ -131,13 +131,13 @@ void dd4hep::BasicGrammar::initialize()  const  {
 }
 
 /// Access ROOT data type for fundamentals
-int dd4hep::BasicGrammar::initialized_data_type()  const   {
+auto dd4hep::BasicGrammar::initialized_data_type()  const -> int   {
   this->initialize();
   return root_data_type;
 }
 
 /// Access the ROOT class for complex objects
-TClass* dd4hep::BasicGrammar::initialized_clazz()  const   {
+auto dd4hep::BasicGrammar::initialized_clazz()  const -> TClass*   {
   this->initialize();
   return root_class;
 }
@@ -160,7 +160,7 @@ void dd4hep::BasicGrammar::invalidConversion(const std::type_info& from, const s
 }
 
 /// Serialize an opaque value to a string
-std::string dd4hep::BasicGrammar::str(const void* ptr) const    {
+auto dd4hep::BasicGrammar::str(const void* ptr) const -> std::string    {
   if ( specialization.str )
     return specialization.str(*this,ptr);
   except("Grammar","Cannot serialize object with incomplete grammar: %s",type_name().c_str());
@@ -168,7 +168,7 @@ std::string dd4hep::BasicGrammar::str(const void* ptr) const    {
 }
 
 /// Set value from serialized string. On successful data conversion TRUE is returned.
-bool dd4hep::BasicGrammar::fromString(void* ptr, const std::string& value) const    {
+auto dd4hep::BasicGrammar::fromString(void* ptr, const std::string& value) const -> bool    {
   if ( specialization.fromString )
     return specialization.fromString(*this,ptr, value);
   except("Grammar","Cannot deserialize object with incomplete grammar: %s",type_name().c_str());
@@ -176,7 +176,7 @@ bool dd4hep::BasicGrammar::fromString(void* ptr, const std::string& value) const
 }
 
 /// Evaluate string value if possible before calling boost::spirit
-int dd4hep::BasicGrammar::evaluate(void* ptr, const std::string& value) const    {
+auto dd4hep::BasicGrammar::evaluate(void* ptr, const std::string& value) const -> int    {
   if ( specialization.eval )
     return specialization.eval(*this,ptr, value);
   except("Grammar","Cannot evaluate object with incomplete grammar: %s",type_name().c_str());
@@ -184,7 +184,7 @@ int dd4hep::BasicGrammar::evaluate(void* ptr, const std::string& value) const   
 }
 
 /// Registry instance singleton
-const dd4hep::GrammarRegistry& dd4hep::GrammarRegistry::instance()   {
+auto dd4hep::GrammarRegistry::instance() -> const dd4hep::GrammarRegistry&   {
   static GrammarRegistry s_reg;
   return s_reg;
 }

@@ -26,15 +26,15 @@ AlignmentsNominalMap::AlignmentsNominalMap(DetElement wrld) : world(wrld) {
 }
 
 /// Insert a new entry to the map
-bool AlignmentsNominalMap::insert(DetElement              detector,
+auto AlignmentsNominalMap::insert(DetElement              detector,
                                   Condition::itemkey_type key,
-                                  Condition               condition)   {
+                                  Condition               condition) -> bool   {
   auto res = data.emplace(ConditionKey(detector,key).hash,condition);
   return res.second;
 }
 
 /// Interface to access conditions by hash value
-Condition AlignmentsNominalMap::get(DetElement detector, Condition::itemkey_type key) const   {
+auto AlignmentsNominalMap::get(DetElement detector, Condition::itemkey_type key) const -> Condition   {
   auto res = data.find(ConditionKey(detector,key).hash);
   if ( res == data.end() )  {
     if ( key == Keys::alignmentKey )  {
@@ -59,7 +59,7 @@ void AlignmentsNominalMap::scan(const Condition::Processor& processor) const  {
     /// Constructor
     Scanner(const Condition::Processor& p) : proc(p)  { }
     /// Conditions callback for object processing
-    int operator()(DetElement de, int /* level */)  const  {
+    auto operator()(DetElement de, int /* level */)  const -> int  {
       Condition c = de.nominal();
       return proc(c);
     }

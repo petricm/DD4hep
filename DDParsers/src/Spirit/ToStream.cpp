@@ -35,7 +35,7 @@ namespace dd4hep {
   namespace Parsers {
     // ============================================================================
     // print XYZ-point
-    std::ostream& toStream_(const ROOT::Math::XYZPoint&  obj, std::ostream& s)  {
+    auto toStream_(const ROOT::Math::XYZPoint&  obj, std::ostream& s) -> std::ostream&  {
       s << "( ";
       toStream_(obj.X () , s );
       s << " , ";
@@ -45,11 +45,11 @@ namespace dd4hep {
       s << " )";
       return s;
     }
-    template <> std::ostream& toStream(const ROOT::Math::XYZPoint& obj, std::ostream& s)
+    template <> auto toStream(const ROOT::Math::XYZPoint& obj, std::ostream& s) -> std::ostream&
     {  return toStream_(obj, s); }
     // ============================================================================
     // print XYZ-vector
-    std::ostream& toStream_(const ROOT::Math::XYZVector& obj, std::ostream& s)  {
+    auto toStream_(const ROOT::Math::XYZVector& obj, std::ostream& s) -> std::ostream&  {
       s << "( ";
       toStream_(obj.X () , s );
       s << " , ";
@@ -59,11 +59,11 @@ namespace dd4hep {
       s << " )";
       return s;
     }
-    template <> std::ostream& toStream(const ROOT::Math::XYZVector& obj, std::ostream& s)
+    template <> auto toStream(const ROOT::Math::XYZVector& obj, std::ostream& s) -> std::ostream&
     {  return toStream_(obj, s); }
     // ============================================================================
     // print LorentzVector
-    std::ostream& toStream_(const ROOT::Math::PxPyPzEVector& obj, std::ostream& s){
+    auto toStream_(const ROOT::Math::PxPyPzEVector& obj, std::ostream& s) -> std::ostream&{
       s << "( ";
       toStream_(obj.Px () , s , 12 );
       s << " , ";
@@ -75,11 +75,11 @@ namespace dd4hep {
       s << " )";
       return s;
     }
-    template <> std::ostream& toStream(const ROOT::Math::PxPyPzEVector& obj, std::ostream& s)
+    template <> auto toStream(const ROOT::Math::PxPyPzEVector& obj, std::ostream& s) -> std::ostream&
     {  return toStream_(obj, s); }
     // ============================================================================
     // print Translation3D
-    std::ostream& toStream_(const ROOT::Math::Translation3D& obj, std::ostream& s){
+    auto toStream_(const ROOT::Math::Translation3D& obj, std::ostream& s) -> std::ostream&{
       double x,y,z;
       obj.GetComponents(x,y,z);
       s << "( ";
@@ -91,11 +91,11 @@ namespace dd4hep {
       s << " )";
       return s;
     }
-    template <> std::ostream& toStream(const ROOT::Math::Translation3D& obj, std::ostream& s)
+    template <> auto toStream(const ROOT::Math::Translation3D& obj, std::ostream& s) -> std::ostream&
     {  return toStream_(obj, s); }
     // ============================================================================
     // print RotationZYX
-    std::ostream& toStream_(const ROOT::Math::RotationZYX& obj, std::ostream& s){
+    auto toStream_(const ROOT::Math::RotationZYX& obj, std::ostream& s) -> std::ostream&{
       s << "( ";
       toStream_(obj.Phi () , s , 12 );    // Z-angle
       s << " , ";
@@ -105,7 +105,7 @@ namespace dd4hep {
       s << " )";
       return s;
     }
-    template <> std::ostream& toStream(const ROOT::Math::RotationZYX& obj, std::ostream& s)
+    template <> auto toStream(const ROOT::Math::RotationZYX& obj, std::ostream& s) -> std::ostream&
     {  return toStream_(obj, s); }
   }
 }

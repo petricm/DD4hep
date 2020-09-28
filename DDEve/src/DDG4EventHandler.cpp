@@ -36,7 +36,7 @@ namespace {
     void* ptr;
   };
   /// Factory entry point
-  void* _create(const char*)  {
+  auto _create(const char*) -> void*  {
     EventHandler* h = new DDG4EventHandler();
     return h;
   }
@@ -69,22 +69,22 @@ DDG4EventHandler::~DDG4EventHandler()   {
 }
 
 /// Load the next event
-bool DDG4EventHandler::NextEvent()   {
+auto DDG4EventHandler::NextEvent() -> bool   {
   return ReadEvent(++m_entry) > 0;
 }
 
 /// Load the previous event
-bool DDG4EventHandler::PreviousEvent()   {
+auto DDG4EventHandler::PreviousEvent() -> bool   {
   return ReadEvent(--m_entry) > 0;
 }
 
 /// Goto a specified event in the file
-bool DDG4EventHandler::GotoEvent(long event_number)   {
+auto DDG4EventHandler::GotoEvent(long event_number) -> bool   {
   return ReadEvent(m_entry = event_number) > 0;
 }
 
 /// Access the number of events on the current input data source (-1 if no data source connected)
-long DDG4EventHandler::numEvents() const   {
+auto DDG4EventHandler::numEvents() const -> long   {
   if ( hasFile() )  {
     return m_file.second->GetEntries();
   }
@@ -92,7 +92,7 @@ long DDG4EventHandler::numEvents() const   {
 }
 
 /// Access the data source name
-std::string DDG4EventHandler::datasourceName() const   {
+auto DDG4EventHandler::datasourceName() const -> std::string   {
   if ( hasFile() )  {
     return m_file.first->GetName();
   }
@@ -100,7 +100,7 @@ std::string DDG4EventHandler::datasourceName() const   {
 }
 
 /// Access to the collection type by name
-EventHandler::CollectionType DDG4EventHandler::collectionType(const std::string& collection) const {
+auto DDG4EventHandler::collectionType(const std::string& collection) const -> EventHandler::CollectionType {
   auto i = m_branches.find(collection);
   if ( i != m_branches.end() )   {
     const char* cl = (*i).second.first->GetClassName();
@@ -116,7 +116,7 @@ EventHandler::CollectionType DDG4EventHandler::collectionType(const std::string&
 }
 
 /// Call functor on hit collection
-size_t DDG4EventHandler::collectionLoop(const std::string& collection, DDEveHitActor& actor)   {
+auto DDG4EventHandler::collectionLoop(const std::string& collection, DDEveHitActor& actor) -> size_t   {
   typedef std::vector<void*> _P;
   auto i = m_branches.find(collection);
   if ( i != m_branches.end() )   {
@@ -136,7 +136,7 @@ size_t DDG4EventHandler::collectionLoop(const std::string& collection, DDEveHitA
 }
 
 /// Loop over collection and extract particle data
-size_t DDG4EventHandler::collectionLoop(const std::string& collection, DDEveParticleActor& actor)    {
+auto DDG4EventHandler::collectionLoop(const std::string& collection, DDEveParticleActor& actor) -> size_t    {
   typedef std::vector<void*> _P;
   auto i = m_branches.find(collection);
   if ( i != m_branches.end() )   {
@@ -156,7 +156,7 @@ size_t DDG4EventHandler::collectionLoop(const std::string& collection, DDEvePart
 }
 
 /// Load the specified event
-Int_t DDG4EventHandler::ReadEvent(Long64_t event_number)   {
+auto DDG4EventHandler::ReadEvent(Long64_t event_number) -> Int_t   {
   m_data.clear();
   m_hasEvent = false;
   if ( hasFile() )  {
@@ -187,7 +187,7 @@ Int_t DDG4EventHandler::ReadEvent(Long64_t event_number)   {
 }
 
 /// Open new data file
-bool DDG4EventHandler::Open(const std::string&, const std::string& name)   {
+auto DDG4EventHandler::Open(const std::string&, const std::string& name) -> bool   {
   if ( m_file.first ) m_file.first->Close();
   m_hasFile = false;
   m_hasEvent = false;

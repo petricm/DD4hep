@@ -91,12 +91,12 @@ Geant4ParticleHandler::~Geant4ParticleHandler()  {
 }
 
 /// No assignment operator
-Geant4ParticleHandler& Geant4ParticleHandler::operator=(const Geant4ParticleHandler&) {
+auto Geant4ParticleHandler::operator=(const Geant4ParticleHandler&) -> Geant4ParticleHandler& {
   return *this;
 }
 
 /// Adopt the user particle handler
-bool Geant4ParticleHandler::adopt(Geant4Action* action)    {
+auto Geant4ParticleHandler::adopt(Geant4Action* action) -> bool    {
   if ( action )   {
     if ( !m_userHandler )  {
       auto* h = dynamic_cast<Geant4UserParticleHandler*>(action);
@@ -551,7 +551,7 @@ void Geant4ParticleHandler::rebaseSimulatedTracks(int )   {
 }
 
 /// Default callback to be answered if the particle should be kept if NO user handler is installed
-bool Geant4ParticleHandler::defaultKeepParticle(Particle& particle)   {
+auto Geant4ParticleHandler::defaultKeepParticle(Particle& particle) -> bool   {
   PropertyMask mask(particle.reason);
   bool secondaries    =  mask.isSet(G4PARTICLE_HAS_SECONDARIES);
   bool tracker_track  =  mask.isSet(G4PARTICLE_CREATED_TRACKER_HIT);
@@ -579,7 +579,7 @@ bool Geant4ParticleHandler::defaultKeepParticle(Particle& particle)   {
 
 /// Clean the monte carlo record. Remove all unwanted stuff.
 /// This is the core of the object executed at the end of each event action.
-int Geant4ParticleHandler::recombineParents()  {
+auto Geant4ParticleHandler::recombineParents() -> int  {
   set<int> remove;
 
   /// Need to start from BACK, to clean first the latest produced stuff.

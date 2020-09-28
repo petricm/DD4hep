@@ -152,17 +152,17 @@ void Display::ChooseGeometry()   {
 }
 
 /// Access to geometry hub
-Detector& Display::detectorDescription() const  {
+auto Display::detectorDescription() const -> Detector&  {
   return *m_detDesc;
 }
 
 /// Access to X-client
-TGClient& Display::client() const   {
+auto Display::client() const -> TGClient&   {
   return *gClient;
 }
 
 /// Access to the event reader
-GenericEventHandler& Display::eventHandler() const   {
+auto Display::eventHandler() const -> GenericEventHandler&   {
   if ( m_evtHandler )  {
     return *m_evtHandler;
   }
@@ -190,7 +190,7 @@ void Display::ImportConfiguration(const DisplayConfiguration& config)   {
 }
 
 /// Access to calo data histograms by name as defined in the configuration
-Display::CalodataContext& Display::GetCaloHistogram(const string& nam)   {
+auto Display::GetCaloHistogram(const string& nam) -> Display::CalodataContext&   {
   auto i = m_calodata.find(nam);
   if ( i == m_calodata.end() )  {
     auto j = m_calodataConfigs.find(nam);
@@ -241,13 +241,13 @@ Display::CalodataContext& Display::GetCaloHistogram(const string& nam)   {
 }
 
 /// Access a data filter by name. Data filters are used to customize views
-const Display::ViewConfig* Display::GetViewConfiguration(const string& nam)  const   {
+auto Display::GetViewConfiguration(const string& nam)  const -> const Display::ViewConfig*   {
   auto i = m_viewConfigs.find(nam);
   return (i == m_viewConfigs.end()) ? nullptr : &((*i).second);
 }
 
 /// Access a data filter by name. Data filters are used to customize calodatas
-const Display::DataConfig* Display::GetCalodataConfiguration(const string& nam)  const   {
+auto Display::GetCalodataConfiguration(const string& nam)  const -> const Display::DataConfig*   {
   auto i = m_calodataConfigs.find(nam);
   return (i == m_calodataConfigs.end()) ? nullptr : &((*i).second);
 }
@@ -286,7 +286,7 @@ void Display::MessageBox(PrintLevel level, const string& text, const string& tit
 }
 
 /// Popup XML file chooser. returns chosen file name; empty on cancel
-string Display::OpenXmlFileDialog(const string& default_dir)   const {
+auto Display::OpenXmlFileDialog(const string& default_dir)   const -> string {
   static const char *evtFiletypes[] = { 
     "xml files",    "*.xml",
     "XML files",    "*.XML",
@@ -307,7 +307,7 @@ string Display::OpenXmlFileDialog(const string& default_dir)   const {
 }
 
 /// Popup ROOT file chooser. returns chosen file name; empty on cancel
-string Display::OpenEventFileDialog(const string& default_dir)   const {
+auto Display::OpenEventFileDialog(const string& default_dir)   const -> string {
   static const char *evtFiletypes[] = { 
     "ROOT files",    "*.root",
     "SLCIO files",   "*.slcio",
@@ -342,7 +342,7 @@ void Display::BuildMenus(TGMenuBar* menubar)   {
 }
 
 /// Open ROOT file
-TFile* Display::Open(const char* name) const   {
+auto Display::Open(const char* name) const -> TFile*   {
   TFile* f = TFile::Open(name);
   if ( f && !f->IsZombie() ) return f;
   throw runtime_error("+++ Failed to open ROOT file:"+string(name));
@@ -439,7 +439,7 @@ void Display::OnNewEvent(EventHandler& handler )   {
 }
 
 /// Access / Create global geometry element
-TEveElementList& Display::GetGeo()   {
+auto Display::GetGeo() -> TEveElementList&   {
   if ( nullptr == m_geoGlobal )  {
     m_geoGlobal = new ElementList("Geo-Global","Geo-Global", true, true);
     manager().AddGlobalElement(m_geoGlobal);
@@ -448,7 +448,7 @@ TEveElementList& Display::GetGeo()   {
 }
 
 /// Access/Create a topic by name
-TEveElementList& Display::GetGeoTopic(const string& name)    {
+auto Display::GetGeoTopic(const string& name) -> TEveElementList&    {
   auto i=m_geoTopics.find(name);
   if ( i == m_geoTopics.end() )  {
     TEveElementList* topic = new ElementList(name.c_str(), name.c_str(), true, true);
@@ -460,7 +460,7 @@ TEveElementList& Display::GetGeoTopic(const string& name)    {
 }
 
 /// Access/Create a topic by name. Throws exception if the topic does not exist
-TEveElementList& Display::GetGeoTopic(const string& name) const   {
+auto Display::GetGeoTopic(const string& name) const -> TEveElementList&   {
   auto i=m_geoTopics.find(name);
   if ( i == m_geoTopics.end() )  {
     throw runtime_error("Display: Attempt to access non-existing geometry topic:"+name);
@@ -469,7 +469,7 @@ TEveElementList& Display::GetGeoTopic(const string& name) const   {
 }
 
 /// Access/Create a topic by name
-TEveElementList& Display::GetEveTopic(const string& name)    {
+auto Display::GetEveTopic(const string& name) -> TEveElementList&    {
   auto i=m_eveTopics.find(name);
   if ( i == m_eveTopics.end() )  {
     TEveElementList* topic = new ElementList(name.c_str(), name.c_str(), true, true);
@@ -481,7 +481,7 @@ TEveElementList& Display::GetEveTopic(const string& name)    {
 }
 
 /// Access/Create a topic by name. Throws exception if the topic does not exist
-TEveElementList& Display::GetEveTopic(const string& name) const   {
+auto Display::GetEveTopic(const string& name) const -> TEveElementList&   {
   auto i=m_eveTopics.find(name);
   if ( i == m_eveTopics.end() )  {
     throw runtime_error("Display: Attempt to access non-existing event topic:"+name);

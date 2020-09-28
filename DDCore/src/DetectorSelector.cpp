@@ -19,19 +19,19 @@ using namespace std;
 using namespace dd4hep;
 
 /// Access a set of subdetectors according to the sensitive type.
-const DetectorSelector::Result& 
-DetectorSelector::detectors(const string& type)
+auto
+DetectorSelector::detectors(const string& type) -> const DetectorSelector::Result&
 {
   return description.detectors(type);
 }
 
 /// Access a set of subdetectors according to several sensitive types.
-DetectorSelector::Result
+auto
 DetectorSelector::detectors(const string& type1,
                             const string& type2,
                             const string& type3,
                             const string& type4,
-                            const string& type5)  {
+                            const string& type5) -> DetectorSelector::Result  {
   const string* types[] = { &type1, &type2, &type3, &type4, &type5 };
   Result result;
   for(auto & type : types)  {
@@ -49,8 +49,8 @@ DetectorSelector::detectors(const string& type1,
 /** return a vector with all detectors that have all the type properties in
  *  includeFlag set but none of the properties given in excludeFlag
  */
-DetectorSelector::Result
-DetectorSelector::detectors(unsigned int includeFlag, unsigned int excludeFlag ) const  {
+auto
+DetectorSelector::detectors(unsigned int includeFlag, unsigned int excludeFlag ) const -> DetectorSelector::Result  {
   Result result;
   const Detector::HandleMap& entries = description.detectors();
   result.reserve( entries.size() ) ;

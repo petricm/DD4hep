@@ -53,7 +53,7 @@ Geant4ActionContainer::~Geant4ActionContainer() {
 }
 
 /// Terminate all associated action instances
-int Geant4ActionContainer::terminate() {
+auto Geant4ActionContainer::terminate() -> int {
   detail::releasePtr (m_physicsList);
   detail::releasePtr (m_constructionAction);
   detail::releasePtr (m_stackingAction);
@@ -67,7 +67,7 @@ int Geant4ActionContainer::terminate() {
   return 1;
 }
 
-Geant4Context* Geant4ActionContainer::workerContext()   {
+auto Geant4ActionContainer::workerContext() -> Geant4Context*   {
   if ( m_context ) return m_context;
   throw runtime_error(format("Geant4Kernel", "DDG4: Master kernel object has no thread context! [Invalid Handle]"));
 }
@@ -77,7 +77,7 @@ void Geant4ActionContainer::setContext(Geant4Context* ctxt)    {
   m_context = ctxt;
 }
 
-template <class C> bool Geant4ActionContainer::registerSequence(C*& seq, const std::string& name) {
+template <class C> auto Geant4ActionContainer::registerSequence(C*& seq, const std::string& name) -> bool {
   if (!name.empty()) {
     seq = new C(m_context, name);
     seq->installMessengers();
@@ -87,61 +87,61 @@ template <class C> bool Geant4ActionContainer::registerSequence(C*& seq, const s
 }
 
 /// Access generator action sequence
-Geant4GeneratorActionSequence* Geant4ActionContainer::generatorAction(bool create) {
+auto Geant4ActionContainer::generatorAction(bool create) -> Geant4GeneratorActionSequence* {
   if (!m_generatorAction && create)
     registerSequence(m_generatorAction, "GeneratorAction");
   return m_generatorAction;
 }
 
 /// Access run action sequence
-Geant4RunActionSequence* Geant4ActionContainer::runAction(bool create) {
+auto Geant4ActionContainer::runAction(bool create) -> Geant4RunActionSequence* {
   if (!m_runAction && create)
     registerSequence(m_runAction, "RunAction");
   return m_runAction;
 }
 
 /// Access event action sequence
-Geant4EventActionSequence* Geant4ActionContainer::eventAction(bool create) {
+auto Geant4ActionContainer::eventAction(bool create) -> Geant4EventActionSequence* {
   if (!m_eventAction && create)
     registerSequence(m_eventAction, "EventAction");
   return m_eventAction;
 }
 
 /// Access stepping action sequence
-Geant4SteppingActionSequence* Geant4ActionContainer::steppingAction(bool create) {
+auto Geant4ActionContainer::steppingAction(bool create) -> Geant4SteppingActionSequence* {
   if (!m_steppingAction && create)
     registerSequence(m_steppingAction, "SteppingAction");
   return m_steppingAction;
 }
 
 /// Access tracking action sequence
-Geant4TrackingActionSequence* Geant4ActionContainer::trackingAction(bool create) {
+auto Geant4ActionContainer::trackingAction(bool create) -> Geant4TrackingActionSequence* {
   if (!m_trackingAction && create)
     registerSequence(m_trackingAction, "TrackingAction");
   return m_trackingAction;
 }
 
 /// Access stacking action sequence
-Geant4StackingActionSequence* Geant4ActionContainer::stackingAction(bool create) {
+auto Geant4ActionContainer::stackingAction(bool create) -> Geant4StackingActionSequence* {
   if (!m_stackingAction && create)
     registerSequence(m_stackingAction, "StackingAction");
   return m_stackingAction;
 }
 
 /// Access detector construcion action sequence (geometry+sensitives+field)
-Geant4DetectorConstructionSequence* Geant4ActionContainer::detectorConstruction(bool create)  {
+auto Geant4ActionContainer::detectorConstruction(bool create) -> Geant4DetectorConstructionSequence*  {
   if (!m_constructionAction && create)
     registerSequence(m_constructionAction, "DetectorConstructionAction");
   return m_constructionAction;
 }
 
 /// Access to the sensitive detector sequences from the kernel object
-Geant4SensDetSequences& Geant4ActionContainer::sensitiveActions() const {
+auto Geant4ActionContainer::sensitiveActions() const -> Geant4SensDetSequences& {
   return *m_sensDetActions;
 }
 
 /// Access to the sensitive detector action from the kernel object
-Geant4SensDetActionSequence* Geant4ActionContainer::sensitiveAction(const string& nam) {
+auto Geant4ActionContainer::sensitiveAction(const string& nam) -> Geant4SensDetActionSequence* {
   Geant4SensDetActionSequence* ptr = m_sensDetActions->find(nam);
   if (ptr)   {
     return ptr;
@@ -152,14 +152,14 @@ Geant4SensDetActionSequence* Geant4ActionContainer::sensitiveAction(const string
 }
 
 /// Access to the physics list
-Geant4PhysicsListActionSequence* Geant4ActionContainer::physicsList(bool create) {
+auto Geant4ActionContainer::physicsList(bool create) -> Geant4PhysicsListActionSequence* {
   if (!m_physicsList && create)
     registerSequence(m_physicsList, "PhysicsList");
   return m_physicsList;
 }
 
 /// Access to the physics list
-Geant4UserInitializationSequence* Geant4ActionContainer::userInitialization(bool create) {
+auto Geant4ActionContainer::userInitialization(bool create) -> Geant4UserInitializationSequence* {
   if (!m_userInit && create)   {
     registerSequence(m_userInit, "UserInitialization");
   }

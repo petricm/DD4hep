@@ -33,11 +33,11 @@ GridPhiEta::GridPhiEta(const BitFieldCoder* aDecoder) :
   registerIdentifier("identifier_phi", "Cell ID identifier for phi", m_phiID, "phi");
 }
 
-Vector3D GridPhiEta::position(const CellID& cID) const {
+auto GridPhiEta::position(const CellID& cID) const -> Vector3D {
   return Util::positionFromREtaPhi(1.0, eta(cID), phi(cID));
 }
 
-CellID GridPhiEta::cellID(const Vector3D& /* localPosition */, const Vector3D& globalPosition, const VolumeID& vID) const {
+auto GridPhiEta::cellID(const Vector3D& /* localPosition */, const Vector3D& globalPosition, const VolumeID& vID) const -> CellID {
   double lEta = Util::etaFromXYZ(globalPosition);
   double lPhi = Util::phiFromXYZ(globalPosition);
   CellID cID = vID ;
@@ -46,11 +46,11 @@ CellID GridPhiEta::cellID(const Vector3D& /* localPosition */, const Vector3D& g
   return cID;
 }
 
-double GridPhiEta::eta(const CellID& cID) const {
+auto GridPhiEta::eta(const CellID& cID) const -> double {
   CellID etaValue = _decoder->get(cID, m_etaID);
   return binToPosition(etaValue, m_gridSizeEta, m_offsetEta);
 }
-double GridPhiEta::phi(const CellID& cID) const {
+auto GridPhiEta::phi(const CellID& cID) const -> double {
   CellID phiValue = _decoder->get(cID, m_phiID);
   return binToPosition(phiValue, 2.*M_PI/(double)m_phiBins, m_offsetPhi);
 }

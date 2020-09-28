@@ -22,35 +22,35 @@ using namespace std;
 using namespace dd4hep;
 
 /// determine the position based on the cell ID
-Position PolarGridRPhi::position(const CellID& id) const   {
+auto PolarGridRPhi::position(const CellID& id) const -> Position   {
   return Position(access()->implementation->position(id));
 }
 
 /// determine the cell ID based on the position
-dd4hep::CellID PolarGridRPhi::cellID(const Position& local,
+auto PolarGridRPhi::cellID(const Position& local,
                                      const Position& global,
-                                     const VolumeID& volID) const
+                                     const VolumeID& volID) const -> dd4hep::CellID
 {
   return access()->implementation->cellID(local, global, volID);
 }
 
 /// access the grid size in R
-double PolarGridRPhi::gridSizeR() const  {
+auto PolarGridRPhi::gridSizeR() const -> double  {
   return access()->implementation->gridSizeR();
 }
 
 /// access the grid size in Phi
-double PolarGridRPhi::gridSizePhi() const  {
+auto PolarGridRPhi::gridSizePhi() const -> double  {
   return access()->implementation->gridSizePhi();
 }
 
 /// access the coordinate offset in R
-double PolarGridRPhi::offsetR() const  {
+auto PolarGridRPhi::offsetR() const -> double  {
   return access()->implementation->offsetR();
 }
 
 /// access the coordinate offset in Phi
-double PolarGridRPhi::offsetPhi() const  {
+auto PolarGridRPhi::offsetPhi() const -> double  {
   return access()->implementation->offsetPhi();
 }
 
@@ -75,12 +75,12 @@ void PolarGridRPhi::setGridSizePhi(double cellSize) const  {
 }
 
 /// access the field name used for R
-const string& PolarGridRPhi::fieldNameR() const  {
+auto PolarGridRPhi::fieldNameR() const -> const string&  {
   return access()->implementation->fieldNameR();
 }
 
 /// access the field name used for Phi
-const string& PolarGridRPhi::fieldNamePhi() const  {
+auto PolarGridRPhi::fieldNamePhi() const -> const string&  {
   return access()->implementation->fieldNamePhi();
 }
 
@@ -93,6 +93,6 @@ const string& PolarGridRPhi::fieldNamePhi() const  {
     -# size in x
     -# size in z
 */
-vector<double> PolarGridRPhi::cellDimensions(const CellID& id) const  {
+auto PolarGridRPhi::cellDimensions(const CellID& id) const -> vector<double>  {
   return access()->implementation->cellDimensions(id);
 }

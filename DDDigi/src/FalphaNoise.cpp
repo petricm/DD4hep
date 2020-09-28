@@ -403,7 +403,7 @@ void FalphaNoise::normalizeVariance(const random_engine_wrapper& generator, size
 }
 
 /// Retrieve the next random number of the sequence
-double FalphaNoise::compute(double rndm_value)   {
+auto FalphaNoise::compute(double rndm_value) -> double   {
 #ifdef  __GSL_FALPHA_NOISE
   if ( arr == nullptr )  {
     arr = new double[1000];

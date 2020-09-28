@@ -17,7 +17,7 @@
 namespace dd4hep::rec {
 
 
-    std::ostream& operator<<( std::ostream& io , const FixedPadSizeTPCData& d ){
+    auto operator<<( std::ostream& io , const FixedPadSizeTPCData& d ) -> std::ostream&{
       boost::io::ios_base_all_saver ifs(io);
 
       io <<  " --FixedPadSizeTPCData: "  << std::scientific << std::endl ; 
@@ -40,7 +40,7 @@ namespace dd4hep::rec {
     
 
 
-    std::ostream& operator<<( std::ostream& io , const ZPlanarData& d ) {
+    auto operator<<( std::ostream& io , const ZPlanarData& d ) -> std::ostream& {
       boost::io::ios_base_all_saver ifs(io);
 
       io <<  " -- ZPlanarData: "  << std::scientific << std::endl ; 
@@ -82,7 +82,7 @@ namespace dd4hep::rec {
       return io ;
     }
 
-    std::ostream& operator<<( std::ostream& io , const ZDiskPetalsData& d ) {
+    auto operator<<( std::ostream& io , const ZDiskPetalsData& d ) -> std::ostream& {
       boost::io::ios_base_all_saver ifs(io);
 
       io <<  " -- ZDiskPetalsData: "  << std::scientific << std::endl ; 
@@ -129,7 +129,7 @@ namespace dd4hep::rec {
     }
 
     
-    std::ostream& operator<<( std::ostream& io , const ConicalSupportData& d ) {
+    auto operator<<( std::ostream& io , const ConicalSupportData& d ) -> std::ostream& {
       boost::io::ios_base_all_saver ifs(io);
 
       io <<  " -- ConicalSupportData : "  << std::scientific << std::endl ; 
@@ -151,7 +151,7 @@ namespace dd4hep::rec {
     }
 
     
-    std::ostream& operator<<( std::ostream& io , const LayeredCalorimeterData& d ) {
+    auto operator<<( std::ostream& io , const LayeredCalorimeterData& d ) -> std::ostream& {
       boost::io::ios_base_all_saver ifs(io);
       
       io <<  " -- LayeredCalorimeterData : "  << std::scientific << std::endl ; 
@@ -195,7 +195,7 @@ namespace dd4hep::rec {
 
 
 
-    std::ostream& operator<<( std::ostream& io , const NeighbourSurfacesData& d ){
+    auto operator<<( std::ostream& io , const NeighbourSurfacesData& d ) -> std::ostream&{
       boost::io::ios_base_all_saver ifs(io);
 
       io <<  " --NeighbourSurfacesData: "  << std::scientific << std::endl ; 
@@ -204,7 +204,7 @@ namespace dd4hep::rec {
     }
 
 
-    std::ostream& operator<<(std::ostream& io, const DoubleParameters& d) {
+    auto operator<<(std::ostream& io, const DoubleParameters& d) -> std::ostream& {
       boost::io::ios_base_all_saver ifs(io);
       io <<  " --DoubleParameters: "  << std::scientific << std::endl ;
       for (auto const& thePair: d.doubleParameters) {

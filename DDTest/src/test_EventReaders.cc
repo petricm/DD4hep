@@ -29,7 +29,7 @@ public:
 };
 
 
-int main(int argc, char** argv ){
+auto main(int argc, char** argv ) -> int{
 
   if( argc < 2 ) {
     std::cout << " usage:  test_EventReaders Path/To/InputFiles " << std::endl ;

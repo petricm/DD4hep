@@ -37,7 +37,7 @@ DDEveHit::DDEveHit(const DDEveHit& c)
 DDEveHit::~DDEveHit()  = default;
 
 /// Assignment operator
-DDEveHit& DDEveHit::operator=(const DDEveHit& c)  {
+auto DDEveHit::operator=(const DDEveHit& c) -> DDEveHit&  {
   if ( this != &c )  {
     x = c.x;
     y = c.y;
@@ -64,7 +64,7 @@ DDEveParticle::~DDEveParticle()
 = default;
 
 /// Assignment operator
-DDEveParticle& DDEveParticle::operator=(const DDEveParticle& c)   {
+auto DDEveParticle::operator=(const DDEveParticle& c) -> DDEveParticle&   {
   if ( this != &c )  {
     id = c.id; 
     parent = c.parent;

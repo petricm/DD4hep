@@ -49,43 +49,43 @@ void PropertyGrammar::invalidConversion(const std::string& value,
 }
 
 /// Access to the type information
-const std::type_info& PropertyGrammar::type() const  {
+auto PropertyGrammar::type() const -> const std::type_info&  {
   return m_grammar.type();
 }
 
 /// Serialize an opaque value to a string
-std::string PropertyGrammar::str(const void* ptr) const  {
+auto PropertyGrammar::str(const void* ptr) const -> std::string  {
   return m_grammar.str(ptr);
 }
 
 /// Set value from serialized string. On successful data conversion TRUE is returned.
-bool PropertyGrammar::fromString(void* ptr, const std::string& value) const  {
+auto PropertyGrammar::fromString(void* ptr, const std::string& value) const -> bool  {
   return m_grammar.fromString(ptr,value);
 }
 
 /// Property type name
-string Property::type(const Property& property) {
+auto Property::type(const Property& property) -> string {
   return type(property.grammar().type());
 }
 
 /// Property type name
-string Property::type(const type_info& typ) {
+auto Property::type(const type_info& typ) -> string {
   return typeName(typ);
 }
 
 /// Property type name
-string Property::type() const {
+auto Property::type() const -> string {
   return Property::type(grammar().type());
 }
 
-const PropertyGrammar& Property::grammar() const {
+auto Property::grammar() const -> const PropertyGrammar& {
   if ( m_hdl )
     return *m_hdl;
   throw runtime_error("Attempt to access property grammar from invalid object.");
 }
 
 /// Conversion to string value
-string Property::str() const {
+auto Property::str() const -> string {
   if ( m_hdl && m_par ) {
     return m_hdl->str(m_par);
   }
@@ -93,7 +93,7 @@ string Property::str() const {
 }
 
 /// Conversion from string value
-const Property& Property::str(const std::string& input)   const {
+auto Property::str(const std::string& input)   const -> const Property& {
   if ( m_hdl && m_par )   {
     m_hdl->fromString(m_par,input);
     return *this;
@@ -102,7 +102,7 @@ const Property& Property::str(const std::string& input)   const {
 }
 
 /// Conversion from string value
-Property& Property::str(const std::string& input)    {
+auto Property::str(const std::string& input) -> Property&    {
   if ( m_hdl && m_par )   {
     m_hdl->fromString(m_par,input);
     return *this;
@@ -111,7 +111,7 @@ Property& Property::str(const std::string& input)    {
 }
 
 /// Assignment operator / set new balue
-Property& Property::operator=(const char* val) {
+auto Property::operator=(const char* val) -> Property& {
   if ( val ) {
     this->set < string > (val);
     return *this;
@@ -128,7 +128,7 @@ PropertyManager::~PropertyManager() {
 }
 
 /// Access total number of properties
-size_t PropertyManager::size()  const   {
+auto PropertyManager::size()  const -> size_t   {
   return m_properties.size();
 }
 
@@ -138,7 +138,7 @@ void PropertyManager::adopt(const PropertyManager& copy)   {
 }
 
 /// Check for existence
-bool PropertyManager::exists(const std::string& name) const   {
+auto PropertyManager::exists(const std::string& name) const -> bool   {
   auto i = m_properties.find(name);
   return i != m_properties.end();
 }
@@ -152,8 +152,8 @@ void PropertyManager::verifyNonExistence(const string& name) const {
 }
 
 /// Verify that this property exists (throw exception if the name was not found)
-PropertyManager::Properties::const_iterator
-PropertyManager::verifyExistence(const string& name) const {
+auto
+PropertyManager::verifyExistence(const string& name) const -> PropertyManager::Properties::const_iterator {
   auto i = m_properties.find(name);
   if (i != m_properties.end())
     return i;
@@ -161,8 +161,8 @@ PropertyManager::verifyExistence(const string& name) const {
 }
 
 /// Verify that this property exists (throw exception if the name was not found)
-PropertyManager::Properties::iterator
-PropertyManager::verifyExistence(const string& name) {
+auto
+PropertyManager::verifyExistence(const string& name) -> PropertyManager::Properties::iterator {
   auto i = m_properties.find(name);
   if (i != m_properties.end())
     return i;
@@ -170,22 +170,22 @@ PropertyManager::verifyExistence(const string& name) {
 }
 
 /// Access property by name (CONST)
-Property& PropertyManager::property(const string& name) {
+auto PropertyManager::property(const string& name) -> Property& {
   return (*verifyExistence(name)).second;
 }
 
 /// Access property by name
-const Property& PropertyManager::property(const string& name) const {
+auto PropertyManager::property(const string& name) const -> const Property& {
   return (*verifyExistence(name)).second;
 }
 
 /// Access property by name
-Property& PropertyManager::operator[](const string& name) {
+auto PropertyManager::operator[](const string& name) -> Property& {
   return (*verifyExistence(name)).second;
 }
 
 /// Access property by name
-const Property& PropertyManager::operator[](const string& name) const {
+auto PropertyManager::operator[](const string& name) const -> const Property& {
   return (*verifyExistence(name)).second;
 }
 
@@ -215,23 +215,23 @@ PropertyConfigurable::PropertyConfigurable()  = default;
 PropertyConfigurable::~PropertyConfigurable()   = default;
 
 /// Check property for existence
-bool PropertyConfigurable::hasProperty(const string& nam) const    {
+auto PropertyConfigurable::hasProperty(const string& nam) const -> bool    {
   return m_properties.exists(nam);
 }
 
 /// Access single property
-Property& PropertyConfigurable::property(const string& nam)   {
+auto PropertyConfigurable::property(const string& nam) -> Property&   {
   return properties()[nam];
 }
 
 #include "DD4hep/detail/Grammar_parsed.h"
 namespace dd4hep { 
   namespace Parsers {
-    template <> int parse(Property& result, const std::string& input) {
+    template <> auto parse(Property& result, const std::string& input) -> int {
       result.str(input); 
       return 1;
     }
-    template <> std::ostream& toStream(const Property& result, std::ostream& os) {
+    template <> auto toStream(const Property& result, std::ostream& os) -> std::ostream& {
       return os << result.str();
     }
   }

@@ -166,7 +166,7 @@ void MaterialScan::setMaterial(Material material)   {
 }
 
 /// Scan along a line and store the matrials internally
-const MaterialVec& MaterialScan::scan(double x0, double y0, double z0, double x1, double y1, double z1, double epsilon)  const  {
+auto MaterialScan::scan(double x0, double y0, double z0, double x1, double y1, double z1, double epsilon)  const -> const MaterialVec&  {
   Vector3D p0(x0, y0, z0), p1(x1, y1, z1);
   return m_materialMgr->materialsBetween(p0, p1, epsilon);
 }

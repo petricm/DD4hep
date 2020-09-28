@@ -35,13 +35,13 @@ AlignmentsPrinter::AlignmentsPrinter(ConditionsMap* cond_map, string  pref, int 
 }
 
 /// Callback to output alignments information
-int AlignmentsPrinter::operator()(Alignment a)  const  {
+auto AlignmentsPrinter::operator()(Alignment a)  const -> int  {
   printAlignment(printLevel, name, a);
   return 1;
 }
 
 /// Callback to output alignments information of an entire DetElement
-int AlignmentsPrinter::operator()(DetElement de, int level)  const   {
+auto AlignmentsPrinter::operator()(DetElement de, int level)  const -> int   {
   if ( mapping )   {
     vector<Alignment> alignments;
     alignmentsCollector(*mapping,alignments)(de, level);
@@ -64,7 +64,7 @@ AlignedVolumePrinter::AlignedVolumePrinter(ConditionsMap* cond_map, const string
 }
 
 /// Callback to output alignments information
-int AlignedVolumePrinter::operator()(Alignment a)  const  {
+auto AlignedVolumePrinter::operator()(Alignment a)  const -> int  {
   printAlignment(printLevel, name, a);
   return 1;
 }
@@ -92,14 +92,14 @@ void dd4hep::align::printAlignment(PrintLevel lvl, const string& prefix, Alignme
   }
 }
 
-static string replace_all(const string& in, const string& from, const string& to)  {
+static auto replace_all(const string& in, const string& from, const string& to) -> string  {
   string res = in;
   size_t idx;
   while( string::npos != (idx=res.find(from)) )
     res.replace(idx,from.length(),to);
   return res;
 }
-static string _transformPoint2World(const AlignmentData& data, const Position& local)  {
+static auto _transformPoint2World(const AlignmentData& data, const Position& local) -> string  {
   char text[256];
   Position world = data.localToWorld(local);
   ::snprintf(text,sizeof(text),"Local: (%7.3f , %7.3f , %7.3f )  -- > World:  (%7.3f , %7.3f , %7.3f )",
@@ -107,7 +107,7 @@ static string _transformPoint2World(const AlignmentData& data, const Position& l
   return text;
 }
 
-static string _transformPoint2Detector(const AlignmentData& data, const Position& local)  {
+static auto _transformPoint2Detector(const AlignmentData& data, const Position& local) -> string  {
   char text[256];
   Position world = data.localToDetector(local);
   ::snprintf(text,sizeof(text),"Local: (%7.3f , %7.3f , %7.3f )  -- > Parent: (%7.3f , %7.3f , %7.3f )",

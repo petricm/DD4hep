@@ -52,7 +52,7 @@ void Solid_type<T>::_assign(T* n, const string& nam, const string& tit, bool cbb
 }
 
 /// Access to shape name
-template <typename T> const char* Solid_type<T>::name() const {
+template <typename T> auto Solid_type<T>::name() const -> const char* {
   if ( this->ptr() )  {
     return this->ptr()->GetName();
   }
@@ -60,7 +60,7 @@ template <typename T> const char* Solid_type<T>::name() const {
 }
 
 /// Access to shape name
-template <typename T> const char* Solid_type<T>::title() const {
+template <typename T> auto Solid_type<T>::title() const -> const char* {
   if ( this->ptr() )  {
     return this->ptr()->GetTitle();
   }
@@ -68,19 +68,19 @@ template <typename T> const char* Solid_type<T>::title() const {
 }
 
 /// Set new shape name
-template <typename T> Solid_type<T>& Solid_type<T>::setName(const char* value)    {
+template <typename T> auto Solid_type<T>::setName(const char* value) -> Solid_type<T>&    {
   this->access()->SetName(value);
   return *this;
 }
 
 /// Set new shape name
-template <typename T> Solid_type<T>& Solid_type<T>::setName(const string& value)    {
+template <typename T> auto Solid_type<T>::setName(const string& value) -> Solid_type<T>&    {
   this->access()->SetName(value.c_str());
   return *this;
 }
 
 /// Access to shape type (The TClass name of the ROOT implementation)
-template <typename T> const char* Solid_type<T>::type() const  {
+template <typename T> auto Solid_type<T>::type() const -> const char*  {
   if ( this->ptr() )  {
     return this->ptr()->IsA()->GetName();
   }
@@ -88,20 +88,20 @@ template <typename T> const char* Solid_type<T>::type() const  {
 }
 
 /// Access the dimensions of the shape: inverse of the setDimensions member function
-template <typename T> vector<double> Solid_type<T>::dimensions()  {
+template <typename T> auto Solid_type<T>::dimensions() -> vector<double>  {
   return move( get_shape_dimensions(this->access()) );
 }
 
 /// Set the shape dimensions. As for the TGeo shape, but angles in rad rather than degrees.
-template <typename T> Solid_type<T>& Solid_type<T>::setDimensions(const vector<double>& params)  {
+template <typename T> auto Solid_type<T>::setDimensions(const vector<double>& params) -> Solid_type<T>&  {
   set_shape_dimensions(this->access(), params);
   return *this;
 }
 
 /// Divide volume into subsections (See the ROOT manuloa for details)
-template <typename T> TGeoVolume*
+template <typename T> auto
 Solid_type<T>::divide(const Volume& voldiv, const string& divname,
-                      int iaxis, int ndiv, double start, double step)   const {
+                      int iaxis, int ndiv, double start, double step)   const -> TGeoVolume* {
   T* p = this->ptr();
   if ( p )  {
     VolumeMulti mv(p->Divide(voldiv.ptr(), divname.c_str(), iaxis, ndiv, start, step));
@@ -121,24 +121,24 @@ void Box::make(const string& nam, double x_val, double y_val, double z_val)   {
 }
 
 /// Set the box dimensionsy
-Box& Box::setDimensions(double x_val, double y_val, double z_val)   {
+auto Box::setDimensions(double x_val, double y_val, double z_val) -> Box&   {
   double params[] = { x_val, y_val, z_val};
   _setDimensions(params);
   return *this;
 }
 
 /// Access half "length" of the box
-double Box::x() const {
+auto Box::x() const -> double {
   return this->ptr()->GetDX();
 }
 
 /// Access half "width" of the box
-double Box::y() const {
+auto Box::y() const -> double {
   return this->ptr()->GetDY();
 }
 
 /// Access half "depth" of the box
-double Box::z() const {
+auto Box::z() const -> double {
   return this->ptr()->GetDZ();
 }
 
@@ -275,10 +275,10 @@ void ConeSegment::make(const string& nam,
 }
 
 /// Set the cone segment dimensions
-ConeSegment& ConeSegment::setDimensions(double dz, 
+auto ConeSegment::setDimensions(double dz,
                                         double rmin1, double rmax1,
                                         double rmin2, double rmax2,
-                                        double startPhi,  double endPhi) {
+                                        double startPhi,  double endPhi) -> ConeSegment& {
   double params[] = { dz, rmin1, rmax1, rmin2, rmax2, startPhi/units::deg, endPhi/units::deg };
   _setDimensions(params);
   return *this;
@@ -290,7 +290,7 @@ void Cone::make(const string& nam, double z, double rmin1, double rmax1, double 
 }
 
 /// Set the box dimensions (startPhi=0.0, endPhi=2*pi)
-Cone& Cone::setDimensions(double z, double rmin1, double rmax1, double rmin2, double rmax2) {
+auto Cone::setDimensions(double z, double rmin1, double rmax1, double rmin2, double rmax2) -> Cone& {
   double params[] = { z, rmin1, rmax1, rmin2, rmax2  };
   _setDimensions(params);
   return *this;
@@ -302,7 +302,7 @@ void Tube::make(const string& nam, double rmin, double rmax, double z, double st
 }
 
 /// Set the tube dimensions
-Tube& Tube::setDimensions(double rmin, double rmax, double z, double startPhi, double endPhi) {
+auto Tube::setDimensions(double rmin, double rmax, double z, double startPhi, double endPhi) -> Tube& {
   double params[] = {rmin,rmax,z,startPhi/units::deg,endPhi/units::deg};
   _setDimensions(params);
   return *this;
@@ -434,42 +434,42 @@ void TruncatedTube::make(const string& nam,
 }
 
 /// Accessor: dZ value
-double TruncatedTube::dZ() const    {
+auto TruncatedTube::dZ() const -> double    {
   return dd4hep::dimensions<TruncatedTube>(*this)[0];
 }
 
 /// Accessor: r-min value
-double TruncatedTube::rMin() const   {
+auto TruncatedTube::rMin() const -> double   {
   return dd4hep::dimensions<TruncatedTube>(*this)[1];
 }
 
 /// Accessor: r-max value
-double TruncatedTube::rMax() const   {
+auto TruncatedTube::rMax() const -> double   {
   return dd4hep::dimensions<TruncatedTube>(*this)[2];
 }
 
 /// Accessor: start-phi value
-double TruncatedTube::startPhi() const    {
+auto TruncatedTube::startPhi() const -> double    {
   return dd4hep::dimensions<TruncatedTube>(*this)[3];
 }
 
 /// Accessor: delta-phi value
-double TruncatedTube::deltaPhi() const    {
+auto TruncatedTube::deltaPhi() const -> double    {
   return dd4hep::dimensions<TruncatedTube>(*this)[4];
 }
 
 /// Accessor: cut at start value
-double TruncatedTube::cutAtStart() const   {
+auto TruncatedTube::cutAtStart() const -> double   {
   return dd4hep::dimensions<TruncatedTube>(*this)[5];
 }
 
 /// Accessor: cut at delta value
-double TruncatedTube::cutAtDelta() const   {
+auto TruncatedTube::cutAtDelta() const -> double   {
   return dd4hep::dimensions<TruncatedTube>(*this)[6];
 }
 
 /// Accessor: cut-inside value
-bool TruncatedTube::cutInside() const   {
+auto TruncatedTube::cutInside() const -> bool   {
   return std::abs(dd4hep::dimensions<TruncatedTube>(*this)[7]) > std::numeric_limits<double>::epsilon();
 }
 
@@ -491,7 +491,7 @@ void Trd1::make(const string& nam, double x1, double x2, double y, double z) {
 }
 
 /// Set the Trd1 dimensions
-Trd1& Trd1::setDimensions(double x1, double x2, double y, double z) {
+auto Trd1::setDimensions(double x1, double x2, double y, double z) -> Trd1& {
   double params[] = { x1, x2, y, z  };
   _setDimensions(params);
   return *this;
@@ -503,7 +503,7 @@ void Trd2::make(const string& nam, double x1, double x2, double y1, double y2, d
 }
 
 /// Set the Trd2 dimensions
-Trd2& Trd2::setDimensions(double x1, double x2, double y1, double y2, double z) {
+auto Trd2::setDimensions(double x1, double x2, double y1, double y2, double z) -> Trd2& {
   double params[] = { x1, x2, y1, y2, z  };
   _setDimensions(params);
   return *this;
@@ -515,7 +515,7 @@ void Paraboloid::make(const string& nam, double r_low, double r_high, double del
 }
 
 /// Set the Paraboloid dimensions
-Paraboloid& Paraboloid::setDimensions(double r_low, double r_high, double delta_z) {
+auto Paraboloid::setDimensions(double r_low, double r_high, double delta_z) -> Paraboloid& {
   double params[] = { r_low, r_high, delta_z  };
   _setDimensions(params);
   return *this;
@@ -527,7 +527,7 @@ void Hyperboloid::make(const string& nam, double rin, double stin, double rout, 
 }
 
 /// Set the Hyperboloid dimensions
-Hyperboloid& Hyperboloid::setDimensions(double rin, double stin, double rout, double stout, double dz)  {
+auto Hyperboloid::setDimensions(double rin, double stin, double rout, double stout, double dz) -> Hyperboloid&  {
   double params[] = { rin, stin/units::deg, rout, stout/units::deg, dz};
   _setDimensions(params);
   return *this;
@@ -541,7 +541,7 @@ void Sphere::make(const string& nam, double rmin, double rmax, double startTheta
 }
 
 /// Set the Sphere dimensions
-Sphere& Sphere::setDimensions(double rmin, double rmax, double startTheta, double endTheta, double startPhi, double endPhi) {
+auto Sphere::setDimensions(double rmin, double rmax, double startTheta, double endTheta, double startPhi, double endPhi) -> Sphere& {
   double params[] = { rmin, rmax, startTheta/units::deg, endTheta/units::deg, startPhi/units::deg, endPhi/units::deg };
   _setDimensions(params);
   return *this;
@@ -553,7 +553,7 @@ void Torus::make(const string& nam, double r, double rmin, double rmax, double s
 }
 
 /// Set the Torus dimensions
-Torus& Torus::setDimensions(double r, double rmin, double rmax, double startPhi, double deltaPhi) {
+auto Torus::setDimensions(double r, double rmin, double rmax, double startPhi, double deltaPhi) -> Torus& {
   double params[] = { r, rmin, rmax, startPhi/units::deg, deltaPhi/units::deg };
   _setDimensions(params);
   return *this;
@@ -593,9 +593,9 @@ void Trap::make(const string& nam, double pz, double py, double px, double pLTX)
 }
 
 /// Set the trap dimensions
-Trap& Trap::setDimensions(double z, double theta, double phi,
+auto Trap::setDimensions(double z, double theta, double phi,
                           double h1, double bl1, double tl1, double alpha1,
-                          double h2, double bl2, double tl2, double alpha2) {
+                          double h2, double bl2, double tl2, double alpha2) -> Trap& {
   double params[] = { z,  theta/units::deg, phi/units::deg,
                       h1, bl1, tl1, alpha1/units::deg,
                       h2, bl2, tl2, alpha2/units::deg };
@@ -768,43 +768,43 @@ void TessellatedSolid::make(const std::string& nam, const std::vector<Object::Ve
 }
 
 /// Add new facet to the shape
-bool TessellatedSolid::addFacet(const Vertex_t& pt0, const Vertex_t& pt1, const Vertex_t& pt2)  const {
+auto TessellatedSolid::addFacet(const Vertex_t& pt0, const Vertex_t& pt1, const Vertex_t& pt2)  const -> bool {
   return access()->AddFacet(pt0, pt1, pt2);
 }
 
 /// Add new facet to the shape
-bool TessellatedSolid::addFacet(const Vertex_t& pt0, const Vertex_t& pt1, const Vertex_t& pt2, const Vertex_t& pt3)  const {
+auto TessellatedSolid::addFacet(const Vertex_t& pt0, const Vertex_t& pt1, const Vertex_t& pt2, const Vertex_t& pt3)  const -> bool {
   return access()->AddFacet(pt0, pt1, pt2, pt3);
 }
 
 /// Add new facet to the shape. Call only if the tessellated shape was constructed with vertices
-bool TessellatedSolid::addFacet(const int pt0, const int pt1, const int pt2)  const    {
+auto TessellatedSolid::addFacet(const int pt0, const int pt1, const int pt2)  const -> bool    {
   return access()->AddFacet(pt0, pt1, pt2);
 }
 
 /// Add new facet to the shape. Call only if the tessellated shape was constructed with vertices
-bool TessellatedSolid::addFacet(const int pt0, const int pt1, const int pt2, const int pt3)  const   {
+auto TessellatedSolid::addFacet(const int pt0, const int pt1, const int pt2, const int pt3)  const -> bool   {
   return access()->AddFacet(pt0, pt1, pt2, pt3);
 }
 #endif
 
 /// Access right solid of the boolean
-Solid BooleanSolid::rightShape()  const    {
+auto BooleanSolid::rightShape()  const -> Solid    {
   return access()->GetBoolNode()->GetRightShape();
 }
 
 /// Access left solid of the boolean
-Solid BooleanSolid::leftShape()  const   {
+auto BooleanSolid::leftShape()  const -> Solid   {
   return access()->GetBoolNode()->GetLeftShape();
 }
 
 /// Access right positioning matrix of the boolean
-const TGeoMatrix* BooleanSolid::rightMatrix()  const   {
+auto BooleanSolid::rightMatrix()  const -> const TGeoMatrix*   {
   return access()->GetBoolNode()->GetRightMatrix();
 }
 
 /// Access left positioning matrix of the boolean
-const TGeoMatrix* BooleanSolid::leftMatrix()  const   {
+auto BooleanSolid::leftMatrix()  const -> const TGeoMatrix*   {
   return access()->GetBoolNode()->GetLeftMatrix();
 }
 

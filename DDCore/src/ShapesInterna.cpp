@@ -57,7 +57,7 @@ void TwistedTubeObject::InspectShape() const    {
 
 /// in case shape has some negative parameters, these has to be computed in order to fit the mother
 
-TGeoShape *TwistedTubeObject::GetMakeRuntimeShape(TGeoShape *mother, TGeoMatrix * /*mat*/) const
+auto TwistedTubeObject::GetMakeRuntimeShape(TGeoShape *mother, TGeoMatrix * /*mat*/) const -> TGeoShape *
 {
    if (!TestShapeBit(kGeoRunTimeShape)) return nullptr;
    if (!mother->TestShapeBit(kGeoTube)) {

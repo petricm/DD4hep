@@ -51,7 +51,7 @@ namespace dd4hep::DDSegmentation {
     }
 
     /// Determine the volume ID from the full cell ID by removing all local fields
-    VolumeID Segmentation::volumeID(const CellID& cID) const {
+    auto Segmentation::volumeID(const CellID& cID) const -> VolumeID {
       map<std::string, StringParameter>::const_iterator it;
       VolumeID vID = cID ;
       for (it = _indexIdentifiers.begin(); it != _indexIdentifiers.end(); ++it) {
@@ -95,7 +95,7 @@ namespace dd4hep::DDSegmentation {
     }
 
     /// Access to parameter by name
-    Parameter Segmentation::parameter(const std::string& parameterName) const {
+    auto Segmentation::parameter(const std::string& parameterName) const -> Parameter {
       auto it = _parameters.find(parameterName);
       if (it != _parameters.end()) {
         return it->second;
@@ -106,7 +106,7 @@ namespace dd4hep::DDSegmentation {
     }
 
     /// Access to all parameters
-    Parameters Segmentation::parameters() const {
+    auto Segmentation::parameters() const -> Parameters {
       Parameters pars;
       for ( const auto& it : _parameters )
         pars.emplace_back(it.second);
@@ -130,12 +130,12 @@ namespace dd4hep::DDSegmentation {
     }
 
     /// Helper method to convert a bin number to a 1D position
-    double Segmentation::binToPosition(long64 bin, double cellSize, double offset) {
+    auto Segmentation::binToPosition(long64 bin, double cellSize, double offset) -> double {
       return bin * cellSize + offset;
     }
 
     /// Helper method to convert a 1D position to a cell ID
-    int Segmentation::positionToBin(double position, double cellSize, double offset) {
+    auto Segmentation::positionToBin(double position, double cellSize, double offset) -> int {
       if (cellSize <= 1e-10) {
         throw runtime_error("Invalid cell size: 0.0");
       }
@@ -143,11 +143,11 @@ namespace dd4hep::DDSegmentation {
     }
 
     /// Helper method to convert a bin number to a 1D position given a vector of binBoundaries
-    double Segmentation::binToPosition(CellID bin, std::vector<double> const& cellBoundaries, double offset) {
+    auto Segmentation::binToPosition(CellID bin, std::vector<double> const& cellBoundaries, double offset) -> double {
       return (cellBoundaries[bin+1] + cellBoundaries[bin])*0.5 + offset;
     }
     /// Helper method to convert a 1D position to a cell ID given a vector of binBoundaries
-    int Segmentation::positionToBin(double position, std::vector<double> const& cellBoundaries, double offset) {
+    auto Segmentation::positionToBin(double position, std::vector<double> const& cellBoundaries, double offset) -> int {
 
       // include the lower edge to the segmentation, deal with numerical issues
       if(fabs(position/cellBoundaries.front()-1.0) < 3e-12) return 0;
@@ -180,7 +180,7 @@ namespace dd4hep::DDSegmentation {
 
     }
 
-    std::vector<double> Segmentation::cellDimensions(const CellID&) const {
+    auto Segmentation::cellDimensions(const CellID&) const -> std::vector<double> {
       std::stringstream errorMessage;
       errorMessage << __func__ << " is not implemented for " << _type;
       throw std::logic_error(errorMessage.str());

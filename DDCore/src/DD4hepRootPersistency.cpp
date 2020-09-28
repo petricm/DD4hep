@@ -34,7 +34,7 @@ DD4hepRootPersistency::DD4hepRootPersistency() : TNamed() {
 /// Default destructor
 DD4hepRootPersistency::~DD4hepRootPersistency() = default;
 
-int DD4hepRootPersistency::save(Detector& description, const char* fname, const char* instance)   {
+auto DD4hepRootPersistency::save(Detector& description, const char* fname, const char* instance) -> int   {
   TFile* f = TFile::Open(fname,"RECREATE");
   if ( f && !f->IsZombie()) {
     try  {
@@ -99,7 +99,7 @@ int DD4hepRootPersistency::save(Detector& description, const char* fname, const 
   return 0;
 }
 
-int DD4hepRootPersistency::load(Detector& description, const char* fname, const char* instance)  {
+auto DD4hepRootPersistency::load(Detector& description, const char* fname, const char* instance) -> int  {
   DetectorData::patchRootStreamer(TGeoVolume::Class());
   DetectorData::patchRootStreamer(TGeoNode::Class());
   TFile* f = TFile::Open(fname);
@@ -210,7 +210,7 @@ namespace {
     /// Default constructor
     PersistencyChecks() = default;
 
-    size_t checkConstant(const std::pair<string,Constant>& obj)  {
+    auto checkConstant(const std::pair<string,Constant>& obj) -> size_t  {
       if ( obj.first.empty() || obj.second->name.empty() )  {
         printout(ERROR,"chkConstant","+++ Invalid constant: key error %s <> %s [%s]",
                  obj.first.c_str(), obj.second->GetName(), obj.second->GetTitle());
@@ -226,7 +226,7 @@ namespace {
       return 1;
     }
     
-    size_t checkProperty(const std::pair<string,map<string,string> >& obj)  {
+    auto checkProperty(const std::pair<string,map<string,string> >& obj) -> size_t  {
       if ( obj.first.empty() || obj.second.empty() )  {
         printout(ERROR,"chkProperty","+++ Emptty property set: %s",obj.first.c_str());
         ++errors;
@@ -235,7 +235,7 @@ namespace {
       return 1;
     }
     
-    size_t printDetElement(DetElement d)  {
+    auto printDetElement(DetElement d) -> size_t  {
       const DetElement::Children& children = d.children();
       size_t count = 1;
       printout(INFO,"chkDetector","+++ %-40s Level:%3d Key:%08X VolID:%016llX",
@@ -259,14 +259,14 @@ namespace {
       return count;
     }
 
-    size_t checkDetector(DetElement d)   {
+    auto checkDetector(DetElement d) -> size_t   {
       printout(INFO,"chkDetector","+++ Checking Sub-Detector: %-40s Key:%08X VolID:%016llX",
                d.name(), d.key(), d.volumeID());
       return printDetElement(d);
     }
 
 
-    size_t checkSensitive(SensitiveDetector d)   {
+    auto checkSensitive(SensitiveDetector d) -> size_t   {
       printout(INFO,"chkDetector","+++ Checking SensitiveDetector: %-30s %-16s CombineHits:%s ecut:%g Collection:%s",
                d.name(), ("["+d.type()+"]").c_str(),
                yes_no(d.combineHits()), d.energyCutoff(), d.hitsCollection().c_str());
@@ -286,7 +286,7 @@ namespace {
       return 1;
     }
 
-    size_t checkReadout(Readout ro)  {
+    auto checkReadout(Readout ro) -> size_t  {
       size_t ret = 1;
       printout(INFO,"chkReadOut","+++ Checking Readout: %s Collection No:%ld IDspec:%s",
                ro.name(), ro.numCollections(), yes_no(ro.idSpec().isValid()));
@@ -317,7 +317,7 @@ namespace {
       return ret;
     }
 
-    size_t checkSegmentation(Segmentation sg)  {
+    auto checkSegmentation(Segmentation sg) -> size_t  {
       DDSegmentation::Segmentation* seg = sg.segmentation();
       if ( seg )  {
         size_t ret = 1;
@@ -351,7 +351,7 @@ namespace {
       return 0;
     }
 
-    size_t checkIDDescriptor(IDDescriptor id)   {
+    auto checkIDDescriptor(IDDescriptor id) -> size_t   {
       const IDDescriptor::FieldMap& fields = id.fields();
       printout(INFO,"chkIDDescript","+++ Checking IDDesc:  %s decoder:%p",
                id->GetName(), (void*)id.decoder());
@@ -370,24 +370,24 @@ namespace {
       return 1;
     }
 
-    size_t checkLimitset(LimitSet ls)   {
+    auto checkLimitset(LimitSet ls) -> size_t   {
       printout(INFO,"chkLimitSet","+++ Checking Limits:  %s Num.Limiits:%ld",
                ls.name(), ls.limits().size());
       return 1;
     }
 
-    size_t checkRegion(Region ls)   {
+    auto checkRegion(Region ls) -> size_t   {
       printout(INFO,"chkRegion","+++ Checking Limits:  %s Num.Limiits:%ld",
                ls.name(), ls.limits().size());
       return 1;
     }
 
-    size_t checkField(CartesianField fld)   {
+    auto checkField(CartesianField fld) -> size_t   {
       printout(INFO,"chkField","+++ Checking Field:  %s",
                fld.name());
       return 1;
     }
-    size_t checkAlignment(DetElement det)   {
+    auto checkAlignment(DetElement det) -> size_t   {
       AlignmentCondition::Object* align = det->nominal.ptr();
       if ( nullptr == align )  {
         printout(ERROR,"chkNominals",
@@ -414,7 +414,7 @@ namespace {
     }
     
     /// Check nominal alignments of the volume manager
-    size_t checkNominals(VolumeManager mgr)   {
+    auto checkNominals(VolumeManager mgr) -> size_t   {
       int count = 0;
       const auto& sdets = mgr->subdetectors;
       for( const auto& vm : sdets )  {
@@ -426,7 +426,7 @@ namespace {
       }
       return count;
     }
-    size_t checkDetectorNominals(DetElement d)   {
+    auto checkDetectorNominals(DetElement d) -> size_t   {
       int count = 0;
       Volume v = d.placement().volume();
       if ( v.isSensitive() )   {
@@ -440,7 +440,7 @@ namespace {
 }
 
 /// Check the collection of define statements
-size_t DD4hepRootCheck::checkConstants()   const   {
+auto DD4hepRootCheck::checkConstants()   const -> size_t   {
   size_t count = 0;
   PersistencyChecks checks;
   for( const auto& obj : object->constants() )
@@ -451,7 +451,7 @@ size_t DD4hepRootCheck::checkConstants()   const   {
 }
 
 /// Check detector description properties (string constants)
-size_t DD4hepRootCheck::checkProperties()   const   { 
+auto DD4hepRootCheck::checkProperties()   const -> size_t   {
   size_t count = 0;
   PersistencyChecks checks;
   for( const auto& obj : object->properties() )
@@ -462,14 +462,14 @@ size_t DD4hepRootCheck::checkProperties()   const   {
 }
 
 /// Call to check a Material object
-size_t DD4hepRootCheck::checkMaterials()  const   {
+auto DD4hepRootCheck::checkMaterials()  const -> size_t   {
   size_t count = 0;
   printout(ALWAYS,"chkMaterials","+++ Check not implemented. Hence OK.");
   return count;
 }
 
 /// Call to check a Readout object
-size_t DD4hepRootCheck::checkReadouts()   const   {
+auto DD4hepRootCheck::checkReadouts()   const -> size_t   {
   size_t count = 0;
   PersistencyChecks checks;
   for( const auto& obj : object->readouts() )
@@ -487,7 +487,7 @@ size_t DD4hepRootCheck::checkReadouts()   const   {
 }
 
 /// Call to theck the DD4hep fields
-size_t DD4hepRootCheck::checkFields()   const   {
+auto DD4hepRootCheck::checkFields()   const -> size_t   {
   size_t count = 0;
   PersistencyChecks checks;
   for( const auto& obj : object->fields() )
@@ -498,7 +498,7 @@ size_t DD4hepRootCheck::checkFields()   const   {
 }
 
 /// Call to check a Region object
-size_t DD4hepRootCheck::checkRegions()   const   {
+auto DD4hepRootCheck::checkRegions()   const -> size_t   {
   size_t count = 0;
   PersistencyChecks checks;
   for( const auto& obj : object->regions() )
@@ -509,7 +509,7 @@ size_t DD4hepRootCheck::checkRegions()   const   {
 }
 
 /// Call to check an ID specification
-size_t DD4hepRootCheck::checkIdSpecs()   const   {
+auto DD4hepRootCheck::checkIdSpecs()   const -> size_t   {
   size_t count = 0;
   PersistencyChecks checks;
   for( const auto& obj : object->idSpecifications() )
@@ -520,7 +520,7 @@ size_t DD4hepRootCheck::checkIdSpecs()   const   {
 }
 
 /// Call to check a top level Detector element (subdetector)
-size_t DD4hepRootCheck::checkDetectors()  const   {
+auto DD4hepRootCheck::checkDetectors()  const -> size_t   {
   size_t count = 0;
   PersistencyChecks checks;
   for( const auto& obj : object->detectors() )
@@ -531,7 +531,7 @@ size_t DD4hepRootCheck::checkDetectors()  const   {
 }
 
 /// Call to check a sensitive detector
-size_t DD4hepRootCheck::checkSensitives()   const   {
+auto DD4hepRootCheck::checkSensitives()   const -> size_t   {
   size_t count = 0;
   PersistencyChecks checks;
   for( const auto& obj : object->sensitiveDetectors() )
@@ -542,7 +542,7 @@ size_t DD4hepRootCheck::checkSensitives()   const   {
 }
 
 /// Call to check a limit-set object
-size_t DD4hepRootCheck::checkLimitSets()   const   {
+auto DD4hepRootCheck::checkLimitSets()   const -> size_t   {
   PersistencyChecks checks;
   size_t count = 0;
   for( const auto& obj : object->limitsets() )
@@ -553,7 +553,7 @@ size_t DD4hepRootCheck::checkLimitSets()   const   {
 }
 
 /// Call to check the volume manager hierarchy
-size_t DD4hepRootCheck::checkVolManager()   const   {
+auto DD4hepRootCheck::checkVolManager()   const -> size_t   {
   PersistencyChecks checks;
   size_t count = checks.checkNominals(object->volumeManager());
   printout(ALWAYS,"chkNominals","+++ %s Checked %ld VolumeManager contexts. Num.Errors: %ld",
@@ -562,7 +562,7 @@ size_t DD4hepRootCheck::checkVolManager()   const   {
 }
 
 /// Call to check the nominal alignments in the detector hierarchy (for sensitive detectors)
-size_t DD4hepRootCheck::checkNominals()   const   {
+auto DD4hepRootCheck::checkNominals()   const -> size_t   {
   size_t count = 0;
   PersistencyChecks checks;
   const auto& dets = object->sensitiveDetectors();
@@ -574,7 +574,7 @@ size_t DD4hepRootCheck::checkNominals()   const   {
 }
 
 /// Call to check the segmentations starting from the top level detector
-size_t DD4hepRootCheck::checkSegmentations()   const   {
+auto DD4hepRootCheck::checkSegmentations()   const -> size_t   {
   size_t count = 0;
   PersistencyChecks checks;
   const auto& dets = object->sensitiveDetectors();
@@ -587,7 +587,7 @@ size_t DD4hepRootCheck::checkSegmentations()   const   {
   return count;
 }
 
-size_t DD4hepRootCheck::checkAll()   const   {
+auto DD4hepRootCheck::checkAll()   const -> size_t   {
   size_t count = 0;
   PersistencyChecks checks;
 

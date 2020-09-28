@@ -22,7 +22,7 @@ using namespace detail;
 static DDTest test( "surface" ) ; 
 //=============================================================================
 
-int main(int argc, char** argv ){
+auto main(int argc, char** argv ) -> int{
     
   test.log( "test units" );
   

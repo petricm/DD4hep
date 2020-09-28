@@ -48,7 +48,7 @@ CaloLego::~CaloLego()  {
 
 
 /// Build the projection view and map it to the given slot
-View& CaloLego::Build(TEveWindow* slot)   {
+auto CaloLego::Build(TEveWindow* slot) -> View&   {
   CreateGeoScene();
   AddToGlobalItems(name());
   return Map(slot);

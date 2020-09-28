@@ -15,7 +15,7 @@ namespace dd4hep {
   /// Namespace for the AIDA detector for utilities using boost::spirit parsers
   namespace Parsers {
 
-    template <> int parse(std::vector<std::vector<double> >& result, const std::string& input) {
+    template <> auto parse(std::vector<std::vector<double> >& result, const std::string& input) -> int {
       return parse_(result, input);
     }
   }

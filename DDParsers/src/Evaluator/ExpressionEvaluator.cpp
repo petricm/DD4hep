@@ -55,7 +55,7 @@ namespace {
 /// Namespace for the AIDA detector description toolkit
 namespace dd4hep {
 
-  tools::Evaluator& evaluator() {
+  auto evaluator() -> tools::Evaluator& {
     static tools::Evaluator* e = nullptr;
     if ( !e )   {
       static tools::Evaluator ev;
@@ -67,7 +67,7 @@ namespace dd4hep {
   }
 
   /// Access to G4 evaluator. Note: Uses Geant4 units!
-  tools::Evaluator& g4Evaluator()   {
+  auto g4Evaluator() -> tools::Evaluator&   {
     static tools::Evaluator* e = nullptr;
     if ( !e )   {
       static tools::Evaluator ev;
@@ -79,7 +79,7 @@ namespace dd4hep {
   }
 
   /// Access to G4 evaluator. Note: Uses cgs units!
-  tools::Evaluator& cgsEvaluator()   {
+  auto cgsEvaluator() -> tools::Evaluator&   {
     static tools::Evaluator* e = nullptr;
     if ( !e )   {
       static tools::Evaluator ev;

@@ -34,12 +34,12 @@ ConditionsDataLoader::ConditionsDataLoader(Detector& description, ConditionsMana
 ConditionsDataLoader::~ConditionsDataLoader()   = default;
 
 /// Access to properties
-dd4hep::Property& ConditionsDataLoader::operator[](const std::string& property_name)  {
+auto ConditionsDataLoader::operator[](const std::string& property_name) -> dd4hep::Property&  {
   return properties().property(property_name);
 }
 
 /// Access to properties (CONST)
-const dd4hep::Property& ConditionsDataLoader::operator[](const std::string& property_name)  const   {
+auto ConditionsDataLoader::operator[](const std::string& property_name)  const -> const dd4hep::Property&   {
   return properties().property(property_name);
 }
 

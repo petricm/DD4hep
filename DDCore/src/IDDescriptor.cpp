@@ -55,25 +55,25 @@ void IDDescriptor::rebuild(const string& description)   {
 }
 
 /// Acces string representation
-string IDDescriptor::toString() const {
+auto IDDescriptor::toString() const -> string {
   if ( isValid() ) {
     return m_element->GetName();
   }
   return "----";
 }
 
-std::string IDDescriptor::fieldDescription() const {
+auto IDDescriptor::fieldDescription() const -> std::string {
   BitFieldCoder& bf = data<Object>()->decoder;
   return bf.fieldDescription();
 }
 
 /// The total number of encoding bits for this descriptor
-unsigned IDDescriptor::maxBit() const {
+auto IDDescriptor::maxBit() const -> unsigned {
   return data<Object>()->decoder.highestBit();
 }
 
 /// Access the field-id container
-const IDDescriptor::FieldIDs& IDDescriptor::ids() const {
+auto IDDescriptor::ids() const -> const IDDescriptor::FieldIDs& {
   if ( isValid() ) {
     return data<Object>()->fieldIDs;
   }
@@ -81,7 +81,7 @@ const IDDescriptor::FieldIDs& IDDescriptor::ids() const {
 }
 
 /// Access the fieldmap container
-const IDDescriptor::FieldMap& IDDescriptor::fields() const {
+auto IDDescriptor::fields() const -> const IDDescriptor::FieldMap& {
   if ( isValid() ) {
     return data<Object>()->fieldMap;
   }
@@ -89,7 +89,7 @@ const IDDescriptor::FieldMap& IDDescriptor::fields() const {
 }
 
 /// Get the field descriptor of one field by name
-const BitFieldElement* IDDescriptor::field(const string& field_name) const {
+auto IDDescriptor::field(const string& field_name) const -> const BitFieldElement* {
   const FieldMap& fm = fields();   // This already checks the object validity
   for (const auto& i : fm )
     if (i.first == field_name)
@@ -100,13 +100,13 @@ const BitFieldElement* IDDescriptor::field(const string& field_name) const {
 }
 
 /// Get the field descriptor of one field by its identifier
-const BitFieldElement* IDDescriptor::field(size_t identifier) const {
+auto IDDescriptor::field(size_t identifier) const -> const BitFieldElement* {
   const FieldMap& fm = fields();   // This already checks the object validity
   return fm[identifier].second;
 }
 
 /// Get the field identifier of one field by name
-size_t IDDescriptor::fieldID(const string& field_name) const {
+auto IDDescriptor::fieldID(const string& field_name) const -> size_t {
   const FieldIDs& fm = ids();   // This already checks the object validity
   for (const auto& i : fm )
     if (i.second == field_name)
@@ -117,7 +117,7 @@ size_t IDDescriptor::fieldID(const string& field_name) const {
 }
 
 /// Compute the submask for a given set of volume IDs
-VolumeID IDDescriptor::get_mask(const std::vector<std::pair<std::string, int> >& id_vector) const   {
+auto IDDescriptor::get_mask(const std::vector<std::pair<std::string, int> >& id_vector) const -> VolumeID   {
   VolumeID mask = 0ULL;
   for (const auto& i : id_vector )   {
     const auto* fld = field(i.first);
@@ -127,7 +127,7 @@ VolumeID IDDescriptor::get_mask(const std::vector<std::pair<std::string, int> >&
 }
 
 /// Encode a set of volume identifiers (corresponding to this description of course!) to a volumeID.
-VolumeID IDDescriptor::encode(const std::vector<std::pair<std::string, int> >& id_vector) const
+auto IDDescriptor::encode(const std::vector<std::pair<std::string, int> >& id_vector) const -> VolumeID
 {
   VolumeID id = 0;
   //const PlacedVolume::VolIDs* ids = (const PlacedVolume::VolIDs*)&id_vector;
@@ -142,7 +142,7 @@ VolumeID IDDescriptor::encode(const std::vector<std::pair<std::string, int> >& i
 }
 
 /// Encode a set of volume identifiers to a volumeID with the system ID on the top bits
-VolumeID IDDescriptor::encode_reverse(const std::vector<std::pair<std::string, int> >& id_vector) const
+auto IDDescriptor::encode_reverse(const std::vector<std::pair<std::string, int> >& id_vector) const -> VolumeID
 {
   return detail::reverseBits<VolumeID>(encode(id_vector));
 }
@@ -158,7 +158,7 @@ void IDDescriptor::decodeFields(VolumeID vid,
 }
 
 /// Decode volume IDs and return string reprensentation for debugging purposes
-string IDDescriptor::str(VolumeID vid)   const {
+auto IDDescriptor::str(VolumeID vid)   const -> string {
   const vector<BitFieldElement>& v = access()->decoder.fields();
   stringstream str;
   for (auto& f : v )
@@ -168,7 +168,7 @@ string IDDescriptor::str(VolumeID vid)   const {
 }
 
 /// Decode volume IDs and return string reprensentation for debugging purposes
-string IDDescriptor::str(VolumeID vid, VolumeID mask)   const {
+auto IDDescriptor::str(VolumeID vid, VolumeID mask)   const -> string {
   const vector<BitFieldElement>& v = access()->decoder.fields();
   stringstream str;
   for (auto& f : v )  {
@@ -180,6 +180,6 @@ string IDDescriptor::str(VolumeID vid, VolumeID mask)   const {
 }
 
 /// Access the BitFieldCoder object
-BitFieldCoder* IDDescriptor::decoder()   const   {
+auto IDDescriptor::decoder()   const -> BitFieldCoder*   {
   return &(data<Object>()->decoder);
 }

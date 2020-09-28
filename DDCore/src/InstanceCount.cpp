@@ -37,10 +37,10 @@ namespace {
   static InstanceCount::Counter s_nullCount;
   static InstanceCount::Counter s_thisCount;
   static InstanceCount s_counter;
-  inline TypeCounter& types() {
+  inline auto types() -> TypeCounter& {
     return *(s_typCounts.get());
   }
-  inline StringCounter& strings() {
+  inline auto strings() -> StringCounter& {
     return *(s_strCounts.get());
   }
   int s_global = 1;
@@ -48,7 +48,7 @@ namespace {
     _Global() = default;
     ~_Global() { s_global = 0; }
   } s_globalObj;
-  int on_exit_destructors()  {
+  auto on_exit_destructors() -> int  {
     static bool first = true;
     if ( first && s_global == 0 && s_trace_instances )  {
       first = false;
@@ -78,7 +78,7 @@ InstanceCount::~InstanceCount() {
   }
 }
 /// Check if tracing is enabled.
-bool InstanceCount::doTrace() {
+auto InstanceCount::doTrace() -> bool {
   return s_trace_instances;
 }
 /// Enable/Disable tracing
@@ -86,13 +86,13 @@ void InstanceCount::doTracing(bool value) {
   s_trace_instances = value;
 }
 /// Access counter object for local caching on optimizations
-InstanceCount::Counter* InstanceCount::getCounter(const std::type_info& typ) {
+auto InstanceCount::getCounter(const std::type_info& typ) -> InstanceCount::Counter* {
   Counter* cnt = s_trace_instances ? types()[&typ] : &s_nullCount;
   return (nullptr != cnt) ? cnt : types()[&typ] = new Counter();
 }
 
 /// Access counter object for local caching on optimizations
-InstanceCount::Counter* InstanceCount::getCounter(const std::string& typ) {
+auto InstanceCount::getCounter(const std::string& typ) -> InstanceCount::Counter* {
   Counter* cnt = s_trace_instances ? strings()[&typ] : &s_nullCount;
   return (nullptr != cnt) ? cnt : strings()[&typ] = new Counter();
 }

@@ -23,7 +23,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::detail;
 
-static Handle<TObject> create_CAD_Shape(Detector&, xml_h e)   {
+static auto create_CAD_Shape(Detector&, xml_h e) -> Handle<TObject>   {
   xml_elt_t elt(e);
   auto fname = elt.attr<string>(_U(ref));
   double unit  = elt.hasAttr(_U(unit)) ? elt.attr<double>(_U(unit)) : dd4hep::cm;
@@ -57,7 +57,7 @@ static Handle<TObject> create_CAD_Shape(Detector&, xml_h e)   {
 DECLARE_XML_SHAPE(CAD_Shape__shape_constructor,create_CAD_Shape)
 
 
-static Handle<TObject> create_CAD_MultiShape_Assembly(Detector&, xml_h e)   {
+static auto create_CAD_MultiShape_Assembly(Detector&, xml_h e) -> Handle<TObject>   {
   xml_elt_t elt(e);
   auto fname = elt.attr<string>(_U(ref));
   double unit  = elt.hasAttr(_U(unit)) ? elt.attr<double>(_U(unit)) : dd4hep::cm;
@@ -122,7 +122,7 @@ DECLARE_XML_VOLUME(CAD_Assembly__volume_constructor,create_CAD_MultiShape_Assemb
  *
  *   </XXX>
  */
-static Handle<TObject> create_CAD_Volume(Detector& dsc, xml_h e)   {
+static auto create_CAD_Volume(Detector& dsc, xml_h e) -> Handle<TObject>   {
   xml_elt_t elt(e);
   auto fname = elt.attr<string>(_U(ref));
   auto unit  = elt.attr<double>(_U(unit));

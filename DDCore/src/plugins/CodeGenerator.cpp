@@ -57,33 +57,33 @@ namespace {
     Detector& detector;
     Actor(Detector& d) : detector(d) {}
     ~Actor() = default;
-    ostream& handleHeader   (ostream& log);
-    ostream& handleTrailer  (ostream& log);
-    ostream& handleSolid    (ostream& log, const TGeoShape*  sh);
-    ostream& handleMatrix   (ostream& log, TGeoMatrix* mat);
-    ostream& handleMaterial (ostream& log, TGeoMedium* mat);
-    ostream& handlePlacement(ostream& log, TGeoNode*   parent, TGeoNode* node);
-    ostream& handleStructure(ostream& log, DetElement parent, DetElement de);
+    auto handleHeader   (ostream& log) -> ostream&;
+    auto handleTrailer  (ostream& log) -> ostream&;
+    auto handleSolid    (ostream& log, const TGeoShape*  sh) -> ostream&;
+    auto handleMatrix   (ostream& log, TGeoMatrix* mat) -> ostream&;
+    auto handleMaterial (ostream& log, TGeoMedium* mat) -> ostream&;
+    auto handlePlacement(ostream& log, TGeoNode*   parent, TGeoNode* node) -> ostream&;
+    auto handleStructure(ostream& log, DetElement parent, DetElement de) -> ostream&;
   };
   typedef void* pvoid_t;
 
-  ostream& newline(ostream& log)    {
+  auto newline(ostream& log) -> ostream&    {
     return log << endl << prefix;
   }
-  template <typename T> const void* pointer(const Handle<T>& h)   {
+  template <typename T> auto pointer(const Handle<T>& h) -> const void*   {
     return h.ptr();
   }
-  template <typename T> const void* pointer(const T* h)   {
+  template <typename T> auto pointer(const T* h) -> const void*   {
     return h;
   }
-  template <typename T> inline string obj_name(const string& pref, const T* ptr)  {
+  template <typename T> inline auto obj_name(const string& pref, const T* ptr) -> string  {
     stringstream name;
     name << pref << "_" << pointer(ptr);
     return name.str();
   }
 
 
-  ostream& Actor::handleHeader   (ostream& log)    {
+  auto Actor::handleHeader   (ostream& log) -> ostream&    {
     log << "#include \"TClass.h\"" << endl
         << "#include \"TGeoNode.h\"" << endl
         << "#include \"TGeoExtension.h\"" << endl
@@ -259,7 +259,7 @@ namespace {
     return log;
   }
 
-  ostream& Actor::handleTrailer   (ostream& log)    {
+  auto Actor::handleTrailer   (ostream& log) -> ostream&    {
     log << "static long generate_dd4hep(Detector& detector, int, char**)   {" << newline
         << "CodeGeo gen(detector);"                     << newline
         << "TGeoVolume* vol_top = gen.load_geometry();" << newline
@@ -279,7 +279,7 @@ namespace {
     return log;
   }
   
-  ostream& Actor::handleStructure(ostream& log, DetElement parent, DetElement de)   {
+  auto Actor::handleStructure(ostream& log, DetElement parent, DetElement de) -> ostream&   {
     if ( de.isValid() && detelements.find(de) == detelements.end() )  {
       string name = obj_name("de", de.ptr());
       detelements.emplace(de,name);
@@ -315,7 +315,7 @@ namespace {
     return log;
   }
 
-  ostream& Actor::handlePlacement(ostream& log, TGeoNode* parent, TGeoNode* node)  {
+  auto Actor::handlePlacement(ostream& log, TGeoNode* parent, TGeoNode* node) -> ostream&  {
     if ( node && placements.find(node) == placements.end() )  {
       PlacedVolume pv(node);
       TGeoVolume* vol = node->GetVolume();
@@ -383,7 +383,7 @@ namespace {
     return log;
   }
 
-  ostream& Actor::handleMaterial(ostream& log, TGeoMedium* medium)   {
+  auto Actor::handleMaterial(ostream& log, TGeoMedium* medium) -> ostream&   {
     if ( medium && materials.find(medium) == materials.end() )  {
       string name = obj_name("material",medium);
       materials.emplace(medium,name);
@@ -406,7 +406,7 @@ namespace {
     return log;
   }
   
-  ostream& Actor::handleMatrix(ostream& log, TGeoMatrix* mat)   {
+  auto Actor::handleMatrix(ostream& log, TGeoMatrix* mat) -> ostream&   {
     if ( mat && matrices.find(mat) == matrices.end() )  {
       string name = obj_name("matrix",mat);
       log << "{" << newline
@@ -447,7 +447,7 @@ namespace {
   }
   
   /// Pretty print of solid attributes
-  ostream& Actor::handleSolid(ostream& log,  const TGeoShape* shape)    {
+  auto Actor::handleSolid(ostream& log,  const TGeoShape* shape) -> ostream&    {
     string name = obj_name("solid", shape);
 
     if ( shapes.find(shape) != shapes.end() )  {
@@ -663,7 +663,7 @@ namespace {
   }
 }
 
-static long generate_cxx(Detector& description, int argc, char** argv) {
+static auto generate_cxx(Detector& description, int argc, char** argv) -> long {
   string output;
   Actor actor(description);
 

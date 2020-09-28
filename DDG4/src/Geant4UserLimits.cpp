@@ -29,7 +29,7 @@ using namespace std;
 using namespace dd4hep::sim;
 
 /// Access value according to track
-double Geant4UserLimits::Handler::value(const G4Track& track) const    {
+auto Geant4UserLimits::Handler::value(const G4Track& track) const -> double    {
   if ( !particleLimits.empty() )  {
     auto i = particleLimits.find(track.GetDefinition());
     if ( i != particleLimits.end() )  {

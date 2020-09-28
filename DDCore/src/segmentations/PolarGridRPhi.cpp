@@ -45,7 +45,7 @@ PolarGridRPhi::PolarGridRPhi(const BitFieldCoder* decode) : PolarGrid(decode) {
 PolarGridRPhi::~PolarGridRPhi() = default;
 
 /// determine the position based on the cell ID
-Vector3D PolarGridRPhi::position(const CellID& cID) const {
+auto PolarGridRPhi::position(const CellID& cID) const -> Vector3D {
 	Vector3D cellPosition;
 	double R =   binToPosition(_decoder->get(cID,_rId),   _gridSizeR,   _offsetR);
 	double phi = binToPosition(_decoder->get(cID,_phiId), _gridSizePhi, _offsetPhi);
@@ -57,7 +57,7 @@ Vector3D PolarGridRPhi::position(const CellID& cID) const {
 }
 
 /// determine the cell ID based on the position
-  CellID PolarGridRPhi::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */, const VolumeID& vID) const {
+  auto PolarGridRPhi::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */, const VolumeID& vID) const -> CellID {
 	double phi = atan2(localPosition.Y,localPosition.X);
 	double R = sqrt( localPosition.X * localPosition.X + localPosition.Y * localPosition.Y );
 	CellID cID = vID ;
@@ -66,7 +66,7 @@ Vector3D PolarGridRPhi::position(const CellID& cID) const {
 	return cID;
 }
 
-std::vector<double> PolarGridRPhi::cellDimensions(const CellID& cID) const {
+auto PolarGridRPhi::cellDimensions(const CellID& cID) const -> std::vector<double> {
   const double rPhiSize = binToPosition(_decoder->get(cID,_rId), _gridSizeR, _offsetR)*_gridSizePhi;
 #if __cplusplus >= 201103L
   return {_gridSizeR, rPhiSize};

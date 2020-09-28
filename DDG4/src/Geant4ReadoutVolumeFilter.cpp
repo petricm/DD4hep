@@ -48,7 +48,7 @@ Geant4ReadoutVolumeFilter::~Geant4ReadoutVolumeFilter() {
 }
 
 /// Filter action. Return true if hits should be processed
-bool Geant4ReadoutVolumeFilter::operator()(const G4Step* step) const    {
+auto Geant4ReadoutVolumeFilter::operator()(const G4Step* step) const -> bool    {
   Geant4StepHandler stepH(step);
   Geant4VolumeManager volMgr = Geant4Mapping::instance().volumeManager();
   VolumeID id  = volMgr.volumeID(stepH.preTouchable());

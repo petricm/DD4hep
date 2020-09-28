@@ -27,11 +27,11 @@ GridRPhiEta::GridRPhiEta(const BitFieldCoder* aDecoder) :
   registerIdentifier("identifier_r", "Cell ID identifier for R", m_rID, "r");
 }
 
-Vector3D GridRPhiEta::position(const CellID& cID) const {
+auto GridRPhiEta::position(const CellID& cID) const -> Vector3D {
   return Util::positionFromREtaPhi(r(cID), eta(cID), phi(cID));
 }
 
-CellID GridRPhiEta::cellID(const Vector3D& /* localPosition */, const Vector3D& globalPosition, const VolumeID& vID) const {
+auto GridRPhiEta::cellID(const Vector3D& /* localPosition */, const Vector3D& globalPosition, const VolumeID& vID) const -> CellID {
   double lRadius = Util::radiusFromXYZ(globalPosition);
   double lEta = Util::etaFromXYZ(globalPosition);
   double lPhi = Util::phiFromXYZ(globalPosition);
@@ -42,7 +42,7 @@ CellID GridRPhiEta::cellID(const Vector3D& /* localPosition */, const Vector3D& 
   return cID;
 }
 
-double GridRPhiEta::r(const CellID& cID) const {
+auto GridRPhiEta::r(const CellID& cID) const -> double {
   CellID rValue = _decoder->get(cID, m_rID);
   return binToPosition(rValue, m_gridSizeR, m_offsetR);
 }

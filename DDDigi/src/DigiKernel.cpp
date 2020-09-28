@@ -93,8 +93,8 @@ public:
     : context(c), action(a) {}
   Wrapper(Wrapper&& copy) = default;
   Wrapper(const Wrapper& copy) = default;
-  Wrapper& operator=(Wrapper&& copy) = delete;
-  Wrapper& operator=(const Wrapper& copy) = delete;
+  auto operator=(Wrapper&& copy) -> Wrapper& = delete;
+  auto operator=(const Wrapper& copy) -> Wrapper& = delete;
   void operator()() const {
     action->execute(context);
   }
@@ -173,7 +173,7 @@ DigiKernel::~DigiKernel() {
 }
 
 /// Instance accessor
-DigiKernel& DigiKernel::instance(Detector& description) {
+auto DigiKernel::instance(Detector& description) -> DigiKernel& {
   static dd4hep::dd4hep_ptr<DigiKernel> s_main_instance(nullptr);
   if ( nullptr == s_main_instance.get() )   {
     std::lock_guard<std::mutex> lock(kernel_mutex);
@@ -185,7 +185,7 @@ DigiKernel& DigiKernel::instance(Detector& description) {
 }
 
 /// Access to the properties of the object
-PropertyManager& DigiKernel::properties()   {
+auto DigiKernel::properties() -> PropertyManager&   {
   return internals->properties;
 }
 
@@ -198,17 +198,17 @@ void DigiKernel::printProperties()  const  {
 }
 
 /// Check property for existence
-bool DigiKernel::hasProperty(const std::string& name) const    {
+auto DigiKernel::hasProperty(const std::string& name) const -> bool    {
   return internals->properties.exists(name);
 }
 
 /// Access single property
-dd4hep::Property& DigiKernel::property(const std::string& name)   {
+auto DigiKernel::property(const std::string& name) -> dd4hep::Property&   {
   return internals->properties[name];
 }
 
 /// Access the output level
-PrintLevel DigiKernel::outputLevel() const  {
+auto DigiKernel::outputLevel() const -> PrintLevel  {
   return (PrintLevel)internals->outputLevel;
 }
 
@@ -218,14 +218,14 @@ void DigiKernel::setOutputLevel(const std::string object, PrintLevel new_level) 
 }
 
 /// Retrieve the global output level of a named object.
-dd4hep::PrintLevel DigiKernel::getOutputLevel(const std::string object) const   {
+auto DigiKernel::getOutputLevel(const std::string object) const -> dd4hep::PrintLevel   {
   auto i=internals->clientLevels.find(object);
   if ( i != internals->clientLevels.end() ) return (PrintLevel)(*i).second;
   return dd4hep::PrintLevel(dd4hep::printLevel()-1);
 }
 
 /// Set the output level; returns previous value
-dd4hep::PrintLevel DigiKernel::setOutputLevel(PrintLevel new_level)  {
+auto DigiKernel::setOutputLevel(PrintLevel new_level) -> dd4hep::PrintLevel  {
   int old = internals->outputLevel;
   internals->outputLevel = new_level;
   return (PrintLevel)old;
@@ -243,26 +243,26 @@ void DigiKernel::loadXML(const char* fname) {
   m_detDesc->apply("DD4hep_XMLLoader", 1, (char**) args);
 }
 
-int DigiKernel::configure()   {
+auto DigiKernel::configure() -> int   {
   return 1;//DigiExec::configure(*this);
 }
 
-int DigiKernel::initialize()   {
+auto DigiKernel::initialize() -> int   {
   return 1;//DigiExec::initialize(*this);
 }
 
 /// Access to the main input action sequence from the kernel object
-DigiActionSequence& DigiKernel::inputAction() const    {
+auto DigiKernel::inputAction() const -> DigiActionSequence&    {
   return *internals->inputAction;
 }
 
 /// Access to the main event action sequence from the kernel object
-DigiActionSequence& DigiKernel::eventAction() const    {
+auto DigiKernel::eventAction() const -> DigiActionSequence&    {
   return *internals->eventAction;
 }
 
 /// Access to the main output action sequence from the kernel object
-DigiActionSequence& DigiKernel::outputAction() const    {
+auto DigiKernel::outputAction() const -> DigiActionSequence&    {
   return *internals->outputAction;
 }
 
@@ -328,7 +328,7 @@ void DigiKernel::notify(DigiContext* context, const std::exception& e)   {
   notify(context);
 }
 
-int DigiKernel::run()   {
+auto DigiKernel::run() -> int   {
   chrono::system_clock::time_point start = chrono::system_clock::now();
   internals->stop = false;
   internals->eventsToDo = internals->numEvents;
@@ -367,7 +367,7 @@ int DigiKernel::run()   {
   return 1;
 }
 
-int DigiKernel::terminate() {
+auto DigiKernel::terminate() -> int {
   printout(INFO,"DigiKernel","++ Terminate Digi and delete associated actions.");
   m_detDesc->destroyInstance();
   m_detDesc = nullptr;

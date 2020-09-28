@@ -20,7 +20,7 @@ using namespace std;
 dd4hep::xml::UriReader::~UriReader()   = default;
 
 /// Resolve a given URI to a string containing the data
-bool dd4hep::xml::UriReader::load(const string& system_id, string& data)   {
+auto dd4hep::xml::UriReader::load(const string& system_id, string& data) -> bool   {
   return this->load(system_id, context(), data);
 }
 
@@ -50,17 +50,17 @@ void dd4hep::xml::UriContextReader::blockPath(const std::string& path)  {
 }
 
 /// Check if a URI path is blocked
-bool dd4hep::xml::UriContextReader::isBlocked(const std::string& path)  const  {
+auto dd4hep::xml::UriContextReader::isBlocked(const std::string& path)  const -> bool  {
   return m_reader->isBlocked(path);
 }
 
 /// Resolve a given URI to a string containing the data
-bool dd4hep::xml::UriContextReader::load(const string& system_id, string& data)   {
+auto dd4hep::xml::UriContextReader::load(const string& system_id, string& data) -> bool   {
   return m_reader->load(system_id, context(), data);
 }
 
 /// Resolve a given URI to a string containing the data
-bool dd4hep::xml::UriContextReader::load(const string& system_id, UserContext* ctxt, string& data)   {
+auto dd4hep::xml::UriContextReader::load(const string& system_id, UserContext* ctxt, string& data) -> bool   {
   return m_reader->load(system_id, ctxt, data);
 }
 

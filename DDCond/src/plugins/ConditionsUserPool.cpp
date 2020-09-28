@@ -50,10 +50,10 @@ namespace dd4hep::cond {
       ConditionsDataLoader* m_loader = nullptr;
 
       /// Internal helper to find conditions
-      [[nodiscard]] Condition::Object* i_findCondition(Condition::key_type key)  const;
+      [[nodiscard]] auto i_findCondition(Condition::key_type key)  const -> Condition::Object*;
 
       /// Internal insertion helper
-      bool i_insert(Condition::Object* o);
+      auto i_insert(Condition::Object* o) -> bool;
 
     public:
       /// Default constructor
@@ -63,40 +63,40 @@ namespace dd4hep::cond {
       /// Print pool content
       void print(const std::string& opt)   const  override;
       /// Total entry count
-      [[nodiscard]] size_t size()  const  override;
+      [[nodiscard]] auto size()  const -> size_t  override;
       /// Full cleanup of all managed conditions.
       void clear()  override;
       /// Check a condition for existence
-      [[nodiscard]] bool exists(Condition::key_type hash)  const  override;
+      [[nodiscard]] auto exists(Condition::key_type hash)  const -> bool  override;
       /// Check a condition for existence
-      [[nodiscard]] bool exists(const ConditionKey& key)  const  override;
+      [[nodiscard]] auto exists(const ConditionKey& key)  const -> bool  override;
       /// Check if a condition exists in the pool and return it to the caller
-      [[nodiscard]] Condition get(Condition::key_type hash)  const  override;
+      [[nodiscard]] auto get(Condition::key_type hash)  const -> Condition  override;
       /// Check if a condition exists in the pool and return it to the caller     
-      [[nodiscard]] Condition get(const ConditionKey& key)  const  override;
+      [[nodiscard]] auto get(const ConditionKey& key)  const -> Condition  override;
 
       /// Remove condition by key from pool.
-      bool remove(Condition::key_type hash_key)  override;
+      auto remove(Condition::key_type hash_key) -> bool  override;
       /// Remove condition by key from pool.
-      bool remove(const ConditionKey& key)  override;
+      auto remove(const ConditionKey& key) -> bool  override;
       /// Do single insertion of condition including registration to the manager
-      bool registerOne(const IOV& iov, Condition cond)  override;
+      auto registerOne(const IOV& iov, Condition cond) -> bool  override;
       /// Do block insertions of conditions with identical IOV including registration to the manager
-      size_t registerMany(const IOV& iov, const std::vector<Condition>& values) override;
+      auto registerMany(const IOV& iov, const std::vector<Condition>& values) -> size_t override;
       /// Register a new condition to this pool
-      bool insert(Condition cond)  override;
+      auto insert(Condition cond) -> bool  override;
 
       /// ConditionsMap overload: Add a condition directly to the slice
-      bool insert(DetElement detector, Condition::itemkey_type key, Condition condition)  override;
+      auto insert(DetElement detector, Condition::itemkey_type key, Condition condition) -> bool  override;
       /// ConditionsMap overload: Access a condition
-      [[nodiscard]] Condition get(DetElement detector, Condition::itemkey_type key)  const  override;
+      [[nodiscard]] auto get(DetElement detector, Condition::itemkey_type key)  const -> Condition  override;
       /// No ConditionsMap overload: Access all conditions within a key range in the interval [lower,upper]
-      [[nodiscard]] std::vector<Condition> get(DetElement detector,
+      [[nodiscard]] auto get(DetElement detector,
                                          Condition::itemkey_type lower,
-                                         Condition::itemkey_type upper)  const override;
+                                         Condition::itemkey_type upper)  const -> std::vector<Condition> override;
       /// Access all conditions within the key range of a detector element
-      [[nodiscard]] std::vector<Condition> get(Condition::key_type lower,
-                                         Condition::key_type upper)  const  override;
+      [[nodiscard]] auto get(Condition::key_type lower,
+                                         Condition::key_type upper)  const -> std::vector<Condition>  override;
 
       /// ConditionsMap overload: Interface to scan data content of the conditions mapping
       void scan(const Condition::Processor& processor) const  override;
@@ -111,23 +111,23 @@ namespace dd4hep::cond {
                         const Condition::Processor& processor) const  override;
 
       /// Prepare user pool for usage (load, fill etc.) according to required IOV
-      ConditionsManager::Result prepare(const IOV&                  required,
+      auto prepare(const IOV&                  required,
                                                 ConditionsSlice&            slice,
-                                                ConditionUpdateUserContext* user_param)  override;
+                                                ConditionUpdateUserContext* user_param) -> ConditionsManager::Result  override;
 
       /// Evaluate and register all derived conditions from the dependency list
-      size_t compute(const Dependencies&         dependencies,
+      auto compute(const Dependencies&         dependencies,
                              ConditionUpdateUserContext* user_param,
-                             bool                        force)  override;
+                             bool                        force) -> size_t  override;
 
       /// Prepare user pool for usage (load, fill etc.) according to required IOV
-      ConditionsManager::Result load   (const IOV&              required,
+      auto load   (const IOV&              required,
                                                 ConditionsSlice&        slice,
-                                                ConditionUpdateUserContext* user_param)  override;
+                                                ConditionUpdateUserContext* user_param) -> ConditionsManager::Result  override;
       /// Prepare user pool for usage (load, fill etc.) according to required IOV
-      ConditionsManager::Result compute(const IOV&                  required,
+      auto compute(const IOV&                  required,
                                                 ConditionsSlice&            slice,
-                                                ConditionUpdateUserContext* user_param)  override;
+                                                ConditionUpdateUserContext* user_param) -> ConditionsManager::Result  override;
     };
 
   }      /* End namespace dd4hep                   */
@@ -168,11 +168,11 @@ namespace {
 
   class SimplePrint : public Condition::Processor {
     /// Conditions callback for object processing
-    [[nodiscard]] int process(Condition)  const override    { return 1; }
+    [[nodiscard]] auto process(Condition)  const -> int override    { return 1; }
     /// Conditions callback for object processing
-    int operator()(Condition)  const override { return 1; }
+    auto operator()(Condition)  const -> int override { return 1; }
     /// Conditions callback for object processing in maps
-    int operator()(const pair<Condition::key_type,Condition>& i)  const override  {
+    auto operator()(const pair<Condition::key_type,Condition>& i)  const -> int override  {
       Condition c = i.second;
       printout(INFO,"UserPool","++ %16llX/%16llX Val:%s %s",i.first, c->hash, c->value.c_str(), c.str().c_str());
       return 1;
@@ -181,10 +181,10 @@ namespace {
   template <typename T> struct MapSelector : public ConditionsSelect {
     T& m;
     MapSelector(T& o) : m(o) {}
-    bool operator()(Condition::Object* o)  const override
+    auto operator()(Condition::Object* o)  const -> bool override
     { return m.emplace(o->hash,o).second;    }
   };
-  template <typename T> MapSelector<T> mapSelector(T& container)
+  template <typename T> auto mapSelector(T& container) -> MapSelector<T>
   {  return MapSelector<T>(container);       }
 
   template <typename T> struct Inserter {
@@ -225,8 +225,8 @@ ConditionsMappedUserPool<MAPPING>::~ConditionsMappedUserPool()  {
   InstanceCount::decrement(this);
 }
 
-template<typename MAPPING> inline Condition::Object* 
-ConditionsMappedUserPool<MAPPING>::i_findCondition(Condition::key_type key)  const {
+template<typename MAPPING> inline auto
+ConditionsMappedUserPool<MAPPING>::i_findCondition(Condition::key_type key)  const -> Condition::Object* {
   auto i=m_conditions.find(key);
 #if 0
   if ( i == m_conditions.end() )  {
@@ -236,8 +236,8 @@ ConditionsMappedUserPool<MAPPING>::i_findCondition(Condition::key_type key)  con
   return i != m_conditions.end() ? (*i).second : 0;
 }
 
-template<typename MAPPING> inline bool
-ConditionsMappedUserPool<MAPPING>::i_insert(Condition::Object* o)   {
+template<typename MAPPING> inline auto
+ConditionsMappedUserPool<MAPPING>::i_insert(Condition::Object* o) -> bool   {
   int ret = m_conditions.emplace(o->hash,o).second;
   if ( flags&PRINT_INSERT )  {
     printout(INFO,"UserPool","++ %s condition [%016llX]: %s [%s].",
@@ -253,7 +253,7 @@ ConditionsMappedUserPool<MAPPING>::i_insert(Condition::Object* o)   {
   
 /// Total entry count
 template<typename MAPPING>
-size_t ConditionsMappedUserPool<MAPPING>::size()  const  {
+auto ConditionsMappedUserPool<MAPPING>::size()  const -> size_t  {
   return  m_conditions.size();
 }
 
@@ -281,32 +281,32 @@ void ConditionsMappedUserPool<MAPPING>::clear()   {
 
 /// Check a condition for existence
 template<typename MAPPING>
-bool ConditionsMappedUserPool<MAPPING>::exists(Condition::key_type hash)  const   {
+auto ConditionsMappedUserPool<MAPPING>::exists(Condition::key_type hash)  const -> bool   {
   return i_findCondition(hash) != nullptr;
 }
 
 /// Check a condition for existence
 template<typename MAPPING>
-bool ConditionsMappedUserPool<MAPPING>::exists(const ConditionKey& key)  const   {
+auto ConditionsMappedUserPool<MAPPING>::exists(const ConditionKey& key)  const -> bool   {
   return i_findCondition(key.hash) != nullptr;
 }
 
 /// Check if a condition exists in the pool and return it to the caller
 template<typename MAPPING>
-Condition ConditionsMappedUserPool<MAPPING>::get(Condition::key_type hash)  const   {
+auto ConditionsMappedUserPool<MAPPING>::get(Condition::key_type hash)  const -> Condition   {
   return i_findCondition(hash);
 }
 
 /// Check if a condition exists in the pool and return it to the caller     
 template<typename MAPPING>
-Condition ConditionsMappedUserPool<MAPPING>::get(const ConditionKey& key)  const   {
+auto ConditionsMappedUserPool<MAPPING>::get(const ConditionKey& key)  const -> Condition   {
   return i_findCondition(key.hash);
 }
 
 /// Do block insertions of conditions with identical IOV including registration to the manager
-template<typename MAPPING> bool
+template<typename MAPPING> auto
 ConditionsMappedUserPool<MAPPING>::registerOne(const IOV& iov,
-                                               Condition cond)   {
+                                               Condition cond) -> bool   {
   if ( iov.iovType )   {
     ConditionsPool* pool = m_manager.registerIOV(*iov.iovType,iov.keyData);
     if ( pool )   {
@@ -319,9 +319,9 @@ ConditionsMappedUserPool<MAPPING>::registerOne(const IOV& iov,
 }
 
 /// Do block insertions of conditions with identical IOV including registration to the manager
-template<typename MAPPING> size_t
+template<typename MAPPING> auto
 ConditionsMappedUserPool<MAPPING>::registerMany(const IOV& iov,
-                                                const vector<Condition>& conds)   {
+                                                const vector<Condition>& conds) -> size_t   {
   if ( iov.iovType )   {
     ConditionsPool* pool = m_manager.registerIOV(*iov.iovType,iov.keyData);
     if ( pool )   {
@@ -342,7 +342,7 @@ ConditionsMappedUserPool<MAPPING>::registerMany(const IOV& iov,
 
 /// Register a new condition to this pool
 template<typename MAPPING>
-bool ConditionsMappedUserPool<MAPPING>::insert(Condition cond)   {
+auto ConditionsMappedUserPool<MAPPING>::insert(Condition cond) -> bool   {
   bool result = i_insert(cond.ptr());
   if ( result ) return true;
   except("UserPool","++ Attempt to double insert condition: %16llX Name:%s", cond->hash, cond.name());
@@ -351,32 +351,32 @@ bool ConditionsMappedUserPool<MAPPING>::insert(Condition cond)   {
 
 /// ConditionsMap overload: Add a condition directly to the slice
 template<typename MAPPING>
-bool ConditionsMappedUserPool<MAPPING>::insert(DetElement detector,
+auto ConditionsMappedUserPool<MAPPING>::insert(DetElement detector,
                                                unsigned int item_key,
-                                               Condition cond)   {
+                                               Condition cond) -> bool   {
   cond->hash = ConditionKey::KeyMaker(detector.key(),item_key).hash;
   return insert(cond);
 }
 
 /// ConditionsMap overload: Access a condition
 template<typename MAPPING>
-Condition ConditionsMappedUserPool<MAPPING>::get(DetElement detector, unsigned int item_key)  const  {
+auto ConditionsMappedUserPool<MAPPING>::get(DetElement detector, unsigned int item_key)  const -> Condition  {
   return get(ConditionKey::KeyMaker(detector.key(), item_key).hash);
 }
   
 /// No ConditionsMap overload: Access all conditions within a key range in the interval [lower,upper]
-template<typename MAPPING> std::vector<Condition>
+template<typename MAPPING> auto
 ConditionsMappedUserPool<MAPPING>::get(DetElement detector,
                                        Condition::itemkey_type lower,
-                                       Condition::itemkey_type upper)  const {
+                                       Condition::itemkey_type upper)  const -> std::vector<Condition> {
   Condition::detkey_type det_key = detector.key();
   return this->get(ConditionKey::KeyMaker(det_key,lower).hash,
                    ConditionKey::KeyMaker(det_key,upper).hash);
 }
 
 /// Specialization for std::map: Access all conditions within a given key range
-template<typename MAPPING> std::vector<Condition>
-ConditionsMappedUserPool<MAPPING>::get(Condition::key_type lower, Condition::key_type upper)   const  {
+template<typename MAPPING> auto
+ConditionsMappedUserPool<MAPPING>::get(Condition::key_type lower, Condition::key_type upper)   const -> std::vector<Condition>  {
   vector<Condition> result;
   if ( !m_conditions.empty() )   {
     auto first = m_conditions.lower_bound(lower);
@@ -421,13 +421,13 @@ void ConditionsMappedUserPool<MAPPING>::scan(Condition::key_type lower,
 
 /// Remove condition by key from pool.
 template<typename MAPPING>
-bool ConditionsMappedUserPool<MAPPING>::remove(const ConditionKey& key)   {
+auto ConditionsMappedUserPool<MAPPING>::remove(const ConditionKey& key) -> bool   {
   return remove(key.hash);
 }
 
 /// Remove condition by key from pool.
 template<typename MAPPING>
-bool ConditionsMappedUserPool<MAPPING>::remove(Condition::key_type hash_key)    {
+auto ConditionsMappedUserPool<MAPPING>::remove(Condition::key_type hash_key) -> bool    {
   auto i = m_conditions.find(hash_key);
   if ( i != m_conditions.end() ) {
     m_conditions.erase(i);
@@ -438,9 +438,9 @@ bool ConditionsMappedUserPool<MAPPING>::remove(Condition::key_type hash_key)    
 
 /// Evaluate and register all derived conditions from the dependency list
 template<typename MAPPING>
-size_t ConditionsMappedUserPool<MAPPING>::compute(const Dependencies& deps,
+auto ConditionsMappedUserPool<MAPPING>::compute(const Dependencies& deps,
                                                   ConditionUpdateUserContext* user_param,
-                                                  bool force)
+                                                  bool force) -> size_t
 {
   if ( !deps.empty() )  {
     Dependencies missing;
@@ -485,21 +485,21 @@ namespace {
     typedef pair<const Condition::key_type,ConditionsLoadInfo* >     Info;
     typedef pair<const Condition::key_type,Condition>                Cond2;
     
-    bool operator()(const Dep& a,const Cond& b) const   { return a.first < b.first; }
-    bool operator()(const Cond& a,const Dep& b) const   { return a.first < b.first; }
+    auto operator()(const Dep& a,const Cond& b) const -> bool   { return a.first < b.first; }
+    auto operator()(const Cond& a,const Dep& b) const -> bool   { return a.first < b.first; }
 
-    bool operator()(const Info& a,const Cond& b) const  { return a.first < b.first; }
-    bool operator()(const Cond& a,const Info& b) const  { return a.first < b.first; }
+    auto operator()(const Info& a,const Cond& b) const -> bool  { return a.first < b.first; }
+    auto operator()(const Cond& a,const Info& b) const -> bool  { return a.first < b.first; }
 
-    bool operator()(const Info& a,const Cond2& b) const { return a.first < b.first; }
-    bool operator()(const Cond2& a,const Info& b) const { return a.first < b.first; }
+    auto operator()(const Info& a,const Cond2& b) const -> bool { return a.first < b.first; }
+    auto operator()(const Cond2& a,const Info& b) const -> bool { return a.first < b.first; }
   };
 }
 
-template<typename MAPPING> ConditionsManager::Result
+template<typename MAPPING> auto
 ConditionsMappedUserPool<MAPPING>::prepare(const IOV&                  required, 
                                            ConditionsSlice&            slice,
-                                           ConditionUpdateUserContext* user_param)
+                                           ConditionUpdateUserContext* user_param) -> ConditionsManager::Result
 {
   typedef vector<pair<Condition::key_type,ConditionDependency*> > CalcMissing;
   typedef vector<pair<Condition::key_type,ConditionsLoadInfo*> >  CondMissing;
@@ -624,10 +624,10 @@ ConditionsMappedUserPool<MAPPING>::prepare(const IOV&                  required,
   return result;
 }
 
-template<typename MAPPING> ConditionsManager::Result
+template<typename MAPPING> auto
 ConditionsMappedUserPool<MAPPING>::load(const IOV&                  required, 
                                         ConditionsSlice&            slice,
-                                        ConditionUpdateUserContext* /* user_param */)
+                                        ConditionUpdateUserContext* /* user_param */) -> ConditionsManager::Result
 {
   typedef vector<pair<Condition::key_type,ConditionsLoadInfo*> >  CondMissing;
   const auto& slice_cond = slice.content->conditions();
@@ -698,10 +698,10 @@ ConditionsMappedUserPool<MAPPING>::load(const IOV&                  required,
   return result;
 }
 
-template<typename MAPPING> ConditionsManager::Result
+template<typename MAPPING> auto
 ConditionsMappedUserPool<MAPPING>::compute(const IOV&                  required, 
                                            ConditionsSlice&            slice,
-                                           ConditionUpdateUserContext* user_param)
+                                           ConditionUpdateUserContext* user_param) -> ConditionsManager::Result
 {
   typedef vector<pair<Condition::key_type,ConditionDependency*> > CalcMissing;
   const auto& slice_calc = slice.content->derived();
@@ -787,8 +787,8 @@ namespace dd4hep::cond {
     /// Access all conditions within a given key range
     /** Specialization necessary, since unordered maps have no lower bound.
      */
-    template<> std::vector<Condition>
-    ConditionsMappedUserPool<umap_t>::get(Condition::key_type lower, Condition::key_type upper)   const  {
+    template<> auto
+    ConditionsMappedUserPool<umap_t>::get(Condition::key_type lower, Condition::key_type upper)   const -> std::vector<Condition>  {
       vector<Condition> result;
       for( const auto& e : m_conditions )  {
         if ( e.second->hash >= lower && e.second->hash <= upper )
@@ -800,7 +800,7 @@ namespace dd4hep::cond {
 
 namespace {
   template <typename MAPPING>
-  void* create_pool(Detector&, int argc, char** argv)  {
+  auto create_pool(Detector&, int argc, char** argv) -> void*  {
     if ( argc > 1 )  {
       auto* m = (ConditionsManagerObject*)argv[0];
       auto* p = (ConditionsIOVPool*)argv[1];
@@ -813,11 +813,11 @@ namespace {
 }
 
 // Factory for the user pool using a binary tree map
-void* create_map_user_pool(Detector& description, int argc, char** argv)
+auto create_map_user_pool(Detector& description, int argc, char** argv) -> void*
 {  return create_pool<map<Condition::key_type,Condition::Object*> >(description, argc, argv);  }
 DECLARE_DD4HEP_CONSTRUCTOR(DD4hep_ConditionsMapUserPool, create_map_user_pool)
 
 // Factory for the user pool using a binary tree map
-void* create_unordered_map_user_pool(Detector& description, int argc, char** argv)
+auto create_unordered_map_user_pool(Detector& description, int argc, char** argv) -> void*
 {  return create_pool<unordered_map<Condition::key_type,Condition::Object*> >(description, argc, argv);  }
 DECLARE_DD4HEP_CONSTRUCTOR(DD4hep_ConditionsUnorderedMapUserPool, create_map_user_pool)

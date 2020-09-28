@@ -31,7 +31,7 @@ RhoPhiProjection::RhoPhiProjection(Display* eve, const std::string& nam)
 RhoPhiProjection::~RhoPhiProjection()  = default;
 
 /// Build the projection view and map it to the given slot
-View& RhoPhiProjection::Build(TEveWindow* slot)   {
+auto RhoPhiProjection::Build(TEveWindow* slot) -> View&   {
   CreateScenes();
   CreateRhoPhiProjection().AddAxis();
   return Map(slot);

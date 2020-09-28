@@ -26,7 +26,7 @@ using namespace dd4hep::detail;
 //=============================================================================
 
 
-static int invoke_dump_B_field(int argc, char** argv ){
+static auto invoke_dump_B_field(int argc, char** argv ) -> int{
   
   if( argc != 8 ) {
     std::cout << " usage: dumpBfield compact.xml x y z dx dy dz [in cm]" << std::endl 
@@ -78,7 +78,7 @@ static int invoke_dump_B_field(int argc, char** argv ){
 
 
 
-int main(int argc, char** argv ){
+auto main(int argc, char** argv ) -> int{
   try {
     return invoke_dump_B_field(argc,argv);
   }

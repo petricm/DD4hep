@@ -19,17 +19,17 @@ using namespace std;
 using namespace dd4hep;
 
 namespace {
-  inline int* s_debug_value()   {
+  inline auto s_debug_value() -> int*   {
     static int s_debug_value = ::getenv("DD4HEP_TRACE") == nullptr ? 0 : 1;
     return &s_debug_value;
   }
 }
 
-bool PluginService::debug()  {
+auto PluginService::debug() -> bool  {
   return *s_debug_value() ? true : false;
 }
 
-bool PluginService::setDebug(bool new_value)   {
+auto PluginService::setDebug(bool new_value) -> bool   {
   int *ptr = s_debug_value();
   bool old_value = *ptr;
   *ptr = new_value ? 1 : 0;
@@ -62,7 +62,7 @@ namespace   {
                  const char* signature, 
                  const char* return_type){nullptr};
     PluginInterface() noexcept(false);
-    static PluginInterface& instance()  noexcept(false)   {
+    static auto instance()  noexcept(false) -> PluginInterface&   {
       static PluginInterface s_instance;
       return s_instance;
     }
@@ -75,7 +75,7 @@ namespace   {
   };
 
   template <typename T> 
-  static inline T get_func(void* handle, const char* plugin, const char* entry)  {
+  static inline auto get_func(void* handle, const char* plugin, const char* entry) -> T  {
 #if !defined(DD4HEP_PARSERS_NO_ROOT)
     _FP<Func_t> fun(gSystem->DynFindSymbol(plugin,entry));
     _FP<T> fp(fun.fptr.ptr);
@@ -130,14 +130,14 @@ PluginDebug::~PluginDebug()   noexcept(false)   {
 }
 
 /// Helper to check factory existence
-string PluginDebug::missingFactory(const string& name) const {
+auto PluginDebug::missingFactory(const string& name) const -> string {
   string factoryname = "Create("+name+")";
   string msg = "\t\tNo factory with name " + factoryname + " for type " + name + " found.\n"
     "\t\tPlease check library load path and/or plugin factory name.";
   return msg;
 }
 
-PluginService::stub_t PluginService::getCreator(const std::string& id, const std::type_info& info)  {
+auto PluginService::getCreator(const std::string& id, const std::type_info& info) -> PluginService::stub_t  {
   return PluginInterface::instance().create(id.c_str(), info.name());
 }
 

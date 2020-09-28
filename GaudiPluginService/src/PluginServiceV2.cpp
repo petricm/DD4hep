@@ -89,7 +89,7 @@ namespace {
     }
   };
   /// Convert a class name in the string used with the Reflex plugin service
-  std::string old_style_name( const std::string& name ) {
+  auto old_style_name( const std::string& name ) -> std::string {
     return std::for_each( name.begin(), name.end(), OldStyleCnv() ).name;
   }
 } // namespace
@@ -97,7 +97,7 @@ namespace {
 namespace DD4hep_Flavor::PluginService {
     GAUDI_PLUGIN_SERVICE_V2_INLINE namespace v2 {
       namespace Details {
-        std::string demangle( const std::string& id ) {
+        auto demangle( const std::string& id ) -> std::string {
           int  status;
           auto realname = std::unique_ptr<char, decltype( free )*>(
               abi::__cxa_demangle( id.c_str(), nullptr, nullptr, &status ), free );
@@ -111,9 +111,9 @@ namespace DD4hep_Flavor::PluginService {
           return std::string{realname.get()};
 #endif
         }
-        std::string demangle( const std::type_info& id ) { return demangle( id.name() ); }
+        auto demangle( const std::type_info& id ) -> std::string { return demangle( id.name() ); }
 
-        Registry& Registry::instance() {
+        auto Registry::instance() -> Registry& {
           SINGLETON_LOCK
           static Registry r;
           return r;
@@ -132,7 +132,7 @@ namespace DD4hep_Flavor::PluginService {
           }
         }
 
-        Registry::Properties::mapped_type Registry::FactoryInfo::getprop( const Properties::key_type& name ) const {
+        auto Registry::FactoryInfo::getprop( const Properties::key_type& name ) const -> Registry::Properties::mapped_type {
           auto p = properties.find( name );
           return ( p != end( properties ) ) ? p->second : Properties::mapped_type{};
         }
@@ -211,17 +211,17 @@ namespace DD4hep_Flavor::PluginService {
           }
         }
 
-        const Registry::FactoryMap& Registry::factories() const {
+        auto Registry::factories() const -> const Registry::FactoryMap& {
           std::call_once( m_initialized, &Registry::initialize, const_cast<Registry*>( this ) );
           return m_factories;
         }
 
-        Registry::FactoryMap& Registry::factories() {
+        auto Registry::factories() -> Registry::FactoryMap& {
           std::call_once( m_initialized, &Registry::initialize, this );
           return m_factories;
         }
 
-        Registry::FactoryInfo& Registry::add( const KeyType& id, FactoryInfo info ) {
+        auto Registry::add( const KeyType& id, FactoryInfo info ) -> Registry::FactoryInfo& {
           REG_SCOPE_LOCK
           FactoryMap& facts = factories();
 
@@ -248,7 +248,7 @@ namespace DD4hep_Flavor::PluginService {
           return entry->second;
         }
 
-        const Registry::FactoryInfo& Registry::getInfo( const KeyType& id, const bool load ) const {
+        auto Registry::getInfo( const KeyType& id, const bool load ) const -> const Registry::FactoryInfo& {
           REG_SCOPE_LOCK
           static const FactoryInfo unknown = {"unknown"};
           const FactoryMap&        facts   = factories();
@@ -271,7 +271,7 @@ namespace DD4hep_Flavor::PluginService {
           }
         }
 
-        Registry& Registry::addProperty( const KeyType& id, const KeyType& k, const std::string& v ) {
+        auto Registry::addProperty( const KeyType& id, const KeyType& k, const std::string& v ) -> Registry& {
           REG_SCOPE_LOCK
           FactoryMap& facts = factories();
           auto        f     = facts.find( id );
@@ -280,7 +280,7 @@ namespace DD4hep_Flavor::PluginService {
           return *this;
         }
 
-        std::set<Registry::KeyType> Registry::loadedFactoryNames() const {
+        auto Registry::loadedFactoryNames() const -> std::set<Registry::KeyType> {
           REG_SCOPE_LOCK
           std::set<KeyType> l;
           for ( const auto& f : factories() ) {
@@ -295,11 +295,11 @@ namespace DD4hep_Flavor::PluginService {
         }
 
         static auto s_logger = std::make_unique<Logger>();
-        Logger&     logger() { return *s_logger; }
+        auto     logger() -> Logger& { return *s_logger; }
         void        setLogger( Logger* logger ) { s_logger.reset( logger ); }
 
         // This chunk of code was taken from GaudiKernel (genconf) DsoUtils.h
-        std::string getDSONameFor( void* fptr ) {
+        auto getDSONameFor( void* fptr ) -> std::string {
 #ifdef _GNU_SOURCE
           Dl_info info;
           if ( dladdr( fptr, &info ) == 0 ) return "";
@@ -327,7 +327,7 @@ namespace DD4hep_Flavor::PluginService {
           l.setLevel( Logger::Warning );
       }
 
-      int Debug() {
+      auto Debug() -> int {
         using namespace Details;
         switch ( logger().level() ) {
         case Logger::Debug:

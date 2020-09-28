@@ -61,7 +61,7 @@ namespace dd4hep::DDSegmentation {
     }
 
     /// 
-    const Segmentation& MultiSegmentation::subsegmentation(const CellID& cID)   const  {
+    auto MultiSegmentation::subsegmentation(const CellID& cID)   const -> const Segmentation&  {
       if ( m_discriminator )  {
         long seg_id = m_discriminator->value(cID);
         for(const auto & e : m_segmentations)  {
@@ -83,16 +83,16 @@ namespace dd4hep::DDSegmentation {
     }
      
     /// determine the position based on the cell ID
-    Vector3D MultiSegmentation::position(const CellID& cID) const {
+    auto MultiSegmentation::position(const CellID& cID) const -> Vector3D {
       return subsegmentation(cID).position(cID);
     }
 
     /// determine the cell ID based on the position
-    CellID MultiSegmentation::cellID(const Vector3D& localPosition, const Vector3D& globalPosition, const VolumeID& vID) const {
+    auto MultiSegmentation::cellID(const Vector3D& localPosition, const Vector3D& globalPosition, const VolumeID& vID) const -> CellID {
       return subsegmentation(vID).cellID(localPosition, globalPosition, vID);
     }
 
-    vector<double> MultiSegmentation::cellDimensions(const CellID& cID) const {
+    auto MultiSegmentation::cellDimensions(const CellID& cID) const -> vector<double> {
       return subsegmentation(cID).cellDimensions(cID);
     }
 

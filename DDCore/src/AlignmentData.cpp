@@ -35,7 +35,7 @@ Delta::Delta(const Delta& c)
 Delta::~Delta()   = default;
 
 /// Assignment operator
-Delta& Delta::operator=(const Delta& c)   {
+auto Delta::operator=(const Delta& c) -> Delta&   {
   if ( &c != this )  {
     pivot       = c.pivot;
     translation = c.translation;
@@ -82,7 +82,7 @@ void Delta::computeMatrix(TGeoHMatrix& tr_delta)  const   {
 }
 
 /// print alignment delta object
-ostream& operator << (ostream& ostr, const Delta& data)   {
+auto operator << (ostream& ostr, const Delta& data) -> ostream&   {
   string res;
   stringstream str;
   str << "[" << data.translation << "," << data.rotation << "," << data.pivot << "]";
@@ -115,7 +115,7 @@ AlignmentData::~AlignmentData()  {
 }
 
 /// Assignment operator necessary due to copy constructor
-AlignmentData& AlignmentData::operator=(const AlignmentData& copy)  {
+auto AlignmentData::operator=(const AlignmentData& copy) -> AlignmentData&  {
   if ( this != &copy )  {
     delta         = copy.delta;
     detectorTrafo = copy.detectorTrafo;
@@ -129,14 +129,14 @@ AlignmentData& AlignmentData::operator=(const AlignmentData& copy)  {
 }
 
 /// print Conditions object
-ostream& operator << (ostream& ostr, const AlignmentData& data)   {
+auto operator << (ostream& ostr, const AlignmentData& data) -> ostream&   {
   stringstream str;
   str << data.delta;
   return ostr << str.str();
 }
 
 /// Transform a point from local coordinates of a given level to global coordinates
-Position AlignmentData::localToWorld(const Position& local) const   {
+auto AlignmentData::localToWorld(const Position& local) const -> Position   {
   Position global;
   Double_t master_point[3] = { 0, 0, 0 }, local_point[3] = { local.X(), local.Y(), local.Z() };
   worldTrafo.LocalToMaster(local_point, master_point);
@@ -157,7 +157,7 @@ void AlignmentData::localToWorld(const Double_t local[3], Double_t global[3]) co
 }
 
 /// Transform a point from local coordinates of a given level to global coordinates
-Position AlignmentData::worldToLocal(const Position& global) const   {
+auto AlignmentData::worldToLocal(const Position& global) const -> Position   {
   Position local;
   // If the path is unknown an exception will be thrown inside worldTransformation() !
   Double_t master_point[3] = { global.X(), global.Y(), global.Z() }, local_point[3] = { 0, 0, 0 };
@@ -179,7 +179,7 @@ void AlignmentData::worldToLocal(const Double_t global[3], Double_t local[3]) co
 }
 
 /// Transform a point from local coordinates to the coordinates of the DetElement
-Position AlignmentData::localToDetector(const Position& local) const   {
+auto AlignmentData::localToDetector(const Position& local) const -> Position   {
   Position global;
   Double_t master_point[3] = { 0, 0, 0 }, local_point[3] = { local.X(), local.Y(), local.Z() };
   detectorTrafo.LocalToMaster(local_point, master_point);
@@ -200,7 +200,7 @@ void AlignmentData::localToDetector(const Double_t local[3], Double_t global[3])
 }
 
 /// Transform a point from local coordinates of the DetElement to global coordinates
-Position AlignmentData::detectorToLocal(const Position& global) const   {
+auto AlignmentData::detectorToLocal(const Position& global) const -> Position   {
   Position local;
   // If the path is unknown an exception will be thrown inside worldTransformation() !
   Double_t master_point[3] = { global.X(), global.Y(), global.Z() }, local_point[3] = { 0, 0, 0 };
@@ -223,7 +223,7 @@ void AlignmentData::detectorToLocal(const Double_t global[3], Double_t local[3])
 }
 
 /// Access the ideal/nominal alignment/placement matrix
-Alignment AlignmentData::nominal() const   {
+auto AlignmentData::nominal() const -> Alignment   {
   return detector.nominal();
 }
 

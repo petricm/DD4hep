@@ -27,7 +27,7 @@ Geant4TrackInformation::Geant4TrackInformation()
 Geant4TrackInformation::~Geant4TrackInformation() = default;
 
 /// Access flag if track should be stored
-Geant4TrackInformation& Geant4TrackInformation::storeTrack(bool value) {
+auto Geant4TrackInformation::storeTrack(bool value) -> Geant4TrackInformation& {
   value ? m_flags |= STORE : m_flags &= ~STORE;
   return *this;
 }

@@ -19,7 +19,7 @@ public:
   TestTuple( double r, double p, long long rB, long long pB): _r(r), _p(p), _rB(rB), _pB(pB) {}
 };
 
-int main() {
+auto main() -> int {
   try{
 
     dd4hep::DDSegmentation::PolarGridRPhi2 seg("system:8,layer:8,barrel:3,layer:8,slice:5,r:16,phi:16");

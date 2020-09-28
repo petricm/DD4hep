@@ -31,7 +31,7 @@ using namespace dd4hep::cond;
 
 namespace {
   /// C++ version: replace all occurrences of a string
-  string str_replace(const std::string& str, const std::string& pattern, const std::string& replacement) {
+  auto str_replace(const std::string& str, const std::string& pattern, const std::string& replacement) -> string {
     string res = str;
     for(size_t id=res.find(pattern); id != std::string::npos; id = res.find(pattern) )
       res.replace(id,pattern.length(),replacement);
@@ -64,7 +64,7 @@ public:
   /// Default destructor
   virtual ~ParamPrinter() = default;
   /// Assignment operator
-  ParamPrinter& operator=(const ParamPrinter& copy) = default;
+  auto operator=(const ParamPrinter& copy) -> ParamPrinter& = default;
   /// Callback to output conditions information
   virtual void operator()(const cond::AbstractMap::Params::value_type& obj)  const;
 };
@@ -136,7 +136,7 @@ ConditionsPrinter::~ConditionsPrinter()   {
 }
 
 /// Actual print method
-int ConditionsPrinter::operator()(Condition cond)   const   {
+auto ConditionsPrinter::operator()(Condition cond)   const -> int   {
   m_print->printLevel = printLevel;
   if ( cond.isValid() )   {
     string repr = cond.str(m_flag);
@@ -258,7 +258,7 @@ int ConditionsPrinter::operator()(Condition cond)   const   {
 }
 
 /// Processing callback to print conditions
-int ConditionsPrinter::operator()(DetElement de, int level)   const {
+auto ConditionsPrinter::operator()(DetElement de, int level)   const -> int {
   if ( mapping )   {
     vector<Condition> conditions;
     conditionsCollector(*mapping,conditions)(de,level);

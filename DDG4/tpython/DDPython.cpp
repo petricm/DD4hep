@@ -42,7 +42,7 @@ using namespace std;
 using namespace dd4hep;
 
 namespace {
-  string loadScript(const string& fname) {
+  auto loadScript(const string& fname) -> string {
     ifstream file(fname.c_str());
     stringstream str;
     if( file ) {
@@ -60,7 +60,7 @@ namespace {
   static DDPython* _instance = nullptr;
   static PyObject* _main_dict = nullptr;
   static PyThreadState *_save_state = nullptr;
-  int _execPy(const char* cmd)   {
+  auto _execPy(const char* cmd) -> int   {
     DDPython::GILState state(0);
     PyObject* ret = ::PyRun_String((char*)cmd, Py_file_input,_main_dict,_main_dict);
     if ( ::PyErr_Occurred() )   {
@@ -79,7 +79,7 @@ namespace {
     }
     return 0;
   }
-  int _evalPy(const char* cmd)   {
+  auto _evalPy(const char* cmd) -> int   {
     DDPython::GILState state(0);
     PyObject* ret = ::PyRun_String((char*)cmd, Py_eval_input,_main_dict,_main_dict);
     if ( ::PyErr_Occurred() )   {
@@ -188,7 +188,7 @@ DDPython::~DDPython()   {
 } 
 
 
-DDPython DDPython::instance()   {
+auto DDPython::instance() -> DDPython   {
   if ( nullptr == _instance ) _instance = new DDPython();
   return DDPython();
 }
@@ -207,7 +207,7 @@ void DDPython::restoreThread()   {
   }
 }
 
-int DDPython::setArgs(int argc, char** argv)  const   {
+auto DDPython::setArgs(int argc, char** argv)  const -> int   {
   // Need to protect against API change from Python 2 to Python 3
 #if PY_VERSION_HEX < 0x03000000
   ::PySys_SetArgv(argc,argv);
@@ -241,20 +241,20 @@ void DDPython::shutdown()   {
   }
 }
 
-int DDPython::runFile(const std::string& fname)  const   {
+auto DDPython::runFile(const std::string& fname)  const -> int   {
   std::string cmd = loadScript(fname);
   return execute(cmd);
 }
 
-int DDPython::evaluate(const std::string& cmd)  const   {
+auto DDPython::evaluate(const std::string& cmd)  const -> int   {
   return _evalPy(cmd.c_str());
 }
 
-int DDPython::execute(const std::string& cmd)  const   {
+auto DDPython::execute(const std::string& cmd)  const -> int   {
   return _execPy(cmd.c_str());
 }
 
-PyObject* DDPython::call(PyObject* method, PyObject* args)   {
+auto DDPython::call(PyObject* method, PyObject* args) -> PyObject*   {
   DDPython::GILState state(0);
   if ( PyCallable_Check(method) )   {
     PyObject* ret = ::PyObject_CallObject(method,args==Py_None ? nullptr : args);
@@ -264,7 +264,7 @@ PyObject* DDPython::call(PyObject* method, PyObject* args)   {
   return nullptr;
 }
 
-TPyReturn DDPython::callC(PyObject* method, PyObject* args)   {
+auto DDPython::callC(PyObject* method, PyObject* args) -> TPyReturn   {
   if ( PyCallable_Check(method) )   {
     PyObject* arg = args==Py_None || args==nullptr ? nullptr : args;
     PyObject* ret = ::PyObject_CallObject(method,arg);
@@ -315,12 +315,12 @@ void DDPython::setMainThread()  {
   _mainThread = pthread_self();
 }
 
-bool DDPython::isMainThread()   {
+auto DDPython::isMainThread() -> bool   {
   return _mainThread == pthread_self();
 }
 
 /// Start the interpreter in normal mode without hacks like 'pythopn.exe' does.
-int DDPython::run_interpreter(int argc, char** argv)   {
+auto DDPython::run_interpreter(int argc, char** argv) -> int   {
 #if PY_VERSION_HEX < 0x03000000
   return ::Py_Main(argc, argv);
 #else

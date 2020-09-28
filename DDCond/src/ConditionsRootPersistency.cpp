@@ -44,7 +44,7 @@ namespace  {
     /// Constructor
     Scanner(ConditionsRootPersistency::pool_type& p) : pool(p) {}
     /// Conditions callback for object processing
-    [[nodiscard]] int process(Condition c)  const override  {
+    [[nodiscard]] auto process(Condition c)  const -> int override  {
       pool.emplace_back(c.ptr());
       return 1;
     }
@@ -77,9 +77,9 @@ ConditionsRootPersistency::~ConditionsRootPersistency()    {
 }
 
 /// Add conditions content to be saved. Note, that dependent conditions shall not be saved!
-size_t ConditionsRootPersistency::add(const std::string& identifier,
+auto ConditionsRootPersistency::add(const std::string& identifier,
                                       const IOV& iov,
-                                      std::vector<Condition>& conditions)   {
+                                      std::vector<Condition>& conditions) -> size_t   {
   DurationStamp stamp(this);
   conditionPools.emplace_back(pair<iov_key_type, pool_type>());
   pool_type&    ent = conditionPools.back().second;
@@ -93,7 +93,7 @@ size_t ConditionsRootPersistency::add(const std::string& identifier,
 }
 
 /// Add conditions content to the saved. Note, that dependent conditions shall not be saved!
-size_t ConditionsRootPersistency::add(const string& identifier, ConditionsPool& pool)    {
+auto ConditionsRootPersistency::add(const string& identifier, ConditionsPool& pool) -> size_t    {
   DurationStamp stamp(this);
   conditionPools.emplace_back(pair<iov_key_type, pool_type>());
   pool_type&    ent = conditionPools.back().second;
@@ -108,7 +108,7 @@ size_t ConditionsRootPersistency::add(const string& identifier, ConditionsPool& 
 }
 
 /// Add conditions content to the saved. Note, that dependent conditions shall not be saved!
-size_t ConditionsRootPersistency::add(const string& identifier, const ConditionsIOVPool& pool)    {
+auto ConditionsRootPersistency::add(const string& identifier, const ConditionsIOVPool& pool) -> size_t    {
   size_t count = 0;
   DurationStamp stamp(this);
   for( const auto& p : pool.elements )  {
@@ -127,7 +127,7 @@ size_t ConditionsRootPersistency::add(const string& identifier, const Conditions
 }
 
 /// Add conditions content to the saved. Note, that dependent conditions shall not be saved!
-size_t ConditionsRootPersistency::add(const string& identifier, const UserPool& pool)    {
+auto ConditionsRootPersistency::add(const string& identifier, const UserPool& pool) -> size_t    {
   DurationStamp stamp(this);
   userPools.emplace_back(pair<iov_key_type, pool_type>());
   pool_type&    ent = userPools.back().second;
@@ -142,7 +142,7 @@ size_t ConditionsRootPersistency::add(const string& identifier, const UserPool& 
 }
 
 /// Open ROOT file in read mode
-TFile* ConditionsRootPersistency::openFile(const string& fname)     {
+auto ConditionsRootPersistency::openFile(const string& fname) -> TFile*     {
   TDirectory::TContext context;
   TFile* file = TFile::Open(fname.c_str());
   if ( file && !file->IsZombie()) return file;
@@ -170,8 +170,8 @@ void ConditionsRootPersistency::clear()  {
 }
 
 /// Add conditions content to the saved. Note, that dependent conditions shall not be saved!
-std::unique_ptr<ConditionsRootPersistency>
-ConditionsRootPersistency::load(TFile* file,const string& obj)   {
+auto
+ConditionsRootPersistency::load(TFile* file,const string& obj) -> std::unique_ptr<ConditionsRootPersistency>   {
   std::unique_ptr<ConditionsRootPersistency> p;
   if ( file && !file->IsZombie())    {
     TTimeStamp start;
@@ -191,12 +191,12 @@ ConditionsRootPersistency::load(TFile* file,const string& obj)   {
 }
 
 /// Load ConditionsPool(s) and populate conditions manager
-size_t ConditionsRootPersistency::_import(ImportStrategy     strategy,
+auto ConditionsRootPersistency::_import(ImportStrategy     strategy,
                                           persistent_type&   persistent_pools,
                                           const std::string& id,
                                           const std::string& iov_type,
                                           const IOV::Key&    iov_key,
-                                          ConditionsManager  mgr)   {
+                                          ConditionsManager  mgr) -> size_t   {
   size_t count = 0;
   std::pair<bool,const IOVType*> iovTyp(false,0);
   for (auto& iovp : persistent_pools )   {
@@ -260,43 +260,43 @@ size_t ConditionsRootPersistency::_import(ImportStrategy     strategy,
 }
 
 /// Load ConditionsIOVPool and populate conditions manager
-size_t ConditionsRootPersistency::importIOVPool(const std::string& identifier,
+auto ConditionsRootPersistency::importIOVPool(const std::string& identifier,
                                                 const std::string& iov_type,
-                                                ConditionsManager  mgr)
+                                                ConditionsManager  mgr) -> size_t
 {
   DurationStamp stamp(this);
   return _import(IMPORT_ALL,iovPools,identifier,iov_type,IOV::Key(),mgr);
 }
 
 /// Load ConditionsIOVPool and populate conditions manager
-size_t ConditionsRootPersistency::importUserPool(const std::string& identifier,
+auto ConditionsRootPersistency::importUserPool(const std::string& identifier,
                                                  const std::string& iov_type,
-                                                 ConditionsManager  mgr)
+                                                 ConditionsManager  mgr) -> size_t
 {
   DurationStamp stamp(this);
   return _import(IMPORT_ALL,userPools,identifier,iov_type,IOV::Key(),mgr);
 }
 
 /// Load ConditionsIOVPool and populate conditions manager
-size_t ConditionsRootPersistency::importConditionsPool(const std::string& identifier,
+auto ConditionsRootPersistency::importConditionsPool(const std::string& identifier,
                                                        const std::string& iov_type,
-                                                       ConditionsManager  mgr)
+                                                       ConditionsManager  mgr) -> size_t
 {
   DurationStamp stamp(this);
   return _import(IMPORT_ALL,conditionPools,identifier,iov_type,IOV::Key(),mgr);
 }
 
 /// Load conditions pool and populate conditions manager. Allow tro be selective also for the key
-size_t ConditionsRootPersistency::importConditionsPool(ImportStrategy     strategy,
+auto ConditionsRootPersistency::importConditionsPool(ImportStrategy     strategy,
                                                        const std::string& identifier,
                                                        const std::string& iov_type,
                                                        const IOV::Key&    iov_key,
-                                                       ConditionsManager  mgr)   {
+                                                       ConditionsManager  mgr) -> size_t   {
   return _import(strategy,conditionPools,identifier,iov_type,iov_key,mgr);
 }
 
 /// Save the data content to a root file
-int ConditionsRootPersistency::save(TFile* file)    {
+auto ConditionsRootPersistency::save(TFile* file) -> int    {
   DurationStamp stamp(this);
   //TDirectory::TContext context;
   int nBytes = file->WriteTObject(this,GetName());
@@ -304,7 +304,7 @@ int ConditionsRootPersistency::save(TFile* file)    {
 }
 
 /// Save the data content to a root file
-int ConditionsRootPersistency::save(const string& fname)    {
+auto ConditionsRootPersistency::save(const string& fname) -> int    {
   DurationStamp stamp(this);
   //TDirectory::TContext context;
   TFile* file = TFile::Open(fname.c_str(),"RECREATE");

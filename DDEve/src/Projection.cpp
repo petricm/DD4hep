@@ -41,12 +41,12 @@ void Projection::SetDepth(Float_t d)  {
 }
 
 /// Call an element to a geometry element list
-TEveElement* Projection::ImportGeoTopic(TEveElement*, TEveElementList*)   {
+auto Projection::ImportGeoTopic(TEveElement*, TEveElementList*) -> TEveElement*   {
   return nullptr;
 }
 
 /// Call an element to a event element list
-TEveElement* Projection::ImportElement(TEveElement* el, TEveElementList* list)  {
+auto Projection::ImportElement(TEveElement* el, TEveElementList* list) -> TEveElement*  {
   TEveElementList* unprojected = &GetGeoTopic("Unprojected");
   for(auto i=m_geoTopics.begin(); i!=m_geoTopics.end(); ++i)  {
     if ( el == unprojected )   {
@@ -70,17 +70,17 @@ TEveElement* Projection::ImportElement(TEveElement* el, TEveElementList* list)  
 }
 
 /// Call an element to a geometry element list
-TEveElement* Projection::ImportGeoElement(TEveElement* element, TEveElementList* list)  {
+auto Projection::ImportGeoElement(TEveElement* element, TEveElementList* list) -> TEveElement*  {
   return element ? ImportElement(element, list) : nullptr;
 }
 
 /// Call an element to a event element list
-TEveElement* Projection::ImportEventElement(TEveElement* element, TEveElementList* list)  {
+auto Projection::ImportEventElement(TEveElement* element, TEveElementList* list) -> TEveElement*  {
   return element ? ImportElement(element, list) : nullptr;
 }
 
 /// Add axis to the projection view
-Projection& Projection::AddAxis()    {
+auto Projection::AddAxis() -> Projection&    {
   auto* a = new TEveProjectionAxes(m_projMgr);
   a->SetMainColor(kWhite);
   a->SetTitle("R-Phi");
@@ -94,7 +94,7 @@ Projection& Projection::AddAxis()    {
 }
 
 /// Create Rho-Phi projection 
-Projection& Projection::CreateRhoPhiProjection()  {
+auto Projection::CreateRhoPhiProjection() -> Projection&  {
   // RhoPhi Projection manager
   m_projMgr = new TEveProjectionManager(TEveProjection::kPT_RPhi);
   //m_ev.AddToListTree(m_projMgr, kFALSE);
@@ -103,7 +103,7 @@ Projection& Projection::CreateRhoPhiProjection()  {
 }
 
 /// Create Rho-Z projection
-Projection& Projection::CreateRhoZProjection()  {
+auto Projection::CreateRhoZProjection() -> Projection&  {
   // RhoZ Projection manager
   m_projMgr = new TEveProjectionManager(TEveProjection::kPT_RhoZ);
   //m_eve->manager().AddToListTree(m_projMgr, kFALSE);
@@ -112,7 +112,7 @@ Projection& Projection::CreateRhoZProjection()  {
 }
 
 /// Map the projection view to the slot
-View& Projection::Map(TEveWindow* slot)  {
+auto Projection::Map(TEveWindow* slot) -> View&  {
   View::Map(slot);
   m_view->GetGLViewer()->SetCurrentCamera(TGLViewer::kCameraOrthoXOY);
   return *this;

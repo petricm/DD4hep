@@ -22,30 +22,30 @@ using namespace std;
 using namespace dd4hep;
 
 /// access the field name used to discriminate sub-segmentations
-const std::string& MultiSegmentation::discriminatorName() const   {
+auto MultiSegmentation::discriminatorName() const -> const std::string&   {
   return access()->implementation->discriminatorName();
 }
 
 /// Discriminating bitfield entry
-const BitFieldElement* MultiSegmentation::discriminator() const  {
+auto MultiSegmentation::discriminator() const -> const BitFieldElement*  {
   return access()->implementation->discriminator();
 }
 
 /// The underlying sub-segementations
-const MultiSegmentation::Segmentations&
-MultiSegmentation::subSegmentations()  const   {
+auto
+MultiSegmentation::subSegmentations()  const -> const MultiSegmentation::Segmentations&   {
   return access()->implementation->subSegmentations();
 }
 
 /// determine the position based on the cell ID
-Position MultiSegmentation::position(const CellID& id) const   {
+auto MultiSegmentation::position(const CellID& id) const -> Position   {
   return Position(access()->implementation->position(id));
 }
 
 /// determine the cell ID based on the position
-dd4hep::CellID MultiSegmentation::cellID(const Position& local,
+auto MultiSegmentation::cellID(const Position& local,
                                    const Position& global,
-                                   const VolumeID& volID) const
+                                   const VolumeID& volID) const -> dd4hep::CellID
 {
   return access()->implementation->cellID(local, global, volID);
 }
@@ -59,6 +59,6 @@ dd4hep::CellID MultiSegmentation::cellID(const Position& local,
     -# size in x
     -# size in y
 */
-vector<double> MultiSegmentation::cellDimensions(const CellID& id) const  {
+auto MultiSegmentation::cellDimensions(const CellID& id) const -> vector<double>  {
   return access()->implementation->cellDimensions(id);
 }

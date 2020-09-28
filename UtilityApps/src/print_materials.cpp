@@ -29,7 +29,7 @@ using namespace dd4hep ;
 //=============================================================================
 #include "main.h"
 
-int main_wrapper(int argc, char** argv ){
+auto main_wrapper(int argc, char** argv ) -> int{
     
   if( argc != 8 ) {
     std::cout << " usage: print_materials compact.xml x0 y0 z0 x1 y1 z1 " << std::endl 

@@ -27,7 +27,7 @@ using namespace dd4hep;
 ClassImp(EvePgonSetProjectedContextMenu)
 
 /// Instantiator
-EvePgonSetProjectedContextMenu& EvePgonSetProjectedContextMenu::install(Display* m)   {
+auto EvePgonSetProjectedContextMenu::install(Display* m) -> EvePgonSetProjectedContextMenu&   {
   static EvePgonSetProjectedContextMenu s(m);
   return s;
 }

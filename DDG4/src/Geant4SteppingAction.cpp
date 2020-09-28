@@ -107,7 +107,7 @@ void Geant4SteppingActionSequence::updateContext(Geant4Context* ctxt)    {
 }
 
 /// Get an action by name
-Geant4SteppingAction* Geant4SteppingActionSequence::get(const string& nam) const   {
+auto Geant4SteppingActionSequence::get(const string& nam) const -> Geant4SteppingAction*   {
   return m_actors.get(FindByName(TypeName::split(nam).second));
 }
 

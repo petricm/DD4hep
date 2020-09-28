@@ -27,8 +27,8 @@ using namespace dd4hep;
 using namespace dd4hep::cad;
 
 /// Read input file
-vector<unique_ptr<TGeoTessellated> >
-ASSIMPReader::read(const string& source, double unit_length)  const  {
+auto
+ASSIMPReader::read(const string& source, double unit_length)  const -> vector<unique_ptr<TGeoTessellated> >  {
   vector<unique_ptr<TGeoTessellated> > result;
   unique_ptr<Assimp::Importer> importer = make_unique<Assimp::Importer>();
   int flags = aiProcess_Triangulate|aiProcess_JoinIdenticalVertices|aiProcess_CalcTangentSpace;

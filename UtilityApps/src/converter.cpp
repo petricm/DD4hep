@@ -43,7 +43,7 @@ namespace {
 
 
   //______________________________________________________________________________
-  int invoke_converter(int argc,char** argv)  {
+  auto invoke_converter(int argc,char** argv) -> int  {
     bool ascii = false;
     bool volmgr = false;
     bool destroy      = false;
@@ -108,7 +108,7 @@ namespace {
 }
 
 /// Main entry point as a program
-int main(int argc, char** argv)   {
+auto main(int argc, char** argv) -> int   {
   try  {
     return invoke_converter(argc, argv);
   }

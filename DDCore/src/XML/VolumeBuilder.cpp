@@ -42,7 +42,7 @@ VolumeBuilder::VolumeBuilder(Detector& dsc, xml_h x_parent, SensitiveDetector sd
 }
 
 /// Collect a set of materials from the leafs of an xml tag
-size_t VolumeBuilder::collectMaterials(xml_h element)   {
+auto VolumeBuilder::collectMaterials(xml_h element) -> size_t   {
   size_t len = materials.size();
   for( xml_coll_t c(element,_U(material)); c; ++c )   {
     xml_comp_t x_c = c;
@@ -81,7 +81,7 @@ void VolumeBuilder::registerVolume(const std::string& nam, Volume volume)   {
 }
 
 /// Access a registered volume by name
-Volume VolumeBuilder::volume(const std::string& nam)  const    {
+auto VolumeBuilder::volume(const std::string& nam)  const -> Volume    {
   auto iv = volumes.find(nam);
   if ( iv == volumes.end() )  {
     auto ib = vol_veto.find(nam);
@@ -99,7 +99,7 @@ Volume VolumeBuilder::volume(const std::string& nam)  const    {
 }
 
 /// Access element from shape cache by name. Invalid returns means 'veto'. Otherwise exception
-Solid VolumeBuilder::getShape(const string& nam)  const   {
+auto VolumeBuilder::getShape(const string& nam)  const -> Solid   {
   auto is = shapes.find(nam);
   if ( is == shapes.end() )  {
     auto ib = shape_veto.find(nam);
@@ -117,7 +117,7 @@ Solid VolumeBuilder::getShape(const string& nam)  const   {
 }
 
 /// Create a new shape from the information given in the xml handle
-Solid VolumeBuilder::makeShape(xml_h handle)   {
+auto VolumeBuilder::makeShape(xml_h handle) -> Solid   {
   xml_comp_t x = handle;
   string     nam;
   xml_attr_t a = handle.attr_nothrow(_U(name));
@@ -165,7 +165,7 @@ Solid VolumeBuilder::makeShape(xml_h handle)   {
 }
 
 /// Build all <shape/> identifiers in the passed parent xml element
-size_t VolumeBuilder::buildShapes(xml_h handle)    {
+auto VolumeBuilder::buildShapes(xml_h handle) -> size_t    {
   size_t len = shapes.size();
   for( xml_coll_t c(handle,_U(shape)); c; ++c )   {
     xml_elt_t x = c;
@@ -202,7 +202,7 @@ size_t VolumeBuilder::buildShapes(xml_h handle)    {
 }
 
 /// Build all <volume/> identifiers in the passed parent xml element
-size_t VolumeBuilder::buildVolumes(xml_h handle)    {
+auto VolumeBuilder::buildVolumes(xml_h handle) -> size_t    {
   size_t len = volumes.size();
   xml_elt_t  x_comp(nullptr);
   for( xml_coll_t c(handle,_U(volume)); c; ++c )   {
@@ -429,7 +429,7 @@ void VolumeBuilder::_placeParamVolumes(DetElement parent, Volume vol, xml_h c)  
 }
 
 /// Load include tags contained in the passed XML handle
-size_t VolumeBuilder::load(xml_h element, const string& tag)  {
+auto VolumeBuilder::load(xml_h element, const string& tag) -> size_t  {
   size_t count = 0;
   for( xml_coll_t c(element,Unicode(tag)); c; ++c )   {
     string ref = c.attr<string>(_U(ref));
@@ -446,13 +446,13 @@ size_t VolumeBuilder::load(xml_h element, const string& tag)  {
 }
 
 /// Build all <physvol/> identifiers as PlaceVolume daughters. Ignores structure
-VolumeBuilder& VolumeBuilder::placeDaughters(Volume vol, xml_h handle)   {
+auto VolumeBuilder::placeDaughters(Volume vol, xml_h handle) -> VolumeBuilder&   {
   DetElement null_de;
   return placeDaughters(null_de, vol, handle);
 }
 
 /// Build all <physvol/> identifiers as PlaceVolume daughters. Also handles structure
-VolumeBuilder& VolumeBuilder::placeDaughters(DetElement parent, Volume vol, xml_h handle)   {
+auto VolumeBuilder::placeDaughters(DetElement parent, Volume vol, xml_h handle) -> VolumeBuilder&   {
   for( xml_coll_t c(handle,_U(physvol)); c; ++c )
     _placeSingleVolume(parent, vol, c);
   for( xml_coll_t c(handle,_U(paramphysvol)); c; ++c )
@@ -461,7 +461,7 @@ VolumeBuilder& VolumeBuilder::placeDaughters(DetElement parent, Volume vol, xml_
 }
 
 /// Build all <transformation/> identifiers in the passed parent xml element
-size_t VolumeBuilder::buildTransformations(Handle_t handle)   {
+auto VolumeBuilder::buildTransformations(Handle_t handle) -> size_t   {
   size_t len = transformations.size();
   for( xml_coll_t c(handle,_U(transformation)); c; ++c )   {
     string nam = xml_comp_t(c).nameStr();
@@ -471,12 +471,12 @@ size_t VolumeBuilder::buildTransformations(Handle_t handle)   {
 }
 
 /// Place the detector object into the mother volume returned by the Detector instance
-PlacedVolume VolumeBuilder::placeDetector(Volume vol)    {
+auto VolumeBuilder::placeDetector(Volume vol) -> PlacedVolume    {
   return placeDetector(vol, x_det);
 }
 
 /// Place the detector object into the mother volume returned by the Detector instance
-PlacedVolume VolumeBuilder::placeDetector(Volume vol, xml_h handle)    {
+auto VolumeBuilder::placeDetector(Volume vol, xml_h handle) -> PlacedVolume    {
   xml_comp_t   x     = handle;
   xml_dim_t    x_pos = x_det.child(_U(position),false);
   xml_dim_t    x_rot = x_det.child(_U(rotation),false);

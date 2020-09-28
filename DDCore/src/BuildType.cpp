@@ -20,7 +20,7 @@
 #include <string>
 
 /// Translate string representation of the geometry build type to value
-dd4hep::DetectorBuildType dd4hep::buildType(const char* value)   {
+auto dd4hep::buildType(const char* value) -> dd4hep::DetectorBuildType   {
   if ( !value )
     return BUILD_DEFAULT;
   else if ( strncmp(value,"BUILD_DEFAULT",9)==0 )
@@ -45,12 +45,12 @@ dd4hep::DetectorBuildType dd4hep::buildType(const char* value)   {
 }
 
 /// Translate string representation of the geometry build type to value
-dd4hep::DetectorBuildType dd4hep::buildType(const std::string& value)   {
+auto dd4hep::buildType(const std::string& value) -> dd4hep::DetectorBuildType   {
   return buildType(value.c_str());
 }
 
 /// Check if a build type matches the current 
-bool dd4hep::buildMatch(const std::string& value, DetectorBuildType match)   {
+auto dd4hep::buildMatch(const std::string& value, DetectorBuildType match) -> bool   {
   switch(match)   {
   case BUILD_RECO:
     return value.find("REC") != std::string::npos;

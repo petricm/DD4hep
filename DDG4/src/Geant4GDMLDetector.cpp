@@ -32,7 +32,7 @@ dd4hep::sim::Geant4GDMLDetector::Geant4GDMLDetector(std::string  gdmlFile)
   : m_fileName(std::move(gdmlFile)), m_world(nullptr) {
 }
 
-G4VPhysicalVolume* dd4hep::sim::Geant4GDMLDetector::Construct() {
+auto dd4hep::sim::Geant4GDMLDetector::Construct() -> G4VPhysicalVolume* {
 #ifdef GEANT4_HAS_GDML
   G4GDMLParser parser;
   parser.Read( m_fileName );

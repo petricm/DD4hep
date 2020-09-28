@@ -52,7 +52,7 @@ WaferGridXY::WaferGridXY(const BitFieldCoder* decode) :	CartesianGrid(decode) {
 WaferGridXY::~WaferGridXY() = default;
 
 /// determine the position based on the cell ID
-Vector3D WaferGridXY::position(const CellID& cID) const {
+auto WaferGridXY::position(const CellID& cID) const -> Vector3D {
         unsigned int _groupMGWaferIndex;
         unsigned int _waferIndex;
 	Vector3D cellPosition;
@@ -82,7 +82,7 @@ Vector3D WaferGridXY::position(const CellID& cID) const {
 }
 
 /// determine the cell ID based on the position
-  CellID WaferGridXY::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */, const VolumeID& vID) const {
+  auto WaferGridXY::cellID(const Vector3D& localPosition, const Vector3D& /* globalPosition */, const VolumeID& vID) const -> CellID {
         unsigned int _groupMGWaferIndex;
         unsigned int _waferIndex;
 
@@ -112,7 +112,7 @@ Vector3D WaferGridXY::position(const CellID& cID) const {
 	return cID;
 }
 
-std::vector<double> WaferGridXY::cellDimensions(const CellID&) const {
+auto WaferGridXY::cellDimensions(const CellID&) const -> std::vector<double> {
 #if __cplusplus >= 201103L
   return {_gridSizeX, _gridSizeY};
 #else

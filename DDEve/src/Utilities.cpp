@@ -73,13 +73,13 @@ void Utilities::MakeNodesVisible(TEveElement* e, bool visible, int level)   {
   }
 }
 
-std::pair<bool,TEveElement*> 
+auto
 Utilities::createEveShape(int level,
                           int max_level,
                           TEveElement* p,
                           TGeoNode* n,
                           const TGeoHMatrix& mat,
-                          const std::string& nam)
+                          const std::string& nam) -> std::pair<bool,TEveElement*>
 {
   TGeoVolume* vol = n ? n->GetVolume() : nullptr;
   bool created = false;
@@ -163,7 +163,7 @@ Utilities::createEveShape(int level,
   return make_pair(created,element);
 }
 
-int Utilities::findNodeWithMatrix(TGeoNode* p, TGeoNode* n, TGeoHMatrix* mat, string* sub_path)  {
+auto Utilities::findNodeWithMatrix(TGeoNode* p, TGeoNode* n, TGeoHMatrix* mat, string* sub_path) -> int  {
   if ( p == n ) return 1;
   TGeoHMatrix dau_mat;
   for (Int_t idau = 0, ndau = p->GetNdaughters(); idau < ndau; ++idau) {
@@ -189,7 +189,7 @@ int Utilities::findNodeWithMatrix(TGeoNode* p, TGeoNode* n, TGeoHMatrix* mat, st
   return 0;
 }
 
-std::pair<bool,TEveElement*> Utilities::LoadDetElement(DetElement de,int levels, TEveElement* parent)  {
+auto Utilities::LoadDetElement(DetElement de,int levels, TEveElement* parent) -> std::pair<bool,TEveElement*>  {
   if ( !strstr(de.name(),"BeamCal") )   {
     PlacedVolume pv = de.placement();
     if (pv.isValid()) {

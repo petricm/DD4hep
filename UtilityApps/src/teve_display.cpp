@@ -68,12 +68,12 @@ using namespace detail ;
 void next_event();
 void make_gui();
 
-TEveStraightLineSet* getSurfaces(int col=kRed, const SurfaceType& type=SurfaceType(), TString name="Surfaces" ) ;
-TEveStraightLineSet* getSurfaceVectors(bool addO=true, bool addU= true, bool addV=true, bool addN=true,TString name="SurfaceVectors",int color=kGreen) ;
+auto getSurfaces(int col=kRed, const SurfaceType& type=SurfaceType(), TString name="Surfaces" ) -> TEveStraightLineSet* ;
+auto getSurfaceVectors(bool addO=true, bool addU= true, bool addV=true, bool addN=true,TString name="SurfaceVectors",int color=kGreen) -> TEveStraightLineSet* ;
 
 //=====================================================================================
 
-static long teve_display(Detector& description, int /* argc */, char** /* argv */) {
+static auto teve_display(Detector& description, int /* argc */, char** /* argv */) -> long {
 
   TGeoManager* mgr = &description.manager();
   mgr->SetNsegments(100); // Increase the visualization resolution.
@@ -154,14 +154,14 @@ DECLARE_APPLY(DD4hepTEveDisplay,teve_display)
 
 //=====================================================================================================================
 
-int main(int argc,char** argv)  {
+auto main(int argc,char** argv) -> int  {
   return dd4hep::execute::main_default("DD4hepTEveDisplay",argc,argv);
 }
 
 //=====================================================================================================================
 
 
-TEveStraightLineSet* getSurfaceVectors(bool addO, bool addU, bool addV, bool addN, TString name,int color) {
+auto getSurfaceVectors(bool addO, bool addU, bool addV, bool addN, TString name,int color) -> TEveStraightLineSet* {
 
   auto* ls = new TEveStraightLineSet(name);
 
@@ -203,7 +203,7 @@ TEveStraightLineSet* getSurfaceVectors(bool addO, bool addU, bool addV, bool add
   return ls;
 }
 //=====================================================================================
-TEveStraightLineSet* getSurfaces(int col, const SurfaceType& type, TString name) {
+auto getSurfaces(int col, const SurfaceType& type, TString name) -> TEveStraightLineSet* {
 
   auto* ls = new TEveStraightLineSet(name);
 

@@ -40,7 +40,7 @@ namespace dd4hep {
     }
     
     
-    const SurfaceMap* SurfaceManager::map( const std::string name ) const {
+    auto SurfaceManager::map( const std::string name ) const -> const SurfaceMap* {
 
       auto it = _map.find( name ) ;
 
@@ -87,7 +87,7 @@ namespace dd4hep {
 
     }
 
-    std::string SurfaceManager::toString() const {
+    auto SurfaceManager::toString() const -> std::string {
       
       std::stringstream sstr ;
        

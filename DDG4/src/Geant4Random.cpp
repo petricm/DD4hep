@@ -29,7 +29,7 @@ using namespace std;
 using namespace dd4hep::sim;
 
 namespace CLHEP   {
-  unsigned long crc32ul(const std::string& s);
+  auto crc32ul(const std::string& s) -> unsigned long;
 }
 
 namespace    {
@@ -59,11 +59,11 @@ namespace    {
       m_generator->setSeed((long)seed);
     }
     /// Single shot random number creation
-    Double_t Rndm()  final {
+    auto Rndm() -> Double_t  final {
       return m_engine->flat();
     }
     /// Single shot random number creation
-    Double_t Rndm(Int_t)  final  {
+    auto Rndm(Int_t) -> Double_t  final  {
       return m_engine->flat();
     }
     /// Return an array of n random numbers uniformly distributed in ]0,1].
@@ -110,7 +110,7 @@ Geant4Random::~Geant4Random()  {
 }
 
 /// Access the main Geant4 random generator instance. Must be created before used!
-Geant4Random* Geant4Random::instance(bool throw_exception)   {
+auto Geant4Random::instance(bool throw_exception) -> Geant4Random*   {
   if ( !s_instance && throw_exception )  {
     throw runtime_error("No global random number generator defined!");
   }  
@@ -118,7 +118,7 @@ Geant4Random* Geant4Random::instance(bool throw_exception)   {
 }
 
 /// Make this random generator instance the one used by Geant4
-Geant4Random* Geant4Random::setMainInstance(Geant4Random* ptr)   {
+auto Geant4Random::setMainInstance(Geant4Random* ptr) -> Geant4Random*   {
   if ( ptr && !ptr->m_inited )  {
     ptr->initialize();
   }
@@ -259,13 +259,13 @@ void Geant4Random::showStatus() const    {
 }
 
 /// Create flat distributed random numbers in the interval ]0,1]
-double Geant4Random::rndm_clhep()  {
+auto Geant4Random::rndm_clhep() -> double  {
   if ( !m_inited ) initialize();
   return m_engine->flat();
 }
 
 /// Create flat distributed random numbers in the interval ]0,1]
-double Geant4Random::rndm(int i)  {
+auto Geant4Random::rndm(int i) -> double  {
   if ( !m_inited ) initialize();
   return gRandom->Rndm(i);
 }
@@ -283,31 +283,31 @@ void   Geant4Random::rndmArray(int n, double *array)  {
 }
 
 /// Create uniformly disributed random numbers in the interval ]0,x1]
-double Geant4Random::uniform(double x1)  {
+auto Geant4Random::uniform(double x1) -> double  {
   if ( !m_inited ) initialize();
   return gRandom->Uniform(x1);
 }
 
 /// Create uniformly disributed random numbers in the interval ]x1,x2]
-double Geant4Random::uniform(double x1, double x2)  {
+auto Geant4Random::uniform(double x1, double x2) -> double  {
   if ( !m_inited ) initialize();
   return gRandom->Uniform(x1,x2);
 }
 
 /// Create exponentially distributed random numbers
-double Geant4Random::exp(double tau)  {
+auto Geant4Random::exp(double tau) -> double  {
   if ( !m_inited ) initialize();
   return gRandom->Exp(tau);
 }
 
 /// Generates random vectors, uniformly distributed over a circle of given radius.
-double Geant4Random::gauss(double mean, double sigma)  {
+auto Geant4Random::gauss(double mean, double sigma) -> double  {
   if ( !m_inited ) initialize();
   return gRandom->Gaus(mean,sigma);
 }
 
 /// Create landau distributed random numbers
-double Geant4Random::landau(double mean, double sigma)  {
+auto Geant4Random::landau(double mean, double sigma) -> double  {
   if ( !m_inited ) initialize();
   return gRandom->Landau(mean,sigma);
 }

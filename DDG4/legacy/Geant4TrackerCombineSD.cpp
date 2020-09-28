@@ -55,7 +55,7 @@ namespace dd4hep::sim {
         current = -1;
         track = nullptr;
       }
-      Geant4TrackerHit* extractHit(Geant4SensitiveDetector::HitCollection* c)   {
+      auto extractHit(Geant4SensitiveDetector::HitCollection* c) -> Geant4TrackerHit*   {
         if ( current == -1 || !track ) {
           return nullptr;
         }

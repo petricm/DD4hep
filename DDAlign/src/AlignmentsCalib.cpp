@@ -42,7 +42,7 @@ public:
   int                    dirty  = 0;
   Entry() = default;
   Entry(const Entry& c) = delete;
-  Entry& operator=(const Entry& c) = delete;
+  auto operator=(const Entry& c) -> Entry& = delete;
 };
  
 /// Initializing constructor
@@ -57,14 +57,14 @@ AlignmentsCalib::~AlignmentsCalib()   noexcept(false)  {
 }
 
 /// Convenience only: Access detector element by path
-DetElement AlignmentsCalib::detector(const string& path)  const   {
+auto AlignmentsCalib::detector(const string& path)  const -> DetElement   {
   DetElement det(detail::tools::findElement(description,path));
   return det;
 }
 
 /// Implementation: Add a new entry to the transaction stack.
-pair<key_type,AlignmentsCalib::Entry*>
-AlignmentsCalib::_set(DetElement detector, const Delta& delta)   {
+auto
+AlignmentsCalib::_set(DetElement detector, const Delta& delta) -> pair<key_type,AlignmentsCalib::Entry*>   {
   ConditionKey tar_key(detector.key(),Keys::alignmentKey);
   auto i = used.find(tar_key.hash);
   if ( i != used.end() )   {
@@ -103,14 +103,14 @@ AlignmentsCalib::_set(DetElement detector, const Delta& delta)   {
 }
 
 /// (1) Add a new entry to an existing DetElement structure.
-Condition::key_type
-AlignmentsCalib::set(DetElement det, const Delta& delta)   {
+auto
+AlignmentsCalib::set(DetElement det, const Delta& delta) -> Condition::key_type   {
   return _set(det.access(), delta).first;
 }
 
 /// (2) Add a new entry to an existing DetElement structure.
-Condition::key_type
-AlignmentsCalib::set(const string& path, const Delta& delta)   {
+auto
+AlignmentsCalib::set(const string& path, const Delta& delta) -> Condition::key_type   {
   return _set(detector(path).access(), delta).first;
 }
 
@@ -134,7 +134,7 @@ void AlignmentsCalib::clear()   noexcept(false)  {
 }
 
 /// Commit all pending transactions. Returns number of altered entries
-AlignmentsCalculator::Result AlignmentsCalib::commit()   {
+auto AlignmentsCalib::commit() -> AlignmentsCalculator::Result   {
   std::map<DetElement, Delta> deltas;
   AlignmentsCalculator        calculator;
 

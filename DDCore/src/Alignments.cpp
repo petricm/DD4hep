@@ -51,32 +51,32 @@ AlignmentCondition::AlignmentCondition(const string& nam)   {
 }
 
 /// Data accessor for the use of decorators
-AlignmentData& Alignment::data()              {
+auto Alignment::data() -> AlignmentData&              {
   return access()->values();
 }
 
 /// Data accessor for the use of decorators
-const AlignmentData& Alignment::data() const  {
+auto Alignment::data() const -> const AlignmentData&  {
   return access()->values();
 }
 
 /// Access the delta value of the object
-const Delta& Alignment::delta() const   {
+auto Alignment::delta() const -> const Delta&   {
   return access()->values().delta;
 }
 
 /// Create cached matrix to transform to world coordinates
-const TGeoHMatrix& Alignment::worldTransformation()  const  {
+auto Alignment::worldTransformation()  const -> const TGeoHMatrix&  {
   return access()->values().worldTransformation();
 }
 
 /// Access the alignment/placement matrix with respect to the world
-const TGeoHMatrix& Alignment::detectorTransformation() const   {
+auto Alignment::detectorTransformation() const -> const TGeoHMatrix&   {
   return access()->values().detectorTransformation();
 }
 
 /// Access to the node list
-const vector<PlacedVolume>& Alignment::nodes() const   {
+auto Alignment::nodes() const -> const vector<PlacedVolume>&   {
   return access()->values().nodes;
 }
 
@@ -90,7 +90,7 @@ void Alignment::localToWorld(const Double_t local[3], Double_t global[3]) const 
   return access()->values().localToWorld(local,global);
 }
 /// Transformation from local coordinates of the placed volume to the world system
-Position Alignment::localToWorld(const Position& local) const  {
+auto Alignment::localToWorld(const Position& local) const -> Position  {
   return access()->values().localToWorld(local);
 }
 
@@ -105,7 +105,7 @@ void Alignment::worldToLocal(const Double_t global[3], Double_t local[3]) const 
 }
 
 /// Transformation from local coordinates of the placed volume to the world system
-Position Alignment::worldToLocal(const Position& global) const  {
+auto Alignment::worldToLocal(const Position& global) const -> Position  {
   return access()->values().worldToLocal(global);
 }
 
@@ -120,7 +120,7 @@ void Alignment::localToDetector(const Double_t local[3], Double_t detector[3]) c
 }
 
 /// Transformation from local coordinates of the placed volume to the world system
-Position Alignment::localToDetector(const Position& local) const  {
+auto Alignment::localToDetector(const Position& local) const -> Position  {
   return access()->values().localToDetector(local);
 }
 
@@ -135,51 +135,51 @@ void Alignment::detectorToLocal(const Double_t detector[3], Double_t local[3]) c
 }
 
 /// Transformation from detector element coordinates to the local placed volume coordinates
-Position Alignment::detectorToLocal(const Position& detector) const  {
+auto Alignment::detectorToLocal(const Position& detector) const -> Position  {
   return access()->values().detectorToLocal(detector);
 }
 
 /// Access the IOV type
-const dd4hep::IOVType& AlignmentCondition::iovType() const   {
+auto AlignmentCondition::iovType() const -> const dd4hep::IOVType&   {
   return *(access()->iovType());
 }
 
 /// Access the IOV block
-const dd4hep::IOV& AlignmentCondition::iov() const   {
+auto AlignmentCondition::iov() const -> const dd4hep::IOV&   {
   return *(access()->iovData());
 }
 
 /// Access the hash identifier
-AlignmentCondition::key_type AlignmentCondition::key() const   {
+auto AlignmentCondition::key() const -> AlignmentCondition::key_type   {
   return access()->hash;
 }
 
 /// Data accessor for the use of decorators
-AlignmentData& AlignmentCondition::data()              {
+auto AlignmentCondition::data() -> AlignmentData&              {
   return *(access()->alignment_data);
 }
 
 /// Data accessor for the use of decorators
-const AlignmentData& AlignmentCondition::data() const  {
+auto AlignmentCondition::data() const -> const AlignmentData&  {
   return *(access()->alignment_data);
 }
 
 /// Access the delta value of the object
-const Delta& AlignmentCondition::delta() const   {
+auto AlignmentCondition::delta() const -> const Delta&   {
   return access()->alignment_data->delta;
 }
 
 /// Check if object is already bound....
-bool AlignmentCondition::is_bound()  const  {
+auto AlignmentCondition::is_bound()  const -> bool  {
   return isValid() ? ptr()->data.is_bound() : false;
 }
 
 /// Create cached matrix to transform to world coordinates
-const TGeoHMatrix& AlignmentCondition::worldTransformation()  const  {
+auto AlignmentCondition::worldTransformation()  const -> const TGeoHMatrix&  {
   return data().worldTransformation();
 }
 
 /// Access the alignment/placement matrix with respect to the world
-const TGeoHMatrix& AlignmentCondition::detectorTransformation() const   {
+auto AlignmentCondition::detectorTransformation() const -> const TGeoHMatrix&   {
   return data().detectorTransformation();
 }

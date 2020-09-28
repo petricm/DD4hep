@@ -14,7 +14,7 @@
 #include "TEveStraightLineSet.h"
 #include "TRandom.h"
 
-TEveStraightLineSet* lineset(Int_t nlines = 40, Int_t nmarkers = 4) ;
+auto lineset(Int_t nlines = 40, Int_t nmarkers = 4) -> TEveStraightLineSet* ;
 
 void next_event(){
 
@@ -37,7 +37,7 @@ void next_event(){
 
 
 //=====================================================================================
-TEveStraightLineSet* lineset(Int_t nlines, Int_t nmarkers )
+auto lineset(Int_t nlines, Int_t nmarkers ) -> TEveStraightLineSet*
 {
   TEveManager::Create();
 

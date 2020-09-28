@@ -38,11 +38,11 @@ namespace dd4hep::sim {
       /// Standard destructor
       ~ParticleFilter() override;
       /// Safe access to the definition
-      const G4ParticleDefinition* definition() const;
+      auto definition() const -> const G4ParticleDefinition*;
       /// Check if a track is of the same type
-      bool isSameType(const G4Track* track)  const;
+      auto isSameType(const G4Track* track)  const -> bool;
       /// Check if the particle is a geantino
-      bool isGeantino(const G4Track* track) const;
+      auto isGeantino(const G4Track* track) const -> bool;
     };
 
     /// Geant4 sensitive detector filter implementing a particle rejector
@@ -57,7 +57,7 @@ namespace dd4hep::sim {
       /// Standard destructor
       ~ParticleRejectFilter() override;
       /// Filter action. Return true if hits should be processed
-      bool operator()(const G4Step* step) const  final;
+      auto operator()(const G4Step* step) const -> bool  final;
     };
 
     /// Geant4 sensitive detector filter implementing a particle selector
@@ -72,7 +72,7 @@ namespace dd4hep::sim {
       /// Standard destructor
       ~ParticleSelectFilter() override;
       /// Filter action. Return true if hits should be processed
-      bool operator()(const G4Step* step) const  final;
+      auto operator()(const G4Step* step) const -> bool  final;
     };
 
     /// Geant4 sensitive detector filter implementing a Geantino rejector
@@ -87,7 +87,7 @@ namespace dd4hep::sim {
       /// Standard destructor
       ~GeantinoRejectFilter() override;
       /// Filter action. Return true if hits should be processed
-      bool operator()(const G4Step* step) const  final;
+      auto operator()(const G4Step* step) const -> bool  final;
     };
 
     /// Geant4 sensitive detector filter implementing an energy cut.
@@ -105,7 +105,7 @@ namespace dd4hep::sim {
       /// Standard destructor
       ~EnergyDepositMinimumCut() override;
       /// Filter action. Return true if hits should be processed
-      bool operator()(const G4Step* step) const  final;
+      auto operator()(const G4Step* step) const -> bool  final;
     };
   }
 
@@ -144,7 +144,7 @@ ParticleFilter::~ParticleFilter()   {
 }
 
 /// Safe access to the definition
-const G4ParticleDefinition* ParticleFilter::definition() const  {
+auto ParticleFilter::definition() const -> const G4ParticleDefinition*  {
   if ( m_definition ) return m_definition;
   m_definition = G4ParticleTable::GetParticleTable()->FindParticle(m_particle);
   if ( nullptr == m_definition )  {
@@ -154,13 +154,13 @@ const G4ParticleDefinition* ParticleFilter::definition() const  {
 }
 
 /// Check if a track is of the same type
-bool ParticleFilter::isSameType(const G4Track* track)  const   {
+auto ParticleFilter::isSameType(const G4Track* track)  const -> bool   {
   G4ParticleDefinition* def = track->GetDefinition();
   return definition() == def;
 }
 
 /// Check if the particle is a geantino
-bool ParticleFilter::isGeantino(const G4Track* track) const   {
+auto ParticleFilter::isGeantino(const G4Track* track) const -> bool   {
   if ( track ) {
     G4ParticleDefinition* def = track->GetDefinition();
     if ( def == G4ChargedGeantino::Definition() )
@@ -184,7 +184,7 @@ GeantinoRejectFilter::~GeantinoRejectFilter() {
 }
 
 /// Filter action. Return true if hits should be processed
-bool GeantinoRejectFilter::operator()(const G4Step* step) const   {
+auto GeantinoRejectFilter::operator()(const G4Step* step) const -> bool   {
   return !isGeantino(step->GetTrack());
 }
 
@@ -200,7 +200,7 @@ ParticleRejectFilter::~ParticleRejectFilter() {
 }
 
 /// Filter action. Return true if hits should be processed
-bool ParticleRejectFilter::operator()(const G4Step* step) const   {
+auto ParticleRejectFilter::operator()(const G4Step* step) const -> bool   {
   return !isSameType(step->GetTrack());
 }
 
@@ -216,7 +216,7 @@ ParticleSelectFilter::~ParticleSelectFilter() {
 }
 
 /// Filter action. Return true if hits should be processed
-bool ParticleSelectFilter::operator()(const G4Step* step) const   {
+auto ParticleSelectFilter::operator()(const G4Step* step) const -> bool   {
   return isSameType(step->GetTrack());
 }
 
@@ -233,7 +233,7 @@ EnergyDepositMinimumCut::~EnergyDepositMinimumCut() {
 }
 
 /// Filter action. Return true if hits should be processed
-bool EnergyDepositMinimumCut::operator()(const G4Step* step) const  {
+auto EnergyDepositMinimumCut::operator()(const G4Step* step) const -> bool  {
   return step->GetTotalEnergyDeposit() > m_energyCut;
 }
 

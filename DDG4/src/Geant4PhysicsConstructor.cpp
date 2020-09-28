@@ -32,7 +32,7 @@ namespace  {
     /// Default destructor
     ~ConstructorImp() override = default;
     /// Access to a fresh (resetted) instance of the particle table iterator
-    [[nodiscard]] G4ParticleTable::G4PTblDicIterator* particleIterator()  const override   {
+    [[nodiscard]] auto particleIterator()  const -> G4ParticleTable::G4PTblDicIterator* override   {
       G4ParticleTable::G4PTblDicIterator* iter;
 
 #if G4VERSION_NUMBER >= 1030

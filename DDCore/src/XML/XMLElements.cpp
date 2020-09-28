@@ -41,14 +41,14 @@ static const size_t INVALID_NODE = ~0U;
 
 // Forward declarations
 namespace dd4hep {
-  dd4hep::tools::Evaluator& evaluator();
+  auto evaluator() -> dd4hep::tools::Evaluator&;
 }
 // Static storage
 namespace {
   bool s_resolve_environment = true;
 
   dd4hep::tools::Evaluator& eval(dd4hep::evaluator());
-  string _checkEnviron(const string& env)  {
+  auto _checkEnviron(const string& env) -> string  {
     if ( s_resolve_environment )  {
       string r = getEnviron(env);
       return r.empty() ? env : r;
@@ -92,11 +92,11 @@ union Xml {
 };
 
 namespace {
-  XmlElement* node_first(XmlElement* e, const Tag_t& t) {
+  auto node_first(XmlElement* e, const Tag_t& t) -> XmlElement* {
     if ( t.str()=="*" ) return e ? (XmlElement*)_E(e)->FirstChildElement() : nullptr;
     return e ? (XmlElement*)_E(e)->FirstChildElement(t.str()) : nullptr;
   }
-  size_t node_count(XmlElement* elt, const Tag_t& t) {
+  auto node_count(XmlElement* elt, const Tag_t& t) -> size_t {
     size_t cnt = 0;
     TiXmlElement* e = Xml(elt).e;
     if ( t.str()=="*" )
@@ -106,15 +106,15 @@ namespace {
     return cnt;
   }
 }
-XmlChar* dd4hep::xml::XmlString::replicate(const XmlChar* c) {
+auto dd4hep::xml::XmlString::replicate(const XmlChar* c) -> XmlChar* {
   return c ? ::strdup(c) : nullptr;
 }
-XmlChar* dd4hep::xml::XmlString::transcode(const char* c)    {return c ? ::strdup(c) : nullptr;
+auto dd4hep::xml::XmlString::transcode(const char* c) -> XmlChar*    {return c ? ::strdup(c) : nullptr;
 }
 void dd4hep::xml::XmlString::release(char** p) {
   if(p && *p)  {::free(*p); *p=nullptr;}
 }
-size_t dd4hep::xml::XmlString::length(const char* p)  {
+auto dd4hep::xml::XmlString::length(const char* p) -> size_t  {
   return p ? ::strlen(p) : 0;
 }
 
@@ -205,10 +205,10 @@ string dd4hep::xml::_toString(const XmlChar *toTranscode) {
 #endif
 
 namespace {
-  Attribute attribute_node(XmlElement* n, const XmlChar* t) {
+  auto attribute_node(XmlElement* n, const XmlChar* t) -> Attribute {
     return Attribute(_E(n)->getAttributeNode(t));
   }
-  const XmlChar* attribute_value(Attribute a) {
+  auto attribute_value(Attribute a) -> const XmlChar* {
     return Xml(a).a->getValue();
   }
 #if 0
@@ -217,77 +217,77 @@ namespace {
 #endif
 }
 
-string dd4hep::xml::_toString(Attribute attr) {
+auto dd4hep::xml::_toString(Attribute attr) -> string {
   if (attr)
     return _toString(attribute_value(attr));
   return "";
 }
 
-template <typename T> static inline string __to_string(T value, const char* fmt) {
+template <typename T> static inline auto __to_string(T value, const char* fmt) -> string {
   char text[128];
   ::snprintf(text, sizeof(text), fmt, value);
   return text;
 }
 
 /// Do-nothing version. Present for completeness and argument interchangeability
-string dd4hep::xml::_toString(const char* s) {
+auto dd4hep::xml::_toString(const char* s) -> string {
   if ( !s || *s == 0 ) return "";
   else if ( !(*s == '$' && *(s+1) == '{') ) return s;
   return _checkEnviron(s);
 }
 
 /// Do-nothing version. Present for completeness and argument interchangeability
-string dd4hep::xml::_toString(const string& s) {
+auto dd4hep::xml::_toString(const string& s) -> string {
   if ( s.length() < 3 || s[0] != '$' ) return s;
   else if ( !(s[0] == '$' && s[1] == '{') ) return s;
   return _checkEnviron(s);
 }
 
 /// Format unsigned long integer to string with arbitrary format
-string dd4hep::xml::_toString(unsigned long v, const char* fmt) {
+auto dd4hep::xml::_toString(unsigned long v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
 /// Format unsigned integer (32 bits) to string with arbitrary format
-string dd4hep::xml::_toString(unsigned int v, const char* fmt) {
+auto dd4hep::xml::_toString(unsigned int v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
 /// Format signed integer (32 bits) to string with arbitrary format
-string dd4hep::xml::_toString(int v, const char* fmt) {
+auto dd4hep::xml::_toString(int v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
 /// Format signed long integer to string with arbitrary format
-string dd4hep::xml::_toString(long v, const char* fmt)   {
+auto dd4hep::xml::_toString(long v, const char* fmt) -> string   {
   return __to_string(v, fmt);
 }
 
 /// Format single procision float number (32 bits) to string with arbitrary format
-string dd4hep::xml::_toString(float v, const char* fmt) {
+auto dd4hep::xml::_toString(float v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
 /// Format double procision float number (64 bits) to string with arbitrary format
-string dd4hep::xml::_toString(double v, const char* fmt) {
+auto dd4hep::xml::_toString(double v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
 /// Convert Strng_t to std::string
-string dd4hep::xml::_toString(const Strng_t& s)   {
+auto dd4hep::xml::_toString(const Strng_t& s) -> string   {
   return _toString(Tag_t(s));
 }
 /// Convert Tag_t to std::string
-string dd4hep::xml::_toString(const Tag_t& s)     {
+auto dd4hep::xml::_toString(const Tag_t& s) -> string     {
   return s.str();
 }
 
 /// Format pointer to string with arbitrary format
-string dd4hep::xml::_ptrToString(const void* v, const char* fmt) {
+auto dd4hep::xml::_ptrToString(const void* v, const char* fmt) -> string {
   return __to_string(v, fmt);
 }
 
-long dd4hep::xml::_toLong(const XmlChar* value) {
+auto dd4hep::xml::_toLong(const XmlChar* value) -> long {
   if (value) {
     string s = _toString(value);
     size_t idx = s.find("(int)");
@@ -309,22 +309,22 @@ long dd4hep::xml::_toLong(const XmlChar* value) {
   return -1;
 }
 
-unsigned long dd4hep::xml::_toULong(const XmlChar* value) {
+auto dd4hep::xml::_toULong(const XmlChar* value) -> unsigned long {
   long val = _toLong(value);
   if ( val > 0 ) return (unsigned long) val;
   string s = _toString(value);
   throw runtime_error("dd4hep: Severe error during expression evaluation of " + s);
 }
 
-int dd4hep::xml::_toInt(const XmlChar* value)   {
+auto dd4hep::xml::_toInt(const XmlChar* value) -> int   {
   return (int)_toLong(value);
 }
 
-unsigned int dd4hep::xml::_toUInt(const XmlChar* value) {
+auto dd4hep::xml::_toUInt(const XmlChar* value) -> unsigned int {
   return (unsigned int)_toULong(value);
 }
 
-bool dd4hep::xml::_toBool(const XmlChar* value) {
+auto dd4hep::xml::_toBool(const XmlChar* value) -> bool {
   if (value) {
     string s = _toString(value);
     char   c = ::toupper(s[0]);
@@ -335,7 +335,7 @@ bool dd4hep::xml::_toBool(const XmlChar* value) {
   return false;
 }
 
-float dd4hep::xml::_toFloat(const XmlChar* value) {
+auto dd4hep::xml::_toFloat(const XmlChar* value) -> float {
   if (value) {
     string s = _toString(value);
     double result = eval.evaluate(s.c_str());
@@ -350,7 +350,7 @@ float dd4hep::xml::_toFloat(const XmlChar* value) {
   return 0.0;
 }
 
-double dd4hep::xml::_toDouble(const XmlChar* value) {
+auto dd4hep::xml::_toDouble(const XmlChar* value) -> double {
   if (value) {
     string s = _toString(value);
     double result = eval.evaluate(s.c_str());
@@ -413,7 +413,7 @@ template void dd4hep::xml::_toDictionary(const XmlChar* name, float value);
 template void dd4hep::xml::_toDictionary(const XmlChar* name, double value);
 
 /// Evaluate string constant using environment stored in the evaluator
-string dd4hep::xml::getEnviron(const string& env)   {
+auto dd4hep::xml::getEnviron(const string& env) -> string   {
   size_t id1 = env.find("${");
   size_t id2 = env.rfind("}");
   if ( id1 == string::npos || id2 == string::npos )   {
@@ -435,55 +435,55 @@ string dd4hep::xml::getEnviron(const string& env)   {
 }
 
 /// Enable/disable environment resolution when parsing strings
-bool dd4hep::xml::enableEnvironResolution(bool new_value)   {
+auto dd4hep::xml::enableEnvironResolution(bool new_value) -> bool   {
   bool tmp = s_resolve_environment;
   s_resolve_environment = new_value;
   return tmp;
 }
 
 template <typename B>
-static inline string i_add(const string& a, B b) {
+static inline auto i_add(const string& a, B b) -> string {
   string r = a;
   r += b;
   return r;
 }
 
-Strng_t dd4hep::xml::operator+(const Strng_t& a, const string& b) {
+auto dd4hep::xml::operator+(const Strng_t& a, const string& b) -> Strng_t {
   return _toString(a.ptr()) + b;
 }
 
-Strng_t dd4hep::xml::operator+(const string& a, const Strng_t& b) {
+auto dd4hep::xml::operator+(const string& a, const Strng_t& b) -> Strng_t {
   return a + _toString(b.ptr());
 }
 
-Strng_t dd4hep::xml::operator+(const Strng_t& a, const char* b) {
+auto dd4hep::xml::operator+(const Strng_t& a, const char* b) -> Strng_t {
   return _toString(a.ptr()) + b;
 }
 
-Strng_t dd4hep::xml::operator+(const char* a, const Strng_t& b) {
+auto dd4hep::xml::operator+(const char* a, const Strng_t& b) -> Strng_t {
   return string(a) + _toString(b.ptr());
 }
 
-Strng_t dd4hep::xml::operator+(const Strng_t& a, const Strng_t& b) {
+auto dd4hep::xml::operator+(const Strng_t& a, const Strng_t& b) -> Strng_t {
   return _toString(a.ptr()) + _toString(b.ptr());
 }
 
-Tag_t dd4hep::xml::operator+(const Tag_t& a, const char* b) {
+auto dd4hep::xml::operator+(const Tag_t& a, const char* b) -> Tag_t {
   string res = a.str() + b;
   return Tag_t(res);
 }
 
-Tag_t dd4hep::xml::operator+(const char* a, const Tag_t& b) {
+auto dd4hep::xml::operator+(const char* a, const Tag_t& b) -> Tag_t {
   string res = a + b.str();
   return Tag_t(res);
 }
 
-Tag_t dd4hep::xml::operator+(const Tag_t& a, const Strng_t& b) {
+auto dd4hep::xml::operator+(const Tag_t& a, const Strng_t& b) -> Tag_t {
   string res = a.str() + _toString(b);
   return Tag_t(res);
 }
 
-Tag_t dd4hep::xml::operator+(const Tag_t& a, const string& b) {
+auto dd4hep::xml::operator+(const Tag_t& a, const string& b) -> Tag_t {
   string res = a.str() + b;
   return Tag_t(res);
 }
@@ -522,14 +522,14 @@ Strng_t& Strng_t::operator=(const XmlChar* s) {
 }
 #endif
 
-Strng_t& Strng_t::operator=(const char* s) {
+auto Strng_t::operator=(const char* s) -> Strng_t& {
   if (m_xml)
     XmlString::release (&m_xml);
   m_xml = s ? XmlString::transcode(s) : nullptr;
   return *this;
 }
 
-Strng_t& Strng_t::operator=(const Strng_t& s) {
+auto Strng_t::operator=(const Strng_t& s) -> Strng_t& {
   if (this != &s) {
     if (m_xml)
       XmlString::release (&m_xml);
@@ -538,14 +538,14 @@ Strng_t& Strng_t::operator=(const Strng_t& s) {
   return *this;
 }
 
-Strng_t& Strng_t::operator=(const string& s) {
+auto Strng_t::operator=(const string& s) -> Strng_t& {
   if (m_xml)
     XmlString::release (&m_xml);
   m_xml = XmlString::transcode(s.c_str());
   return *this;
 }
 
-Tag_t& Tag_t::operator=(const Tag_t& s) {
+auto Tag_t::operator=(const Tag_t& s) -> Tag_t& {
   if (this != &s) {
     m_str = s.m_str;
     if (m_xml)
@@ -555,7 +555,7 @@ Tag_t& Tag_t::operator=(const Tag_t& s) {
   return *this;
 }
 
-Tag_t& Tag_t::operator=(const char* s) {
+auto Tag_t::operator=(const char* s) -> Tag_t& {
   if (m_xml)
     XmlString::release (&m_xml);
   if (s) {
@@ -569,7 +569,7 @@ Tag_t& Tag_t::operator=(const char* s) {
   return *this;
 }
 
-Tag_t& Tag_t::operator=(const Strng_t& s) {
+auto Tag_t::operator=(const Strng_t& s) -> Tag_t& {
   if (m_xml)  {
     XmlString::release (&m_xml);
   }
@@ -582,7 +582,7 @@ Tag_t& Tag_t::operator=(const Strng_t& s) {
   return *this;
 }
 
-Tag_t& Tag_t::operator=(const string& s) {
+auto Tag_t::operator=(const string& s) -> Tag_t& {
   if (m_xml)
     XmlString::release (&m_xml);
   m_xml = XmlString::transcode(s.c_str());
@@ -608,12 +608,12 @@ NodeList::NodeList(XmlElement* node, const XmlChar* tag_value)
 NodeList::~NodeList() = default;
 
 /// Reset the nodelist
-XmlElement* NodeList::reset() {
+auto NodeList::reset() -> XmlElement* {
   return m_ptr=node_first(m_node,m_tag);
 }
 
 /// Advance to next element
-XmlElement* NodeList::next() const {
+auto NodeList::next() const -> XmlElement* {
 #ifdef DD4HEP_USE_TINYXML
   if ( m_tag.str()=="*" )
     return m_ptr =_XE(m_ptr ? _E(m_ptr)->NextSiblingElement() : nullptr);
@@ -630,7 +630,7 @@ XmlElement* NodeList::next() const {
 }
 
 /// Go back to previous element
-XmlElement* NodeList::previous() const {
+auto NodeList::previous() const -> XmlElement* {
 #ifdef DD4HEP_USE_TINYXML
   if ( m_tag.str()=="*" )
     return m_ptr = _XE(m_ptr ? _E(m_ptr)->PreviousSiblingElement() : nullptr);
@@ -647,7 +647,7 @@ XmlElement* NodeList::previous() const {
 }
 
 /// Assignment operator
-NodeList& NodeList::operator=(const NodeList& l) {
+auto NodeList::operator=(const NodeList& l) -> NodeList& {
   if (this != &l) {
     m_tag = l.m_tag;
     m_node = l.m_node;
@@ -657,22 +657,22 @@ NodeList& NodeList::operator=(const NodeList& l) {
 }
 
 /// Unicode text access to the element's tag. Tis must be wrong ....
-const XmlChar* Handle_t::rawTag() const {
+auto Handle_t::rawTag() const -> const XmlChar* {
   return _E(m_node)->getTagName();
 }
 
 /// Unicode text access to the element's text
-const XmlChar* Handle_t::rawText() const {
+auto Handle_t::rawText() const -> const XmlChar* {
   return _E(m_node)->getTextContent();
 }
 
 /// Unicode text access to the element's value
-const XmlChar* Handle_t::rawValue() const {
+auto Handle_t::rawValue() const -> const XmlChar* {
   return _N(m_node)->getNodeValue();
 }
 
 /// Clone the DOMelement - with the option of a deep copy
-Handle_t Handle_t::clone(XmlDocument* new_doc) const {
+auto Handle_t::clone(XmlDocument* new_doc) const -> Handle_t {
   if (m_node) {
 #ifdef DD4HEP_USE_TINYXML
     if ( new_doc ) {}
@@ -689,22 +689,22 @@ Handle_t Handle_t::clone(XmlDocument* new_doc) const {
 }
 
 /// Access the element's parent element
-Handle_t Handle_t::parent() const {
+auto Handle_t::parent() const -> Handle_t {
   return Elt_t(m_node ? _N(m_node)->getParentNode() : nullptr);
 }
 
 /// Access attribute pointer by the attribute's unicode name (no exception thrown if not present)
-Attribute Handle_t::attr_nothrow(const XmlChar* tag_value) const {
+auto Handle_t::attr_nothrow(const XmlChar* tag_value) const -> Attribute {
   return attribute_node(m_node, tag_value);
 }
 
 /// Check for the existence of a named attribute
-bool Handle_t::hasAttr(const XmlChar* tag_value) const {
+auto Handle_t::hasAttr(const XmlChar* tag_value) const -> bool {
   return m_node && nullptr != _E(m_node)->getAttributeNode(tag_value);
 }
 
 /// Retrieve a collection of all attributes of this DOM element
-vector<Attribute> Handle_t::attributes() const {
+auto Handle_t::attributes() const -> vector<Attribute> {
   vector < Attribute > attrs;
   if (m_node) {
 #ifdef DD4HEP_USE_TINYXML
@@ -721,7 +721,7 @@ vector<Attribute> Handle_t::attributes() const {
   return attrs;
 }
 
-size_t Handle_t::numChildren(const XmlChar* t, bool throw_exception) const {
+auto Handle_t::numChildren(const XmlChar* t, bool throw_exception) const -> size_t {
   size_t n = node_count(m_node, t);
   if (n == INVALID_NODE && !throw_exception)
     return 0;
@@ -736,7 +736,7 @@ size_t Handle_t::numChildren(const XmlChar* t, bool throw_exception) const {
 }
 
 /// Remove a single child node identified by it's handle from the tree of the element
-Handle_t Handle_t::child(const XmlChar* t, bool throw_exception) const {
+auto Handle_t::child(const XmlChar* t, bool throw_exception) const -> Handle_t {
   Elt_t e = node_first(m_node, t);
   if (e || !throw_exception)
     return e;
@@ -748,7 +748,7 @@ Handle_t Handle_t::child(const XmlChar* t, bool throw_exception) const {
   throw runtime_error(msg);
 }
 
-NodeList Handle_t::children(const XmlChar* tag_value) const {
+auto Handle_t::children(const XmlChar* tag_value) const -> NodeList {
   return NodeList(m_node, tag_value);
 }
 
@@ -758,7 +758,7 @@ void Handle_t::append(Handle_t e) const {
 }
 
 /// Remove a single child node identified by it's handle from the tree of the element
-Handle_t Handle_t::remove(Handle_t node) const {
+auto Handle_t::remove(Handle_t node) const -> Handle_t {
 #ifdef DD4HEP_USE_TINYXML
   bool e = (m_node && node.ptr() ? _N(m_node)->RemoveChild(_N(node.ptr())) : false);
 #else
@@ -790,7 +790,7 @@ void Handle_t::removeChildren(const XmlChar* tag_value) const {
 #endif
 }
 
-bool Handle_t::hasChild(const XmlChar* tag_value) const {
+auto Handle_t::hasChild(const XmlChar* tag_value) const -> bool {
   return node_first(m_node, tag_value) != nullptr;
 }
 
@@ -864,7 +864,7 @@ void Handle_t::setAttrs(Handle_t /* elt */) const {
 #endif
 
 /// Access attribute pointer by the attribute's unicode name (throws exception if not present)
-Attribute Handle_t::attr_ptr(const XmlChar* t) const {
+auto Handle_t::attr_ptr(const XmlChar* t) const -> Attribute {
   Attribute a = attribute_node(m_node, t);
   if (nullptr != a)
     return a;
@@ -877,7 +877,7 @@ Attribute Handle_t::attr_ptr(const XmlChar* t) const {
 }
 
 /// Access attribute name (throws exception if not present)
-const XmlChar* Handle_t::attr_name(const Attribute a) const {
+auto Handle_t::attr_name(const Attribute a) const -> const XmlChar* {
   if (a) {
     return Xml(a).a->getName();
   }
@@ -885,51 +885,51 @@ const XmlChar* Handle_t::attr_name(const Attribute a) const {
 }
 
 /// Access attribute value by the attribute's unicode name (throws exception if not present)
-const XmlChar* Handle_t::attr_value(const XmlChar* attr_tag) const {
+auto Handle_t::attr_value(const XmlChar* attr_tag) const -> const XmlChar* {
   return attribute_value(attr_ptr(attr_tag));
 }
 
 /// Access attribute value by the attribute  (throws exception if not present)
-const XmlChar* Handle_t::attr_value(const Attribute attr_val) const {
+auto Handle_t::attr_value(const Attribute attr_val) const -> const XmlChar* {
   return attribute_value(attr_val);
 }
 
 /// Access attribute value by the attribute's unicode name (no exception thrown if not present)
-const XmlChar* Handle_t::attr_value_nothrow(const XmlChar* attr_tag) const {
+auto Handle_t::attr_value_nothrow(const XmlChar* attr_tag) const -> const XmlChar* {
   Attribute a = attr_nothrow(attr_tag);
   return a ? attribute_value(a) : nullptr;
 }
 
 /// Generic attribute setter with integer value
-Attribute Handle_t::setAttr(const XmlChar* nam, int val) const {
+auto Handle_t::setAttr(const XmlChar* nam, int val) const -> Attribute {
   char txt[32];
   ::snprintf(txt, sizeof(txt), "%d", val);
   return setAttr(nam, Strng_t(txt));
 }
 
 /// Generic attribute setter with boolen value
-Attribute Handle_t::setAttr(const XmlChar* name, bool val) const {
+auto Handle_t::setAttr(const XmlChar* name, bool val) const -> Attribute {
   char txt[32];
   ::snprintf(txt, sizeof(txt), "%s", val ? "true" : "false");
   return setAttr(name, Strng_t(txt));
 }
 
 /// Generic attribute setter with floating point value
-Attribute Handle_t::setAttr(const XmlChar* name, float val) const {
+auto Handle_t::setAttr(const XmlChar* name, float val) const -> Attribute {
   char txt[32];
   ::snprintf(txt, sizeof(txt), "%.8e", val);
   return setAttr(name, Strng_t(txt));
 }
 
 /// Generic attribute setter with double precision floating point value
-Attribute Handle_t::setAttr(const XmlChar* name, double val) const {
+auto Handle_t::setAttr(const XmlChar* name, double val) const -> Attribute {
   char txt[32];
   ::snprintf(txt, sizeof(txt), "%.8e", val);
   return setAttr(name, Strng_t(txt));
 }
 
 /// Generic attribute setter with string value
-Attribute Handle_t::setAttr(const XmlChar* name, const string& val) const {
+auto Handle_t::setAttr(const XmlChar* name, const string& val) const -> Attribute {
   return setAttr(name, Strng_t(val.c_str()));
 }
 
@@ -940,12 +940,12 @@ Attribute Handle_t::setAttr(const XmlChar* name, const char* v) const {
 #endif
 
 /// Generic attribute setter with XmlAttr value
-Attribute Handle_t::setAttr(const XmlChar* nam, const Attribute v) const {
+auto Handle_t::setAttr(const XmlChar* nam, const Attribute v) const -> Attribute {
   return v ? setAttr(nam, attribute_value(v)) : nullptr;
 }
 
 /// Generic attribute setter with unicode value
-Attribute Handle_t::setAttr(const XmlChar* nam, const XmlChar* val) const {
+auto Handle_t::setAttr(const XmlChar* nam, const XmlChar* val) const -> Attribute {
 #ifdef DD4HEP_USE_TINYXML
   TiXmlElement* e = Xml(m_node).e;
   e->SetAttribute(nam,val);
@@ -963,7 +963,7 @@ Attribute Handle_t::setAttr(const XmlChar* nam, const XmlChar* val) const {
 }
 
 /// Add reference child as a new child node. The obj must have the "name" attribute!
-Handle_t Handle_t::setRef(const XmlChar* tag_value, const XmlChar* ref_name) {
+auto Handle_t::setRef(const XmlChar* tag_value, const XmlChar* ref_name) -> Handle_t {
   Element me(*this);
   Element ref(me.document(), tag_value);
   ref.setAttr(Unicode_ref, ref_name);
@@ -972,12 +972,12 @@ Handle_t Handle_t::setRef(const XmlChar* tag_value, const XmlChar* ref_name) {
 }
 
 /// Add reference child as a new child node. The obj must have the "name" attribute!
-Handle_t Handle_t::setRef(const XmlChar* tag_value, const string& ref_name) {
+auto Handle_t::setRef(const XmlChar* tag_value, const string& ref_name) -> Handle_t {
   return setRef(tag_value, Strng_t(ref_name).ptr());
 }
 
 /// Checksum (sub-)tree of a xml document/tree
-static unsigned int adler32(unsigned int adler, const XmlChar* xml_buff, size_t len) {
+static auto adler32(unsigned int adler, const XmlChar* xml_buff, size_t len) -> unsigned int {
 #define DO1(buf,i)  {s1 +=(unsigned char)buf[i]; s2 += s1;}
 #define DO2(buf,i)  DO1(buf,i); DO1(buf,i+1);
 #define DO4(buf,i)  DO2(buf,i); DO2(buf,i+2);
@@ -1016,7 +1016,7 @@ static unsigned int adler32(unsigned int adler, const XmlChar* xml_buff, size_t 
 
 /// Checksum (sub-)tree of a xml document/tree
 typedef unsigned int (fcn_t)(unsigned int, const XmlChar*, size_t);
-unsigned int Handle_t::checksum(unsigned int param, fcn_t fcn) const {
+auto Handle_t::checksum(unsigned int param, fcn_t fcn) const -> unsigned int {
 #ifdef DD4HEP_USE_TINYXML
   typedef map<string, string> StringMap;
   TiXmlNode* n = Xml(m_node).n;
@@ -1057,7 +1057,7 @@ unsigned int Handle_t::checksum(unsigned int param, fcn_t fcn) const {
 }
 
 /// Create DOM element
-Handle_t Document::createElt(const XmlChar* tag_value) const {
+auto Document::createElt(const XmlChar* tag_value) const -> Handle_t {
 #ifdef DD4HEP_USE_TINYXML
   return _XE(new TiXmlElement(tag_value));
 #else
@@ -1066,14 +1066,14 @@ Handle_t Document::createElt(const XmlChar* tag_value) const {
 }
 
 /// Access the ROOT eleemnt of the DOM document
-Handle_t Document::root() const {
+auto Document::root() const -> Handle_t {
   if (m_doc)
     return _XE(_D(m_doc)->getDocumentElement());
   throw runtime_error("Document::root: Invalid handle!");
 }
 
 /// Acces the document URI
-std::string Document::uri() const   {
+auto Document::uri() const -> std::string   {
   if (m_doc)   {
     Tag_t val(_D(m_doc)->getDocumentURI());
     return val;
@@ -1082,7 +1082,7 @@ std::string Document::uri() const   {
 }
 
 /// Assign new document. Old document is dropped.
-DocumentHolder& DocumentHolder::assign(DOC d)   {
+auto DocumentHolder::assign(DOC d) -> DocumentHolder&   {
   if (m_doc)   {
     printout(DEBUG,"DocumentHolder","+++ Release DOM document....");
 #ifdef DD4HEP_USE_TINYXML
@@ -1106,7 +1106,7 @@ Element::Element(const Document& doc, const XmlChar* type)
 }
 
 /// Access the XmlElements parent
-Element::Elt_t Element::parentElement()  const   {
+auto Element::parentElement()  const -> Element::Elt_t   {
   Handle_t p = m_element.parent();
   if ( p && _N(p.ptr())->getNodeType() == ELEMENT_NODE_TYPE )  {
     return Elt_t(p);
@@ -1115,46 +1115,46 @@ Element::Elt_t Element::parentElement()  const   {
 }
 
 /// Access the hosting document handle of this DOM element
-Document Element::document() const {
+auto Element::document() const -> Document {
   return Document((XmlDocument*) (m_element ? _N(m_element)->getOwnerDocument() : nullptr));
 }
 
 /// Clone the DOM element tree
-Handle_t Element::clone(Handle_t h) const {
+auto Element::clone(Handle_t h) const -> Handle_t {
   if (m_element && h) {
     return h.clone(Document::DOC(document()));
   }
   throw runtime_error("Element::clone: Invalid element pointer -- unable to clone node!");
 }
 
-Attribute Element::getAttr(const XmlChar* name) const {
+auto Element::getAttr(const XmlChar* name) const -> Attribute {
   return m_element ? attribute_node(m_element, name) : nullptr;
 }
 
 /// Set the reference attribute to the node (adds attribute ref="ref-name")
-Attribute Element::setRef(const XmlChar* tag_value, const XmlChar* ref_name) const {
+auto Element::setRef(const XmlChar* tag_value, const XmlChar* ref_name) const -> Attribute {
   return setChild(tag_value).setAttr(Unicode_ref, ref_name);
 }
 
 /// Set the reference attribute to the node (adds attribute ref="ref-name")
-Attribute Element::setRef(const XmlChar* tag_value, const string& ref_name) const {
+auto Element::setRef(const XmlChar* tag_value, const string& ref_name) const -> Attribute {
   return setRef(tag_value, Strng_t(ref_name).ptr());
 }
 
 /// Access the value of the reference attribute of the node (attribute ref="ref-name")
-const XmlChar* Element::getRef(const XmlChar* tag_value) const {
+auto Element::getRef(const XmlChar* tag_value) const -> const XmlChar* {
   return child(tag_value).attr < cpXmlChar > (Unicode_ref);
 }
 
 /// Add a new child to the DOM node
-Handle_t Element::addChild(const XmlChar* tag_value) const {
+auto Element::addChild(const XmlChar* tag_value) const -> Handle_t {
   Handle_t e = document().createElt(tag_value);
   m_element.append(e);
   return e;
 }
 
 /// Check if a child with the required tag exists - if not create it and add it to the current node
-Handle_t Element::setChild(const XmlChar* t) const {
+auto Element::setChild(const XmlChar* t) const -> Handle_t {
   Elt_t e = m_element.child(t, false);
   return e ? Handle_t(e) : addChild(t);
 }
@@ -1197,18 +1197,18 @@ RefElement::RefElement(const RefElement& e)
    = default;
 
 /// Assignment operator
-RefElement& RefElement::operator=(const RefElement& e) {
+auto RefElement::operator=(const RefElement& e) -> RefElement& {
   m_element = e.m_element;
   return *this;
 }
 
-const XmlChar* RefElement::name() const {
+auto RefElement::name() const -> const XmlChar* {
   if (nullptr == m_name)
     cout << "Error:tag=" << m_element.tag() << endl;
   return attribute_value(m_name);
 }
 
-const XmlChar* RefElement::refName() const {
+auto RefElement::refName() const -> const XmlChar* {
   if (nullptr == m_name)
     cout << "Error:tag=" << m_element.tag() << endl;
   return attribute_value(m_name);
@@ -1237,13 +1237,13 @@ Collection_t::Collection_t(NodeList node_list)
 }
 
 /// Reset the collection object to restart the iteration
-Collection_t& Collection_t::reset() {
+auto Collection_t::reset() -> Collection_t& {
   m_node = m_children.reset();
   return *this;
 }
 
 /// Access the collection size. Avoid this call -- sloooow!
-size_t Collection_t::size() const {
+auto Collection_t::size() const -> size_t {
   return Handle_t(m_children.m_node).numChildren(m_children.m_tag, false);
 }
 
@@ -1285,7 +1285,7 @@ void Collection_t::operator--(int) const {
   --(*this);
 }
 
-Handle_t Document::clone(Handle_t source) const {
+auto Document::clone(Handle_t source) const -> Handle_t {
 #ifdef DD4HEP_USE_TINYXML
   return _XE(source.clone(nullptr));
 #else

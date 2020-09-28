@@ -60,7 +60,7 @@ void SurfaceInstaller::invalidInstaller(const std::string& msg)   const  {
 }
 
 /// Shortcut to access the parent detectorelement's volume
-Volume SurfaceInstaller::parentVolume(DetElement component)  const  {
+auto SurfaceInstaller::parentVolume(DetElement component)  const -> Volume  {
   DetElement module = component.parent();
   if ( module.isValid() )   {
     return module.placement().volume();
@@ -69,7 +69,7 @@ Volume SurfaceInstaller::parentVolume(DetElement component)  const  {
 }
 
 /// Shortcut to access the translation vector of a given component
-const double* SurfaceInstaller::placementTranslation(DetElement component)  const  {
+auto SurfaceInstaller::placementTranslation(DetElement component)  const -> const double*  {
   TGeoMatrix* mat = component.placement()->GetMatrix();
   const double* trans = mat->GetTranslation();
   return trans;

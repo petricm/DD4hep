@@ -18,7 +18,7 @@ using namespace dd4hep;
 using namespace dd4hep::detail;
 //using dd4hep::DDSegmentation::BitFieldCoder;
 
-int main() {
+auto main() -> int {
   try{
     BitFieldCoder bf("system:8,barrel:3,layer:8,slice:5,x:16,y:16");
     Segmentation base("CartesianGridXY","Test",&bf);

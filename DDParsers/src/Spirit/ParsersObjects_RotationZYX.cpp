@@ -15,7 +15,7 @@
 #include "Parsers/spirit/ParsersStandardListCommon.h"
 
 namespace ROOT::Math {
-    bool operator<(const RotationZYX& a, const RotationZYX& b)  {
+    auto operator<(const RotationZYX& a, const RotationZYX& b) -> bool  {
       if ( a.Theta() < b.Theta() ) return true;
       if ( a.Phi() < b.Phi() ) return true;
       if ( a.Psi() < b.Psi() ) return true;
@@ -29,7 +29,7 @@ template struct std::less<ROOT::Math::RotationZYX>;
 namespace dd4hep::Parsers {
 
     // ==========================================================================
-    template <> int parse(ROOT::Math::RotationZYX& result,const std::string& input) {
+    template <> auto parse(ROOT::Math::RotationZYX& result,const std::string& input) -> int {
       return parse_(result, input);
     }
     // ==========================================================================

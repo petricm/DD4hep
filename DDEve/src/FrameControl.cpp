@@ -58,12 +58,12 @@ void FrameControl::OnBuild()   {
 }
 
 /// Create the frame for this control structure. Default: create horizontal frame
-TGCompositeFrame* FrameControl::CreateFrame()    {
+auto FrameControl::CreateFrame() -> TGCompositeFrame*    {
   return new TGHorizontalFrame(this);
 }
 
 /// Helper: Load picture using path name
-const TGPicture* FrameControl::LoadPicture(const std::string& path)   {
+auto FrameControl::LoadPicture(const std::string& path) -> const TGPicture*   {
   const TGPicture* pic = m_client->GetPicture(path.c_str());
   if ( !pic )   {
     printout(ERROR,"FrameControl","+++ loadPicture: Failed to load picture: %s",path.c_str());

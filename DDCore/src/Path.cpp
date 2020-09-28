@@ -29,9 +29,9 @@ namespace {
   const char colon = ':';
 
   
-  inline bool is_separator(char c)  { return c == separator;  }
+  inline auto is_separator(char c) -> bool  { return c == separator;  }
 
-  bool is_root_separator(const string& str, size_t pos)
+  auto is_root_separator(const string& str, size_t pos) -> bool
   // pos is position of the separator
   {
     if ( str.empty() || is_separator(str[pos]) ) {
@@ -51,7 +51,7 @@ namespace {
     return str.find_first_of(separators, 2) == pos;
   }
 
-  size_t filename_pos(const string& str,size_t end_pos)
+  auto filename_pos(const string& str,size_t end_pos) -> size_t
   // return 0 if str itself is filename (or empty)
   {
     // case: "//"
@@ -73,7 +73,7 @@ namespace {
   }
 
   // return npos if no root_directory found
-  size_t root_directory_start(const string& path, size_t size)  {
+  auto root_directory_start(const string& path, size_t size) -> size_t  {
     // case "//"
     if (size == 2
         && is_separator(path[0])
@@ -94,22 +94,22 @@ namespace {
   }
 }
 
-const Path& Path::detail::dot_path()   {
+auto Path::detail::dot_path() -> const Path&   {
   static Path p(".");
   return p;
 }
-const Path& Path::detail::dot_dot_path()  {
+auto Path::detail::dot_dot_path() -> const Path&  {
   static Path p("..");
   return p;
 }
 
-Path& Path::append(const std::string& c)   {
+auto Path::append(const std::string& c) -> Path&   {
   insert(end(),separator);
   insert(end(),c.begin(),c.end());
   return *this;
 }
 
-Path Path::normalize()  const {
+auto Path::normalize()  const -> Path {
   if (empty())
     return *this;
 
@@ -180,7 +180,7 @@ Path Path::normalize()  const {
   return temp;
 }
 
-size_t Path::parent_path_end() const  {
+auto Path::parent_path_end() const -> size_t  {
   size_t end_pos(filename_pos(native(),this->size()));
   bool filename_was_separator(this->size() && is_separator(at(end_pos)));
 
@@ -196,17 +196,17 @@ size_t Path::parent_path_end() const  {
 }
 
 
-Path& Path::remove_filename()   {
+auto Path::remove_filename() -> Path&   {
   this->erase(this->parent_path_end());
   return *this;
 }
 
-Path  Path::parent_path() const  {
+auto  Path::parent_path() const -> Path  {
   size_t end_pos(parent_path_end());
   return end_pos == string::npos ? Path() : Path(string_data(), string_data() + end_pos);
 }
 
-Path Path::filename() const
+auto Path::filename() const -> Path
 {
   size_t pos(filename_pos(native(), native().size()));
   return (native().size()
@@ -217,7 +217,7 @@ Path Path::filename() const
     : Path(string_data() + pos);
 }
 
-Path  Path::file_path() const  {
+auto  Path::file_path() const -> Path  {
   size_t pos(filename_pos(native(), native().size()));
   return (native().size()
           && pos

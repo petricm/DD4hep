@@ -163,11 +163,11 @@ void DigiSubdetectorSequence::execute(DigiContext& context)  const   {
 }
 
 /// Access subdetector from the detector description
-dd4hep::DetElement DigiSubdetectorSequence::subdetector(const string& nam)   const   {
+auto DigiSubdetectorSequence::subdetector(const string& nam)   const -> dd4hep::DetElement   {
   return m_kernel.detectorDescription().detector(nam);
 }
 
 /// Access sensitive detector from the detector description
-dd4hep::SensitiveDetector DigiSubdetectorSequence::sensitiveDetector(const string& nam)   const   {
+auto DigiSubdetectorSequence::sensitiveDetector(const string& nam)   const -> dd4hep::SensitiveDetector   {
   return m_kernel.detectorDescription().sensitiveDetector(nam);
 }

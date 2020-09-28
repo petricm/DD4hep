@@ -31,28 +31,28 @@ namespace dd4hep::cond  {
       typedef std::vector<Condition> Buffer;
       Buffer m_buffer;
 
-      size_t load_source  (const std::string& nam,
+      auto load_source  (const std::string& nam,
                            key_type key,
                            const IOV& req_validity,
-                           RangeConditions& conditions);
+                           RangeConditions& conditions) -> size_t;
     public:
       /// Default constructor
       ConditionsXmlLoader(Detector& description, ConditionsManager mgr, const std::string& nam);
       /// Default destructor
       ~ConditionsXmlLoader() override;
       /// Load  a condition set given a Detector Element and the conditions name according to their validity
-      virtual size_t load_single(key_type key,
+      virtual auto load_single(key_type key,
                                  const IOV& req_validity,
-                                 RangeConditions& conditions);
+                                 RangeConditions& conditions) -> size_t;
       /// Load  a condition set given a Detector Element and the conditions name according to their validity
-      virtual size_t load_range( key_type key,
+      virtual auto load_range( key_type key,
                                  const IOV& req_validity,
-                                 RangeConditions& conditions);
+                                 RangeConditions& conditions) -> size_t;
       /// Optimized update using conditions slice data
-      size_t load_many(  const IOV& /* req_validity */,
+      auto load_many(  const IOV& /* req_validity */,
                                  RequiredItems&  /* work         */,
                                  LoadedItems&    /* loaded       */,
-                                 IOV&       /* conditions_validity */) override
+                                 IOV&       /* conditions_validity */) -> size_t override
       {
         except("ConditionsLoader","+++ update: Invalid call!");
         return 0;
@@ -80,7 +80,7 @@ using namespace dd4hep;
 using namespace dd4hep::cond;
 
 namespace {
-  void* create_loader(Detector& description, int argc, char** argv)   {
+  auto create_loader(Detector& description, int argc, char** argv) -> void*   {
     const char* name = argc>0 ? argv[0] : "XMLLoader";
     auto* mgr = (ConditionsManagerObject*)(argc>0 ? argv[1] : nullptr);
     return new ConditionsXmlLoader(description,ConditionsManager(mgr),name);
@@ -97,10 +97,10 @@ ConditionsXmlLoader::ConditionsXmlLoader(Detector& description, ConditionsManage
 /// Default Destructor
 ConditionsXmlLoader::~ConditionsXmlLoader() = default;
 
-size_t ConditionsXmlLoader::load_source(const std::string& nam,
+auto ConditionsXmlLoader::load_source(const std::string& nam,
                                         key_type key,
                                         const IOV& req_validity,
-                                        RangeConditions& conditions)
+                                        RangeConditions& conditions) -> size_t
 {
   size_t len = conditions.size();
   string fac = "XMLConditionsParser";
@@ -130,9 +130,9 @@ size_t ConditionsXmlLoader::load_source(const std::string& nam,
   return conditions.size()-len;
 }
 
-size_t ConditionsXmlLoader::load_single(key_type key,
+auto ConditionsXmlLoader::load_single(key_type key,
                                         const IOV& req_validity,
-                                        RangeConditions& conditions)
+                                        RangeConditions& conditions) -> size_t
 {
   size_t len = conditions.size();
   if ( m_buffer.empty() && !m_sources.empty() )  {
@@ -152,9 +152,9 @@ size_t ConditionsXmlLoader::load_single(key_type key,
   return conditions.size()-len;
 }
 
-size_t ConditionsXmlLoader::load_range(key_type key,
+auto ConditionsXmlLoader::load_range(key_type key,
                                        const IOV& req_validity,
-                                       RangeConditions& conditions)
+                                       RangeConditions& conditions) -> size_t
 {
   size_t len = conditions.size();
   while ( !m_sources.empty() )  {

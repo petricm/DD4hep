@@ -524,7 +524,7 @@ namespace dd4hep {
       /// G4VSensitiveDetector interface: Method invoked at the end of each event.
       virtual void end(G4HCofThisEvent* hce);
       /// G4VSensitiveDetector interface: Method for generating hit(s) using the G4Step object.
-      virtual bool process(G4Step* step,G4TouchableHistory* history);
+      virtual auto process(G4Step* step,G4TouchableHistory* history) -> bool;
       /// G4VSensitiveDetector interface: Method invoked if the event was aborted.
       virtual void clear(G4HCofThisEvent* hce);
     };

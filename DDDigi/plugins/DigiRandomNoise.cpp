@@ -43,7 +43,7 @@ namespace dd4hep::digi {
       /// Inhibit copy constructor
       DigiRandomNoise(const DigiRandomNoise& copy) = delete;
       /// Inhibit assignment operator
-      DigiRandomNoise& operator=(const DigiRandomNoise& copy) = delete;
+      auto operator=(const DigiRandomNoise& copy) -> DigiRandomNoise& = delete;
 
     public:
       /// Standard constructor

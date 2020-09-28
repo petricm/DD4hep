@@ -242,7 +242,7 @@ namespace {
   };
 
 
-  pair<double,double> g4PropertyConversion(int index)   {
+  auto g4PropertyConversion(int index) -> pair<double,double>   {
 #if G4VERSION_NUMBER >= 1040
     switch(index)  {
     case kRINDEX:                         return make_pair(CLHEP::keV/units::keV, 1.0);
@@ -278,7 +278,7 @@ namespace {
     return make_pair(0e0,0e0);
   }
 
-  double g4ConstPropertyConversion(int index)   {
+  auto g4ConstPropertyConversion(int index) -> double   {
 #if G4VERSION_NUMBER >= 1040
     switch(index)   {
     case kSURFACEROUGHNESS:            return CLHEP::m/units::m;                             // Length
@@ -345,7 +345,7 @@ Geant4Converter::Geant4Converter(const Detector& description_ref, PrintLevel lev
 Geant4Converter::~Geant4Converter() = default;
 
 /// Handle the conversion of isotopes
-void* Geant4Converter::handleIsotope(const string& /* name */, const TGeoIsotope* iso) const {
+auto Geant4Converter::handleIsotope(const string& /* name */, const TGeoIsotope* iso) const -> void* {
   G4Isotope* g4i = data().g4Isotopes[iso];
   if (!g4i) {
     double a_conv = (CLHEP::g / CLHEP::mole);
@@ -359,7 +359,7 @@ void* Geant4Converter::handleIsotope(const string& /* name */, const TGeoIsotope
 }
 
 /// Handle the conversion of elements
-void* Geant4Converter::handleElement(const string& name, const Atom element) const {
+auto Geant4Converter::handleElement(const string& name, const Atom element) const -> void* {
   G4Element* g4e = data().g4Elements[element];
   if (!g4e) {
     PrintLevel lvl = debugElements ? ALWAYS : outputLevel;
@@ -387,7 +387,7 @@ void* Geant4Converter::handleElement(const string& name, const Atom element) con
 }
 
 /// Dump material in GDML format to output stream
-void* Geant4Converter::handleMaterial(const string& name, Material medium) const {
+auto Geant4Converter::handleMaterial(const string& name, Material medium) const -> void* {
   Geant4GeometryInfo& info = data();
   G4Material*         mat  = info.g4Materials[medium];
   if ( !mat )  {
@@ -519,7 +519,7 @@ void* Geant4Converter::handleMaterial(const string& name, Material medium) const
 }
 
 /// Dump solid in GDML format to output stream
-void* Geant4Converter::handleSolid(const string& name, const TGeoShape* shape) const {
+auto Geant4Converter::handleSolid(const string& name, const TGeoShape* shape) const -> void* {
   G4VSolid* solid = nullptr;
   if ( shape ) {
     if (nullptr != (solid = data().g4Solids[shape])) {
@@ -661,7 +661,7 @@ void* Geant4Converter::handleSolid(const string& name, const TGeoShape* shape) c
 }
 
 /// Dump logical volume in GDML format to output stream
-void* Geant4Converter::handleVolume(const string& name, const TGeoVolume* volume) const {
+auto Geant4Converter::handleVolume(const string& name, const TGeoVolume* volume) const -> void* {
   Geant4GeometryInfo& info = data();
   PrintLevel lvl = debugVolumes ? ALWAYS : outputLevel;
   auto volIt = info.g4Volumes.find(volume);
@@ -737,7 +737,7 @@ void* Geant4Converter::handleVolume(const string& name, const TGeoVolume* volume
 }
 
 /// Dump logical volume in GDML format to output stream
-void* Geant4Converter::collectVolume(const string& /* name */, const TGeoVolume* volume) const {
+auto Geant4Converter::collectVolume(const string& /* name */, const TGeoVolume* volume) const -> void* {
   Geant4GeometryInfo& info = data();
   const TGeoVolume* v = volume;
   Volume _v(v);
@@ -755,7 +755,7 @@ void* Geant4Converter::collectVolume(const string& /* name */, const TGeoVolume*
 }
 
 /// Dump volume placement in GDML format to output stream
-void* Geant4Converter::handleAssembly(const string& name, const TGeoNode* node) const {
+auto Geant4Converter::handleAssembly(const string& name, const TGeoNode* node) const -> void* {
   TGeoVolume* mot_vol = node->GetVolume();
   PrintLevel lvl = debugVolumes ? ALWAYS : outputLevel;
   if ( mot_vol->IsA() != TGeoVolumeAssembly::Class() )    {
@@ -810,7 +810,7 @@ void* Geant4Converter::handleAssembly(const string& name, const TGeoNode* node) 
 }
 
 /// Dump volume placement in GDML format to output stream
-void* Geant4Converter::handlePlacement(const string& name, const TGeoNode* node) const {
+auto Geant4Converter::handlePlacement(const string& name, const TGeoNode* node) const -> void* {
   Geant4GeometryInfo& info = data();
   PrintLevel lvl = debugPlacements ? ALWAYS : outputLevel;
   auto g4it = info.g4Placements.find(node);
@@ -889,7 +889,7 @@ void* Geant4Converter::handlePlacement(const string& name, const TGeoNode* node)
 }
 
 /// Convert the geometry type region into the corresponding Geant4 object(s).
-void* Geant4Converter::handleRegion(Region region, const set<const TGeoVolume*>& /* volumes */) const {
+auto Geant4Converter::handleRegion(Region region, const set<const TGeoVolume*>& /* volumes */) const -> void* {
   G4Region* g4 = data().g4Regions[region];
   if (!g4) {
     PrintLevel lvl = debugRegions ? ALWAYS : outputLevel;
@@ -967,13 +967,13 @@ void* Geant4Converter::handleRegion(Region region, const set<const TGeoVolume*>&
 }
 
 /// Convert the geometry type LimitSet into the corresponding Geant4 object(s).
-void* Geant4Converter::handleLimitSet(LimitSet limitset, const set<const TGeoVolume*>& /* volumes */) const {
+auto Geant4Converter::handleLimitSet(LimitSet limitset, const set<const TGeoVolume*>& /* volumes */) const -> void* {
   G4UserLimits* g4 = data().g4Limits[limitset];
   if (!g4) {
     struct LimitPrint  {
       const LimitSet& ls;
       LimitPrint(const LimitSet& lset) : ls(lset) {}
-      const LimitPrint& operator()(const std::string& pref, const Geant4UserLimits::Handler& h)  const {
+      auto operator()(const std::string& pref, const Geant4UserLimits::Handler& h)  const -> const LimitPrint& {
         if ( !h.particleLimits.empty() )  {
           printout(ALWAYS,"Geant4Converter",
                    "+++ LimitSet: Limit %s.%s applied for particles:",ls.name(), pref.c_str());
@@ -1004,7 +1004,7 @@ void* Geant4Converter::handleLimitSet(LimitSet limitset, const set<const TGeoVol
 }
 
 /// Convert the geometry visualisation attributes to the corresponding Geant4 object(s).
-void* Geant4Converter::handleVis(const string& /* name */, VisAttr attr) const {
+auto Geant4Converter::handleVis(const string& /* name */, VisAttr attr) const -> void* {
   Geant4GeometryInfo& info = data();
   G4VisAttributes*    g4   = info.g4Vis[attr];
   if ( !g4 ) {
@@ -1072,7 +1072,7 @@ void Geant4Converter::handleProperties(Detector::Properties& prp) const {
 
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,17,0)
 /// Convert the geometry type material into the corresponding Geant4 object(s).
-void* Geant4Converter::handleMaterialProperties(TObject* matrix) const    {
+auto Geant4Converter::handleMaterialProperties(TObject* matrix) const -> void*    {
   auto* gdmlMat = (TGDMLMatrix*)matrix;
   Geant4GeometryInfo& info = data();
   Geant4GeometryInfo::PropertyVector* g4 = info.g4OpticalProperties[gdmlMat];
@@ -1095,7 +1095,7 @@ void* Geant4Converter::handleMaterialProperties(TObject* matrix) const    {
   return g4;
 }
 
-static G4OpticalSurfaceFinish geant4_surface_finish(TGeoOpticalSurface::ESurfaceFinish f)   {
+static auto geant4_surface_finish(TGeoOpticalSurface::ESurfaceFinish f) -> G4OpticalSurfaceFinish   {
 #define TO_G4_FINISH(x)  case TGeoOpticalSurface::kF##x : return x;
   switch(f)   {
     TO_G4_FINISH(polished);              // smooth perfectly polished surface
@@ -1151,7 +1151,7 @@ static G4OpticalSurfaceFinish geant4_surface_finish(TGeoOpticalSurface::ESurface
 #undef TO_G4_FINISH
 }
 
-static G4SurfaceType geant4_surface_type(TGeoOpticalSurface::ESurfaceType t)   {
+static auto geant4_surface_type(TGeoOpticalSurface::ESurfaceType t) -> G4SurfaceType   {
 #define TO_G4_TYPE(x)  case TGeoOpticalSurface::kT##x : return x;
   switch(t)   {
     TO_G4_TYPE(dielectric_metal);      // dielectric-metal interface
@@ -1169,7 +1169,7 @@ static G4SurfaceType geant4_surface_type(TGeoOpticalSurface::ESurfaceType t)   {
 #undef TO_G4_TYPE
 }
 
-static G4OpticalSurfaceModel geant4_surface_model(TGeoOpticalSurface::ESurfaceModel surfMod)   {
+static auto geant4_surface_model(TGeoOpticalSurface::ESurfaceModel surfMod) -> G4OpticalSurfaceModel   {
 #define TO_G4_MODEL(x)  case TGeoOpticalSurface::kM##x : return x;
   switch(surfMod)   {
     TO_G4_MODEL(glisur);   // original GEANT3 model
@@ -1186,7 +1186,7 @@ static G4OpticalSurfaceModel geant4_surface_model(TGeoOpticalSurface::ESurfaceMo
 }
 
 /// Convert the optical surface to Geant4
-void* Geant4Converter::handleOpticalSurface(TObject* surface) const    {
+auto Geant4Converter::handleOpticalSurface(TObject* surface) const -> void*    {
   auto* optSurf    = (TGeoOpticalSurface*)surface;
   Geant4GeometryInfo& info = data();
   G4OpticalSurface*   g4   = info.g4OpticalSurfaces[optSurf];
@@ -1245,7 +1245,7 @@ void* Geant4Converter::handleOpticalSurface(TObject* surface) const    {
 }
 
 /// Convert the skin surface to Geant4
-void* Geant4Converter::handleSkinSurface(TObject* surface) const   {
+auto Geant4Converter::handleSkinSurface(TObject* surface) const -> void*   {
   auto*    surf = (TGeoSkinSurface*)surface;
   Geant4GeometryInfo& info = data();
   G4LogicalSkinSurface* g4 = info.g4SkinSurfaces[surf];
@@ -1262,7 +1262,7 @@ void* Geant4Converter::handleSkinSurface(TObject* surface) const   {
 }
 
 /// Convert the border surface to Geant4
-void* Geant4Converter::handleBorderSurface(TObject* surface) const   {
+auto Geant4Converter::handleBorderSurface(TObject* surface) const -> void*   {
   auto*    surf = (TGeoBorderSurface*)surface;
   Geant4GeometryInfo&   info = data();
   G4LogicalBorderSurface* g4 = info.g4BorderSurfaces[surf];
@@ -1308,7 +1308,7 @@ void Geant4Converter::printSensitive(SensitiveDetector sens_det, const set<const
   }
 }
 
-string printSolid(G4VSolid* sol) {
+auto printSolid(G4VSolid* sol) -> string {
   stringstream str;
   if (typeid(*sol) == typeid(G4Box)) {
     const G4Box* b = (G4Box*) sol;
@@ -1323,7 +1323,7 @@ string printSolid(G4VSolid* sol) {
 }
 
 /// Print G4 placement
-void* Geant4Converter::printPlacement(const string& name, const TGeoNode* node) const {
+auto Geant4Converter::printPlacement(const string& name, const TGeoNode* node) const -> void* {
   Geant4GeometryInfo& info = data();
   G4VPhysicalVolume* g4 = info.g4Placements[node];
   G4LogicalVolume* vol = info.g4Volumes[node->GetVolume()];
@@ -1387,7 +1387,7 @@ namespace  {
 }
 
 /// Create geometry conversion
-Geant4Converter& Geant4Converter::create(DetElement top) {
+auto Geant4Converter::create(DetElement top) -> Geant4Converter& {
   Geant4GeometryInfo& geo = this->init();
   World wrld = top.world();
   m_data->clear();

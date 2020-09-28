@@ -33,6 +33,6 @@ DigiUniformNoise::~DigiUniformNoise() {
 }
 
 /// Callback to read event uniformnoise
-double DigiUniformNoise::operator()(DigiCellContext& context)  const  {
+auto DigiUniformNoise::operator()(DigiCellContext& context)  const -> double  {
   return context.context.randomGenerator().uniform(m_min,m_max);
 }

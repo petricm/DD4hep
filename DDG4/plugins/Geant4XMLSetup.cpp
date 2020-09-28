@@ -34,7 +34,7 @@ namespace dd4hep {
     class XMLSetup;
 
     /// Action cast
-    template <typename TYPE, typename PTR> TYPE* _action(PTR* in)  {
+    template <typename TYPE, typename PTR> auto _action(PTR* in) -> TYPE*  {
       return dynamic_cast<TYPE*>(in);
     }
 
@@ -67,7 +67,7 @@ namespace dd4hep {
     }
 
     /// Create/Configure Geant4 sensitive action object from XML
-    static Action _convertSensitive(Detector& description, xml_h e, const string& detector)  {
+    static auto _convertSensitive(Detector& description, xml_h e, const string& detector) -> Action  {
       xml_comp_t action(e);
       Kernel& kernel = Kernel::instance(description);
       TypeName tn = TypeName::split(action.attr<string>(_U(name)));
@@ -86,7 +86,7 @@ namespace dd4hep {
     }
 
     /// Create/Configure Action object from XML
-    static Action _convertAction(Detector& description, xml_h e)  {
+    static auto _convertAction(Detector& description, xml_h e) -> Action  {
       xml_comp_t action(e);
       Kernel& kernel = Kernel::instance(description);
       TypeName tn = TypeName::split(action.attr<string>(_U(name)));
@@ -109,7 +109,7 @@ namespace dd4hep {
 
     enum { SENSITIVE, ACTION, FILTER };
     /// Create/Configure Action object from XML
-    Action _createAction(Detector& description, xml_h a, const string& seqType, int what)  {
+    auto _createAction(Detector& description, xml_h a, const string& seqType, int what) -> Action  {
       string   nam = a.attr<string>(_U(name));
       TypeName typ    = TypeName::split(nam);
       Kernel&  kernel = Kernel::instance(description);
@@ -487,7 +487,7 @@ namespace dd4hep {
 }
 
 /// Factory method
-static long setup_Geant4(dd4hep::Detector& description, const xml_h& element) {
+static auto setup_Geant4(dd4hep::Detector& description, const xml_h& element) -> long {
   (dd4hep::Converter<dd4hep::sim::XMLSetup>(description))(element);
   return 1;
 }

@@ -75,7 +75,7 @@ namespace  {
 
     }
     /// Action routine to execute the test
-    static long run(Detector& description,int argc,char** argv)   {
+    static auto run(Detector& description,int argc,char** argv) -> long   {
       DetectorHelperTest test(description,argc,argv);
       return 1;
     }

@@ -37,7 +37,7 @@ void ConditionsMap::scan(DetElement   detector,
     Scanner(Condition::key_type low, Condition::key_type up, const Condition::Processor& p)
       : lower(low), upper(up), processor(p) {}
     /// Conditions callback for object processing
-    [[nodiscard]] int process(Condition c)  const override  {
+    [[nodiscard]] auto process(Condition c)  const -> int override  {
       Condition::key_type h = c->hash;
       if ( h >= lower && h <= upper )
         return processor(c);
@@ -56,9 +56,9 @@ void ConditionsMap::scan(DetElement   detector,
 }
 
 /// No ConditionsMap overload: Access all conditions within a key range in the interval [lower,upper]
-std::vector<Condition> ConditionsMap::get(DetElement detector,
+auto ConditionsMap::get(DetElement detector,
                                           Condition::itemkey_type lower,
-                                          Condition::itemkey_type upper)  const   {
+                                          Condition::itemkey_type upper)  const -> std::vector<Condition>   {
   /// Helper to implement partial scans.
   /*
    *  \author  M.Frank
@@ -71,7 +71,7 @@ std::vector<Condition> ConditionsMap::get(DetElement detector,
     /// Constructor
     Scanner(Condition::key_type low, Condition::key_type up, std::vector<Condition>& r) : lower(low), upper(up), result(r) {}
     /// Conditions callback for object processing
-    [[nodiscard]] int process(Condition c)  const override  {
+    [[nodiscard]] auto process(Condition c)  const -> int override  {
       Condition::key_type h = c->hash;
       if ( h >= lower && h <= upper )   {
         result.emplace_back(c);
@@ -95,14 +95,14 @@ std::vector<Condition> ConditionsMap::get(DetElement detector,
 
 /// Insert a new entry to the map
 template <typename T>
-bool ConditionsMapping<T>::insert(DetElement detector, Condition::itemkey_type key, Condition condition)   {
+auto ConditionsMapping<T>::insert(DetElement detector, Condition::itemkey_type key, Condition condition) -> bool   {
   auto res = data.emplace(ConditionKey(detector,key).hash,condition);
   return res.second;
 }
 
 /// Interface to access conditions by hash value
 template <typename T>
-Condition ConditionsMapping<T>::get(DetElement detector, Condition::itemkey_type key) const   {
+auto ConditionsMapping<T>::get(DetElement detector, Condition::itemkey_type key) const -> Condition   {
   auto res = data.find(ConditionKey(detector,key).hash);
   return (res == data.end()) ? Condition() : res->second;
 }
@@ -138,8 +138,8 @@ namespace dd4hep {
 
   /// Specialization: Insert a new entry to the map
   template <>
-  bool ConditionsMapping<std::multimap<Condition::key_type,Condition> >
-  ::insert(DetElement detector, Condition::itemkey_type key, Condition condition)   {
+  auto ConditionsMapping<std::multimap<Condition::key_type,Condition> >
+  ::insert(DetElement detector, Condition::itemkey_type key, Condition condition) -> bool   {
     data.emplace(ConditionKey(detector,key).hash,condition);
     return true;
   }

@@ -29,7 +29,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::sim;
 
-TypeName TypeName::split(const string& type_name, const string& delim) {
+auto TypeName::split(const string& type_name, const string& delim) -> TypeName {
   size_t idx = type_name.find(delim);
   string typ = type_name, nam = type_name;
   if (idx != string::npos) {
@@ -39,7 +39,7 @@ TypeName TypeName::split(const string& type_name, const string& delim) {
   return TypeName(typ, nam);
 }
 
-TypeName TypeName::split(const string& type_name) {
+auto TypeName::split(const string& type_name) -> TypeName {
   return split(type_name,"/");
 }
 #if 0
@@ -71,12 +71,12 @@ Geant4Action::~Geant4Action() {
 }
 
 /// Implicit destruction
-long Geant4Action::addRef() {
+auto Geant4Action::addRef() -> long {
   return ++m_refCount;
 }
 
 /// Decrease reference count. Implicit destruction
-long Geant4Action::release() {
+auto Geant4Action::release() -> long {
   long count = --m_refCount;
   if (m_refCount <= 0) {
     printM1("Geant4Action: Deleting object %s of type %s Pointer:%p",
@@ -87,25 +87,25 @@ long Geant4Action::release() {
 }
 
 /// Set the output level; returns previous value
-PrintLevel Geant4Action::setOutputLevel(PrintLevel new_level)  {
+auto Geant4Action::setOutputLevel(PrintLevel new_level) -> PrintLevel  {
   int old = m_outputLevel;
   m_outputLevel = new_level;
   return (PrintLevel)old;
 }
 
 /// Set object properties
-Geant4Action& Geant4Action::setProperties(PropertyConfigurator& setup) {
+auto Geant4Action::setProperties(PropertyConfigurator& setup) -> Geant4Action& {
   m_properties.set(m_name, setup);
   return *this;
 }
 
 /// Check property for existence
-bool Geant4Action::hasProperty(const string& nam) const    {
+auto Geant4Action::hasProperty(const string& nam) const -> bool    {
   return m_properties.exists(nam);
 }
 
 /// Access single property
-Property& Geant4Action::property(const string& nam)   {
+auto Geant4Action::property(const string& nam) -> Property&   {
   return properties()[nam];
 }
 
@@ -131,7 +131,7 @@ void Geant4Action::installCommandMessenger()   {
 }
 
 /// Access to the UI messenger
-Geant4UIMessenger* Geant4Action::control() const   {
+auto Geant4Action::control() const -> Geant4UIMessenger*   {
   if ( m_control )   {
     return m_control;
   }
@@ -237,7 +237,7 @@ void Geant4Action::error(const char* fmt, ...) const {
 }
 
 /// Action to support error messages.
-bool Geant4Action::return_error(bool return_value, const char* fmt, ...) const {
+auto Geant4Action::return_error(bool return_value, const char* fmt, ...) const -> bool {
   va_list args;
   va_start(args, fmt);
   dd4hep::printout(dd4hep::ERROR, m_name, fmt, args);
@@ -276,31 +276,31 @@ void Geant4Action::abortRun(const string& exception, const char* fmt, ...) const
 }
 
 /// Access to the main run action sequence from the kernel object
-Geant4RunActionSequence& Geant4Action::runAction() const {
+auto Geant4Action::runAction() const -> Geant4RunActionSequence& {
   return m_context->kernel().runAction();
 }
 
 /// Access to the main event action sequence from the kernel object
-Geant4EventActionSequence& Geant4Action::eventAction() const {
+auto Geant4Action::eventAction() const -> Geant4EventActionSequence& {
   return m_context->kernel().eventAction();
 }
 
 /// Access to the main stepping action sequence from the kernel object
-Geant4SteppingActionSequence& Geant4Action::steppingAction() const {
+auto Geant4Action::steppingAction() const -> Geant4SteppingActionSequence& {
   return m_context->kernel().steppingAction();
 }
 
 /// Access to the main tracking action sequence from the kernel object
-Geant4TrackingActionSequence& Geant4Action::trackingAction() const {
+auto Geant4Action::trackingAction() const -> Geant4TrackingActionSequence& {
   return m_context->kernel().trackingAction();
 }
 
 /// Access to the main stacking action sequence from the kernel object
-Geant4StackingActionSequence& Geant4Action::stackingAction() const {
+auto Geant4Action::stackingAction() const -> Geant4StackingActionSequence& {
   return m_context->kernel().stackingAction();
 }
 
 /// Access to the main generator action sequence from the kernel object
-Geant4GeneratorActionSequence& Geant4Action::generatorAction() const {
+auto Geant4Action::generatorAction() const -> Geant4GeneratorActionSequence& {
   return m_context->kernel().generatorAction();
 }

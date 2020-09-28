@@ -21,7 +21,7 @@ SegmentationCreatorBase::SegmentationCreatorBase(const std::string& name) {
 SegmentationFactory* SegmentationFactory::_instance = nullptr;
 
 /// Access to the global factory instance
-SegmentationFactory* SegmentationFactory::instance() {
+auto SegmentationFactory::instance() -> SegmentationFactory* {
 	if (not _instance) {
 		_instance = new SegmentationFactory();
 	}
@@ -29,7 +29,7 @@ SegmentationFactory* SegmentationFactory::instance() {
 }
 
 /// Create a new segmentation object with the given type name. Returns NULL if type name is unknown.
-Segmentation* SegmentationFactory::create(const std::string& name, const std::string& identifier) const {
+auto SegmentationFactory::create(const std::string& name, const std::string& identifier) const -> Segmentation* {
 	map<std::string, SegmentationCreatorBase*>::const_iterator it;
 	it = _segmentations.find(name);
 	if (it != _segmentations.end()) {
@@ -39,7 +39,7 @@ Segmentation* SegmentationFactory::create(const std::string& name, const std::st
 }
 
 /// Access to the list of registered segmentations
-vector<std::string> SegmentationFactory::registeredSegmentations() const {
+auto SegmentationFactory::registeredSegmentations() const -> vector<std::string> {
 	vector<std::string> segmentationNames;
 	map<std::string, SegmentationCreatorBase*>::const_iterator it;
 	for (it = _segmentations.begin(); it != _segmentations.end(); ++ it) {

@@ -33,7 +33,7 @@ typedef Geant4DataDump::Particles Particles;
 typedef Geant4DataDump::TrackerHits TrackerHits;
 typedef Geant4DataDump::CalorimeterHits CalorimeterHits;
 
-static long usage()   {
+static auto usage() -> long   {
   printout(FATAL,"Geant4ROOTDump","usage: Geant4ROOTDump -opt (app-opts) --opt=value (plugin-opts)");
   printout(FATAL,"Geant4ROOTDump","       app-opts: ");
   printout(FATAL,"Geant4ROOTDump","       -print INFO      Print container summaries only.");
@@ -46,7 +46,7 @@ static long usage()   {
   return 'H';
 }
 
-static pair<TClass*,void*> load(TBranch* branch, int entry)   {
+static auto load(TBranch* branch, int entry) -> pair<TClass*,void*>   {
   TClass* cl = gROOT->GetClass(branch->GetClassName(),kTRUE);
   if ( !cl )   {
     return pair<TClass*,void*>(0,0);
@@ -62,7 +62,7 @@ static pair<TClass*,void*> load(TBranch* branch, int entry)   {
   return pair<TClass*,void*>(cl,obj);
 }
 
-static long dump_root(Detector&, int argc, char** argv) {
+static auto dump_root(Detector&, int argc, char** argv) -> long {
   std::string input = "", tag="Geant4ROOTDump";
   int entry = -1;
 

@@ -47,7 +47,7 @@ namespace  {
     struct FND {
       const string& test;
       FND(const string& c) : test(c) {}
-      bool operator()(const VolIDs::value_type& c) const { return c.first == test; }
+      auto operator()(const VolIDs::value_type& c) const -> bool { return c.first == test; }
     };
     AlignmentsNominalMap m_mapping;
     IDDescriptor  m_iddesc;
@@ -67,7 +67,7 @@ namespace  {
     void walkVolume(DetElement e, PlacedVolume pv, VolIDs ids, const Chain& chain, size_t depth, size_t mx_depth);
 
     /// Action routine to execute the test
-    static long run(Detector& description,int argc,char** argv);
+    static auto run(Detector& description,int argc,char** argv) -> long;
   };
 }
 
@@ -298,7 +298,7 @@ void VolIDTest::walkVolume(DetElement detector, PlacedVolume pv, VolIDs ids, con
 }
 
 /// Action routine to execute the test
-long VolIDTest::run(Detector& description,int argc,char** argv)    {
+auto VolIDTest::run(Detector& description,int argc,char** argv) -> long    {
   printout(ALWAYS,"DD4hepVolumeMgrTest","++ Processing plugin...");
   for(int iarg=0; iarg<argc;++iarg)  {
     if ( argv[iarg] == nullptr ) break;

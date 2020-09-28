@@ -15,7 +15,7 @@
 #include "Parsers/spirit/ParsersStandardListCommon.h"
 
 namespace ROOT::Math {
-    bool operator<(const PxPyPzEVector& a, const PxPyPzEVector& b)  {
+    auto operator<(const PxPyPzEVector& a, const PxPyPzEVector& b) -> bool  {
       if ( a.X() < b.X() ) return true;
       if ( a.Y() < b.Y() ) return true;
       if ( a.Z() < b.Z() ) return true;
@@ -29,7 +29,7 @@ template struct std::less<ROOT::Math::PxPyPzEVector>;
 // ============================================================================
 namespace dd4hep::Parsers {
 
-    template <> int parse(ROOT::Math::PxPyPzEVector& result, const std::string& input) {
+    template <> auto parse(ROOT::Math::PxPyPzEVector& result, const std::string& input) -> int {
       return parse_(result, input);
     }
 

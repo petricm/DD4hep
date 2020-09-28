@@ -25,7 +25,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::digi;
 
-TypeName TypeName::split(const string& type_name, const string& delim) {
+auto TypeName::split(const string& type_name, const string& delim) -> TypeName {
   size_t idx = type_name.find(delim);
   string typ = type_name, nam = type_name;
   if (idx != string::npos) {
@@ -35,7 +35,7 @@ TypeName TypeName::split(const string& type_name, const string& delim) {
   return TypeName(typ, nam);
 }
 
-TypeName TypeName::split(const string& type_name) {
+auto TypeName::split(const string& type_name) -> TypeName {
   return split(type_name,"/");
 }
 
@@ -55,12 +55,12 @@ DigiAction::~DigiAction() {
 }
 
 /// Implicit destruction
-long DigiAction::addRef() {
+auto DigiAction::addRef() -> long {
   return ++m_refCount;
 }
 
 /// Decrease reference count. Implicit destruction
-long DigiAction::release() {
+auto DigiAction::release() -> long {
   long count = --m_refCount;
   if (m_refCount <= 0) {
     printM1("DigiAction: Deleting object %s of type %s Pointer:%p",
@@ -71,19 +71,19 @@ long DigiAction::release() {
 }
 
 /// Set the output level; returns previous value
-PrintLevel DigiAction::setOutputLevel(PrintLevel new_level)  {
+auto DigiAction::setOutputLevel(PrintLevel new_level) -> PrintLevel  {
   int old = m_outputLevel;
   m_outputLevel = new_level;
   return (PrintLevel)old;
 }
 
 /// Check property for existence
-bool DigiAction::hasProperty(const string& nam) const    {
+auto DigiAction::hasProperty(const string& nam) const -> bool    {
   return m_properties.exists(nam);
 }
 
 /// Access single property
-Property& DigiAction::property(const string& nam)   {
+auto DigiAction::property(const string& nam) -> Property&   {
   return properties()[nam];
 }
 
@@ -175,7 +175,7 @@ void DigiAction::error(const char* fmt, ...) const {
 }
 
 /// Action to support error messages.
-bool DigiAction::return_error(bool return_value, const char* fmt, ...) const {
+auto DigiAction::return_error(bool return_value, const char* fmt, ...) const -> bool {
   va_list args;
   va_start(args, fmt);
   dd4hep::printout(dd4hep::ERROR, m_name, fmt, args);

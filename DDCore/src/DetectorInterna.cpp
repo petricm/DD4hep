@@ -95,7 +95,7 @@ DetElementObject::~DetElementObject() {
 }
 
 /// Deep object copy to replicate DetElement trees e.g. for reflection
-DetElementObject* DetElementObject::clone(int new_id, int flg) const {
+auto DetElementObject::clone(int new_id, int flg) const -> DetElementObject* {
   auto* obj = new DetElementObject();
   obj->id          = new_id;
   obj->typeFlag    = typeFlag;
@@ -135,7 +135,7 @@ DetElementObject* DetElementObject::clone(int new_id, int flg) const {
 }
 
 /// Reflect all volumes in a DetElement sub-tree and re-attach the placements
-pair<DetElement,Volume> DetElementObject::reflect(const std::string& new_name, int new_id, SensitiveDetector sd)   {
+auto DetElementObject::reflect(const std::string& new_name, int new_id, SensitiveDetector sd) -> pair<DetElement,Volume>   {
   struct ChildMapper  {
     std::map<TGeoNode*,TGeoNode*> nodes;
     void match(DetElement de_det, DetElement de_ref)  const  {
@@ -177,7 +177,7 @@ pair<DetElement,Volume> DetElementObject::reflect(const std::string& new_name, i
 }
 
 /// Access to the world object. Only possible once the geometry is closed.
-World DetElementObject::i_access_world()   {
+auto DetElementObject::i_access_world() -> World   {
   if ( !privateWorld.isValid() )  {
     DetElementObject* p = parent.ptr();
     if ( nullptr == p )  {

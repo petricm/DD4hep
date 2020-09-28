@@ -40,22 +40,22 @@ namespace {
   // http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring
 
   constexpr struct is_space_t {
-    bool operator()( int i ) const { return std::isspace( i ); }
+    auto operator()( int i ) const -> bool { return std::isspace( i ); }
   } is_space{};
 
   // trim from start
-  static inline std::string& ltrim( std::string& s ) {
+  static inline auto ltrim( std::string& s ) -> std::string& {
     s.erase( s.begin(), std::find_if_not( s.begin(), s.end(), is_space ) );
     return s;
   }
 
   // trim from end
-  static inline std::string& rtrim( std::string& s ) {
+  static inline auto rtrim( std::string& s ) -> std::string& {
     s.erase( std::find_if_not( s.rbegin(), s.rend(), is_space ).base(), s.end() );
     return s;
   }
   // trim from both ends
-  static inline std::string& trim( std::string& s ) { return ltrim( rtrim( s ) ); }
+  static inline auto trim( std::string& s ) -> std::string& { return ltrim( rtrim( s ) ); }
 } // namespace
 
 namespace {
@@ -100,7 +100,7 @@ namespace {
     }
   };
   /// Convert a class name in the string used with the Reflex plugin service
-  std::string old_style_name( const std::string& name ) {
+  auto old_style_name( const std::string& name ) -> std::string {
     return std::for_each( name.begin(), name.end(), OldStyleCnv() ).name;
   }
 } // namespace
@@ -109,14 +109,14 @@ namespace DD4hep_Flavor::PluginService {
     GAUDI_PLUGIN_SERVICE_V1_INLINE namespace v1 {
       Exception::Exception( std::string msg ) : m_msg( std::move( msg ) ) {}
       Exception::~Exception() throw() = default;
-      const char* Exception::what() const throw() { return m_msg.c_str(); }
+      auto Exception::what() const throw() -> const char* { return m_msg.c_str(); }
 
       namespace Details {
-        void* getCreator( const std::string& id, const std::string& type ) {
+        auto getCreator( const std::string& id, const std::string& type ) -> void* {
           return Registry::instance().get( id, type );
         }
 
-        std::string demangle( const std::string& id ) {
+        auto demangle( const std::string& id ) -> std::string {
           int  status;
           auto realname = std::unique_ptr<char, decltype( free )*>(
               abi::__cxa_demangle( id.c_str(), nullptr, nullptr, &status ), free );
@@ -130,9 +130,9 @@ namespace DD4hep_Flavor::PluginService {
           return std::string{realname.get()};
 #endif
         }
-        std::string demangle( const std::type_info& id ) { return demangle( id.name() ); }
+        auto demangle( const std::type_info& id ) -> std::string { return demangle( id.name() ); }
 
-        Registry& Registry::instance() {
+        auto Registry::instance() -> Registry& {
           SINGLETON_LOCK
           static Registry r;
           return r;
@@ -235,9 +235,9 @@ namespace DD4hep_Flavor::PluginService {
           }
         }
 
-        Registry::FactoryInfo& Registry::add( const std::string& id, void* factory, const std::string& type,
+        auto Registry::add( const std::string& id, void* factory, const std::string& type,
                                               const std::string& rtype, const std::string& className,
-                                              const Properties& props ) {
+                                              const Properties& props ) -> Registry::FactoryInfo& {
           REG_SCOPE_LOCK
           FactoryMap& facts = factories();
           auto        entry = facts.find( id );
@@ -260,7 +260,7 @@ namespace DD4hep_Flavor::PluginService {
           return entry->second;
         }
 
-        void* Registry::get( const std::string& id, const std::string& type ) const {
+        auto Registry::get( const std::string& id, const std::string& type ) const -> void* {
           REG_SCOPE_LOCK
           const FactoryMap& facts = factories();
           auto              f     = facts.find( id );
@@ -289,7 +289,7 @@ namespace DD4hep_Flavor::PluginService {
           return nullptr; // factory not found
         }
 
-        const Registry::FactoryInfo& Registry::getInfo( const std::string& id ) const {
+        auto Registry::getInfo( const std::string& id ) const -> const Registry::FactoryInfo& {
           REG_SCOPE_LOCK
           static const FactoryInfo unknown( "unknown" );
           const FactoryMap&        facts = factories();
@@ -297,7 +297,7 @@ namespace DD4hep_Flavor::PluginService {
           return ( f != facts.end() ) ? f->second : unknown;
         }
 
-        Registry& Registry::addProperty( const std::string& id, const std::string& k, const std::string& v ) {
+        auto Registry::addProperty( const std::string& id, const std::string& k, const std::string& v ) -> Registry& {
           REG_SCOPE_LOCK
           FactoryMap& facts = factories();
           auto        f     = facts.find( id );
@@ -305,7 +305,7 @@ namespace DD4hep_Flavor::PluginService {
           return *this;
         }
 
-        std::set<Registry::KeyType> Registry::loadedFactoryNames() const {
+        auto Registry::loadedFactoryNames() const -> std::set<Registry::KeyType> {
           REG_SCOPE_LOCK
           std::set<KeyType> l;
           for ( const auto& f : factories() ) {
@@ -320,7 +320,7 @@ namespace DD4hep_Flavor::PluginService {
         }
 
         static auto s_logger = std::make_unique<Logger>();
-        Logger&     logger() { return *s_logger; }
+        auto     logger() -> Logger& { return *s_logger; }
         void        setLogger( Logger* logger ) { s_logger.reset( logger ); }
 
       } // namespace Details
@@ -336,7 +336,7 @@ namespace DD4hep_Flavor::PluginService {
           l.setLevel( Logger::Warning );
       }
 
-      int Debug() {
+      auto Debug() -> int {
         using namespace Details;
         switch ( logger().level() ) {
         case Logger::Debug:

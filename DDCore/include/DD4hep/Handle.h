@@ -166,7 +166,7 @@ namespace dd4hep {
      */
     T* access() const;
     /// Access the object name (or "" if not supported by the object)
-    const char* name() const;
+    auto name() const -> const char*;
     /// Assign a new named object. Note: object references must be managed by the user
     void assign(Object* n, const std::string& nam, const std::string& title);
     /// Destroy the underlying object (be careful here: things are not reference counted)!

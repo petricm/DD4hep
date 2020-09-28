@@ -49,7 +49,7 @@ Entry::~Entry()   {
 }
 
 /// Assignment operator
-Entry& Entry::operator=(const Entry& c)   {
+auto Entry::operator=(const Entry& c) -> Entry&   {
   if ( this != &c )  {
     this->NamedObject::operator=(c);
     detector = c.detector;

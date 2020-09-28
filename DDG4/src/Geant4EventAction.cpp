@@ -125,7 +125,7 @@ void Geant4EventActionSequence::configureFiber(Geant4Context* thread_context)   
 }
 
 /// Get an action by name
-Geant4EventAction* Geant4EventActionSequence::get(const string& nam) const   {
+auto Geant4EventActionSequence::get(const string& nam) const -> Geant4EventAction*   {
   return m_actors.get(FindByName(TypeName::split(nam).second));
 }
 

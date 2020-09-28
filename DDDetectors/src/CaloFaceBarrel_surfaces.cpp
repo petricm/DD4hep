@@ -58,7 +58,7 @@ namespace{
     void setID( dd4hep::long64 id_val ) { _id = id_val ; }
     
     // overwrite to include points inside the inner radius of the barrel 
-    bool insideBounds(const dd4hep::rec::Vector3D& point, double epsilon) const override {
+    auto insideBounds(const dd4hep::rec::Vector3D& point, double epsilon) const -> bool override {
       dd4hep::rec::Vector2D uvVec = globalToLocal( point ) ;
       
       return ( std::abs ( distance( point ) ) < epsilon )  &&  
@@ -66,7 +66,7 @@ namespace{
     }
     
     /// create outer bounding lines for the given symmetry of the polyhedron
-    std::vector< std::pair<dd4hep::rec::Vector3D, dd4hep::rec::Vector3D> > getLines(unsigned) override{
+    auto getLines(unsigned) -> std::vector< std::pair<dd4hep::rec::Vector3D, dd4hep::rec::Vector3D> > override{
       
       std::vector< std::pair<dd4hep::rec::Vector3D, dd4hep::rec::Vector3D> >  lines ;
       

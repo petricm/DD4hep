@@ -148,7 +148,7 @@ namespace dd4hep {
       virtual bool defineCollection(const std::string& coll_name);
 
       /// Method for generating hit(s) using the information of G4Step object.
-      virtual G4bool ProcessHits(G4Step* step,G4TouchableHistory* history);
+      virtual auto ProcessHits(G4Step* step,G4TouchableHistory* history) -> G4bool;
 
       /** Method invoked at the begining of each event.
        *  The hits collection(s) created by this sensitive detector must
@@ -168,7 +168,7 @@ namespace dd4hep {
       virtual void clear();
 
       /// Method for generating hit(s) using the information of G4Step object.
-      virtual bool buildHits(G4Step* step,G4TouchableHistory* history);
+      virtual auto buildHits(G4Step* step,G4TouchableHistory* history) -> bool;
     };
 
   }    // End namespace sim

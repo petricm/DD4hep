@@ -45,7 +45,7 @@ GlobalAlignmentWriter::~GlobalAlignmentWriter()  {
 }
 
 /// Create the element corresponding to one single detector element without children
-xml::Element GlobalAlignmentWriter::createElement(xml::Document doc, DetElement element)  const  {
+auto GlobalAlignmentWriter::createElement(xml::Document doc, DetElement element)  const -> xml::Element  {
   xml::Element e(nullptr), placement(nullptr), elt = xml::Element(doc,_ALU(detelement));
   string path = element.placementPath();
   GlobalAlignment a = element->global_alignment;
@@ -104,7 +104,7 @@ void GlobalAlignmentWriter::addNode(xml::Element elt, GlobalAlignment a)  const 
 }
 
 /// Scan a DetElement subtree and add on the fly the XML entries
-xml::Element GlobalAlignmentWriter::scan(xml::Document doc, DetElement element)  const  {
+auto GlobalAlignmentWriter::scan(xml::Document doc, DetElement element)  const -> xml::Element  {
   xml::Element elt(nullptr);
   if ( element.isValid() )   {
     const DetElement::Children& c = element.children();
@@ -121,7 +121,7 @@ xml::Element GlobalAlignmentWriter::scan(xml::Document doc, DetElement element) 
 }
 
 /// Dump the tree content into a XML document structure
-xml::Document GlobalAlignmentWriter::dump(DetElement top, bool enable_transactions)  const {
+auto GlobalAlignmentWriter::dump(DetElement top, bool enable_transactions)  const -> xml::Document {
   xml::DocumentHandler docH;
   xml::Document doc = docH.create("alignment", docH.defaultComment());
   xml::Element elt(nullptr), elements(nullptr), root = doc.root();
@@ -133,7 +133,7 @@ xml::Document GlobalAlignmentWriter::dump(DetElement top, bool enable_transactio
 }
 
 /// Write the XML document structure to a file.
-long GlobalAlignmentWriter::write(xml::Document doc, const string& output)   const {
+auto GlobalAlignmentWriter::write(xml::Document doc, const string& output)   const -> long {
   xml::DocumentHandler docH;
   return docH.output(doc, output);
 }

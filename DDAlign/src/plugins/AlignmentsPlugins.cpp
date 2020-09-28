@@ -22,7 +22,7 @@ using namespace dd4hep::align;
 
 // ======================================================================================
 #include "DDAlign/GlobalAlignmentWriter.h"
-long create_global_alignment_xml_file(Detector& description, int argc, char** argv)   {
+auto create_global_alignment_xml_file(Detector& description, int argc, char** argv) -> long   {
   DetElement top;
   string output, path = "/world";
   bool enable_transactions = false, arg_error = false;

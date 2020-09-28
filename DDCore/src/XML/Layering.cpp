@@ -34,7 +34,7 @@ void Layer::compute() {
     _thickness += _slice._thickness;
 }
 
-double LayerStack::sectionThickness(size_t is, size_t ie) const {
+auto LayerStack::sectionThickness(size_t is, size_t ie) const -> double {
   double thick = 0.;
   if (is > ie)
     throw runtime_error(
@@ -59,7 +59,7 @@ Layering::Layering(Element e) {
   LayeringCnv(e).fromCompact(*this);
 }
 
-const Layer* Layering::layer(size_t which) const {
+auto Layering::layer(size_t which) const -> const Layer* {
   return _stack.layers()[which];
 }
 
@@ -88,7 +88,7 @@ void LayeringCnv::fromCompact(Layering& layering) const {
   }
 }
 
-double Layering::singleLayerThickness(xml::Element e) const {
+auto Layering::singleLayerThickness(xml::Element e) const -> double {
   Component lay = e;
   double thickness = 0e0;
   for (Collection_t s(lay, _U(slice)); s; ++s) {
@@ -98,7 +98,7 @@ double Layering::singleLayerThickness(xml::Element e) const {
   return thickness;
 }
 
-double Layering::absorberThicknessInLayer(xml::Element e) const {
+auto Layering::absorberThicknessInLayer(xml::Element e) const -> double {
   Component lay = e;
   double thickness = 0e0;
   for (Collection_t s(lay, _U(slice)); s; ++s) {

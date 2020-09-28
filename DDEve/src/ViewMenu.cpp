@@ -75,7 +75,7 @@ void ViewMenu::CreateView(TGMenuEntry*, void* ud)   {
   CreateView(args->first,args->second);
 }
 
-View* ViewMenu::CreateView(const std::string& type, const std::string& title)   {
+auto ViewMenu::CreateView(const std::string& type, const std::string& title) -> View*   {
   pair<string,string> args("DD4hep_DDEve_"+type,title);
   View* v = PluginService::Create<View*>(type.c_str(),m_display,title.c_str());
   BuildView(v);
@@ -83,17 +83,17 @@ View* ViewMenu::CreateView(const std::string& type, const std::string& title)   
 }
 
 /// Create a new 3D view
-View* ViewMenu::CreateView3D(const std::string& title)   {
+auto ViewMenu::CreateView3D(const std::string& title) -> View*   {
   return CreateView("DD4hep_DDEve_View3D",title.c_str());
 }
 
 /// Create a new R-Z view
-View* ViewMenu::CreateRhoZProjection(const std::string& title )  {
+auto ViewMenu::CreateRhoZProjection(const std::string& title ) -> View*  {
   return CreateView("DD4hep_DDEve_RhoZProjection",title.c_str());
 }
 
 /// Create a new R-Phi view
-View* ViewMenu::CreateRhoPhiProjection(const std::string& title )  {
+auto ViewMenu::CreateRhoPhiProjection(const std::string& title ) -> View*  {
   return CreateView("DD4hep_DDEve_RhoPhiProjection",title.c_str());
 }
 

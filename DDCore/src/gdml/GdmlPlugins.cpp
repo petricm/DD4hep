@@ -43,7 +43,7 @@ using namespace dd4hep;
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long gdml_parse(Detector& description, int argc, char** argv) {
+static auto gdml_parse(Detector& description, int argc, char** argv) -> long {
   if ( argc > 0 )   {
     string input, path;
     bool wrld = false;
@@ -141,7 +141,7 @@ DECLARE_APPLY(DD4hep_ROOTGDMLParse,gdml_parse)
  *  \version 1.0
  *  \date    01/04/2014
  */
-static long gdml_extract(Detector& description, int argc, char** argv) {
+static auto gdml_extract(Detector& description, int argc, char** argv) -> long {
   if ( argc > 0 )   {
     bool detector = true, volpath = false;
     string output, path;
@@ -241,7 +241,7 @@ static long gdml_extract(Detector& description, int argc, char** argv) {
 DECLARE_APPLY(DD4hep_ROOTGDMLExtract,gdml_extract)
 
 /// Factory for backwards compatibility
-static long create_gdml_from_dd4hep(Detector& description, int argc, char** argv) {
+static auto create_gdml_from_dd4hep(Detector& description, int argc, char** argv) -> long {
   if ( argc > 0 )    {
     string output = argv[0];
     if ( output.substr(0,5) == "file:" ) output = output.substr(6);
@@ -258,7 +258,7 @@ static long create_gdml_from_dd4hep(Detector& description, int argc, char** argv
 DECLARE_APPLY(DD4hepGeometry2GDML, create_gdml_from_dd4hep)
 
 /// Factory to import subdetectors from GDML fragment
-static Ref_t create_detector(Detector& description, xml_h e, Ref_t /* sens_det */)  {
+static auto create_detector(Detector& description, xml_h e, Ref_t /* sens_det */) -> Ref_t  {
   using namespace dd4hep::detail;
   xml_det_t   x_det = e;
   int         id    = x_det.hasAttr(_U(id)) ? x_det.id() : 0;
