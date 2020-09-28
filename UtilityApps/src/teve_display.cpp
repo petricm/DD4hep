@@ -109,18 +109,18 @@ static long teve_display(Detector& description, int /* argc */, char** /* argv *
 
   TEveElement* surfaces = getSurfaces(  kRed, SurfaceType( SurfaceType::Sensitive ), "SensitiveSurfaces" ) ;
   TEveElement* helperSurfaces = getSurfaces(  kGray, SurfaceType( SurfaceType::Helper ),"HelperSurfaces" ) ;
-  TEveElement* surfaceVectors = getSurfaceVectors(1,0,0,1,"SurfaceVectorsN",kGreen) ;
+  TEveElement* surfaceVectors = getSurfaceVectors(true,false,false,true,"SurfaceVectorsN",kGreen) ;
 
   gEve->AddGlobalElement( surfaces ) ;
   gEve->AddGlobalElement( helperSurfaces ) ;
   gEve->AddGlobalElement( surfaceVectors ) ;
   
   
-  TEveElement* surfaceVectors_u = getSurfaceVectors(0,1,0,0,"SurfaceVectorsU",kMagenta) ;
+  TEveElement* surfaceVectors_u = getSurfaceVectors(false,true,false,false,"SurfaceVectorsU",kMagenta) ;
   
   gEve->AddGlobalElement( surfaceVectors_u ) ;
 
-  TEveElement* surfaceVectors_v = getSurfaceVectors(0,0,1,0,"SurfaceVectorsV",kBlack) ;
+  TEveElement* surfaceVectors_v = getSurfaceVectors(false,false,true,false,"SurfaceVectorsV",kBlack) ;
   
   gEve->AddGlobalElement( surfaceVectors_v ) ;
 

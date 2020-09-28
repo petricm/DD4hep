@@ -73,7 +73,7 @@ namespace dd4hep::rec {
           // TVirtualGeoTrack *track; 
 	  
           // step to (and over) the next Boundary
-          TGeoNode * node2 = _tgeoMgr->FindNextBoundaryAndStep( 500, 1) ;
+          TGeoNode * node2 = _tgeoMgr->FindNextBoundaryAndStep( 500, true) ;
 	  
           if( !node2 || _tgeoMgr->IsOutside() )
             break;
@@ -97,7 +97,7 @@ namespace dd4hep::rec {
                                        position[2] + MINSTEP * direction[2] );
 	    
             length = _tgeoMgr->GetStep();
-            node2  = _tgeoMgr->FindNextBoundaryAndStep(500, 1) ;
+            node2  = _tgeoMgr->FindNextBoundaryAndStep(500, true) ;
 	    
             position    = _tgeoMgr->GetCurrentPoint();
             previouspos = _tgeoMgr->GetLastPoint();

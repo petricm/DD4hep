@@ -67,7 +67,7 @@ namespace dd4hep::sim {
         hit->momentum = direction;
         hit->length   = hit_len;
         collection(0)->insert(hit);
-        return 1;
+        return true;
       }
       throw std::runtime_error("new() failed: Cannot allocate hit object");
     }

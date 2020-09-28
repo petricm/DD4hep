@@ -315,7 +315,7 @@ ConditionsMappedUserPool<MAPPING>::registerOne(const IOV& iov,
     except("UserPool","++ Failed to register IOV: %s",iov.str().c_str());
   }
   except("UserPool","++ Cannot register conditions with invalid IOV.");
-  return 0;
+  return false;
 }
 
 /// Do block insertions of conditions with identical IOV including registration to the manager

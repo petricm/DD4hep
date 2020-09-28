@@ -125,7 +125,7 @@ double DigiRandomGenerator::gaussian(double mean, double sigma)  const   {
       }
     }
 
-    while (1) {
+    while (true) {
       x = engine();
       y = kYm * engine();
       z = kX0 - kS*x - y;
@@ -142,7 +142,7 @@ double DigiRandomGenerator::gaussian(double mean, double sigma)  const   {
         if (rn*rn<4*(kB-log(x))) {
           result = rn; break; }
     }
-  } while(0);
+  } while(false);
 
   return mean + sigma * result;
 }
@@ -167,7 +167,7 @@ double DigiRandomGenerator::poisson(double mean)  const   {
     double expmean = std::exp(-mean);
     double pir = 1;
     n = -1;
-    while(1) {
+    while(true) {
       n++;
       pir *= engine();
       if (pir <= expmean) break;

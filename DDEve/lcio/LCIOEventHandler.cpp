@@ -172,7 +172,7 @@ bool LCIOEventHandler::NextEvent()   {
         m_branches[collname] = c;
       }
       m_hasEvent = true;
-      return 1;
+      return true;
     }
     throw runtime_error("+++ EventHandler::readEvent: Failed to read event");
   }

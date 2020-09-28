@@ -151,7 +151,7 @@ bool GenericEventHandler::NextEvent()   {
       if ( current()->NextEvent() > 0 )   {
         m_hasEvent = true;
         NotifySubscribers(&EventConsumer::OnNewEvent);
-        return 1;
+        return true;
       }
     }
     throw runtime_error("+++ EventHandler::readEvent: No file open!");
@@ -173,7 +173,7 @@ bool GenericEventHandler::PreviousEvent()    {
   if ( m_hasFile && current()->PreviousEvent() > 0 )   {
     m_hasEvent = true;
     NotifySubscribers(&EventConsumer::OnNewEvent);
-    return 1;
+    return true;
   }
   return -1;
 }
@@ -184,7 +184,7 @@ bool GenericEventHandler::GotoEvent(long event_number)   {
   if ( m_hasFile && current()->GotoEvent(event_number) > 0 )   {
     m_hasEvent = true;
     NotifySubscribers(&EventConsumer::OnNewEvent);
-    return 1;
+    return true;
   }
   return -1;
 }

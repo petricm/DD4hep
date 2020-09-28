@@ -101,7 +101,7 @@ void Geant4IsotropeGenerator::getParticleDirectionFFbar(int, ROOT::Math::XYZVect
   // We have to throw the dice until it fits.....
   double v1 = Distribution::ffbar(m_thetaMin), v2 = Distribution::ffbar(m_thetaMax);
   double vmax = std::max(v1,v2); // ffbar symmetric and monotonic in |x|.
-  while(1)  {
+  while(true)  {
     double dice  = rnd.rndm()*vmax;
     double theta = m_thetaMin+(m_thetaMax-m_thetaMin)*rnd.rndm();
     double dist  = Distribution::ffbar(theta);
