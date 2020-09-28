@@ -23,6 +23,8 @@
 #include "DD4hep/Printout.h"
 
 #include <cstdio>
+#include <memory>
+
 
 using namespace dd4hep;
 using namespace dd4hep::rec;
@@ -31,14 +33,14 @@ using namespace dd4hep::rec;
 MaterialScan::MaterialScan()
   : m_detector(Detector::getInstance())
 {
-  m_materialMgr.reset(new MaterialManager(m_detector.world().volume()));
+  m_materialMgr = std::make_unique<MaterialManager>(m_detector.world().volume());
 }
 
 /// Default constructor
 MaterialScan::MaterialScan(Detector& description)
   : m_detector(description)
 {
-  m_materialMgr.reset(new MaterialManager(m_detector.world().volume()));
+  m_materialMgr = std::make_unique<MaterialManager>(m_detector.world().volume());
 }
 
 /// Default destructor

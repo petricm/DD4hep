@@ -20,6 +20,8 @@
 #include "DD4hep/Path.h"
 
 // C/C++ include files
+#include <memory>
+
 #include <stdexcept>
 #include <iostream>
 #include <iomanip>
@@ -565,7 +567,7 @@ static long generate_cxx(Detector& description, int argc, char** argv) {
   ostream* os = &cout;
   if ( !output.empty() )   {
     Path path(output);
-    out.reset(new ofstream(path.c_str()));
+    out = std::make_unique<ofstream>(path.c_str());
     if ( !out->good() )   {
       out.reset();
       except("CxxRootGenerator",
