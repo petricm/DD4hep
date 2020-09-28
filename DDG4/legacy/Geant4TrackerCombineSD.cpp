@@ -18,7 +18,7 @@
 /*
  *   dd4hep::sim namespace declaration
  */
-namespace dd4hep {  namespace sim {
+namespace dd4hep::sim {
 
     /// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     ///               Geant4GenericSD<TrackerCombine>
@@ -122,6 +122,6 @@ namespace dd4hep {  namespace sim {
       return return_code;
     }
     typedef Geant4GenericSD<TrackerCombine>  Geant4TrackerCombine;
-  }}    // End namespace dd4hep::sim
+  }    // End namespace dd4hep::sim
 
 DECLARE_GEANT4SENSITIVEDETECTOR_NS(dd4hep::sim,Geant4TrackerCombine)

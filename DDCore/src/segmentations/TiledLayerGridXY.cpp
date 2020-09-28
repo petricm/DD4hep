@@ -14,8 +14,7 @@
 #include <stdexcept>
 #include <cmath>
 
-namespace dd4hep {
-namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 
 /// default constructor using an encoding string
 TiledLayerGridXY::TiledLayerGridXY(const std::string& cellEncoding) :
@@ -124,5 +123,4 @@ std::vector<double> TiledLayerGridXY::cellDimensions(const CellID&) const {
 
 REGISTER_SEGMENTATION(TiledLayerGridXY)
 
-} /* namespace DDSegmentation */
 } /* namespace dd4hep */

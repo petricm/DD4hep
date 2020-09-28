@@ -20,10 +20,7 @@
 class G4VHitsCollection;
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     // Forward declarations
     class Geant4ParticleMap;
@@ -56,8 +53,7 @@ namespace dd4hep {
       virtual void end(const G4Event* event)  override;
     };
 
-  }    // End namespace sim
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 #endif /* DD4HEP_DDG4_GEANT4HITDUMPACTION_H */
 

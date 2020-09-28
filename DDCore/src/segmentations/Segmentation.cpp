@@ -14,9 +14,7 @@
 #include <algorithm>
 #include <iomanip>
 
-namespace dd4hep {
-
-  namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 
     using std::cerr;
     using std::endl;
@@ -188,5 +186,4 @@ namespace dd4hep {
       throw std::logic_error(errorMessage.str());
     }
 
-  } /* namespace DDSegmentation */
-} /* namespace dd4hep */
+  } /* namespace dd4hep */

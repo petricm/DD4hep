@@ -7,8 +7,7 @@
 
 #include "DDSegmentation/NoSegmentation.h"
 
-namespace dd4hep {
-  namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 
     NoSegmentation::NoSegmentation(const std::string& cellEncoding) :
       Segmentation(cellEncoding)
@@ -38,5 +37,4 @@ namespace dd4hep {
 
 REGISTER_SEGMENTATION(NoSegmentation)
 
-  } /* namespace DDSegmentation */
-} /* namespace dd4hep */
+  } /* namespace dd4hep */

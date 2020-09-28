@@ -20,10 +20,7 @@
 #include "DDG4/Geant4DetectorConstruction.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Generic Setup component to perform the magnetic field tracking in Geant4
     /** Geant4FieldTrackingSetup.
@@ -116,8 +113,7 @@ namespace dd4hep {
       void constructField(Geant4DetectorConstructionContext *ctxt);
 
     };
-  }    // End namespace sim
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 #endif // DD4HEP_DDG4_GEANT4FIELDTRACKINGSETUP_H
 
 //==========================================================================

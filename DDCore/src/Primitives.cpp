@@ -353,8 +353,7 @@ void dd4hep::typeinfoCheck(const std::type_info& typ1, const std::type_info& typ
   }
 }
 
-namespace dd4hep   {
-  namespace detail  {
+namespace dd4hep::detail  {
     template<> const char* Primitive<bool>::default_format()           { return "%d"; }
     template<> const char* Primitive<char>::default_format()           { return "%c"; }
     template<> const char* Primitive<unsigned char>::default_format()  { return "%02X"; }
@@ -408,7 +407,6 @@ namespace dd4hep   {
     template std::string Primitive<float>::toString(float value);
     template std::string Primitive<double>::toString(double value);
   }
-}
 
 /// Initializing Constructor
 dd4hep::ComponentCast::ComponentCast(const std::type_info& t, destroy_t d, cast_t c)

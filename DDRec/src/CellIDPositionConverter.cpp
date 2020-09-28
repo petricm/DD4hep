@@ -18,8 +18,7 @@
 
 #include "TGeoManager.h"
 
-namespace dd4hep {
-  namespace rec {
+namespace dd4hep::rec {
 
     using std::set;
 
@@ -350,5 +349,4 @@ namespace dd4hep {
 
 
 
-  } /* namespace rec */
-} /* namespace dd4hep */
+  } /* namespace dd4hep */

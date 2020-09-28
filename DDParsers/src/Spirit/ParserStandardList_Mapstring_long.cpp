@@ -11,6 +11,6 @@
 //==========================================================================
 
 #include "Parsers/spirit/ParsersStandardListCommon.h"
-namespace dd4hep{ namespace Parsers{
+namespace dd4hep::Parsers{
 IMPLEMENT_STL_MAP_PARSER(std::map,std::string,long)
-  }}
+  }

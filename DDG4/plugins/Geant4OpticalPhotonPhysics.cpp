@@ -40,10 +40,7 @@
 #include "G4ProcessManager.hh"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Geant4 physics list action to enable OpticalPhoton physics
     /**
@@ -96,7 +93,6 @@ namespace dd4hep {
       int         m_verbosity;
     };
   }
-}
 #endif   // DDG4_GEANT4OPTICALPHOTONPHYSICS_H
 
 #include "DDG4/Factories.h"

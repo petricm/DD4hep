@@ -22,10 +22,7 @@
 #include <unordered_map>
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for implementation details of the AIDA detector description toolkit
-  namespace cond {
+namespace dd4hep::cond {
 
     /// Forward declarations
     class ConditionsDataLoader;
@@ -133,8 +130,7 @@ namespace dd4hep {
                                                 ConditionUpdateUserContext* user_param)  override;
     };
 
-  }    /* End namespace cond               */
-}      /* End namespace dd4hep                   */
+  }      /* End namespace dd4hep                   */
 #endif /* DDCOND_CONDITIONSMAPPEDUSERPOOL_H      */
 
 //==========================================================================
@@ -773,10 +769,7 @@ ConditionsMappedUserPool<MAPPING>::compute(const IOV&                  required,
 
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for implementation details of the AIDA detector description toolkit
-  namespace cond {
+namespace dd4hep::cond {
 
     typedef unordered_map<Condition::key_type,Condition::Object*> umap_t;
 
@@ -803,8 +796,7 @@ namespace dd4hep {
       }
       return result;
     }
-  }    /* End namespace cond               */
-}      /* End namespace dd4hep                   */
+  }      /* End namespace dd4hep                   */
 
 namespace {
   template <typename MAPPING>

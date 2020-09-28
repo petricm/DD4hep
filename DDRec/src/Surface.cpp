@@ -26,8 +26,7 @@
 //TGeoTrd1 is apparently not included by defautl
 #include "TGeoTrd1.h"
 
-namespace dd4hep {
-  namespace rec {
+namespace dd4hep::rec {
  
     using namespace detail ;
 
@@ -1306,6 +1305,5 @@ namespace dd4hep {
     //================================================================================================================
 
   } // namespace
-} // namespace
 
 

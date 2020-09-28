@@ -27,10 +27,7 @@
 #include "G4Run.hh"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Private helper to support sequence reference counting
     /**
@@ -141,8 +138,7 @@ namespace dd4hep {
       }
 
     };
-  }    // End namespace sim
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 
 #include "DDG4/Factories.h"

@@ -76,8 +76,7 @@ const string& Geant4SensitiveDetector::hitCollectionName(int which) const {
 Geant4SensitiveDetector::HitCollection* Geant4SensitiveDetector::createCollection(const string& coll_name) const {
   return new G4THitsCollection<Geant4Hit>(GetName(), coll_name);
 }
-namespace dd4hep {
-  namespace sim {
+namespace dd4hep::sim {
     template <> Geant4CalorimeterHit*
     Geant4SensitiveDetector::find<Geant4CalorimeterHit>(const HitCollection* c, const HitCompare<Geant4CalorimeterHit>& cmp) {
       typedef vector<Geant4CalorimeterHit*> _V;
@@ -88,7 +87,6 @@ namespace dd4hep {
       return 0;
     }
   }
-}
 
 /// Method invoked at the begining of each event.
 void Geant4SensitiveDetector::Initialize(G4HCofThisEvent* HCE) {

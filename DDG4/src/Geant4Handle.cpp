@@ -44,8 +44,7 @@ namespace {
   G4Mutex creation_mutex=G4MUTEX_INITIALIZER;
 }
 
-namespace dd4hep {
-  namespace sim {
+namespace dd4hep::sim {
 
 
     template <typename TYPE> static inline TYPE* checked_value(TYPE* p) {
@@ -354,4 +353,3 @@ namespace dd4hep {
     template class Geant4Handle<Geant4UserInitializationSequence>;
     template class Geant4Handle<Geant4DetectorConstructionSequence>;
   }
-}

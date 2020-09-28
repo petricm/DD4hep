@@ -30,10 +30,7 @@
 #endif
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the alignment part of the AIDA detector description toolkit
-  namespace align {
+namespace dd4hep::align {
 
     /// Global alignment data container
     /**
@@ -53,8 +50,7 @@ namespace dd4hep {
         detail::destroyHandle (global);
       }
     };
-  } /* End namespace Aligments               */
-} /* End namespace dd4hep                    */
+  } /* End namespace dd4hep                    */
 
 using namespace std;
 using namespace dd4hep;

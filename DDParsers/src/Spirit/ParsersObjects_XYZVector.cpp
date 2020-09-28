@@ -14,20 +14,19 @@
 #ifndef DD4HEP_PARSERS_NO_ROOT
 #include "Parsers/spirit/ParsersStandardListCommon.h"
 
-namespace ROOT {  namespace Math {
+namespace ROOT::Math {
     bool operator<(const XYZVector& a, const XYZVector& b)  {
       if ( a.X() < b.X() ) return true;
       if ( a.Y() < b.Y() ) return true;
       if ( a.Z() < b.Z() ) return true;
       return false;
     }
-  }}
+  }
 
 template struct std::less<ROOT::Math::XYZVector>;
 
 // ============================================================================
-namespace dd4hep {
-  namespace Parsers {
+namespace dd4hep::Parsers {
 
     // ==========================================================================
     /*  parse 3D-vector
@@ -56,5 +55,4 @@ namespace dd4hep {
     IMPLEMENT_STL_PARSERS(ROOT::Math::XYZVector)
     IMPLEMENT_MAPPED_PARSERS(pair,ROOT::Math::XYZVector)
   }
-}
 #endif

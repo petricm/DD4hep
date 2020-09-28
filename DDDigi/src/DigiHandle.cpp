@@ -29,9 +29,7 @@ using namespace dd4hep;
 using namespace dd4hep::digi;
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-  /// Namespace for the Digitization part of the AIDA detector description toolkit
-  namespace digi {
+namespace dd4hep::digi {
  
     template <typename TYPE> static inline TYPE* checked_value(TYPE* p) {
       if (p) {
@@ -180,19 +178,15 @@ namespace dd4hep {
     KernelHandle::KernelHandle(DigiKernel* k) : value(k)  {
     }
   }
-}
 
 #include "DDDigi/DigiSynchronize.h"
 #include "DDDigi/DigiActionSequence.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-  /// Namespace for the Digitization part of the AIDA detector description toolkit
-  namespace digi {
+namespace dd4hep::digi {
     template class DigiHandle<DigiAction>;
     template class DigiHandle<DigiEventAction>;
     template class DigiHandle<DigiSynchronize>;
     template class DigiHandle<DigiActionSequence>;
     template class DigiHandle<DigiSignalProcessor>;
   }
-}

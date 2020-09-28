@@ -64,9 +64,7 @@ static double eval_isinf(double a)           { return std::isinf(a);           }
 static double eval_nearbyint(double a)       { return ::nearbyint(a);          }
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep  {
-
-  namespace tools {
+namespace dd4hep::tools {
 
     void Evaluator::setStdMath() {
 
@@ -133,5 +131,4 @@ namespace dd4hep  {
       setFunction("nearbyint",  eval_nearbyint);
     }
 
-  } // namespace tools
-}  // namespace dd4hep
+  }  // namespace dd4hep

@@ -25,7 +25,7 @@ using namespace dd4hep::detail;
 /*
  *   dd4hep::sim namespace declaration
  */
-namespace dd4hep {  namespace sim {
+namespace dd4hep::sim {
 
     /// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     ///               Geant4GenericSD<Calorimeter>
@@ -57,14 +57,14 @@ namespace dd4hep {  namespace sim {
       return true;
     }
     typedef  Geant4GenericSD<Calorimeter> Geant4Calorimeter;
-  }}    // End namespace dd4hep::sim
+  }    // End namespace dd4hep::sim
 
 DECLARE_GEANT4SENSITIVEDETECTOR_NS(dd4hep::sim,Geant4Calorimeter)
 
 /*
  *   dd4hep::sim namespace declaration
  */
-namespace dd4hep {  namespace sim {
+namespace dd4hep::sim {
 
     /// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     ///               Geant4GenericSD<OpticalCalorimeter>
@@ -127,6 +127,6 @@ namespace dd4hep {  namespace sim {
       }
     };
     typedef Geant4GenericSD<OpticalCalorimeter>  Geant4OpticalCalorimeter;
-  }}    // End namespace dd4hep::sim
+  }    // End namespace dd4hep::sim
 
 DECLARE_GEANT4SENSITIVEDETECTOR_NS(dd4hep::sim,Geant4OpticalCalorimeter)

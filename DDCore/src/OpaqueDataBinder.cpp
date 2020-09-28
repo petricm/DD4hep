@@ -50,10 +50,7 @@ namespace {
 }
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// DD4hep internal namespace declaration for utilities and implementation details
-  namespace detail  {
+namespace dd4hep::detail  {
 
     /// Binding function for scalar items. See the implementation function for the concrete instantiations
     template <typename BINDER, typename T> 
@@ -393,4 +390,3 @@ namespace dd4hep {
                                                   const string& key_type, const string& val_type, const string& pair_data)
     {    return insert_map(b, object->data, key_type, val_type, pair_data);   }  
   }
-}

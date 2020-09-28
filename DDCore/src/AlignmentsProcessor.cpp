@@ -63,10 +63,7 @@ int AlignmentsCollector<T>::operator()(DetElement de, int level)  const  {
 
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the AIDA detector description toolkit supporting XML utilities
-  namespace align {
+namespace dd4hep::align {
 
     template class DeltaCollector<list<Delta> >;
     template class DeltaCollector<vector<Delta> >;
@@ -89,5 +86,4 @@ namespace dd4hep {
     template class AlignmentsCollector<map<string,Alignment> >;
     template class AlignmentsCollector<multimap<string,Alignment> >;
 
-  }    /* End namespace align  */
-}      /* End namespace dd4hep      */
+  }      /* End namespace dd4hep      */

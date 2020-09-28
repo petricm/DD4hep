@@ -21,7 +21,7 @@
 
 #define IMPLEMENT(x,y) std::string x () { return ::strerror( errno = y ); }
 
-namespace dd4hep { namespace Errors  {
+namespace dd4hep::Errors  {
     IMPLEMENT(noPermission,EPERM)       //  1
     IMPLEMENT(noEntry,ENOENT)           //  2
     IMPLEMENT(ioError,EIO)              //  5
@@ -35,4 +35,4 @@ namespace dd4hep { namespace Errors  {
     IMPLEMENT(linkRange,ELNRNG)         // 48
     IMPLEMENT(noKey,ENOKEY)             // 126
 #endif
-  }}
+  }

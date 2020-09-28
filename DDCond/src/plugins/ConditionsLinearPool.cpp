@@ -24,10 +24,7 @@
 #include <list>
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for implementation details of the AIDA detector description toolkit
-  namespace cond {
+namespace dd4hep::cond {
 
     /// Class implementing the conditions collection for a given IOV type
     /**
@@ -167,8 +164,7 @@ namespace dd4hep {
     };
 
 
-  } /* End namespace cond             */
-} /* End namespace dd4hep                   */
+  } /* End namespace dd4hep                   */
 #endif // DDCOND_CONDITIONSLINEARPOOL_H
 
 //==========================================================================
@@ -211,13 +207,9 @@ ConditionsLinearPool<MAPPING,BASE>::~ConditionsLinearPool()  {
 }
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
 
-  /// Namespace for implementation details of the AIDA detector description toolkit
-  namespace cond {
 
-  } /* End namespace cond             */
-} /* End namespace dd4hep                   */
+
 
 #include "DD4hep/Factories.h"
 namespace {

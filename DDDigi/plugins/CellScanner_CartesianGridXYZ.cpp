@@ -17,10 +17,7 @@
 #include <DDDigi/segmentations/SegmentationScanner.h>
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Digitization part of the AIDA detector description toolkit
-  namespace digi {
+namespace dd4hep::digi {
 
     template <>
     void init_segmentation_data<CartesianGridXYZ>(segmentation_data<CartesianGridXYZ>& data,
@@ -77,14 +74,10 @@ namespace dd4hep {
         }
       }
     }
-  }    // End namespace digi
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Digitization part of the AIDA detector description toolkit
-  namespace digi {
+namespace dd4hep::digi {
 
     template <> void
     CellScanner<CartesianGridXYZ,Box>::operator()(DigiContext& ct,
@@ -112,8 +105,7 @@ namespace dd4hep {
         }
       }
     }
-  }    // End namespace digi
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 DECLARE_DIGICELLSCANNER(DigiCellScanner,CartesianGridXYZ,Box)
 

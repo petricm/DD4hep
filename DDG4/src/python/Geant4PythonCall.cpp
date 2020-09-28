@@ -51,7 +51,7 @@ void Geant4PythonCall::set(PyObject* callable)   {
   DDPython::assignObject(m_arguments,0);
 }
 
-namespace dd4hep { namespace sim {
+namespace dd4hep::sim {
 
     /// Execute command in the python interpreter.
     template <typename RETURN> RETURN Geant4PythonCall::execute() const   {
@@ -93,4 +93,4 @@ namespace dd4hep { namespace sim {
     INSTANTIATE(const char*);
     INSTANTIATE(PyObject*);
     INSTANTIATE(void*);
-  }}
+  }

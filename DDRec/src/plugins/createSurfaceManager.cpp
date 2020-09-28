@@ -16,8 +16,7 @@
 
 #include "DDRec/SurfaceManager.h"
 
-namespace dd4hep{
-  namespace rec{
+namespace dd4hep::rec{
     
     using namespace detail ;
 
@@ -48,7 +47,6 @@ namespace dd4hep{
       return 1;
     }
   }
-}
 
 DECLARE_APPLY( InstallSurfaceManager, dd4hep::rec::createSurfaceManager )
 

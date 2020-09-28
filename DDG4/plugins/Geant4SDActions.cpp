@@ -20,10 +20,7 @@
 using namespace CLHEP;
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim   {
+namespace dd4hep::sim   {
 
     namespace {
       struct Geant4VoidSensitive {};
@@ -500,7 +497,6 @@ namespace dd4hep {
     typedef Geant4CalorimeterAction                Geant4SimpleCalorimeterAction;
     typedef Geant4OpticalCalorimeterAction         Geant4SimpleOpticalCalorimeterAction;
   }
-}
 
 using namespace dd4hep::sim;
 

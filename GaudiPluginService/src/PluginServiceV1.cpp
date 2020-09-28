@@ -105,8 +105,7 @@ namespace {
   }
 } // namespace
 
-namespace Gaudi {
-  namespace PluginService {
+namespace DD4hep_Flavor::PluginService {
     GAUDI_PLUGIN_SERVICE_V1_INLINE namespace v1 {
       Exception::Exception( std::string msg ) : m_msg( std::move( msg ) ) {}
       Exception::~Exception() throw() {}
@@ -349,5 +348,4 @@ namespace Gaudi {
         }
       }
     }
-  } // namespace PluginService
-} // namespace Gaudi
+  } // namespace Gaudi

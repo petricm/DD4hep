@@ -28,10 +28,7 @@ using namespace dd4hep::align;
 typedef AlignmentsCalculator::Result Result;
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the alignment part of the AIDA detector description toolkit
-  namespace align {
+namespace dd4hep::align {
 
     /// Anonymous implementation classes
     namespace {
@@ -98,8 +95,7 @@ namespace dd4hep {
         }
       };
     }
-  }       /* End namespace align */
-}         /* End namespace dd4hep     */
+  }         /* End namespace dd4hep     */
 
 //static PrintLevel s_PRINT = DEBUG;
 //static PrintLevel s_PRINT = INFO;

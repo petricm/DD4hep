@@ -12,8 +12,7 @@
 //==========================================================================
 #include "DDRec/DetectorSurfaces.h"
 
-namespace dd4hep {
-  namespace rec {
+namespace dd4hep::rec {
     
 
 
@@ -79,5 +78,4 @@ namespace dd4hep {
     
 
 
-  } // namespace
-}// namespace
+  }// namespace

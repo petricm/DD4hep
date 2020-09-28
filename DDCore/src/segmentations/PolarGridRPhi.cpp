@@ -7,8 +7,7 @@
 
 #include "DDSegmentation/PolarGridRPhi.h"
 
-namespace dd4hep {
-namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 
 /// default constructor using an encoding string
 PolarGridRPhi::PolarGridRPhi(const std::string& cellEncoding) :
@@ -83,5 +82,4 @@ std::vector<double> PolarGridRPhi::cellDimensions(const CellID& cID) const {
 
 REGISTER_SEGMENTATION(PolarGridRPhi)
 
-} /* namespace DDSegmentation */
 } /* namespace dd4hep */

@@ -29,10 +29,7 @@
 // C/C++ include files
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// HepMC namespace declaration
     namespace HepMC {
@@ -73,8 +70,7 @@ namespace dd4hep {
       virtual EventReaderStatus skipEvent() override { return EVENT_READER_OK; }
 
     };
-  }     /* End namespace sim   */
-}       /* End namespace dd4hep       */
+  }       /* End namespace dd4hep       */
 
 //====================================================================
 //  AIDA Detector description implementation 
@@ -103,13 +99,7 @@ typedef dd4hep::detail::ReferenceBitMask<int> PropertyMask;
 DECLARE_GEANT4_EVENT_READER(Geant4EventReaderHepMC)
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
-
-    /// HepMC namespace declaration
-    namespace HepMC {
+namespace dd4hep::sim::HepMC {
 
       /// HepMC EventHeader class used internally by the Geant4EventReaderHepMC plugin
       /*
@@ -193,8 +183,6 @@ namespace dd4hep {
       Geant4Vertex* vertex(EventStream& info, int i);
       void fix_particles(EventStream &info);
     }
-  }
-}
 
 // For debugging specify here vertex numbers
 //#define DD4HEP_DEBUG_HEP_MC_VERTEX   -390

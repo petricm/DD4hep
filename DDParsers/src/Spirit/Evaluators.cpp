@@ -41,7 +41,7 @@ namespace {
 }
 
 //==============================================================================
-namespace dd4hep {  namespace Parsers {
+namespace dd4hep::Parsers {
     template <typename T> T evaluate_string(const std::string& /* value */)   {
       throw "Bad undefined call";
     }
@@ -65,4 +65,3 @@ namespace dd4hep {  namespace Parsers {
       return (float) result;
     }
   }
-}

@@ -14,7 +14,7 @@
 #ifndef DD4HEP_PARSERS_NO_ROOT
 #include "Parsers/spirit/ParsersStandardListCommon.h"
 
-namespace ROOT {  namespace Math {
+namespace ROOT::Math {
     bool operator<(const PxPyPzEVector& a, const PxPyPzEVector& b)  {
       if ( a.X() < b.X() ) return true;
       if ( a.Y() < b.Y() ) return true;
@@ -22,13 +22,12 @@ namespace ROOT {  namespace Math {
       if ( a.T() < b.T() ) return true;
       return false;
     }
-  }}
+  }
 
 template struct std::less<ROOT::Math::PxPyPzEVector>;
 
 // ============================================================================
-namespace dd4hep {
-  namespace Parsers {
+namespace dd4hep::Parsers {
 
     template <> int parse(ROOT::Math::PxPyPzEVector& result, const std::string& input) {
       return parse_(result, input);
@@ -46,6 +45,5 @@ namespace dd4hep {
     typedef ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<double> > _L;
     IMPLEMENT_MAPPED_PARSERS(pair,_L)
   }
-}
 #endif
 

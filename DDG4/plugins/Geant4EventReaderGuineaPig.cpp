@@ -31,10 +31,7 @@
 #include <sstream>
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Reader for ascii files with e+e- pairs created from GuineaPig.
     /**
@@ -66,8 +63,7 @@ namespace dd4hep {
       virtual EventReaderStatus skipEvent() override  { return EVENT_READER_OK; }
       virtual EventReaderStatus setParameters( std::map< std::string, std::string > & parameters ) override ;
     };
-  }     /* End namespace sim   */
-}       /* End namespace dd4hep       */
+  }       /* End namespace dd4hep       */
 
 
 // Framework include files

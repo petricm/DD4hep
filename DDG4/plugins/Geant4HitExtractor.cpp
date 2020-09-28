@@ -18,10 +18,7 @@ using namespace dd4hep;
 using namespace dd4hep::sim;
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the dd4hep event display specializations
-  namespace DDEve  {
+namespace dd4hep::DDEve  {
 
     /// SimulationHit definition
     /**
@@ -52,7 +49,6 @@ namespace dd4hep {
       }
     };
   }
-}
 
 /// Hit conversion function  \ingroup DD4HEP_EVE
 static void* _convertHitCollection(const char* source)  {

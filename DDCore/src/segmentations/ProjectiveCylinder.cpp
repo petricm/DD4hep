@@ -11,8 +11,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-namespace dd4hep {
-namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 
 using Util::thetaFromXYZ;
 using Util::phiFromXYZ;
@@ -82,5 +81,4 @@ double ProjectiveCylinder::phi(const CellID& cID) const {
 
 REGISTER_SEGMENTATION(ProjectiveCylinder)
 
-} /* namespace DDSegmentation */
 } /* namespace dd4hep */

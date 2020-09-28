@@ -20,10 +20,7 @@
 #include "DD4hep/Printout.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for implementation details of the AIDA detector description toolkit
-  namespace cond  {
+namespace dd4hep::cond  {
 
     /// Implementation of a stack of conditions assembled before application
     /** 
@@ -57,8 +54,7 @@ namespace dd4hep {
         return 0;
       }
     };
-  }    /* End namespace cond                             */
-}      /* End namespace dd4hep                            */
+  }      /* End namespace dd4hep                            */
 #endif /* DD4HEP_CONDITIONS_CONDIITONSSNAPSHOTROOTLOADER_H  */
 
 //#include "ConditionsSnapshotRootLoader.h"

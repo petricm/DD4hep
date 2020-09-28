@@ -19,10 +19,7 @@
 #include "DDG4/Geant4SteppingAction.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Class to measure the energy of escaping tracks
     /** Class to measure the energy of escaping tracks of a detector using Geant 4
@@ -46,8 +43,7 @@ namespace dd4hep {
       virtual bool process(G4Step* step, G4TouchableHistory* history)  override;
     };
 
-  }    // End namespace sim
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 #endif /* DD4HEP_DDG4_GEANT4ESCAPECOUNTER_H */
 

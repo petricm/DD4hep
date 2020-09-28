@@ -411,9 +411,7 @@ int DocumentHandler::output(Document doc, const string& fname) const {
 #include "XML/tinyxml.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-  /// Namespace containing utilities to parse XML files using XercesC or TinyXML
-  namespace xml {
+namespace dd4hep::xml {
 
     /// XML-DOM ERror handler class for the TinyXML document parser (Compatibility class)
     class DocumentErrorHandler {};
@@ -431,7 +429,7 @@ namespace dd4hep {
       TiXmlDocument* d;
       XmlDocument* xd;
     };
-  }}
+  }
 
 namespace {
   static string _clean_fname(const string& s) {

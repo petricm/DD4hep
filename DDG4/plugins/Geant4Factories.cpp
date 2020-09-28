@@ -127,13 +127,13 @@ DECLARE_GEANT4ACTION(Geant4GeneratorWrapper)
 
 //=============================
 #include "DDG4/Geant4TestActions.h"
-namespace dd4hep {  namespace sim   {
+namespace dd4hep::sim   {
     namespace Test {}
     //using namespace Test;
     using namespace dd4hep::sim::Test;
     typedef Geant4TestSensitive Geant4TestSensitiveTracker;
     typedef Geant4TestSensitive Geant4TestSensitiveCalorimeter;
-  }}
+  }
 
 DECLARE_GEANT4ACTION(Geant4TestRunAction)
 DECLARE_GEANT4ACTION(Geant4TestEventAction)

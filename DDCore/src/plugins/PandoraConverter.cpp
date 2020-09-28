@@ -21,12 +21,7 @@
 /*
  *   dd4hep namespace declaration
  */
-namespace dd4hep {
-
-  /*
-   *   XML namespace declaration
-   */
-  namespace detail {
+namespace dd4hep::detail {
 
     /// Converter to create Pandora structures from dd4hep (NOT IMPLEMENTED)
     /** @class PandoraConverter PandoraConverter.h XML/PandoraConverter.h
@@ -63,8 +58,7 @@ namespace dd4hep {
       xml_doc_t create(DetElement top);
 
     };
-  }    // End namespace xml
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 #endif /* DD4HEP_DDCORE_PANDORACONVERTER_H   */
 

@@ -33,10 +33,7 @@ using namespace dd4hep::detail;
 DD4HEP_INSTANTIATE_HANDLE_NAMED(VolumeManagerObject);
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for implementation details of the AIDA detector description toolkit
-  namespace detail {
+namespace dd4hep::detail {
 
     /// Helper class to populate the volume manager
     /**
@@ -298,8 +295,7 @@ namespace dd4hep {
         printout(m_debug ? INFO : DEBUG, "VolumeManager", log.str().c_str());
       }
     };
-  }       /* End namespace detail                */
-}         /* End namespace dd4hep                */
+  }         /* End namespace dd4hep                */
 
 /// Default destructor
 VolumeManagerContext::~VolumeManagerContext() {

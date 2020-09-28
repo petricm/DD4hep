@@ -27,7 +27,7 @@
 #include "TROOT.h"
 
 
-namespace dd4hep {  namespace detail {    class DetectorImp;  }}
+namespace dd4hep::detail {    class DetectorImp;  }
 
 using namespace dd4hep::detail;
 using namespace dd4hep;

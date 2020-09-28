@@ -20,10 +20,7 @@
 class G4LogicalVolume;
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim   {
+namespace dd4hep::sim   {
 
     /// Class to perform directional material scans using Geantinos.
     /**
@@ -73,7 +70,6 @@ namespace dd4hep {
       void beginEvent(const G4Event* event);
     };
   }
-}
 
 //====================================================================
 //  AIDA Detector description implementation 

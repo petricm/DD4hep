@@ -29,10 +29,7 @@
 #include <fstream>
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Class to populate Geant4 primaries from StdHep files.
     /**
@@ -62,8 +59,7 @@ namespace dd4hep {
       virtual EventReaderStatus moveToEvent(int event_number);
       virtual EventReaderStatus skipEvent() { return EVENT_READER_OK; }
     };
-  }     /* End namespace sim   */
-}       /* End namespace dd4hep       */
+  }       /* End namespace dd4hep       */
 
 //====================================================================
 //  AIDA Detector description implementation 

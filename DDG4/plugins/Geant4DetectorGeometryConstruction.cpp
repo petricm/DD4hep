@@ -16,10 +16,7 @@
 #include <DDG4/Geant4DetectorConstruction.h>
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Class to create Geant4 detector geometry from TGeo representation in memory
     /**
@@ -78,8 +75,7 @@ namespace dd4hep {
       /// Install command control messenger to write GDML file from command prompt.
       virtual void installCommandMessenger()   override;
     };
-  }    // End namespace sim
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 
 // Framework include files

@@ -20,10 +20,7 @@
 #include "G4RunManager.hh"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Geant4 run manager plugin class. 
     /**
@@ -68,7 +65,6 @@ namespace dd4hep {
     }
     typedef Geant4RunManager<G4RunManager>   Geant4STRunManager;
   }
-}
 #endif   // DDG4_GEANT4RUNMANAGER_H
 
 #include "DDG4/Factories.h"
@@ -79,9 +75,7 @@ DD4HEP_PLUGINSVC_FACTORY(Geant4STRunManager,G4RunManager,dd4hep::sim::Geant4Acti
 #include "G4MTRunManager.hh"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
     template <> void Geant4RunManager<G4MTRunManager>::enableUI()  {
       Geant4Action::enableUI();
       this->G4MTRunManager::SetNumberOfThreads(m_numThreads);
@@ -90,7 +84,6 @@ namespace dd4hep {
     }
     typedef Geant4RunManager<G4MTRunManager> Geant4MTRunManager;
   }
-}
 DD4HEP_PLUGINSVC_FACTORY(Geant4MTRunManager,G4MTRunManager,dd4hep::sim::Geant4Action*(_ns::CT*,std::string),__LINE__)
 #endif
 

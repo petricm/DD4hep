@@ -97,8 +97,7 @@ class G4TouchableHistory;
 #include "DDG4/Geant4TrackingAction.h"
 #include "DDG4/Geant4SteppingAction.h"
 #include "DDG4/Geant4GeneratorAction.h"
-namespace dd4hep {
-  namespace sim {
+namespace dd4hep::sim {
     /// Callback in Begin stacking action
     void Geant4ActionPhase::call() {
       this->execute(0);
@@ -138,4 +137,3 @@ namespace dd4hep {
       this->execute(args);
     }
   }
-}

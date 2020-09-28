@@ -40,10 +40,7 @@
 #include "G4Scintillation.hh"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Geant4 physics list action to enable Scintillation physics
     /**
@@ -115,7 +112,6 @@ namespace dd4hep {
       bool   m_trackSecondariesFirst;
     };
   }
-}
 #endif   // DDG4_GEANT4SCINTILLATIONPHYSICS_H
 
 #include "DDG4/Factories.h"

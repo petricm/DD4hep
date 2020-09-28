@@ -31,10 +31,7 @@ DD4HEP_INSTANTIATE_HANDLE_NAMED(ConditionsManagerObject);
 
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-  
-  /// Namespace for implementation details of the AIDA detector description toolkit
-  namespace cond {
+namespace dd4hep::cond {
 
     /// Access specialization
     template <> ConditionsManager ConditionsManager::from<Detector>(Detector& host)  {
@@ -44,7 +41,6 @@ namespace dd4hep {
       return ConditionsManager();
     }
   }
-}
 
 /// Default constructor
 ConditionsManagerObject::ConditionsManagerObject(Detector& ref_description)

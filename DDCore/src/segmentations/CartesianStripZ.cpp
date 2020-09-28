@@ -8,8 +8,7 @@
 
 #include "DDSegmentation/CartesianStripZ.h"
 
-namespace dd4hep {
-namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 /// default constructor using an encoding string
 CartesianStripZ::CartesianStripZ(const std::string& cellEncoding) : CartesianStrip(cellEncoding) {
     // define type and description
@@ -63,5 +62,4 @@ std::vector<double> CartesianStripZ::cellDimensions(const CellID&) const {
 }
 
 REGISTER_SEGMENTATION(CartesianStripZ)
-}  // namespace DDSegmentation
 } /* namespace dd4hep */

@@ -94,8 +94,7 @@ namespace {
   }
 } // namespace
 
-namespace Gaudi {
-  namespace PluginService {
+namespace DD4hep_Flavor::PluginService {
     GAUDI_PLUGIN_SERVICE_V2_INLINE namespace v2 {
       namespace Details {
         std::string demangle( const std::string& id ) {
@@ -340,5 +339,4 @@ namespace Gaudi {
         }
       }
     }
-  } // namespace PluginService
-} // namespace Gaudi
+  } // namespace Gaudi

@@ -17,10 +17,7 @@
 #include "DDDigi/DigiEventAction.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Digitization part of the AIDA detector description toolkit
-  namespace digi {
+namespace dd4hep::digi {
 
     // Forward declarations
     class DigiAction;
@@ -57,8 +54,7 @@ namespace dd4hep {
       virtual void execute(DigiContext& context)  const override;
     };
 
-  }    // End namespace digi
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 #endif // DD4HEP_DDDIGI_DIGIRANDOMNOISE_H
 
 //==========================================================================

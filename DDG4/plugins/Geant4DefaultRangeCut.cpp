@@ -35,10 +35,7 @@
 
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Geant4 physics list action to set global range cuts for secondary productions
     /**
@@ -72,7 +69,6 @@ namespace dd4hep {
       double m_rangeCut;
     };
   }
-}
 #endif   // DDG4_Geant4DefaultRangeCut_h
 
 #include "DDG4/Factories.h"

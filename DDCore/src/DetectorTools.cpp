@@ -26,14 +26,7 @@
 #include "TGeoMatrix.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Helper namespace used to answer detector element specific questons
-  /**
-   * @author  M.Frank
-   * @version 1.0
-   */
-  namespace detail { namespace tools  {
+namespace dd4hep::detail::tools  {
       /// Assemble the path of the PlacedVolume selection
       std::string elementPath(const PlacementPath& nodes, bool reverse);
       /// Collect detector elements to any parent detector element
@@ -48,8 +41,7 @@ namespace dd4hep {
 
       // Internal helper
       static void makePlacementPath(PlacementPath det_nodes, PlacementPath& all_nodes);
-    }}
-}
+    }
 
 using namespace std;
 using namespace dd4hep;

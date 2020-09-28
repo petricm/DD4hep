@@ -8,8 +8,7 @@
 
 #include "DDSegmentation/CartesianStrip.h"
 
-namespace dd4hep {
-namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 /// Default constructor used by derived classes passing the encoding string
 CartesianStrip::CartesianStrip(const std::string& cellEncoding) : Segmentation(cellEncoding) {}
 
@@ -18,5 +17,4 @@ CartesianStrip::CartesianStrip(const BitFieldCoder* decode) : Segmentation(decod
 
 /// Destructor
 CartesianStrip::~CartesianStrip() {}
-} /* namespace DDSegmentation */
 } /* namespace dd4hep */

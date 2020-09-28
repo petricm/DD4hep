@@ -4,9 +4,7 @@
 #include "Evaluator/Evaluator.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep  {
-
-  namespace tools {
+namespace dd4hep::tools {
 
     void Evaluator::setSystemOfUnits(double meter,
 				     double kilogram,
@@ -407,5 +405,4 @@ namespace dd4hep  {
       setVariable("kGs",         kilo_ * Gs);
     }
 
-  } // namespace tools
-}  // namespace dd4hep
+  }  // namespace dd4hep

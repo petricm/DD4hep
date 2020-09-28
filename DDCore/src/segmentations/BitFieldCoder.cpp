@@ -4,9 +4,7 @@
 #include <algorithm>
 #include <stdexcept>
 
-namespace dd4hep{
-
-  namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
   
     BitFieldElement::BitFieldElement( const std::string& fieldName,
                                       unsigned fieldOffset, int signedWidth ) :
@@ -212,5 +210,3 @@ namespace dd4hep{
 
 
   } // namespace
-
-} // namespace

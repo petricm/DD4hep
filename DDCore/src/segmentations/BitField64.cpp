@@ -4,9 +4,7 @@
 #include <algorithm>
 #include <stdexcept>
 
-namespace dd4hep{
-
-namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
   
 
   std::string BitField64::valueString() const {
@@ -48,7 +46,5 @@ namespace DDSegmentation {
   
     return os ;
   } 
-
-} // namespace
 
 } // namespace

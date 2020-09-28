@@ -58,12 +58,7 @@ using namespace lcio ;
 /*
  *   dd4hep namespace declaration
  */
-namespace dd4hep {
-
-  /*
-   *   Simulation namespace declaration
-   */
-  namespace sim   {
+namespace dd4hep::sim   {
 
     typedef VolumeManager VolMgr;
     typedef IDDescriptor  IDDescriptor;
@@ -322,8 +317,7 @@ namespace dd4hep {
     DECLARE_GEANT4_HITCONVERTER(lcio::LCCollectionVec,CONVERSION_ARGS,lcio::SimTrackerHitImpl)
     DECLARE_GEANT4_HITCONVERTER(lcio::LCCollectionVec,CONVERSION_ARGS,lcio::SimCalorimeterHitImpl)
     DECLARE_GEANT4_HITCONVERTER(lcio::LCCollectionVec,CONVERSION_ARGS,lcio::ClusterImpl)
-  }    // End namespace sim
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 
 

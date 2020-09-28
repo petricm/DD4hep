@@ -7,8 +7,7 @@
 
 #include "DDSegmentation/CartesianGrid.h"
 
-namespace dd4hep {
-  namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 
     /// Default constructor used by derived classes passing the encoding string
     CartesianGrid::CartesianGrid(const std::string& cellEncoding) :
@@ -23,5 +22,4 @@ namespace dd4hep {
     CartesianGrid::~CartesianGrid() {
     }
 
-  } /* namespace DDSegmentation */
-} /* namespace dd4hep */
+  } /* namespace dd4hep */

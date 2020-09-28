@@ -14,8 +14,7 @@
 #include <algorithm>
 #include <iostream>
 
-namespace dd4hep {
-  namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 
     /// default constructor using an encoding string
     MegatileLayerGridXY::MegatileLayerGridXY(const std::string& cellEncoding) :
@@ -185,5 +184,4 @@ namespace dd4hep {
 
     REGISTER_SEGMENTATION(MegatileLayerGridXY)
 
-  } /* namespace DDSegmentation */
-} /* namespace dd4hep */
+  } /* namespace dd4hep */

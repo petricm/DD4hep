@@ -133,9 +133,7 @@ long GeometryWalk::run(Detector& description,int argc,char** argv)    {
 }
 
 
-namespace dd4hep {
-  namespace detail {
+namespace dd4hep::detail {
     using ::GeometryWalk;
   }
-}
 DECLARE_APPLY(GeometryWalker,GeometryWalk::run)

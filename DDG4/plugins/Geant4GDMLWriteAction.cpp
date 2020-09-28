@@ -17,10 +17,7 @@
 #include "DDG4/Geant4Action.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Class to measure the energy of escaping tracks
     /** Class to dump Geant4 geometry to GDML
@@ -63,8 +60,7 @@ namespace dd4hep {
       virtual void writeGDML();
     };
 
-  }    // End namespace sim
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 #endif /* DD4HEP_DDG4_GEANT4GDMLWRITEACTION_H */
 

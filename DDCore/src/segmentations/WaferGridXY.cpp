@@ -7,8 +7,7 @@
 
 #include "DDSegmentation/WaferGridXY.h"
 
-namespace dd4hep {
-namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 
 /// default constructor using an encoding string
 WaferGridXY::WaferGridXY(const std::string& cellEncoding) :
@@ -128,5 +127,4 @@ std::vector<double> WaferGridXY::cellDimensions(const CellID&) const {
 
 REGISTER_SEGMENTATION(WaferGridXY)
 
-} /* namespace DDSegmentation */
 } /* namespace dd4hep */

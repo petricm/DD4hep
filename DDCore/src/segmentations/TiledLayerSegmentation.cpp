@@ -12,8 +12,7 @@
 #include <sstream>
 #include <stdexcept>
 
-namespace dd4hep {
-namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 
 using std::find;
 using std::runtime_error;
@@ -153,5 +152,4 @@ double TiledLayerSegmentation::calculateOffset(double /* cellSize */, double /* 
 	return 0.;
 }
 
-} /* namespace DDSegmentation */
 } /* namespace dd4hep */

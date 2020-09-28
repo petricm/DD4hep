@@ -31,10 +31,7 @@
 #include "LCIOEventReader.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep  {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim  {
+namespace dd4hep::sim  {
 
     /// Base class to read StdHep files with lcio
     /**
@@ -58,8 +55,7 @@ namespace dd4hep  {
       virtual EventReaderStatus skipEvent() { return EVENT_READER_OK; }
 
     };
-  }     /* End namespace lcio   */
-}       /* End namespace dd4hep */
+  }       /* End namespace dd4hep */
 #endif  /* DD4HEP_DDG4_LCIOSTDHEPREADER_H */
 
 //==========================================================================

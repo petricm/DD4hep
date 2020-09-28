@@ -16,10 +16,7 @@
 #include "DDG4/Geant4DetectorConstruction.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Class to create Geant4 detector geometry from TGeo representation in memory
     /**
@@ -41,8 +38,7 @@ namespace dd4hep {
       /// Sensitives construction callback. Called at "ConstructSDandField()"
       void constructSensitives(Geant4DetectorConstructionContext* ctxt);
     };
-  }    // End namespace sim
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 
 // Framework include files

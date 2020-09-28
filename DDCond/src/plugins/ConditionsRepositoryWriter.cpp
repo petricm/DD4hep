@@ -21,10 +21,7 @@
 // C/C++ include files
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for implementation details of the AIDA detector description toolkit
-  namespace cond {
+namespace dd4hep::cond {
 
     // Forward declarations
     class ConditionsSlice;
@@ -71,8 +68,7 @@ namespace dd4hep {
       long write(xml::Document doc, const std::string& output)  const;
     };
     
-  }        /* End namespace cond                          */
-}          /* End namespace dd4hep                              */
+  }          /* End namespace dd4hep                              */
 #endif     /* DD4HEP_DDCOND_CONDITIONSREPOSITORYWRITER_H        */
 
 

@@ -19,10 +19,7 @@
 #include "DDG4/Python/DDPython.h"
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim {
+namespace dd4hep::sim {
 
     /// Base class to initialize a multi-threaded or single threaded Geant4 application
     /**
@@ -46,8 +43,7 @@ namespace dd4hep {
         DDPython::allowThreads();
       }
     };
-  }    // End namespace sim
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 #endif // DD4HEP_DDG4_GEANT4PYTHONDETECTORCONSTRUCTIONLAST_H
 
 using namespace dd4hep::sim;

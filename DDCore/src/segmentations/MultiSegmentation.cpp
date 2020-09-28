@@ -12,8 +12,7 @@
 
 using namespace std;
 
-namespace dd4hep {
-  namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 
     /// default constructor using an encoding string
     MultiSegmentation::MultiSegmentation(const string& cellEncoding)
@@ -100,5 +99,4 @@ namespace dd4hep {
 
     REGISTER_SEGMENTATION(MultiSegmentation)
 
-  } /* namespace DDSegmentation */
-} /* namespace dd4hep */
+  } /* namespace dd4hep */

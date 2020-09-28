@@ -7,8 +7,7 @@
 
 #include "DDSegmentation/PolarGrid.h"
 
-namespace dd4hep {
-  namespace DDSegmentation {
+namespace dd4hep::DDSegmentation {
 
     /// Default constructor used by derived classes passing the encoding string
     PolarGrid::PolarGrid(const std::string& cellEncoding) :
@@ -22,5 +21,4 @@ namespace dd4hep {
     PolarGrid::~PolarGrid() {
     }
 
-  } /* namespace DDSegmentation */
-} /* namespace dd4hep */
+  } /* namespace dd4hep */

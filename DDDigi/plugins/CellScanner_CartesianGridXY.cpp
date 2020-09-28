@@ -19,10 +19,7 @@
 
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-  
-  /// Namespace for the Digitization part of the AIDA detector description toolkit
-  namespace digi {
+namespace dd4hep::digi {
 
     template <>
     void init_segmentation_data<CartesianGridXY>(segmentation_data<CartesianGridXY>& data,
@@ -69,14 +66,11 @@ namespace dd4hep {
         }
       }
     }
-  }    // End namespace digi
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {  
-  /// Namespace for the Digitization part of the AIDA detector description toolkit
-  namespace digi {
+namespace dd4hep::digi {
 
     template <> void
     CellScanner<CartesianGridXY,Box>::operator()(DigiContext& context,
@@ -100,15 +94,12 @@ namespace dd4hep {
         }
       }
     }
-  }    // End namespace digi
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 DECLARE_DIGICELLSCANNER(DigiCellScanner,CartesianGridXY,Box)
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep {
-  /// Namespace for the Digitization part of the AIDA detector description toolkit
-  namespace digi {
+namespace dd4hep::digi {
 
     template <typename self_t> void
     scan_poly(DigiContext& context,
@@ -162,8 +153,7 @@ namespace dd4hep {
                                                       const cell_handler_t& cell_handler) {
       scan_poly<self_t>(ct, pv, vid, cell_handler, *this);
     }
-  }    // End namespace digi
-}      // End namespace dd4hep
+  }      // End namespace dd4hep
 
 DECLARE_DIGICELLSCANNER(DigiCellScanner,CartesianGridXY,PolyhedraRegular)
 DECLARE_DIGICELLSCANNER(DigiCellScanner,CartesianGridXY,Polyhedra)

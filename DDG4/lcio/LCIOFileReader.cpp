@@ -37,10 +37,7 @@ using namespace lcio ;
 namespace IO { class LCReader; }
 
 /// Namespace for the AIDA detector description toolkit
-namespace dd4hep  {
-
-  /// Namespace for the Geant4 based simulation part of the AIDA detector description toolkit
-  namespace sim  {
+namespace dd4hep::sim  {
 
     /// get the parameters from the input LCIO Event and store them in the EventParameters extension
     template <class T=EVENT::LCParameters> void EventParameters::ingestParameters(T const& source) {
@@ -90,7 +87,6 @@ namespace dd4hep  {
       virtual EventReaderStatus setParameters(std::map< std::string, std::string >& parameters); 
     };
   }
-}
 #endif // DD4HEP_DDG4_LCIOFILEREADER_H
 
 #include "DD4hep/Printout.h"
