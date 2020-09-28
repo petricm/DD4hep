@@ -257,5 +257,4 @@ WorldObject::WorldObject(Detector& _description, const string& nam)
 }
 
 /// Internal object destructor: release extension object(s)
-WorldObject::~WorldObject()  {
-}
+WorldObject::~WorldObject()  = default;

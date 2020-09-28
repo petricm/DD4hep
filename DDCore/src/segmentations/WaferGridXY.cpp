@@ -49,9 +49,7 @@ WaferGridXY::WaferGridXY(const BitFieldCoder* decode) :	CartesianGrid(decode) {
 }
 
 /// destructor
-WaferGridXY::~WaferGridXY() {
-
-}
+WaferGridXY::~WaferGridXY() = default;
 
 /// determine the position based on the cell ID
 Vector3D WaferGridXY::position(const CellID& cID) const {

@@ -17,12 +17,10 @@
 using namespace dd4hep::sim;
 
 /// Default constructor
-Geant4ConversionHelper::Geant4ConversionHelper() {
-}
+Geant4ConversionHelper::Geant4ConversionHelper() = default;
 
 /// Default destructor
-Geant4ConversionHelper::~Geant4ConversionHelper() {
-}
+Geant4ConversionHelper::~Geant4ConversionHelper() = default;
 
 /// Access to the data encoding using the volume manager and a specified volume id
 std::string Geant4ConversionHelper::encoding(VolumeManager vm, VolumeID vid) {

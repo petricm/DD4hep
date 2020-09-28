@@ -19,10 +19,8 @@ using namespace dd4hep::cad;
 
 /// Default constructor
 InputReader::InputReader()
-{
-}
+= default;
 
 /// Default destructor
 InputReader::~InputReader()
-{
-}
+= default;

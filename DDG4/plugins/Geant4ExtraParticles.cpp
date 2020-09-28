@@ -40,7 +40,7 @@ Geant4ExtraParticles::Geant4ExtraParticles(Geant4Context* ctxt, const std::strin
   declareProperty("pdgfile", m_pdgfile);
 }
 
-Geant4ExtraParticles::~Geant4ExtraParticles() {}
+Geant4ExtraParticles::~Geant4ExtraParticles() = default;
 
 
 void Geant4ExtraParticles::constructParticle(Constructor& ) {

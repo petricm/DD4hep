@@ -53,7 +53,7 @@ namespace dd4hep::sim   {
         /// Copy constructor
         StepInfo(const StepInfo& c);
         /// Default destructor
-        ~StepInfo() {}
+        ~StepInfo() = default;
         /// Assignment operator
         StepInfo& operator=(const StepInfo& c);
       };
@@ -113,9 +113,8 @@ Geant4GeometryScanner::StepInfo::StepInfo(Position  prePos,
 
 /// Copy constructor
 Geant4GeometryScanner::StepInfo::StepInfo(const StepInfo& c)
-  : pre(c.pre), post(c.post), path(c.path), volume(c.volume)
-{
-}
+
+= default;
 
 /// Assignment operator
 Geant4GeometryScanner::StepInfo& Geant4GeometryScanner::StepInfo::operator=(const StepInfo& c)  {

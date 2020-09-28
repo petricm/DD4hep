@@ -233,10 +233,8 @@ namespace {
     double threshold{0.0};
     bool storeSecondaries{false};
     G4UserRegionInformation()
-       {
-    }
-    virtual ~G4UserRegionInformation() {
-    }
+       = default;
+    virtual ~G4UserRegionInformation() = default;
     virtual void Print() const {
       if (region.isValid())
         printout(DEBUG, "Region", "Name:%s", region.name());
@@ -344,8 +342,7 @@ Geant4Converter::Geant4Converter(const Detector& description_ref, PrintLevel lev
 }
 
 /// Standard destructor
-Geant4Converter::~Geant4Converter() {
-}
+Geant4Converter::~Geant4Converter() = default;
 
 /// Handle the conversion of isotopes
 void* Geant4Converter::handleIsotope(const string& /* name */, const TGeoIsotope* iso) const {

@@ -20,11 +20,9 @@ ClassImp(EventHandler)
 ClassImp(EventConsumer)
 
 /// Default destructor
-EventHandler::~EventHandler()   {
-}
+EventHandler::~EventHandler()   = default;
 
 /// Default destructor
-EventConsumer::~EventConsumer()   {
-}
+EventConsumer::~EventConsumer()   = default;
 
 

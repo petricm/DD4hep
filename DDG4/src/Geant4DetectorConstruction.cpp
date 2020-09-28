@@ -38,8 +38,7 @@ Geant4DetectorConstruction::Geant4DetectorConstruction(Geant4Context* ctxt, cons
 }
 
 /// Default destructor
-Geant4DetectorConstruction::~Geant4DetectorConstruction()  {
-}
+Geant4DetectorConstruction::~Geant4DetectorConstruction()  = default;
 
 /// Geometry construction callback. Called at "Construct()"
 void Geant4DetectorConstruction::constructGeo(Geant4DetectorConstructionContext* )   {

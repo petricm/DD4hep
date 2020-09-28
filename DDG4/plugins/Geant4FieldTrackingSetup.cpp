@@ -83,7 +83,7 @@ namespace dd4hep::sim {
       /// Standard constructor
       Geant4FieldTrackingSetupAction(Geant4Context* context, const std::string& nam);
       /// Default destructor
-      virtual ~Geant4FieldTrackingSetupAction() {}
+      virtual ~Geant4FieldTrackingSetupAction() = default;
       /// Phase action callback
       void operator()();
     };
@@ -107,7 +107,7 @@ namespace dd4hep::sim {
       Geant4FieldTrackingConstruction(Geant4Context* context, const std::string& nam);
 
       /// Default destructor
-      virtual ~Geant4FieldTrackingConstruction() {}
+      virtual ~Geant4FieldTrackingConstruction() = default;
 
       /// Detector construction callback
       void constructField(Geant4DetectorConstructionContext *ctxt);
@@ -182,8 +182,7 @@ Geant4FieldTrackingSetup::Geant4FieldTrackingSetup() : eq_typ(), stepper_typ() {
 }
 
 /// Default destructor
-Geant4FieldTrackingSetup::~Geant4FieldTrackingSetup()   {
-}
+Geant4FieldTrackingSetup::~Geant4FieldTrackingSetup()   = default;
 
 /// Perform the setup of the magnetic field tracking in Geant4
 int Geant4FieldTrackingSetup::execute(Detector& description)   {
@@ -250,7 +249,7 @@ static long setup_fields(Detector& description, const dd4hep::detail::GeoHandler
       if ( pm["delta_intersection"] ) delta_intersection = pm.toDouble("delta_intersection");
       if ( pm["largest_step"] ) largest_step = pm.toDouble("largest_step");
     }
-    virtual ~XMLFieldTrackingSetup() {}
+    virtual ~XMLFieldTrackingSetup() = default;
   } setup(vals);
   return setup.execute(description);
 }

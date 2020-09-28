@@ -16,5 +16,5 @@ CartesianStrip::CartesianStrip(const std::string& cellEncoding) : Segmentation(c
 CartesianStrip::CartesianStrip(const BitFieldCoder* decode) : Segmentation(decode) {}
 
 /// Destructor
-CartesianStrip::~CartesianStrip() {}
+CartesianStrip::~CartesianStrip() = default;
 } /* namespace dd4hep */

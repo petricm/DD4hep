@@ -54,8 +54,7 @@ Geant4UIManager::Geant4UIManager(Geant4Context* ctxt, const std::string& nam)
 }
 
 /// Default destructor
-Geant4UIManager::~Geant4UIManager()   {
-}
+Geant4UIManager::~Geant4UIManager()   = default;
 
 /// Install command control messenger to write GDML file from command prompt.
 void Geant4UIManager::installCommandMessenger()   {

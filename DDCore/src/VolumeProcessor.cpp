@@ -18,8 +18,7 @@
 using namespace dd4hep;
 
 /// Default destructor
-PlacedVolumeProcessor::~PlacedVolumeProcessor()   {
-}
+PlacedVolumeProcessor::~PlacedVolumeProcessor()   = default;
 
 /// Callback to output PlacedVolume information of an entire DetElement
 int PlacedVolumeProcessor::process(PlacedVolume pv, int level, bool recursive)  {

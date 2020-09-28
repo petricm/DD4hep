@@ -239,7 +239,7 @@ static int ddcond_detelement_dump(Detector& description, int argc, char** argv) 
     /// Standard constructor
     Actor(ConditionsPrinter& p) : printer(p)  {    }
     /// Default destructor
-    virtual ~Actor()   {    }
+    virtual ~Actor()   = default;
     /// Dump method.
     virtual int operator()(DetElement de,int level)  const  {
       const DetElement::Children& children = de.children();

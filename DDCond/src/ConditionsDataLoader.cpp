@@ -31,8 +31,7 @@ ConditionsDataLoader::ConditionsDataLoader(Detector& description, ConditionsMana
 }
 
 /// Default destructor
-ConditionsDataLoader::~ConditionsDataLoader()   {
-}
+ConditionsDataLoader::~ConditionsDataLoader()   = default;
 
 /// Access to properties
 dd4hep::Property& ConditionsDataLoader::operator[](const std::string& property_name)  {

@@ -32,8 +32,7 @@ DD4hepRootPersistency::DD4hepRootPersistency() : TNamed() {
 }
 
 /// Default destructor
-DD4hepRootPersistency::~DD4hepRootPersistency() {
-}
+DD4hepRootPersistency::~DD4hepRootPersistency() = default;
 
 int DD4hepRootPersistency::save(Detector& description, const char* fname, const char* instance)   {
   TFile* f = TFile::Open(fname,"RECREATE");

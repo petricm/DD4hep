@@ -33,8 +33,7 @@ using namespace dd4hep::sim;
 typedef detail::ReferenceBitMask<int> PropertyMask;
 
 /// Default destructor
-ParticleExtension::~ParticleExtension() {
-}
+ParticleExtension::~ParticleExtension() = default;
 
 /// Default constructor
 Geant4Particle::Geant4Particle() : ref(1)

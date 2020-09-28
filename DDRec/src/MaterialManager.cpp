@@ -27,9 +27,7 @@ namespace dd4hep::rec {
       _tgeoMgr = world->GetGeoManager();
     }
     
-    MaterialManager::~MaterialManager(){
-      
-    }
+    MaterialManager::~MaterialManager()= default;
     
     const PlacementVec& MaterialManager::placementsBetween(const Vector3D& p0, const Vector3D& p1 , double epsilon) {
       materialsBetween(p0,p1,epsilon);

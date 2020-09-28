@@ -25,8 +25,7 @@ Geant4PhaseAction::Geant4PhaseAction(Geant4Context* ctxt, const std::string& nam
 }
 
 /// Default destructor
-Geant4PhaseAction::~Geant4PhaseAction()   {
-}
+Geant4PhaseAction::~Geant4PhaseAction()   = default;
 
 /// Callback to generate primary particles
 void Geant4PhaseAction::operator()() {

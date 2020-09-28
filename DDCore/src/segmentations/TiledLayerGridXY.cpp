@@ -62,9 +62,7 @@ TiledLayerGridXY::TiledLayerGridXY(const BitFieldCoder* decode) : CartesianGrid(
 }
 
 /// destructor
-TiledLayerGridXY::~TiledLayerGridXY() {
-
-}
+TiledLayerGridXY::~TiledLayerGridXY() = default;
 
 /// determine the position based on the cell ID
 Vector3D TiledLayerGridXY::position(const CellID& cID) const {

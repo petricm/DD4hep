@@ -95,8 +95,7 @@ ConditionsXmlLoader::ConditionsXmlLoader(Detector& description, ConditionsManage
 }
 
 /// Default Destructor
-ConditionsXmlLoader::~ConditionsXmlLoader() {
-} 
+ConditionsXmlLoader::~ConditionsXmlLoader() = default;
 
 size_t ConditionsXmlLoader::load_source(const std::string& nam,
                                         key_type key,

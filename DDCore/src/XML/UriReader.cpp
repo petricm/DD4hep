@@ -17,8 +17,7 @@
 using namespace std;
 
 /// Default destructor
-dd4hep::xml::UriReader::~UriReader()   {
-}
+dd4hep::xml::UriReader::~UriReader()   = default;
 
 /// Resolve a given URI to a string containing the data
 bool dd4hep::xml::UriReader::load(const string& system_id, string& data)   {
@@ -43,8 +42,7 @@ dd4hep::xml::UriContextReader::UriContextReader(const UriContextReader& copy)
 }
 
 /// Default destructor
-dd4hep::xml::UriContextReader::~UriContextReader()   {
-}
+dd4hep::xml::UriContextReader::~UriContextReader()   = default;
 
 /// Add a blocked path entry
 void dd4hep::xml::UriContextReader::blockPath(const std::string& path)  {

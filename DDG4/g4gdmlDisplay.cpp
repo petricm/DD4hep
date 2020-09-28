@@ -44,8 +44,8 @@ using namespace dd4hep::sim;
 namespace {
   class EmptyPhysicsList: public G4VUserPhysicsList  {
   public:
-    EmptyPhysicsList()       {                                       }
-    ~EmptyPhysicsList()      {                                       }
+    EmptyPhysicsList()       = default;
+    ~EmptyPhysicsList()      = default;
     // Construct particle and physics process
     void ConstructParticle() {    G4Geantino::GeantinoDefinition();  }
     void ConstructProcess()  {    AddTransportation();               }

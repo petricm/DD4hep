@@ -23,12 +23,10 @@ using namespace std;
 using namespace dd4hep::json;
 
 /// Default constructor
-DocumentHandler::DocumentHandler()  {
-}
+DocumentHandler::DocumentHandler()  = default;
                                     
 /// Default destructor
-DocumentHandler::~DocumentHandler()   {
-}
+DocumentHandler::~DocumentHandler()   = default;
 
 /// Load XML file and parse it.
 Document DocumentHandler::load(const string& fname) const   {

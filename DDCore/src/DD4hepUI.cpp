@@ -33,8 +33,7 @@ DD4hepUI::DD4hepUI(Detector& instance) : m_detDesc(instance)  {
 }
 
 /// Default destructor
-DD4hepUI::~DD4hepUI()   {
-}
+DD4hepUI::~DD4hepUI()   = default;
 
 /// Access to the Detector instance
 Detector* DD4hepUI::instance()  const   {

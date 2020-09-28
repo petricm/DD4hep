@@ -18,7 +18,6 @@ namespace dd4hep::DDSegmentation {
     }
 
     /// Destructor
-    PolarGrid::~PolarGrid() {
-    }
+    PolarGrid::~PolarGrid() = default;
 
   } /* namespace dd4hep */

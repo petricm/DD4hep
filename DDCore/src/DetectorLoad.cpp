@@ -43,8 +43,7 @@ DetectorLoad::DetectorLoad(Detector& description) : m_detDesc(&description)  {
 }
 
 /// Standard destructor
-DetectorLoad::~DetectorLoad() {
-}
+DetectorLoad::~DetectorLoad() = default;
 
 /// Process XML unit and adopt all data from source structure.
 void DetectorLoad::processXML(const string& xmlfile, xml::UriReader* entity_resolver) {

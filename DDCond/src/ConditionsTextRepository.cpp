@@ -38,12 +38,10 @@ typedef xml::Collection_t xml_coll_t;
 typedef map<Condition::key_type,Condition> AllConditions;
 
 /// Default constructor. Allocates resources
-ConditionsTextRepository::ConditionsTextRepository()  {
-}
+ConditionsTextRepository::ConditionsTextRepository()  = default;
 
 /// Default destructor
-ConditionsTextRepository::~ConditionsTextRepository()   {
-}
+ConditionsTextRepository::~ConditionsTextRepository()   = default;
 
 namespace {
 

@@ -49,9 +49,7 @@ ProjectiveCylinder::ProjectiveCylinder(const BitFieldCoder* decode) :	Cylindrica
 }
 
 /// destructor
-ProjectiveCylinder::~ProjectiveCylinder() {
-
-}
+ProjectiveCylinder::~ProjectiveCylinder() = default;
 
 /// determine the local based on the cell ID
 Vector3D ProjectiveCylinder::position(const CellID& cID) const {

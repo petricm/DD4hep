@@ -19,8 +19,7 @@
 using namespace dd4hep;
 
 /// Default destructor
-DetectorProcessor::~DetectorProcessor()   {
-}
+DetectorProcessor::~DetectorProcessor()   = default;
 
 /// Callback to output detector information of an entire DetElement
 int DetectorProcessor::process(DetElement de, int level, bool recursive)  const  {

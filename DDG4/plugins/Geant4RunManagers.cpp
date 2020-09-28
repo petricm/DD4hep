@@ -47,7 +47,7 @@ namespace dd4hep::sim {
       {
         declareProperty("NumberOfThreads", m_numThreads);
       }
-      virtual ~Geant4RunManager()   { }
+      virtual ~Geant4RunManager()   = default;
       /// Enable and install UI messenger
       virtual void enableUI();
     private:

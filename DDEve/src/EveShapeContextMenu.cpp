@@ -41,5 +41,4 @@ EveShapeContextMenu::EveShapeContextMenu(Display* disp)
 }
 
 /// Default destructor
-EveShapeContextMenu::~EveShapeContextMenu()  {
-}
+EveShapeContextMenu::~EveShapeContextMenu()  = default;

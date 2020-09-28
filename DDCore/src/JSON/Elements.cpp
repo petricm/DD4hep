@@ -287,8 +287,7 @@ NodeList::NodeList(JsonElement* node, string  tag_value)
 }
 
 /// Default destructor
-NodeList::~NodeList() {
-}
+NodeList::~NodeList() = default;
 
 /// Reset the nodelist
 JsonElement* NodeList::reset() {

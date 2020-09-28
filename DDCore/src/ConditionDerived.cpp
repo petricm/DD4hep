@@ -23,8 +23,7 @@ using namespace dd4hep;
 using namespace dd4hep::cond;
 
 /// Default destructor
-ConditionUpdateUserContext::~ConditionUpdateUserContext()   {
-}
+ConditionUpdateUserContext::~ConditionUpdateUserContext()   = default;
 
 /// Access to the top level detector element
 DetElement ConditionUpdateContext::world()  const   {
@@ -112,8 +111,7 @@ ConditionUpdateCall::~ConditionUpdateCall()  {
 }
 
 /// Standard destructor
-ConditionResolver::~ConditionResolver()  {
-}
+ConditionResolver::~ConditionResolver()  = default;
 
 /// Throw exception on conditions access failure
 void ConditionUpdateContext::accessFailure(const ConditionKey& key_value)  const   {
@@ -203,8 +201,7 @@ DependencyBuilder::DependencyBuilder(DetElement           de,
 }
 
 /// Default destructor
-DependencyBuilder::~DependencyBuilder()   {
-}
+DependencyBuilder::~DependencyBuilder()   = default;
 
 /// Add a new dependency
 void DependencyBuilder::add(const ConditionKey& source)   {

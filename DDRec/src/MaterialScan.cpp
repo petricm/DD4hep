@@ -44,8 +44,7 @@ MaterialScan::MaterialScan(Detector& description)
 }
 
 /// Default destructor
-MaterialScan::~MaterialScan()    {
-}
+MaterialScan::~MaterialScan()    = default;
 
 
 /// Set a specific region to limit the scan (resets the subdetector selection)

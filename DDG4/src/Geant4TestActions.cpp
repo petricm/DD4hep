@@ -31,10 +31,8 @@ using namespace dd4hep::sim::Test;
 
 namespace {
   struct TestHit {
-    TestHit() {
-    }
-    virtual ~TestHit() {
-    }
+    TestHit() = default;
+    virtual ~TestHit() = default;
   };
 }
 

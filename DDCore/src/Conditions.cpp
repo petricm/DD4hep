@@ -177,8 +177,7 @@ const dd4hep::BasicGrammar& Condition::descriptor() const   {
 }
 
 /// Default destructor. 
-ConditionsSelect::~ConditionsSelect()   {
-}
+ConditionsSelect::~ConditionsSelect()   = default;
 
 /// Constructor from string
 ConditionKey::KeyMaker::KeyMaker(DetElement detector, const std::string& value)   {

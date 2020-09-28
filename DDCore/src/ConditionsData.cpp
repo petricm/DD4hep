@@ -44,8 +44,7 @@ std::ostream& operator << (std::ostream& s, const AbstractMap& data)   {
 }
 
 /// Default destructor
-ClientData::~ClientData()  {
-}
+ClientData::~ClientData()  = default;
 
 /// Default constructor
 AbstractMap::AbstractMap() : clientData(0), classID(0) {

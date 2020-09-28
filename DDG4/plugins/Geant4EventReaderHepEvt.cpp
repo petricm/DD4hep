@@ -99,14 +99,14 @@ namespace {
     /// Initializing constructor
     explicit Geant4EventReaderHepEvtShort(const string& nam) : Geant4EventReaderHepEvt(nam,HEPEvtShort) {}
     /// Default destructor
-    virtual ~Geant4EventReaderHepEvtShort() {}
+    virtual ~Geant4EventReaderHepEvtShort() = default;
   };
   class Geant4EventReaderHepEvtLong : public Geant4EventReaderHepEvt  {
   public:
     /// Initializing constructor
     explicit Geant4EventReaderHepEvtLong(const string& nam) : Geant4EventReaderHepEvt(nam,HEPEvtLong) {}
     /// Default destructor
-    virtual ~Geant4EventReaderHepEvtLong() {}
+    virtual ~Geant4EventReaderHepEvtLong() = default;
   };
 }
 

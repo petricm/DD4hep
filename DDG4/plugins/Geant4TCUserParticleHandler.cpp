@@ -46,7 +46,7 @@ namespace dd4hep::sim {
       Geant4TCUserParticleHandler(Geant4Context* context, const std::string& nam);
 
       /// Default destructor
-      virtual ~Geant4TCUserParticleHandler() {}
+      virtual ~Geant4TCUserParticleHandler() = default;
 
       /// Post-track action callback
       /** Allow the user to force the particle handling in the post track action

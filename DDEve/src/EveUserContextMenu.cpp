@@ -34,8 +34,7 @@ EveUserContextMenu::EveUserContextMenu(Display* disp) : m_display(disp)  {
 }
 
 /// Default destructor
-EveUserContextMenu::~EveUserContextMenu()  {
-}
+EveUserContextMenu::~EveUserContextMenu()  = default;
 
 /// EVE manager
 TEveManager& EveUserContextMenu::manager() const   {

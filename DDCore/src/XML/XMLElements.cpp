@@ -605,8 +605,7 @@ NodeList::NodeList(XmlElement* node, const XmlChar* tag_value)
 }
 
 /// Default destructor
-NodeList::~NodeList() {
-}
+NodeList::~NodeList() = default;
 
 /// Reset the nodelist
 XmlElement* NodeList::reset() {
@@ -1195,8 +1194,7 @@ RefElement::RefElement(const Handle_t& e)
 
 /// Copy constructor
 RefElement::RefElement(const RefElement& e)
-  : Element(e), m_name(e.m_name) {
-}
+   = default;
 
 /// Assignment operator
 RefElement& RefElement::operator=(const RefElement& e) {

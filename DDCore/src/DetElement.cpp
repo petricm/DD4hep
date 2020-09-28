@@ -30,12 +30,10 @@ namespace {
 }
 
 /// Default constructor
-DetElement::Processor::Processor()   {
-}
+DetElement::Processor::Processor()   = default;
 
 /// Default destructor
-DetElement::Processor::~Processor()   {
-}
+DetElement::Processor::~Processor()   = default;
 
 /// Clone constructor
 DetElement::DetElement(Object* det_data, const string& det_name, const string& det_type)

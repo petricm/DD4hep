@@ -24,8 +24,7 @@ Geant4TrackInformation::Geant4TrackInformation()
 }
 
 /// Standard destructor
-Geant4TrackInformation::~Geant4TrackInformation() {
-}
+Geant4TrackInformation::~Geant4TrackInformation() = default;
 
 /// Access flag if track should be stored
 Geant4TrackInformation& Geant4TrackInformation::storeTrack(bool value) {

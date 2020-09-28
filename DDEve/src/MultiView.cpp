@@ -40,8 +40,7 @@ MultiView::MultiView(Display* eve, const string& nam) : View(eve, nam)
 }
 
 /// Default destructor
-MultiView::~MultiView()  {
-}
+MultiView::~MultiView()  = default;
 
 /// Build the projection view and map it to the given slot
 View& MultiView::Build(TEveWindow* slot)   {

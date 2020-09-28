@@ -36,13 +36,13 @@ namespace dd4hep::DDEve  {
       Position position;
       float deposit{0.0};
       /// Default constructor
-      SimulationHit()  {}
+      SimulationHit()  = default;
       /// Standard initializing constructor
       SimulationHit(Position  p, float d) : position(std::move(p)), deposit(d) {}
       /// Copy constructor
-      SimulationHit(const SimulationHit& c) : position(c.position), deposit(c.deposit) {}
+      SimulationHit(const SimulationHit& c)  = default;
       /// Standard Destructor
-      ~SimulationHit()  {}
+      ~SimulationHit()  = default;
       /// Assignment operator
       SimulationHit& operator=(const SimulationHit& c)  {
         if ( this != &c )  {

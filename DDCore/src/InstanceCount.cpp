@@ -45,7 +45,7 @@ namespace {
   }
   int s_global = 1;
   struct _Global {
-    _Global() {}
+    _Global() = default;
     ~_Global() { s_global = 0; }
   } s_globalObj;
   int on_exit_destructors()  {

@@ -77,8 +77,7 @@ UpdatePool::UpdatePool(ConditionsManager mgr, IOV* i) : ConditionsPool(mgr, i)
 }
 
 /// Default destructor
-UpdatePool::~UpdatePool()   {
-}
+UpdatePool::~UpdatePool()   = default;
 
 /// Default constructor
 UserPool::UserPool(ConditionsManager mgr)

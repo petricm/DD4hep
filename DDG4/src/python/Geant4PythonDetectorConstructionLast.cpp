@@ -36,7 +36,7 @@ namespace dd4hep::sim {
       Geant4PythonDetectorConstructionLast(Geant4Context* ctxt, const std::string& nam)
         : Geant4DetectorConstruction(ctxt,nam) {}
       /// Default destructor
-      virtual ~Geant4PythonDetectorConstructionLast() {}
+      virtual ~Geant4PythonDetectorConstructionLast() = default;
       /// Geometry construction callback. Called at "Construct()"
       virtual void constructGeo(Geant4DetectorConstructionContext*)      {
         info("+++ Python setup finished. From now on THREADS ARE ALLOWED!");

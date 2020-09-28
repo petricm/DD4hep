@@ -117,8 +117,7 @@ namespace dd4hep::cond {
       }
 
       /// Default destructor
-      virtual ~ConditionsLinearUpdatePool()  {
-      }
+      virtual ~ConditionsLinearUpdatePool()  = default;
 
       /// Adopt all entries sorted by IOV. Entries will be removed from the pool
       virtual size_t popEntries(UpdatePool::UpdateEntries& entries)   final  {

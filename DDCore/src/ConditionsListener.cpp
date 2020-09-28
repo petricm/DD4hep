@@ -17,9 +17,7 @@
 using namespace dd4hep::cond;
 
 /// Default constructor
-ConditionsListener::ConditionsListener()   {
-}
+ConditionsListener::ConditionsListener()   = default;
 
 /// Default destructor
-ConditionsListener::~ConditionsListener()   {
-}
+ConditionsListener::~ConditionsListener()   = default;

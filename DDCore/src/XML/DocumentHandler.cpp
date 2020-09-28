@@ -613,10 +613,10 @@ void dd4hep::xml::dump_tree(Document doc, ostream& os) {
 
 
 /// Default constructor of a document handler using TiXml
-DocumentHandler::DocumentHandler() {}
+DocumentHandler::DocumentHandler() = default;
 
 /// Default destructor of a document handler using TiXml
-DocumentHandler::~DocumentHandler() {}
+DocumentHandler::~DocumentHandler() = default;
 
 /// Set minimum print level
 int DocumentHandler::setMinimumPrintLevel(int level)    {

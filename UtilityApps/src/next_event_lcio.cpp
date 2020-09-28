@@ -40,7 +40,7 @@ TEveElement* createPointSet( lcio::LCCollection* col, const std::string& name, u
 template <class T>
 class LCIOTObject : public TObject{
   const T* _obj ;
-  LCIOTObject() {}
+  LCIOTObject() = default;
 public:
   LCIOTObject( const T* o) : _obj(o) {}
   void Print() {

@@ -53,8 +53,7 @@ LCIOEventReader::LCIOEventReader(const string& nam)
 }
 
 /// Default destructor
-LCIOEventReader::~LCIOEventReader()   {
-}
+LCIOEventReader::~LCIOEventReader()   = default;
 
 
 /// Read an event and fill a vector of MCParticles.

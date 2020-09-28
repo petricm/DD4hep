@@ -137,7 +137,7 @@ namespace dd4hep::cond {
         : ConditionsMappedPool<MAPPING,BASE>(mgr) { }
 
       /// Default destructor
-      virtual ~ConditionsMappedUpdatePool()  { }
+      virtual ~ConditionsMappedUpdatePool()  = default;
 
       /// Adopt all entries sorted by IOV. Entries will be removed from the pool
       virtual size_t popEntries(UpdatePool::UpdateEntries& entries)  final   {

@@ -267,12 +267,10 @@ namespace {
 }
 
 /// Default constructor
-PlacedVolume::Processor::Processor()   {
-}
+PlacedVolume::Processor::Processor()   = default;
 
 /// Default destructor
-PlacedVolume::Processor::~Processor()   {
-}
+PlacedVolume::Processor::~Processor()   = default;
 
 /// Default constructor
 PlacedVolumeExtension::PlacedVolumeExtension()

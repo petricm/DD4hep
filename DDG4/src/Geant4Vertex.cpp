@@ -20,8 +20,7 @@ using namespace dd4hep;
 using namespace dd4hep::sim;
 
 /// Default destructor
-VertexExtension::~VertexExtension() {
-}
+VertexExtension::~VertexExtension() = default;
 
 /// Copy constructor
 Geant4Vertex::Geant4Vertex(const Geant4Vertex& c)

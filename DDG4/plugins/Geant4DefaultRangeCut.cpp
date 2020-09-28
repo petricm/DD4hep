@@ -50,8 +50,7 @@ namespace dd4hep::sim {
       {
         declareProperty("RangeCut", m_rangeCut);
       }
-      virtual ~Geant4DefaultRangeCut()   {
-      }
+      virtual ~Geant4DefaultRangeCut()   = default;
       /// Callback to construct processes (uses the G4 particle table)
       virtual void constructProcesses(G4VUserPhysicsList* physics_list)   { 
         if ( physics_list )  {

@@ -34,7 +34,7 @@ CartesianStripY::CartesianStripY(const BitFieldCoder* decode) : CartesianStrip(d
 }
 
 /// destructor
-CartesianStripY::~CartesianStripY() {}
+CartesianStripY::~CartesianStripY() = default;
 
 /// determine the position based on the cell ID
 Vector3D CartesianStripY::position(const CellID& cID) const {

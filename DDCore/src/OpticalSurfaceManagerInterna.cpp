@@ -26,5 +26,4 @@ using detail::OpticalSurfaceManagerObject;
 DD4HEP_INSTANTIATE_HANDLE(OpticalSurfaceManagerObject);
 
 /// Default destructor
-detail::OpticalSurfaceManagerObject::~OpticalSurfaceManagerObject() {
-}
+detail::OpticalSurfaceManagerObject::~OpticalSurfaceManagerObject() = default;

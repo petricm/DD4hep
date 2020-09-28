@@ -40,5 +40,4 @@ EvePgonSetProjectedContextMenu::EvePgonSetProjectedContextMenu(Display* mgr)
 }
 
 /// Default destructor
-EvePgonSetProjectedContextMenu::~EvePgonSetProjectedContextMenu()  {
-}
+EvePgonSetProjectedContextMenu::~EvePgonSetProjectedContextMenu()  = default;

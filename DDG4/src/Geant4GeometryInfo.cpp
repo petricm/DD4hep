@@ -45,8 +45,7 @@ Geant4GeometryInfo::Geant4GeometryInfo()
 }
 
 /// Default destructor
-Geant4GeometryInfo::~Geant4GeometryInfo() {
-}
+Geant4GeometryInfo::~Geant4GeometryInfo() = default;
 
 /// The world placement
 G4VPhysicalVolume* Geant4GeometryInfo::world() const   {

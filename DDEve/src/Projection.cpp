@@ -33,8 +33,7 @@ Projection::Projection(Display* eve, const string& nam)
 }
 
 /// Default destructor
-Projection::~Projection() {
-}
+Projection::~Projection() = default;
 
 void Projection::SetDepth(Float_t d)  {
   // Set current depth on all projection managers.

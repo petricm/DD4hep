@@ -44,15 +44,15 @@ namespace {
   };
 
   struct EmptyPhysics : public G4VModularPhysicsList {
-    EmptyPhysics()  {}
-    virtual ~EmptyPhysics()  {}
+    EmptyPhysics()  = default;
+    virtual ~EmptyPhysics()  = default;
   };
   struct ParticlePhysics : public G4VPhysicsConstructor {
     Geant4PhysicsListActionSequence* seq;
     G4VUserPhysicsList*              phys;
     ParticlePhysics(Geant4PhysicsListActionSequence* s, G4VUserPhysicsList* p)
       : seq(s), phys(p)  {}
-    virtual ~ParticlePhysics()  {}
+    virtual ~ParticlePhysics()  = default;
     virtual void ConstructProcess()  {
       seq->constructProcesses(phys);
       if ( seq->transportation() )   {
@@ -68,12 +68,10 @@ namespace {
 
 /// Default constructor
 Geant4PhysicsList::Process::Process()
-    {
-}
+    = default;
 /// Copy constructor
 Geant4PhysicsList::Process::Process(const Process& p)
-  : name(p.name), ordAtRestDoIt(p.ordAtRestDoIt), ordAlongSteptDoIt(p.ordAlongSteptDoIt), ordPostStepDoIt(p.ordPostStepDoIt)  {
-}
+    = default;
 
 /// Assignment operator
 Geant4PhysicsList::Process& Geant4PhysicsList::Process::operator=(const Process& p)  {

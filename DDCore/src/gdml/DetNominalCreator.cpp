@@ -33,7 +33,7 @@ namespace dd4hep {
     Detector& description;
   public:
     DetNominalCreator(Detector& d) : description(d) {}
-    DetNominalCreator(const DetNominalCreator& c) : description(c.description) {}
+    DetNominalCreator(const DetNominalCreator& c)  = default;
     virtual ~DetNominalCreator() = default;
     int operator()(DetElement de, int /* level */)  const  {
       if ( de.nominal().isValid() )  return 1;

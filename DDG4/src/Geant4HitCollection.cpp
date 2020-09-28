@@ -22,8 +22,7 @@ using namespace dd4hep::sim;
 
 G4ThreadLocal G4Allocator<Geant4HitWrapper>* HitWrapperAllocator = 0;
 
-Geant4HitWrapper::InvalidHit::~InvalidHit() {
-}
+Geant4HitWrapper::InvalidHit::~InvalidHit() = default;
 
 /// Initializing Constructor
 Geant4HitWrapper::HitManipulator::HitManipulator(const ComponentCast& c, const ComponentCast& v)
@@ -74,8 +73,7 @@ Geant4HitWrapper::Wrapper Geant4HitWrapper::releaseData() {
 }
 
 /// Default destructor
-Geant4HitCollection::Compare::~Compare()  {
-}
+Geant4HitCollection::Compare::~Compare()  = default;
 
 /// Default destructor
 Geant4HitCollection::~Geant4HitCollection() {

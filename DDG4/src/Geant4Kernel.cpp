@@ -50,8 +50,7 @@ Geant4Kernel::PhaseSelector::PhaseSelector(Geant4Kernel* kernel)
 
 /// Copy constructor
 Geant4Kernel::PhaseSelector::PhaseSelector(const PhaseSelector& c)
-  : m_kernel(c.m_kernel) {
-}
+   = default;
 
 /// Assignment operator
 Geant4Kernel::PhaseSelector& Geant4Kernel::PhaseSelector::operator=(const PhaseSelector& c) {

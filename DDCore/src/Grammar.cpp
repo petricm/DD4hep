@@ -66,8 +66,7 @@ dd4hep::BasicGrammar::BasicGrammar(const std::string& typ)
 
 
 /// Default destructor
-dd4hep::BasicGrammar::~BasicGrammar()   {
-}
+dd4hep::BasicGrammar::~BasicGrammar()   = default;
 
 /// Prenote loadable grammar
 void dd4hep::BasicGrammar::pre_note(const std::type_info& info,

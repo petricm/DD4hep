@@ -29,8 +29,7 @@ RhoZProjection::RhoZProjection(Display* eve, const std::string& nam)
 }
 
 /// Default destructor
-RhoZProjection::~RhoZProjection()  {
-}
+RhoZProjection::~RhoZProjection()  = default;
 
 /// Build the projection view and map it to the given slot
 View& RhoZProjection::Build(TEveWindow* slot)   {

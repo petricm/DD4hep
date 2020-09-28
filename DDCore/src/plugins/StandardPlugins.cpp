@@ -402,7 +402,7 @@ static long root_elements(Detector& description, int argc, char** argv) {
     typedef xml::Element elt_h;
     elt_h root;
     ElementPrintXML(elt_h r) : root(r) {}
-    virtual ~ElementPrintXML() {}
+    virtual ~ElementPrintXML() = default;
     virtual void operator()(TGeoElement* element)  {
       elt_h elt = root.addChild(_U(element));
       elt.setAttr(_U(Z),element->Z());
@@ -551,7 +551,7 @@ static long root_materials(Detector& description, int argc, char** argv) {
   struct MaterialPrintXML : public MaterialPrint  {
     elt_h root;
     MaterialPrintXML(elt_h elt, Detector& desc) : MaterialPrint(desc), root(elt) {}
-    virtual ~MaterialPrintXML() {}
+    virtual ~MaterialPrintXML() = default;
     virtual elt_h print(TGeoMaterial* mat)  {
       elt_h elt = root.addChild(_U(material));
       elt.setAttr(_U(name),mat->GetName());

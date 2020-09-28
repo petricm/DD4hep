@@ -83,8 +83,7 @@ Geant4HierarchyDump::Geant4HierarchyDump(Detector& description) : m_detDesc(desc
 }
 
 /// Standard destructor
-Geant4HierarchyDump::~Geant4HierarchyDump() {
-}
+Geant4HierarchyDump::~Geant4HierarchyDump() = default;
 
 void Geant4HierarchyDump::dump(const string& indent, const G4VPhysicalVolume* v) const {
   G4LogicalVolume* lv = v->GetLogicalVolume();

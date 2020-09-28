@@ -29,9 +29,7 @@ namespace dd4hep::DDSegmentation {
     }
 
     /// destructor
-    MegatileLayerGridXY::~MegatileLayerGridXY() {
-
-    }
+    MegatileLayerGridXY::~MegatileLayerGridXY() = default;
 
     void MegatileLayerGridXY::setup() {
       // define type and description

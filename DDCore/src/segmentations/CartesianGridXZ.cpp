@@ -45,9 +45,7 @@ CartesianGridXZ::CartesianGridXZ(const BitFieldCoder* decode) :
 }
 
 /// destructor
-CartesianGridXZ::~CartesianGridXZ() {
-
-}
+CartesianGridXZ::~CartesianGridXZ() = default;
 
 /// determine the position based on the cell ID
 Vector3D CartesianGridXZ::position(const CellID& cID) const {

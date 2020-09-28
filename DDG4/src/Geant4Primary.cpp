@@ -28,8 +28,7 @@ using namespace dd4hep;
 using namespace dd4hep::sim;
 
 /// Default destructor
-PrimaryExtension::~PrimaryExtension() {
-}
+PrimaryExtension::~PrimaryExtension() = default;
 
 /// Default destructor
 Geant4PrimaryMap::~Geant4PrimaryMap()   {

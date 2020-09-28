@@ -30,7 +30,7 @@ namespace {
   class MyTFile : public TFile  {
   private:
     /// Destructor (unused!)
-    virtual ~MyTFile() {}
+    virtual ~MyTFile() = default;
   public:
     /// Basic write call
     virtual Int_t SysWrite(Int_t fd, const void* buf, Int_t len)  { return TFile::SysWrite(fd, buf, len);  }

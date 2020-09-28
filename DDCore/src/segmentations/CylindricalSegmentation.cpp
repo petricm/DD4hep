@@ -20,8 +20,6 @@ namespace dd4hep::DDSegmentation {
     }
 
     /// destructor
-    CylindricalSegmentation::~CylindricalSegmentation() {
-
-    }
+    CylindricalSegmentation::~CylindricalSegmentation() = default;
 
   } /* namespace dd4hep */

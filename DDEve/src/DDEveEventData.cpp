@@ -30,13 +30,11 @@ DDEveHit::DDEveHit(int p, float xx, float yy, float zz, float d)
 
 /// Copy constructor
 DDEveHit::DDEveHit(const DDEveHit& c)
-  : particle(c.particle), x(c.x), y(c.y), z(c.z), deposit(c.deposit) 
-{
-}
+
+= default;
 
 /// Default destructor
-DDEveHit::~DDEveHit()  {
-}
+DDEveHit::~DDEveHit()  = default;
 
 /// Assignment operator
 DDEveHit& DDEveHit::operator=(const DDEveHit& c)  {
@@ -51,11 +49,7 @@ DDEveHit& DDEveHit::operator=(const DDEveHit& c)  {
 
 /// Copy constructor
 DDEveParticle::DDEveParticle(const DDEveParticle& c)
-  : id(c.id), parent(c.parent), pdgID(c.pdgID),
-    vsx(c.vsx), vsy(c.vsy), vsz(c.vsz), vex(c.vex), vey(c.vey), vez(c.vez), 
-    psx(c.psx), psy(c.psy), psz(c.psz), 
-    energy(c.energy), time(c.time), daughters(c.daughters)	{
-}
+	= default;
 
 /// Default constructor
 DDEveParticle::DDEveParticle()
@@ -67,8 +61,7 @@ DDEveParticle::DDEveParticle()
 
 /// Default destructor
 DDEveParticle::~DDEveParticle()  
-{
-}
+= default;
 
 /// Assignment operator
 DDEveParticle& DDEveParticle::operator=(const DDEveParticle& c)   {

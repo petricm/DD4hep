@@ -422,8 +422,7 @@ dd4hep::ComponentCast::ComponentCast(const std::type_info& t, destroy_t d, cast_
 }
 
 /// Defautl destructor
-dd4hep::ComponentCast::~ComponentCast() {
-}
+dd4hep::ComponentCast::~ComponentCast() = default;
 
 #if 0
 // Dynamic cast runtime.

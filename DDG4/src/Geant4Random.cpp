@@ -47,7 +47,7 @@ namespace    {
       m_engine = m_generator->engine();
     }
     /// Default destructor
-    virtual ~RNDM() {      }
+    virtual ~RNDM() = default;
     /// Set new seed
     virtual  void SetSeed(UInt_t seed=0)  final  {
       fSeed = seed;

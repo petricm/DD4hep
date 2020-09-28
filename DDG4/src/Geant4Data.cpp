@@ -53,8 +53,7 @@ SimpleEvent::~SimpleEvent() {
 }
 
 /// Default destructor
-DataExtension::~DataExtension() {
-}
+DataExtension::~DataExtension() = default;
 
 /// Default constructor
 Geant4HitData::Geant4HitData()

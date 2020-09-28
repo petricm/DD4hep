@@ -28,13 +28,11 @@ using namespace dd4hep;
 
 /// Copy constructor
 Delta::Delta(const Delta& c)
-  : translation(c.translation), pivot(c.pivot), rotation(c.rotation), flags(c.flags)
-{
-}
+
+= default;
 
 /// Default destructor
-Delta::~Delta()   {
-}
+Delta::~Delta()   = default;
 
 /// Assignment operator
 Delta& Delta::operator=(const Delta& c)   {

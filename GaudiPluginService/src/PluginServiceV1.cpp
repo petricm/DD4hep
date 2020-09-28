@@ -108,7 +108,7 @@ namespace {
 namespace DD4hep_Flavor::PluginService {
     GAUDI_PLUGIN_SERVICE_V1_INLINE namespace v1 {
       Exception::Exception( std::string msg ) : m_msg( std::move( msg ) ) {}
-      Exception::~Exception() throw() {}
+      Exception::~Exception() throw() = default;
       const char* Exception::what() const throw() { return m_msg.c_str(); }
 
       namespace Details {

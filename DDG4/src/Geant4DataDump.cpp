@@ -30,8 +30,7 @@ Geant4DataDump::Geant4DataDump(std::string  tag) : m_tag(std::move(tag)) {
 }
 
 /// Standard destructor
-Geant4DataDump::~Geant4DataDump()  {
-}
+Geant4DataDump::~Geant4DataDump()  = default;
 
 /// Print a single particle to the output logging using the specified print level
 void Geant4DataDump::print(PrintLevel level, Geant4ParticleHandle p)  const  {

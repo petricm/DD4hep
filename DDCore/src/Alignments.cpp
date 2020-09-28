@@ -32,8 +32,7 @@ const dd4hep::Condition::itemkey_type dd4hep::align::Keys::alignmentKey =
   dd4hep::ConditionKey::itemCode("alignment");
 
 /// Default constructor
-Alignment::Processor::Processor() {
-}
+Alignment::Processor::Processor() = default;
 
 /// Initializing constructor to create a new object (Specialized for AlignmentNamedObject)
 Alignment::Alignment(const string& nam)  {

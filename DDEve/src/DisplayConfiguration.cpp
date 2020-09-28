@@ -28,8 +28,7 @@ DisplayConfiguration::DisplayConfiguration(Display* eve)
 }
 
 /// Default destructor
-DisplayConfiguration::~DisplayConfiguration()  {
-}
+DisplayConfiguration::~DisplayConfiguration()  = default;
 
 /// Default constructor
 DisplayConfiguration::ViewConfig::ViewConfig()
@@ -40,14 +39,11 @@ DisplayConfiguration::ViewConfig::ViewConfig()
 
 /// Copy constructor
 DisplayConfiguration::ViewConfig::ViewConfig(const ViewConfig& c)
-  : Config(c), type(c.type),
-    subdetectors(c.subdetectors), show_sensitive(c.show_sensitive), show_structure(c.show_structure)
-{
-}
+
+= default;
 
 /// Default destructor
-DisplayConfiguration::ViewConfig::~ViewConfig()  {
-}
+DisplayConfiguration::ViewConfig::~ViewConfig()  = default;
 
 /// Assignment operator
 DisplayConfiguration::ViewConfig& DisplayConfiguration::ViewConfig::operator=(const ViewConfig& c)  {
@@ -79,8 +75,7 @@ DisplayConfiguration::Config::Config(const Config& c)  {
 }
 
 /// Default destructor
-DisplayConfiguration::Config::~Config()  {
-}
+DisplayConfiguration::Config::~Config()  = default;
 
 /// Assignment operator
 DisplayConfiguration::Config& DisplayConfiguration::Config::operator=(const Config& c)  {

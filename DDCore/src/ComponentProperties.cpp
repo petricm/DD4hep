@@ -25,16 +25,14 @@ using namespace std;
 using namespace dd4hep;
 
 /// Default destructor
-PropertyConfigurator::~PropertyConfigurator()   {
-}
+PropertyConfigurator::~PropertyConfigurator()   = default;
 
 /// Default constructor
 PropertyGrammar::PropertyGrammar(const BasicGrammar& g) : m_grammar(g) {
 }
 
 /// Default destructor
-PropertyGrammar::~PropertyGrammar() {
-}
+PropertyGrammar::~PropertyGrammar() = default;
 
 /// Error callback on invalid conversion
 void PropertyGrammar::invalidConversion(const std::type_info& from,
@@ -122,8 +120,7 @@ Property& Property::operator=(const char* val) {
 }
 
 /// Default constructor
-PropertyManager::PropertyManager() {
-}
+PropertyManager::PropertyManager() = default;
 
 /// Default destructor
 PropertyManager::~PropertyManager() {
@@ -212,12 +209,10 @@ void PropertyManager::dump() const {
 }
 
 /// Standard PropertyConfigurable constructor
-PropertyConfigurable::PropertyConfigurable()  {
-}
+PropertyConfigurable::PropertyConfigurable()  = default;
 
 /// Default PropertyConfigurable destructor
-PropertyConfigurable::~PropertyConfigurable()   {
-}
+PropertyConfigurable::~PropertyConfigurable()   = default;
 
 /// Check property for existence
 bool PropertyConfigurable::hasProperty(const string& nam) const    {

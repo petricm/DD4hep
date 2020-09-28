@@ -137,7 +137,7 @@ namespace DD4hep_Flavor::PluginService {
           return ( p != end( properties ) ) ? p->second : Properties::mapped_type{};
         }
 
-        Registry::Registry() {}
+        Registry::Registry() = default;
 
         void Registry::initialize() {
           REG_SCOPE_LOCK

@@ -53,7 +53,7 @@ namespace  {
     /// Initializing constructor
     GeometryWalk(Detector& description, DetElement sdet);
     /// Default destructor
-    virtual ~GeometryWalk() {}
+    virtual ~GeometryWalk() = default;
     /// Walk through tree of detector elements
     void walk(DetElement de, PlacedVolume::VolIDs ids)  const;
     /// Printout volume information

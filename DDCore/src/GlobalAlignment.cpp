@@ -32,7 +32,7 @@ namespace  {
       if ( a.isValid() ) return;
       throw runtime_error("dd4hep: Attempt to access invalid alignment object. [Invalid Handle]");
     }
-    ~CheckHandle() {}
+    ~CheckHandle() = default;
   };
 }
 

@@ -42,9 +42,7 @@ PolarGridRPhi2::PolarGridRPhi2(const BitFieldCoder* decode) :
 }
 
 /// destructor
-PolarGridRPhi2::~PolarGridRPhi2() {
-
-}
+PolarGridRPhi2::~PolarGridRPhi2() = default;
 
 /// determine the position based on the cell ID
 Vector3D PolarGridRPhi2::position(const CellID& cID) const {

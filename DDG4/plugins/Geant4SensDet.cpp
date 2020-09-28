@@ -88,7 +88,7 @@ namespace dd4hep::sim {
       }
 
       /// Destructor
-      virtual ~Geant4SensDet()        {                                 }
+      virtual ~Geant4SensDet()        = default;
       /// Overload to avoid ambiguity between G4VSensitiveDetector and G4VSDFilter
       inline G4String GetName() const
       {  return this->G4VSensitiveDetector::SensitiveDetectorName;      }

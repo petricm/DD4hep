@@ -159,8 +159,7 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserRunAction() {
-      }
+      virtual ~Geant4UserRunAction() = default;
       /// Begin-of-run callback
       virtual void BeginOfRunAction(const G4Run* run)  final;
       /// End-of-run callback
@@ -186,8 +185,7 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserEventAction() {
-      }
+      virtual ~Geant4UserEventAction() = default;
       /// Begin-of-event callback
       virtual void BeginOfEventAction(const G4Event* evt)  final;
       /// End-of-event callback
@@ -212,8 +210,7 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserTrackingAction() {
-      }
+      virtual ~Geant4UserTrackingAction() = default;
       /// Pre-track action callback
       virtual void PreUserTrackingAction(const G4Track* trk)  final  {
         m_sequence->context()->kernel().setTrackMgr(fpTrackingManager);
@@ -244,8 +241,7 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserStackingAction() {
-      }
+      virtual ~Geant4UserStackingAction() = default;
       /// New-stage callback
       virtual void NewStage()  final  {
         m_sequence->newStage();
@@ -275,8 +271,7 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserGeneratorAction() {
-      }
+      virtual ~Geant4UserGeneratorAction() = default;
       /// Generate primary particles
       virtual void GeneratePrimaries(G4Event* event)  final;
     };
@@ -299,8 +294,7 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserSteppingAction() {
-      }
+      virtual ~Geant4UserSteppingAction() = default;
       /// User stepping callback
       virtual void UserSteppingAction(const G4Step* s)   final  {
         (*m_sequence)(s, fpSteppingManager);
@@ -327,8 +321,7 @@ namespace dd4hep::sim {
       {
       }
       /// Default destructor
-      virtual ~Geant4UserDetectorConstruction() {
-      }
+      virtual ~Geant4UserDetectorConstruction() = default;
       /// Call the actions for the construction of the sensitive detectors and the field
       virtual void ConstructSDandField()  final;
       /// Call the actions to construct the detector geometry
@@ -351,8 +344,7 @@ namespace dd4hep::sim {
         : G4VUserActionInitialization(), Base(ctxt, seq) {
       }
       /// Default destructor
-      virtual ~Geant4UserActionInitialization()  {
-      }
+      virtual ~Geant4UserActionInitialization()  = default;
       /// Build the actions for the worker thread
       virtual void Build()  const  final;
       /// Build the action sequences for the master thread

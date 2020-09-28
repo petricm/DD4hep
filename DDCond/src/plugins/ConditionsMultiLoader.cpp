@@ -108,8 +108,7 @@ ConditionsMultiLoader::ConditionsMultiLoader(Detector& description, ConditionsMa
 }
 
 /// Default Destructor
-ConditionsMultiLoader::~ConditionsMultiLoader() {
-} 
+ConditionsMultiLoader::~ConditionsMultiLoader() = default;
 
 ConditionsDataLoader* 
 ConditionsMultiLoader::load_source(const std::string& nam,

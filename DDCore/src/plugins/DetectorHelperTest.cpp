@@ -52,7 +52,7 @@ namespace  {
       walkSD(h,description.detector(nam));
     }
     /// Default destructor
-    virtual ~DetectorHelperTest() {}
+    virtual ~DetectorHelperTest() = default;
 
     void walkSD(DetectorHelper h, DetElement de)  const {
       printSD(h,de);

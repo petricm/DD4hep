@@ -19,7 +19,6 @@ namespace dd4hep::DDSegmentation {
     }
 
     /// Destructor
-    CartesianGrid::~CartesianGrid() {
-    }
+    CartesianGrid::~CartesianGrid() = default;
 
   } /* namespace dd4hep */

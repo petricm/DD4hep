@@ -30,7 +30,7 @@ namespace  {
       : G4VPhysicsConstructor(ct->name(),typ), Geant4PhysicsConstructor::Constructor(), ctor(ct)
     {}
     /// Default destructor
-    virtual ~ConstructorImp() {}
+    virtual ~ConstructorImp() = default;
     /// Access to a fresh (resetted) instance of the particle table iterator
     G4ParticleTable::G4PTblDicIterator* particleIterator()  const   {
       G4ParticleTable::G4PTblDicIterator* iter;
@@ -66,8 +66,7 @@ Geant4PhysicsConstructor::Constructor::Constructor()
 }
 
 /// Default destructor
-Geant4PhysicsConstructor::Constructor::~Constructor()  {
-}
+Geant4PhysicsConstructor::Constructor::~Constructor()  = default;
 
 /// Standard action constructor
 Geant4PhysicsConstructor::Geant4PhysicsConstructor(Geant4Context* ctxt, const std::string& nam)

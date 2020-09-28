@@ -30,9 +30,8 @@ using namespace dd4hep::detail;
 
 /// Copy constructor
 HitCollection::HitCollection(const HitCollection& c)
-  : name(c.name), key(c.key), key_min(c.key_min), key_max(c.key_max)
-{
-}
+
+= default;
 
 /// Initializing constructor
 HitCollection::HitCollection(string  n, string  k, long k_min, long k_max)

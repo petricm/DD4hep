@@ -35,8 +35,7 @@ Geant4DummyTruthHandler::Geant4DummyTruthHandler(Geant4Context* ctxt,const std::
 
 /// Default destructor
 Geant4DummyTruthHandler::~Geant4DummyTruthHandler()
-{
-}
+= default;
 
 /// Mark a Geant4 track to be kept for later MC truth analysis
 void Geant4DummyTruthHandler::mark(const G4Track*)  {

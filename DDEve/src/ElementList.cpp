@@ -68,5 +68,4 @@ ElementListContextMenu::ElementListContextMenu(Display* mgr)
 }
 
 /// Default destructor
-ElementListContextMenu::~ElementListContextMenu()  {
-}
+ElementListContextMenu::~ElementListContextMenu()  = default;

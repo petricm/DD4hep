@@ -39,8 +39,7 @@ Geant4EventReader::Geant4EventReader(std::string  nam)
 }
 
 /// Default destructor
-Geant4EventReader::~Geant4EventReader()   {
-}
+Geant4EventReader::~Geant4EventReader()   = default;
 
 /// Get the context (from the input action)
 Geant4Context* Geant4EventReader::context() const {
@@ -134,8 +133,7 @@ Geant4InputAction::Geant4InputAction(Geant4Context* ctxt, const string& nam)
 }
 
 /// Default destructor
-Geant4InputAction::~Geant4InputAction()   {
-}
+Geant4InputAction::~Geant4InputAction()   = default;
 
 /// helper to report Geant4 exceptions
 string Geant4InputAction::issue(int i)  const  {

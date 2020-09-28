@@ -40,8 +40,7 @@ ContextMenuHandler::ContextMenuHandler(Callback cb, void* par)
 }
 
 /// Default destructor
-ContextMenuHandler::~ContextMenuHandler()   {
-}
+ContextMenuHandler::~ContextMenuHandler()   = default;
 
 /// Callback
 void ContextMenuHandler::Context(TObject* target)   {
@@ -60,8 +59,7 @@ ContextMenu::ContextMenu(TClass* cl) : m_class(cl)  {
 }
 
 /// Default destructor
-ContextMenu::~ContextMenu()   {
-}
+ContextMenu::~ContextMenu()   = default;
 
 /// Instantiator
 ContextMenu& ContextMenu::instance(TClass* cl)  {

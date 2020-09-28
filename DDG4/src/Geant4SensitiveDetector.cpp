@@ -51,8 +51,7 @@ Geant4SensitiveDetector::Geant4SensitiveDetector(const string& nam, Detector& de
 }
 
 /// Standard destructor
-Geant4SensitiveDetector::~Geant4SensitiveDetector() {
-}
+Geant4SensitiveDetector::~Geant4SensitiveDetector() = default;
 
 /// Initialize the sensitive detector for the usage of a single hit collection
 bool Geant4SensitiveDetector::defineCollection(const string& coll_name) {

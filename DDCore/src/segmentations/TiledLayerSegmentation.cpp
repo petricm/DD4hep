@@ -61,8 +61,7 @@ TiledLayerSegmentation::TiledLayerSegmentation(const BitFieldCoder* decode) :	Se
 
 }
 
-TiledLayerSegmentation::~TiledLayerSegmentation() {
-}
+TiledLayerSegmentation::~TiledLayerSegmentation() = default;
 
 /// access the actual grid size in X for a given layer
 double TiledLayerSegmentation::layerGridSizeX(int layerIndex) const {
