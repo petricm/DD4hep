@@ -82,7 +82,7 @@ using namespace dd4hep::cond;
 namespace {
   void* create_loader(Detector& description, int argc, char** argv)   {
     const char* name = argc>0 ? argv[0] : "XMLLoader";
-    auto* mgr = (ConditionsManagerObject*)(argc>0 ? argv[1] : 0);
+    auto* mgr = (ConditionsManagerObject*)(argc>0 ? argv[1] : nullptr);
     return new ConditionsXmlLoader(description,ConditionsManager(mgr),name);
   }
 }
@@ -107,8 +107,8 @@ size_t ConditionsXmlLoader::load_source(const std::string& nam,
   xml::DocumentHolder doc(xml::DocumentHandler().load(nam));
   xml::Handle_t       handle = doc.root();
   ConditionsStack     stack;
-  char* argv[] = { (char*)handle.ptr(), (char*)&stack, 0};
-  void* result = dd4hep::createPlugin(fac, m_detector, 2, argv, 0);
+  char* argv[] = { (char*)handle.ptr(), (char*)&stack, nullptr};
+  void* result = dd4hep::createPlugin(fac, m_detector, 2, argv, nullptr);
   if ( result == &m_detector )  { // All OK.
     for (auto e : stack)  {
       Condition condition;/// = queueUpdate(e);

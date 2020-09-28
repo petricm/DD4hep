@@ -76,7 +76,7 @@ using namespace dd4hep::cond;
 namespace {
   void* create_loader(Detector& description, int argc, char** argv)   {
     const char* name = argc>0 ? argv[0] : "XMLLoader";
-    auto* mgr = (ConditionsManagerObject*)(argc>0 ? argv[1] : 0);
+    auto* mgr = (ConditionsManagerObject*)(argc>0 ? argv[1] : nullptr);
     return new ConditionsSnapshotRootLoader(description,ConditionsManager(mgr),name);
   }
 }

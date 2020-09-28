@@ -324,14 +324,14 @@ PlacedVolume detail::tools::findNode(PlacedVolume top_place, const string& place
   const char* path = place.c_str();
   // Check if a geometry path is valid without changing the state of the navigator.
   Int_t length = strlen(path);
-  if (!length) return 0;
+  if (!length) return nullptr;
   TString spath = path;
   TGeoVolume *vol;
   // Check first occurance of a '/'
   Int_t ind1 = spath.Index("/");
   if (ind1<0) {
     // No '/' so we check directly the path against the name of the top
-    if ( strcmp(path,top->GetName()) ) return 0;
+    if ( strcmp(path,top->GetName()) ) return nullptr;
     return top;
   }
   Int_t ind2 = ind1;
@@ -346,7 +346,7 @@ PlacedVolume detail::tools::findNode(PlacedVolume top_place, const string& place
     ind1 = ind2;
   }
   else  {
-    return 0;
+    return nullptr;
   }
   TGeoNode *node = top;
   // Deeper than just top level
@@ -360,7 +360,7 @@ PlacedVolume detail::tools::findNode(PlacedVolume top_place, const string& place
     name = spath(ind1+1, ind2-ind1-1);
     node = vol->GetNode(name.Data());
     if (!node)
-      return 0;
+      return nullptr;
     else if (ind2>=length-1)
       return node;
     ind1 = ind2;

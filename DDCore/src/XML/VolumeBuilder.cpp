@@ -58,7 +58,7 @@ size_t VolumeBuilder::collectMaterials(xml_h element)   {
 void VolumeBuilder::registerShape(const std::string& nam, Solid shape)   {
   auto is = shapes.find(nam);
   if ( is == shapes.end() )  {
-    shapes[nam] = make_pair(xml_h(0), shape);
+    shapes[nam] = make_pair(xml_h(nullptr), shape);
     return;
   }
   except("VolumeBuilder","+++ Shape %s is already known to this builder unit. ",nam.c_str());
@@ -74,7 +74,7 @@ void VolumeBuilder::registerVolume(const std::string& nam, Volume volume)   {
              volume.solid()->IsA()->GetName(),
              volume.visAttributes().name(),
              yes_no(volume.isSensitive()));
-    volumes[nam] = make_pair(xml_h(0), volume);
+    volumes[nam] = make_pair(xml_h(nullptr), volume);
     return;
   }
   except("VolumeBuilder","+++ Volume %s is already known to this builder unit. ",nam.c_str());
@@ -204,7 +204,7 @@ size_t VolumeBuilder::buildShapes(xml_h handle)    {
 /// Build all <volume/> identifiers in the passed parent xml element
 size_t VolumeBuilder::buildVolumes(xml_h handle)    {
   size_t len = volumes.size();
-  xml_elt_t  x_comp(0);
+  xml_elt_t  x_comp(nullptr);
   for( xml_coll_t c(handle,_U(volume)); c; ++c )   {
     Solid solid;
     xml_comp_t x    = c;
@@ -268,8 +268,8 @@ size_t VolumeBuilder::buildVolumes(xml_h handle)    {
       continue;
     }
     bool is_assembly = true;
-    is_assembly |= x.child(_U(assembly),false) != 0;
-    is_assembly |= c.attr_nothrow(_U(assembly)) != 0;
+    is_assembly |= x.child(_U(assembly),false) != nullptr;
+    is_assembly |= c.attr_nothrow(_U(assembly)) != nullptr;
     if ( is_assembly )   {
       Assembly vol(nam);
       placeDaughters(detector, vol, x);

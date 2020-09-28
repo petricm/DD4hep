@@ -106,7 +106,7 @@ bool ConditionsSlice::manage(ConditionsPool* p, Condition condition, ManageFlag 
 
 /// Insert a set of conditions to the slice AND register them to the conditions manager.
 bool ConditionsSlice::manage(Condition condition, ManageFlag flg)    {
-  ConditionsPool* p = (flg&REGISTER_MANAGER) ? manager.registerIOV(pool->validity()) : 0;
+  ConditionsPool* p = (flg&REGISTER_MANAGER) ? manager.registerIOV(pool->validity()) : nullptr;
   return manage(p, condition, flg);
 }
 

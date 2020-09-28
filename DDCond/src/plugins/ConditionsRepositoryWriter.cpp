@@ -442,7 +442,7 @@ long ConditionsXMLRepositoryWriter::write(xml::Document doc, const string& outpu
  */
 static long write_repository_conditions(Detector& description, int argc, char** argv)  {
   ConditionsManager manager  =  ConditionsManager::from(description);
-  const IOVType*    iovtype  =  0;
+  const IOVType*    iovtype  =  nullptr;
   long              iovvalue = -1;
   long              mgr_prop = 0;
   string            output;
@@ -465,7 +465,7 @@ static long write_repository_conditions(Detector& description, int argc, char** 
       ::exit(EINVAL);
     }
   }
-  if ( 0 == iovtype )
+  if ( nullptr == iovtype )
     except("ConditionsPrepare","++ Unknown IOV type supplied.");
   if ( 0 > iovvalue )
     except("ConditionsPrepare",
@@ -482,7 +482,7 @@ static long write_repository_conditions(Detector& description, int argc, char** 
            iovtype ? iov.str().c_str() : "???");
   
   ConditionsXMLRepositoryWriter writer;  
-  xml::Document doc(0);
+  xml::Document doc(nullptr);
   if ( mgr_prop )  {
     doc = writer.dump(manager);
     writer.collect(doc.root(), *slice);

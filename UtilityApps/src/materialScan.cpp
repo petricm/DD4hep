@@ -77,7 +77,7 @@ int main_wrapper(int argc, char** argv)   {
   }
   if ( interactive )   {
     char cmd[256];
-    description.apply("DD4hep_InteractiveUI",0,0);
+    description.apply("DD4hep_InteractiveUI",0,nullptr);
     ::snprintf(cmd,sizeof(cmd),
                "dd4hep::rec::MaterialScan* gMaterialScan = "
                "(dd4hep::rec::MaterialScan*)%p",(void*)&scan);
@@ -86,7 +86,7 @@ int main_wrapper(int argc, char** argv)   {
              "\"dd4hep::rec::MaterialScan* gMaterialScan\" to interact "
              "with the material scanner");
     gInterpreter->ProcessLine(".class dd4hep::rec::MaterialScan");
-    description.apply("DD4hep_Rint",0,0);
+    description.apply("DD4hep_Rint",0,nullptr);
   }
   return 0;
 }

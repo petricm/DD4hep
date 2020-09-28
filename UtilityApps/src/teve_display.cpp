@@ -128,7 +128,7 @@ static long teve_display(Detector& description, int /* argc */, char** /* argv *
   // v->GetClipSet()->SetClipType(TGLClip::kClipPlane);
   //  v->ColorSet().Background().SetColor(kMagenta+4);
   v->ColorSet().Background().SetColor(kWhite);
-  v->SetGuideState(TGLUtil::kAxesEdge, kTRUE, kFALSE, 0);
+  v->SetGuideState(TGLUtil::kAxesEdge, kTRUE, kFALSE, nullptr);
   v->RefreshPadEditor(v);
   //  v->CurrentCamera().RotateRad(-1.2, 0.5);
 
@@ -272,7 +272,7 @@ void make_gui() {
   {
       
     TString icondir( Form("%s/icons/", gSystem->Getenv("ROOTSYS")) );
-    TGPictureButton* b = 0;
+    TGPictureButton* b = nullptr;
     auto    *fh = new EvNavHandler;
 
     b = new TGPictureButton(hf, gClient->GetPicture(icondir+"GoBack.gif"));

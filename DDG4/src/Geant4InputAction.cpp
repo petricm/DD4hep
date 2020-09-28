@@ -34,7 +34,7 @@ typedef Geant4InputAction::Vertices Vertices ;
 
 /// Initializing constructor
 Geant4EventReader::Geant4EventReader(std::string  nam)
-  : m_name(std::move(nam)), m_directAccess(false), m_currEvent(0), m_inputAction(0)
+  : m_name(std::move(nam)), m_directAccess(false), m_currEvent(0), m_inputAction(nullptr)
 {
 }
 
@@ -43,7 +43,7 @@ Geant4EventReader::~Geant4EventReader()   = default;
 
 /// Get the context (from the input action)
 Geant4Context* Geant4EventReader::context() const {
-  if( 0 == m_inputAction ) {
+  if( nullptr == m_inputAction ) {
     printout(FATAL,"Geant4EventReader", "No input action registered!");
     throw std::runtime_error("Geant4EventReader: No input action registered!");
   }
@@ -121,7 +121,7 @@ Geant4EventReader::moveToEvent(int /* event_number */)   {
 
 /// Standard constructor
 Geant4InputAction::Geant4InputAction(Geant4Context* ctxt, const string& nam)
-  : Geant4GeneratorAction(ctxt,nam), m_reader(0), m_currentEventNumber(0)
+  : Geant4GeneratorAction(ctxt,nam), m_reader(nullptr), m_currentEventNumber(0)
 {
   declareProperty("Input",          m_input);
   declareProperty("Sync",           m_firstEvent=0);
@@ -148,7 +148,7 @@ int Geant4InputAction::readParticles(int evt_number,
                                      std::vector<Particle*>& particles)
 {
   int evid = evt_number + m_firstEvent;
-  if ( 0 == m_reader )  {
+  if ( nullptr == m_reader )  {
     if ( m_input.empty() )  {
       except("InputAction: No input file declared!");
     }
@@ -156,7 +156,7 @@ int Geant4InputAction::readParticles(int evt_number,
     TypeName tn = TypeName::split(m_input,"|");
     try  {
       m_reader = PluginService::Create<Geant4EventReader*>(tn.first,tn.second);
-      if ( 0 == m_reader )   {
+      if ( nullptr == m_reader )   {
         PluginDebug dbg;
         m_reader = PluginService::Create<Geant4EventReader*>(tn.first,tn.second);
         abortRun(issue(evid)+"Error creating reader plugin.",

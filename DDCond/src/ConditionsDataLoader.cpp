@@ -50,7 +50,7 @@ void ConditionsDataLoader::addSource(const string& source, const IOV& iov)   {
 
 /// Add data source definition to loader
 void ConditionsDataLoader::addSource(const string& source)   {
-  m_sources.emplace_back(source,IOV(0,0));
+  m_sources.emplace_back(source,IOV(nullptr,0));
 }
 
 /// Queue update to manager.

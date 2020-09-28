@@ -46,7 +46,7 @@ namespace dd4hep {
     template <typename T> inline T* get_ptr(const TGeoShape* shape)    {
       if ( shape && shape->IsA() == T::Class() ) return (T*)shape;
       except("Dimension","Invalid shape pointer!");
-      return 0;
+      return nullptr;
     }
     inline void invalidSetDimensionCall(const TGeoShape* sh, const vector<double>& params)   {
       except("Solid","+++ Shape:%s setDimension: Invalid number of parameters: %ld",

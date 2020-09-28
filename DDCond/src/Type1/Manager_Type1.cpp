@@ -66,21 +66,21 @@ namespace {
       if ( typ )  {
         if ( iov->type == typ->type )  {
           if ( typ->type < o->m_rawPool.size() )  {
-            if ( o->m_rawPool[typ->type] != 0 )  {
+            if ( o->m_rawPool[typ->type] != nullptr )  {
               return typ;
             }
           }
         }
       }
     }
-    return 0;
+    return nullptr;
   }
 
   /// Helper: Specialized IOV check for discrete IOV values
   template <> const IOVType* check_iov_type<Discrete>(const Manager_Type1* o, const IOV* iov)   {
     const IOVType* typ = check_iov_type<void>(o,iov);
     if ( typ && !iov->has_range() ) return typ;
-    return 0;
+    return nullptr;
   }
 #if 0
   /// Helper: Specialized IOV check for range IOV values
@@ -146,7 +146,7 @@ Manager_Type1::Manager_Type1(Detector& description_instance)
   declareProperty("UserPoolType",        m_userType   = "DD4hep_ConditionsMapUserPool");
   declareProperty("LoaderType",          m_loaderType = "DD4hep_Conditions_multi_Loader");
   m_iovTypes.resize(m_maxIOVTypes,IOVType());
-  m_rawPool.resize(m_maxIOVTypes,0);
+  m_rawPool.resize(m_maxIOVTypes,nullptr);
 }
 
 /// Default destructor
@@ -158,8 +158,8 @@ Manager_Type1::~Manager_Type1()   {
 void Manager_Type1::initialize()  {
   if ( !m_updatePool.get() )  {
     string typ = m_loaderType;
-    const void* argv_loader[] = {"ConditionsDataLoader", this, 0};
-    const void* argv_pool[] = {this, 0, 0};
+    const void* argv_loader[] = {"ConditionsDataLoader", this, nullptr};
+    const void* argv_pool[] = {this, nullptr, nullptr};
     m_loader.reset(createPlugin<ConditionsDataLoader>(typ,m_detDesc,2,argv_loader));
     m_updatePool.reset(createPlugin<UpdatePool>(m_updateType,m_detDesc,2,argv_pool));
     if ( !m_updatePool.get() )  {
@@ -192,7 +192,7 @@ pair<bool, const IOVType*> Manager_Type1::registerIOVType(size_t iov_index, cons
   }
   except("ConditionsMgr","Cannot register IOV section %d of type %d. Value out of bounds: [%d,%d]",
          iov_name.c_str(), iov_index, 0, int(m_iovTypes.size()));
-  return make_pair(false,(IOVType*)0);
+  return make_pair(false,(IOVType*)nullptr);
 }
 
 /// Access IOV by its type
@@ -202,7 +202,7 @@ const IOVType* Manager_Type1::iovType (size_t iov_index) const  {
     if ( typ.type == iov_index ) return &typ;
   }
   except("ConditionsMgr","Request to access an unregistered IOV type: %d.", iov_index);
-  return 0;
+  return nullptr;
 }
 
 /// Access IOV by its name
@@ -210,7 +210,7 @@ const IOVType* Manager_Type1::iovType (const string& iov_name) const   {
   for( const auto& i : m_iovTypes ) 
     if ( i.name == iov_name ) return &i;
   except("ConditionsMgr","Request to access an unregistered IOV type: %s.", iov_name.c_str());
-  return 0;
+  return nullptr;
 }
 
 /// Register IOV with type and key
@@ -228,7 +228,7 @@ ConditionsPool* Manager_Type1::registerIOV(const IOVType& typ, IOV::Key key)   {
   IOV* iov = new IOV(&typ);
   iov->type      = typ.type;
   iov->keyData   = key;
-  const void* argv_pool[] = {this, iov, 0};
+  const void* argv_pool[] = {this, iov, nullptr};
   shared_ptr<ConditionsPool> cond_pool(createPlugin<ConditionsPool>(m_poolType,m_detDesc,2,argv_pool));
   pool->elements.emplace(key,cond_pool);
   printout(INFO,"ConditionsMgr","Created IOV Pool for:%s",iov->str().c_str());
@@ -331,8 +331,8 @@ void Manager_Type1::__get_checked_pool(const IOV& req_iov,
   const IOVType* typ = check_iov_type<Discrete>(this, &req_iov);
   if ( typ )  {
     ConditionsIOVPool* pool = m_rawPool[typ->type];
-    if ( 0 == up.get() )  {
-      const void* argv[] = {this, pool, 0};
+    if ( nullptr == up.get() )  {
+      const void* argv[] = {this, pool, nullptr};
       auto* p = createPlugin<UserPool>(m_userType,m_detDesc,2,argv);
       up.reset(p);
     }
@@ -410,7 +410,7 @@ bool Manager_Type1::select(Condition::key_type key,
                            const IOV& req_validity,
                            RangeConditions& conditions)   {
   {
-    ConditionsIOVPool* p = 0;
+    ConditionsIOVPool* p = nullptr;
     dd4hep_lock_t locked_action(m_poolLock);
     p = m_rawPool[req_validity.type]; // Existence already checked by caller!
     p->select(key, req_validity, conditions);
@@ -428,7 +428,7 @@ bool Manager_Type1::select_range(Condition::key_type key,
                                  RangeConditions& conditions)
 {
   {
-    ConditionsIOVPool* p = 0;
+    ConditionsIOVPool* p = nullptr;
     dd4hep_lock_t locked_action(m_poolLock);
     p = m_rawPool[req_validity.type]; // Existence alread checked by caller!
     p->selectRange(key, req_validity, conditions);
@@ -545,7 +545,7 @@ Manager_Type1::compute(const IOV& req_iov, ConditionsSlice& slice, ConditionUpda
 std::unique_ptr<UserPool> Manager_Type1::createUserPool(const IOVType* iovT)  const  {
   if ( iovT )  {
     ConditionsIOVPool* p = m_rawPool[iovT->type];
-    const void* argv[] = {this, p, 0};
+    const void* argv[] = {this, p, nullptr};
     std::unique_ptr<UserPool> pool(createPlugin<UserPool>(m_userType,m_detDesc,2,argv));
     return pool;
   }

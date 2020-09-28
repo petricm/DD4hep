@@ -57,9 +57,9 @@ namespace {
   static int       _blockers = 0;
   static pthread_t _mainThread = 0;
   static int       _refCount = 0;
-  static DDPython* _instance = 0;
-  static PyObject* _main_dict = 0;
-  static PyThreadState *_save_state = 0;
+  static DDPython* _instance = nullptr;
+  static PyObject* _main_dict = nullptr;
+  static PyThreadState *_save_state = nullptr;
   int _execPy(const char* cmd)   {
     DDPython::GILState state(0);
     PyObject* ret = ::PyRun_String((char*)cmd, Py_file_input,_main_dict,_main_dict);
@@ -137,7 +137,7 @@ DDPython::AllowThreads::~AllowThreads()  {
 }
 
 /// Standard constructor, initializes variables
-DDPython::DDPython() : context(0)  {
+DDPython::DDPython() : context(nullptr)  {
   ++_refCount;
   bool inited = ::Py_IsInitialized();
   if ( !inited ) {
@@ -177,19 +177,19 @@ DDPython::~DDPython()   {
     dd4hep::printout(ALWAYS,"DDPython","+++ Shutdown python interpreter......");
     if ( _main_dict )  {
       Py_DECREF(_main_dict);
-      _main_dict = 0;
+      _main_dict = nullptr;
     }
     if ( _save_state )  {
       ::PyEval_RestoreThread(_save_state);
     }
     ::Py_Finalize();
-    _instance = 0;
+    _instance = nullptr;
   }
 } 
 
 
 DDPython DDPython::instance()   {
-  if ( 0 == _instance ) _instance = new DDPython();
+  if ( nullptr == _instance ) _instance = new DDPython();
   return DDPython();
 }
 
@@ -203,7 +203,7 @@ void DDPython::allowThreads()   {
 void DDPython::restoreThread()   {
   if ( _save_state ) {
     ::PyEval_RestoreThread(_save_state);
-    _save_state = 0;
+    _save_state = nullptr;
   }
 }
 
@@ -233,10 +233,10 @@ int DDPython::setArgs(int argc, char** argv)  const   {
 }
 
 void DDPython::shutdown()   {
-  if ( 0 != _instance )  {
+  if ( nullptr != _instance )  {
     if ( 1 == _refCount ) {
       delete _instance;
-      _instance = 0;
+      _instance = nullptr;
     }
   }
 }
@@ -257,16 +257,16 @@ int DDPython::execute(const std::string& cmd)  const   {
 PyObject* DDPython::call(PyObject* method, PyObject* args)   {
   DDPython::GILState state(0);
   if ( PyCallable_Check(method) )   {
-    PyObject* ret = ::PyObject_CallObject(method,args==Py_None ? NULL : args);
+    PyObject* ret = ::PyObject_CallObject(method,args==Py_None ? nullptr : args);
     return ret;
   }
   ::PyErr_SetString(PyExc_RuntimeError,"DDPython::call: The argument is not a callable object!");
-  return 0;
+  return nullptr;
 }
 
 TPyReturn DDPython::callC(PyObject* method, PyObject* args)   {
   if ( PyCallable_Check(method) )   {
-    PyObject* arg = args==Py_None || args==0 ? 0 : args;
+    PyObject* arg = args==Py_None || args==nullptr ? nullptr : args;
     PyObject* ret = ::PyObject_CallObject(method,arg);
     if ( ::PyErr_Occurred() )   {
       ::PyErr_Print();
@@ -285,7 +285,7 @@ void DDPython::releaseObject(PyObject*& obj)   {
   if ( obj && ::Py_IsInitialized() )  {
     Py_DECREF(obj);
   }
-  obj = 0;
+  obj = nullptr;
 }
 
 /// Release python object

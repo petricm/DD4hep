@@ -91,7 +91,7 @@ Geant4DetectorConstruction* Geant4DetectorConstructionSequence::get(const std::s
     }
   }
   except("Geant4RunActionSequence","++ Attempt to access invalid actor %s!",nam.c_str());
-  return 0;
+  return nullptr;
 }
 
 /// Geometry construction callback. Called at "Construct()"

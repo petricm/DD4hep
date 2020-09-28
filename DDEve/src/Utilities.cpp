@@ -81,14 +81,14 @@ Utilities::createEveShape(int level,
                           const TGeoHMatrix& mat,
                           const std::string& nam)
 {
-  TGeoVolume* vol = n ? n->GetVolume() : 0;
+  TGeoVolume* vol = n ? n->GetVolume() : nullptr;
   bool created = false;
 
-  if ( 0 == vol || level > max_level ) return make_pair(created,(TEveElement*)0);
+  if ( nullptr == vol || level > max_level ) return make_pair(created,(TEveElement*)nullptr);
 
   VisAttr vis(Volume(vol).visAttributes());
   TGeoShape* geoShape = vol->GetShape();
-  TEveElement* element = 0;
+  TEveElement* element = nullptr;
 
   if ( p )   {
     auto* pn = (TGeoNode*)p->GetUserData();
@@ -120,7 +120,7 @@ Utilities::createEveShape(int level,
     created = true;
     goto Daughters;
   }  
-  else if ( 0 == element )  {
+  else if ( nullptr == element )  {
     auto* shape = new TEveGeoShape(n->GetName());
     //printout(INFO,"createEveShape","+++ Create TEveGeoShape %s [%s] Userdata:%p.",
     //n->GetName(),geoShape->IsA()->GetName(),n);
@@ -169,14 +169,14 @@ int Utilities::findNodeWithMatrix(TGeoNode* p, TGeoNode* n, TGeoHMatrix* mat, st
   for (Int_t idau = 0, ndau = p->GetNdaughters(); idau < ndau; ++idau) {
     string spath;
     TGeoNode*   daughter = p->GetDaughter(idau);
-    TGeoHMatrix* daughter_matrix = 0;
+    TGeoHMatrix* daughter_matrix = nullptr;
     if ( mat )  {
       TGeoMatrix* matrix = daughter->GetMatrix();
       dau_mat = *mat;
       dau_mat.Multiply(matrix);
       daughter_matrix = &dau_mat;
     }
-    int level = findNodeWithMatrix(daughter,n,daughter_matrix,sub_path ? &spath : 0);
+    int level = findNodeWithMatrix(daughter,n,daughter_matrix,sub_path ? &spath : nullptr);
     if ( level>0 )  {
       if ( sub_path )  {
         *sub_path += "/";
@@ -195,7 +195,7 @@ std::pair<bool,TEveElement*> Utilities::LoadDetElement(DetElement de,int levels,
     if (pv.isValid()) {
       TGeoNode* n = pv.ptr();
       TGeoMatrix* matrix = n->GetMatrix();
-      gGeoManager = 0;
+      gGeoManager = nullptr;
       gGeoManager = new TGeoManager();
       std::pair<bool,TEveElement*> e = createEveShape(0, levels, parent, n, *matrix, de.name());
       auto* list = dynamic_cast<TEveElementList*>(e.second);
@@ -205,5 +205,5 @@ std::pair<bool,TEveElement*> Utilities::LoadDetElement(DetElement de,int levels,
       return e;
     }
   }
-  return make_pair(false,(TEveGeoShape*)0);
+  return make_pair(false,(TEveGeoShape*)nullptr);
 }

@@ -31,7 +31,7 @@ namespace {
   typedef InstanceCount::Counter COUNT;
   typedef std::map<const std::type_info*, COUNT*> TypeCounter;
   typedef std::map<const std::string*, COUNT*> StringCounter;
-  static bool s_trace_instances = ::getenv("DD4HEP_TRACE") != 0;
+  static bool s_trace_instances = ::getenv("DD4HEP_TRACE") != nullptr;
   static dd4hep_ptr<TypeCounter> s_typCounts(new TypeCounter());
   static dd4hep_ptr<StringCounter> s_strCounts(new StringCounter());
   static InstanceCount::Counter s_nullCount;
@@ -88,13 +88,13 @@ void InstanceCount::doTracing(bool value) {
 /// Access counter object for local caching on optimizations
 InstanceCount::Counter* InstanceCount::getCounter(const std::type_info& typ) {
   Counter* cnt = s_trace_instances ? types()[&typ] : &s_nullCount;
-  return (0 != cnt) ? cnt : types()[&typ] = new Counter();
+  return (nullptr != cnt) ? cnt : types()[&typ] = new Counter();
 }
 
 /// Access counter object for local caching on optimizations
 InstanceCount::Counter* InstanceCount::getCounter(const std::string& typ) {
   Counter* cnt = s_trace_instances ? strings()[&typ] : &s_nullCount;
-  return (0 != cnt) ? cnt : strings()[&typ] = new Counter();
+  return (nullptr != cnt) ? cnt : strings()[&typ] = new Counter();
 }
 
 /// Increment count according to string information

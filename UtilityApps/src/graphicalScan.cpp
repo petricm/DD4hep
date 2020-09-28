@@ -188,7 +188,7 @@ int main_wrapper(int argc, char** argv)   {
     }
 
 
-    TH2F* h2slice = 0;
+    TH2F* h2slice = nullptr;
 
     if (scanMaterial) {
 

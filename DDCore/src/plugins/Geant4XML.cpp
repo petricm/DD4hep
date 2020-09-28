@@ -44,6 +44,6 @@ DECLARE_XML_DOC_READER(geant4,create_Geant4)
 
 static Ref_t handle_Geant4(Detector& description, const xml_h& element) {
   (Converter < Geant4 > (description))(element);
-  return Ref_t(0);
+  return Ref_t(nullptr);
 }
 DECLARE_XMLELEMENT(geant4_xml_setup,handle_Geant4)

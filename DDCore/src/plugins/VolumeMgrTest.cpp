@@ -116,7 +116,7 @@ void VolIDTest::checkVolume(DetElement detector, PlacedVolume pv, const VolIDs& 
   VolumeID     det_vol_id = detector.volumeID();
   VolumeID     vid = det_vol_id;
   DetElement   top_sdet, det_elem;
-  VolumeManagerContext* mgr_ctxt = 0;
+  VolumeManagerContext* mgr_ctxt = nullptr;
   
   ++m_elements;
 
@@ -218,7 +218,7 @@ void VolIDTest::checkVolume(DetElement detector, PlacedVolume pv, const VolIDs& 
         }
         
         /// Check volume manager context
-        if ( 0 == mgr_ctxt )  {
+        if ( nullptr == mgr_ctxt )  {
           printout(ERROR,m_det.name(),"VOLUME_MANAGER FAILED: Could not find entry for vid:%s.",
                    volumeID(vid).c_str());
           ++m_errors;
@@ -301,7 +301,7 @@ void VolIDTest::walkVolume(DetElement detector, PlacedVolume pv, VolIDs ids, con
 long VolIDTest::run(Detector& description,int argc,char** argv)    {
   printout(ALWAYS,"DD4hepVolumeMgrTest","++ Processing plugin...");
   for(int iarg=0; iarg<argc;++iarg)  {
-    if ( argv[iarg] == 0 ) break;
+    if ( argv[iarg] == nullptr ) break;
     string name = argv[iarg];
     if ( name == "all" || name == "All" || name == "ALL" )  {
       const DetElement::Children& children = description.world().children();

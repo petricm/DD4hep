@@ -65,7 +65,7 @@ namespace {
 
 /// Standard action constructor
 Geant4ActionSD::Geant4ActionSD(const std::string& nam)
-  : Geant4Action(0, nam) {
+  : Geant4Action(nullptr, nam) {
   InstanceCount::increment(this);
 }
 
@@ -245,7 +245,7 @@ long long int Geant4Sensitive::cellID(const G4Step* step) {
 
 /// Standard constructor
 Geant4SensDetActionSequence::Geant4SensDetActionSequence(Geant4Context* ctxt, const string& nam)
-  : Geant4Action(ctxt, nam),  m_detector(0)
+  : Geant4Action(ctxt, nam),  m_detector(nullptr)
 {
   m_needsControl = true;
   context()->sensitiveActions().insert(name(), this);
@@ -336,7 +336,7 @@ Geant4HitCollection* Geant4SensDetActionSequence::collection(size_t which) const
     except("The collection index for subdetector %s is wrong!", c_name());
   }
   except("The collection name index for subdetector %s is out of range!", c_name());
-  return 0;
+  return nullptr;
 }
 
 /// Retrieve the hits collection associated with this detector by its collection identifier
@@ -345,7 +345,7 @@ Geant4HitCollection* Geant4SensDetActionSequence::collectionByID(size_t id) cons
   if (c)
     return c;
   except("The collection index for subdetector %s is wrong!", c_name());
-  return 0;
+  return nullptr;
 }
 
 /// Callback before hit processing starts. Invoke all filters.
@@ -420,7 +420,7 @@ Geant4SensDetActionSequence* Geant4SensDetSequences::find(const std::string& nam
   auto i = m_sequences.find(nam);
   if (i != m_sequences.end())
     return (*i).second;
-  return 0;
+  return nullptr;
 }
 
 /// Insert sequence member

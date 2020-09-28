@@ -113,13 +113,13 @@ void GlobalAlignmentStack::create()   {
 
 /// Check existence of alignment stack
 bool GlobalAlignmentStack::exists()   {
-  return _stack().get() != 0;
+  return _stack().get() != nullptr;
 }
 
 /// Clear data content and remove the slignment stack
 void GlobalAlignmentStack::release()    {
   if ( _stack().get() )  {
-    _stack(0);
+    _stack(nullptr);
     return;
   }
   throw runtime_error("GlobalAlignmentStack> Attempt to delete non existing stack.");

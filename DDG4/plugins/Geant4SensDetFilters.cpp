@@ -132,7 +132,7 @@ DECLARE_GEANT4ACTION(EnergyDepositMinimumCut)
 
 /// Constructor.
 ParticleFilter::ParticleFilter(Geant4Context* ctxt, const std::string& nam)
-: Geant4Filter(ctxt,nam), m_definition(0)
+: Geant4Filter(ctxt,nam), m_definition(nullptr)
 {
   declareProperty("particle",m_particle);
   InstanceCount::increment(this);
@@ -147,7 +147,7 @@ ParticleFilter::~ParticleFilter()   {
 const G4ParticleDefinition* ParticleFilter::definition() const  {
   if ( m_definition ) return m_definition;
   m_definition = G4ParticleTable::GetParticleTable()->FindParticle(m_particle);
-  if ( 0 == m_definition )  {
+  if ( nullptr == m_definition )  {
     throw runtime_error("Invalid particle name:'"+m_particle+"' [Not-in-particle-table]");
   }
   return m_definition;

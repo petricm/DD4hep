@@ -113,11 +113,11 @@ void Geant4HitDumpAction::dumpCollection(G4VHitsCollection* collection)  {
     for(size_t i=0; i<nhits; ++i)   {
       Geant4HitData* h = coll->hit(i);
       auto* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
-      if ( 0 != trk_hit )   {
+      if ( nullptr != trk_hit )   {
         trk_hits.emplace_back(trk_hit);
       }
       auto* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
-      if ( 0 != cal_hit )   {
+      if ( nullptr != cal_hit )   {
         cal_hits.emplace_back(cal_hit);
       }
     }

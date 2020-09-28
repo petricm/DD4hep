@@ -79,7 +79,7 @@ void* ObjectExtensions::addExtension(unsigned long long int key, ExtensionEntry*
     except("ObjectExtensions::addExtension","Invalid extension object for key %016llX!",key);
   }
   except("ObjectExtensions::addExtension","Invalid extension entry for key %016llX!",key);
-  return 0;
+  return nullptr;
 }
 
 /// Remove an existing extension object from the instance
@@ -95,7 +95,7 @@ void* ObjectExtensions::removeExtension(unsigned long long int key, bool destroy
     return ptr;
   }
   except("ObjectExtensions::removeExtension","The object of type %016llX is not present.",key);
-  return 0;
+  return nullptr;
 }
 
 /// Access an existing extension object from the detector element
@@ -115,7 +115,7 @@ void* ObjectExtensions::extension(unsigned long long int key, bool alert) const 
     return (*j).second->object();
   }
   else if ( !alert )
-    return 0;
+    return nullptr;
   string msg = format("ObjectExtensions::extension","The object has no extension of type %016llX.",key);
   throw runtime_error(msg);
 }

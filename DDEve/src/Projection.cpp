@@ -28,7 +28,7 @@ using namespace dd4hep;
 
 /// Initializing constructor
 Projection::Projection(Display* eve, const string& nam)
-  : View(eve, nam), m_projMgr(0), m_axis(0)
+  : View(eve, nam), m_projMgr(nullptr), m_axis(nullptr)
 {
 }
 
@@ -42,7 +42,7 @@ void Projection::SetDepth(Float_t d)  {
 
 /// Call an element to a geometry element list
 TEveElement* Projection::ImportGeoTopic(TEveElement*, TEveElementList*)   {
-  return 0;
+  return nullptr;
 }
 
 /// Call an element to a event element list
@@ -51,7 +51,7 @@ TEveElement* Projection::ImportElement(TEveElement* el, TEveElementList* list)  
   for(auto i=m_geoTopics.begin(); i!=m_geoTopics.end(); ++i)  {
     if ( el == unprojected )   {
       m_projMgr->AddElement(el);
-      return 0;
+      return nullptr;
     }
   }
   TEveElement* e = m_projMgr->ImportElements(el, list);
@@ -71,12 +71,12 @@ TEveElement* Projection::ImportElement(TEveElement* el, TEveElementList* list)  
 
 /// Call an element to a geometry element list
 TEveElement* Projection::ImportGeoElement(TEveElement* element, TEveElementList* list)  {
-  return element ? ImportElement(element, list) : 0;
+  return element ? ImportElement(element, list) : nullptr;
 }
 
 /// Call an element to a event element list
 TEveElement* Projection::ImportEventElement(TEveElement* element, TEveElementList* list)  {
-  return element ? ImportElement(element, list) : 0;
+  return element ? ImportElement(element, list) : nullptr;
 }
 
 /// Add axis to the projection view

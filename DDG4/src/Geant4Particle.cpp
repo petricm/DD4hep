@@ -113,7 +113,7 @@ void Geant4Particle::removeDaughter(int id_daughter)  {
 const G4ParticleDefinition* Geant4ParticleHandle::definition() const   {
   G4ParticleTable*      tab = G4ParticleTable::GetParticleTable();
   G4ParticleDefinition* def = tab->FindParticle(particle->pdgID);
-  if ( 0 == def && 0 == particle->pdgID )   {
+  if ( nullptr == def && 0 == particle->pdgID )   {
     if ( 0 == particle->charge )
       return G4Geantino::Definition();
     return G4ChargedGeantino::Definition();
@@ -171,7 +171,7 @@ std::vector<G4ParticleDefinition*> Geant4ParticleHandle::g4DefinitionsRegEx(cons
   iter->reset();
   while ((*iter)()) {
     G4ParticleDefinition* p = iter->value();
-    ret = ::regexec(&reg, p->GetParticleName().c_str(), 0, NULL, 0);
+    ret = ::regexec(&reg, p->GetParticleName().c_str(), 0, nullptr, 0);
     if (!ret)
       results.emplace_back(p);
     else if (ret == REG_NOMATCH)

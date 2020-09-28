@@ -58,11 +58,11 @@ static const void* _convertHitFunc(const LCObject* source, DDEveHit* target)  {
   if (t && _fill(t,target)) return t;
   const auto* c = dynamic_cast<const SimCalorimeterHit*>(source);
   if (c && _fill(c,target)) return c;
-  return 0;
+  return nullptr;
 }
 static const void* _convertParticleFunc(const LCObject* source, DDEveParticle* target)  {
   if ( source && target )  {}
-  return 0;
+  return nullptr;
 }
 
 static void* _create(const char*)  {
@@ -73,7 +73,7 @@ using namespace dd4hep::detail;
 DECLARE_CONSTRUCTOR(DDEve_LCIOEventHandler,_create)
 
 /// Standard constructor
-LCIOEventHandler::LCIOEventHandler() : EventHandler(), m_lcReader(0), m_event(0) {
+LCIOEventHandler::LCIOEventHandler() : EventHandler(), m_lcReader(nullptr), m_event(nullptr) {
   m_lcReader = LCFactory::getInstance()->createLCReader() ;
 }
 
@@ -148,7 +148,7 @@ bool LCIOEventHandler::Open(const std::string&, const std::string& name)   {
   if ( m_hasFile ) m_lcReader->close();
   m_hasFile = false;
   m_hasEvent = false;
-  m_event = 0;
+  m_event = nullptr;
   m_branches.clear();
   m_lcReader->open(name);
   m_hasFile = true;

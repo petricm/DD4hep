@@ -49,7 +49,7 @@ typedef detail::ReferenceBitMask<int> PropertyMask;
 /// Standard constructor
 Geant4ParticleHandler::Geant4ParticleHandler(Geant4Context* ctxt, const string& nam)
   : Geant4GeneratorAction(ctxt,nam), Geant4MonteCarloTruth(),
-    m_ownsParticles(false), m_userHandler(0), m_primaryMap(0)
+    m_ownsParticles(false), m_userHandler(nullptr), m_primaryMap(nullptr)
 {
   InstanceCount::increment(this);
   //generatorAction().adopt(this);
@@ -70,8 +70,8 @@ Geant4ParticleHandler::Geant4ParticleHandler(Geant4Context* ctxt, const string& 
 
 /// No default constructor
 Geant4ParticleHandler::Geant4ParticleHandler()
-  : Geant4GeneratorAction(0,""), Geant4MonteCarloTruth(),
-    m_ownsParticles(false), m_userHandler(0), m_primaryMap(0)
+  : Geant4GeneratorAction(nullptr,""), Geant4MonteCarloTruth(),
+    m_ownsParticles(false), m_userHandler(nullptr), m_primaryMap(nullptr)
 {
   m_globalParticleID = 0;
   declareProperty("PrintEndTracking",      m_printEndTracking = false);
@@ -210,7 +210,7 @@ void Geant4ParticleHandler::begin(const G4Track* track)   {
   const G4ThreeVector& v = h.vertex();
   int                  reason = (kine > m_kinEnergyCut) ? G4PARTICLE_ABOVE_ENERGY_THRESHOLD : 0;
   const G4PrimaryParticle* prim = h.primary();
-  Particle* prim_part = 0;
+  Particle* prim_part = nullptr;
 
   if ( prim )   {
     prim_part = m_primaryMap->get(prim);
@@ -311,7 +311,7 @@ void Geant4ParticleHandler::end(const G4Track* track)   {
 
   // check if the last step ended on the worldVolume boundary
   const G4Step* theLastStep = track->GetStep();
-  G4StepPoint* theLastPostStepPoint = NULL;
+  G4StepPoint* theLastPostStepPoint = nullptr;
   if(theLastStep) theLastPostStepPoint = theLastStep->GetPostStepPoint();
   if( theLastPostStepPoint &&
       ( theLastPostStepPoint->GetStepStatus() == fWorldBoundary //particle left world volume
@@ -344,7 +344,7 @@ void Geant4ParticleHandler::end(const G4Track* track)   {
       ph.dump2(outputLevel()-1,name(),"Add Primary",h.id(),ip!=m_particleMap.end());
     }
     // Create a new MC particle from the current track information saved in the pre-tracking action
-    Particle* part = 0;
+    Particle* part = nullptr;
     if ( ip==m_particleMap.end() ) part = m_particleMap[g4_id] = new Particle();
     else part = (*ip).second;
     part->get_data(m_currTrack);
@@ -418,7 +418,7 @@ void Geant4ParticleHandler::endEvent(const G4Event* event)  {
   // Now export the data to the final record.
   auto* part_map = context()->event().extension<Geant4ParticleMap>();
   part_map->adopt(m_particleMap, m_equivalentTracks);
-  m_primaryMap = 0;
+  m_primaryMap = nullptr;
   clear();
 }
 

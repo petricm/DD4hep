@@ -36,7 +36,7 @@ namespace dd4hep::DDSegmentation {
 
     /// Destructor
     Segmentation::~Segmentation() {
-      if (_ownsDecoder and _decoder != 0) {
+      if (_ownsDecoder and _decoder != nullptr) {
         delete _decoder;
       }
       for (auto& p : _parameters)  {

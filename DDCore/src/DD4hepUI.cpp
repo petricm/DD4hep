@@ -60,7 +60,7 @@ int DD4hepUI::setVisLevel(int value)     {
 /// Install the dd4hep conditions manager object
 Handle<NamedObject> DD4hepUI::conditionsMgr()  const  {
   if ( !m_condMgr.isValid() )  {
-    const void* argv[] = {"-handle",&m_condMgr,0};
+    const void* argv[] = {"-handle",&m_condMgr,nullptr};
     if ( 1 != apply("DD4hep_ConditionsManagerInstaller",2,(char**)argv) )  {
       except("DD4hepUI","Failed to install the conditions manager object.");
     }
@@ -84,7 +84,7 @@ long DD4hepUI::loadConditions(const std::string& fname)  const  {
 /// Install the dd4hep alignment manager object
 Handle<NamedObject> DD4hepUI::alignmentMgr()  const  {
   if ( !m_alignMgr.isValid() )  {
-    const void* argv[] = {"-handle",&m_alignMgr,0};
+    const void* argv[] = {"-handle",&m_alignMgr,nullptr};
     if ( 1 != apply("DD4hep_AlignmentsManagerInstaller",2,(char**)argv) )  {
       except("DD4hepUI","Failed to install the alignment manager object.");
     }
@@ -118,21 +118,21 @@ void DD4hepUI::redraw() const   {
 /// Detector interface: Draw detector sub-tree the scene on a OpenGL pane
 void DD4hepUI::drawSubtree(const char* path) const    {
   string vis = _visLevel(visLevel);
-  const void* av[] = {"-detector", path, "-option", "ogl", "-level", vis.c_str(), 0};
+  const void* av[] = {"-detector", path, "-option", "ogl", "-level", vis.c_str(), nullptr};
   m_detDesc.apply("DD4hep_GeometryDisplay", 2, (char**)av);
 }
 
 /// Detector interface: Re-draw the entire sub-tree scene
 void DD4hepUI::redrawSubtree(const char* path) const    {
   string vis = _visLevel(visLevel);
-  const void* av[] = {"-detector", path, "-option", "oglsame", "-level", vis.c_str(), 0};
+  const void* av[] = {"-detector", path, "-option", "oglsame", "-level", vis.c_str(), nullptr};
   m_detDesc.apply("DD4hep_GeometryDisplay", 4, (char**)av);
 }
 
 /// Dump the volume tree
 long DD4hepUI::dumpVols(int argc, char** argv)  const   {
   if ( argc==0 )  {
-    const void* av[] = {"-positions","-pointers",0};
+    const void* av[] = {"-positions","-pointers",nullptr};
     return m_detDesc.apply("DD4hep_VolumeDump",2,(char**)av);
   }
   return m_detDesc.apply("DD4hep_VolumeDump",argc,argv);
@@ -140,26 +140,26 @@ long DD4hepUI::dumpVols(int argc, char** argv)  const   {
 
 /// Dump the DetElement tree with placements
 long DD4hepUI::dumpDet(const char* path)  const   {
-  const void* args[] = {"--detector", path ? path : "/world", 0};
+  const void* args[] = {"--detector", path ? path : "/world", nullptr};
   return m_detDesc.apply("DD4hep_DetectorVolumeDump",2,(char**)args);
 }
 
 /// Dump the DetElement tree with placements
 long DD4hepUI::dumpDetMaterials(const char* path)  const   {
-  const void* args[] = {"--detector", path ? path : "/world", "--materials", "--shapes", 0};
+  const void* args[] = {"--detector", path ? path : "/world", "--materials", "--shapes", nullptr};
   return m_detDesc.apply("DD4hep_DetectorVolumeDump",4,(char**)args);
 }
 
 /// Dump the DetElement tree with placements
 long DD4hepUI::dumpStructure(const char* path)  const   {
-  const void* args[] = {"--detector", path ? path : "/world", 0};
+  const void* args[] = {"--detector", path ? path : "/world", nullptr};
   return m_detDesc.apply("DD4hep_DetectorDump",2,(char**)args);
 }
 
 /// Dump the entire detector description object to a root file
 long DD4hepUI::saveROOT(const char* file_name)    const     {
   if ( file_name )  {
-    const void* av[] = {"-output",file_name,0};
+    const void* av[] = {"-output",file_name,nullptr};
     return m_detDesc.apply("DD4hep_Geometry2ROOT",2,(char**)av);
   }
   printout(WARNING,"DD4hepUI","++ saveROOT: No valid output file name supplied");
@@ -169,7 +169,7 @@ long DD4hepUI::saveROOT(const char* file_name)    const     {
 /// Import the entire detector description object from a root file
 long DD4hepUI::importROOT(const char* file_name)    const    {
   if ( file_name )  {
-    const void* av[] = {"-input",file_name,0};
+    const void* av[] = {"-input",file_name,nullptr};
     return m_detDesc.apply("DD4hep_RootLoader",2,(char**)av);
   }
   printout(WARNING,"DD4hepUI","++ importROOT: No valid output file name supplied");
@@ -178,7 +178,7 @@ long DD4hepUI::importROOT(const char* file_name)    const    {
 
 /// Create ROOT interpreter instance
 long DD4hepUI::createInterpreter(int argc, char** argv)  {
-  if ( 0 == gApplication )  {
+  if ( nullptr == gApplication )  {
     pair<int, char**> a(argc,argv);
     gApplication = new TRint("DD4hepUI", &a.first, a.second);
     printout(INFO,"DD4hepUI","++ Created ROOT interpreter instance for DD4hepUI.");
@@ -191,7 +191,7 @@ long DD4hepUI::createInterpreter(int argc, char** argv)  {
 
 /// Execute ROOT interpreter instance
 long DD4hepUI::runInterpreter()  const   {
-  if ( 0 != gApplication )  {
+  if ( nullptr != gApplication )  {
     if ( !gApplication->IsRunning() )  {
       gApplication->Run();
       return 1;

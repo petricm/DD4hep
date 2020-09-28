@@ -44,7 +44,7 @@ using namespace dd4hep::sim;
 
 /// Constructor. The detector element is identified by the name
 Geant4SensitiveDetector::Geant4SensitiveDetector(const string& nam, Detector& description)
-  : G4VSensitiveDetector(nam), m_detDesc(description), m_detector(), m_sensitive(), m_readout(), m_hce(0) {
+  : G4VSensitiveDetector(nam), m_detDesc(description), m_detector(), m_sensitive(), m_readout(), m_hce(nullptr) {
   m_sensitive = description.sensitiveDetector(nam);
   m_detector = description.detector(nam);
   m_readout = m_sensitive.readout();
@@ -83,7 +83,7 @@ namespace dd4hep::sim {
       for (auto i : *v)
         if (cmp(i))
           return i;
-      return 0;
+      return nullptr;
     }
   }
 
@@ -99,7 +99,7 @@ void Geant4SensitiveDetector::Initialize(G4HCofThisEvent* HCE) {
 
 /// Method invoked at the end of each event.
 void Geant4SensitiveDetector::EndOfEvent(G4HCofThisEvent* /* HCE */) {
-  m_hce = 0;
+  m_hce = nullptr;
   // Eventuall print event summary
 }
 

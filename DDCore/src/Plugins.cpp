@@ -20,7 +20,7 @@ using namespace dd4hep;
 
 namespace {
   inline int* s_debug_value()   {
-    static int s_debug_value = ::getenv("DD4HEP_TRACE") == 0 ? 0 : 1;
+    static int s_debug_value = ::getenv("DD4HEP_TRACE") == nullptr ? 0 : 1;
     return &s_debug_value;
   }
 }
@@ -54,8 +54,8 @@ bool PluginService::setDebug(bool new_value)   {
 
 namespace   {
   struct PluginInterface  {
-    int (*getDebug)(){0};
-    int (*setDebug)(int new_value){0};
+    int (*getDebug)(){nullptr};
+    int (*setDebug)(int new_value){nullptr};
     PluginService::stub_t (*create)(const char* identifier, const char* signature){nullptr};
     void  (*add)(const char* identifier, 
                  PluginService::stub_t&& creator_stub, 
@@ -82,9 +82,9 @@ namespace   {
     if ( handle ) {}
 #else
     _FP<T> fp(::dlsym(handle, entry));
-    if ( !fp.fptr.ptr ) fp.fptr.ptr = ::dlsym(0, entry);
+    if ( !fp.fptr.ptr ) fp.fptr.ptr = ::dlsym(nullptr, entry);
 #endif
-    if ( 0 == fp.fptr.ptr )      {
+    if ( nullptr == fp.fptr.ptr )      {
       string err = "dd4hep:PluginService: Failed to access symbol "
         "\""+string(entry)+"\" in plugin library "+string(plugin)+
         " ["+string(::strerror(errno))+"]";
@@ -96,10 +96,10 @@ namespace   {
   PluginInterface::PluginInterface()  noexcept(false)
 
   {
-    void* handle = 0;
+    void* handle = nullptr;
     const char* plugin_name = ::getenv("DD4HEP_PLUGINMGR");
 #if defined(__linux) && !defined(__APPLE__)
-    if ( 0 == plugin_name ) plugin_name = "libDD4hepGaudiPluginMgr.so";
+    if ( nullptr == plugin_name ) plugin_name = "libDD4hepGaudiPluginMgr.so";
 #else
     if ( 0 == plugin_name ) plugin_name = "libDD4hepGaudiPluginMgr";
 #endif

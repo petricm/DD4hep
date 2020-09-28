@@ -18,7 +18,7 @@ SegmentationCreatorBase::SegmentationCreatorBase(const std::string& name) {
 }
 
 /// Initialize the global factory instance
-SegmentationFactory* SegmentationFactory::_instance = 0;
+SegmentationFactory* SegmentationFactory::_instance = nullptr;
 
 /// Access to the global factory instance
 SegmentationFactory* SegmentationFactory::instance() {
@@ -35,7 +35,7 @@ Segmentation* SegmentationFactory::create(const std::string& name, const std::st
 	if (it != _segmentations.end()) {
 		return it->second->create(identifier);
 	}
-	return 0;
+	return nullptr;
 }
 
 /// Access to the list of registered segmentations

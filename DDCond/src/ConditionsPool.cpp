@@ -51,7 +51,7 @@ void ConditionsPool::print(const string& opt)   const  {
   printout(INFO,"ConditionsPool","+++ %s Conditions for pool with IOV: %-32s age:%3d [%4d entries]",
            opt.c_str(), GetName(), age_value, size());
   if ( opt == "*" || opt == "ALL" )   {
-    ConditionsPrinter printer(0);
+    ConditionsPrinter printer(nullptr);
     RangeConditions   range;
     printer.summary    = false;
     printer.lineLength = 132;
@@ -81,7 +81,7 @@ UpdatePool::~UpdatePool()   = default;
 
 /// Default constructor
 UserPool::UserPool(ConditionsManager mgr)
-  : m_iov(0), m_manager(mgr)
+  : m_iov(nullptr), m_manager(mgr)
 {
   InstanceCount::increment(this);
 }

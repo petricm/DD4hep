@@ -44,7 +44,7 @@ ContextMenuHandler::~ContextMenuHandler()   = default;
 
 /// Callback
 void ContextMenuHandler::Context(TObject* target)   {
-  const void *args[] = {target,m_param,0};
+  const void *args[] = {target,m_param,nullptr};
   m_call.execute(args);
 }
 

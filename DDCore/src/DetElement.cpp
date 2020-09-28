@@ -276,7 +276,7 @@ pair<DetElement,Volume> DetElement::reflect(const string& new_name) const {
 }
 
 pair<DetElement,Volume> DetElement::reflect(const string& new_name, int new_id) const {
-  return reflect(new_name, new_id, SensitiveDetector(0));
+  return reflect(new_name, new_id, SensitiveDetector(nullptr));
 }
 
 pair<DetElement,Volume> DetElement::reflect(const string& new_name, int new_id, SensitiveDetector sd) const {

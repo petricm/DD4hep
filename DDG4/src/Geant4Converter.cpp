@@ -444,18 +444,18 @@ void* Geant4Converter::handleMaterial(const string& name, Material medium) const
     }
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,17,0)
     /// Attach the material properties if any
-    G4MaterialPropertiesTable* tab = 0;
+    G4MaterialPropertiesTable* tab = nullptr;
     TListIter propIt(&material->GetProperties());
     for(TObject* obj=propIt.Next(); obj; obj = propIt.Next())  {
       auto*      named  = (TNamed*)obj;
       TGDMLMatrix* matrix = info.manager->GetGDMLMatrix(named->GetTitle());
       auto* v =
         (Geant4GeometryInfo::PropertyVector*)handleMaterialProperties(matrix);
-      if ( 0 == v )   {
+      if ( nullptr == v )   {
         except("Geant4Converter", "++ FAILED to create G4 material %s [Cannot convert property:%s]",
                material->GetName(), named->GetName());
       }
-      if ( 0 == tab )  {
+      if ( nullptr == tab )  {
         tab = new G4MaterialPropertiesTable();
         mat->SetMaterialPropertiesTable(tab);
       }
@@ -490,7 +490,7 @@ void* Geant4Converter::handleMaterial(const string& name, Material medium) const
                "[Cannot convert const property: %s]",
                material->GetName(), named->GetName());
       }
-      if ( 0 == tab )  {
+      if ( nullptr == tab )  {
         tab = new G4MaterialPropertiesTable();
         mat->SetMaterialPropertiesTable(tab);
       }
@@ -520,9 +520,9 @@ void* Geant4Converter::handleMaterial(const string& name, Material medium) const
 
 /// Dump solid in GDML format to output stream
 void* Geant4Converter::handleSolid(const string& name, const TGeoShape* shape) const {
-  G4VSolid* solid = 0;
+  G4VSolid* solid = nullptr;
   if ( shape ) {
-    if (0 != (solid = data().g4Solids[shape])) {
+    if (nullptr != (solid = data().g4Solids[shape])) {
       return solid;
     }
     TClass*    isa = shape->IsA();
@@ -642,11 +642,11 @@ void* Geant4Converter::handleSolid(const string& name, const TGeoShape* shape) c
         const Double_t *t = matrix->GetTranslation();
         G4ThreeVector transform(t[0] * CM_2_MM, t[1] * CM_2_MM, t[2] * CM_2_MM);
         if (oper == TGeoBoolNode::kGeoSubtraction)
-          solid = new G4SubtractionSolid(name, left, right, 0, transform);
+          solid = new G4SubtractionSolid(name, left, right, nullptr, transform);
         else if (oper == TGeoBoolNode::kGeoUnion)
-          solid = new G4UnionSolid(name, left, right, 0, transform);
+          solid = new G4UnionSolid(name, left, right, nullptr, transform);
         else if (oper == TGeoBoolNode::kGeoIntersection)
-          solid = new G4IntersectionSolid(name, left, right, 0, transform);
+          solid = new G4IntersectionSolid(name, left, right, nullptr, transform);
       }
     }
 
@@ -668,7 +668,7 @@ void* Geant4Converter::handleVolume(const string& name, const TGeoVolume* volume
   Volume     _v(volume);
   if ( _v.testFlagBit(Volume::VETO_SIMU) )  {
     printout(lvl, "Geant4Converter", "++ Volume %s not converted [Veto'ed for simulation]",volume->GetName());
-    return 0;
+    return nullptr;
   }
   else if (volIt == info.g4Volumes.end() ) {
     const TGeoVolume* v = volume;
@@ -676,11 +676,11 @@ void* Geant4Converter::handleVolume(const string& name, const TGeoVolume* volume
     TGeoMedium* med = v->GetMedium();
     TGeoShape* sh   = v->GetShape();
     G4VSolid* solid = (G4VSolid*) handleSolid(sh->GetName(), sh);
-    G4Material* medium = 0;
+    G4Material* medium = nullptr;
     bool assembly = sh->IsA() == TGeoShapeAssembly::Class() || v->IsA() == TGeoVolumeAssembly::Class();
 
     LimitSet lim = _v.limitSet();
-    G4UserLimits* user_limits = 0;
+    G4UserLimits* user_limits = nullptr;
     if (lim.isValid()) {
       user_limits = info.g4Limits[lim];
       if (!user_limits) {
@@ -689,12 +689,12 @@ void* Geant4Converter::handleVolume(const string& name, const TGeoVolume* volume
       }
     }
     VisAttr vis = _v.visAttributes();
-    G4VisAttributes* vis_attr = 0;
+    G4VisAttributes* vis_attr = nullptr;
     if (vis.isValid()) {
       vis_attr = (G4VisAttributes*)handleVis(vis.name(), vis);
     }
     Region reg = _v.region();
-    G4Region* region = 0;
+    G4Region* region = nullptr;
     if (reg.isValid()) {
       region = info.g4Regions[reg];
       if (!region) {
@@ -707,7 +707,7 @@ void* Geant4Converter::handleVolume(const string& name, const TGeoVolume* volume
 
     if (assembly) {
       //info.g4AssemblyVolumes[v] = new Geant4AssemblyVolume();
-      return 0;
+      return nullptr;
     }
     medium = (G4Material*) handleMaterial(med->GetName(), Material(med));
     if (!solid) {
@@ -720,7 +720,7 @@ void* Geant4Converter::handleVolume(const string& name, const TGeoVolume* volume
       printout(lvl, "Geant4Converter", "++ Volume     + Apply LIMITS settings:%-24s to volume %s.",
                lim.name(), _v.name());
     }
-    auto* vol = new G4LogicalVolume(solid, medium, n, 0, 0, user_limits);
+    auto* vol = new G4LogicalVolume(solid, medium, n, nullptr, nullptr, user_limits);
     if (region) {
       printout(lvl, "Geant4Converter", "++ Volume     + Apply REGION settings: %s to volume %s.",
                reg.name(), _v.name());
@@ -759,12 +759,12 @@ void* Geant4Converter::handleAssembly(const string& name, const TGeoNode* node) 
   TGeoVolume* mot_vol = node->GetVolume();
   PrintLevel lvl = debugVolumes ? ALWAYS : outputLevel;
   if ( mot_vol->IsA() != TGeoVolumeAssembly::Class() )    {
-    return 0;
+    return nullptr;
   }
   Volume _v(mot_vol);
   if ( _v.testFlagBit(Volume::VETO_SIMU) )  {
     printout(lvl, "Geant4Converter", "++ AssemblyNode %s not converted [Veto'ed for simulation]",node->GetName());
-    return 0;
+    return nullptr;
   }
   Geant4GeometryInfo& info = data();
   Geant4AssemblyVolume* g4 = info.g4AssemblyVolumes[node];
@@ -781,7 +781,7 @@ void* Geant4Converter::handleAssembly(const string& name, const TGeoNode* node) 
         if ( assIt == info.g4AssemblyVolumes.end() )  {
           printout(FATAL, "Geant4Converter", "+++ Invalid child assembly at %s : %d  parent: %s child:%s",
                    __FILE__, __LINE__, name.c_str(), d->GetName());
-          return 0;
+          return nullptr;
         }
         g4->placeAssembly(d,(*assIt).second,transform);
         printout(lvl, "Geant4Converter", "+++ Assembly: AddPlacedAssembly : dau:%s "
@@ -819,7 +819,7 @@ void* Geant4Converter::handlePlacement(const string& name, const TGeoNode* node)
   Volume _v(vol);
   if ( _v.testFlagBit(Volume::VETO_SIMU) )  {
     printout(lvl, "Geant4Converter", "++ Placement %s not converted [Veto'ed for simulation]",node->GetName());
-    return 0;
+    return nullptr;
   }
   if (!g4) {
     TGeoVolume* mot_vol = node->GetMotherVolume();
@@ -828,7 +828,7 @@ void* Geant4Converter::handlePlacement(const string& name, const TGeoNode* node)
       except("Geant4Converter", "++ Attempt to handle placement without transformation:%p %s of type %s vol:%p", node,
              node->GetName(), node->IsA()->GetName(), vol);
     }
-    else if (0 == vol) {
+    else if (nullptr == vol) {
       except("Geant4Converter", "++ Unknown G4 volume:%p %s of type %s ptr:%p", node, node->GetName(),
              node->IsA()->GetName(), vol);
     }
@@ -850,7 +850,7 @@ void* Geant4Converter::handlePlacement(const string& name, const TGeoNode* node)
                  "to mother %s Tr:x=%8.3f y=%8.3f z=%8.3f",
                  vol->GetName(), mot_vol->GetName(),
                  transform.dx(), transform.dy(), transform.dz());
-        return 0;
+        return nullptr;
       }
       else if ( node_is_assembly )   {
         //
@@ -865,7 +865,7 @@ void* Geant4Converter::handlePlacement(const string& name, const TGeoNode* node)
         Geant4AssemblyVolume::Chain chain;
         chain.emplace_back(node);
         ass->imprint(info,node,chain,ass,(*volIt).second, transform, copy, checkOverlaps);
-        return 0;
+        return nullptr;
       }
       else if ( node != info.manager->GetTopNode() && volIt == info.g4Volumes.end() )  {
         throw logic_error("Geant4Converter: Invalid mother volume found!");
@@ -909,7 +909,7 @@ void* Geant4Converter::handleRegion(Region region, const set<const TGeoVolume*>&
 
     printout(lvl, "Geant4Converter", "++ Converted region settings of:%s.", r.name());
     vector < string > &limits = r.limits();
-    G4ProductionCuts* cuts = 0;
+    G4ProductionCuts* cuts = nullptr;
     // set production cut
     if( not r.useDefaultCut() ) {
       cuts = new G4ProductionCuts();
@@ -1203,12 +1203,12 @@ void* Geant4Converter::handleOpticalSurface(TObject* surface) const    {
              TGeoOpticalSurface::TypeToString(optSurf->GetType()),
              TGeoOpticalSurface::ModelToString(optSurf->GetModel()),
              TGeoOpticalSurface::FinishToString(optSurf->GetFinish()));
-    G4MaterialPropertiesTable* tab = 0;
+    G4MaterialPropertiesTable* tab = nullptr;
     TListIter it(&optSurf->GetProperties());
     for(TObject* obj = it.Next(); obj; obj = it.Next())  {
       auto*      named = (TNamed*)obj;
       TGDMLMatrix* matrix = info.manager->GetGDMLMatrix(named->GetTitle());
-      if ( 0 == tab )  {
+      if ( nullptr == tab )  {
         tab = new G4MaterialPropertiesTable();
         g4->SetMaterialPropertiesTable(tab);
       }

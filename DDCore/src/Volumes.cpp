@@ -178,7 +178,7 @@ namespace {
     }
   };
 
-  TGeoVolume* MakeReflection(TGeoVolume* v, const char* newname=0)  {
+  TGeoVolume* MakeReflection(TGeoVolume* v, const char* newname=nullptr)  {
     static TMap map(100);
     auto* vol = (TGeoVolume*)map.GetValue(v);
     if ( vol ) {
@@ -200,7 +200,7 @@ namespace {
       vol->SetName((nam+"_refl").c_str());
     }
     delete vol->GetNodes();
-    vol->SetNodes(NULL);
+    vol->SetNodes(nullptr);
     vol->SetBit(TGeoVolume::kVolumeImportNodes, kFALSE);
     v->CloneNodesAndConnect(vol);
     // The volume is now properly cloned, but with the same shape.
@@ -254,7 +254,7 @@ namespace {
     new_finder->SetVolume(vol);
     vol->SetFinder(new_finder);
     TGeoNodeOffset *nodeoff;
-    new_vol = 0;
+    new_vol = nullptr;
     for (Int_t i=0; i<nd; i++) {
       nodeoff = (TGeoNodeOffset*)vol->GetNode(i);
       nodeoff->SetFinder(new_finder);
@@ -363,17 +363,17 @@ int PlacedVolume::copyNumber() const   {
 
 /// Volume material
 Material PlacedVolume::material() const {
-  return Material(m_element ? m_element->GetMedium() : 0);
+  return Material(m_element ? m_element->GetMedium() : nullptr);
 }
 
 /// Logical volume of this placement
 Volume PlacedVolume::volume() const {
-  return Volume(m_element ? m_element->GetVolume() : 0);
+  return Volume(m_element ? m_element->GetVolume() : nullptr);
 }
 
 /// Parent volume (envelope)
 Volume PlacedVolume::motherVol() const {
-  return Volume(m_element ? m_element->GetMotherVolume() : 0);
+  return Volume(m_element ? m_element->GetMotherVolume() : nullptr);
 }
 
 /// Access to the volume IDs
@@ -464,12 +464,12 @@ void VolumeExtension::Release() const  {
 
 /// Constructor to be used when creating a new geometry tree.
 Volume::Volume(const string& nam) {
-  m_element = _createTGeoVolume(nam,0,0);
+  m_element = _createTGeoVolume(nam,nullptr,nullptr);
 }
 
 /// Constructor to be used when creating a new geometry tree.
 Volume::Volume(const string& nam, const string& title) {
-  m_element = _createTGeoVolume(nam,0,0);
+  m_element = _createTGeoVolume(nam,nullptr,nullptr);
   m_element->SetTitle(title.c_str());
 }
 
@@ -492,7 +492,7 @@ Volume::Object* Volume::data() const   {
 
 /// Create a reflected volume tree. The reflected volume has left-handed coordinates
 Volume Volume::reflect()  const   {
-  return reflect(SensitiveDetector(0));
+  return reflect(SensitiveDetector(nullptr));
 }
     
 /// Create a reflected volume tree. The reflected volume has left-handed coordinates
@@ -560,7 +560,7 @@ Volume Volume::divide(const std::string& divname, int iaxis, int ndiv,
 }
 
 Int_t get_copy_number(TGeoVolume* par)    {
-  TObjArray* a = par ? par->GetNodes() : 0;
+  TObjArray* a = par ? par->GetNodes() : nullptr;
   Int_t copy_nr = (a ? a->GetEntries() : 0);
   return copy_nr;
 }
@@ -599,7 +599,7 @@ PlacedVolume _addNode(TGeoVolume* par, TGeoVolume* daughter, int id, TGeoMatrix*
   geo_node_t* n;
   TString nam_id = TString::Format("%s_%d", daughter->GetName(), id);
   n = static_cast<geo_node_t*>(parent->GetNode(nam_id));
-  if ( n != 0 )  {
+  if ( n != nullptr )  {
     printout(ERROR,"PlacedVolume","++ Attempt to add already exiting node %s",(const char*)nam_id);
   }
   parent->AddNode(daughter, id, transform);

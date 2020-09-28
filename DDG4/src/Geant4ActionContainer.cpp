@@ -38,9 +38,9 @@ using namespace dd4hep::sim;
 /// Standard constructor
 Geant4ActionContainer::Geant4ActionContainer(Geant4Context* ctxt)
   : m_context(ctxt), 
-    m_generatorAction(0), m_runAction(0), m_eventAction(0), m_trackingAction(0),
-    m_steppingAction(0), m_stackingAction(0), m_constructionAction(0),
-    m_sensDetActions(0), m_physicsList(0), m_userInit(0)
+    m_generatorAction(nullptr), m_runAction(nullptr), m_eventAction(nullptr), m_trackingAction(nullptr),
+    m_steppingAction(nullptr), m_stackingAction(nullptr), m_constructionAction(nullptr),
+    m_sensDetActions(nullptr), m_physicsList(nullptr), m_userInit(nullptr)
 {
   m_sensDetActions = new Geant4SensDetSequences();
   InstanceCount::increment(this);

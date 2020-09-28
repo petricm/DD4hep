@@ -116,7 +116,7 @@ namespace dd4hep {
       Action action((what==FILTER) ? (Geant4Action*)kernel.globalFilter(typ.second,false)
                     : (what==ACTION) ? kernel.globalAction(typ.second,false)
                     ///  : (what==FILTER) ? kernel.globalAction(typ.second,false)
-                    : 0);
+                    : nullptr);
       // Create the object using the factory method
       if ( !action )  {
         action = (what == SENSITIVE) ? Action(_convertSensitive(description, a, seqType))

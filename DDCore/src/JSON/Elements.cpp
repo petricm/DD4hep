@@ -54,12 +54,12 @@ namespace {
       string t(tag);
       if ( t == "*" )  {
         ptree::iterator i = e->second.begin();
-        return i != e->second.end() ? &(*i) : 0;
+        return i != e->second.end() ? &(*i) : nullptr;
       }
       ptree::assoc_iterator i = e->second.find(t);
-      return i != e->second.not_found() ? &(*i) : 0;
+      return i != e->second.not_found() ? &(*i) : nullptr;
     }
-    return 0;
+    return nullptr;
   }
 
   size_t node_count(JsonElement* e, const string& t) {
@@ -69,9 +69,9 @@ namespace {
   Attribute attribute_node(JsonElement* n, const char* t)  {
     if ( n )  {
       auto i = n->second.find(t);
-      return i != n->second.not_found() ? &(*i) : 0;
+      return i != n->second.not_found() ? &(*i) : nullptr;
     }
-    return 0;
+    return nullptr;
   }
 
   const char* attribute_value(Attribute a) {
@@ -297,7 +297,7 @@ JsonElement* NodeList::reset() {
     m_ptr = m_node->second.equal_range(m_tag);
   if ( m_ptr.first != m_ptr.second )
     return &(*m_ptr.first);
-  return 0;
+  return nullptr;
 }
 
 /// Advance to next element
@@ -306,7 +306,7 @@ JsonElement* NodeList::next() const {
     m_ptr.first = ++m_ptr.first;
     if ( m_ptr.first != m_ptr.second ) return &(*m_ptr.first);
   }
-  return 0;
+  return nullptr;
 }
 
 /// Go back to previous element
@@ -315,7 +315,7 @@ JsonElement* NodeList::previous() const {
     m_ptr.first = --m_ptr.first;
     if ( m_ptr.first != m_ptr.second ) return &(*m_ptr.first);
   }
-  return 0;
+  return nullptr;
 }
 
 /// Assignment operator
@@ -350,7 +350,7 @@ Attribute Handle_t::attr_nothrow(const char* tag_value) const {
 
 /// Check for the existence of a named attribute
 bool Handle_t::hasAttr(const char* tag_value) const {
-  return m_node && 0 != node_first(m_node, tag_value);
+  return m_node && nullptr != node_first(m_node, tag_value);
 }
 
 /// Retrieve a collection of all attributes of this DOM element
@@ -397,13 +397,13 @@ NodeList Handle_t::children(const char* tag_value) const {
 }
 
 bool Handle_t::hasChild(const char* tag_value) const {
-  return node_first(m_node, tag_value) != 0;
+  return node_first(m_node, tag_value) != nullptr;
 }
 
 /// Access attribute pointer by the attribute's unicode name (throws exception if not present)
 Attribute Handle_t::attr_ptr(const char* t) const {
   Attribute a = attribute_node(m_node, t);
-  if (0 != a)
+  if (nullptr != a)
     return a;
   string msg = "Handle_t::attr_ptr: ";
   if (m_node)
@@ -434,7 +434,7 @@ const char* Handle_t::attr_value(const Attribute attr_val) const {
 /// Access attribute value by the attribute's unicode name (no exception thrown if not present)
 const char* Handle_t::attr_value_nothrow(const char* attr_tag) const {
   Attribute a = attr_nothrow(attr_tag);
-  return a ? attribute_value(a) : 0;
+  return a ? attribute_value(a) : nullptr;
 }
 
 
@@ -458,11 +458,11 @@ DocumentHolder& DocumentHolder::assign(DOC d)   {
 
 /// Standard destructor - releases the document
 DocumentHolder::~DocumentHolder()   {
-  assign(0);
+  assign(nullptr);
 }
 
 Attribute Element::getAttr(const char* name) const {
-  return m_element ? attribute_node(m_element, name) : 0;
+  return m_element ? attribute_node(m_element, name) : nullptr;
 }
 
 Collection_t::Collection_t(Handle_t element, const char* tag_value)

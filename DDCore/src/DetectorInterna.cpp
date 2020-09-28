@@ -180,7 +180,7 @@ pair<DetElement,Volume> DetElementObject::reflect(const std::string& new_name, i
 World DetElementObject::i_access_world()   {
   if ( !privateWorld.isValid() )  {
     DetElementObject* p = parent.ptr();
-    if ( 0 == p )  {
+    if ( nullptr == p )  {
       privateWorld = (WorldObject*)this;
       return privateWorld;
     }
@@ -206,13 +206,13 @@ void DetElementObject::revalidate()  {
            "DetElement","+++ Invalidate chache of %s -> %s Placement:%p --> %p %s",
            det.path().c_str(), detail::tools::placementPath(par_path).c_str(),
            placement.ptr(), node.ptr(), (placement.ptr() == node.ptr()) ? "" : "[UPDATE]");
-  if ( idealPlace.ptr() != node.ptr() && 0 == node->GetUserExtension() )  {
+  if ( idealPlace.ptr() != node.ptr() && nullptr == node->GetUserExtension() )  {
     auto ext = idealPlace->GetUserExtension();
     node->SetUserExtension(ext);
   }
   Volume node_vol = node.volume();
   Volume plac_vol = idealPlace.volume();
-  if ( node_vol.ptr() != plac_vol.ptr() && 0 == node_vol->GetUserExtension() )  {
+  if ( node_vol.ptr() != plac_vol.ptr() && nullptr == node_vol->GetUserExtension() )  {
     auto ext = plac_vol->GetUserExtension();
     node_vol->SetUserExtension(ext);    
   }

@@ -108,7 +108,7 @@ Solid_type<T>::divide(const Volume& voldiv, const string& divname,
     return mv.ptr();
   }
   except("dd4hep","Volume: Attempt to divide an invalid logical volume.");
-  return 0;
+  return nullptr;
 }
 
 /// Constructor to create an anonymous new box object (retrieves name from volume)
@@ -684,7 +684,7 @@ void PseudoTrap::make(const string& nam, double x1, double x2, double y1, double
 
   Solid trap(new TGeoTrd2((nam+"Trd2").c_str(), x1, x2, y1, y2, halfZ));
   Solid tubs(new TGeoTubeSeg((nam+"Tubs").c_str(), 0.,std::abs(r),h,startPhi,startPhi + halfOpeningAngle*2.));
-  TGeoCompositeShape* solid = 0;
+  TGeoCompositeShape* solid = nullptr;
   if( intersec )  {
     solid = SubtractionSolid(nam, trap, tubs, Transform3D(RotationX(M_PI/2.), Position(0.,0.,displacement))).ptr();
   }

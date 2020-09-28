@@ -296,7 +296,7 @@ Geant4EventReaderHepEvt::readParticles(int /* event_number */,
         }
       }
       Particle* findParent(const Particle* p)  {
-        return m_part->parents.find(p->id)==m_part->parents.end() ? 0 : m_part;
+        return m_part->parents.find(p->id)==m_part->parents.end() ? nullptr : m_part;
       }
     };
 

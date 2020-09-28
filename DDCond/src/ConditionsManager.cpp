@@ -140,7 +140,7 @@ void ConditionsManagerObject::fromString(const std::string& data, IOV& iov)   {
 
 /// Register IOV using new string data
 ConditionsPool* ConditionsManagerObject::registerIOV(const string& data)   {
-  IOV iov(0);
+  IOV iov(nullptr);
   // Convert string to IOV
   fromString(data, iov);
   // IOV read and checked. Now register it.
@@ -217,13 +217,13 @@ const vector<const IOVType*> ConditionsManager::iovTypesUsed() const  {
 
 /// Register IOV with type and key
 ConditionsPool* ConditionsManager::registerIOV(const string& iov_rep)  const   {
-  IOV iov(0);
+  IOV iov(nullptr);
   Object* o = access();
   o->fromString(iov_rep, iov);
   if ( iov.iovType )
     return o->registerIOV(*iov.iovType, iov.key());
   except("ConditionsManager","Invalid IOV type registration requested by IOV:%s",iov_rep.c_str());
-  return 0;
+  return nullptr;
 }
       
 /// Register IOV with type and key
@@ -231,7 +231,7 @@ ConditionsPool* ConditionsManager::registerIOV(const IOV& iov) const   {
   if ( iov.iovType )
     return access()->registerIOV(*iov.iovType, iov.key());
   except("ConditionsManager","+++ Attempt to register invalid IOV [FAILED]");
-  return 0;
+  return nullptr;
 }
 
 /// Register IOV with type and key

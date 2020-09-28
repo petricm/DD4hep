@@ -42,7 +42,7 @@ ClassImp(DD4hepMenu)
 
 /// Initializing constructor
 DD4hepMenu::DD4hepMenu(Display* display) 
-: PopupMenu(display->client().GetRoot()), m_display(display), m_evtCtrl(0)
+: PopupMenu(display->client().GetRoot()), m_display(display), m_evtCtrl(nullptr)
 {
   InstanceCount::increment(this);
 }
@@ -100,7 +100,7 @@ void DD4hepMenu::OnLoadRootGeometry(TGMenuEntry* /* entry */, void* /* ptr */)  
 
 /// Callback to show the event I/O panel
 void DD4hepMenu::OnCreateEventIO(TGMenuEntry* /* entry */, void* /* ptr */)  {
-  if ( 0 == m_evtCtrl )  {
+  if ( nullptr == m_evtCtrl )  {
     TEveBrowser* browser = m_display->manager().GetBrowser();
     browser->StartEmbedding(TRootBrowser::kLeft);
     m_evtCtrl = new EventControl(m_display,600,450);
@@ -113,8 +113,8 @@ void DD4hepMenu::OnCreateEventIO(TGMenuEntry* /* entry */, void* /* ptr */)  {
 
 /// Callback when loading a new event data file
 void DD4hepMenu::OnOpenEventData(TGMenuEntry* /* entry */, void* /* ptr */)  {
-  if ( 0 == m_evtCtrl )  {
-    OnCreateEventIO(0,0);
+  if ( nullptr == m_evtCtrl )  {
+    OnCreateEventIO(nullptr,nullptr);
   }
   if ( m_evtCtrl->Open() )   {
     TGPopupMenu& pm = menu();

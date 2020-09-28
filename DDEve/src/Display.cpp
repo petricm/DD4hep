@@ -60,9 +60,9 @@ using namespace dd4hep::detail;
 ClassImp(Display)
 
 namespace dd4hep {
-  void EveDisplay(const char* xmlConfig = 0, const char* eventFileName = 0)  {
+  void EveDisplay(const char* xmlConfig = nullptr, const char* eventFileName = nullptr)  {
     auto* display = new Display(TEveManager::Create(true,"VI"));
-    if ( xmlConfig != 0 )   {
+    if ( xmlConfig != nullptr )   {
       char text[PATH_MAX];
       ::snprintf(text,sizeof(text),"%s%s",strncmp(xmlConfig,"file:",5)==0 ? "file:" : "",xmlConfig);
       display->LoadXML(text);
@@ -77,16 +77,16 @@ namespace dd4hep {
       display->ChooseGeometry();
       //display->LoadXML("file:../DD4hep/examples/CLICSiD/compact/DDEve.xml");
     }
-    if (eventFileName != 0) {
+    if (eventFileName != nullptr) {
       display->eventHandler().Open(display->getEventHandlerName(),eventFileName);
     }
   }
 }
 
 /// Standard constructor
-Display::Display(TEveManager* eve) 
+Display::Display(TEveManager* eve)
   : m_eve(eve),
-    m_viewMenu(0), m_dd4Menu(0), m_visLevel(7), m_loadLevel(1)
+    m_viewMenu(nullptr), m_dd4Menu(nullptr), m_visLevel(7), m_loadLevel(1)
 {
   TEveBrowser* br = m_eve->GetBrowser();
   TGMenuBar*   menu = br->GetMenuBar();
@@ -120,8 +120,8 @@ Display::~Display()   {
   auto* data = dynamic_cast<DetectorData*>(m_detDesc);
   if ( data ) data->destroyData(false);
   deletePtr(m_detDesc);
-  gGeoManager = 0;
-  gEve = 0;
+  gGeoManager = nullptr;
+  gEve = nullptr;
 }
 
 /// Load geometry from compact xml file
@@ -130,7 +130,7 @@ void Display::LoadXML(const char* xmlFile)     {
   bool has_geo = !m_geoTopics.empty();
   m_detDesc->fromXML(xmlFile);
   if ( !has_geo )  {
-    LoadGeoChildren(0,m_loadLevel,false);
+    LoadGeoChildren(nullptr,m_loadLevel,false);
     mgr.SetVisLevel(m_visLevel);
   }
   if ( m_dd4Menu && !m_geoTopics.empty() )   {
@@ -148,7 +148,7 @@ void Display::LoadGeometryRoot(const char* /* rootFile */)     {
 
 /// Load geometry with panel
 void Display::ChooseGeometry()   {
-  m_dd4Menu->OnLoadXML(0,0);
+  m_dd4Menu->OnLoadXML(nullptr,nullptr);
 }
 
 /// Access to geometry hub
@@ -243,13 +243,13 @@ Display::CalodataContext& Display::GetCaloHistogram(const string& nam)   {
 /// Access a data filter by name. Data filters are used to customize views
 const Display::ViewConfig* Display::GetViewConfiguration(const string& nam)  const   {
   auto i = m_viewConfigs.find(nam);
-  return (i == m_viewConfigs.end()) ? 0 : &((*i).second);
+  return (i == m_viewConfigs.end()) ? nullptr : &((*i).second);
 }
 
 /// Access a data filter by name. Data filters are used to customize calodatas
 const Display::DataConfig* Display::GetCalodataConfiguration(const string& nam)  const   {
   auto i = m_calodataConfigs.find(nam);
-  return (i == m_calodataConfigs.end()) ? 0 : &((*i).second);
+  return (i == m_calodataConfigs.end()) ? nullptr : &((*i).second);
 }
 
 /// Register to the main event scene on new events
@@ -268,7 +268,7 @@ void Display::UnregisterEvents(View* view)   {
 /// Open standard message box
 void Display::MessageBox(PrintLevel level, const string& text, const string& title) const   {
   string path = TString::Format("%s/icons/", gSystem->Getenv("ROOTSYS")).Data();
-  const TGPicture* pic = 0;
+  const TGPicture* pic = nullptr;
   if ( level == VERBOSE )
     pic = client().GetPicture((path+"mb_asterisk_s.xpm").c_str());
   else if ( level == DEBUG )
@@ -281,8 +281,8 @@ void Display::MessageBox(PrintLevel level, const string& text, const string& tit
     pic = client().GetPicture((path+"mb_stop.xpm").c_str());
   else if ( level == FATAL )
     pic = client().GetPicture((path+"interrupt.xpm").c_str());
-  new TGMsgBox(gClient->GetRoot(),0,title.c_str(),text.c_str(),pic,
-               kMBDismiss,0,kVerticalFrame,kTextLeft|kTextCenterY);
+  new TGMsgBox(gClient->GetRoot(),nullptr,title.c_str(),text.c_str(),pic,
+               kMBDismiss,nullptr,kVerticalFrame,kTextLeft|kTextCenterY);
 }
 
 /// Popup XML file chooser. returns chosen file name; empty on cancel
@@ -291,13 +291,13 @@ string Display::OpenXmlFileDialog(const string& default_dir)   const {
     "xml files",    "*.xml",
     "XML files",    "*.XML",
     "All files",     "*",
-    0,               0 
+    nullptr,               nullptr
   };
   TGFileInfo fi;
   fi.fFileTypes = evtFiletypes;
   fi.fIniDir    = StrDup(default_dir.c_str());
-  fi.fFilename  = 0;
-  new TGFileDialog(client().GetRoot(), 0, kFDOpen, &fi);
+  fi.fFilename  = nullptr;
+  new TGFileDialog(client().GetRoot(), nullptr, kFDOpen, &fi);
   if ( fi.fFilename ) {
     string ret = fi.fFilename;
     if ( ret.find("file:") != 0 ) return "file:"+ret;
@@ -313,13 +313,13 @@ string Display::OpenEventFileDialog(const string& default_dir)   const {
     "SLCIO files",   "*.slcio",
     "LCIO files",    "*.lcio",
     "All files",     "*",
-    0,               0 
+    nullptr,               nullptr
   };
   TGFileInfo fi;
   fi.fFileTypes = evtFiletypes;
   fi.fIniDir    = StrDup(default_dir.c_str());
-  fi.fFilename  = 0;
-  new TGFileDialog(client().GetRoot(), 0, kFDOpen, &fi);
+  fi.fFilename  = nullptr;
+  new TGFileDialog(client().GetRoot(), nullptr, kFDOpen, &fi);
   if ( fi.fFilename ) {
     return fi.fFilename;
   }
@@ -328,14 +328,14 @@ string Display::OpenEventFileDialog(const string& default_dir)   const {
 
 /// Build the DDEve specific menues
 void Display::BuildMenus(TGMenuBar* menubar)   {
-  if ( 0 == menubar ) {
+  if ( nullptr == menubar ) {
     menubar = m_eve->GetBrowser()->GetMenuBar();
   }
-  if ( 0 == m_dd4Menu )  {
+  if ( nullptr == m_dd4Menu )  {
     m_dd4Menu = new DD4hepMenu(this);
     AddMenu(menubar, m_dd4Menu);
   }
-  if ( 0 == m_viewMenu && !m_viewConfigs.empty() )  {
+  if ( nullptr == m_viewMenu && !m_viewConfigs.empty() )  {
     m_viewMenu = new ViewMenu(this,"&Views");
     AddMenu(menubar, m_viewMenu, kLHintsRight);
   }
@@ -357,7 +357,7 @@ void Display::OnNewEvent(EventHandler& handler )   {
   typedef EventHandler::TypedEventCollections Types;
   typedef vector<EventHandler::Collection> Collections;
   const Types& types = handler.data();
-  TEveElement* particles = 0;
+  TEveElement* particles = nullptr;
 
   printout(ERROR,"EventHandler","+++ Display new event.....");
   manager().GetEventScene()->DestroyElements();
@@ -407,7 +407,7 @@ void Display::OnNewEvent(EventHandler& handler )   {
 
           // $$$ Do not know exactly what the field parameters mean
           const auto i=m_collectionsConfigs.find(nam);
-          const DataConfig* cfg = (i==m_collectionsConfigs.end()) ? 0 : &((*i).second);
+          const DataConfig* cfg = (i==m_collectionsConfigs.end()) ? nullptr : &((*i).second);
           MCParticleCreator cr(new TEveTrackPropagator("","",new TEveMagFieldDuo(350, -3.5, 2.0)),
                                new TEveCompound("MC_Particles","MC_Particles"),cfg);
           handler.collectionLoop(coll.first, cr);
@@ -440,7 +440,7 @@ void Display::OnNewEvent(EventHandler& handler )   {
 
 /// Access / Create global geometry element
 TEveElementList& Display::GetGeo()   {
-  if ( 0 == m_geoGlobal )  {
+  if ( nullptr == m_geoGlobal )  {
     m_geoGlobal = new ElementList("Geo-Global","Geo-Global", true, true);
     manager().AddGlobalElement(m_geoGlobal);
   }
@@ -517,7 +517,7 @@ void Display::LoadGeoChildren(TEveElement* start, int levels, bool redraw)  {
     MessageBox(INFO,"It looks like there is no\nGeometry loaded.\nNo event display availible.\n");
   }
   else if ( levels > 0 )   {
-    if ( 0 == start )     {
+    if ( nullptr == start )     {
       TEveElementList& sens = GetGeoTopic("Sensitive");
       TEveElementList& struc = GetGeoTopic("Structure");
       const DetElement::Children& c = world.children();
@@ -537,7 +537,7 @@ void Display::LoadGeoChildren(TEveElement* start, int levels, bool redraw)  {
     else    {
       auto* n = (TGeoNode*)start->GetUserData();
       printout(INFO,"Display","+++ Load children of %s to %d levels",Utilities::GetName(start),levels);
-      if ( 0 != n )   {
+      if ( nullptr != n )   {
         TGeoHMatrix mat;
         const char* node_name = n->GetName();
         int level = Utilities::findNodeWithMatrix(detectorDescription().world().placement().ptr(),n,&mat);
@@ -564,7 +564,7 @@ void Display::LoadGeoChildren(TEveElement* start, int levels, bool redraw)  {
         }
       }
       else  {
-        LoadGeoChildren(0,levels,false);
+        LoadGeoChildren(nullptr,levels,false);
       }
     }
   }

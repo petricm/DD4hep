@@ -16,7 +16,7 @@ namespace dd4hep::DDSegmentation {
 
     /// default constructor using an encoding string
     MultiSegmentation::MultiSegmentation(const string& cellEncoding)
-      :	Segmentation(cellEncoding), m_discriminator(0), m_debug(0)
+      :	Segmentation(cellEncoding), m_discriminator(nullptr), m_debug(0)
     {
       // define type and description
       _type        = "MultiSegmentation";
@@ -27,7 +27,7 @@ namespace dd4hep::DDSegmentation {
 
     /// Default constructor used by derived classes passing an existing decoder
     MultiSegmentation::MultiSegmentation(const BitFieldCoder* decode)
-      :	Segmentation(decode), m_discriminator(0), m_debug(0)
+      :	Segmentation(decode), m_discriminator(nullptr), m_debug(0)
     {
       // define type and description
       _type        = "MultiSegmentation";

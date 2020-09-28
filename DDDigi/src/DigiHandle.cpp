@@ -37,7 +37,7 @@ namespace dd4hep::digi {
       }
       except("DigiHandle","Attempt to access an invalid object of type:%s!",
              typeName(typeid(TYPE)).c_str());
-      return 0;
+      return nullptr;
     }
 
     template <typename TYPE> DigiHandle<TYPE>::DigiHandle(TYPE* typ) : value(typ)  {
@@ -53,7 +53,7 @@ namespace dd4hep::digi {
 
     template <typename TYPE> DigiHandle<TYPE>::DigiHandle(DigiHandle<TYPE>&& handle) : value(handle.get())
     {
-      handle.value = 0;
+      handle.value = nullptr;
     }
 
     template <typename T> T* _raw_create(const std::string& t, const DigiKernel& kernel, const std::string& n)    {
@@ -101,12 +101,12 @@ namespace dd4hep::digi {
     template <typename TYPE> DigiHandle<TYPE>::~DigiHandle() {
       if (value)
         value->release();
-      value = 0;
+      value = nullptr;
     }
 
     template <typename TYPE> TYPE* DigiHandle<TYPE>::release() {
       TYPE* temp = value;
-      value = 0;
+      value = nullptr;
       return temp;
     }
 
@@ -128,7 +128,7 @@ namespace dd4hep::digi {
     }
 
     template <typename TYPE> bool DigiHandle<TYPE>::operator!() const {
-      return 0 == value;
+      return nullptr == value;
     }
 
     template <typename TYPE> TYPE* DigiHandle<TYPE>::get() const {
@@ -158,7 +158,7 @@ namespace dd4hep::digi {
     template <typename TYPE> DigiHandle<TYPE>& DigiHandle<TYPE>::operator=(DigiHandle&& handle) {
       if ( value ) value->release();
       value = handle.get();
-      handle.value = 0;
+      handle.value = nullptr;
       return *this;
     }
 

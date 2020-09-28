@@ -56,7 +56,7 @@ ViewMenu::~ViewMenu()  {
 
 /// Add the menu to the menu bar
 void ViewMenu::Build(TGMenuBar* menubar, int hints)    {
-  pair<string,string>* p = 0;
+  pair<string,string>* p = nullptr;
   PopupMenu* view_menu = this;
   view_menu->AddEntry("3&D View", this, &ViewMenu::CreateView, p=new pair<string,string>("DD4hep_DDEve_View3D","3D"));
   view_menu->AddEntry("Rho-&Z Projection", this, &ViewMenu::CreateView, p=new pair<string,string>("DD4hep_DDEve_RhoZProjection","Rho-Z"));

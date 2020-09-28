@@ -33,7 +33,7 @@ using namespace std;
 
 /// Standard constructor
 Geant4Output2ROOT::Geant4Output2ROOT(Geant4Context* ctxt, const string& nam)
-  : Geant4OutputAction(ctxt, nam), m_file(0), m_tree(0) {
+  : Geant4OutputAction(ctxt, nam), m_file(nullptr), m_tree(nullptr) {
   declareProperty("Section", m_section = "EVENT");
   declareProperty("HandleMCTruth", m_handleMCTruth = true);
   declareProperty("DisabledCollections",  m_disabledCollections);
@@ -48,7 +48,7 @@ Geant4Output2ROOT::~Geant4Output2ROOT() {
     TDirectory::TContext ctxt(m_file);
     m_tree->Write();
     m_file->Close();
-    m_tree = 0;
+    m_tree = nullptr;
     detail::deletePtr (m_file);
   }
 }
@@ -82,12 +82,12 @@ void Geant4Output2ROOT::beginRun(const G4Run* run) {
 /// Fill single EVENT branch entry (Geant4 collection data)
 int Geant4Output2ROOT::fill(const string& nam, const ComponentCast& type, void* ptr) {
   if (m_file) {
-    TBranch* b = 0;
+    TBranch* b = nullptr;
     auto i = m_branches.find(nam);
     if (i == m_branches.end()) {
       TClass* cl = TBuffer::GetClass(type.type);
       if (cl) {
-        b = m_tree->Branch(nam.c_str(), cl->GetName(), (void*) 0);
+        b = m_tree->Branch(nam.c_str(), cl->GetName(), (void*) nullptr);
         b->SetAutoDelete(false);
         m_branches.emplace(nam, b);
       }
@@ -100,7 +100,7 @@ int Geant4Output2ROOT::fill(const string& nam, const ComponentCast& type, void* 
     }
     Long64_t evt = b->GetEntries(), nevt = b->GetTree()->GetEntries(), num = nevt - evt;
     if (nevt > evt) {
-      b->SetAddress(0);
+      b->SetAddress(nullptr);
       while (num > 0) {
         b->Fill();
         --num;
@@ -128,7 +128,7 @@ void Geant4Output2ROOT::commit(OutputContext<G4Event>& ctxt) {
       Long64_t br_evt = br_ptr->GetEntries();
       if (br_evt < evt) {
         Long64_t num = evt - br_evt;
-        br_ptr->SetAddress(0);
+        br_ptr->SetAddress(nullptr);
         while (num > 0) {
           br_ptr->Fill();
           --num;
@@ -178,13 +178,13 @@ void Geant4Output2ROOT::saveCollection(OutputContext<G4Event>& /* ctxt */, G4VHi
         for(size_t i=0; i<nhits; ++i)   {
           Geant4HitData* h = coll->hit(i);
           auto* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
-          if ( 0 != trk_hit )   {
+          if ( nullptr != trk_hit )   {
             Geant4HitData::Contribution& t = trk_hit->truth;
             int trackID = t.trackID;
             t.trackID = m_truth->particleID(trackID);
           }
           auto* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
-          if ( 0 != cal_hit )   {
+          if ( nullptr != cal_hit )   {
             Geant4HitData::Contributions& c = cal_hit->truth;
             for(auto & t : c)  {
               int trackID = t.trackID;

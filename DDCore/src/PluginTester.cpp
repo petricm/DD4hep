@@ -86,7 +86,7 @@ void* PluginTester::removeExtension(const std::string& name, const std::type_inf
       if (i != extensionMap->end()) {
         Entry& e = (*i).second;
         (*e.destruct)((*j).second);
-        ptr = 0;
+        ptr = nullptr;
       }
     }
     extensions.erase(j);
@@ -104,7 +104,7 @@ void* PluginTester::extension(const std::string& name, const std::type_info& inf
     return (*j).second;
   }
   else if ( !alert )
-    return 0;
+    return nullptr;
   throw std::runtime_error("dd4hep: extension: Object has no extension "+name+
                            " of type:" + typeName(info) + ".");
 }

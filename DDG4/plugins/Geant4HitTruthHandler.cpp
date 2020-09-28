@@ -105,7 +105,7 @@ void Geant4HitTruthHandler::handleCollection(Geant4ParticleMap* truth, G4VHitsCo
     for(size_t i=0; i<nhits; ++i)   {
       Geant4HitData* h = coll->hit(i);
       auto* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
-      if ( 0 != trk_hit )   {
+      if ( nullptr != trk_hit )   {
         if ( truth )  {
           Geant4HitData::Contribution& t = trk_hit->truth;
           int trackID = t.trackID;
@@ -113,7 +113,7 @@ void Geant4HitTruthHandler::handleCollection(Geant4ParticleMap* truth, G4VHitsCo
         }
       }
       auto* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
-      if ( 0 != cal_hit )   {
+      if ( nullptr != cal_hit )   {
         if ( truth )  {
           Geant4HitData::Contributions& c = cal_hit->truth;
           for(auto & t : c)  {
@@ -133,7 +133,7 @@ void Geant4HitTruthHandler::end(const G4Event* event)    {
     int nCol = hce->GetNumberOfCollections();
     auto* truth = context()->event().extension<Geant4ParticleMap>(false);
     if ( truth && !truth->isValid() )  {
-      truth = 0;
+      truth = nullptr;
       printout(WARNING,name(),"+++ [Event:%d] No valid MC truth info present. "
                "Is a Particle handler installed ?",event->GetEventID());
     }

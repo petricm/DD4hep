@@ -97,7 +97,7 @@ namespace {
         detectors.erase(i);
         return det;
       }
-      return 0;
+      return nullptr;
     }
   };
   static Instances& detector_instances()    {
@@ -138,8 +138,8 @@ unique_ptr<Detector> Detector::make_unique(const std::string& name)   {
 Detector& Detector::getInstance(const std::string& name)   {
   lock_guard<recursive_mutex> lock(detector_instances().lock);
   Detector* description = detector_instances().get(name);
-  if ( 0 == description )   {
-    gGeoManager = 0;
+  if ( nullptr == description )   {
+    gGeoManager = nullptr;
     description = new DetectorImp(name);
     detector_instances().insert(name,description);
   }
@@ -184,7 +184,7 @@ DetectorImp::DetectorImp(const string& name)
     // table->Print();
 #endif
   }
-  if ( 0 == gGeoIdentity )
+  if ( nullptr == gGeoIdentity )
   {
     gGeoIdentity = new TGeoIdentity();
   }
@@ -208,9 +208,9 @@ DetectorImp::DetectorImp(const string& name)
 DetectorImp::~DetectorImp() {
   if ( m_manager )  {
     lock_guard<recursive_mutex> lock(detector_instances().lock);
-    if ( m_manager == gGeoManager ) gGeoManager = 0;
+    if ( m_manager == gGeoManager ) gGeoManager = nullptr;
     Detector* description = detector_instances().get(GetName());
-    if ( 0 != description )   {
+    if ( nullptr != description )   {
       detector_instances().remove(m_manager->GetName());
     }
   }
@@ -317,7 +317,7 @@ Volume DetectorImp::pickMotherVolume(const DetElement& de) const {
            de.name());
   }
   except("DD4hep","Detector: Attempt access mother volume of invalid detector [Invalid-handle]");
-  return 0;
+  return nullptr;
 }
 
 /// Access default conditions (temperature and pressure
@@ -587,7 +587,7 @@ Handle<NamedObject> DetectorImp::getRefChild(const HandleMap& e, const string& n
       cout << "   " << cnt << "  " << (*i).first << endl;
     throw runtime_error("Cannot find a child with the reference name:" + name);
   }
-  return 0;
+  return nullptr;
 }
 
 namespace {
@@ -608,7 +608,7 @@ namespace {
           TGeoShape*  s   = vol->GetShape();
           const char* sn  = s->GetName();
           ::snprintf(text,sizeof(text),"_shape_%p",(void*)s);
-          if (0 == sn || 0 == ::strlen(sn)) {
+          if (nullptr == sn || 0 == ::strlen(sn)) {
             nam = vol->GetName();
             nam += text;
             s->SetName(nam.c_str());
@@ -629,7 +629,7 @@ namespace {
             const TGeoBoolNode* boolean = c->GetBoolNode();
             s = boolean->GetLeftShape();
             sn = s->GetName();
-            if (0 == sn || 0 == ::strlen(sn)) {
+            if (nullptr == sn || 0 == ::strlen(sn)) {
               s->SetName((nam + "_left").c_str());
             }
             else if (0 == ::strcmp(sn, s->IsA()->GetName())) {
@@ -637,7 +637,7 @@ namespace {
             }
             s = boolean->GetRightShape();
             sn = s->GetName();
-            if (0 == sn || 0 == ::strlen(sn)) {
+            if (nullptr == sn || 0 == ::strlen(sn)) {
               s->SetName((nam + "_right").c_str());
             }
             else if (0 == ::strcmp(s->GetName(), s->IsA()->GetName())) {
@@ -745,7 +745,7 @@ void DetectorImp::init() {
 void DetectorImp::fromXML(const string& xmlfile, DetectorBuildType build_type) {
   TypePreserve build_type_preserve(m_buildType = build_type);
   lock_guard<recursive_mutex> lock(s_detector_apply_lock);
-  processXML(xmlfile,0);
+  processXML(xmlfile,nullptr);
 }
 
 /// Read any geometry description or alignment file with external XML entity resolution

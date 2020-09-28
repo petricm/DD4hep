@@ -88,7 +88,7 @@ int main_wrapper(int argc, char** argv ){
   LCReader* rdr = LCFactory::getInstance()->createLCReader() ;
   rdr->open( lcioFileName ) ;
 
-  LCEvent* evt = 0 ;
+  LCEvent* evt = nullptr ;
 
 
   // use only hits from these collections
@@ -101,7 +101,7 @@ int main_wrapper(int argc, char** argv ){
   
   TestMap tMap ;
 
-  while( ( evt = rdr->readNextEvent() ) != 0 ){
+  while( ( evt = rdr->readNextEvent() ) != nullptr ){
 
     const std::vector< std::string >& colNames = *evt->getCollectionNames() ;
 

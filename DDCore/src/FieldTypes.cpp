@@ -102,7 +102,7 @@ void MultipoleField::fieldComponents(const double* pos, double* field) {
   //const Transform3D::Point::CoordinateType& c = p.Coordinates();
   double x=p.X(), y=p.Y(), z=p.Z();
   double coord[3] = {x,y,z};
-  if ( 0 == volume.ptr() || volume->Contains(coord) )  {
+  if ( nullptr == volume.ptr() || volume->Contains(coord) )  {
     double bx = 0.0;
     double by = 0.0;
     double xy = x*y;

@@ -75,12 +75,12 @@ namespace    {
       m_engine->flatArray(size,array);
     }
   };
-  static Geant4Random* s_instance = 0;
+  static Geant4Random* s_instance = nullptr;
 }
 
 /// Default constructor
 Geant4Random::Geant4Random(Geant4Context* ctxt, const std::string& nam)
-  : Geant4Action(ctxt,nam), m_engine(0), m_rootRandom(0), m_rootOLD(0), 
+  : Geant4Action(ctxt,nam), m_engine(nullptr), m_rootRandom(nullptr), m_rootOLD(nullptr),
     m_inited(false)
 {
   declareProperty("File",   m_file="");
@@ -103,7 +103,7 @@ Geant4Random::~Geant4Random()  {
   // Set gRandom to the old value
   if (  m_rootRandom == gRandom ) gRandom = m_rootOLD;
   // Reset instance pointer
-  if (  s_instance == this ) s_instance = 0;
+  if (  s_instance == this ) s_instance = nullptr;
   // Finally delete the TRandom instance wrapper
   detail::deletePtr(m_rootRandom);
   InstanceCount::decrement(this);
@@ -142,7 +142,7 @@ Geant4Random* Geant4Random::setMainInstance(Geant4Random* ptr)   {
     s_instance = ptr;
     return old;
   }
-  return 0;
+  return nullptr;
 }
 
 #include "CLHEP/Random/DualRand.h"
@@ -190,7 +190,7 @@ void Geant4Random::initialize()   {
   m_engine->setSeed(m_seed,m_luxury);
   m_rootRandom = new RNDM(this);
   m_inited = true;
-  if ( 0 == s_instance )   {
+  if ( nullptr == s_instance )   {
     setMainInstance(this);
   }
 }
@@ -251,7 +251,7 @@ void Geant4Random::showStatus() const    {
   if ( gRandom != m_rootRandom )   {
     printP2("      Local TRandom: 0x%p  gRandom: 0x%p",m_rootRandom,gRandom);
   }
-  if ( 0 == m_engine )   {
+  if ( nullptr == m_engine )   {
     error("   Geant4Random instance has not engine attached!");
     return;
   }

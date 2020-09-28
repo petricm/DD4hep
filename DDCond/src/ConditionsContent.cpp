@@ -97,7 +97,7 @@ bool ConditionsContent::remove(Condition::key_type hash)   {
 
 pair<Condition::key_type, ConditionsLoadInfo*>
 ConditionsContent::insertKey(Condition::key_type hash)   {
-  auto ret = m_conditions.emplace(hash,(ConditionsLoadInfo*)0);
+  auto ret = m_conditions.emplace(hash,(ConditionsLoadInfo*)nullptr);
   //printout(DEBUG,"ConditionsContent","++ Insert key: %016X",hash);
   if ( ret.second )  return pair<Condition::key_type, ConditionsLoadInfo*>(hash,0);
   return pair<Condition::key_type, ConditionsLoadInfo*>(0,0);

@@ -99,7 +99,7 @@ LCIOStdHepReader::moveToEvent(int event_number) {
     printout(INFO,"LCIOStdHepReader::moveToEvent","Event number before skipping: %d", m_currEvent );
     while ( m_currEvent < event_number ) {
       EVENT::LCCollection* particles = m_reader->readEvent();
-      if ( 0 == particles ) return EVENT_READER_EOF;
+      if ( nullptr == particles ) return EVENT_READER_EOF;
       delete particles;
       ++m_currEvent;
     }
@@ -115,6 +115,6 @@ LCIOStdHepReader::readParticleCollection(int /*event_number*/, EVENT::LCCollecti
   *particles = m_reader->readEvent();
   ++m_currEvent;
 
-  if ( 0 == *particles ) return EVENT_READER_EOF;
+  if ( nullptr == *particles ) return EVENT_READER_EOF;
   return EVENT_READER_OK;
 }

@@ -16,7 +16,7 @@ namespace dd4hep::rec {
     
 
 
-    DetectorSurfaces::DetectorSurfaces(dd4hep::DetElement const& e) : DetElement(e) , _sL( 0 ) {
+    DetectorSurfaces::DetectorSurfaces(dd4hep::DetElement const& e) : DetElement(e) , _sL( nullptr ) {
 
       initialize() ;
     }
@@ -50,7 +50,7 @@ namespace dd4hep::rec {
 	
 	for(auto volSurf : *vsL){
 	  
-	  Surface* surf = 0 ;
+	  Surface* surf = nullptr ;
 	  
 	  if( volSurf.type().isCylinder() )
 	    surf = new CylinderSurface(  det,  volSurf ) ;

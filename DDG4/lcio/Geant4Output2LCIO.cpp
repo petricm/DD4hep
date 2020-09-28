@@ -184,7 +184,7 @@ DECLARE_GEANT4ACTION(Geant4Output2LCIO)
 
 /// Standard constructor
 Geant4Output2LCIO::Geant4Output2LCIO(Geant4Context* ctxt, const string& nam)
-: Geant4OutputAction(ctxt,nam), m_file(0), m_runNo(0), m_runNumberOffset(0), m_eventNumberOffset(0)
+: Geant4OutputAction(ctxt,nam), m_file(nullptr), m_runNo(0), m_runNumberOffset(0), m_eventNumberOffset(0)
 {
   declareProperty("RunHeader", m_runHeader);
   declareProperty("EventParametersInt",    m_eventParametersInt);
@@ -207,7 +207,7 @@ Geant4Output2LCIO::~Geant4Output2LCIO()  {
 
 // Callback to store the Geant4 run information
 void Geant4Output2LCIO::beginRun(const G4Run* run)  {
-  if ( 0 == m_file && !m_output.empty() )   {
+  if ( nullptr == m_file && !m_output.empty() )   {
     G4AutoLock protection_lock(&action_mutex);
     m_file = lcio::LCFactory::getInstance()->createLCWriter();
     m_file->open(m_output,lcio::LCIO::WRITE_NEW);
@@ -266,8 +266,8 @@ lcio::LCCollectionVec* Geant4Output2LCIO::saveParticles(Geant4ParticleMap* parti
   if ( nparts > 0 )  {
     size_t cnt = 0;
     map<int,int> p_ids;
-    vector<const Geant4Particle*> p_part(pm.size(),0);
-    vector<MCParticleImpl*> p_lcio(pm.size(),0);
+    vector<const Geant4Particle*> p_part(pm.size(),nullptr);
+    vector<MCParticleImpl*> p_lcio(pm.size(),nullptr);
     // First create the particles
     for(auto i=pm.begin(); i!=pm.end();++i, ++cnt)   {
       int id = (*i).first;

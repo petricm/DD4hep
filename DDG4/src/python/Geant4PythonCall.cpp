@@ -26,7 +26,7 @@ using namespace dd4hep::sim;
 
 /// Standard constructor, initializes variables
 Geant4PythonCall::Geant4PythonCall()
-  : m_callable(0), m_arguments(0)
+  : m_callable(nullptr), m_arguments(nullptr)
 {
   DDPython::instance();
 }
@@ -48,7 +48,7 @@ void Geant4PythonCall::set(PyObject* callable, PyObject* arguments)   {
 void Geant4PythonCall::set(PyObject* callable)   {
   DDPython::GILState state(0);
   DDPython::assignObject(m_callable,callable);
-  DDPython::assignObject(m_arguments,0);
+  DDPython::assignObject(m_arguments,nullptr);
 }
 
 namespace dd4hep::sim {
@@ -63,7 +63,7 @@ namespace dd4hep::sim {
     /// Execute command in the python interpreter.
     template <typename RETURN> RETURN Geant4PythonCall::execute(PyObject* method) const   {
       DDPython::GILState state(0);
-      TPyReturn ret(DDPython::instance().callC(method,0));
+      TPyReturn ret(DDPython::instance().callC(method,nullptr));
       return (RETURN)ret;
     }
 

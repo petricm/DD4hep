@@ -29,7 +29,7 @@ using namespace std;
 using namespace dd4hep;
 
 dd4hep::sim::Geant4GDMLDetector::Geant4GDMLDetector(std::string  gdmlFile)
-  : m_fileName(std::move(gdmlFile)), m_world(0) {
+  : m_fileName(std::move(gdmlFile)), m_world(nullptr) {
 }
 
 G4VPhysicalVolume* dd4hep::sim::Geant4GDMLDetector::Construct() {

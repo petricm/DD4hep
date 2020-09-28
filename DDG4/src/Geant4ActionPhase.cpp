@@ -99,7 +99,7 @@ class G4TouchableHistory;
 namespace dd4hep::sim {
     /// Callback in Begin stacking action
     void Geant4ActionPhase::call() {
-      this->execute(0);
+      this->execute(nullptr);
     }
     /// Callback in BeginRun/EndRun
     template <> void Geant4ActionPhase::call<const G4Run*>(const G4Run* run) {

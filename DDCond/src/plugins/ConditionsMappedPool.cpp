@@ -202,7 +202,7 @@ using namespace dd4hep::cond;
 
 /// Default constructor
 template<typename MAPPING, typename BASE>
-ConditionsMappedPool<MAPPING,BASE>::ConditionsMappedPool(ConditionsManager mgr) : BASE(mgr,0)  {
+ConditionsMappedPool<MAPPING,BASE>::ConditionsMappedPool(ConditionsManager mgr) : BASE(mgr,nullptr)  {
   this->BASE::SetName("");
   this->BASE::SetTitle("ConditionsMappedPool");
   InstanceCount::increment(this);
@@ -224,7 +224,7 @@ namespace {
       return m;
     }
     dd4hep::except("ConditionsMappedPool","++ Insufficient arguments: arg[0] = ConditionManager!");
-    return ConditionsManager(0);
+    return ConditionsManager(nullptr);
   }
 #define _CR(fun,x,b,y) void* fun(dd4hep::Detector&, int argc, char** argv) \
   {  return new b<x<Condition::key_type,Condition::Object*>,y>(_mgr(argc,argv));  }

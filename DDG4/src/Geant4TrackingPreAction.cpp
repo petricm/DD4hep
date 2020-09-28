@@ -35,7 +35,7 @@ Geant4TrackingPreAction::~Geant4TrackingPreAction() {
 void Geant4TrackingPreAction::begin(const G4Track* track) {
   // Is the track valid? Is tracking manager valid?
   // Does trajectory already exist?
-  if (0 == track || 0 == trackMgr() || 0 != trackMgr()->GimmeTrajectory())
+  if (nullptr == track || nullptr == trackMgr() || nullptr != trackMgr()->GimmeTrajectory())
     return;
   trackMgr()->SetStoreTrajectory(true);
   // create GaussTrajectory and inform Tracking Manager

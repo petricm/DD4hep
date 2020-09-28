@@ -40,7 +40,7 @@ void EtaPhiHistogramActor::operator()(const DDEveHit& hit)   {
 
 /// Standard initializing constructor
 PointsetCreator::PointsetCreator(const std::string& collection, size_t length) 
-  : pointset(0), deposit(0), count(0) 
+  : pointset(nullptr), deposit(0), count(0)
 {
   pointset = new TEvePointSet(collection.c_str(),length);
   pointset->SetMarkerSize(0.2);
@@ -48,7 +48,7 @@ PointsetCreator::PointsetCreator(const std::string& collection, size_t length)
 
 /// Standard initializing constructor
 PointsetCreator::PointsetCreator(const std::string& collection, size_t length, const DisplayConfiguration::Config& cfg) 
-  : pointset(0), deposit(0), count(0) 
+  : pointset(nullptr), deposit(0), count(0)
 {
   pointset = new TEvePointSet(collection.c_str(),length);
   pointset->SetMarkerSize(cfg.data.hits.size);
@@ -79,7 +79,7 @@ void PointsetCreator::operator()(const DDEveHit& hit)   {
 
 /// Standard initializing constructor
 BoxsetCreator::BoxsetCreator(const std::string& collection, size_t /*length */, const DisplayConfiguration::Config& cfg)
-  : boxset(0), emax(1e12), towerH(1e12), deposit(0.0), count(0)
+  : boxset(nullptr), emax(1e12), towerH(1e12), deposit(0.0), count(0)
 {
   emax   = cfg.data.hits.emax;
   towerH = cfg.data.hits.towerH;
@@ -94,7 +94,7 @@ BoxsetCreator::BoxsetCreator(const std::string& collection, size_t /*length */, 
 
 /// Standard initializing constructor
 BoxsetCreator::BoxsetCreator(const std::string& collection, size_t /*length */)
-  : boxset(0), emax(1e12), towerH(1e12), deposit(0.0), count(0)
+  : boxset(nullptr), emax(1e12), towerH(1e12), deposit(0.0), count(0)
 {
   boxset = new TEveBoxSet(collection.c_str());
   boxset->SetMainTransparency(0);

@@ -77,7 +77,7 @@ namespace {
         mm->Print();
       }
       transform->MultiplyLeft(mm); // orig * delta
-      n->Align(transform, 0, check, overlap);
+      n->Align(transform, nullptr, check, overlap);
       if ( dbg )   {
         printout(INFO,"Alignment","NEW matrix of %s",n->GetName());
         n->GetNode()->GetMatrix()->Print();

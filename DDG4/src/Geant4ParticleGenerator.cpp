@@ -34,7 +34,7 @@ using namespace dd4hep::sim;
 
 /// Standard constructor
 Geant4ParticleGenerator::Geant4ParticleGenerator(Geant4Context* ctxt, const string& nam)
-  : Geant4GeneratorAction(ctxt, nam), m_direction(0,1,0), m_position(0,0,0), m_particle(0)
+  : Geant4GeneratorAction(ctxt, nam), m_direction(0,1,0), m_position(0,0,0), m_particle(nullptr)
 {
   InstanceCount::increment(this);
   m_needsControl = true;
@@ -103,10 +103,10 @@ void Geant4ParticleGenerator::printInteraction(Geant4PrimaryInteraction* inter) 
 void Geant4ParticleGenerator::operator()(G4Event*) {
   typedef Geant4Particle Particle;
 
-  if (0 == m_particle || m_particle->GetParticleName() != m_particleName.c_str()) {
+  if (nullptr == m_particle || m_particle->GetParticleName() != m_particleName.c_str()) {
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
     m_particle = particleTable->FindParticle(m_particleName);
-    if (0 == m_particle) {
+    if (nullptr == m_particle) {
       throw runtime_error("Geant4ParticleGenerator: Bad particle type:"+m_particleName+"!");
     }
   }

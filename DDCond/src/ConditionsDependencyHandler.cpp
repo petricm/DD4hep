@@ -79,7 +79,7 @@ ConditionsDependencyHandler::ConditionsDependencyHandler(ConditionsManager mgr,
 ConditionsDependencyHandler::~ConditionsDependencyHandler()   {
   m_todo.clear();
   if ( m_block ) delete [] m_block;
-  m_block = 0;
+  m_block = nullptr;
 }
 
 /// ConditionResolver implementation: Access to the detector description instance

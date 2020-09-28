@@ -86,12 +86,12 @@ detail::ConditionObject& detail::ConditionObject::move(ConditionObject& /* from 
 const dd4hep::IOV* detail::ConditionObject::iovData() const    {
   if ( iov ) return iov;
   invalidHandleError<IOV>();
-  return 0;
+  return nullptr;
 }
 
 /// Access safely the IOV-type
 const dd4hep::IOVType* detail::ConditionObject::iovType() const    {
   if ( iov && iov->iovType ) return iov->iovType;
   invalidHandleError<IOVType>();
-  return 0;
+  return nullptr;
 }

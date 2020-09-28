@@ -53,7 +53,7 @@ namespace dd4hep::sim {
       }
       except("Geant4Handle","Attempt to access an invalid object of type:%s!",
              typeName(typeid(TYPE)).c_str());
-      return 0;
+      return nullptr;
     }
 
     template <typename TYPE> Geant4Handle<TYPE>::Geant4Handle(TYPE* typ) : value(typ)  {
@@ -69,7 +69,7 @@ namespace dd4hep::sim {
 
     template <typename TYPE> Geant4Handle<TYPE>::Geant4Handle(Geant4Handle<TYPE>&& handle) : value(handle.get())
     {
-      handle.value = 0;
+      handle.value = nullptr;
     }
 
     template <typename TYPE> TYPE* _create_object(Geant4Kernel& kernel, const TypeName& typ)    {
@@ -97,7 +97,7 @@ namespace dd4hep::sim {
                typ.first.c_str(),typ.second.c_str());
       }
       except("Geant4Handle", "Failed to create object of type %s!", typ.first.c_str());
-      return 0;
+      return nullptr;
     }
 
     template <typename TYPE, typename CONT> 
@@ -114,7 +114,7 @@ namespace dd4hep::sim {
         TypeName s_type = TypeName::split(shared_typ+"/"+typ.second);
         _ST* object = (_ST*)_create_object<TYPE>(kernel,s_type);
         CONT& container = (k.*pmf)();
-        TYPE* value = 0;
+        TYPE* value = nullptr;
         { // Need to protect the global action sequence!
           G4AutoLock protection_lock(&creation_mutex);
           value = container.get(typ.second);
@@ -146,12 +146,12 @@ namespace dd4hep::sim {
     template <typename TYPE> Geant4Handle<TYPE>::~Geant4Handle() {
       if (value)
         value->release();
-      value = 0;
+      value = nullptr;
     }
 
     template <typename TYPE> TYPE* Geant4Handle<TYPE>::release() {
       TYPE* temp = value;
-      value = 0;
+      value = nullptr;
       return temp;
     }
 
@@ -173,7 +173,7 @@ namespace dd4hep::sim {
     }
 
     template <typename TYPE> bool Geant4Handle<TYPE>::operator!() const {
-      return 0 == value;
+      return nullptr == value;
     }
 
     template <typename TYPE> TYPE* Geant4Handle<TYPE>::get() const {
@@ -203,7 +203,7 @@ namespace dd4hep::sim {
     template <typename TYPE> Geant4Handle<TYPE>& Geant4Handle<TYPE>::operator=(Geant4Handle&& handle) {
       if ( value ) value->release();
       value = handle.get();
-      handle.value = 0;
+      handle.value = nullptr;
       return *this;
     }
 
@@ -226,14 +226,14 @@ namespace dd4hep::sim {
     KernelHandle::KernelHandle(Geant4Kernel* k) : value(k)  {
     }
     KernelHandle KernelHandle::worker()  {
-      Geant4Kernel* k = value ? &value->worker(Geant4Kernel::thread_self()) : 0;
+      Geant4Kernel* k = value ? &value->worker(Geant4Kernel::thread_self()) : nullptr;
       if ( k ) return KernelHandle(k);
       except("KernelHandle", "Cannot access worker context [Invalid Handle]");
-      return KernelHandle(0);
+      return KernelHandle(nullptr);
     }
     void KernelHandle::destroy()  {
       if ( value ) delete value;
-      value = 0;
+      value = nullptr;
     }
 
     template <> 

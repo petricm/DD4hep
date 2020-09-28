@@ -21,7 +21,7 @@ using namespace dd4hep;
 /// Standard constructor
 SegmentationObject::SegmentationObject(DDSegmentation::Segmentation* s)
   : magic(magic_word()), useForHitPosition(0),
-    detector(0), sensitive(0), segmentation(s)
+    detector(nullptr), sensitive(nullptr), segmentation(s)
 {
   InstanceCount::increment(this);
 }

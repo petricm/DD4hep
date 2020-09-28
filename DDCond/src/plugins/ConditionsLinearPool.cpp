@@ -111,7 +111,7 @@ namespace dd4hep::cond {
     public:
       /// Default constructor
       ConditionsLinearUpdatePool(ConditionsManager mgr, IOV*)
-        : ConditionsLinearPool<MAPPING,BASE>(mgr,0)
+        : ConditionsLinearPool<MAPPING,BASE>(mgr,nullptr)
       {
         this->BASE::SetTitle("ConditionsLinearUpdatePool");
       }
@@ -220,7 +220,7 @@ namespace {
       return m;
     }
     dd4hep::except("ConditionsLinearPool","++ Insufficient arguments: arg[0] = ConditionManager!");
-    return ConditionsManager(0);
+    return ConditionsManager(nullptr);
   }
   IOV* _iov(int argc, char** argv)  {
     if ( argc > 1 )  {

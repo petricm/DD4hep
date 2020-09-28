@@ -136,7 +136,7 @@ void Geant4ExtraParticles::constructParticle(Constructor& ) {
                                      pdg,        // PDG encoding
                                      stable,     // stable
                                      lifetime,   // lifetime
-                                     NULL,       // decay table
+                                     nullptr,       // decay table
                                      false);      // short lived
       }
     }

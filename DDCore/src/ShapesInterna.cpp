@@ -59,10 +59,10 @@ void TwistedTubeObject::InspectShape() const    {
 
 TGeoShape *TwistedTubeObject::GetMakeRuntimeShape(TGeoShape *mother, TGeoMatrix * /*mat*/) const
 {
-   if (!TestShapeBit(kGeoRunTimeShape)) return 0;
+   if (!TestShapeBit(kGeoRunTimeShape)) return nullptr;
    if (!mother->TestShapeBit(kGeoTube)) {
       Error("GetMakeRuntimeShape", "Invalid mother for shape %s", GetName());
-      return 0;
+      return nullptr;
    }
    Double_t rmin = fRmin;
    Double_t rmax = fRmax;

@@ -136,7 +136,7 @@ Geant4UIMessenger* Geant4Action::control() const   {
     return m_control;
   }
   except("No control was installed for this action item.");
-  return 0;
+  return nullptr;
 }
 
 /// Enable and install UI messenger

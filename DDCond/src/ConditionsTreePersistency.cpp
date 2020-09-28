@@ -50,7 +50,7 @@ namespace  {
   };
   struct DurationStamp  {
     TTimeStamp start;
-    ConditionsTreePersistency* object = 0;
+    ConditionsTreePersistency* object = nullptr;
     DurationStamp(ConditionsTreePersistency* obj) : object(obj)  {
     }
     ~DurationStamp()  {
@@ -131,7 +131,7 @@ TFile* ConditionsTreePersistency::openFile(const string& fname)     {
   TFile* file = TFile::Open(fname.c_str());
   if ( file && !file->IsZombie()) return file;
   except("ConditionsTreePersistency","+++ FAILED to open ROOT file %s in read-mode.",fname.c_str());
-  return 0;
+  return nullptr;
 }
 
 /// Clear object content and release allocated memory

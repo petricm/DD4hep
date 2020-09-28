@@ -176,7 +176,7 @@ static Handle<TObject> create_Trap(Detector&, xml_h element)   {
     solid = Trap(e.dz(),e.dy(),e.dx(),_toDouble(_Unicode(pLTX)));
   }
   else   {
-    xml_attr_t attr = 0;
+    xml_attr_t attr = nullptr;
     double x1 = e.x1();
     double x2 = e.x2();
     double x3 = (attr=element.attr_nothrow(_U(x3))) ? element.attr<double>(attr) : x1;
@@ -485,7 +485,7 @@ static Handle<TObject> create_BooleanMulti(Detector& description, xml_h element)
   int flag = 0;
   Transform3D position, rotation, trafo;
 
-  xml_attr_t attr = 0;
+  xml_attr_t attr = nullptr;
   auto op = e.attr<std::string>(_U(operation)) ;
   std::transform( op.begin(), op.end(), op.begin(), ::tolower);
   //printout(ALWAYS,"","Boolean shape ---> %s",op.c_str());
@@ -805,7 +805,7 @@ static Ref_t create_shape(Detector& description, xml_h e, Ref_t /* sens */)  {
 
   if ( x_test.ptr() )  {
     string typ = x_test.typeStr();
-    const void* argv[] = { &e, &pv, 0};
+    const void* argv[] = { &e, &pv, nullptr};
     Ref_t result = (NamedObject*)PluginService::Create<void*>(typ, &description, 2, (char**)argv);
     if ( !result.isValid() )  {
       printout(INFO,"TestShape","+++ Shape verification FAILED. [Plugin not found]");

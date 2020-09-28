@@ -43,7 +43,7 @@ using namespace dd4hep::cond;
  *  \date    01/04/2016
  */
 static int ddcond_install_cond_mgr (Detector& description, int argc, char** argv)  {
-  Handle<NamedObject>* h = 0;
+  Handle<NamedObject>* h = nullptr;
   Handle<ConditionsManagerObject> mgr(description.extension<ConditionsManagerObject>(false));
   if ( !mgr.isValid() )  {
     bool arg_error = false;
@@ -100,7 +100,7 @@ DECLARE_APPLY(DD4hep_ConditionsManagerInstaller,ddcond_install_cond_mgr)
  *  \date    01/04/2016
  */
 static ConditionsSlice* ddcond_prepare(Detector& description, const string& iov_typ, long iov_val, int argc, char** argv)  {
-  const IOVType*    iovtype  = 0;
+  const IOVType*    iovtype  = nullptr;
   long              iovvalue = iov_val;
   ConditionsManager manager  = ConditionsManager::from(description);
 
@@ -110,9 +110,9 @@ static ConditionsSlice* ddcond_prepare(Detector& description, const string& iov_
     else if ( ::strncmp(argv[i],"-iov_value",7) == 0 )
       iovvalue = ::atol(argv[++i]);
   }
-  if ( 0 == iovtype )
+  if ( nullptr == iovtype )
     iovtype = manager.iovType(iov_typ);
-  if ( 0 == iovtype )
+  if ( nullptr == iovtype )
     except("ConditionsPrepare","++ Unknown IOV type supplied.");
   if ( 0 > iovvalue )
     except("ConditionsPrepare",
@@ -204,7 +204,7 @@ static int ddcond_conditions_pool_print(Detector& description, bool print_condit
     printout(WARNING,"DDCondProcessor","++ Found arguments in plugin call, "
              "but could not make any sense of them....");
   }
-  const void* args[] = { "-processor", "DD4hep_ConditionsPrinter", 0};
+  const void* args[] = { "-processor", "DD4hep_ConditionsPrinter", nullptr};
   return ddcond_conditions_pool_processor(description,true,print_conditions,2,(char**)args);
 }
 
@@ -278,7 +278,7 @@ DECLARE_APPLY(DD4hep_DetElementConditionsDump,ddcond_detelement_dump)
 static void* ddcond_prepare_plugin(Detector& description, int argc, char** argv)   {
   dd4hep_ptr<ConditionsSlice> slice(ddcond_prepare(description,"",-1,argc,argv));
   UserPool* p = slice->pool.get();
-  return p && p->size() > 0 ? slice.release() : 0;
+  return p && p->size() > 0 ? slice.release() : nullptr;
 }
 DECLARE_DD4HEP_CONSTRUCTOR(DD4hep_ConditionsPrepare,ddcond_prepare_plugin)
 #if 0
@@ -426,7 +426,7 @@ static void* create_printer(Detector& description, int argc,char** argv)  {
   }
   DetElement world = description.world();
   printout(INFO,"Printer","World=%s [%p]",world.path().c_str(),world.ptr());
-  ConditionsSlice* slice = 0;
+  ConditionsSlice* slice = nullptr;
   if ( have_pool )   {
     auto*    test  = description.extension<PluginTester>();
     slice = test->extension<ConditionsSlice>("ConditionsTestSlice");

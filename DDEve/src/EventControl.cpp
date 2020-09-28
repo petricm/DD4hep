@@ -37,9 +37,9 @@ ClassImp(EventControl)
 /// Standard constructor
 EventControl::EventControl(Display* display, unsigned int width, unsigned int height) 
 : FrameControl(&display->client(), "EventControl GUI", width, height), EventConsumer(), 
-  m_display(display), m_dataGroup(0), m_dataFrame(0), m_eventGroup(0),
-  m_numEvtFrame(0), m_input1(0), m_input2(0), m_numEvtLabel(0),
-  m_open(0), m_prev(0), m_next(0), m_goto(0)
+  m_display(display), m_dataGroup(nullptr), m_dataFrame(nullptr), m_eventGroup(nullptr),
+  m_numEvtFrame(nullptr), m_input1(nullptr), m_input2(nullptr), m_numEvtLabel(nullptr),
+  m_open(nullptr), m_prev(nullptr), m_next(nullptr), m_goto(nullptr)
 {
   SetWindowName("XX GUI");
   m_display->eventHandler().Subscribe(this);
@@ -161,7 +161,7 @@ void EventControl::OnBuild()   {
   string icondir = TString::Format("%s/icons/", gSystem->Getenv("ROOTSYS")).Data();
   auto* group = new TGGroupFrame(m_frame,"Event I/O Control");
   TGCompositeFrame* top = new TGHorizontalFrame(group);
-  TGPictureButton* b = 0;
+  TGPictureButton* b = nullptr;
   char text[1024];
   group->SetTitlePos(TGGroupFrame::kLeft);
   m_frame->AddFrame(group, new TGLayoutHints(kLHintsExpandX|kLHintsCenterX, 2, 2, 2, 2));

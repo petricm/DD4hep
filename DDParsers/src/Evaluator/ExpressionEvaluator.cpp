@@ -56,7 +56,7 @@ namespace {
 namespace dd4hep {
 
   tools::Evaluator& evaluator() {
-    static tools::Evaluator* e = 0;
+    static tools::Evaluator* e = nullptr;
     if ( !e )   {
       static tools::Evaluator ev;
       _init(ev);
@@ -68,7 +68,7 @@ namespace dd4hep {
 
   /// Access to G4 evaluator. Note: Uses Geant4 units!
   tools::Evaluator& g4Evaluator()   {
-    static tools::Evaluator* e = 0;
+    static tools::Evaluator* e = nullptr;
     if ( !e )   {
       static tools::Evaluator ev;
       _init(ev);
@@ -80,7 +80,7 @@ namespace dd4hep {
 
   /// Access to G4 evaluator. Note: Uses cgs units!
   tools::Evaluator& cgsEvaluator()   {
-    static tools::Evaluator* e = 0;
+    static tools::Evaluator* e = nullptr;
     if ( !e )   {
       static tools::Evaluator ev;
       _init(ev);

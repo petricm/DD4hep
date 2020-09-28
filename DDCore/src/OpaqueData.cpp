@@ -63,8 +63,8 @@ OpaqueDataBlock::OpaqueDataBlock() : OpaqueData(), type(0)   {
 /// Copy constructor
 OpaqueDataBlock::OpaqueDataBlock(const OpaqueDataBlock& c) 
   : OpaqueData(c), type(c.type)   {
-  grammar = 0;
-  pointer = 0;
+  grammar = nullptr;
+  pointer = nullptr;
   this->bind(c.grammar);
   if ( this->grammar->specialization.copy )  {
     this->grammar->specialization.copy(pointer, c.pointer);
@@ -82,8 +82,8 @@ OpaqueDataBlock::~OpaqueDataBlock()   {
     grammar->destruct(pointer);
     if ( (type&ALLOC_DATA) == ALLOC_DATA ) ::operator delete(pointer);
   }
-  pointer = 0;
-  grammar = 0;
+  pointer = nullptr;
+  grammar = nullptr;
   InstanceCount::decrement(this);
 }
 
@@ -95,13 +95,13 @@ OpaqueDataBlock& OpaqueDataBlock::operator=(const OpaqueDataBlock& c)   {
         if ( grammar ) grammar->destruct(pointer);
         if ( (type&ALLOC_DATA) == ALLOC_DATA ) ::operator delete(pointer);
       }
-      pointer = 0;
-      grammar = 0;
+      pointer = nullptr;
+      grammar = nullptr;
     }
-    if ( grammar == 0 )  {
+    if ( grammar == nullptr )  {
       this->OpaqueData::operator=(c);
       type = c.type;
-      grammar = 0;
+      grammar = nullptr;
       if ( c.grammar )   {
 	if ( !c.grammar->specialization.copy )  {
 	  except("OpaqueDataBlock","Grammar type %s does not support object copy. Operation not allowed.",
@@ -140,12 +140,12 @@ void* OpaqueDataBlock::bind(const BasicGrammar* g)   {
     except("OpaqueData","You may not bind opaque multiple times!");
   }
   typeinfoCheck(grammar->type(),g->type(),"Opaque data blocks may not be assigned.");
-  return 0;
+  return nullptr;
 }
 
 /// Bind external data value to the pointer
 void OpaqueDataBlock::bindExtern(void* ptr, const BasicGrammar* gr)    {
-  if ( grammar != 0 && type != EXTERN_DATA )  {
+  if ( grammar != nullptr && type != EXTERN_DATA )  {
     // We cannot ingore secondary requests for data bindings.
     // This leads to memory leaks in the caller!
     except("OpaqueData","You may not bind opaque data multiple times!");
@@ -177,7 +177,7 @@ void* OpaqueDataBlock::bind(void* ptr, size_t size, const BasicGrammar* g)   {
     except("OpaqueData","You may not bind opaque data multiple times!");
   }
   typeinfoCheck(grammar->type(),g->type(),"Opaque data blocks may not be assigned.");
-  return 0;
+  return nullptr;
 }
 
 #include "DD4hep/detail/Grammar_unparsed.h"

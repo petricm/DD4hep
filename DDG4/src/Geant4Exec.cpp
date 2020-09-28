@@ -63,13 +63,13 @@ namespace dd4hep::sim {
     public:
       typedef SequenceHdl<T> Base;
       T* m_sequence;
-      mutable Geant4Context* m_activeContext{0};
+      mutable Geant4Context* m_activeContext{nullptr};
       /// Default constructor
       SequenceHdl()
         : m_sequence(0) {
       }
       /// Initializing constructor
-      SequenceHdl(Geant4Context* ctxt, T* seq) : m_sequence(0), m_activeContext(ctxt)  {
+      SequenceHdl(Geant4Context* ctxt, T* seq) : m_sequence(nullptr), m_activeContext(ctxt)  {
         _aquire(seq);
       }
       /// Default destructor
@@ -117,7 +117,7 @@ namespace dd4hep::sim {
       void destroyClientContext(const G4Run*)   {
         Geant4Run* r = m_activeContext->runPtr();
         if ( r )  {
-          m_activeContext->setRun(0);
+          m_activeContext->setRun(nullptr);
           detail::deletePtr(r);
         }
       }
@@ -130,7 +130,7 @@ namespace dd4hep::sim {
       void destroyClientContext(const G4Event*)   {
         Geant4Event* e = m_activeContext->eventPtr();
         if ( e )  {
-          m_activeContext->setEvent(0);
+          m_activeContext->setEvent(nullptr);
           detail::deletePtr(e);
         }
       }
@@ -154,7 +154,7 @@ namespace dd4hep::sim {
       Geant4UserEventAction* eventAction;
       /// Standard constructor
       Geant4UserRunAction(Geant4Context* ctxt, Geant4RunActionSequence* seq)
-        : Base(ctxt, seq), eventAction(0)  {
+        : Base(ctxt, seq), eventAction(nullptr)  {
         updateContext(ctxt);
         configureFiber(ctxt);
       }
@@ -180,7 +180,7 @@ namespace dd4hep::sim {
       Geant4UserRunAction* runAction;
       /// Standard constructor
       Geant4UserEventAction(Geant4Context* ctxt, Geant4EventActionSequence* seq)
-        : Base(ctxt, seq), runAction(0)  {
+        : Base(ctxt, seq), runAction(nullptr)  {
         updateContext(ctxt);
         configureFiber(ctxt);
       }
@@ -219,7 +219,7 @@ namespace dd4hep::sim {
       /// Post-track action callback
       virtual void PostUserTrackingAction(const G4Track* trk)   final  {
         m_sequence->end(trk);
-        m_sequence->context()->kernel().setTrackMgr(0);
+        m_sequence->context()->kernel().setTrackMgr(nullptr);
       }
     };
 
@@ -408,7 +408,7 @@ namespace dd4hep::sim {
       G4AutoLock protection_lock(&action_mutex);
       updateContext(m_sequence->context());
       m_sequence->constructGeo(&m_ctxt);
-      if ( 0 == m_ctxt.world )    {
+      if ( nullptr == m_ctxt.world )    {
         m_sequence->except("+++ Executing G4 detector construction did not result in a valid world volume!");
       }
       m_sequence->context()->kernel().setWorld(m_ctxt.world);
@@ -541,7 +541,7 @@ int Geant4Exec::configure(Geant4Kernel& kernel) {
     rndm->initialize();
   }
   Geant4Random::setMainInstance(rndm);
-  kernel.executePhase("configure",0);
+  kernel.executePhase("configure",nullptr);
 
   // Construct the default run manager
   G4RunManager& runManager = kernel.runManager();
@@ -555,10 +555,10 @@ int Geant4Exec::configure(Geant4Kernel& kernel) {
 
   // Get the detector constructed
   Geant4DetectorConstructionSequence* user_det = kernel.detectorConstruction(false);
-  if ( 0 == user_det && kernel.isMultiThreaded() )   {
+  if ( nullptr == user_det && kernel.isMultiThreaded() )   {
     throw runtime_error("Panic! No valid detector construction sequencer present. [Mandatory MT]");
   }
-  if ( 0 == user_det && !kernel.isMultiThreaded() )   {
+  if ( nullptr == user_det && !kernel.isMultiThreaded() )   {
     user_det = Geant4Compatibility().buildDefaultDetectorConstruction(kernel);
   }
   auto* det_seq = new Geant4UserDetectorConstruction(ctx,user_det);
@@ -566,13 +566,13 @@ int Geant4Exec::configure(Geant4Kernel& kernel) {
 
   // Get the physics list constructed
   Geant4PhysicsListActionSequence* phys_seq = kernel.physicsList(false);
-  if ( 0 == phys_seq )   {
+  if ( nullptr == phys_seq )   {
     string phys_model = "QGSP_BERT";
     phys_seq = kernel.physicsList(true);
     phys_seq->property("extends").set(phys_model);
   }
   G4VUserPhysicsList* physics = phys_seq->extensionList();
-  if (0 == physics) {
+  if (nullptr == physics) {
     throw runtime_error("Panic! No valid user physics list present!");
   }
 #if 0
@@ -587,10 +587,10 @@ int Geant4Exec::configure(Geant4Kernel& kernel) {
 
   // Construct the remaining user initialization in multi-threaded mode
   Geant4UserInitializationSequence* user_init = kernel.userInitialization(false);
-  if ( 0 == user_init && kernel.isMultiThreaded() )   {
+  if ( nullptr == user_init && kernel.isMultiThreaded() )   {
     throw runtime_error("Panic! No valid user initialization sequencer present. [Mandatory MT]");
   }
-  else if ( 0 == user_init && !kernel.isMultiThreaded() )  {
+  else if ( nullptr == user_init && !kernel.isMultiThreaded() )  {
     // Use default actions registered to the default kernel. Will do the right thing...
     user_init = kernel.userInitialization(true);
   }
@@ -606,7 +606,7 @@ int Geant4Exec::initialize(Geant4Kernel& kernel) {
   //
   // Initialize G4 engine
   //
-  kernel.executePhase("initialize",0);
+  kernel.executePhase("initialize",nullptr);
   runManager.Initialize();
   return 1;
 }
@@ -616,14 +616,14 @@ int Geant4Exec::run(Geant4Kernel& kernel) {
   Property& p = kernel.property("UI");
   auto value = p.value<string>();
 
-  kernel.executePhase("start",0);
+  kernel.executePhase("start",nullptr);
   if ( !value.empty() )  {
     Geant4Action* ui = kernel.globalAction(value);
     if ( ui )  {
       auto* c = dynamic_cast<Geant4Call*>(ui);
       if ( c )  {
-        (*c)(0);
-        kernel.executePhase("stop",0);
+        (*c)(nullptr);
+        kernel.executePhase("stop",nullptr);
         return 1;
       }
       ui->except("++ Geant4Exec: Failed to start UI interface.");
@@ -632,12 +632,12 @@ int Geant4Exec::run(Geant4Kernel& kernel) {
   }
   long nevt = kernel.property("NumEvents").value<long>();
   kernel.runManager().BeamOn(nevt);
-  kernel.executePhase("stop",0);
+  kernel.executePhase("stop",nullptr);
   return 1;
 }
 
 /// Run the simulation
 int Geant4Exec::terminate(Geant4Kernel& kernel) {
-  kernel.executePhase("terminate",0);
+  kernel.executePhase("terminate",nullptr);
   return 1;
 }

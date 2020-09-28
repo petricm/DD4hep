@@ -60,7 +60,7 @@ namespace dd4hep::detail {
       VolumeManager_Populator(const Detector& description, VolumeManager vm)
         : m_detDesc(description), m_volManager(vm)
       {
-        m_debug = (0 != ::getenv("DD4HEP_VOLMGR_DEBUG"));
+        m_debug = (nullptr != ::getenv("DD4HEP_VOLMGR_DEBUG"));
       }
 
       /// Access node count
@@ -105,7 +105,7 @@ namespace dd4hep::detail {
           bool     compound      = e.type() == "compound";
 
           if ( compound )  {
-            sd = SensitiveDetector(0);
+            sd = SensitiveDetector(nullptr);
             vol_encoding = Encoding();
           }
           else if ( !sd.isValid() )  {
@@ -158,7 +158,7 @@ namespace dd4hep::detail {
                      " [Internal error -- bad detector constructor]");
             }
             if ( compound )  {
-              sd = SensitiveDetector(0);
+              sd = SensitiveDetector(nullptr);
             }
           }
           if ( sd.isValid() )   {
@@ -349,7 +349,7 @@ VolumeManager::VolumeManager(DetElement sub_detector, Readout ro)  {
 
 VolumeManager VolumeManager::getVolumeManager(const Detector& description) {
   if( not description.volumeManager().isValid() ) {
-    description.apply("DD4hepVolumeManager", 0, 0);
+    description.apply("DD4hepVolumeManager", 0, nullptr);
   }
   return description.volumeManager();
 }
@@ -534,7 +534,7 @@ bool VolumeManager::adoptPlacement(VolumeManagerContext* context) {
 /// Lookup the context, which belongs to a registered physical volume.
 VolumeManagerContext* VolumeManager::lookupContext(VolumeID volume_id) const {
   if (isValid()) {
-    VolumeManagerContext* c = 0;
+    VolumeManagerContext* c = nullptr;
     const Object& o = _data();
     bool is_top = o.top == ptr();
     bool one_tree = (o.flags & ONE) == ONE;
@@ -549,14 +549,14 @@ VolumeManagerContext* VolumeManager::lookupContext(VolumeID volume_id) const {
     /// Second: look in the subdetector volume cache if the entry is found.
     if (!one_tree) {
       for (const auto& j : o.subdetectors )  {
-        if ((c = j.second._data().search(id)) != 0)
+        if ((c = j.second._data().search(id)) != nullptr)
           return c;
       }
     }
     except("VolumeManager","lookupContext: Failed to search Volume context %016llX [Unknown identifier]", (void*)volume_id);
   }
   except("VolumeManager","lookupContext: Failed to search Volume context [Invalid Manager Handle]");
-  return 0;
+  return nullptr;
 }
 
 /// Lookup a physical (placed) volume identified by its 64 bit hit ID

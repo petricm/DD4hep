@@ -39,7 +39,7 @@ namespace dd4hep::sim {
     public:
       T* m_sequence;
       /// Default constructor
-      RefCountedSequence() : m_sequence(0) {                 }
+      RefCountedSequence() : m_sequence(nullptr) {                 }
       /// Initializing constructor
       RefCountedSequence(T* seq)           {   _aquire(seq); }
       /// Default destructor
@@ -73,7 +73,7 @@ namespace dd4hep::sim {
       /// Constructor. The detector element is identified by the name
       Geant4SensDet(const std::string& nam, Detector& description)
         : G4VSensitiveDetector(nam), G4VSDFilter(nam),
-          Geant4Action(0,nam), Geant4ActionSD(nam),
+          Geant4Action(nullptr,nam), Geant4ActionSD(nam),
           RefCountedSequence<Geant4SensDetActionSequence>()
       {
         Geant4Kernel& master = Geant4Kernel::instance(description);

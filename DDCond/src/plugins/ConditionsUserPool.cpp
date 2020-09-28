@@ -45,9 +45,9 @@ namespace dd4hep::cond {
       typedef MAPPING Mapping;
       Mapping               m_conditions;
       /// IOV Pool as data source
-      ConditionsIOVPool*    m_iovPool = 0;
+      ConditionsIOVPool*    m_iovPool = nullptr;
       /// The loader to access non-existing conditions
-      ConditionsDataLoader* m_loader = 0;
+      ConditionsDataLoader* m_loader = nullptr;
 
       /// Internal helper to find conditions
       [[nodiscard]] Condition::Object* i_findCondition(Condition::key_type key)  const;
@@ -190,7 +190,7 @@ namespace {
   template <typename T> struct Inserter {
     T& m;
     IOV* iov;
-    Inserter(T& o, IOV* i=0) : m(o), iov(i) {}
+    Inserter(T& o, IOV* i=nullptr) : m(o), iov(i) {}
     void operator()(const Condition& c)  {
       Condition::Object* o = c.ptr();
       m.emplace(o->hash,o);
@@ -275,20 +275,20 @@ void ConditionsMappedUserPool<MAPPING>::clear()   {
   if ( flags&PRINT_CLEAR )  {
     printout(INFO,"UserPool","++ Cleared %ld conditions from pool.",m_conditions.size());
   }
-  m_iov = IOV(0);
+  m_iov = IOV(nullptr);
   m_conditions.clear();
 }
 
 /// Check a condition for existence
 template<typename MAPPING>
 bool ConditionsMappedUserPool<MAPPING>::exists(Condition::key_type hash)  const   {
-  return i_findCondition(hash) != 0;
+  return i_findCondition(hash) != nullptr;
 }
 
 /// Check a condition for existence
 template<typename MAPPING>
 bool ConditionsMappedUserPool<MAPPING>::exists(const ConditionKey& key)  const   {
-  return i_findCondition(key.hash) != 0;
+  return i_findCondition(key.hash) != nullptr;
 }
 
 /// Check if a condition exists in the pool and return it to the caller
@@ -808,7 +808,7 @@ namespace {
       return pool;
     }
     except("ConditionsMappedUserPool","++ Insufficient arguments: arg[0] = ConditionManager!");
-    return 0;
+    return nullptr;
   }
 }
 

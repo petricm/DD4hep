@@ -96,7 +96,7 @@ void DetectorLoad::processXML(const xml::Handle_t& base, const string& xmlfile, 
 
 /// Process XML unit and adopt all data from source string in momory.
 void DetectorLoad::processXMLString(const char* xmldata)   {
-  processXMLString(xmldata, 0);
+  processXMLString(xmldata, nullptr);
 }
 
 /// Process XML unit and adopt all data from source string in momory. Subsequent parsers may use the entity resolver.

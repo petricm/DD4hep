@@ -50,7 +50,7 @@ namespace {
 class ConditionsPrinter::ParamPrinter {
 protected:
   /// Parent object
-  ConditionsPrinter* m_parent = 0;
+  ConditionsPrinter* m_parent = nullptr;
 public:
   /// Prefix to tag print statements
   std::string        prefix;

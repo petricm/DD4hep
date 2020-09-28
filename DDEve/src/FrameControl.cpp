@@ -29,7 +29,7 @@ ClassImp(FrameControl)
 
 /// Standard constructor
 FrameControl::FrameControl(TGClient* cl, const std::string& name, unsigned int width, unsigned int height) 
-: TGMainFrame(cl->GetRoot(), width, height), m_client(cl), m_frame(0)
+: TGMainFrame(cl->GetRoot(), width, height), m_client(cl), m_frame(nullptr)
 {
   SetWindowName(name.c_str());
   SetCleanup(kDeepCleanup);

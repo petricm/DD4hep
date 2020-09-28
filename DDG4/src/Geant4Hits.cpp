@@ -29,8 +29,8 @@
 using namespace std;
 using namespace dd4hep::sim;
 
-G4ThreadLocal G4Allocator<Geant4TrackerHit>* TrackerHitAllocator = 0;
-G4ThreadLocal G4Allocator<Geant4CalorimeterHit>* CalorimeterHitAllocator = 0;
+G4ThreadLocal G4Allocator<Geant4TrackerHit>* TrackerHitAllocator = nullptr;
+G4ThreadLocal G4Allocator<Geant4CalorimeterHit>* CalorimeterHitAllocator = nullptr;
 
 
 /// Check if the Geant4 track is a Geantino

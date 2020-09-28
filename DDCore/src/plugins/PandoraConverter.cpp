@@ -90,19 +90,19 @@ using namespace std;
 
 /// Helper constructor
 PandoraConverter::GeometryInfo::GeometryInfo()
-  : doc(0), doc_root(0), doc_calorimeters(0), doc_detector(0), doc_coil(0), doc_tracking(0) {
+  : doc(nullptr), doc_root(nullptr), doc_calorimeters(nullptr), doc_detector(nullptr), doc_coil(nullptr), doc_tracking(nullptr) {
 }
 
 /// Initializing Constructor
 PandoraConverter::PandoraConverter(Detector& description)
-  : m_detDesc(description), m_dataPtr(0) {
+  : m_detDesc(description), m_dataPtr(nullptr) {
 }
 
 /// Standard destructor
 PandoraConverter::~PandoraConverter() {
   if (m_dataPtr)
     delete m_dataPtr;
-  m_dataPtr = 0;
+  m_dataPtr = nullptr;
 }
 
 /// Create geometry conversion in Pandora XML format
@@ -120,7 +120,7 @@ xml_doc_t PandoraConverter::create(DetElement /* top */) {
   xml::DocumentHandler docH;
   GeometryInfo& geo = *(m_dataPtr = new GeometryInfo);
 
-  xml_elt_t elt(0);
+  xml_elt_t elt(nullptr);
   Header hdr = m_detDesc.header();
   geo.doc = docH.parse(empty_xml, sizeof(empty_xml));
   geo.doc_root = geo.doc.root();

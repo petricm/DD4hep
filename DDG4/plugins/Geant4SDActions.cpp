@@ -331,7 +331,7 @@ namespace dd4hep::sim   {
     struct TrackerCombine {
       Geant4Tracker::Hit  pre, post;
       Position          mean_pos;
-      Geant4Sensitive*  sensitive{0};
+      Geant4Sensitive*  sensitive{nullptr};
       double            mean_time{0.0};
       double            e_cut{0.0};
       int               current{-1};
@@ -439,7 +439,7 @@ namespace dd4hep::sim   {
         if ( prePV != postPV ) {
           void* postSD = h.sd(h.post);
           extractHit(coll);
-          if ( 0 != postSD )   {
+          if ( nullptr != postSD )   {
             void* preSD = h.sd(h.pre);
             if ( preSD == postSD ) {
               start(step,h.post);

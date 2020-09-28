@@ -27,7 +27,7 @@ Geant4ReadoutVolumeFilter::Geant4ReadoutVolumeFilter(Geant4Context* ctxt,
                                                      const std::string& nam, 
                                                      Readout ro, 
                                                      const std::string& coll)
-  : Geant4Filter(ctxt, nam), m_readout(ro), m_collection(0), m_key(0)
+  : Geant4Filter(ctxt, nam), m_readout(ro), m_collection(nullptr), m_key(nullptr)
 {
   InstanceCount::increment(this);
   for(size_t i=0; i<ro->hits.size(); ++i)  {

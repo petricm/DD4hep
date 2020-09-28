@@ -40,7 +40,7 @@ int main(int argc, char** argv)    {
     }
   }
   std::pair<int, char**> a(0,0);
-  const char* config_xml = config.empty() ? 0 : config.c_str();
+  const char* config_xml = config.empty() ? nullptr : config.c_str();
   gApplication = new TRint("DDEve", &a.first, a.second);
   DDEve(config_xml);
   gApplication->Run();

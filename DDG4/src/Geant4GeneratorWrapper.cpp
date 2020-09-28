@@ -36,7 +36,7 @@ using namespace std;
 
 /// Standard constructor
 Geant4GeneratorWrapper::Geant4GeneratorWrapper(Geant4Context* ctxt, const string& nam)
-  : Geant4GeneratorAction(ctxt,nam), m_generator(0)
+  : Geant4GeneratorAction(ctxt,nam), m_generator(nullptr)
 {
   declareProperty("Uses", m_generatorType);
   declareProperty("Mask", m_mask = 1);
@@ -50,9 +50,9 @@ Geant4GeneratorWrapper::~Geant4GeneratorWrapper()  {
 }
 
 G4VPrimaryGenerator* Geant4GeneratorWrapper::generator()   {
-  if ( 0 == m_generator )  {
+  if ( nullptr == m_generator )  {
     m_generator = PluginService::Create<G4VPrimaryGenerator*>(m_generatorType);
-    if ( 0 == m_generator )  {
+    if ( nullptr == m_generator )  {
       PluginDebug dbg;
       m_generator = PluginService::Create<G4VPrimaryGenerator*>(m_generatorType);
       if ( !m_generator )  {

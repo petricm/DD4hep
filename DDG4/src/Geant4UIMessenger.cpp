@@ -46,7 +46,7 @@ namespace {
 }
 
 Geant4UIMessenger::Geant4UIMessenger(const string& name, const string& path)
-  : G4UImessenger(), m_directory(0), m_properties(0), m_name(name), m_path(path) {
+  : G4UImessenger(), m_directory(nullptr), m_properties(nullptr), m_name(name), m_path(path) {
   m_directory = new G4UIdirectory(path.c_str());
   printout(INFO, "Geant4UI", "+++ %s> Install Geant4 control directory:%s", name.c_str(), path.c_str());
   m_directory->SetGuidance(("Control hierarchy for Geant4 action:" + name).c_str());
@@ -131,7 +131,7 @@ void Geant4UIMessenger::SetNewValue(G4UIcommand *c, G4String v) {
     auto j = m_actionCmd.find(c);
     if (j != m_actionCmd.end()) {
       try  {
-        const void* args[] = {v.c_str(), 0};
+        const void* args[] = {v.c_str(), nullptr};
         (*j).second.execute(args);
       }
       catch(const exception& e)   {

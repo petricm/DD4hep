@@ -403,7 +403,7 @@ template <> void Converter<Material>::operator()(xml_h e) const {
   xml_coll_t        fractions (x_mat, _U(fraction));
   xml_coll_t        composites(x_mat, _U(composite));
 
-  if (0 == mat) {
+  if (nullptr == mat) {
     TGeoMaterial* comp_mat;
     TGeoElement*  comp_elt;
     xml_h  density     = x_mat.child(_U(D), false);
@@ -429,9 +429,9 @@ template <> void Converter<Material>::operator()(xml_h e) const {
     for (composites.reset(); composites; ++composites)   {
       string nam      = composites.attr<string>(_U(ref));
       double fraction = composites.attr<double>(_U(n));
-      if (0 != (comp_mat = mgr.GetMaterial(nam.c_str())))
+      if (nullptr != (comp_mat = mgr.GetMaterial(nam.c_str())))
         fraction *= comp_mat->GetA();
-      else if (0 != (comp_elt = table->FindElement(nam.c_str())))
+      else if (nullptr != (comp_elt = table->FindElement(nam.c_str())))
         fraction *= comp_elt->A();
       else
         except("Compact2Objects","Converting material: %s Element missing: %s",mname.c_str(),nam.c_str());
@@ -441,17 +441,17 @@ template <> void Converter<Material>::operator()(xml_h e) const {
     for (composites.reset(), ifrac=0; composites; ++composites, ++ifrac) {
       string nam      = composites.attr<string>(_U(ref));
       double fraction = composite_fractions[ifrac]/composite_fractions_total;
-      if (0 != (comp_mat = mgr.GetMaterial(nam.c_str())))
+      if (nullptr != (comp_mat = mgr.GetMaterial(nam.c_str())))
         mix->AddElement(comp_mat, fraction);
-      else if (0 != (comp_elt = table->FindElement(nam.c_str())))
+      else if (nullptr != (comp_elt = table->FindElement(nam.c_str())))
         mix->AddElement(comp_elt, fraction);
     }
     for (fractions.reset(); fractions; ++fractions) {
       string nam      = fractions.attr<string>(_U(ref));
       double fraction = fractions.attr<double>(_U(n));
-      if (0 != (comp_mat = mgr.GetMaterial(nam.c_str())))
+      if (nullptr != (comp_mat = mgr.GetMaterial(nam.c_str())))
         mix->AddElement(comp_mat, fraction);
-      else if (0 != (comp_elt = table->FindElement(nam.c_str())))
+      else if (nullptr != (comp_elt = table->FindElement(nam.c_str())))
         mix->AddElement(comp_elt, fraction);
       else
         throw_print("Compact2Objects[ERROR]: Converting material:" + mname + " Element missing: " + nam);
@@ -539,7 +539,7 @@ template <> void Converter<Material>::operator()(xml_h e) const {
 #endif
   }
   TGeoMedium* medium = mgr.GetMedium(matname);
-  if (0 == medium) {
+  if (nullptr == medium) {
     --unique_mat_id;
     medium = new TGeoMedium(matname, unique_mat_id, mat);
     medium->SetTitle("material");
@@ -551,7 +551,7 @@ template <> void Converter<Material>::operator()(xml_h e) const {
     auto form = x_mat.attr<string>(_U(formula));
     if (form != matname) {
       medium = mgr.GetMedium(form.c_str());
-      if (0 == medium) {
+      if (nullptr == medium) {
         --unique_mat_id;
         medium = new TGeoMedium(form.c_str(), unique_mat_id, mat);
         medium->SetTitle("material");
@@ -960,7 +960,7 @@ template <> void Converter<Segmentation>::operator()(xml_h seg) const {
                  sub_seg->segmentation->name().c_str(),
                  sub_seg->segmentation->type().c_str());
         base->addSubsegmentation(key_min, key_max, sub_seg->segmentation);
-        sub_seg->segmentation = 0;
+        sub_seg->segmentation = nullptr;
         delete sub_seg.ptr();
       }
     }
@@ -1246,7 +1246,7 @@ template <> void Converter<DetElement>::operator()(xml_h element) const {
   try {
     string par_name;
     xml_attr_t attr_par = element.attr_nothrow(_U(parent));
-    xml_elt_t  elt_par(0);
+    xml_elt_t  elt_par(nullptr);
     if (attr_par)
       par_name = element.attr<string>(attr_par);
     else if ( (elt_par=element.child(_U(parent),false)) )
@@ -1321,7 +1321,7 @@ template <> void Converter<GdmlFile>::operator()(xml_h element) const   {
     printout(ALWAYS, "Compact","++ Processing xml document %s.",doc.uri().c_str());
   }
   if ( root.tag() == "materials" || root.tag() == "elements" )   {
-    xml_coll_t(root, _U(isotope)).for_each(Converter<Isotope>(this->description,0,0));
+    xml_coll_t(root, _U(isotope)).for_each(Converter<Isotope>(this->description,nullptr,nullptr));
     xml_coll_t(root, _U(element)).for_each(Converter<Atom>(this->description));
     xml_coll_t(root, _U(material)).for_each(Converter<Material>(this->description));
     return;

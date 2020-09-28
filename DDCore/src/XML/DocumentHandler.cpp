@@ -519,7 +519,7 @@ Document DocumentHandler::load(const std::string& fname, UriReader* reader) cons
     return (XmlDocument*)doc;
   }
   delete doc;
-  return 0;
+  return nullptr;
 }
 
 /// Load XML file and parse it using URI resolver to read data.
@@ -548,14 +548,14 @@ Document DocumentHandler::parse(const char* bytes, size_t length, const char* /*
           buff[len] = 0;
           for(size_t i=len-1; i>0 && (buff[i]==0 || ::isspace(buff[i])); --i)
             buff[i] = 0;
-          if ( 0 == doc->Parse(buff) ) {
+          if ( nullptr == doc->Parse(buff) ) {
             return (XmlDocument*)doc;
           }
         }
         catch(...)   {
         }
       }
-      if ( 0 == doc->Parse(bytes) ) {
+      if ( nullptr == doc->Parse(bytes) ) {
         return (XmlDocument*)doc;
       }
       if ( doc->Error() ) {
@@ -575,7 +575,7 @@ Document DocumentHandler::parse(const char* bytes, size_t length, const char* /*
     printout(ERROR,"DocumentHandler","+++ Exception (TinyXML): parse(string):%s",e.what());
   }
   delete doc;
-  return 0;
+  return nullptr;
 }
 
 /// Write xml document to output file (stdout if file name empty)
@@ -643,17 +643,17 @@ std::string DocumentHandler::defaultComment()  {
 
 /// Load XML file and parse it.
 Document DocumentHandler::load(const std::string& fname) const {
-  return load(fname, 0);
+  return load(fname, nullptr);
 }
 
 /// Load secondary XML file with relative addressing with respect to handle
 Document DocumentHandler::load(Handle_t base, const XmlChar* fname) const {
-  return load(base, fname, 0);
+  return load(base, fname, nullptr);
 }
 
 /// Parse a standalong XML string into a document.
 Document DocumentHandler::parse(const char* bytes, size_t length) const {
-  return parse(bytes, length, "xml-memory-buffer", 0);
+  return parse(bytes, length, "xml-memory-buffer", nullptr);
 }
 
 /// System ID of a given XML entity

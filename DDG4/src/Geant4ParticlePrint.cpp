@@ -55,7 +55,7 @@ void Geant4ParticlePrint::makePrintout(const G4Event* e) const  {
     const ParticleMap& particles = parts->particles();
     print("+++ ******** MC Particle Printout for event ID:%d ********",e->GetEventID());
     if ( (m_outputType&2) != 0 ) printParticleTree(e,particles);  // Tree printout....
-    if ( (m_outputType&1) != 0 ) printParticles(0,particles);     // Table printout....
+    if ( (m_outputType&1) != 0 ) printParticles(nullptr,particles);     // Table printout....
     return;
   }
   except("No Geant4MonteCarloTruth object present in the event structure to access the particle information!", c_name());
@@ -122,7 +122,7 @@ void Geant4ParticlePrint::printParticle(const std::string& prefix, const G4Event
         for(size_t i=0; i<nhits; ++i)   {
           Geant4HitData* h = coll->hit(i);
           auto* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
-          if ( 0 != trk_hit )   {
+          if ( nullptr != trk_hit )   {
             Geant4HitData::Contribution& t = trk_hit->truth;
             int trackID = t.trackID;
             int trueID  = truth->particleID(trackID);
@@ -132,7 +132,7 @@ void Geant4ParticlePrint::printParticle(const std::string& prefix, const G4Event
             }
           }
           auto* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
-          if ( 0 != cal_hit )   {
+          if ( nullptr != cal_hit )   {
             Geant4HitData::Contributions& contrib = cal_hit->truth;
             for(auto & t : contrib)  {
               int trackID = t.trackID;

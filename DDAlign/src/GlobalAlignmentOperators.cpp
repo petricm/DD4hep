@@ -32,7 +32,7 @@ void GlobalAlignmentOperator::insert(GlobalAlignment alignment)  const   {
 }
 
 void GlobalAlignmentSelector::operator()(Entries::value_type e)  const {
-  TGeoPhysicalNode* pn = 0;
+  TGeoPhysicalNode* pn = nullptr;
   nodes.emplace(e->path,make_pair(pn,e));
 }
 

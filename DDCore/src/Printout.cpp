@@ -35,8 +35,8 @@ namespace {
 
   std::string print_fmt = "%-16s %5s %s";
   dd4hep::PrintLevel print_lvl = dd4hep::INFO;
-  void* print_arg = 0;
-  dd4hep::output_function1_t print_func_1 = 0;
+  void* print_arg = nullptr;
+  dd4hep::output_function1_t print_func_1 = nullptr;
   dd4hep::output_function2_t print_func_2 = _the_printer_2;
 
   const char* print_level(dd4hep::PrintLevel lvl)   {

@@ -25,14 +25,14 @@ using namespace std;
 
 /// Initializing Constructor
 Geant4Mapping::Geant4Mapping(const Detector& description_ref)
-  : m_detDesc(description_ref), m_dataPtr(0) {
+  : m_detDesc(description_ref), m_dataPtr(nullptr) {
 }
 
 /// Standard destructor
 Geant4Mapping::~Geant4Mapping() {
   if (m_dataPtr)
     delete m_dataPtr;
-  m_dataPtr = 0;
+  m_dataPtr = nullptr;
 }
 
 /// Possibility to define a singleton instance
@@ -60,7 +60,7 @@ Geant4GeometryInfo& Geant4Mapping::init() {
 /// Release data and pass over the ownership
 Geant4GeometryInfo* Geant4Mapping::detach() {
   Geant4GeometryInfo* p = m_dataPtr;
-  m_dataPtr = 0;
+  m_dataPtr = nullptr;
   return p;
 }
 
@@ -87,5 +87,5 @@ PlacedVolume Geant4Mapping::placement(const G4VPhysicalVolume* node) const {
   for (auto i : pm)
     if (i.second == node)
       return PlacedVolume(i.first);
-  return PlacedVolume(0);
+  return PlacedVolume(nullptr);
 }

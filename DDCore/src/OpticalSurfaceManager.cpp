@@ -41,7 +41,7 @@ SkinSurface  OpticalSurfaceManager::skinSurface(DetElement de, const string& nam
     if ( surf ) return surf;
     auto i = o->skinSurfaces.find(Object::LocalKey(de, nam));
     if ( i != o->skinSurfaces.end() ) return (*i).second;
-    return 0;
+    return nullptr;
   }
   except("SkinSurface",
          "++ Cannot access SkinSurface %s without valid detector element!",nam.c_str());
@@ -62,7 +62,7 @@ BorderSurface  OpticalSurfaceManager::borderSurface(DetElement de, const string&
     if ( surf ) return surf;
     auto i = o->borderSurfaces.find(Object::LocalKey(de, nam));
     if ( i != o->borderSurfaces.end() ) return (*i).second;
-    return 0;
+    return nullptr;
   }
   except("BorderSurface",
          "++ Cannot access BorderSurface %s without valid detector element!",nam.c_str());
@@ -83,7 +83,7 @@ OpticalSurface OpticalSurfaceManager::opticalSurface(DetElement de, const string
     if ( surf ) return surf;
     auto i = o->opticalSurfaces.find(n);
     if ( i != o->opticalSurfaces.end() ) return (*i).second;
-    return 0;
+    return nullptr;
   }
   except("OpticalSurface",
          "++ Cannot access OpticalSurface %s without valid detector element!",nam.c_str());

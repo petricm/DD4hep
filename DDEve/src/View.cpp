@@ -42,7 +42,7 @@ static inline typename T::const_iterator find(const T& cont,const string& str)  
 
 /// Initializing constructor
 View::View(Display* eve, string  nam)
-  : m_eve(eve), m_view(0), m_geoScene(0), m_eveScene(0), m_global(0), m_name(std::move(nam)), m_showGlobal(false)
+  : m_eve(eve), m_view(nullptr), m_geoScene(nullptr), m_eveScene(nullptr), m_global(nullptr), m_name(std::move(nam)), m_showGlobal(false)
 {
   m_config = m_eve->GetViewConfiguration(m_name);
   InstanceCount::increment(this);
@@ -84,7 +84,7 @@ void View::Initialize()  {
 
 /// Add the view to the global list of eve objects
 TEveElementList* View::AddToGlobalItems(const string& nam)   {
-  if ( 0 == m_global )   {
+  if ( nullptr == m_global )   {
     m_global = new ElementList(nam.c_str(), nam.c_str(), true, true);
     if ( m_geoScene ) m_global->AddElement(geoScene());
     if ( m_eveScene ) m_global->AddElement(eveScene());
@@ -316,7 +316,7 @@ View& View::CreateScenes()  {
 
 /// Create the event scene
 View& View::CreateEventScene()   {
-  if ( 0 == m_eveScene ) {
+  if ( nullptr == m_eveScene ) {
     string nam  = m_name+" - Event Data";
     string tool = m_name+" - Scene holding projected event-data for the view.";
     m_eveScene = m_eve->manager().SpawnNewScene(nam.c_str(), tool.c_str());
@@ -326,7 +326,7 @@ View& View::CreateEventScene()   {
 
 /// Create the geometry scene
 View& View::CreateGeoScene()  {
-  if ( 0 == m_geoScene )   {
+  if ( nullptr == m_geoScene )   {
     string nam  = m_name+" - Geometry";
     string tool = m_name+" - Scene holding projected geometry for the view.";
     m_geoScene = m_eve->manager().SpawnNewScene(nam.c_str(), tool.c_str());

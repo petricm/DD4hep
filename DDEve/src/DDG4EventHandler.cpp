@@ -47,12 +47,12 @@ DECLARE_CONSTRUCTOR(DDEve_DDG4EventHandler,_create)
 /// Standard constructor
 DDG4EventHandler::DDG4EventHandler() : EventHandler(), m_file(0,0), m_entry(-1) {
   void* ptr = PluginService::Create<void*>("DDEve_DDG4HitAccess",(const char*)"");
-  if ( 0 == ptr )   {
+  if ( nullptr == ptr )   {
     throw runtime_error("FATAL: Failed to access function pointer from factory DDEve_DDG4HitAccess");
   }
   m_simhitConverter = FCN(ptr).hits;
   ptr = PluginService::Create<void*>("DDEve_DDG4ParticleAccess",(const char*)"");
-  if ( 0 == ptr )   {
+  if ( nullptr == ptr )   {
     throw runtime_error("FATAL: Failed to access function pointer from factory DDEve_DDG4ParticleAccess");
   }
   m_particleConverter = FCN(ptr).particles;
@@ -203,7 +203,7 @@ bool DDG4EventHandler::Open(const std::string&, const std::string& name)   {
       for(Int_t i=0; i<br->GetSize(); ++i)  {
         auto* b = (TBranch*)br->At(i);
         if ( !b ) continue;
-        m_branches[b->GetName()] = make_pair(b,(void*)0);
+        m_branches[b->GetName()] = make_pair(b,(void*)nullptr);
         printout(INFO,"DDG4EventHandler::open","+++ Branch %s has %ld entries.",b->GetName(),b->GetEntries());
       }
       for(Int_t i=0; i<br->GetSize(); ++i)  {

@@ -53,7 +53,7 @@ void next_event(){
   
   static int count = 1 ;
   
-  static LCReader* rdr = 0 ;
+  static LCReader* rdr = nullptr ;
   
   std::string lcioFileName = "teve_infile.slcio" ; 
   
@@ -79,7 +79,7 @@ void next_event(){
     }
   }
 
-  if( rdr == 0 )
+  if( rdr == nullptr )
     // nothing to do as inputfile does not exist:
     return ;
   
@@ -91,7 +91,7 @@ void next_event(){
   
   LCEvent* evt =  rdr->readNextEvent() ;
 
-  if( evt != 0 ){
+  if( evt != nullptr ){
 
     const std::vector< std::string >& colNames = * evt->getCollectionNames() ;
 

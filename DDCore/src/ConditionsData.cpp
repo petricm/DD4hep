@@ -47,7 +47,7 @@ std::ostream& operator << (std::ostream& s, const AbstractMap& data)   {
 ClientData::~ClientData()  = default;
 
 /// Default constructor
-AbstractMap::AbstractMap() : clientData(0), classID(0) {
+AbstractMap::AbstractMap() : clientData(nullptr), classID(0) {
   InstanceCount::increment(this);
 }
 
@@ -61,7 +61,7 @@ AbstractMap::AbstractMap(const AbstractMap& c)
 /// Default destructor
 AbstractMap::~AbstractMap()  {
   if ( clientData ) clientData->release();
-  clientData = 0;
+  clientData = nullptr;
   InstanceCount::decrement(this);
 }
 

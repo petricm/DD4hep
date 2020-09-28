@@ -64,7 +64,7 @@ void Geant4TrackingPostAction::begin(const G4Track* track) {
 
   // Is the track valid? Is tracking manager valid?
   // Does trajectory already exist?
-  if (0 == track || 0 == trackMgr() || 0 != trackMgr()->GimmeTrajectory())
+  if (nullptr == track || nullptr == trackMgr() || nullptr != trackMgr()->GimmeTrajectory())
     return;
   trackMgr()->SetStoreTrajectory(true);
   // create GaussTrajectory and inform Tracking Manager
@@ -74,9 +74,9 @@ void Geant4TrackingPostAction::begin(const G4Track* track) {
 
 /// End-of-tracking callback
 void Geant4TrackingPostAction::end(const G4Track* tr) {
-  if (0 == tr)
+  if (nullptr == tr)
     return;
-  else if (0 == trackMgr())
+  else if (nullptr == trackMgr())
     return;
 
   Geant4TrackHandler track(tr);
@@ -99,7 +99,7 @@ void Geant4TrackingPostAction::end(const G4Track* tr) {
 }
 
 void Geant4TrackingPostAction::saveTrack(const G4Track* track) {
-  if (0 != track) {
+  if (nullptr != track) {
   }
 }
 

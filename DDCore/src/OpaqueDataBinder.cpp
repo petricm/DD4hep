@@ -159,25 +159,25 @@ namespace dd4hep::detail  {
       BasicGrammar::instance<KEY>().fromString(&key, key_val);
       // Short and char is not part of the standard dictionaries. Fall back to 'int'.
       if ( val_type.substr(0,4) == "char" )
-        emplace_map_item(b, object, key, val, (int*)0);
+        emplace_map_item(b, object, key, val, (int*)nullptr);
       else if ( val_type.substr(0,5) == "short" )
-        emplace_map_item(b, object, key, val, (int*)0);
+        emplace_map_item(b, object, key, val, (int*)nullptr);
       else if ( val_type.substr(0,3) == "int" )
-        emplace_map_item(b, object, key, val, (int*)0);
+        emplace_map_item(b, object, key, val, (int*)nullptr);
       else if ( val_type.substr(0,4) == "long" )
-        emplace_map_item(b, object, key, val, (long*)0);
+        emplace_map_item(b, object, key, val, (long*)nullptr);
       else if ( val_type.substr(0,5) == "float" )
-        emplace_map_item(b, object, key, val, (float*)0);
+        emplace_map_item(b, object, key, val, (float*)nullptr);
       else if ( val_type.substr(0,6) == "double" )
-        emplace_map_item(b, object, key, val, (double*)0);
+        emplace_map_item(b, object, key, val, (double*)nullptr);
       else if ( val_type.substr(0,6) == "string" )
-        emplace_map_item(b, object, key, val, (string*)0);
+        emplace_map_item(b, object, key, val, (string*)nullptr);
       else if ( val_type == "std::string" )
-        emplace_map_item(b, object, key, val, (string*)0);
+        emplace_map_item(b, object, key, val, (string*)nullptr);
       else {
         printout(INFO,"Param","++ Unknown conditions parameter type:%s data:%s",
                  val_type.c_str(),val.c_str());
-        emplace_map_item(b, object, key, val, (string*)0);
+        emplace_map_item(b, object, key, val, (string*)nullptr);
       }
     }
 
@@ -206,32 +206,32 @@ namespace dd4hep::detail  {
     {
       // Short and char is not part of the standard dictionaries. Fall back to 'int'.
       if ( val_type.substr(0,4) == "char" )
-        emplace_map_pair(b, object, pair_data, (KEY*)0, (int*)0);
+        emplace_map_pair(b, object, pair_data, (KEY*)nullptr, (int*)nullptr);
       else if ( val_type.substr(0,5) == "short" )
-        emplace_map_pair(b, object, pair_data, (KEY*)0, (int*)0);
+        emplace_map_pair(b, object, pair_data, (KEY*)nullptr, (int*)nullptr);
       else if ( val_type.substr(0,3) == "int" )
-        emplace_map_pair(b, object, pair_data, (KEY*)0, (int*)0);
+        emplace_map_pair(b, object, pair_data, (KEY*)nullptr, (int*)nullptr);
       else if ( val_type.substr(0,4) == "long" )
-        emplace_map_pair(b, object, pair_data, (KEY*)0, (long*)0);
+        emplace_map_pair(b, object, pair_data, (KEY*)nullptr, (long*)nullptr);
       else if ( val_type.substr(0,5) == "float" )
-        emplace_map_pair(b, object, pair_data, (KEY*)0, (float*)0);
+        emplace_map_pair(b, object, pair_data, (KEY*)nullptr, (float*)nullptr);
       else if ( val_type.substr(0,6) == "double" )
-        emplace_map_pair(b, object, pair_data, (KEY*)0, (double*)0);
+        emplace_map_pair(b, object, pair_data, (KEY*)nullptr, (double*)nullptr);
       else if ( val_type.substr(0,6) == "string" )
-        emplace_map_pair(b, object, pair_data, (KEY*)0, (string*)0);
+        emplace_map_pair(b, object, pair_data, (KEY*)nullptr, (string*)nullptr);
       else if ( val_type == "std::string" )
-        emplace_map_pair(b, object, pair_data, (KEY*)0, (string*)0);
+        emplace_map_pair(b, object, pair_data, (KEY*)nullptr, (string*)nullptr);
       else {
         printout(INFO,"Param","++ Unknown conditions parameter type:%s data:%s",
                  val_type.c_str(),pair_data.c_str());
-        emplace_map_pair(b, object, pair_data, (KEY*)0, (string*)0);
+        emplace_map_pair(b, object, pair_data, (KEY*)nullptr, (string*)nullptr);
       }
     }
 
     template<typename BINDER, typename OBJECT, typename KEY> 
     static void bind_mapping(const BINDER& b, const string& val_type, OBJECT& object, const KEY*)   {
       if ( val_type.substr(0,3) == "int" )
-        __bind__(b,object, (map<KEY,int>*)0);
+        __bind__(b,object, (map<KEY,int>*)nullptr);
 #if defined(DD4HEP_HAVE_ALL_PARSERS)
       else if ( val_type.substr(0,12) == "unsigned int" )
         __bind__(b,object, (map<KEY,unsigned int>*)0);
@@ -248,22 +248,22 @@ namespace dd4hep::detail  {
 #else
       // Short and char is not part of the standard dictionaries. Fall back to 'int'.
       else if ( val_type.substr(0,4) == "char" )
-        __bind__(b,object, (map<KEY,int>*)0);
+        __bind__(b,object, (map<KEY,int>*)nullptr);
       else if ( val_type.substr(0,5) == "short" )
-        __bind__(b,object, (map<KEY,int>*)0);
+        __bind__(b,object, (map<KEY,int>*)nullptr);
 #endif
       else if ( val_type.substr(0,4) == "long" )
-        __bind__(b,object, (map<KEY,long>*)0);
+        __bind__(b,object, (map<KEY,long>*)nullptr);
       else if ( val_type.substr(0,5) == "float" )
-        __bind__(b,object, (map<KEY,float>*)0);
+        __bind__(b,object, (map<KEY,float>*)nullptr);
       else if ( val_type.substr(0,6) == "double" )
-        __bind__(b,object, (map<KEY,double>*)0);
+        __bind__(b,object, (map<KEY,double>*)nullptr);
       else if ( val_type.substr(0,6) == "string" )
-        __bind__(b,object, (map<KEY,string>*)0);
+        __bind__(b,object, (map<KEY,string>*)nullptr);
       else if ( val_type == "std::string" )
-        __bind__(b,object, (map<KEY,string>*)0);
+        __bind__(b,object, (map<KEY,string>*)nullptr);
       else {
-        __bind__(b,object, (map<KEY,string>*)0);
+        __bind__(b,object, (map<KEY,string>*)nullptr);
       }
     }
   

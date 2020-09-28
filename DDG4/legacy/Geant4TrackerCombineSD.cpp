@@ -33,7 +33,7 @@ namespace dd4hep::sim {
     struct TrackerCombine {
       Geant4TrackerHit  pre;
       Geant4TrackerHit  post;
-      G4Track*          track{0};
+      G4Track*          track{nullptr};
       double            e_cut{0.0};
       int               current{-1};
       long long int     cellID{0};
@@ -53,15 +53,15 @@ namespace dd4hep::sim {
       void clear()   {
         pre.truth.clear();
         current = -1;
-        track = 0;
+        track = nullptr;
       }
       Geant4TrackerHit* extractHit(Geant4SensitiveDetector::HitCollection* c)   {
         if ( current == -1 || !track ) {
-          return 0;
+          return nullptr;
         }
         else if ( pre.truth.deposit <= e_cut && !Geant4Hit::isGeantino(track) ) {
           clear();
-          return 0;
+          return nullptr;
         }
         Position pos = 0.5 * (pre.position + post.position);
         Momentum mom = 0.5 * (pre.momentum + post.momentum);
@@ -98,7 +98,7 @@ namespace dd4hep::sim {
       bool return_code = false;
 
       if ( !userData.track || userData.current != h.track->GetTrackID() ) {
-        return_code = userData.extractHit(collection(0)) != 0;
+        return_code = userData.extractHit(collection(0)) != nullptr;
         userData.start(getCellID(step), step, h.pre);
       }
 
@@ -108,8 +108,8 @@ namespace dd4hep::sim {
       void *prePV = h.volume(h.pre), *postPV = h.volume(h.post);
       if ( prePV != postPV ) {
         void* postSD = h.sd(h.post);
-        return_code = userData.extractHit(collection(0)) != 0;
-        if ( 0 != postSD )   {
+        return_code = userData.extractHit(collection(0)) != nullptr;
+        if ( nullptr != postSD )   {
           void* preSD = h.sd(h.pre);
           if ( preSD == postSD ) {
             userData.start(getCellID(step), step,h.post);
@@ -117,7 +117,7 @@ namespace dd4hep::sim {
         }
       }
       else if ( userData.track->GetTrackStatus() == fStopAndKill ) {
-        return_code = userData.extractHit(collection(0)) != 0;
+        return_code = userData.extractHit(collection(0)) != nullptr;
       }
       return return_code;
     }

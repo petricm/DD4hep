@@ -44,11 +44,11 @@ struct Item {
   enum { UNKNOWN, VARIABLE, EXPRESSION, FUNCTION, STRING } what{UNKNOWN};
   double variable{0};
   string expression;
-  void   *function{0};
+  void   *function{nullptr};
 
   explicit Item()         : expression() {}
-  explicit Item(double x) : what(VARIABLE),  variable(x),expression(), function(0) {}
-  explicit Item(string x) : what(EXPRESSION),variable(0),expression(x),function(0) {}
+  explicit Item(double x) : what(VARIABLE),  variable(x),expression(), function(nullptr) {}
+  explicit Item(string x) : what(EXPRESSION),variable(0),expression(x),function(nullptr) {}
   explicit Item(void  *x) : what(FUNCTION),  variable(0),expression(), function(x) {}
 };
 
@@ -173,7 +173,7 @@ static int function(const string & name, stack<double> & par,
   double pp[MAX_N_PAR];
   for(int i=0; i<npar; i++) { pp[i] = par.top(); par.pop(); }
   errno = 0;
-  if (item.function == 0)       return EVAL::ERROR_CALCULATION_ERROR;
+  if (item.function == nullptr)       return EVAL::ERROR_CALCULATION_ERROR;
   FCN fcn(item.function);
   switch (npar) {
   case 0:
@@ -566,7 +566,7 @@ static int engine(pchar begin, pchar end, double & result,
 static void setItem(const char * prefix, const char * name,
                     const Item & item, Struct * s) {
 
-  if (name == 0 || *name == '\0') {
+  if (name == nullptr || *name == '\0') {
     s->theStatus = EVAL::ERROR_NOT_A_NAME;
     return;
   }
@@ -613,8 +613,8 @@ using namespace dd4hep::tools;
 Evaluator::Evaluator() {
   auto * s = new Struct();
   p = (void *) s;
-  s->theExpression = 0;
-  s->thePosition   = 0;
+  s->theExpression = nullptr;
+  s->thePosition   = nullptr;
   s->theStatus     = OK;
   s->theResult     = 0.0;
 }
@@ -622,9 +622,9 @@ Evaluator::Evaluator() {
 //---------------------------------------------------------------------------
 Evaluator::~Evaluator() {
   auto * s = reinterpret_cast<Struct*>(p);
-  if (s->theExpression != 0) {
+  if (s->theExpression != nullptr) {
     delete[] s->theExpression;
-    s->theExpression = 0;
+    s->theExpression = nullptr;
   }
   delete reinterpret_cast<Struct*>(p);
 }
@@ -632,12 +632,12 @@ Evaluator::~Evaluator() {
 //---------------------------------------------------------------------------
 double Evaluator::evaluate(const char * expression) {
   auto * s = reinterpret_cast<Struct*>(p);
-  if (s->theExpression != 0) { delete[] s->theExpression; }
-  s->theExpression = 0;
-  s->thePosition   = 0;
+  if (s->theExpression != nullptr) { delete[] s->theExpression; }
+  s->theExpression = nullptr;
+  s->thePosition   = nullptr;
   s->theStatus     = WARNING_BLANK_STRING;
   s->theResult     = 0.0;
-  if (expression != 0) {
+  if (expression != nullptr) {
     s->theExpression = new char[strlen(expression)+1];
     strcpy(s->theExpression, expression);
     s->theStatus = engine(s->theExpression,
@@ -711,7 +711,7 @@ void Evaluator::setEnviron(const char* name, const char* value)  {
   Item item;
   item.what = Item::STRING;
   item.expression = value;
-  item.function = 0;
+  item.function = nullptr;
   item.variable = 0;
   //std::cout << " ++++++++++++++++++++++++++++ Saving env:" << name << " = " << value << std::endl;
   if (iter != (s->theDictionary).end()) {
@@ -740,13 +740,13 @@ const char* Evaluator::getEnviron(const char* name)  {
     // Need to remove braces from ${xxxx} for call to getenv()
     string env_name(name+2,::strlen(name)-3);
     const char* env_str = ::getenv(env_name.c_str());
-    if ( 0 != env_str )    {
+    if ( nullptr != env_str )    {
       s->theStatus = EVAL::OK;
       return env_str;
     }
   }
   s->theStatus = EVAL::ERROR_UNKNOWN_VARIABLE;
-  return 0;
+  return nullptr;
 }
 
 //---------------------------------------------------------------------------
@@ -789,7 +789,7 @@ void Evaluator::setFunction(const char * name, double (*fun)(double,double,doubl
 
 //---------------------------------------------------------------------------
 bool Evaluator::findVariable(const char * name) const {
-  if (name == 0 || *name == '\0') return false;
+  if (name == nullptr || *name == '\0') return false;
   const char * pointer; int n; REMOVE_BLANKS;
   if (n == 0) return false;
   auto * s = reinterpret_cast<Struct*>(p);
@@ -800,7 +800,7 @@ bool Evaluator::findVariable(const char * name) const {
 
 //---------------------------------------------------------------------------
 bool Evaluator::findFunction(const char * name, int npar) const {
-  if (name == 0 || *name == '\0')    return false;
+  if (name == nullptr || *name == '\0')    return false;
   if (npar < 0  || npar > MAX_N_PAR) return false;
   const char * pointer; int n; REMOVE_BLANKS;
   if (n == 0) return false;
@@ -811,7 +811,7 @@ bool Evaluator::findFunction(const char * name, int npar) const {
 
 //---------------------------------------------------------------------------
 void Evaluator::removeVariable(const char * name) {
-  if (name == 0 || *name == '\0') return;
+  if (name == nullptr || *name == '\0') return;
   const char * pointer; int n; REMOVE_BLANKS;
   if (n == 0) return;
   auto * s = reinterpret_cast<Struct*>(p);
@@ -820,7 +820,7 @@ void Evaluator::removeVariable(const char * name) {
 
 //---------------------------------------------------------------------------
 void Evaluator::removeFunction(const char * name, int npar) {
-  if (name == 0 || *name == '\0')    return;
+  if (name == nullptr || *name == '\0')    return;
   if (npar < 0  || npar > MAX_N_PAR) return;
   const char * pointer; int n; REMOVE_BLANKS;
   if (n == 0) return;
@@ -832,8 +832,8 @@ void Evaluator::removeFunction(const char * name, int npar) {
 void Evaluator::clear() {
   auto * s = reinterpret_cast<Struct*>(p);
   s->theDictionary.clear();
-  s->theExpression = 0;
-  s->thePosition   = 0;
+  s->theExpression = nullptr;
+  s->thePosition   = nullptr;
   s->theStatus     = OK;
   s->theResult     = 0.0;
 }

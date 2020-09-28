@@ -28,7 +28,7 @@ using namespace std;
 
 /// Standard constructor
 Geant4OutputAction::Geant4OutputAction(Geant4Context* ctxt, const string& nam)
-  : Geant4EventAction(ctxt, nam), m_truth(0)
+  : Geant4EventAction(ctxt, nam), m_truth(nullptr)
 {
   InstanceCount::increment(this);
   declareProperty("Output", m_output);
@@ -62,7 +62,7 @@ void Geant4OutputAction::end(const G4Event* evt) {
     try  {
       m_truth = context()->event().extension<Geant4ParticleMap>(false);
       if ( m_truth && !m_truth->isValid() )  {
-        m_truth = 0;
+        m_truth = nullptr;
         printout(WARNING,name(),"+++ [Event:%d] No valid MC truth info present. "
                  "Is a Particle handler installed ?",evt->GetEventID());
       }
@@ -95,7 +95,7 @@ void Geant4OutputAction::end(const G4Event* evt) {
                evt->GetEventID());
       if ( m_errorFatal ) throw;
     }
-    m_truth = 0;
+    m_truth = nullptr;
     return;
   }
   printout(WARNING,"Geant4OutputAction",

@@ -34,7 +34,7 @@ Segmentation::Segmentation(const string& typ, const string& nam, const BitFieldC
 {
   string seg_type = "segmentation_constructor__"+typ;
   auto* obj = PluginService::Create<SegmentationObject*>(seg_type, dec);
-  if ( obj != 0 )  {
+  if ( obj != nullptr )  {
     assign(obj, nam, typ);
     if ( !nam.empty() ) obj->setName(nam);
     return;

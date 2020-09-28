@@ -57,7 +57,7 @@ namespace {
       "      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n  ";
     dd4hep::xml::DocumentHandler docH;
     xml_doc_t doc = docH.create("collection", comment);
-    xml_elt_t root = doc.root(), cond(0);
+    xml_elt_t root = doc.root(), cond(nullptr);
     for( const auto& i : all )  {
       char text[32];
       Condition c = i.second;

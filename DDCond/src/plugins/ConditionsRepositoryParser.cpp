@@ -90,7 +90,7 @@ namespace {
     ConditionsManager  manager;
     ConversionArg() = delete;
     ConversionArg(const ConversionArg&) = delete;
-    ConversionArg(DetElement det, ConditionsManager m) : detector(det), pool(0), manager(m)
+    ConversionArg(DetElement det, ConditionsManager m) : detector(det), pool(nullptr), manager(m)
     { }
     ConversionArg& operator=(const ConversionArg&) = delete;
   };

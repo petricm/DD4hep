@@ -69,7 +69,7 @@ namespace dd4hep::sim {
         info("+++              G4OpAbsorption G4OpRayleigh G4OpMieHG G4OpBoundaryProcess");
         G4ParticleTable*      table = G4ParticleTable::GetParticleTable();
         G4ParticleDefinition* particle = table->FindParticle("opticalphoton");
-        if (0 == particle) {
+        if (nullptr == particle) {
           except("++ Cannot resolve 'opticalphoton' particle definition!");
         }
 

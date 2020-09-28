@@ -130,7 +130,7 @@ namespace {
         ((FundamentalData*)ptr)->read(b,gr.data_type());
       b.CheckByteCount(R__s, R__c, cl);
     }
-    else if ( 0 == block->grammar )  {
+    else if ( nullptr == block->grammar )  {
       printout(ERROR,"OpaqueData","+++ ERROR +++ Opaque data block has no grammar attached. Cannot be saved!");
     }
     else  {
@@ -155,7 +155,7 @@ namespace {
 
 /// Default constructor
 DetectorData::DetectorData()
-  : m_manager(0), m_world(), m_trackers(), m_worldVol(),
+  : m_manager(nullptr), m_world(), m_trackers(), m_worldVol(),
     m_trackingVol(), m_field(),
     m_buildType(BUILD_DEFAULT), m_extensions(typeid(DetectorData)), m_volManager(),
     m_inhibitConstants(false)
@@ -164,10 +164,10 @@ DetectorData::DetectorData()
   if ( first )   {
     first = false;
     TClass* cl = gROOT->GetClass("dd4hep::OpaqueDataBlock");
-    if ( 0 == cl )  {
+    if ( nullptr == cl )  {
       except("PersistencyIO","+++ Missing TClass for 'dd4hep::OpaqueDataBlock'.");
     }
-    if ( 0 == cl->GetStreamer() )  {
+    if ( nullptr == cl->GetStreamer() )  {
       cl->AdoptStreamer(new TClassStreamer(stream_opaque_datablock));
       printout(INFO,"PersistencyIO","+++ Set Streamer to %s",cl->GetName());
     }
@@ -183,7 +183,7 @@ DetectorData::~DetectorData() {
 
 /// Patch the ROOT streamers to adapt for DD4hep
 void DetectorData::patchRootStreamer(TClass* cl)   {
-  TDataMember* dm = 0;
+  TDataMember* dm = nullptr;
   printout(INFO,"PersistencyIO",
            "+++ Set data member %s.fUserExtension as PERSISTENT.",
            cl->GetName());
@@ -194,7 +194,7 @@ void DetectorData::patchRootStreamer(TClass* cl)   {
 
 /// UNPatch the ROOT streamers to adapt for DD4hep
 void DetectorData::unpatchRootStreamer(TClass* cl)   {
-  TDataMember* dm = 0;
+  TDataMember* dm = nullptr;
   printout(INFO,"PersistencyIO",
            "+++ Set data member %s.fUserExtension as TRANSIENT.",
            cl->GetName());
@@ -240,11 +240,11 @@ void DetectorData::destroyData(bool destroy_mgr)   {
   if ( destroy_mgr )  {
     gGeoManager = m_manager;
     deletePtr(m_manager);
-    gGeoManager = 0;
+    gGeoManager = nullptr;
   }
   else  {
     gGeoManager = m_manager;
-    m_manager = 0;
+    m_manager = nullptr;
   }
 }
 
@@ -273,7 +273,7 @@ void DetectorData::clearData()   {
   m_materialVacuum.clear();
   m_materialAir.clear();
   m_volManager.clear();
-  m_manager = 0;
+  m_manager = nullptr;
   m_inhibitConstants = false;
 }
 

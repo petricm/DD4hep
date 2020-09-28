@@ -190,7 +190,7 @@ static long gdml_extract(Detector& description, int argc, char** argv) {
       struct Actor {
         bool _volpath;
         const string& _path;
-        TGeoNode*     _node = 0;
+        TGeoNode*     _node = nullptr;
         Actor(const string& p, bool vp) : _volpath(vp), _path(p)  {}
         void scan(TGeoNode* n, const std::string& p="")  {
           string nam;
@@ -200,7 +200,7 @@ static long gdml_extract(Detector& description, int argc, char** argv) {
             if ( _volpath && nam.find(_path) == 0 )   {
               _node = n;
             }
-            for (Int_t idau = 0, ndau = n->GetNdaughters(); _node == 0 && idau < ndau; ++idau)
+            for (Int_t idau = 0, ndau = n->GetNdaughters(); _node == nullptr && idau < ndau; ++idau)
               scan(n->GetDaughter(idau), p);
             return;
           }
@@ -211,14 +211,14 @@ static long gdml_extract(Detector& description, int argc, char** argv) {
             printout(ALWAYS,"Check","+++                     -> %s",nam.c_str());
             return;
           }
-          for (Int_t idau = 0, ndau = n->GetNdaughters(); _node == 0 && idau < ndau; ++idau)
+          for (Int_t idau = 0, ndau = n->GetNdaughters(); _node == nullptr && idau < ndau; ++idau)
             scan(n->GetDaughter(idau),nam);
         }
       };
       Volume top = description.worldVolume();
       TObjArray* ents = top->GetNodes();
       Actor a(path, volpath ? true : false);
-      for (Int_t i = 0, n = ents->GetEntries(); i < n && a._node == 0; ++i)  {
+      for (Int_t i = 0, n = ents->GetEntries(); i < n && a._node == nullptr; ++i)  {
         auto* node = (TGeoNode*)ents->At(i);
         a.scan(node, node->GetName());
       }
@@ -245,7 +245,7 @@ static long create_gdml_from_dd4hep(Detector& description, int argc, char** argv
   if ( argc > 0 )    {
     string output = argv[0];
     if ( output.substr(0,5) == "file:" ) output = output.substr(6);
-    const char* av[] = {"DD4hepGeometry2GDML", "-output", output.c_str(), "-path", "/world", 0};
+    const char* av[] = {"DD4hepGeometry2GDML", "-output", output.c_str(), "-path", "/world", nullptr};
     if ( 1 == gdml_extract(description, 5, (char**)av) )   {
       printout(INFO,"Geometry2GDML","+++ Successfully extracted GDML to %s",output.c_str());
       return 1;

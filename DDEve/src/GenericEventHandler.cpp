@@ -29,7 +29,7 @@ using namespace dd4hep;
 ClassImp(GenericEventHandler)
 
 /// Standard constructor
-GenericEventHandler::GenericEventHandler() : m_current(0) {
+GenericEventHandler::GenericEventHandler() : m_current(nullptr) {
 }
 
 /// Default destructor
@@ -107,14 +107,14 @@ bool GenericEventHandler::Open(const string& file_type, const string& file_name)
     detail::deletePtr(m_current);
     //  prefer event handler configured in xml
     if ( file_type.find("FCC") != string::npos ) {
-      m_current = (EventHandler*)PluginService::Create<void*>("DDEve_FCCEventHandler",(const char*)0);
+      m_current = (EventHandler*)PluginService::Create<void*>("DDEve_FCCEventHandler",(const char*)nullptr);
     }
     // fall back to defaults according to file ending
     else if ( idx != string::npos )   {
-      m_current = (EventHandler*)PluginService::Create<void*>("DDEve_LCIOEventHandler",(const char*)0);
+      m_current = (EventHandler*)PluginService::Create<void*>("DDEve_LCIOEventHandler",(const char*)nullptr);
     }
     else if ( idr != string::npos )   {
-      m_current = (EventHandler*)PluginService::Create<void*>("DDEve_DDG4EventHandler",(const char*)0);
+      m_current = (EventHandler*)PluginService::Create<void*>("DDEve_DDG4EventHandler",(const char*)nullptr);
     }
     else   {
       throw runtime_error("Attempt to open file:"+file_name+" of unknown type:"+file_type);
@@ -138,8 +138,8 @@ bool GenericEventHandler::Open(const string& file_type, const string& file_name)
   }
   string path = TString::Format("%s/icons/stop_t.xpm", gSystem->Getenv("ROOTSYS")).Data();
   const TGPicture* pic = gClient->GetPicture(path.c_str());
-  new TGMsgBox(gClient->GetRoot(),0,"Failed to open event data",err.c_str(),pic,
-               kMBDismiss,0,kVerticalFrame,kTextLeft|kTextCenterY);
+  new TGMsgBox(gClient->GetRoot(),nullptr,"Failed to open event data",err.c_str(),pic,
+               kMBDismiss,nullptr,kVerticalFrame,kTextLeft|kTextCenterY);
   return false;
 }
 
@@ -161,8 +161,8 @@ bool GenericEventHandler::NextEvent()   {
     string err = "\nAn exception occurred \n"
       "while reading a new event:\n" + string(e.what()) + "\n\n";
     const TGPicture* pic = gClient->GetPicture(path.c_str());
-    new TGMsgBox(gClient->GetRoot(),0,"Failed to read event", err.c_str(),pic,
-                 kMBDismiss,0,kVerticalFrame,kTextLeft|kTextCenterY);
+    new TGMsgBox(gClient->GetRoot(),nullptr,"Failed to read event", err.c_str(),pic,
+                 kMBDismiss,nullptr,kVerticalFrame,kTextLeft|kTextCenterY);
   }
   return -1;
 }

@@ -109,10 +109,10 @@ GlobalAlignmentCache* GlobalAlignmentCache::section(const string& path_name) con
     return section(m_detDesc.world().placementPath()+'/'+path_name);
   }
   else if ( (idx=path_name.find('/',1)) == string::npos )  {
-    return (m_sdPath == path_name.c_str()+1) ? (GlobalAlignmentCache*)this : 0;
+    return (m_sdPath == path_name.c_str()+1) ? (GlobalAlignmentCache*)this : nullptr;
   }
   else if ( m_detectors.empty() )  {
-    return 0;
+    return nullptr;
   }
   if ( (idq=path_name.find('/',idx+1)) != string::npos ) --idq;
   string path = path_name.substr(idx+1,idq-idx);
@@ -129,20 +129,20 @@ GlobalAlignment GlobalAlignmentCache::get(const string& path_name) const   {
     return GlobalAlignment((*i).second);
   }
   else if ( m_detectors.empty() )  {
-    return GlobalAlignment(0);
+    return GlobalAlignment(nullptr);
   }
   else if ( path_name[0] != '/' )   {
     return get(m_detDesc.world().placementPath()+'/'+path_name);
   }
   else if ( (idx=path_name.find('/',1)) == string::npos )  {
     // Escape: World volume and not found in cache --> not present
-    return GlobalAlignment(0);
+    return GlobalAlignment(nullptr);
   }
   if ( (idq=path_name.find('/',idx+1)) != string::npos ) --idq;
   string path = path_name.substr(idx+1,idq-idx);
   auto j = m_detectors.find(path);
   if ( j != m_detectors.end() ) return (*j).second->get(path_name);
-  return GlobalAlignment(0);
+  return GlobalAlignment(nullptr);
 }
 
 /// Return all entries matching a given path.

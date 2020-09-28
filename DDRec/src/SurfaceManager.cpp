@@ -49,7 +49,7 @@ namespace dd4hep {
         return & it->second ;
       }
 
-      return 0 ;
+      return nullptr ;
     }
 
     void SurfaceManager::initialize(Detector& description) {

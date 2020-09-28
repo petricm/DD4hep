@@ -27,7 +27,7 @@ namespace dd4hep {
   static inline ComponentCast* component(void* p) { return (ComponentCast*)p; }
 
   void* createProcessor(Detector& description, int argc, char** argv, void* (*cast)(void*))  {
-    void* processor = 0;
+    void* processor = nullptr;
     if ( argc < 2 )   {
       except("createProcessor","++ dd4hep-plugins: No processor creator name given!");
     }
@@ -88,7 +88,7 @@ namespace dd4hep {
 
   /// Handler for factories of type: ConstructionFactory
   void* createPlugin(const std::string& factory, Detector& description, void* (*cast)(void*))  {
-    char* argv[] = {0};
+    char* argv[] = {nullptr};
     int   argc = 0;
     return createPlugin(factory, description, argc, argv, cast);
   }
@@ -97,7 +97,7 @@ namespace dd4hep {
                      Detector& description, 
                      const std::string& arg,
                      void* (*cast)(void*))   {
-    char* argv[] = { (char*)arg.c_str(), 0 };
+    char* argv[] = { (char*)arg.c_str(), nullptr };
     int   argc = 1;
     return createPlugin(factory, description, argc, argv, cast);
   }

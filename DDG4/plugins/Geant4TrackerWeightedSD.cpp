@@ -72,9 +72,9 @@ namespace dd4hep::sim   {
       
       Geant4Tracker::Hit    pre, post;
       Position              mean_pos;
-      Geant4Sensitive*      sensitive            = 0;
-      G4VSensitiveDetector* thisSD               = 0;
-      G4VPhysicalVolume*    thisPV               = 0;
+      Geant4Sensitive*      sensitive            = nullptr;
+      G4VSensitiveDetector* thisSD               = nullptr;
+      G4VPhysicalVolume*    thisPV               = nullptr;
       double                distance_to_inside   = 0.0;
       double                distance_to_outside  = 0.0;
       double                mean_time            = 0.0;
@@ -285,7 +285,7 @@ namespace dd4hep::sim   {
         const void* preSD  = h.preSD();
         G4VSolid* solid = (preSD == thisSD) ? preSolid : postSolid;
         // Track went into new Volume, extracted the hit in prePV, then start a new hit in thisPV.
-        if ( current == h.trkID() && thisPV != 0 && prePV != thisPV )  {
+        if ( current == h.trkID() && thisPV != nullptr && prePV != thisPV )  {
           if( DEBUG == printLevel() ) {
             std::cout<<" DEBUG: Geant4TrackerWeightedSD: if ( current == h.trkID() && thisPV != 0 && prePV != thisPV ),"
                      <<" Track went into new Volume, extracted the hit in prePV, then start a new hit in thisPV."

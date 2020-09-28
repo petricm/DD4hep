@@ -188,7 +188,7 @@ namespace dd4hep::sim::HepMC {
 
 /// Initializing constructor
 Geant4EventReaderHepMC::Geant4EventReaderHepMC(const string& nam)
-  : Geant4EventReader(nam), m_input(), m_events(0)
+  : Geant4EventReader(nam), m_input(), m_events(nullptr)
 {
   // Now open the input file:
   m_input.open(nam.c_str(),BOOST_IOS::in|BOOST_IOS::binary);
@@ -202,7 +202,7 @@ Geant4EventReaderHepMC::Geant4EventReaderHepMC(const string& nam)
 /// Default destructor
 Geant4EventReaderHepMC::~Geant4EventReaderHepMC()    {
   delete m_events;
-  m_events = 0;
+  m_events = nullptr;
   m_input.close();
 }
 

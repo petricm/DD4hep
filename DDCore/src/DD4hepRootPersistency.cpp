@@ -134,7 +134,7 @@ int DD4hepRootPersistency::load(Detector& description, const char* fname, const 
           for( const auto& vm : sdets )  {
             VolumeManager::Object* obj = vm.second.ptr();
             obj->system = obj->id.field("system");
-            if ( 0 != obj->system )   {
+            if ( nullptr != obj->system )   {
               printout(ALWAYS,"DD4hepRootPersistency",
                        "+++ Fixed VolumeManager.system for %-24s  %6ld volumes %4ld sdets %4ld mgrs.",
                        obj->detector.path().c_str(), obj->volumes.size(),
@@ -389,13 +389,13 @@ namespace {
     }
     size_t checkAlignment(DetElement det)   {
       AlignmentCondition::Object* align = det->nominal.ptr();
-      if ( 0 == align )  {
+      if ( nullptr == align )  {
         printout(ERROR,"chkNominals",
                  "+++ ERROR +++ Detector element with invalid nominal:%s",
                  det.path().c_str());
         ++errors;
       }
-      else if ( 0 == align->alignment_data )  {
+      else if ( nullptr == align->alignment_data )  {
         printout(ERROR,"chkNominals",
                  "+++ ERROR +++ Detector element with invalid nominal data:%s",
                  det.path().c_str());

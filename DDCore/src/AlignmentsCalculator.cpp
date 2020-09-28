@@ -60,9 +60,9 @@ namespace dd4hep::align {
 
       class Calculator::Entry  {
       public:
-        DetElement::Object*         det   = 0;
-        const Delta*                delta = 0;
-        AlignmentCondition::Object* cond  = 0;
+        DetElement::Object*         det   = nullptr;
+        const Delta*                delta = nullptr;
+        AlignmentCondition::Object* cond  = nullptr;
         unsigned char               key   = 0, valid = 0, created = 0, _pad[1];
         Entry(DetElement d, const Delta* del) : det(d.ptr()), delta(del), key(d.key())  {}
       };
@@ -168,7 +168,7 @@ Result Calculator::compute(Context& context, Entry& e)   const  {
   if ( s_PRINT <= INFO )  {
     printout(INFO,"ComputeAlignment","Level:%d Path:%s DetKey:%08X: Cond:%s key:%16llX",
              det.level(), det.path().c_str(), det.key(),
-             yes_no(e.delta != 0), (long long int)cond.key());
+             yes_no(e.delta != nullptr), (long long int)cond.key());
     if ( s_PRINT <= DEBUG )  {
       ::printf("Nominal:     '%s' ", det.path().c_str());
       det.nominal().worldTransformation().Print();
@@ -189,7 +189,7 @@ Result Calculator::compute(Context& context, Entry& e)   const  {
 void Calculator::resolve(Context& context, DetElement detector) const   {
   auto children = detector.children();
   auto item = context.detectors.find(detector);
-  if ( item == context.detectors.end() ) context.insert(detector,0);
+  if ( item == context.detectors.end() ) context.insert(detector,nullptr);
   for(const auto& c : children )
     resolve(context, c.second);
 }
@@ -270,7 +270,7 @@ size_t AlignmentsCalculator::extract_deltas(DetElement start,
     struct DeltaScanner : public Condition::Processor   {
       OrderedDeltas& delta_conditions;
       ExtractContext& extract_context;
-      IOV* effective_iov = 0;
+      IOV* effective_iov = nullptr;
       /// Constructor
       DeltaScanner(OrderedDeltas& d, ExtractContext& e, IOV* eff_iov)
         : delta_conditions(d), extract_context(e), effective_iov(eff_iov) {}

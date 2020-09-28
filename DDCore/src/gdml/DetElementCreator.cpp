@@ -32,7 +32,7 @@ namespace dd4hep {
    */
   class DetElementCreator : public PlacedVolumeProcessor  {
     struct Data {
-      PlacedVolume pv {0};
+      PlacedVolume pv {nullptr};
       DetElement   element {};
       bool         sensitive = false;
       bool         has_sensitive = false;

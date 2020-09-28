@@ -61,11 +61,11 @@ namespace dd4hep::sim {
         dd4hep::except("convertShape","Unsupported shape: %s",shape->IsA()->GetName());
       }
       dd4hep::except("convertShape","Invalid shape conversion requested.");
-      return 0;
+      return nullptr;
     }
 
     template <> G4VSolid* convertShape<TGeoShapeAssembly>(const TGeoShape* /* shape */)  {
-      return 0;
+      return nullptr;
     }
 
     template <> G4VSolid* convertShape<TGeoBBox>(const TGeoShape* shape)  {
@@ -246,7 +246,7 @@ namespace dd4hep::sim {
         const auto& v0 = sh->GetVertex(facet.GetVertexIndex(0));
         const auto& v1 = sh->GetVertex(facet.GetVertexIndex(1));
         const auto& v2 = sh->GetVertex(facet.GetVertexIndex(2));
-        G4VFacet* g4f = 0;
+        G4VFacet* g4f = nullptr;
         if ( nv == 3 )    {
           g4f = new G4TriangularFacet(G4ThreeVector(v0.x() * CM_2_MM, v0.y() * CM_2_MM, v0.z() * CM_2_MM),
                                       G4ThreeVector(v1.x() * CM_2_MM, v1.y() * CM_2_MM, v1.z() * CM_2_MM),

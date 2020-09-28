@@ -40,7 +40,7 @@ using namespace dd4hep::sim;
 
 namespace {
   G4Mutex kernel_mutex=G4MUTEX_INITIALIZER;
-  dd4hep::dd4hep_ptr<Geant4Kernel> s_main_instance(0);
+  dd4hep::dd4hep_ptr<Geant4Kernel> s_main_instance(nullptr);
 }
 
 /// Standard constructor
@@ -71,9 +71,9 @@ Geant4ActionPhase& Geant4Kernel::PhaseSelector::operator[](const std::string& na
 
 /// Standard constructor
 Geant4Kernel::Geant4Kernel(Detector& description_ref)
-  : Geant4ActionContainer(), m_runManager(0), m_control(0), m_trackMgr(0), m_detDesc(&description_ref), 
-    m_numThreads(0), m_id(Geant4Kernel::thread_self()), m_master(this), m_shared(0),
-    m_threadContext(0), phase(this)
+  : Geant4ActionContainer(), m_runManager(nullptr), m_control(nullptr), m_trackMgr(nullptr), m_detDesc(&description_ref),
+    m_numThreads(0), m_id(Geant4Kernel::thread_self()), m_master(this), m_shared(nullptr),
+    m_threadContext(nullptr), phase(this)
 {
   //m_detDesc->addExtension < Geant4Kernel > (this);
   m_ident = -1;
@@ -95,9 +95,9 @@ Geant4Kernel::Geant4Kernel(Detector& description_ref)
 
 /// Standard constructor
 Geant4Kernel::Geant4Kernel(Geant4Kernel* krnl, unsigned long ident)
-  : Geant4ActionContainer(), m_runManager(0), m_control(0), m_trackMgr(0), m_detDesc(0),
-    m_numThreads(1), m_id(ident), m_master(krnl), m_shared(0),
-    m_threadContext(0), phase(this)
+  : Geant4ActionContainer(), m_runManager(nullptr), m_control(nullptr), m_trackMgr(nullptr), m_detDesc(nullptr),
+    m_numThreads(1), m_id(ident), m_master(krnl), m_shared(nullptr),
+    m_threadContext(nullptr), phase(this)
 {
   char text[64];
   m_detDesc        = m_master->m_detDesc;
@@ -135,7 +135,7 @@ Geant4Kernel::~Geant4Kernel() {
     try  {
       //m_detDesc->removeExtension < Geant4Kernel > (false);
       m_detDesc->destroyInstance();
-      m_detDesc = 0;
+      m_detDesc = nullptr;
     }
     catch(...)  {
     }
@@ -145,9 +145,9 @@ Geant4Kernel::~Geant4Kernel() {
 
 /// Instance accessor
 Geant4Kernel& Geant4Kernel::instance(Detector& description) {
-  if ( 0 == s_main_instance.get() )   {
+  if ( nullptr == s_main_instance.get() )   {
     G4AutoLock protection_lock(&kernel_mutex);    {
-      if ( 0 == s_main_instance.get() )   { // Need to check again!
+      if ( nullptr == s_main_instance.get() )   { // Need to check again!
         s_main_instance.adopt(new Geant4Kernel(description));
       }
     }
@@ -289,7 +289,7 @@ void Geant4Kernel::loadGeometry(const std::string& compact_file) {
 
 // Utility function to load XML files
 void Geant4Kernel::loadXML(const char* fname) {
-  const char* args[] = { fname, 0 };
+  const char* args[] = { fname, nullptr };
   m_detDesc->apply("DD4hep_XMLLoader", 1, (char**) args);
 }
 
@@ -335,7 +335,7 @@ int Geant4Kernel::terminate() {
   if ( ptr == this && m_detDesc )  {
     //m_detDesc->removeExtension < Geant4Kernel > (false);
     m_detDesc->destroyInstance();
-    m_detDesc = 0;
+    m_detDesc = nullptr;
   }
   return 1;
 }
@@ -372,7 +372,7 @@ Geant4Action* Geant4Kernel::globalAction(const std::string& action_name, bool th
        except("Geant4Kernel", "DDG4: The action '%s' is not globally "
               "registered. [Action-Missing]", action_name.c_str());
     }
-    return 0;
+    return nullptr;
   }
   return (*i).second;
 }
@@ -407,7 +407,7 @@ Geant4Action* Geant4Kernel::globalFilter(const std::string& filter_name, bool th
       except("Geant4Kernel", "DDG4: The filter '%s' is not already globally "
              "registered. [Filter-Missing]", filter_name.c_str());
     }
-    return 0;
+    return nullptr;
   }
   return (*i).second;
 }
@@ -429,7 +429,7 @@ Geant4ActionPhase* Geant4Kernel::getPhase(const std::string& nam) {
     return (*i).second;
   }
   except("Geant4Kernel", "DDG4: The Geant4 action phase '%s' does not exist. [No-Entry]", nam.c_str());
-  return 0;
+  return nullptr;
 }
 
 /// Add a new phase to the phase

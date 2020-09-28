@@ -117,11 +117,11 @@ Path Path::normalize()  const {
   char tmp[PATH_MAX];
   ::strncpy(tmp, string_data(), sizeof(tmp));
   tmp[sizeof(tmp)-1] = 0;
-  char *token, *save=0;
+  char *token, *save=nullptr;
   token = ::strtok_r(tmp,separators,&save);
   while(token)  {
     pathes.emplace_back(token);
-    token = ::strtok_r(0,separators,&save);
+    token = ::strtok_r(nullptr,separators,&save);
   }
   Path temp;
   vector<string>::const_iterator start(pathes.begin());

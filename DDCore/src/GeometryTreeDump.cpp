@@ -99,7 +99,7 @@ void* GeometryTreeDump::handleVolume(const string& name, Volume vol) const {
     }
   }
   m_output << "\t\t</volume>" << endl;
-  return 0;
+  return nullptr;
 }
 
 /// Dump solid in GDML format to output stream
@@ -184,7 +184,7 @@ void* GeometryTreeDump::handleSolid(const string& name, const TGeoShape* shape) 
       cerr << "Failed to handle unknwon solid shape:" << shape->IsA()->GetName() << endl;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 /// Dump structure information in GDML format to output stream
@@ -215,7 +215,7 @@ void* GeometryTreeDump::handleTransformation(const string& name, const TGeoMatri
       m_output << "x=\"" << theta << "\" " << "y=\"" << psi << "\" " << "z=\"" << phi << R"(" unit="deg"/>)" << endl;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 /// Dump Transformations in GDML format to output stream

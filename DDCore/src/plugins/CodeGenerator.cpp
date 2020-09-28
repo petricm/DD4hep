@@ -714,7 +714,7 @@ static long generate_cxx(Detector& description, int argc, char** argv) {
   DetElement de = description.world();
   PlacedVolume pv = de.placement();
   actor.handleHeader(*os);
-  actor.handlePlacement(*os, 0, pv.ptr());
+  actor.handlePlacement(*os, nullptr, pv.ptr());
   actor.handleStructure(*os, DetElement(), de);
   actor.handleTrailer(*os);
   out.reset();

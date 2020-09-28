@@ -211,7 +211,7 @@ const Geant4PhysicsList::ParticleProcesses& Geant4PhysicsList::discreteProcesses
 
 /// Add PhysicsConstructor by name
 void Geant4PhysicsList::adoptPhysicsConstructor(Geant4Action* action)  {
-  if ( 0 != action )   {
+  if ( nullptr != action )   {
     auto* p = dynamic_cast<G4VPhysicsConstructor*>(action);
     if ( p )   {
       PhysicsConstructor ctor(action->name());
@@ -229,7 +229,7 @@ void Geant4PhysicsList::adoptPhysicsConstructor(Geant4Action* action)  {
 void Geant4PhysicsList::constructPhysics(G4VModularPhysicsList* physics_pointer)  {
   debug("constructPhysics %p", physics_pointer);
   for (auto & ctor : m_physics)  {
-    if ( 0 == ctor.pointer )   {
+    if ( nullptr == ctor.pointer )   {
       auto* p = PluginService::Create<G4VPhysicsConstructor*>(ctor);
       if (!p)  {
         except("Failed to create the physics entities "

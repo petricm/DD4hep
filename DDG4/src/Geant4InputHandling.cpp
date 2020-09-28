@@ -341,7 +341,7 @@ int dd4hep::sim::smearInteraction(const Geant4Action* caller,
 }
 
 static G4PrimaryParticle* createG4Primary(const Geant4ParticleHandle p)  {
-  G4PrimaryParticle* g4 = 0;
+  G4PrimaryParticle* g4 = nullptr;
   if ( 0 != p->pdgID )   {
     g4 = new G4PrimaryParticle(p->pdgID, p->psx, p->psy, p->psz);
   }

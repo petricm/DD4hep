@@ -57,13 +57,13 @@ public:
   std::atomic_int       eventsToDo;
 
   /// The main data input action sequence
-  DigiActionSequence*   inputAction = 0;
+  DigiActionSequence*   inputAction = nullptr;
   /// The main event action sequence
-  DigiActionSequence*   eventAction = 0;
+  DigiActionSequence*   eventAction = nullptr;
   /// The main data output action sequence
-  DigiActionSequence*   outputAction = 0;
+  DigiActionSequence*   outputAction = nullptr;
   /// TBB initializer (If TBB is used)
-  void*                 tbbInit = 0;
+  void*                 tbbInit = nullptr;
   /// Property: Output level
   int                   outputLevel;
   /// Property: maximum number of events to be processed (if < 0: infinite)
@@ -88,7 +88,7 @@ public:
 class DigiKernel::Wrapper  {
 public:
   DigiContext& context;
-  DigiEventAction*  action = 0;
+  DigiEventAction*  action = nullptr;
   Wrapper(DigiContext& c, DigiEventAction* a)
     : context(c), action(a) {}
   Wrapper(Wrapper&& copy) = default;
@@ -174,10 +174,10 @@ DigiKernel::~DigiKernel() {
 
 /// Instance accessor
 DigiKernel& DigiKernel::instance(Detector& description) {
-  static dd4hep::dd4hep_ptr<DigiKernel> s_main_instance(0);
-  if ( 0 == s_main_instance.get() )   {
+  static dd4hep::dd4hep_ptr<DigiKernel> s_main_instance(nullptr);
+  if ( nullptr == s_main_instance.get() )   {
     std::lock_guard<std::mutex> lock(kernel_mutex);
-    if ( 0 == s_main_instance.get() )   { // Need to check again!
+    if ( nullptr == s_main_instance.get() )   { // Need to check again!
       s_main_instance.adopt(new DigiKernel(description));
     }
   }
@@ -239,7 +239,7 @@ void DigiKernel::loadGeometry(const std::string& compact_file) {
 
 // Utility function to load XML files
 void DigiKernel::loadXML(const char* fname) {
-  const char* args[] = { fname, 0 };
+  const char* args[] = { fname, nullptr };
   m_detDesc->apply("DD4hep_XMLLoader", 1, (char**) args);
 }
 
@@ -268,7 +268,7 @@ DigiActionSequence& DigiKernel::outputAction() const    {
 
 void DigiKernel::submit(const DigiAction::Actors<DigiEventAction>& actions, DigiContext& context)   const  {
   chrono::system_clock::time_point start = chrono::system_clock::now();
-  bool parallel = 0 != internals->tbbInit && internals->numThreads>0;
+  bool parallel = nullptr != internals->tbbInit && internals->numThreads>0;
 #ifdef DD4HEP_USE_TBB
   if ( parallel )   {
     tbb::task_group que;
@@ -314,7 +314,7 @@ void DigiKernel::notify(DigiContext* context)   {
   if ( context )   {
     DigiEvent* event = context->eventPtr();
     if ( event )    {
-      context->setEvent(0);
+      context->setEvent(nullptr);
       detail::deletePtr(event);
     }
     delete context;
@@ -370,7 +370,7 @@ int DigiKernel::run()   {
 int DigiKernel::terminate() {
   printout(INFO,"DigiKernel","++ Terminate Digi and delete associated actions.");
   m_detDesc->destroyInstance();
-  m_detDesc = 0;
+  m_detDesc = nullptr;
   return 1;
 }
 

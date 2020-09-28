@@ -41,7 +41,7 @@ namespace dd4hep::rec {
 
       const VolumeManagerContext* context = findContext( cell ) ;
 
-      if( context == NULL)
+      if( context == nullptr)
 	return Position() ;
 
       DetElement det = context->element ;
@@ -110,11 +110,11 @@ namespace dd4hep::rec {
 	
 	unsigned motherCount = 0 ;
 
-	while( pN.GetMother( motherCount ) != NULL   ){
+	while( pN.GetMother( motherCount ) != nullptr   ){
 
 	    PlacedVolume mPv = pN.GetMother( motherCount++ ) ;
 	    
-	    if( mPv.isValid() &&  pN.GetMother( motherCount ) != NULL )  // world has no volIDs
+	    if( mPv.isValid() &&  pN.GetMother( motherCount ) != nullptr )  // world has no volIDs
 	      volIDs.insert( std::end(volIDs), std::begin(mPv.volIDs()), std::end(mPv.volIDs())) ;
 	}
 	

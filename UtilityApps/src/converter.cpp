@@ -86,11 +86,11 @@ namespace {
     dd4hep::Detector& description = dd4hep_instance();
     // Load compact files
     for(auto & geo_file : geo_files)  {
-      const char* plugin_argv[] = {geo_file, 0};
+      const char* plugin_argv[] = {geo_file, nullptr};
       run_plugin(description,"DD4hep_CompactLoader",1,(char**)plugin_argv);
     }
     // Create volume manager and populate it required
-    if ( volmgr  ) run_plugin(description,"DD4hepVolumeManager",0,0);
+    if ( volmgr  ) run_plugin(description,"DD4hepVolumeManager",0,nullptr);
     // Execute data converter.
     if ( compact2description )
       run_plugin(description,"DD4hepGeometry2Detector",output,&argv[output]);

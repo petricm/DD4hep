@@ -39,7 +39,7 @@ namespace   {
 
 /// Initializing constructor
 Geant4UIManager::Geant4UIManager(Geant4Context* ctxt, const std::string& nam)
-  : Geant4Action(ctxt,nam), m_vis(0), m_ui(0)
+  : Geant4Action(ctxt,nam), m_vis(nullptr), m_ui(nullptr)
 {
   declareProperty("SetupUI",        m_uiSetup="");
   declareProperty("SetupVIS",       m_visSetup="");
@@ -78,7 +78,7 @@ G4VisManager* Geant4UIManager::startVis()  {
 
 /// Start UI
 G4UIExecutive* Geant4UIManager::startUI()   {
-  G4UIExecutive* ui = 0;
+  G4UIExecutive* ui = nullptr;
   const char* args[] = {"DDG4","",""};
   printout(INFO,"Geant4UIManager","+++ Starting G4UIExecutive '%s' of type %s....",
            args[0], m_sessionType.c_str());

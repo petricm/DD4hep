@@ -137,7 +137,7 @@ void IOV::move(IOV& from)   {
   *this = from;
   from.keyData.first = from.keyData.second = from.optData = 0;
   from.type = int(IOVType::UNKNOWN_IOV);
-  from.iovType = 0;
+  from.iovType = nullptr;
 }
 
 /// Create string representation of the IOV

@@ -223,7 +223,7 @@ DECLARE_APPLY(DD4hep_Function,run_function)
  *  \date    01/04/2014
  */
 static long run_interpreter(Detector& /* description */, int argc, char** argv) {
-  if ( 0 == gApplication )  {
+  if ( nullptr == gApplication )  {
     pair<int, char**> a(argc,argv);
     gApplication = new TRint("DD4hepRint", &a.first, a.second);
     printout(INFO,"DD4hepRint","++ Created ROOT interpreter instance for DD4hepUI.");
@@ -443,9 +443,9 @@ static long root_elements(Detector& description, int argc, char** argv) {
     }
   }
 
-  xml::Document doc(0);
+  xml::Document doc(nullptr);
   xml::DocumentHandler docH;
-  xml::Element  element(0);
+  xml::Element  element(nullptr);
   if ( type == "xml" )  {
      const char comment[] = "\n"
     "      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
@@ -517,7 +517,7 @@ static long root_materials(Detector& description, int argc, char** argv) {
                mat->GetRadLen(), mat->GetIntLen(), mat->GetIndex());
       ::printf("         Temp=%.3g [Kelvin] Pressure=%.5g [hPa] state=%s\n",
                mat->GetTemperature(), mat->GetPressure()/dd4hep::pascal/100.0, st);
-      return elt_h(0);
+      return elt_h(nullptr);
     }
     virtual void print(elt_h, TGeoElement* elt, double frac)   {
       ::printf("  %-6s Fraction: %7.3f Z=%3d A=%6.2f N=%3d Neff=%6.2f\n",
@@ -534,7 +534,7 @@ static long root_materials(Detector& description, int argc, char** argv) {
     }
 #endif
     virtual void operator()(TGeoMaterial* mat)  {
-      Double_t* mix = mat->IsMixture() ? ((TGeoMixture*)mat)->GetWmixt() : 0;
+      Double_t* mix = mat->IsMixture() ? ((TGeoMixture*)mat)->GetWmixt() : nullptr;
       elt_h  mh = print(mat);
       for(int n=mat->GetNelements(), i=0; i<n; ++i)   {
         TGeoElement* elt = mat->GetElement(i);
@@ -621,9 +621,9 @@ static long root_materials(Detector& description, int argc, char** argv) {
     }
   }
 
-  xml::Document doc(0);
+  xml::Document doc(nullptr);
   xml::DocumentHandler docH;
-  xml::Element  element(0);
+  xml::Element  element(nullptr);
   if ( type == "xml" )  {
      const char comment[] = "\n"
     "      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n"
@@ -644,10 +644,10 @@ static long root_materials(Detector& description, int argc, char** argv) {
   dd4hep_ptr<MaterialPrint> printer(element
                                     ? new MaterialPrintXML(element, description)
                                    : new MaterialPrint(description));
-  TObject* obj = 0;
+  TObject* obj = nullptr;
   TList* mats = description.manager().GetListOfMaterials();
   dd4hep_ptr<TIterator> iter(mats->MakeIterator());
-  while( (obj=iter->Next()) != 0 )  {
+  while( (obj=iter->Next()) != nullptr )  {
     auto* mat = (TGeoMaterial*)obj;
     if ( name.empty() || name == mat->GetName() )
       (*printer)(mat);
@@ -1116,7 +1116,7 @@ static long dump_volume_tree(Detector& description, int argc, char** argv) {
         }
         opt_info = log.str();
       }
-      TGeoVolume* volume = ideal ? ideal->GetVolume() : 0;
+      TGeoVolume* volume = ideal ? ideal->GetVolume() : nullptr;
       if ( !m_printSensitivesOnly || (m_printSensitivesOnly && sensitive) )  {
         char sens = pv.volume().isSensitive() ? 'S' : ' ';
         if ( m_printPointers )    {

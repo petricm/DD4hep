@@ -92,10 +92,10 @@ int main_wrapper(int argc, char** argv ){
   IO::LCReader* rdr = IOIMPL::LCFactory::getInstance()->createLCReader() ;
   rdr->open( lcioFileName ) ;
 
-  EVENT::LCEvent* evt = 0 ;
+  EVENT::LCEvent* evt = nullptr ;
 
 
-  while( ( evt = rdr->readNextEvent() ) != 0 ){
+  while( ( evt = rdr->readNextEvent() ) != nullptr ){
 
     const std::vector< std::string >& colNames = *evt->getCollectionNames() ;
 
@@ -139,10 +139,10 @@ int main_wrapper(int argc, char** argv ){
 	
         // ===== test that we have a surface with the correct ID for every hit ======================
 	
-        test( surf != 0 , true , sst.str() ) ; 
+        test( surf != nullptr , true , sst.str() ) ;
 	
 
-        if( surf != 0 ){
+        if( surf != nullptr ){
 	  
           //  std::cout << " found surface " <<  *surf << std::endl ;
 

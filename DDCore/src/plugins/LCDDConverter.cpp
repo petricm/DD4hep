@@ -94,10 +94,10 @@ namespace {
 
   bool is_volume(const TGeoVolume* volume)  {
     Volume v(volume);
-    return v.data() != 0;
+    return v.data() != nullptr;
   }
   bool is_placement(PlacedVolume node)  {
-    return node.data() != 0;
+    return node.data() != nullptr;
   }
 
   string genName(const string& n)  {  return n; }
@@ -122,13 +122,13 @@ void LCDDConverter::GeometryInfo::check(const string& name, const TNamed* _n, ma
 
 /// Initializing Constructor
 LCDDConverter::LCDDConverter(Detector& description)
-  : m_detDesc(description), m_dataPtr(0) {
+  : m_detDesc(description), m_dataPtr(nullptr) {
 }
 
 LCDDConverter::~LCDDConverter() {
   if (m_dataPtr)
     delete m_dataPtr;
-  m_dataPtr = 0;
+  m_dataPtr = nullptr;
 }
 
 /// Dump element in GDML format to output stream
@@ -222,7 +222,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
   if (!shape) {
     // This is an invalid volume. Let's pray returning nothing will work,
     // and the non-existing solid is also nowhere referenced in the GDML.
-    return xml_h(0);
+    return xml_h(nullptr);
   }
   else if (sit != geo.xmlSolids.end()) {
     // The solidis already registered. Return the reference
@@ -230,11 +230,11 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
   }
   else if (shape->IsA() == TGeoShapeAssembly::Class()) {
     // Assemblies have no shape in GDML. Hence, return nothing.
-    return xml_h(0);
+    return xml_h(nullptr);
   }
   else {
-    xml_h solid(0);
-    xml_h zplane(0);
+    xml_h solid(nullptr);
+    xml_h zplane(nullptr);
     TClass* isa = shape->IsA();
     string shape_name = shape->GetName(); //genName(shape->GetName(),shape);
     geo.checkShape(name, shape);
@@ -499,7 +499,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       TGeoShape* rs = boolean->GetRightShape();
       xml_h left    = handleSolid(ls->GetName(), ls);
       xml_h right   = handleSolid(rs->GetName(), rs);
-      xml_h first_solid(0), second_solid(0);
+      xml_h first_solid(nullptr), second_solid(nullptr);
       if (!left) {
         throw runtime_error("G4Converter: No left Detector Solid present for composite shape:" + name);
       }
@@ -625,7 +625,7 @@ xml_h LCDDConverter::handlePosition(const std::string& name, const TGeoMatrix* t
       geo.identity_pos.setAttr(_U(z), 0);
       geo.identity_pos.setAttr(_U(unit), "cm");
       pos = geo.identity_pos;
-      geo.checkPosition("identity_pos", 0);
+      geo.checkPosition("identity_pos", nullptr);
     }
     geo.xmlPositions[trafo] = pos;
   }
@@ -659,7 +659,7 @@ xml_h LCDDConverter::handleRotation(const std::string& name, const TGeoMatrix* t
       geo.identity_rot.setAttr(_U(z), 0);
       geo.identity_rot.setAttr(_U(unit), "rad");
       rot = geo.identity_rot;
-      geo.checkRotation("identity_rot", 0);
+      geo.checkRotation("identity_rot", nullptr);
     }
     geo.xmlRotations[trafo] = rot;
   }
@@ -1178,7 +1178,7 @@ xml_doc_t LCDDConverter::createVis(DetElement top) {
   printout(ALWAYS,"LCDDConverter","++ ==> Dump visualisation attributes "
            "from in memory detector description...");
   xml::DocumentHandler docH;
-  xml_elt_t elt(0);
+  xml_elt_t elt(nullptr);
   geo.doc = docH.create("visualization", docH.defaultComment());
   geo.doc_root = geo.doc.root();
   geo.doc_root.append(geo.doc_display = xml_elt_t(geo.doc, _U(display)));
@@ -1201,7 +1201,7 @@ xml_doc_t LCDDConverter::createDetector(DetElement top) {
   m_data->clear();
   collect(top, geo);
   xml::DocumentHandler docH;
-  xml_elt_t elt(0);
+  xml_elt_t elt(nullptr);
   Volume world_vol = description.worldVolume();
   geo.doc = docH.create("description", docH.defaultComment());
   geo.doc_root = geo.doc.root();
@@ -1274,9 +1274,9 @@ xml_doc_t LCDDConverter::createDetector(DetElement top) {
 
 /// Helper constructor
 LCDDConverter::GeometryInfo::GeometryInfo()
-  : doc(0), doc_root(0), doc_header(0), doc_idDict(0), doc_detectors(0), doc_limits(0), 
-    doc_regions(0), doc_display(0), doc_gdml(0), doc_fields(0), doc_define(0),
-    doc_materials(0), doc_solids(0), doc_structure(0), doc_setup(0)
+  : doc(nullptr), doc_root(nullptr), doc_header(nullptr), doc_idDict(nullptr), doc_detectors(nullptr), doc_limits(nullptr),
+    doc_regions(nullptr), doc_display(nullptr), doc_gdml(nullptr), doc_fields(nullptr), doc_define(nullptr),
+    doc_materials(nullptr), doc_solids(nullptr), doc_structure(nullptr), doc_setup(nullptr)
 {
 }
 

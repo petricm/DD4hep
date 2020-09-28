@@ -188,7 +188,7 @@ long int dd4hep::detail::makeTime(int year, int month, int day,
 long int dd4hep::detail::makeTime(const std::string& date, const char* fmt)  {
   struct tm tm;
   char* c = ::strptime(date.c_str(),fmt,&tm);
-  if ( 0 == c )   {
+  if ( nullptr == c )   {
     except("dd4hep",
            "Invalid time format given for update:%s should be: %s",
            date.c_str(), fmt);

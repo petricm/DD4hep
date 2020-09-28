@@ -62,7 +62,7 @@ LCIOEventReader::readParticles(int event_number,
                                Vertices& vertices,
                                vector<Particle*>& particles)
 {
-  EVENT::LCCollection*        primaries = 0;
+  EVENT::LCCollection*        primaries = nullptr;
   map<EVENT::MCParticle*,int> mcparts;
   vector<EVENT::MCParticle*>  mcpcoll;
   EventReaderStatus ret = readParticleCollection(event_number,&primaries);
@@ -73,7 +73,7 @@ LCIOEventReader::readParticles(int event_number,
   // check if there is at least one particle
   if ( NHEP == 0 ) return EVENT_READER_NO_PRIMARIES;
 
-  mcpcoll.resize(NHEP,0);
+  mcpcoll.resize(NHEP,nullptr);
   for(int i=0; i<NHEP; ++i ) {
     auto* p = dynamic_cast<EVENT::MCParticle*>(primaries->getElementAt(i));
     mcparts[p] = i;
@@ -104,7 +104,7 @@ LCIOEventReader::readParticles(int event_number,
     p->vex          = vex[0]*CLHEP::mm;
     p->vey          = vex[1]*CLHEP::mm;
     p->vez          = vex[2]*CLHEP::mm;
-    p->process      = 0;
+    p->process      = nullptr;
     p->spin[0]      = spin[0];
     p->spin[1]      = spin[1];
     p->spin[2]      = spin[2];

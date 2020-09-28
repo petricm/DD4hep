@@ -60,12 +60,12 @@ GeoHandler::GeoHandler(map<int,set<const TGeoNode*> >* ptr)
 GeoHandler::~GeoHandler() {
   if (m_data)
     delete m_data;
-  m_data = 0;
+  m_data = nullptr;
 }
 
 map<int,set<const TGeoNode*> >* GeoHandler::release() {
   map<int,set<const TGeoNode*> >* d = m_data;
-  m_data = 0;
+  m_data = nullptr;
   return d;
 }
 
@@ -162,7 +162,7 @@ GeoScan::GeoScan(DetElement e, bool propagate) {
 GeoScan::~GeoScan() {
   if (m_data)
     delete m_data;
-  m_data = 0;
+  m_data = nullptr;
 }
 
 /// Work callback
