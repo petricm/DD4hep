@@ -37,9 +37,9 @@ namespace dd4hep {
     /// Initializing constructor
     NamedObject(const char* nam, const char* typ="");
     /// Initializing constructor
-    NamedObject(const std::string& nam);
+    NamedObject(std::string  nam);
     /// Initializing constructor
-    NamedObject(const std::string& nam, const std::string& typ);
+    NamedObject(std::string  nam, std::string  typ);
 
     /// Standard constructor
     NamedObject() = default;

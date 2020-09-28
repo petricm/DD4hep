@@ -47,6 +47,8 @@
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
+#include <utility>
+
 
 using namespace std;
 using namespace dd4hep;
@@ -1327,8 +1329,8 @@ template <int flag> long dump_detelement_tree(Detector& description, int argc, c
     bool dump_materials = false, dump_shapes = false, dump_positions = false;
     bool sensitive_only = false;
 
-    Actor(const string& p, int level, bool mat, bool shap, bool pos, bool sens)
-      : path(p), analysis_level(level), dump_materials(mat), dump_shapes(shap), dump_positions(pos), sensitive_only(sens) {}
+    Actor(string  p, int level, bool mat, bool shap, bool pos, bool sens)
+      : path(std::move(p)), analysis_level(level), dump_materials(mat), dump_shapes(shap), dump_positions(pos), sensitive_only(sens) {}
     ~Actor() {
       printout(ALWAYS,"DetectorDump", "+++ Scanned a total of %ld elements.",count);
     }

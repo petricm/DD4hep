@@ -88,7 +88,7 @@ namespace dd4hep {
     /// Initializing constructor
     explicit IOV(const IOVType* typ);
     /// Specialized copy constructor for range IOVs
-    explicit IOV(const IOVType* typ, const Key& key);
+    explicit IOV(const IOVType* typ, Key  key);
     /// Specialized copy constructor for discrete IOVs
     explicit IOV(const IOVType* typ, Key_value_type iov_value);
     /// Copy constructor

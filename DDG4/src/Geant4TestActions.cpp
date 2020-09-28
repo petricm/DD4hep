@@ -22,6 +22,8 @@
 
 // C/C++ include files
 #include <stdexcept>
+#include <utility>
+
 
 using namespace std;
 using namespace dd4hep::sim;
@@ -40,8 +42,8 @@ namespace {
 
 
 /// Standard constructor
-Geant4TestBase::Geant4TestBase(Geant4Action* a, const std::string& typ)
-  : m_type(typ) {
+Geant4TestBase::Geant4TestBase(Geant4Action* a, std::string  typ)
+  : m_type(std::move(typ)) {
   a->declareProperty("Property_int", m_value1 = 0);
   a->declareProperty("Property_double", m_value2 = 0e0);
   a->declareProperty("Property_string", m_value3);

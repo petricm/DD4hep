@@ -1,12 +1,14 @@
 #include "DDSegmentation/BitFieldCoder.h"
 
-#include <cmath>
 #include <algorithm>
+#include <cmath>
 #include <stdexcept>
+#include <utility>
+
 
 namespace dd4hep::DDSegmentation {
   
-    BitFieldElement::BitFieldElement( const std::string& fieldName,
+    BitFieldElement::BitFieldElement( std::string  fieldName,
                                       unsigned fieldOffset, int signedWidth ) :
       _mask(0), 
       _offset( fieldOffset ),
@@ -14,7 +16,7 @@ namespace dd4hep::DDSegmentation {
       _minVal(0),
       _maxVal(0),
       _isSigned( signedWidth < 0 ),
-      _name( fieldName ) {
+      _name(std::move( fieldName )) {
     
       // sanity check
       if( _offset > 63 || _offset+_width > 64 ) {

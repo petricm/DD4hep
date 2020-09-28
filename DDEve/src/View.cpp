@@ -26,6 +26,10 @@
 #include <TEveCalo.h>
 #include <TGLViewer.h>
 
+
+#include <utility>
+
+
 using namespace std;
 using namespace dd4hep;
 
@@ -37,8 +41,8 @@ static inline typename T::const_iterator find(const T& cont,const string& str)  
 }
 
 /// Initializing constructor
-View::View(Display* eve, const string& nam)
-  : m_eve(eve), m_view(0), m_geoScene(0), m_eveScene(0), m_global(0), m_name(nam), m_showGlobal(false)
+View::View(Display* eve, string  nam)
+  : m_eve(eve), m_view(0), m_geoScene(0), m_eveScene(0), m_global(0), m_name(std::move(nam)), m_showGlobal(false)
 {
   m_config = m_eve->GetViewConfiguration(m_name);
   InstanceCount::increment(this);

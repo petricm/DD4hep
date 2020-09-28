@@ -18,6 +18,8 @@
 
 // C/C++ include files
 #include <algorithm>
+#include <utility>
+
 
 using namespace std;
 using namespace dd4hep;
@@ -38,8 +40,8 @@ TypeName TypeName::split(const string& type_name) {
 }
 
 /// Standard constructor
-DigiAction::DigiAction(const DigiKernel& krnl, const string& nam)
-  : m_kernel(krnl), m_name(nam), m_outputLevel(INFO)
+DigiAction::DigiAction(const DigiKernel& krnl, string  nam)
+  : m_kernel(krnl), m_name(std::move(nam)), m_outputLevel(INFO)
 {
   InstanceCount::increment(this);
   declareProperty("Name", m_name);

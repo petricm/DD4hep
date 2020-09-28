@@ -101,7 +101,7 @@ namespace dd4hep  {
 
     public:
       /// Initializing constructor
-      Geant4EventReader(const std::string& nam);
+      Geant4EventReader(std::string  nam);
       /// Default destructor
       virtual ~Geant4EventReader();
       /// Get the context (from the input action)

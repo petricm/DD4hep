@@ -71,7 +71,7 @@ namespace dd4hep {
     public:
       /// Initializing constructor
       ConditionsPrinter(ConditionsMap* m,
-                        const std::string& prefix="", 
+                        std::string  prefix="",
                         int flag=Condition::NO_NAME|Condition::WITH_IOV|Condition::WITH_ADDRESS);
       /// Default destructor
       virtual ~ConditionsPrinter();

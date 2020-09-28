@@ -22,6 +22,8 @@
 
 // C/C++ include files
 #include <sstream>
+#include <utility>
+
 
 using namespace std;
 using namespace dd4hep;
@@ -115,8 +117,8 @@ void ConditionsPrinter::ParamPrinter::operator()(const AbstractMap::Params::valu
 }
 
 /// Initializing constructor
-ConditionsPrinter::ConditionsPrinter(ConditionsMap* cond_map, const string& pref, int flg)
-  : mapping(cond_map), m_flag(flg), name("Condition"), prefix(pref)
+ConditionsPrinter::ConditionsPrinter(ConditionsMap* cond_map, string  pref, int flg)
+  : mapping(cond_map), m_flag(flg), name("Condition"), prefix(std::move(pref))
 {
   m_print = new ParamPrinter(this, printLevel);
 }

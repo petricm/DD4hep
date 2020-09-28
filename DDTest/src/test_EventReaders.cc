@@ -1,7 +1,9 @@
 #include "DD4hep/DDTest.h"
 
-#include <iostream>
 #include <iomanip>
+#include <iostream>
+#include <utility>
+
 #include <vector>
 #include <algorithm>
 #include <exception>
@@ -23,7 +25,7 @@ public:
   std::string readerType;
   std::string inputFile;
   bool skipEOF; //LCIO skipNEvents does not signal end of file??
-  TestTuple( std::string const& rT, std::string const& iF, bool sEOF=false): readerType(rT), inputFile(iF), skipEOF(sEOF) {}
+  TestTuple( std::string  rT, std::string  iF, bool sEOF=false): readerType(std::move(rT)), inputFile(std::move(iF)), skipEOF(sEOF) {}
 };
 
 

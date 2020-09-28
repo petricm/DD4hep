@@ -53,7 +53,7 @@ namespace dd4hep {
       /// No default constructor
       AlignmentsPrinter() = delete;
       /// Initializing constructor
-      AlignmentsPrinter(ConditionsMap* m, const std::string& prefix="",int flags=0);
+      AlignmentsPrinter(ConditionsMap* m, std::string  prefix="",int flags=0);
       /// Default destructor
       virtual ~AlignmentsPrinter() = default;
       /// Set name for printouts

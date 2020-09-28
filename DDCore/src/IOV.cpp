@@ -18,8 +18,10 @@
 
 // C/C++ include files
 #include <climits>
-#include <iomanip>
 #include <cstring>
+#include <iomanip>
+#include <utility>
+
 
 using namespace std;
 using namespace dd4hep;
@@ -60,8 +62,8 @@ IOV::IOV(const IOVType* t, Key_value_type iov_value)
 }
 
 /// Copy constructor
-IOV::IOV(const IOVType* t, const Key& k)
-  : iovType(t), keyData(k)
+IOV::IOV(const IOVType* t, Key  k)
+  : iovType(t), keyData(std::move(k))
 {
   if ( t ) type = t->type;
 }

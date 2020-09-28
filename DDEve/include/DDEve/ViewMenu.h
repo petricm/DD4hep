@@ -43,7 +43,7 @@ namespace dd4hep {
     std::string m_title;
   public:
     /// Standard constructor
-    ViewMenu(Display* eve, const std::string& title);
+    ViewMenu(Display* eve, std::string  title);
     /// Default destructor
     virtual ~ViewMenu();
 

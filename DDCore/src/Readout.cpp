@@ -12,6 +12,10 @@
 //==========================================================================
 
 // Framework include files
+#include <utility>
+
+
+
 #include "DD4hep/Readout.h"
 #include "DD4hep/detail/SegmentationsInterna.h"
 #include "DD4hep/detail/ObjectsInterna.h"
@@ -31,8 +35,8 @@ HitCollection::HitCollection(const HitCollection& c)
 }
 
 /// Initializing constructor
-HitCollection::HitCollection(const string& n, const string& k, long k_min, long k_max)  
-  : name(n), key(k), key_min(k_min), key_max(k_max)
+HitCollection::HitCollection(string  n, string  k, long k_min, long k_max)
+  : name(std::move(n)), key(std::move(k)), key_min(k_min), key_max(k_max)
 {
 }
 

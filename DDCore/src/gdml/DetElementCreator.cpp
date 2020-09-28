@@ -88,11 +88,11 @@ namespace dd4hep {
   public:
     /// Initializing constructor
     DetElementCreator(Detector& desc,
-                      const std::string& detector,
-                      const std::string& sd_type,
-                      const std::string& sd_match, 
-                      const std::string& sd_veto,
-                      const std::string& sd_mat,
+                      std::string  detector,
+                      std::string  sd_type,
+                      std::string  sd_match,
+                      std::string  sd_veto,
+                      std::string  sd_mat,
                       int sd_lvl,
                       PrintLevel p);
     /// Default destructor
@@ -113,21 +113,23 @@ namespace dd4hep {
 
 // C/C++ include files
 #include <sstream>
+#include <utility>
+
 
 using namespace std;
 using namespace dd4hep;
 
 /// Initializing constructor
 DetElementCreator::DetElementCreator(Detector& desc,
-                                     const std::string& det,
-                                     const string& sd_match,
-                                     const string& sd_veto,
-                                     const string& sd_type,
-                                     const string& sd_mat, int sd_lvl,
+                                     std::string  det,
+                                     string  sd_match,
+                                     string  sd_veto,
+                                     string  sd_type,
+                                     string  sd_mat, int sd_lvl,
                                      PrintLevel p)
-  : description(desc), detector(det), sensitive_material_name(sd_mat),
-    sensitive_type(sd_type), detector_volume_match(sd_match),
-    detector_volume_veto(sd_veto), max_volume_level(sd_lvl), printLevel(p)
+  : description(desc), detector(std::move(det)), sensitive_material_name(std::move(sd_mat)),
+    sensitive_type(std::move(sd_type)), detector_volume_match(std::move(sd_match)),
+    detector_volume_veto(std::move(sd_veto)), max_volume_level(sd_lvl), printLevel(p)
 {
   DetectorHelper helper(description);
   sensitive_material = desc.material(sensitive_material_name);

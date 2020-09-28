@@ -12,6 +12,10 @@
 //==========================================================================
 
 // Framework include files
+#include <utility>
+
+
+
 #include "DD4hep/Printout.h"
 #include "DD4hep/InstanceCount.h"
 #include "DDG4/Geant4Data.h"
@@ -150,8 +154,8 @@ Geant4Calorimeter::Hit::Hit()
 }
 
 /// Standard constructor
-Geant4Calorimeter::Hit::Hit(const Position& pos)
-: Geant4HitData(), position(pos), truth(), energyDeposit(0) {
+Geant4Calorimeter::Hit::Hit(Position  pos)
+: Geant4HitData(), position(std::move(pos)), truth(), energyDeposit(0) {
   InstanceCount::increment(this);
 }
 

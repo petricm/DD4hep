@@ -12,6 +12,10 @@
 //==========================================================================
 
 // Framework include files
+#include <utility>
+
+
+
 #include "DD4hep/Plugins.h"
 #include "DD4hep/Printout.h"
 #include "DD4hep/InstanceCount.h"
@@ -39,8 +43,8 @@ using namespace dd4hep;
 ClassImp(ViewMenu)
 
 /// Initializing constructor
-ViewMenu::ViewMenu(Display* display, const std::string& title) 
-: PopupMenu(display->client().GetRoot()), m_display(display), m_title(title)
+ViewMenu::ViewMenu(Display* display, std::string  title)
+: PopupMenu(display->client().GetRoot()), m_display(display), m_title(std::move(title))
 {
   InstanceCount::increment(this);
 }

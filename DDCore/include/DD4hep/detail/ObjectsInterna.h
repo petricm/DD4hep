@@ -167,7 +167,7 @@ namespace dd4hep {
     /// Copy constructor
     HitCollection(const HitCollection& c);
     /// Initializing constructor
-    HitCollection(const std::string& name, const std::string& key="",long k_min=~0x0, long kmax=~0x0);
+    HitCollection(std::string  name, std::string  key="",long k_min=~0x0, long kmax=~0x0);
     /// Assignment operator
     HitCollection& operator=(const HitCollection& c);
   };

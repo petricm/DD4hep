@@ -74,7 +74,7 @@ namespace dd4hep {
 
   public:
     /// Initializing constructor
-    View(Display* eve, const std::string& name);
+    View(Display* eve, std::string  name);
     /// Default destructor
     virtual ~View();
     /// Access to the view name/title

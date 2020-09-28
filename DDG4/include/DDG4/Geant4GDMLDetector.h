@@ -33,7 +33,7 @@ namespace dd4hep {
     public:
 
       /// Constructor to open gdml file
-      Geant4GDMLDetector(const std::string& gdmlFile);
+      Geant4GDMLDetector(std::string  gdmlFile);
       /// Default destructor
       virtual ~Geant4GDMLDetector() {
       }

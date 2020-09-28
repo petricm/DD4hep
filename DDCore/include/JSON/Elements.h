@@ -110,7 +110,7 @@ namespace dd4hep {
       /// Copy constructor
       NodeList(const NodeList& l);
       /// Initializing constructor
-      NodeList(JsonElement* frst, const std::string& tag);
+      NodeList(JsonElement* frst, std::string  tag);
       /// Default destructor
       ~NodeList();
       /// Reset the nodelist - e.g. restart iteration from beginning

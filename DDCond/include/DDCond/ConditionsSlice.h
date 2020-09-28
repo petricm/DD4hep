@@ -137,7 +137,7 @@ namespace dd4hep {
       /// Initializing constructor
       ConditionsSlice(ConditionsManager m);
       /// Initializing constructor
-      ConditionsSlice(ConditionsManager m, const std::shared_ptr<ConditionsContent>& c);
+      ConditionsSlice(ConditionsManager m, std::shared_ptr<ConditionsContent>  c);
       /// Copy constructor (Special, partial copy only. Hence no assignment!)
       ConditionsSlice(const ConditionsSlice& copy);
       /// Default destructor. 

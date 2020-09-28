@@ -12,6 +12,10 @@
 //==========================================================================
 
 // Framework include files
+#include <utility>
+
+
+
 #include "DDG4/Geant4Data.h"
 
 using namespace dd4hep;
@@ -34,7 +38,7 @@ namespace dd4hep::DDEve  {
       /// Default constructor
       SimulationHit() : deposit(0.0) {}
       /// Standard initializing constructor
-      SimulationHit(const Position& p, float d) : position(p), deposit(d) {}
+      SimulationHit(Position  p, float d) : position(std::move(p)), deposit(d) {}
       /// Copy constructor
       SimulationHit(const SimulationHit& c) : position(c.position), deposit(c.deposit) {}
       /// Standard Destructor

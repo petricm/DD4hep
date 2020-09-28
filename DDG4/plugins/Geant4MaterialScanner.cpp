@@ -12,6 +12,10 @@
 //==========================================================================
 
 // Framework include files
+#include <utility>
+
+
+
 #include "DD4hep/Objects.h"
 #include "DDG4/Defs.h"
 #include "DDG4/Geant4SteppingAction.h"
@@ -40,7 +44,7 @@ namespace dd4hep::sim   {
         const G4LogicalVolume* volume;
 
         /// Initializing constructor
-        StepInfo(const Position& pre, const Position& post, const G4LogicalVolume* volume);
+        StepInfo(Position  pre, Position  post, const G4LogicalVolume* volume);
         /// Copy constructor
         StepInfo(const StepInfo& c);
         /// Default destructor
@@ -97,8 +101,8 @@ using namespace dd4hep::sim;
 DECLARE_GEANT4ACTION(Geant4MaterialScanner)
 
 /// Initializing constructor
-Geant4MaterialScanner::StepInfo::StepInfo(const Position& prePos, const Position& postPos, const G4LogicalVolume* vol)
-: pre(prePos), post(postPos), volume(vol)
+Geant4MaterialScanner::StepInfo::StepInfo(Position  prePos, Position  postPos, const G4LogicalVolume* vol)
+: pre(std::move(prePos)), post(std::move(postPos)), volume(vol)
 {
 }
 

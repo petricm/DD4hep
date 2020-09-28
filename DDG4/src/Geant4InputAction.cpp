@@ -13,6 +13,10 @@
 //====================================================================
 
 // Framework include files
+#include <utility>
+
+
+
 #include "DD4hep/Memory.h"
 #include "DD4hep/Plugins.h"
 #include "DDG4/Geant4Primary.h"
@@ -29,8 +33,8 @@ typedef Geant4InputAction::Vertices Vertices ;
 
 
 /// Initializing constructor
-Geant4EventReader::Geant4EventReader(const std::string& nam)
-  : m_name(nam), m_directAccess(false), m_currEvent(0), m_inputAction(0)
+Geant4EventReader::Geant4EventReader(std::string  nam)
+  : m_name(std::move(nam)), m_directAccess(false), m_currEvent(0), m_inputAction(0)
 {
 }
 

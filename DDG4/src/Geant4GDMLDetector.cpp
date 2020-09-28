@@ -16,6 +16,8 @@
 
 // C/C++ include files
 #include <iostream>
+#include <utility>
+
 
 //#define GEANT4_HAS_GDML
 
@@ -26,8 +28,8 @@
 using namespace std;
 using namespace dd4hep;
 
-dd4hep::sim::Geant4GDMLDetector::Geant4GDMLDetector(const std::string& gdmlFile)
-  : m_fileName(gdmlFile), m_world(0) {
+dd4hep::sim::Geant4GDMLDetector::Geant4GDMLDetector(std::string  gdmlFile)
+  : m_fileName(std::move(gdmlFile)), m_world(0) {
 }
 
 G4VPhysicalVolume* dd4hep::sim::Geant4GDMLDetector::Construct() {

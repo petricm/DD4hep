@@ -64,7 +64,7 @@ namespace dd4hep {
         /// Default constructor
         StackEntry() = delete;
         /// Fully initializing constructor
-        StackEntry(DetElement p, const std::string& placement, const Delta& t, double ov);
+        StackEntry(DetElement p, std::string  placement, const Delta& t, double ov);
         /// Copy constructor
         StackEntry(const StackEntry& e);
         /// Default destructor

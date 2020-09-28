@@ -235,7 +235,7 @@ namespace dd4hep {
 
     public:
       /// Standard constructor
-      DigiAction(const DigiKernel& kernel, const std::string& nam);
+      DigiAction(const DigiKernel& kernel, std::string  nam);
       /// Increase reference count
       long addRef();
       /// Decrease reference count. Implicit destruction

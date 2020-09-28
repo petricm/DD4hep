@@ -23,6 +23,8 @@
 
 // C/C++ include files
 #include <iostream>
+#include <utility>
+
 
 using namespace std;
 using namespace dd4hep::sim;
@@ -116,8 +118,8 @@ void Geant4TrackerHit::operator delete(void *p) {
 }
 
 /// Standard constructor
-Geant4CalorimeterHit::Geant4CalorimeterHit(const Position& pos)
-  : Geant4Hit(), position(pos), truth(), energyDeposit(0) {
+Geant4CalorimeterHit::Geant4CalorimeterHit(Position  pos)
+  : Geant4Hit(), position(std::move(pos)), truth(), energyDeposit(0) {
 }
 
 /// Geant4 required object allocator

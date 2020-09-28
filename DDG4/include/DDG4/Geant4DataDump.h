@@ -51,7 +51,7 @@ namespace dd4hep {
 
     public:
       /// Default constructor
-      Geant4DataDump(const std::string& tag);
+      Geant4DataDump(std::string  tag);
       /// Standard destructor
       virtual ~Geant4DataDump();
 #if !(defined(G__DICTIONARY) || defined(__CLANG__) || defined(__CINT__) || defined(__MAKECINT__))

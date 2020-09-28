@@ -281,7 +281,7 @@ namespace dd4hep {
         /// Default constructor (for ROOT)
         Hit();
         /// Standard constructor
-        Hit(const Position& cell_pos);
+        Hit(Position  cell_pos);
         /// Default destructor
         virtual ~Hit();
       };

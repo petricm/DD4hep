@@ -12,6 +12,10 @@
 //==========================================================================
 
 // Framework include files
+#include <utility>
+
+
+
 #include "DD4hep/Detector.h"
 #include "DD4hep/Objects.h"
 #include "DD4hep/Printout.h"
@@ -33,8 +37,8 @@ static dd4hep_ptr<GlobalAlignmentStack>& _stack(GlobalAlignmentStack* obj)  {
 }
 
 /// Constructor with partial initialization
-GlobalAlignmentStack::StackEntry::StackEntry(DetElement element, const std::string& p, const Delta& del, double ov)
-  : detector(element), delta(del), path(p), overlap(ov)
+GlobalAlignmentStack::StackEntry::StackEntry(DetElement element, std::string  p, const Delta& del, double ov)
+  : detector(element), delta(del), path(std::move(p)), overlap(ov)
 {
   InstanceCount::increment(this);
 }

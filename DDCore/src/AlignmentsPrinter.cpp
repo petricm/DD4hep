@@ -20,6 +20,8 @@
 
 // C/C++ include files
 #include <sstream>
+#include <utility>
+
 #include "TClass.h"
 
 using namespace std;
@@ -27,8 +29,8 @@ using namespace dd4hep;
 using namespace dd4hep::align;
 
 /// Initializing constructor
-AlignmentsPrinter::AlignmentsPrinter(ConditionsMap* cond_map, const string& pref, int flg)
-  : mapping(cond_map), name("Alignment"), prefix(pref), printLevel(INFO), m_flag(flg)
+AlignmentsPrinter::AlignmentsPrinter(ConditionsMap* cond_map, string  pref, int flg)
+  : mapping(cond_map), name("Alignment"), prefix(std::move(pref)), printLevel(INFO), m_flag(flg)
 {
 }
 

@@ -48,7 +48,7 @@ namespace dd4hep {
         std::string m_type;
       public:
         /// Standard constructor
-        Geant4TestBase(Geant4Action* action, const std::string& typ);
+        Geant4TestBase(Geant4Action* action, std::string  typ);
         /// Default destructor
         virtual ~Geant4TestBase();
       };

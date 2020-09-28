@@ -12,6 +12,10 @@
 //==========================================================================
 
 // Framework includes
+#include <utility>
+
+
+
 #include "DD4hep/NamedObject.h"
 #include "DD4hep/detail/Handle.inl"
 #include "TNamed.h"
@@ -40,14 +44,14 @@ NamedObject::NamedObject(const char* nam, const char* typ)
 }
 
 /// Initializing constructor
-NamedObject::NamedObject(const std::string& nam)
-  : name(nam), type()
+NamedObject::NamedObject(std::string  nam)
+  : name(std::move(nam)), type()
 {
 }
 
 /// Initializing constructor
-NamedObject::NamedObject(const std::string& nam, const std::string& typ)
-  : name(nam), type(typ)
+NamedObject::NamedObject(std::string  nam, std::string  typ)
+  : name(std::move(nam)), type(std::move(typ))
 {
 }
 

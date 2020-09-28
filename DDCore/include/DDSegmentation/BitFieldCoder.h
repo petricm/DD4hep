@@ -45,7 +45,7 @@ namespace dd4hep {
        * @param  offset        offset of field
        * @param  signedWidth   width of field, negative if field is signed
        */
-      BitFieldElement( const std::string& name, unsigned offset, int signedWidth ) ; 
+      BitFieldElement( std::string  name, unsigned offset, int signedWidth ) ;
       /// Default destructor
       ~BitFieldElement() = default ;
 

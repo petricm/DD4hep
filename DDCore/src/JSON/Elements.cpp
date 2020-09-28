@@ -17,10 +17,12 @@
 #include "JSON/Elements.h"
 
 // C/C++ include files
-#include <iostream>
-#include <stdexcept>
 #include <cstdio>
+#include <iostream>
 #include <map>
+#include <stdexcept>
+#include <utility>
+
 
 using namespace std;
 using namespace dd4hep::json;
@@ -278,8 +280,8 @@ NodeList::NodeList(const NodeList& copy)
 }
 
 /// Initializing constructor
-NodeList::NodeList(JsonElement* node, const string& tag_value)
-  : m_tag(tag_value), m_node(node)
+NodeList::NodeList(JsonElement* node, string  tag_value)
+  : m_tag(std::move(tag_value)), m_node(node)
 {
   reset();
 }

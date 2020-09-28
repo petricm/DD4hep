@@ -12,6 +12,10 @@
 //==========================================================================
 
 // Framework include files
+#include <utility>
+
+
+
 #include "DD4hep/InstanceCount.h"
 #include "DDCond/ConditionsEntry.h"
 
@@ -26,8 +30,8 @@ Entry::Entry()
 }
 
 /// Initializing constructor
-Entry::Entry(const DetElement& det, const string& nam, const string& typ, const string& valid, int h)
-  : NamedObject(nam,typ), detector(det), value(), validity(valid), hash(h)
+Entry::Entry(const DetElement& det, const string& nam, const string& typ, string  valid, int h)
+  : NamedObject(nam,typ), detector(det), value(), validity(std::move(valid)), hash(h)
 {
   InstanceCount::increment(this);
 }

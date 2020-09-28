@@ -12,6 +12,10 @@
 //==========================================================================
 
 // Framework include files
+#include <utility>
+
+
+
 #include "DDCond/ConditionsSlice.h"
 #include "DDCond/ConditionsIOVPool.h"
 #include "DD4hep/InstanceCount.h"
@@ -29,8 +33,8 @@ ConditionsSlice::ConditionsSlice(ConditionsManager mgr) : manager(mgr)
 
 /// Initializing constructor
 ConditionsSlice::ConditionsSlice(ConditionsManager mgr,
-                                 const shared_ptr<ConditionsContent>& cont)
-  : manager(mgr), content(cont)
+                                 shared_ptr<ConditionsContent>  cont)
+  : manager(mgr), content(std::move(cont))
 {
   InstanceCount::increment(this);  
 }

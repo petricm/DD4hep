@@ -186,7 +186,7 @@ namespace dd4hep {
       double energyDeposit;
     public:
       /// Standard constructor
-      Geant4CalorimeterHit(const Position& cell_pos);
+      Geant4CalorimeterHit(Position  cell_pos);
       /// Default destructor
       virtual ~Geant4CalorimeterHit() { }
       /// Geant4 required object allocator

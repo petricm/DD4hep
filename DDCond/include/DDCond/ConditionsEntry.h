@@ -46,7 +46,7 @@ namespace dd4hep {
       /// Default constructor
       Entry();
       /// Initializing constructor
-      Entry(const DetElement& det, const std::string& nam, const std::string& typ, const std::string& valid, int hash);
+      Entry(const DetElement& det, const std::string& nam, const std::string& typ, std::string  valid, int hash);
       /// Copy constructor
       Entry(const Entry& c);
       /// Default destructor

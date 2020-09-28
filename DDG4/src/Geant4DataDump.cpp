@@ -12,6 +12,10 @@
 //==========================================================================
 
 // Framework include files
+#include <utility>
+
+
+
 #include "DD4hep/Primitives.h"
 #include "DDG4/Geant4DataDump.h"
 
@@ -22,7 +26,7 @@ using namespace dd4hep::sim;
 typedef detail::ReferenceBitMask<const int> PropertyMask;
 
 /// Default constructor
-Geant4DataDump::Geant4DataDump(const std::string& tag) : m_tag(tag) {
+Geant4DataDump::Geant4DataDump(std::string  tag) : m_tag(std::move(tag)) {
 }
 
 /// Standard destructor
