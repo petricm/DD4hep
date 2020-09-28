@@ -411,7 +411,7 @@ template <> void Converter<Material>::operator()(xml_h e) const {
     double dens_unit   = 1.0;
 
     if ( !density.ptr() ) {
-      throw_print("Compact2Objects[ERROR]: material without density tag ( <D  unit=\"g/cm3\" value=\"..\"/> ) provided: "
+      throw_print(R"(Compact2Objects[ERROR]: material without density tag ( <D  unit="g/cm3" value=".."/> ) provided: )"
                   + string( matname ) ) ;
     }
     if ( density.hasAttr(_U(unit)) )   {

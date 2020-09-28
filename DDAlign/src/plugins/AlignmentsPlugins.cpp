@@ -54,7 +54,7 @@ long create_global_alignment_xml_file(Detector& description, int argc, char** ar
   }
 
   printout(ALWAYS,"AlignmentXmlWriter",
-           "++ Writing dd4hep alignment constants of the \"%s\" DetElement tree to file \"%s\"",
+           R"(++ Writing dd4hep alignment constants of the "%s" DetElement tree to file "%s")",
            path.c_str(), output.c_str());
   top = detail::tools::findDaughterElement(description.world(),path);
   if ( top.isValid() )   {
