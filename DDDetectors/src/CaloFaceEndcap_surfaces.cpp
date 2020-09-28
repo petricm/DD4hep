@@ -77,8 +77,8 @@ namespace{
       for(unsigned i=0 ; i < _sym ; ++i){
         double gam0 =    i  * alpha + _phi0 ;
         double gam1 = (i+1) * alpha + _phi0 ;
-        lines.push_back( std::make_pair( dd4hep::rec::Vector3D( _r*cos(gam0), _r*sin(gam0), origin().z()  ), 
-                                         dd4hep::rec::Vector3D( _r*cos(gam1), _r*sin(gam1), origin().z()  ) ) ) ;
+        lines.emplace_back( dd4hep::rec::Vector3D( _r*cos(gam0), _r*sin(gam0), origin().z()  ),
+                                         dd4hep::rec::Vector3D( _r*cos(gam1), _r*sin(gam1), origin().z()  ) ) ;
       }
       return lines; 
     }

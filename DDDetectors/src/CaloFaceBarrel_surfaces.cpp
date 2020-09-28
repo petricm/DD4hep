@@ -70,10 +70,10 @@ namespace{
       
       std::vector< std::pair<dd4hep::rec::Vector3D, dd4hep::rec::Vector3D> >  lines ;
       
-      lines.push_back( std::make_pair( origin()+_width/2.*u()+_length/2.*v(), origin()-_width/2.*u()+_length/2.*v() ) ) ;
-      lines.push_back( std::make_pair( origin()-_width/2.*u()+_length/2.*v(), origin()-_width/2.*u()-_length/2.*v() ) ) ;
-      lines.push_back( std::make_pair( origin()-_width/2.*u()-_length/2.*v(), origin()+_width/2.*u()-_length/2.*v() ) ) ;
-      lines.push_back( std::make_pair( origin()+_width/2.*u()-_length/2.*v(), origin()+_width/2.*u()+_length/2.*v() ) ) ;
+      lines.emplace_back( origin()+_width/2.*u()+_length/2.*v(), origin()-_width/2.*u()+_length/2.*v() ) ;
+      lines.emplace_back( origin()-_width/2.*u()+_length/2.*v(), origin()-_width/2.*u()-_length/2.*v() ) ;
+      lines.emplace_back( origin()-_width/2.*u()-_length/2.*v(), origin()+_width/2.*u()-_length/2.*v() ) ;
+      lines.emplace_back( origin()+_width/2.*u()-_length/2.*v(), origin()+_width/2.*u()+_length/2.*v() ) ;
       
       return lines; 
     }

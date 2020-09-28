@@ -83,10 +83,10 @@ public:
       Vector3D pl2 = -zv + rv1  ;
       Vector3D pl3 = -zv + rv0 ;
 
-      lines.push_back( std::make_pair( pl0, pl1 ) ) ;
-      lines.push_back( std::make_pair( pl1, pl2 ) ) ;
-      lines.push_back( std::make_pair( pl2, pl3 ) ) ;
-      lines.push_back( std::make_pair( pl3, pl0 ) ) ;
+      lines.emplace_back( pl0, pl1 ) ;
+      lines.emplace_back( pl1, pl2 ) ;
+      lines.emplace_back( pl2, pl3 ) ;
+      lines.emplace_back( pl3, pl0 ) ;
     }
     return lines;
   }

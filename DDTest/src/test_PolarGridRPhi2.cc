@@ -70,31 +70,31 @@ int main() {
     seg.setOffsetPhi(-M_PI);
 
     std::vector<TestTuple> tests;
-    tests.push_back( TestTuple( 10.0, -180*DegToRad,   0,   0 ) );
-    tests.push_back( TestTuple( 10.1,  175*DegToRad,   0,  35 ) );
-    tests.push_back( TestTuple( 20.0,   22*DegToRad,   1,  10 ) );
-    tests.push_back( TestTuple( 20.1,   40*DegToRad,   1,  11 ) );
-    tests.push_back( TestTuple( 15.0,  359*DegToRad,   0,  17 ) );
-    tests.push_back( TestTuple( 42.0,   42*DegToRad,   3,   5 ) );
-    tests.push_back( TestTuple( 22.0,    0*DegToRad,   1,   9 ) );
-    tests.push_back( TestTuple( 22.0,  180*DegToRad,   1,  18 ) );
-    tests.push_back( TestTuple( 22.0,  -180*DegToRad,   1,  0 ) );
-    tests.push_back( TestTuple(  10.1, -179*DegToRad,     0,   0 ) );
-    tests.push_back( TestTuple(  20.1, -179*DegToRad,     1,   0 ) );
-    tests.push_back( TestTuple(  30.1, -179*DegToRad,     2,   0 ) );
-    tests.push_back( TestTuple(  40.1, -179*DegToRad,     3,   0 ) );
-    tests.push_back( TestTuple(  50.1, -179*DegToRad,     4,   0 ) );
-    tests.push_back( TestTuple(  60.1, -179*DegToRad,     5,   0 ) );
-    tests.push_back( TestTuple(  70.1, -179*DegToRad,     6,   0 ) );
-    tests.push_back( TestTuple(  80.1, -179*DegToRad,     7,   0 ) );
-    tests.push_back( TestTuple(  90.1, -179*DegToRad,     8,   0 ) );
-    tests.push_back( TestTuple( 100.1, -179*DegToRad,     9,   0 ) );
-    tests.push_back( TestTuple( 110.1, -179*DegToRad,    10,   0 ) );
-    tests.push_back( TestTuple( 120.1, -179*DegToRad,    11,   0 ) );
-    tests.push_back( TestTuple( 130.1, -179*DegToRad,    12,   0 ) );
-    tests.push_back( TestTuple( 140.1, -179*DegToRad,    13,   0 ) );
-    tests.push_back( TestTuple( 150.1, -179*DegToRad,    14,   0 ) );
-    tests.push_back( TestTuple( 160.0, -179*DegToRad,    14,   0 ) );
+    tests.emplace_back( 10.0, -180*DegToRad,   0,   0 );
+    tests.emplace_back( 10.1,  175*DegToRad,   0,  35 );
+    tests.emplace_back( 20.0,   22*DegToRad,   1,  10 );
+    tests.emplace_back( 20.1,   40*DegToRad,   1,  11 );
+    tests.emplace_back( 15.0,  359*DegToRad,   0,  17 );
+    tests.emplace_back( 42.0,   42*DegToRad,   3,   5 );
+    tests.emplace_back( 22.0,    0*DegToRad,   1,   9 );
+    tests.emplace_back( 22.0,  180*DegToRad,   1,  18 );
+    tests.emplace_back( 22.0,  -180*DegToRad,   1,  0 );
+    tests.emplace_back(  10.1, -179*DegToRad,     0,   0 );
+    tests.emplace_back(  20.1, -179*DegToRad,     1,   0 );
+    tests.emplace_back(  30.1, -179*DegToRad,     2,   0 );
+    tests.emplace_back(  40.1, -179*DegToRad,     3,   0 );
+    tests.emplace_back(  50.1, -179*DegToRad,     4,   0 );
+    tests.emplace_back(  60.1, -179*DegToRad,     5,   0 );
+    tests.emplace_back(  70.1, -179*DegToRad,     6,   0 );
+    tests.emplace_back(  80.1, -179*DegToRad,     7,   0 );
+    tests.emplace_back(  90.1, -179*DegToRad,     8,   0 );
+    tests.emplace_back( 100.1, -179*DegToRad,     9,   0 );
+    tests.emplace_back( 110.1, -179*DegToRad,    10,   0 );
+    tests.emplace_back( 120.1, -179*DegToRad,    11,   0 );
+    tests.emplace_back( 130.1, -179*DegToRad,    12,   0 );
+    tests.emplace_back( 140.1, -179*DegToRad,    13,   0 );
+    tests.emplace_back( 150.1, -179*DegToRad,    14,   0 );
+    tests.emplace_back( 160.0, -179*DegToRad,    14,   0 );
 
 
     dd4hep::DDSegmentation::VolumeID volID = 0;
@@ -138,23 +138,23 @@ int main() {
 
 
     std::vector<TestTuple> testPositions;
-    testPositions.push_back( TestTuple( 15.0, -175*DegToRad,   0,   0 ) );
-    testPositions.push_back( TestTuple( 15.0,  175*DegToRad,   0,  35 ) );
-    testPositions.push_back( TestTuple( 25.0, -150*DegToRad,   1,  1 ) );
-    testPositions.push_back( TestTuple( 35.0, -135*DegToRad,   2,  1 ) );
-    testPositions.push_back( TestTuple( 45.0, -120*DegToRad,   3,  1 ) );
-    testPositions.push_back( TestTuple( 55.0, -105*DegToRad,   4,  1 ) );
-    testPositions.push_back( TestTuple( 65.0,  -90*DegToRad,   5,  1 ) );
-    testPositions.push_back( TestTuple( 75.0,  -75*DegToRad,   6,  1 ) );
-    testPositions.push_back( TestTuple( 85.0,  -60*DegToRad,   7,  1 ) );
-    testPositions.push_back( TestTuple( 95.0,  -45*DegToRad,   8,  1 ) );
-    testPositions.push_back( TestTuple( 105.0, -30*DegToRad,   9,  1 ) );
-    testPositions.push_back( TestTuple( 115.0, -15*DegToRad,  10,  1 ) );
-    testPositions.push_back( TestTuple( 125.0,  -0*DegToRad,  11,  1 ) );
-    testPositions.push_back( TestTuple( 135.0,  15*DegToRad,  12,  1 ) );
-    testPositions.push_back( TestTuple( 145.0,  30*DegToRad,  13,  1 ) );
-    testPositions.push_back( TestTuple( 155.0,  45*DegToRad,  14,  1 ) );
-    testPositions.push_back( TestTuple(155.0, -105*DegToRad,  14,   0 ) );
+    testPositions.emplace_back( 15.0, -175*DegToRad,   0,   0 );
+    testPositions.emplace_back( 15.0,  175*DegToRad,   0,  35 );
+    testPositions.emplace_back( 25.0, -150*DegToRad,   1,  1 );
+    testPositions.emplace_back( 35.0, -135*DegToRad,   2,  1 );
+    testPositions.emplace_back( 45.0, -120*DegToRad,   3,  1 );
+    testPositions.emplace_back( 55.0, -105*DegToRad,   4,  1 );
+    testPositions.emplace_back( 65.0,  -90*DegToRad,   5,  1 );
+    testPositions.emplace_back( 75.0,  -75*DegToRad,   6,  1 );
+    testPositions.emplace_back( 85.0,  -60*DegToRad,   7,  1 );
+    testPositions.emplace_back( 95.0,  -45*DegToRad,   8,  1 );
+    testPositions.emplace_back( 105.0, -30*DegToRad,   9,  1 );
+    testPositions.emplace_back( 115.0, -15*DegToRad,  10,  1 );
+    testPositions.emplace_back( 125.0,  -0*DegToRad,  11,  1 );
+    testPositions.emplace_back( 135.0,  15*DegToRad,  12,  1 );
+    testPositions.emplace_back( 145.0,  30*DegToRad,  13,  1 );
+    testPositions.emplace_back( 155.0,  45*DegToRad,  14,  1 );
+    testPositions.emplace_back(155.0, -105*DegToRad,  14,   0 );
 
     //Test from cellID to position
     for(const auto & testPosition : testPositions) {

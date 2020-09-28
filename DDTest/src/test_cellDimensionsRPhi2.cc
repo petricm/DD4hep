@@ -119,9 +119,9 @@ void testRPhi2(){
 
   dd4hep::DDSegmentation::Segmentation* seg = createPolarGridRPhi2();
   const double DegToRad = M_PI/180.0;
-  tests.push_back( TestTuple( seg, 20.0, 20*10*DegToRad,  0,   1 ) );
-  tests.push_back( TestTuple( seg, 5.0, 32.5*20*DegToRad,  1,   1 ) );
-  tests.push_back( TestTuple( seg, 3.0, 151.5*150*DegToRad,  14, 1 ) );
+  tests.emplace_back( seg, 20.0, 20*10*DegToRad,  0,   1 );
+  tests.emplace_back( seg, 5.0, 32.5*20*DegToRad,  1,   1 );
+  tests.emplace_back( seg, 3.0, 151.5*150*DegToRad,  14, 1 );
 
   try {
 
@@ -150,9 +150,9 @@ void testRPhi(){
   const double phiSizeGrid = M_PI/36;
   dd4hep::DDSegmentation::Segmentation* seg = createPolarGridRPhi(rSizeGrid, phiSizeGrid);
 
-  tests.push_back( TestTuple( seg, rSizeGrid, rSizeGrid*(0) *phiSizeGrid,   0, 1 ) );
-  tests.push_back( TestTuple( seg, rSizeGrid, rSizeGrid*(1) *phiSizeGrid,   1, 1 ) );
-  tests.push_back( TestTuple( seg, rSizeGrid, rSizeGrid*(14)*phiSizeGrid,  14, 1 ) );
+  tests.emplace_back( seg, rSizeGrid, rSizeGrid*(0) *phiSizeGrid,   0, 1 );
+  tests.emplace_back( seg, rSizeGrid, rSizeGrid*(1) *phiSizeGrid,   1, 1 );
+  tests.emplace_back( seg, rSizeGrid, rSizeGrid*(14)*phiSizeGrid,  14, 1 );
 
   try {
 

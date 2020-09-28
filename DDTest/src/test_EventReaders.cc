@@ -39,10 +39,10 @@ int main(int argc, char** argv ){
   std::string inputFileFolder = argv[1];
 
   std::vector<TestTuple> tests;
-  tests.push_back( TestTuple( "LCIOStdHepReader", "bbudsc_3evt.stdhep" ) );
-  tests.push_back( TestTuple( "LCIOFileReader",   "muons.slcio" , /*skipEOF= */ true ) );
-  tests.push_back( TestTuple( "Geant4EventReaderHepEvtShort", "Muons10GeV.HEPEvt" ) );
-  tests.push_back( TestTuple( "Geant4EventReaderHepMC", "g4pythia.hepmc" ) );
+  tests.emplace_back( "LCIOStdHepReader", "bbudsc_3evt.stdhep" );
+  tests.emplace_back( "LCIOFileReader",   "muons.slcio" , /*skipEOF= */ true );
+  tests.emplace_back( "Geant4EventReaderHepEvtShort", "Muons10GeV.HEPEvt" );
+  tests.emplace_back( "Geant4EventReaderHepMC", "g4pythia.hepmc" );
 
 
   try{
