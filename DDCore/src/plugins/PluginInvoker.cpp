@@ -78,8 +78,8 @@ template <> void Converter<plugin>::operator()(xml_h e)  const  {
   //args.emplace_back("plugin:"+nam);
 
   xml_coll_t(e,"arg").for_each(Converter<dd4hep::arg>(description,&args));
-  for(vector<string>::const_iterator i=args.begin(); i!=args.end();++i)
-    cargs.emplace_back((*i).c_str());
+  for(const auto & arg : args)
+    cargs.emplace_back(arg.c_str());
   printout(INFO,"ConverterPlugin","+++ Now executing plugin:%s [%d args]",nam.c_str(),int(cargs.size()));
   description.apply(nam.c_str(),int(cargs.size()),(char**)&cargs[0]);
 }

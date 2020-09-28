@@ -38,8 +38,7 @@ void GlobalAlignmentSelector::operator()(Entries::value_type e)  const {
 
 void GlobalAlignmentSelector::operator()(const Cache::value_type& entry)  const {
   TGeoPhysicalNode* pn = entry.second;
-  for(Entries::const_iterator j=entries.begin(); j != entries.end(); ++j)   {
-    Entries::value_type e = (*j);
+  for(auto e : entries)   {
     if ( GlobalAlignmentStack::needsReset(*e) || GlobalAlignmentStack::hasMatrix(*e) )  {
       const char* p = pn->GetName();
       bool reset_children = GlobalAlignmentStack::resetChildren(*e);

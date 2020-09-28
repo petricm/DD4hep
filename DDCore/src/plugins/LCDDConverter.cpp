@@ -823,10 +823,10 @@ xml_h LCDDConverter::handlePlacement(const string& name,PlacedVolume node) const
     if (geo.doc_root.tag() != "gdml") {
       if (is_placement(node)) {
         const PlacedVolume::VolIDs& ids = node.volIDs();
-        for (PlacedVolume::VolIDs::const_iterator i = ids.begin(); i != ids.end(); ++i) {
+        for (const auto & id : ids) {
           xml_h pvid = xml_elt_t(geo.doc, _U(physvolid));
-          pvid.setAttr(_U(field_name), (*i).first);
-          pvid.setAttr(_U(value), (*i).second);
+          pvid.setAttr(_U(field_name), id.first);
+          pvid.setAttr(_U(value), id.second);
           place.append(pvid);
         }
       }
@@ -863,9 +863,8 @@ xml_h LCDDConverter::handleLimitSet(const std::string& /* name */, LimitSet lim)
     geo.doc_limits.append(xml = xml_elt_t(geo.doc, _U(limitset)));
     xml.setAttr(_U(name), lim.name());
     const set<Limit>& obj = lim.limits();
-    for (set<Limit>::const_iterator i = obj.begin(); i != obj.end(); ++i) {
+    for (const auto & l : obj) {
       xml_h x = xml_elt_t(geo.doc, _U(limit));
-      const Limit& l = *i;
       xml.append(x);
       x.setAttr(_U(name), l.name);
       x.setAttr(_U(unit), l.unit);
@@ -885,8 +884,7 @@ xml_h LCDDConverter::handleSegmentation(Segmentation seg) const {
     string typ = seg.type();
     _P p = seg.parameters();
     xml = xml_elt_t(data().doc, Unicode(typ));
-    for (_P::const_iterator i = p.begin(); i != p.end(); ++i) {
-      const _P::value_type& v = *i;
+    for (auto v : p) {
       if (v->name() == "lunit") {
         string val = v->value() == _toDouble("mm") ? "mm" : v->value() == _toDouble("cm") ? "cm" :
           v->value() == _toDouble("m") ? "m" : v->value() == _toDouble("micron") ? "micron" :
@@ -1232,8 +1230,8 @@ xml_doc_t LCDDConverter::createDetector(DetElement top) {
 
   // Ensure that all required materials are present in the Detector material table
   const Detector::HandleMap& fld = description.fields();
-  for (Detector::HandleMap::const_iterator i = fld.begin(); i != fld.end(); ++i)
-    geo.fields.insert((*i).second);
+  for (const auto & i : fld)
+    geo.fields.insert(i.second);
 
   printout(ALWAYS,"LCDDConverter","++ ==> Converting in memory detector description to Detector format...");
   handleHeader();

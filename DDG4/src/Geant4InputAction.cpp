@@ -249,8 +249,8 @@ void Geant4InputAction::operator()(G4Event* event)   {
         int(primaries.size()), int(vertices.size()) );
   
 
-  for(size_t i=0; i<vertices.size(); ++i )   {
-    inter->vertices[m_mask].emplace_back( vertices[i] ); 
+  for(auto & vertice : vertices)   {
+    inter->vertices[m_mask].emplace_back( vertice );
   }
 
   // build collection of MCParticles

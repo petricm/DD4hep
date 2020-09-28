@@ -217,8 +217,8 @@ void Geant4Kernel::printProperties()  const  {
   printout(ALWAYS,"Geant4Kernel","UI:           %s", m_uiName.c_str());
   printout(ALWAYS,"Geant4Kernel","NumEvents:    %ld",m_numEvent);
   printout(ALWAYS,"Geant4Kernel","NumThreads:   %d", m_numThreads);
-  for(ClientOutputLevels::const_iterator i=m_clientLevels.begin(); i!=m_clientLevels.end();++i)  {
-    printout(ALWAYS,"Geant4Kernel","OutputLevel[%s]:  %d",(*i).first.c_str(),(*i).second);
+  for(const auto & m_clientLevel : m_clientLevels)  {
+    printout(ALWAYS,"Geant4Kernel","OutputLevel[%s]:  %d",m_clientLevel.first.c_str(),m_clientLevel.second);
   }
 }
 

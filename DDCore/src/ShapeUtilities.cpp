@@ -309,9 +309,9 @@ namespace dd4hep {
     TGeoArb8* sh = get_ptr<TGeoArb8>(shape);
     struct _V { double xy[8][2]; } *vtx = (_V*)sh->GetVertices();
     vector<double> pars { sh->GetDz() };
-    for ( size_t i=0; i<8; ++i )   {
-      pars.emplace_back(vtx->xy[i][0]);
-      pars.emplace_back(vtx->xy[i][1]);
+    for (auto & i : vtx->xy)   {
+      pars.emplace_back(i[0]);
+      pars.emplace_back(i[1]);
     }
     return pars;
   }

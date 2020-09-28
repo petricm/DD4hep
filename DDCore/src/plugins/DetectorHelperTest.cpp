@@ -56,8 +56,8 @@ namespace  {
 
     void walkSD(DetectorHelper h, DetElement de)  const {
       printSD(h,de);
-      for(DetElement::Children::const_iterator i=de.children().begin(); i!=de.children().end(); ++i)  {
-        DetElement child = (*i).second;
+      for(const auto & i : de.children())  {
+        DetElement child = i.second;
         printSD(h,child);
         if ( child.children().size() > 0 ) walkSD(h,child);
       }

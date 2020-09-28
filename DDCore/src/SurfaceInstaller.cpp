@@ -98,8 +98,8 @@ void SurfaceInstaller::install(DetElement component, PlacedVolume pv)   {
       log << (void*)(placed->GetMatrix()) << " ";
       if ( placed->GetUserExtension() )  {
         const PlacedVolume::VolIDs& vid = placed.volIDs();
-        for(PlacedVolume::VolIDs::const_iterator j=vid.begin(); j!=vid.end(); ++j)  {
-          log << (*j).first << ":" << (*j).second << " ";
+        for(const auto & j : vid)  {
+          log << j.first << ":" << j.second << " ";
         }
       }
       log << " ";

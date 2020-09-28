@@ -16,14 +16,14 @@
 #include <vector>
 
 static int load_libs(const std::vector<char*>& libs)  {
-  for(size_t i=0; i<libs.size(); ++i)   {
-    int ret = gSystem->Load(libs[i]);
+  for(auto lib : libs)   {
+    int ret = gSystem->Load(lib);
     if ( 0 != ret )   {
-      ::printf("+++ Failed to load library: %s [ignored]\n",libs[i]);
+      ::printf("+++ Failed to load library: %s [ignored]\n",lib);
       return ret;
     }
     else  {
-      ::printf("+++ Successfully loaded library: %s\n",libs[i]);
+      ::printf("+++ Successfully loaded library: %s\n",lib);
     }
   }
   return 0;

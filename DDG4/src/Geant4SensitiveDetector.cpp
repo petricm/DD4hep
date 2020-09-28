@@ -81,9 +81,9 @@ namespace dd4hep::sim {
     Geant4SensitiveDetector::find<Geant4CalorimeterHit>(const HitCollection* c, const HitCompare<Geant4CalorimeterHit>& cmp) {
       typedef vector<Geant4CalorimeterHit*> _V;
       const _V* v = (const _V*) c->GetVector();
-      for (_V::const_iterator i = v->begin(); i != v->end(); ++i)
-        if (cmp(*i))
-          return *i;
+      for (auto i : *v)
+        if (cmp(i))
+          return i;
       return 0;
     }
   }

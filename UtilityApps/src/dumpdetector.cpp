@@ -67,8 +67,8 @@ static void printDetectorSets( std::string name, unsigned int includeFlag,  unsi
   Detector& description = Detector::getInstance();
   const std::vector<DetElement>& dets = DetectorSelector(description).detectors( includeFlag, excludeFlag ) ;
   std::cout << " " << name  ;
-  for(int i=0,N=dets.size();i<N;++i)  
-    std::cout << dets[i].name() << ", " ;
+  for(auto det : dets)
+    std::cout << det.name() << ", " ;
   std::cout << endl ;
 } 
 
@@ -174,8 +174,7 @@ static int invoke_dump_detector(int argc, char** argv ){
   std::list< DetElement > gdaugs ; 
   daugs.emplace_back( world ) ;
   while( ! daugs.empty() ) {
-    for( std::list< DetElement >::iterator li=daugs.begin() ; li != daugs.end() ; ++li ){
-      DetElement dau = *li ;
+    for(auto dau : daugs){
       DetElement::Children chMap = dau.children() ;
       for ( DetElement::Children::const_iterator it=chMap.begin() ; it != chMap.end() ; ++it ){
         DetElement de = (*it).second ;
@@ -213,9 +212,8 @@ static int invoke_dump_detector(int argc, char** argv ){
     //    printDetectorData( de ) ;
 
     if( printSurfaces ){
-      for( SurfaceList::const_iterator sit = sL.begin() ; sit != sL.end() ; ++sit ){
-	const ISurface* surf =  *sit ;
-	std::cout << " ------------------------- " 
+      for(auto surf : sL){
+		std::cout << " ------------------------- "
 		  << " surface: "  << *surf         << std::endl
 		  << " ------------------------- "  << std::endl ;
       }

@@ -85,10 +85,10 @@ namespace dd4hep::DDSegmentation {
     
       unsigned hb(0) ;
     
-      for(unsigned i=0;i<_fields.size();i++){
+      for(const auto & _field : _fields){
       
-        if( hb < ( _fields[i].offset() + _fields[i].width() ) )
-          hb = _fields[i].offset() + _fields[i].width()  ;
+        if( hb < ( _field.offset() + _field.width() ) )
+          hb = _field.offset() + _field.width()  ;
       }    
       return hb ;
     }
@@ -161,12 +161,12 @@ namespace dd4hep::DDSegmentation {
 
       std::for_each( initString.begin(), initString.end(), t ) ; 
 
-      for(unsigned i=0; i< fieldDescriptors.size() ; i++ ){
+      for(auto & fieldDescriptor : fieldDescriptors){
       
         std::vector<std::string> subfields ;
         StringTokenizer ts( subfields ,':') ;
       
-        std::for_each( fieldDescriptors[i].begin(), fieldDescriptors[i].end(), ts );
+        std::for_each( fieldDescriptor.begin(), fieldDescriptor.end(), ts );
 
         std::string name ; 
         int  width ; 
@@ -197,7 +197,7 @@ namespace dd4hep::DDSegmentation {
 
           std::stringstream s ;
           s << " BitFieldCoder: invalid number of subfields " 
-            <<  fieldDescriptors[i] ;
+            <<  fieldDescriptor ;
 
           throw( std::runtime_error( s.str() ) ) ;
         }

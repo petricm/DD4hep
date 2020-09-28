@@ -47,8 +47,8 @@ View::View(Display* eve, const string& nam)
 /// Default destructor
 View::~View() {
   m_eve->UnregisterEvents(this);
-  for(Topics::iterator i=m_geoTopics.begin(); i!=m_geoTopics.end(); ++i)
-    (*i).second->DestroyElements();
+  for(auto & m_geoTopic : m_geoTopics)
+    m_geoTopic.second->DestroyElements();
   if ( m_geoScene ) m_geoScene->DestroyElements();
   if ( m_eveScene ) m_eveScene->DestroyElements();
   if ( m_global ) m_global->DestroyElements();
@@ -204,9 +204,9 @@ void View::ConfigureGeometry(const DisplayConfiguration::ViewConfig& config)    
 /// Call to import geometry topics
 void View::ImportGeoTopics(const string& title)   {
   printout(INFO,"View","+++ %s: Import geometry topics.",c_name());
-  for(Topics::iterator i=m_geoTopics.begin(); i!=m_geoTopics.end(); ++i)  {
-    printout(INFO,"ViewConfiguration","+++     Add topic %s",(*i).second->GetName());
-    ImportGeoTopic((*i).second,m_geoScene);
+  for(auto & m_geoTopic : m_geoTopics)  {
+    printout(INFO,"ViewConfiguration","+++     Add topic %s",m_geoTopic.second->GetName());
+    ImportGeoTopic(m_geoTopic.second,m_geoScene);
   }
   if ( !title.empty() ) AddToGlobalItems(title);
 }

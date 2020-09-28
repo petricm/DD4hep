@@ -410,8 +410,8 @@ string PlacedVolume::toString() const {
   str << m_element->GetName() << ":  vol='" << m_element->GetVolume()->GetName()
       << "' mat:'" << m_element->GetMatrix()->GetName()
       << "' volID[" << obj->volIDs.size() << "] ";
-  for (VolIDs::const_iterator i = obj->volIDs.begin(); i != obj->volIDs.end(); ++i)
-    str << (*i).first << "=" << (*i).second << "  ";
+  for (const auto & volID : obj->volIDs)
+    str << volID.first << "=" << volID.second << "  ";
   str << ends;
   return str.str();
 }

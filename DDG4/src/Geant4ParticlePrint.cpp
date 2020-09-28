@@ -134,8 +134,7 @@ void Geant4ParticlePrint::printParticle(const std::string& prefix, const G4Event
           Geant4Calorimeter::Hit* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
           if ( 0 != cal_hit )   {
             Geant4HitData::Contributions& contrib = cal_hit->truth;
-            for(Geant4HitData::Contributions::iterator j=contrib.begin(); j!=contrib.end(); ++j)  {
-              Geant4HitData::Contribution& t = *j;
+            for(auto & t : contrib)  {
               int trackID = t.trackID;
               int trueID  = truth->particleID(trackID);
               if ( trueID == p->id )   {
@@ -167,8 +166,8 @@ void Geant4ParticlePrint::printParticles(const G4Event* e, const ParticleMap& pa
   print("+++ MC Particles #Tracks:%7d ParticleType Parent/Geant4 "
         "Primary Secondary Energy in [MeV] Calo Tracker Process/Par Details",
         int(particles.size()));
-  for(ParticleMap::const_iterator i=particles.begin(); i!=particles.end(); ++i)  {
-    Geant4ParticleHandle p = (*i).second;
+  for(auto particle : particles)  {
+    Geant4ParticleHandle p = particle.second;
     PropertyMask mask(p->reason);
     printParticle("MC Particle Track",e, p);
     num_secondaries += int(p->daughters.size());
@@ -209,8 +208,7 @@ void Geant4ParticlePrint::printParticleTree(const G4Event* e,
   printParticle(txt, e, p);
   const set<int>& daughters = p->daughters;
   // For all particles, the set of daughters must be contained in the record.
-  for(set<int>::const_iterator id=daughters.begin(); id!=daughters.end(); ++id)   {
-    int id_dau = *id;
+  for(int id_dau : daughters)   {
     Geant4ParticleHandle dau = (*particles.find(id_dau)).second;
     printParticleTree(e, particles, level+1, dau);
   }

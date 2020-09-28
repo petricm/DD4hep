@@ -192,8 +192,7 @@ namespace dd4hep::sim   {
         ///No! Done when adding particle contrbutions: lc_hit->setEnergy( hit->energyDeposit );
         lc_coll->addElement(lc_hit);
         /// Now add the individual track contributions to the LCIO hit structure
-        for(Contributions::const_iterator j=hit->truth.begin(); j!=hit->truth.end(); ++j)   {
-          const Geant4HitData::Contribution& c = *j;
+        for(const auto & c : hit->truth)   {
           int trackID = pm->particleID(c.trackID);
           EVENT::MCParticle* lc_mcp = (EVENT::MCParticle*)lc_parts->getElementAt(trackID);
           if ( hit_creation_mode == Geant4Sensitive::DETAILED_MODE )     {

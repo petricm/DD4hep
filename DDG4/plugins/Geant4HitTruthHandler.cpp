@@ -116,8 +116,7 @@ void Geant4HitTruthHandler::handleCollection(Geant4ParticleMap* truth, G4VHitsCo
       if ( 0 != cal_hit )   {
         if ( truth )  {
           Geant4HitData::Contributions& c = cal_hit->truth;
-          for(Geant4HitData::Contributions::iterator j=c.begin(); j!=c.end(); ++j)  {
-            Geant4HitData::Contribution& t = *j;
+          for(auto & t : c)  {
             int trackID = t.trackID;
             t.trackID = truth->particleID(trackID);
           }

@@ -48,9 +48,7 @@ namespace dd4hep::rec {
 	// 	  << " 	DetectorSurfaces::initialize()  adding surfaces : " 
 	// 	  << std::endl ;
 	
-	for( VolSurfaceList::const_iterator it = vsL->begin() ; it != vsL->end() ; ++it ){
-	  
-	  VolSurface volSurf =  *it ;
+	for(auto volSurf : *vsL){
 	  
 	  Surface* surf = 0 ;
 	  

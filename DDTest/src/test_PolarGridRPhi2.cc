@@ -100,12 +100,12 @@ int main() {
     dd4hep::DDSegmentation::VolumeID volID = 0;
 
     //Test from position to cellID
-    for(std::vector<TestTuple>::const_iterator it = tests.begin(); it != tests.end(); ++it) {
+    for(const auto & it : tests) {
 
-      const double r     = (*it)._r;
-      const double phi   = (*it)._p;
-      const long long rB = (*it)._rB;
-      const long long pB = (*it)._pB;
+      const double r     = it._r;
+      const double phi   = it._p;
+      const long long rB = it._rB;
+      const long long pB = it._pB;
 
       dd4hep::DDSegmentation::Vector3D locPos ( r*cos(phi), r*sin(phi), 0.0);
       dd4hep::DDSegmentation::Vector3D globPos( r*cos(phi), r*sin(phi), 0.0);
@@ -157,12 +157,12 @@ int main() {
     testPositions.push_back( TestTuple(155.0, -105*DegToRad,  14,   0 ) );
 
     //Test from cellID to position
-    for(std::vector<TestTuple>::const_iterator it = testPositions.begin(); it != testPositions.end(); ++it) {
+    for(const auto & testPosition : testPositions) {
 
-      const double r     = (*it)._r;
-      const double phi   = (*it)._p;
-      const long long rB = (*it)._rB;
-      const long long pB = (*it)._pB;
+      const double r     = testPosition._r;
+      const double phi   = testPosition._p;
+      const long long rB = testPosition._rB;
+      const long long pB = testPosition._pB;
 
       dd4hep::DDSegmentation::CellID cellID  ;
 

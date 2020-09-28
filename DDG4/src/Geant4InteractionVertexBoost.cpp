@@ -54,6 +54,6 @@ void Geant4InteractionVertexBoost::operator()(G4Event*) {
     return;
   }
   _I interactions = evt->interactions();
-  for(_I::iterator i=interactions.begin(); i != interactions.end(); ++i)
-    boost(*i);
+  for(auto & interaction : interactions)
+    boost(interaction);
 }

@@ -60,11 +60,9 @@ namespace dd4hep::rec {
 
       //"ladderNumber phi0 sensorsPerLadder lengthSensor distanceSupport thicknessSupport offsetSupport widthSupport zHalfSupport distanceSensitive thicknessSensitive offsetSensitive widthSensitive zHalfSensitive"  <<  std::endl ; 
 
-      for(unsigned i=0,N=layers.size() ; i<N ; ++i){
+      for(auto l : layers){
 
-	ZPlanarData::LayerLayout l = layers[i] ;
-
-	io << " " << l.ladderNumber
+		io << " " << l.ladderNumber
 	   << " " << l.phi0
 	   << " " << l.sensorsPerLadder
 	   << " " << l.lengthSensor
@@ -100,11 +98,9 @@ namespace dd4hep::rec {
 
       //"petalHalfAngle alphaPetal zPosition petalNumber sensorsPerPetal DoubleSided Pixel phi0 zOffsetSupport distanceSupport thicknessSupport widthInnerSupport widthOuterSupport lengthSupport zOffsetSensitive distanceSensitive thicknessSensitive widthInnerSensitive widthOuterSensitive lengthSensitive" << std::endl ;
 
-      for(unsigned i=0,N=layers.size() ; i<N ; ++i){
+      for(auto l : layers){
 
-	ZDiskPetalsData::LayerLayout l = layers[i] ;
-
-	io << " " << l.petalHalfAngle
+		io << " " << l.petalHalfAngle
 	   << " " << l.alphaPetal
 	   << " " << l.zPosition
 	   << " " << l.petalNumber
@@ -144,11 +140,9 @@ namespace dd4hep::rec {
       io <<  " Sections : " << std::endl 
 	 <<  "rInner rOuter zPos " << std::endl ;
       
-      for(unsigned i=0,N=layers.size() ; i<N ; ++i){
+      for(auto l : layers){
 	
-	ConicalSupportData::Section l = layers[i] ;
-	
-	io << " " << l.rInner
+		io << " " << l.rInner
 	   << " " << l.rOuter
 	   << " " << l.zPos
 	   << std::endl ;
@@ -181,11 +175,9 @@ namespace dd4hep::rec {
 	 <<  "  distance      inner_nX0   outer_nX0    inner_nInt    outer_nInt  inner_thick outer_thick   sense_thick  cellSize0  cellSize1" 
 	 << std::endl ;
 
-      for(unsigned i=0,N=layers.size() ; i<N ; ++i){
+      for(auto l : layers){
 
-	LayeredCalorimeterData::Layer l = layers[i] ;
-
-	io << " " << l.distance
+		io << " " << l.distance
 	   << " " << l.inner_nRadiationLengths
 	   << " " << l.outer_nRadiationLengths
 	   << " " << l.inner_nInteractionLengths 

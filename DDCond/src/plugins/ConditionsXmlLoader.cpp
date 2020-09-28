@@ -111,8 +111,7 @@ size_t ConditionsXmlLoader::load_source(const std::string& nam,
   char* argv[] = { (char*)handle.ptr(), (char*)&stack, 0};
   void* result = dd4hep::createPlugin(fac, m_detector, 2, argv, 0);
   if ( result == &m_detector )  { // All OK.
-    for (ConditionsStack::iterator c=stack.begin(); c!=stack.end(); ++c)  {
-      Entry* e = (*c);
+    for (auto e : stack)  {
       Condition condition;/// = queueUpdate(e);
       except("ConditionsXmlLoader","Fix me: queueUpdate(e) not implemented");
       delete e;
@@ -163,8 +162,7 @@ size_t ConditionsXmlLoader::load_range(key_type key,
     load_source(m_sources.begin()->first, key, req_validity, conditions);
   }
   std::vector<Condition> keep;
-  for (Buffer::iterator j=m_buffer.begin(); j!=m_buffer.end(); ++j)  {
-    Condition condition = *j;
+  for (auto condition : m_buffer)  {
     const IOV* iov = condition->iov;
     if ( IOV::partial_match(req_validity,*iov) )  {
       if ( key == condition->hash )  {

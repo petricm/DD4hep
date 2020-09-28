@@ -207,8 +207,7 @@ namespace dd4hep::detail {
       /// Compute the encoding for a set of VolIDs within a readout descriptor
       static Encoding update_encoding(const IDDescriptor iddesc, const VolIDs& ids, const Encoding& initial)  {
         VolumeID volume_id = initial.first, mask = initial.second;
-        for (VolIDs::const_iterator i = ids.begin(); i != ids.end(); ++i) {
-          const auto& id = (*i);
+        for (const auto & id : ids) {
           const BitFieldElement* f = iddesc.field(id.first);
           VolumeID msk = f->mask();
           int      off = f->offset();
@@ -221,8 +220,7 @@ namespace dd4hep::detail {
       /// Compute the encoding for a set of VolIDs within a readout descriptor
       static Encoding encoding(const IDDescriptor iddesc, const VolIDs& ids)  {
         VolumeID volume_id = 0, mask = 0;
-        for (VolIDs::const_iterator i = ids.begin(); i != ids.end(); ++i) {
-          const auto& id = (*i);
+        for (const auto & id : ids) {
           const BitFieldElement* f = iddesc.field(id.first);
           VolumeID msk = f->mask();
           int      off = f->offset();

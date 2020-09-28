@@ -43,10 +43,10 @@ PluginTester::~PluginTester()   {
 
 /// Internal object destructor: release extension object(s)
 void PluginTester::clear(bool destroy)    {
-  for (Extensions::iterator i = extensions.begin(); i != extensions.end(); ++i) {
-    void* ptr = (*i).second;
+  for (auto & extension : extensions) {
+    void* ptr = extension.second;
     if (ptr) {
-      ExtensionMap::iterator j = extensionMap->find((*i).first.first);
+      ExtensionMap::iterator j = extensionMap->find(extension.first.first);
       if (j != extensionMap->end()) {
         Entry& e = (*j).second;
         if (destroy && e.destruct)

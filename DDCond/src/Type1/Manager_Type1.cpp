@@ -362,8 +362,7 @@ int Manager_Type1::clean(const IOVType* typ, int max_age)   {
 /// Invoke cache cleanup with user defined policy
 pair<int,int> Manager_Type1::clean(const ConditionsCleanup& cleaner)   {
   pair<int,int> count(0,0);
-  for( TypedConditionPool::iterator i=m_rawPool.begin(); i != m_rawPool.end(); ++i)  {
-    ConditionsIOVPool* p = *i;
+  for(auto p : m_rawPool)  {
     if ( p && cleaner(*p) )  {
       ++count.first;
       count.second += p->clean(cleaner);
@@ -375,8 +374,7 @@ pair<int,int> Manager_Type1::clean(const ConditionsCleanup& cleaner)   {
 /// Full cleanup of all managed conditions.
 pair<int,int> Manager_Type1::clear()   {
   pair<int,int> count(0,0);
-  for( TypedConditionPool::iterator i=m_rawPool.begin(); i != m_rawPool.end(); ++i)  {
-    ConditionsIOVPool* p = *i;
+  for(auto p : m_rawPool)  {
     if ( p )  {
       ++count.first;
       count.second += p->clean(0);

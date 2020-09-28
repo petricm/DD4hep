@@ -124,8 +124,8 @@ size_t DDG4EventHandler::collectionLoop(const std::string& collection, DDEveHitA
     if ( data_ptr )  {
       DDEveHit hit;
       actor.setSize(data_ptr->size());
-      for(_P::const_iterator j=data_ptr->begin(); j!=data_ptr->end(); ++j)   {
-        if ( (*m_simhitConverter)(*j,&hit) )    {
+      for(auto j : *data_ptr)   {
+        if ( (*m_simhitConverter)(j,&hit) )    {
           actor(hit);
         }
       }
@@ -144,8 +144,8 @@ size_t DDG4EventHandler::collectionLoop(const std::string& collection, DDEvePart
     if ( data_ptr )  {
       DDEveParticle part;
       actor.setSize(data_ptr->size());
-      for(_P::const_iterator j=data_ptr->begin(); j!=data_ptr->end(); ++j)   {
-        if ( (*m_particleConverter)(*j,&part) )    {
+      for(auto j : *data_ptr)   {
+        if ( (*m_particleConverter)(j,&part) )    {
           actor(part);
         }
       }

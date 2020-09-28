@@ -89,8 +89,8 @@ ostream& operator << (ostream& ostr, const Delta& data)   {
   stringstream str;
   str << "[" << data.translation << "," << data.rotation << "," << data.pivot << "]";
   res = str.str();
-  for(size_t i=0; i<res.length(); ++i)
-    if ( res[i]=='\n' ) res[i] = ' ';
+  for(char & re : res)
+    if ( re=='\n' ) re = ' ';
   return ostr << res;
 }
 

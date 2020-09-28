@@ -34,10 +34,10 @@ DetectorSelector::detectors(const string& type1,
                             const string& type5)  {
   const string* types[] = { &type1, &type2, &type3, &type4, &type5 };
   Result result;
-  for(size_t i=0; i<sizeof(types)/sizeof(types[0]); ++i)  {
+  for(auto & type : types)  {
     try  {
-      if ( !types[i]->empty() )  {
-        const vector<DetElement>& v = description.detectors(*(types[i]));
+      if ( !type->empty() )  {
+        const vector<DetElement>& v = description.detectors(*type);
         result.insert(end(result),begin(v),end(v));
       }
     }

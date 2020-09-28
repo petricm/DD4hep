@@ -406,8 +406,8 @@ Detector& DetectorImp::addDetector(const Handle<NamedObject>& ref_det) {
   }
 
   // The detector's placement must be one of the existing detectors
-  for(HandleMap::iterator idet = m_detectors.begin(); idet != m_detectors.end(); ++idet)  {
-    DetElement parent((*idet).second);
+  for(auto & m_detector : m_detectors)  {
+    DetElement parent(m_detector.second);
     Volume vol = parent.placement().volume();
     if ( vol == volume )  {
       printout(INFO,"DD4hep","+++ Detector: Added detector %s to the parent:%s.",
@@ -535,8 +535,8 @@ vector<DetElement> DetectorImp::detectors(unsigned int includeFlag, unsigned int
   vector<DetElement> dets ;
   dets.reserve( m_detectors.size() ) ;
   
-  for(HandleMap::const_iterator i=m_detectors.begin(); i!=m_detectors.end(); ++i)   {
-    DetElement det((*i).second);
+  for(const auto & m_detector : m_detectors)   {
+    DetElement det(m_detector.second);
     if ( det.parent().isValid() )  { // Exclude 'world'
       
       //fixme: what to do with compounds - add their daughters  ?

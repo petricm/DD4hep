@@ -210,8 +210,8 @@ namespace {
           << "; r->cut = " << r->cut << ";" << newline;
       if ( !r->user_limits.empty() )   {
         log << " vector<string> user_limits = {";
-        for(size_t i=0, n=r->user_limits.size(); i<n; ++i)
-          log << "r->user_limits.emplace_back(\"" << r->user_limits[i] << "\");" << newline;
+        for(auto & user_limit : r->user_limits)
+          log << "r->user_limits.emplace_back(\"" << user_limit << "\");" << newline;
       }
     }
 

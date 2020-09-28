@@ -30,8 +30,8 @@ using namespace dd4hep::xml;
 
 void Layer::compute() {
   _thickness = 0.;
-  for (vector<LayerSlice>::const_iterator i = _slices.begin(); i != _slices.end(); ++i)
-    _thickness += (*i)._thickness;
+  for (const auto & _slice : _slices)
+    _thickness += _slice._thickness;
 }
 
 double LayerStack::sectionThickness(size_t is, size_t ie) const {

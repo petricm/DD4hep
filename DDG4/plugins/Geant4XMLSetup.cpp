@@ -48,8 +48,7 @@ namespace dd4hep {
       xml::Handle_t props(e);
       // Now we set the object properties
       vector<xml::Attribute> attrs = props.attributes();
-      for(vector<xml::Attribute>::iterator i=attrs.begin(); i!=attrs.end(); ++i)   {
-        xml::Attribute a = *i;
+      for(auto a : attrs)   {
         handle[xml::_toString(props.attr_name(a))].str(props.attr<string>(a));
       }
     }

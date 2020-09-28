@@ -166,10 +166,10 @@ bool LCIOEventHandler::NextEvent()   {
     if ( m_event )   {
       typedef std::vector<std::string> _S;
       const _S* collnames = m_event->getCollectionNames();
-      for( _S::const_iterator i = collnames->begin(); i != collnames->end(); ++i) {
-        LCCollection* c = m_event->getCollection(*i);
-        m_data[c->getTypeName()].push_back(make_pair((*i).c_str(),c->getNumberOfElements()));
-        m_branches[*i] = c;
+      for(const auto & collname : *collnames) {
+        LCCollection* c = m_event->getCollection(collname);
+        m_data[c->getTypeName()].push_back(make_pair(collname.c_str(),c->getNumberOfElements()));
+        m_branches[collname] = c;
       }
       m_hasEvent = true;
       return 1;

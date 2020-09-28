@@ -251,8 +251,8 @@ Geant4EventReaderHepMC::readParticles(int /* ev_id */,
     transform(parts.begin(),parts.end(),back_inserter(output),detail::reference2nd(parts));
     m_events->clear();
     if (pos.mag2() > numeric_limits<double>::epsilon() )  {
-      for(Particles::iterator k=output.begin(); k != output.end(); ++k) {
-        Geant4ParticleHandle p(*k);
+      for(auto & k : output) {
+        Geant4ParticleHandle p(k);
         p->vsx += pos.x();
         p->vsy += pos.y();
         p->vsz += pos.z();
@@ -261,8 +261,8 @@ Geant4EventReaderHepMC::readParticles(int /* ev_id */,
         p->vez += pos.z();
       }
     }
-    for(Particles::const_iterator k=output.begin(); k != output.end(); ++k) {
-      Geant4ParticleHandle p(*k);
+    for(auto k : output) {
+      Geant4ParticleHandle p(k);
       printout(VERBOSE,m_name,
                "+++ %s ID:%3d status:%08X typ:%9d Mom:(%+.2e,%+.2e,%+.2e)[MeV] "
                "time: %+.2e [ns] #Dau:%3d #Par:%1d",

@@ -190,8 +190,8 @@ string detail::tools::elementPath(const ElementPath& nodes, bool reverse)  {
       path += "/" + string((*i)->GetName());
   }
   else  {
-    for(ElementPath::const_iterator i=nodes.begin();i!=nodes.end();++i)
-      path += "/" + string((*i)->GetName());
+    for(auto node : nodes)
+      path += "/" + string(node->GetName());
   }
   return path;
 }
@@ -280,8 +280,8 @@ string detail::tools::placementPath(const PlacementPath& nodes, bool reverse)  {
       path += "/" + string((*i)->GetName());
   }
   else  {
-    for(PlacementPath::const_iterator i=nodes.begin();i!=nodes.end();++i)
-      path += "/" + string((*i)->GetName());
+    for(auto node : nodes)
+      path += "/" + string(node->GetName());
   }
   return path;
 }
@@ -294,8 +294,8 @@ string detail::tools::placementPath(const vector<const TGeoNode*>& nodes, bool r
       path += "/" + string((*i)->GetName());
   }
   else  {
-    for(vector<const TGeoNode*>::const_iterator i=nodes.begin();i!=nodes.end();++i)
-      path += "/" + string((*i)->GetName());
+    for(auto node : nodes)
+      path += "/" + string(node->GetName());
   }
   return path;
 }

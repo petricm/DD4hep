@@ -81,8 +81,7 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
       PlacedVolume  pv = endcapVol.placeVolume(l_vol,Position(0,0,layerZ));
       pv.addPhysVolID("layer", l_num);
       layer_elt.setPlacement(pv);
-      for(size_t ic=0; ic<sensitives.size(); ++ic)  {
-        PlacedVolume sens_pv = sensitives[ic];
+      for(auto sens_pv : sensitives)  {
         DetElement comp_elt(layer_elt,sens_pv.volume().name(),l_num);
         comp_elt.setPlacement(sens_pv);
       }

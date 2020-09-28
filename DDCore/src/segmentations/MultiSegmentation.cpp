@@ -38,8 +38,8 @@ namespace dd4hep::DDSegmentation {
 
     /// destructor
     MultiSegmentation::~MultiSegmentation() {
-      for(Segmentations::iterator i=m_segmentations.begin(); i!=m_segmentations.end(); ++i)
-        delete (*i).segmentation;
+      for(auto & m_segmentation : m_segmentations)
+        delete m_segmentation.segmentation;
       m_segmentations.clear();
     }
 
@@ -55,8 +55,8 @@ namespace dd4hep::DDSegmentation {
     /// Set the underlying decoder
     void MultiSegmentation::setDecoder(const BitFieldCoder* newDecoder) {
       this->Segmentation::setDecoder(newDecoder);
-      for(Segmentations::iterator i=m_segmentations.begin(); i != m_segmentations.end(); ++i)
-        (*i).segmentation->setDecoder(newDecoder);
+      for(auto & m_segmentation : m_segmentations)
+        m_segmentation.segmentation->setDecoder(newDecoder);
       m_discriminator = &((*_decoder)[m_discriminatorId]);
     }
 
@@ -64,15 +64,14 @@ namespace dd4hep::DDSegmentation {
     const Segmentation& MultiSegmentation::subsegmentation(const CellID& cID)   const  {
       if ( m_discriminator )  {
         long seg_id = m_discriminator->value(cID);
-        for(Segmentations::const_iterator i=m_segmentations.begin(); i != m_segmentations.end(); ++i)  {
-          const Entry& e = *i; 
+        for(const auto & e : m_segmentations)  {
           if ( e.key_min<= seg_id && e.key_max >= seg_id )   {
             Segmentation* s = e.segmentation;
             if ( m_debug > 0 )   {
               cout << "MultiSegmentation: id:" << setw(4) << hex << seg_id << dec << "  " << s->name();
               const Parameters& pars = s->parameters();
-              for(Parameters::const_iterator j=pars.begin(); j!=pars.end();++j)  {
-                cout << " " << (*j)->name() << "=" << (*j)->value();
+              for(auto par : pars)  {
+                cout << " " << par->name() << "=" << par->value();
               }
               cout << endl;
             }

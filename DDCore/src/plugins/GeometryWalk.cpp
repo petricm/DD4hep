@@ -107,8 +107,8 @@ void GeometryWalk::walk(DetElement e, PlacedVolume::VolIDs ids)  const   {
   PlacedVolume::VolIDs child_ids(ids);
   print(e,pv,ids);
   child_ids.insert(child_ids.end(),pv.volIDs().begin(),pv.volIDs().end());
-  for (_C::const_iterator i=children.begin(); i!=children.end(); ++i)  {
-    walk((*i).second,child_ids);
+  for (const auto & i : children)  {
+    walk(i.second,child_ids);
   }
 }
 
@@ -119,8 +119,8 @@ long GeometryWalk::run(Detector& description,int argc,char** argv)    {
     string name = argv[in]+1;
     if ( name == "all" || name == "All" || name == "ALL" )  {
       const _C& children = description.world().children();
-      for (_C::const_iterator i=children.begin(); i!=children.end(); ++i)  {
-        DetElement sdet = (*i).second;
+      for (const auto & i : children)  {
+        DetElement sdet = i.second;
         cout << "++ Processing subdetector: " << sdet.name() << endl;
         GeometryWalk test(description,sdet);
       }

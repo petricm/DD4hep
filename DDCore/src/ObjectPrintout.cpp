@@ -34,8 +34,8 @@ namespace dd4hep {
   template <typename T> void PrintMap<T>::operator()() const {
     Printer < T > p(description, os);
     os << "++" << endl << "++          " << text << endl << "++" << endl;
-    for (Detector::HandleMap::const_iterator i = cont.begin(); i != cont.end(); ++i)
-      p((*i).second);
+    for (const auto & i : cont)
+      p(i.second);
   }
 
   template <> void Printer<Handle<NamedObject> >::operator()(const Handle<NamedObject>& val) const {

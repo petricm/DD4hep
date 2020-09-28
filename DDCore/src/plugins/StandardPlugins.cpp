@@ -1400,8 +1400,8 @@ template <int flag> long dump_detelement_tree(Detector& description, int argc, c
           }
         }
       }
-      for (DetElement::Children::const_iterator i = c.begin(); i != c.end(); ++i)
-        dump((*i).second,level+1);
+      for (const auto & i : c)
+        dump(i.second,level+1);
       return 1;
     }
   };
@@ -1501,11 +1501,11 @@ DECLARE_APPLY(DD4hep_GeometryTreeDump,exec_GeometryTreeDump)
 static long detectortype_cache(Detector& description, int , char** ) {
   vector<string> v = description.detectorTypes();
   printout(INFO,"DetectorTypes","Detector type dump:  %ld types:",long(v.size()));
-  for(vector<string>::const_iterator i=v.begin(); i!=v.end(); ++i)   {
-    const vector<DetElement>& vv=description.detectors(*i);
-    printout(INFO,"DetectorTypes","\t --> %ld %s detectors:",long(vv.size()),(*i).c_str());
-    for(vector<DetElement>::const_iterator j=vv.begin(); j!=vv.end(); ++j)
-      printout(INFO,"DetectorTypes","\t\t %-16s --> %s  [%s]",(*i).c_str(),(*j).name(),(*j).type().c_str());
+  for(const auto & i : v)   {
+    const vector<DetElement>& vv=description.detectors(i);
+    printout(INFO,"DetectorTypes","\t --> %ld %s detectors:",long(vv.size()),i.c_str());
+    for(auto j : vv)
+      printout(INFO,"DetectorTypes","\t\t %-16s --> %s  [%s]",i.c_str(),j.name(),j.type().c_str());
   }
   return 1;
 }

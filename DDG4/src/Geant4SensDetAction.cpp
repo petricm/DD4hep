@@ -309,8 +309,8 @@ size_t Geant4SensDetActionSequence::Geant4SensDetActionSequence::defineCollectio
   m_detector = sens_det;
   m_actors(&Geant4Sensitive::setDetector, sens_det);
   m_actors(&Geant4Sensitive::defineCollections);
-  for (HitCollections::const_iterator i = m_collections.begin(); i != m_collections.end(); ++i) {
-    sens_det->defineCollection((*i).first);
+  for (const auto & m_collection : m_collections) {
+    sens_det->defineCollection(m_collection.first);
     ++count;
   }
   return count;
@@ -357,8 +357,7 @@ bool Geant4SensDetActionSequence::accept(const G4Step* step) const {
 /// Function to process hits
 bool Geant4SensDetActionSequence::process(G4Step* step, G4TouchableHistory* hist) {
   bool result = false;
-  for (vector<Geant4Sensitive*>::iterator i = m_actors->begin(); i != m_actors->end(); ++i) {
-    Geant4Sensitive* sensitive = *i;
+  for (auto sensitive : *m_actors) {
     if (sensitive->accept(step))
       result |= sensitive->process(step, hist);
   }

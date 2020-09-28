@@ -65,8 +65,8 @@ View& MultiView::Build(TEveWindow* slot)   {
   _V::const_iterator icfg = view_cfg.find(m_name);
   if ( icfg != view_cfg.end() )   {
     const _C& c = (*icfg).second.subdetectors;
-    for(_C::const_iterator i = c.begin(); i!=c.end();++i)  {
-      if ( (*i).type == DisplayConfiguration::PANEL ) panels.push_back(*i);
+    for(const auto & i : c)  {
+      if ( i.type == DisplayConfiguration::PANEL ) panels.push_back(i);
     }
   }
   /// First panel

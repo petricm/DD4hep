@@ -56,8 +56,8 @@ namespace dd4hep::rec {
         double totDist = sqrt( L ) ;
 	
         //normalize direction
-        for(unsigned int i=0; i<3; i++)
-          direction[i]=direction[i]/totDist;
+        for(double & i : direction)
+          i=i/totDist;
 	
         _tgeoMgr->AddTrack(0, 12 ) ; // electron neutrino
 

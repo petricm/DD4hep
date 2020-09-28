@@ -361,11 +361,11 @@ void Display::OnNewEvent(EventHandler& handler )   {
 
   printout(ERROR,"EventHandler","+++ Display new event.....");
   manager().GetEventScene()->DestroyElements();
-  for(Types::const_iterator ityp=types.begin(); ityp!=types.end(); ++ityp)  {
-    const Collections& colls = (*ityp).second;
-    for(Collections::const_iterator j=colls.begin(); j!=colls.end(); ++j)   {
-      size_t len = (*j).second;
-      const char* nam = (*j).first;
+  for(const auto & type : types)  {
+    const Collections& colls = type.second;
+    for(const auto & coll : colls)   {
+      size_t len = coll.second;
+      const char* nam = coll.first;
       if ( len > 0 )   {
         EventHandler::CollectionType typ = handler.collectionType(nam);
         if ( typ == EventHandler::CALO_HIT_COLLECTION ||
@@ -375,28 +375,28 @@ void Display::OnNewEvent(EventHandler& handler )   {
             const DataConfig& cfg = (*i).second;
             if ( cfg.hits == "PointSet" )  {
               PointsetCreator cr(nam,len,cfg);
-              handler.collectionLoop((*j).first, cr);
+              handler.collectionLoop(coll.first, cr);
               ImportEvent(cr.element());
             }
             else if ( cfg.hits == "BoxSet" )  {
               BoxsetCreator cr(nam,len,cfg);
-              handler.collectionLoop((*j).first, cr);
+              handler.collectionLoop(coll.first, cr);
               ImportEvent(cr.element());
             }
             else if ( cfg.hits == "TowerSet" )  {
               TowersetCreator cr(nam,len,cfg);
-              handler.collectionLoop((*j).first, cr);
+              handler.collectionLoop(coll.first, cr);
               ImportEvent(cr.element());
             }
             else {  // Default is point set
               PointsetCreator cr(nam,len);
-              handler.collectionLoop((*j).first, cr);
+              handler.collectionLoop(coll.first, cr);
               ImportEvent(cr.element());
             }
           }
           else  {
             PointsetCreator cr(nam,len);
-            handler.collectionLoop((*j).first, cr);
+            handler.collectionLoop(coll.first, cr);
             ImportEvent(cr.element());
           }
         }
@@ -410,17 +410,17 @@ void Display::OnNewEvent(EventHandler& handler )   {
           const DataConfig* cfg = (i==m_collectionsConfigs.end()) ? 0 : &((*i).second);
           MCParticleCreator cr(new TEveTrackPropagator("","",new TEveMagFieldDuo(350, -3.5, 2.0)),
                                new TEveCompound("MC_Particles","MC_Particles"),cfg);
-          handler.collectionLoop((*j).first, cr);
+          handler.collectionLoop(coll.first, cr);
           cr.close();
           particles = cr.particles;
         }
       }
     }
   }
-  for(Calodata::iterator i = m_calodata.begin(); i != m_calodata.end(); ++i)
-    (*i).second.eveHist->GetHist(0)->Reset();
-  for(Calodata::iterator i = m_calodata.begin(); i != m_calodata.end(); ++i)  {
-    CalodataContext& ctx = (*i).second;
+  for(auto & i : m_calodata)
+    i.second.eveHist->GetHist(0)->Reset();
+  for(auto & i : m_calodata)  {
+    CalodataContext& ctx = i.second;
     TH2F* h = ctx.eveHist->GetHist(0);
     EtaPhiHistogramActor actor(h);
     size_t n = eventHandler().collectionLoop(ctx.config.hits, actor);
@@ -433,8 +433,8 @@ void Display::OnNewEvent(EventHandler& handler )   {
   if ( particles )  {
     ImportEvent(particles);
   }
-  for(Views::iterator i = m_eveViews.begin(); i != m_eveViews.end(); ++i)
-    (*i)->ConfigureEventFromInfo();
+  for(auto m_eveView : m_eveViews)
+    m_eveView->ConfigureEventFromInfo();
   manager().Redraw3D();
 }
 
@@ -524,8 +524,8 @@ void Display::LoadGeoChildren(TEveElement* start, int levels, bool redraw)  {
       
       printout(INFO,"Display","+++ Load children of %s to %d levels", 
                world.placement().name(), levels);
-      for (DetElement::Children::const_iterator i = c.begin(); i != c.end(); ++i) {
-        DetElement de = (*i).second;
+      for (const auto & i : c) {
+        DetElement de = i.second;
         SensitiveDetector sd = m_detDesc->sensitiveDetector(de.name());
         TEveElementList& parent = sd.isValid() ? sens : struc;
         pair<bool,TEveElement*> e = Utilities::LoadDetElement(de,levels,&parent);
@@ -544,8 +544,8 @@ void Display::LoadGeoChildren(TEveElement* start, int levels, bool redraw)  {
         if ( level > 0 )   {
           pair<bool,TEveElement*> e(false,0);
           const DetElement::Children& c = world.children();
-          for (DetElement::Children::const_iterator i = c.begin(); i != c.end(); ++i) {
-            DetElement de = (*i).second;
+          for (const auto & i : c) {
+            DetElement de = i.second;
             if ( de.placement().ptr() == n )  {
               e = Utilities::createEveShape(0, levels, start, n, mat, de.name());
               break;

@@ -58,8 +58,8 @@ void ViewMenu::Build(TGMenuBar* menubar, int hints)    {
   view_menu->AddEntry("Rho-&Z Projection", this, &ViewMenu::CreateView, p=new pair<string,string>("DD4hep_DDEve_RhoZProjection","Rho-Z"));
   view_menu->AddEntry("Rho-&Phi Projection",this, &ViewMenu::CreateView, p=new pair<string,string>("DD4hep_DDEve_RhoPhiProjection","Rho-Phi"));
   const Display::ViewConfigurations& vc = m_display->viewConfigurations();
-  for(Display::ViewConfigurations::const_iterator i=vc.begin(); i!=vc.end(); ++i)  {
-    const Display::ViewConfig& v = (*i).second;
+  for(const auto & i : vc)  {
+    const Display::ViewConfig& v = i.second;
     view_menu->AddEntry(v.name.c_str(), this, &ViewMenu::CreateView,p=new pair<string,string>("DD4hep_DDEve_"+v.type,v.name));
   }
   menubar->AddPopup(m_title.c_str(),*view_menu, new TGLayoutHints(hints, 0, 4, 0, 0));

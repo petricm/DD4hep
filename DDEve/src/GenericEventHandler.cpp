@@ -47,8 +47,8 @@ EventHandler* GenericEventHandler::current() const   {
 
 /// Notfy all subscribers
 void GenericEventHandler::NotifySubscribers(void (EventConsumer::*pmf)(EventHandler&))   {
-  for(Subscriptions::iterator i=m_subscriptions.begin(); i!=m_subscriptions.end();++i)
-    ((*i)->*pmf)(*this);
+  for(auto m_subscription : m_subscriptions)
+    (m_subscription->*pmf)(*this);
 }
 
 /// Subscribe to notification of new data present

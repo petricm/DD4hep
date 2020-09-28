@@ -48,8 +48,8 @@ Geant4ActionPhase::Geant4ActionPhase(Geant4Context* ctxt, const string& nam, con
 
 /// Default destructor
 Geant4ActionPhase::~Geant4ActionPhase() {
-  for (Members::iterator i = m_members.begin(); i != m_members.end(); ++i)
-    (*i).first->release();
+  for (auto & m_member : m_members)
+    m_member.first->release();
   m_members.clear();
   InstanceCount::decrement(this);
 }
@@ -85,8 +85,8 @@ bool Geant4ActionPhase::remove(Geant4Action* action, Callback callback) {
 
 /// Execute all members in the phase context
 void Geant4ActionPhase::execute(void* argument) {
-  for (Members::iterator i = m_members.begin(); i != m_members.end(); ++i) {
-    (*i).second.execute((const void**) &argument);
+  for (auto & m_member : m_members) {
+    m_member.second.execute((const void**) &argument);
   }
 }
 

@@ -230,8 +230,7 @@ int dd4hep::sim::mergeInteractions(const Geant4Action* caller,
   Interactions inter  = evt->interactions();
   int particle_offset = 0;
 
-  for(Interactions::const_iterator i=inter.begin(); i != inter.end(); ++i)  {
-    Interaction* interaction = *i;
+  for(auto interaction : inter)  {
     int vertex_offset = particle_offset;
     if ( !interaction->applyMask() )   {
       caller->abortRun("Found single interaction with multiple primary vertices!",
@@ -397,21 +396,21 @@ getRelevant(set<int>& visited,
         p4->SetProperTime(proper_time);
         prim[p->id] = p4;
         Primaries daughters;
-        for(Geant4Particle::Particles::const_iterator i=dau.begin(); i!=dau.end(); ++i)  {
-          if ( visited.find(*i) == visited.end() )  {
-            Primaries tmp = getRelevant(visited,prim,pm,primaryConfig,pm[*i]);
+        for(int i : dau)  {
+          if ( visited.find(i) == visited.end() )  {
+            Primaries tmp = getRelevant(visited,prim,pm,primaryConfig,pm[i]);
             daughters.insert(daughters.end(), tmp.begin(),tmp.end());
           }
         }
-        for(Primaries::iterator i=daughters.begin(); i!=daughters.end(); ++i)
-          p4->SetDaughter((*i).second);
+        for(auto & daughter : daughters)
+          p4->SetDaughter(daughter.second);
       }
       res.emplace_back(p,p4);
     }
     else  {
-      for(Geant4Particle::Particles::const_iterator i=dau.begin(); i!=dau.end(); ++i)  {
-        if ( visited.find(*i) == visited.end() )  {
-          Primaries tmp = getRelevant(visited,prim,pm,primaryConfig,pm[*i]);
+      for(int i : dau)  {
+        if ( visited.find(i) == visited.end() )  {
+          Primaries tmp = getRelevant(visited,prim,pm,primaryConfig,pm[i]);
           res.insert(res.end(), tmp.begin(),tmp.end());
         }
       }
@@ -454,17 +453,17 @@ int dd4hep::sim::generatePrimaries(const Geant4Action* caller,
         event->AddPrimaryVertex(v4);
         caller->print("+++++ G4PrimaryVertex at (%+.2e,%+.2e,%+.2e) [mm] %+.2e [ns]",
                       v->x/CLHEP::mm,v->y/CLHEP::mm,v->z/CLHEP::mm,v->time/CLHEP::ns);
-        for(Geant4Vertex::Particles::const_iterator ip=v->out.begin(); ip!=v->out.end(); ++ip)  {
-          Geant4ParticleHandle p = pm[*ip];
+        for(int ip : v->out)  {
+          Geant4ParticleHandle p = pm[ip];
           if ( p->daughters.size() > 0 )  {
             PropertyMask mask(p->reason);
             mask.set(G4PARTICLE_HAS_SECONDARIES);
           }
           if ( p->parents.size() == 0 )  {
             Primaries relevant = getRelevant(visited,prim,pm,primaryConfig,p);
-            for(Primaries::const_iterator j=relevant.begin(); j!= relevant.end(); ++j)  {
-              Geant4ParticleHandle r = (*j).first;
-              G4PrimaryParticle* p4 = (*j).second;
+            for(const auto & j : relevant)  {
+              Geant4ParticleHandle r = j.first;
+              G4PrimaryParticle* p4 = j.second;
               PropertyMask reason(r->reason);
               char text[64];
 	      
@@ -481,9 +480,9 @@ int dd4hep::sim::generatePrimaries(const Geant4Action* caller,
         }
       }
     }
-    for(map<int,G4PrimaryParticle*>::iterator i=prim.begin(); i!=prim.end(); ++i)  {
-      Geant4ParticleHandle p = pm[(*i).first];
-      primaries->insert((*i).second,p);
+    for(auto & i : prim)  {
+      Geant4ParticleHandle p = pm[i.first];
+      primaries->insert(i.second,p);
     }
   }
   return 1;

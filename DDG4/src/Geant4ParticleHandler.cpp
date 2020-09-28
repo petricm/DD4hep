@@ -647,8 +647,8 @@ int Geant4ParticleHandler::recombineParents()  {
       }
     }
   }
-  for(set<int>::const_iterator r=remove.begin(); r!=remove.end();++r)  {
-    ParticleMap::iterator ir = m_particleMap.find(*r);
+  for(int r : remove)  {
+    ParticleMap::iterator ir = m_particleMap.find(r);
     if ( ir != m_particleMap.end() )  {
       (*ir).second->release();
       m_particleMap.erase(ir);
@@ -668,8 +668,7 @@ void Geant4ParticleHandler::checkConsistency()  const   {
     PropertyMask status(p->status);
     set<int>& daughters = p->daughters;
     // For all particles, the set of daughters must be contained in the record.
-    for(set<int>::const_iterator id=daughters.begin(); id!=daughters.end(); ++id)   {
-      int id_dau = *id;
+    for(int id_dau : daughters)   {
       if ( (j=m_particleMap.find(id_dau)) == m_particleMap.end() )   {
         ++num_errors;
         error("+++ Particle:%d Daughter %d is not in particle map!",p->id,id_dau);
@@ -691,8 +690,8 @@ void Geant4ParticleHandler::checkConsistency()  const   {
         parent_list[0] = 0;
         ++num_errors;
         p.dumpWithMomentum(ERROR,name(),"INCONSISTENCY");
-        for(set<int>::const_iterator ip=p->parents.begin(); ip!=p->parents.end();++ip)
-          ::snprintf(parent_list+strlen(parent_list),sizeof(parent_list)-strlen(parent_list),"%d ",*ip);
+        for(int parent : p->parents)
+          ::snprintf(parent_list+strlen(parent_list),sizeof(parent_list)-strlen(parent_list),"%d ",parent);
         error("+++ Particle:%d Parent %d (G4id:%d)  In record:%s In parent list:%s [%s]",
               p->id,parent_id,p->g4Parent,yes_no(in_map),yes_no(in_parent_list),parent_list);
       }

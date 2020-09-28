@@ -56,13 +56,13 @@ static void* _convertHitCollection(const char* source)  {
   const std::vector<SimpleHit*>* c = (std::vector<SimpleHit*>*)source;
   std::vector<SimulationHit>* pv = new std::vector<SimulationHit>();
   if ( source && c->size() > 0 )   {
-    for(std::vector<SimpleHit*>::const_iterator k=c->begin(); k!=c->end(); ++k)   {
-      SimpleTracker::Hit* trh = dynamic_cast<SimpleTracker::Hit*>(*k);
+    for(auto k : *c)   {
+      SimpleTracker::Hit* trh = dynamic_cast<SimpleTracker::Hit*>(k);
       if ( trh )   {
         pv->emplace_back(SimulationHit(trh->position, trh->energyDeposit));
         continue;
       }
-      SimpleCalorimeter::Hit* cah = dynamic_cast<SimpleCalorimeter::Hit*>(*k);
+      SimpleCalorimeter::Hit* cah = dynamic_cast<SimpleCalorimeter::Hit*>(k);
       if ( cah )   {
         pv->emplace_back(SimulationHit(cah->position, cah->energyDeposit));
         continue;

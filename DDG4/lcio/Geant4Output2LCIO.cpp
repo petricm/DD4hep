@@ -110,22 +110,22 @@ namespace dd4hep {
     /// Fill event parameters in LCIO event
     template <typename T>
     inline void Geant4Output2LCIO::saveEventParameters(lcio::LCEventImpl* event, const std::map<std::string, std::string >& parameters)  {
-      for(std::map<std::string, std::string >::const_iterator iter = parameters.begin(), endIter = parameters.end() ; iter != endIter ; ++iter)  {
+      for(const auto & iter : parameters)  {
         T parameter;
-        std::istringstream iss(iter->second);
+        std::istringstream iss(iter.second);
         if ( (iss >> parameter).fail() )  {
-          printout(FATAL,"saveEventParameters","+++ Event parameter %s: FAILED to convert to type :%s",iter->first.c_str(),typeid(T).name());
+          printout(FATAL,"saveEventParameters","+++ Event parameter %s: FAILED to convert to type :%s",iter.first.c_str(),typeid(T).name());
           continue;
         }
-        event->parameters().setValue(iter->first,parameter);
+        event->parameters().setValue(iter.first,parameter);
       }
     }
 
     /// Fill event parameters in LCIO event - std::string specialization
     template <>
     inline void Geant4Output2LCIO::saveEventParameters<std::string>(lcio::LCEventImpl* event, const std::map<std::string, std::string >& parameters)  {
-      for(std::map<std::string, std::string >::const_iterator iter = parameters.begin(), endIter = parameters.end() ; iter != endIter ; ++iter)  {
-        event->parameters().setValue(iter->first,iter->second);
+      for(const auto & parameter : parameters)  {
+        event->parameters().setValue(parameter.first,parameter.second);
       }
     }
 
@@ -237,8 +237,8 @@ void Geant4Output2LCIO::saveRun(const G4Run* run)  {
   G4AutoLock protection_lock(&action_mutex);
   // --- write an lcio::RunHeader ---------
   lcio::LCRunHeaderImpl* rh =  new lcio::LCRunHeaderImpl;
-  for (std::map< std::string, std::string >::iterator it = m_runHeader.begin(); it != m_runHeader.end(); ++it) {
-    rh->parameters().setValue( it->first, it->second );
+  for (auto & it : m_runHeader) {
+    rh->parameters().setValue( it.first, it.second );
   }
   m_runNo = m_runNumberOffset > 0 ? m_runNumberOffset + run->GetRunID() : run->GetRunID();
   rh->parameters().setValue("GEANT4Version", G4Version);
@@ -338,8 +338,7 @@ lcio::LCCollectionVec* Geant4Output2LCIO::saveParticles(Geant4ParticleMap* parti
       const Geant4Particle* p = p_part[i];
       MCParticleImpl* q = p_lcio[i];
       const Geant4Particle::Particles& dau = p->daughters;
-      for(Geant4Particle::Particles::const_iterator j=dau.begin(); j!=dau.end(); ++j)  {
-        int idau = *j;
+      for(int idau : dau)  {
         if ( (k=p_ids.find(idau)) == p_ids.end() )  {  // Error!!!
           printout(FATAL,"Geant4Conversion","+++ Particle %d: FAILED to find daughter with ID:%d",p->id,idau);
           continue;
@@ -349,8 +348,8 @@ lcio::LCCollectionVec* Geant4Output2LCIO::saveParticles(Geant4ParticleMap* parti
         qdau->addParent(q);
       }
       const Geant4Particle::Particles& par = p->parents;
-      for(Geant4Particle::Particles::const_iterator j=par.begin(); j!=par.end(); ++j)  {
-        int ipar = *j; // A parent ID iof -1 means NO parent, because a base of 0 is perfectly leagal!
+      for(int ipar : par)  {
+        // A parent ID iof -1 means NO parent, because a base of 0 is perfectly leagal!
         if ( ipar>=0 && (k=p_ids.find(ipar)) == p_ids.end() )  {  // Error!!!
           printout(FATAL,"Geant4Conversion","+++ Particle %d: FAILED to find parent with ID:%d",p->id,ipar);
           continue;

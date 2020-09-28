@@ -255,9 +255,9 @@ void Geant4VolumeManager::volumeDescriptor(const vector<const G4VPhysicalVolume*
       if (lvol->GetSensitiveDetector()) {
         const G4VPhysicalVolume* node = path[0];
         const PlacementMap& pm = ptr()->g4Placements;
-        for (PlacementMap::const_iterator ipm = pm.begin(); ipm != pm.end(); ++ipm) {
-          if ((*ipm).second == node)  {
-            PlacedVolume pv = (*ipm).first;
+        for (auto ipm : pm) {
+          if (ipm.second == node)  {
+            PlacedVolume pv = ipm.first;
             SensitiveDetector sd = pv.volume().sensitiveDetector();
             IDDescriptor dsc = sd.readout().idSpec();
             vol_desc.first = vid;

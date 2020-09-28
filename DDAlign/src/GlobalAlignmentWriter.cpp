@@ -56,10 +56,10 @@ xml::Element GlobalAlignmentWriter::createElement(xml::Document doc, DetElement 
   if ( a.isValid() )  {
     addNode(elt,a);
   }
-  for(vector<GlobalAlignment>::const_iterator i=va.begin(); i!=va.end();++i)  {
+  for(auto i : va)  {
     e = xml::Element(doc,_U(volume));
-    e.setAttr(_ALU(path),(*i)->GetName());
-    addNode(e,*i);
+    e.setAttr(_ALU(path),i->GetName());
+    addNode(e,i);
     elt.append(e);
   }
   return elt;
@@ -110,8 +110,8 @@ xml::Element GlobalAlignmentWriter::scan(xml::Document doc, DetElement element) 
     const DetElement::Children& c = element.children();
     GlobalAlignment alignment = element->global_alignment;
     if ( alignment.isValid() ) elt = createElement(doc,element);
-    for (DetElement::Children::const_iterator i = c.begin(); i != c.end(); ++i)   {
-      xml::Element daughter = scan(doc, (*i).second);
+    for (const auto & i : c)   {
+      xml::Element daughter = scan(doc, i.second);
       if ( daughter )   {
         (elt ? (elt) : (elt=createElement(doc,element))).append(daughter);
       }

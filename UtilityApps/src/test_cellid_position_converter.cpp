@@ -105,22 +105,22 @@ int main_wrapper(int argc, char** argv ){
 
     const std::vector< std::string >& colNames = *evt->getCollectionNames() ;
 
-    for(unsigned icol=0, ncol = colNames.size() ; icol < ncol ; ++icol ){
+    for(const auto & colName : colNames){
 
-      LCCollection* col =  evt->getCollection( colNames[ icol ] ) ;
+      LCCollection* col =  evt->getCollection( colName ) ;
 
       std::string typeName = col->getTypeName() ;
 
       if( typeName != lcio::LCIO::SIMCALORIMETERHIT )
         continue ;
 
-      if( !subset.empty() && subset.find( colNames[icol] ) ==  subset.end()  ) 
+      if( !subset.empty() && subset.find( colName ) ==  subset.end()  )
 	continue ;
 
-      if( !subsetIgnore.empty() && subsetIgnore.find( colNames[icol] ) !=  subsetIgnore.end()  ) 
+      if( !subsetIgnore.empty() && subsetIgnore.find( colName ) !=  subsetIgnore.end()  )
        	continue ;
 
-      std::cout << "  -- testing collection : " <<  colNames[ icol ] << std::endl ;
+      std::cout << "  -- testing collection : " <<  colName << std::endl ;
 
       std::string cellIDEcoding = col->getParameters().getStringVal("CellIDEncoding") ;
       
@@ -153,9 +153,9 @@ int main_wrapper(int argc, char** argv ){
 	test( id, idFromDecoder,  sst.str() ) ;
 	
 	if( ! strcmp( test.last_test_status() , "PASSED" ) )
-	  tMap[ colNames[icol] ].cellid.passed++ ;
+	  tMap[ colName ].cellid.passed++ ;
 	else
-	  tMap[ colNames[icol] ].cellid.failed++ ;
+	  tMap[ colName ].cellid.failed++ ;
 	  
 	Position pointFromDecoder = idposConv.position( id ) ;
 
@@ -167,9 +167,9 @@ int main_wrapper(int argc, char** argv ){
 	test( d < epsilon , true  , sst1.str()  ) ;
 	
 	if( ! strcmp( test.last_test_status() , "PASSED" ) )
-	  tMap[ colNames[icol] ].position.passed++ ;
+	  tMap[ colName ].position.passed++ ;
 	else
-	  tMap[ colNames[icol] ].position.failed++ ;
+	  tMap[ colName ].position.failed++ ;
 
       }
     }

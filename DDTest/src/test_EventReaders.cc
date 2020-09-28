@@ -44,10 +44,10 @@ int main(int argc, char** argv ){
 
 
   try{
-    for(std::vector<TestTuple>::const_iterator it = tests.begin(); it != tests.end(); ++it) {
-      std::string readerType = (*it).readerType;
-      std::string fileName = (*it).inputFile;
-      bool skipEOF =  (*it).skipEOF;
+    for(const auto & it : tests) {
+      std::string readerType = it.readerType;
+      std::string fileName = it.inputFile;
+      bool skipEOF =  it.skipEOF;
       //InputFiles are in DDTest/inputFiles, argument is cmake_source directory
       std::string inputFile = argv[1]+ std::string("/inputFiles/") + fileName;
       dd4hep::sim::Geant4EventReader* thisReader = dd4hep::PluginService::Create<dd4hep::sim::Geant4EventReader*>(readerType, inputFile);

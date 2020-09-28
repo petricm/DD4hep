@@ -85,8 +85,8 @@ namespace {
 
     dd4hep::Detector& description = dd4hep_instance();
     // Load compact files
-    for(size_t i=0; i<geo_files.size(); ++i)  {
-      const char* plugin_argv[] = {geo_files[i], 0};
+    for(auto & geo_file : geo_files)  {
+      const char* plugin_argv[] = {geo_file, 0};
       run_plugin(description,"DD4hep_CompactLoader",1,(char**)plugin_argv);
     }
     // Create volume manager and populate it required

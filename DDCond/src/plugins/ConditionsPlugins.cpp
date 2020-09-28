@@ -512,8 +512,7 @@ static long ddcond_dump_repository(Detector& /* description */, int argc, char**
   printout(INFO,"Conditions","+++ ConditionsRepository: Dumping %s",input.c_str());
   if ( ConditionsRepository().load(input, data) )  {
     printout(INFO,"Repository","%-8s  %-60s %-60s","Key","Name","Address");
-    for(Data::const_iterator i=data.begin(); i!=data.end(); ++i)  {
-      const ConditionsRepository::Entry& e = *i;
+    for(const auto & e : data)  {
       string add = e.address;
       if ( add.length() > 80 ) add = e.address.substr(0,60) + "...";
       printout(INFO,"Repository","%16llX  %s",e.key,e.name.c_str());

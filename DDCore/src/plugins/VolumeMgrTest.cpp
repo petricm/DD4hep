@@ -305,8 +305,8 @@ long VolIDTest::run(Detector& description,int argc,char** argv)    {
     string name = argv[iarg];
     if ( name == "all" || name == "All" || name == "ALL" )  {
       const DetElement::Children& children = description.world().children();
-      for (DetElement::Children::const_iterator i=children.begin(); i!=children.end(); ++i)  {
-        DetElement sdet = (*i).second;
+      for (const auto & i : children)  {
+        DetElement sdet = i.second;
         printout(INFO,"DD4hepVolumeMgrTest","++ Processing subdetector: %s",sdet.name());
         VolIDTest test(description,sdet,99);
       }

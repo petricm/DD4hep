@@ -50,8 +50,7 @@ namespace dd4hep {
       
       while( ! daugs.empty() ) {
 	
-        for( std::list< DetElement >::iterator li=daugs.begin() ; li != daugs.end() ; ++li ){
-          DetElement dau = *li ;
+        for(auto dau : daugs){
           DetElement::Children chMap = dau.children() ;
           for ( DetElement::Children::const_iterator it=chMap.begin() ; it != chMap.end() ; ++it ){
             DetElement de = (*it).second ;
@@ -65,9 +64,9 @@ namespace dd4hep {
       
       //      std::cout << " **** SurfaceHelper::initialize() : # DetElements found  " << dets.size() << std::endl ;
       
-      for( std::list< DetElement >::iterator li=dets.begin() ; li != dets.end() ; ++li ) {
+      for(auto & li : dets) {
 	
-        DetElement det = (*li) ;
+        DetElement det = li ;
 	
 
 

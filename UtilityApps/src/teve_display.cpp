@@ -174,9 +174,8 @@ TEveStraightLineSet* getSurfaceVectors(bool addO, bool addU, bool addV, bool add
 
   const SurfaceList& sL = surfMan.surfaceList() ;
 
-  for( SurfaceList::const_iterator it = sL.begin() ; it != sL.end() ; ++it ){
+  for(auto surf : sL){
 
-    ISurface* surf = *it ;
     const Vector3D& u = surf->u() ;
     const Vector3D& v = surf->v() ;
     const Vector3D& n = surf->normal() ;
@@ -219,9 +218,9 @@ TEveStraightLineSet* getSurfaces(int col, const SurfaceType& type, TString name)
 
 //    std::cout << " getSurfaces() for "<<name<<" - #surfaces : " << sL.size() << std::endl ;
 
-  for( SurfaceList::const_iterator it = sL.begin() ; it != sL.end() ; ++it ){
+  for(auto it : sL){
 
-    Surface* surf = dynamic_cast< Surface*> ( *it ) ;
+    Surface* surf = dynamic_cast< Surface*> ( it ) ;
 
     if( ! surf ) 
       continue ;

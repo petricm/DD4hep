@@ -99,16 +99,16 @@ int main_wrapper(int argc, char** argv ){
 
     const std::vector< std::string >& colNames = *evt->getCollectionNames() ;
 
-    for(unsigned icol=0, ncol = colNames.size() ; icol < ncol ; ++icol ){
+    for(const auto & colName : colNames){
 
-      EVENT::LCCollection* col =  evt->getCollection( colNames[ icol ] ) ;
+      EVENT::LCCollection* col =  evt->getCollection( colName ) ;
 
       std::string typeName = col->getTypeName() ;
 
       if( typeName != lcio::LCIO::SIMTRACKERHIT ) 
         continue ;
 
-      std::cout << "  -- testing collection : " <<  colNames[ icol ] << std::endl ;
+      std::cout << "  -- testing collection : " <<  colName << std::endl ;
 
       std::string cellIDEcoding = col->getParameters().getStringVal("CellIDEncoding") ;
       

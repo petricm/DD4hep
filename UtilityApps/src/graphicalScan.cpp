@@ -284,9 +284,9 @@ int main_wrapper(int argc, char** argv)   {
             }
 
             const MaterialVec& materials = matMgr.materialsBetween(p0, p1);
-            for( unsigned i=0,n=materials.size();i<n;++i){
-              TGeoMaterial* mat =  materials[i].first->GetMaterial();
-              double length = materials[i].second;
+            for(const auto & material : materials){
+              TGeoMaterial* mat =  material.first->GetMaterial();
+              double length = material.second;
               sum_length += length;
               double nx0 = length / mat->GetRadLen();
               sum_x0 += nx0;
@@ -307,16 +307,16 @@ int main_wrapper(int argc, char** argv)   {
           scanmap["x0"]->SetBinContent(ix, iy, sum_x0/sum_length); // normalise to cm (ie x0/cm density: indep of bin size)
           scanmap["lambda"]->SetBinContent(ix, iy, sum_lambda/sum_length);
 
-          for (  std::map < std::string , float >::iterator jj = materialmap.begin(); jj!=materialmap.end(); jj++) {
-            if ( scanmap.find( jj->first )==scanmap.end() ) {
-              hn = "slice"; hn+=isl; hn+="_"+jj->first;
-              hnn = jj->first; hnn += " "+XYZ; hnn+="="; 
+          for (auto & jj : materialmap) {
+            if ( scanmap.find( jj.first )==scanmap.end() ) {
+              hn = "slice"; hn+=isl; hn+="_"+jj.first;
+              hnn = jj.first; hnn += " "+XYZ; hnn+="=";
               // hnn+=sz; 
               hnn += Form("%7.3f",sz);
               hnn+=" [cm]";
-              scanmap[jj->first] = new TH2F( hn, hnn, nbins, mmin[index[1]], mmax[index[1]], nbins, mmin[index[2]], mmax[index[2]] );
+              scanmap[jj.first] = new TH2F( hn, hnn, nbins, mmin[index[1]], mmax[index[1]], nbins, mmin[index[2]], mmax[index[2]] );
             }
-            scanmap[jj->first]->SetBinContent(ix, iy, jj->second / sum_length );
+            scanmap[jj.first]->SetBinContent(ix, iy, jj.second / sum_length );
           }
 
         } // if (scanMaterial)
@@ -324,10 +324,10 @@ int main_wrapper(int argc, char** argv)   {
       }
     }
 
-    for (  std::map < std::string , TH2F* >::iterator jj = scanmap.begin(); jj!=scanmap.end(); jj++) {
-      jj->second->SetOption("zcol");
-      jj->second->GetXaxis()->SetTitle(labx);
-      jj->second->GetYaxis()->SetTitle(laby);
+    for (auto & jj : scanmap) {
+      jj.second->SetOption("zcol");
+      jj.second->GetXaxis()->SetTitle(labx);
+      jj.second->GetYaxis()->SetTitle(laby);
     }
   }
   f->Write();

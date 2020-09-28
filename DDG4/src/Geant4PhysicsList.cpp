@@ -107,26 +107,25 @@ void Geant4PhysicsList::dump()    {
   if ( !m_physics.empty() && !m_particles.empty() && !m_processes.empty() )  {
     printout(ALWAYS,name(),"+++ Geant4PhysicsList Dump");
   }
-  for (PhysicsConstructors::const_iterator i = m_physics.begin(); i != m_physics.end(); ++i)
-    printout(ALWAYS,name(),"+++ PhysicsConstructor:           %s",(*i).c_str());
-  for (ParticleConstructors::const_iterator i = m_particles.begin(); i != m_particles.end(); ++i)
-    printout(ALWAYS,name(),"+++ ParticleConstructor:          %s",(*i).c_str());
-  for (ParticleConstructors::const_iterator i = m_particlegroups.begin(); i != m_particlegroups.end(); ++i)
-    printout(ALWAYS,name(),"+++ ParticleGroupConstructor:     %s",(*i).c_str());
+  for (const auto & m_physic : m_physics)
+    printout(ALWAYS,name(),"+++ PhysicsConstructor:           %s",m_physic.c_str());
+  for (const auto & m_particle : m_particles)
+    printout(ALWAYS,name(),"+++ ParticleConstructor:          %s",m_particle.c_str());
+  for (const auto & m_particlegroup : m_particlegroups)
+    printout(ALWAYS,name(),"+++ ParticleGroupConstructor:     %s",m_particlegroup.c_str());
   for (PhysicsProcesses::const_iterator i = m_discreteProcesses.begin(); i != m_discreteProcesses.end(); ++i)  {
     const string& part_name = (*i).first;
     const ParticleProcesses& procs = (*i).second;
     printout(ALWAYS,name(),"+++ DiscretePhysicsProcesses of particle  %s",part_name.c_str());
-    for (ParticleProcesses::const_iterator ip = procs.begin(); ip != procs.end(); ++ip)  {
-      printout(ALWAYS,name(),"+++        Process    %s", (*ip).name.c_str());
+    for (const auto & proc : procs)  {
+      printout(ALWAYS,name(),"+++        Process    %s", proc.name.c_str());
     }
   }
   for (PhysicsProcesses::const_iterator i = m_processes.begin(); i != m_processes.end(); ++i)  {
     const string& part_name = (*i).first;
     const ParticleProcesses& procs = (*i).second;
     printout(ALWAYS,name(),"+++ PhysicsProcesses of particle  %s",part_name.c_str());
-    for (ParticleProcesses::const_iterator ip = procs.begin(); ip != procs.end(); ++ip)  {
-      const Process& p = (*ip);
+    for (const auto & p : procs)  {
       printout(ALWAYS,name(),"+++        Process    %s  ordAtRestDoIt=%d ordAlongSteptDoIt=%d ordPostStepDoIt=%d",
                p.name.c_str(),p.ordAtRestDoIt,p.ordAlongSteptDoIt,p.ordPostStepDoIt);
     }
@@ -231,8 +230,7 @@ void Geant4PhysicsList::adoptPhysicsConstructor(Geant4Action* action)  {
 /// Callback to construct particle decays
 void Geant4PhysicsList::constructPhysics(G4VModularPhysicsList* physics_pointer)  {
   debug("constructPhysics %p", physics_pointer);
-  for (PhysicsConstructors::iterator i=m_physics.begin(); i != m_physics.end(); ++i)  {
-    PhysicsConstructors::value_type& ctor = *i;
+  for (auto & ctor : m_physics)  {
     if ( 0 == ctor.pointer )   {
       G4VPhysicsConstructor* p = PluginService::Create<G4VPhysicsConstructor*>(ctor);
       if (!p)  {
@@ -250,8 +248,7 @@ void Geant4PhysicsList::constructPhysics(G4VModularPhysicsList* physics_pointer)
 void Geant4PhysicsList::constructParticles(G4VUserPhysicsList* physics_pointer)   {
   debug("constructParticles %p", physics_pointer);
   /// Now define all particles
-  for (ParticleConstructors::const_iterator i = m_particles.begin(); i != m_particles.end(); ++i)   {
-    const ParticleConstructors::value_type& ctor = *i;
+  for (const auto & ctor : m_particles)   {
     G4ParticleDefinition* def = PluginService::Create<G4ParticleDefinition*>(ctor);
     if (!def)  {
       /// Check if we have here a particle group constructor
@@ -263,8 +260,7 @@ void Geant4PhysicsList::constructParticles(G4VUserPhysicsList* physics_pointer) 
     }
   }
   /// Now define all particles
-  for (ParticleConstructors::const_iterator i = m_particlegroups.begin(); i != m_particlegroups.end(); ++i)  {
-    const ParticleConstructors::value_type& ctor = *i;
+  for (const auto & ctor : m_particlegroups)  {
     /// Check if we have here a particle group constructor
     long* result = (long*) PluginService::Create<long>(ctor);
     if (!result || *result != 1L)  {
@@ -284,11 +280,9 @@ void Geant4PhysicsList::constructProcesses(G4VUserPhysicsList* physics_pointer) 
     if (defs.empty())  {
       except("Particle:%s Cannot find the corresponding entry in the particle table.", part_name.c_str());
     }
-    for (vector<G4ParticleDefinition*>::const_iterator id = defs.begin(); id != defs.end(); ++id)  {
-      G4ParticleDefinition* particle = *id;
+    for (auto particle : defs)  {
       G4ProcessManager* mgr = particle->GetProcessManager();
-      for (ParticleProcesses::const_iterator ip = procs.begin(); ip != procs.end(); ++ip)  {
-        const Process& p = (*ip);
+      for (const auto & p : procs)  {
         G4VProcess* g4 = PluginService::Create<G4VProcess*>(p.name);
         if (!g4)  {   // Error no factory for this process
           except("Particle:%s -> [%s] Cannot create discrete physics process %s", 
@@ -307,11 +301,9 @@ void Geant4PhysicsList::constructProcesses(G4VUserPhysicsList* physics_pointer) 
     if (defs.empty())  {
       except("Particle:%s Cannot find the corresponding entry in the particle table.", part_name.c_str());
     }
-    for (vector<G4ParticleDefinition*>::const_iterator id = defs.begin(); id != defs.end(); ++id)  {
-      G4ParticleDefinition* particle = *id;
+    for (auto particle : defs)  {
       G4ProcessManager* mgr = particle->GetProcessManager();
-      for (ParticleProcesses::const_iterator ip = procs.begin(); ip != procs.end(); ++ip)  {
-        const Process& p = (*ip);
+      for (const auto & p : procs)  {
         G4VProcess* g4 = PluginService::Create<G4VProcess*>(p.name);
         if (!g4)  {   // Error no factory for this process
           except("Particle:%s -> [%s] Cannot create physics process %s", 

@@ -95,28 +95,28 @@ void next_event(){
 
     const std::vector< std::string >& colNames = * evt->getCollectionNames() ;
 
-    for(unsigned icol=0, ncol = colNames.size() ; icol < ncol ; ++icol ){
+    for(const auto & colName : colNames){
 
-      LCCollection* col = evt->getCollection( colNames[ icol ] ) ;
+      LCCollection* col = evt->getCollection( colName ) ;
 
-      std::cout << " **** reading collection " << colNames[ icol ] << std::endl ;
+      std::cout << " **** reading collection " << colName << std::endl ;
 
 
       if( col->getTypeName() == LCIO::SIMTRACKERHIT ){   
 	  
-        MultiView::instance()->ImportEvent(  createPointSet<EVENT::SimTrackerHit>( col , colNames[ icol ]  , kMagenta+2 , 1 , 4  ) ) ; 
+        MultiView::instance()->ImportEvent(  createPointSet<EVENT::SimTrackerHit>( col , colName  , kMagenta+2 , 1 , 4  ) ) ;
       }
       else if( col->getTypeName() == LCIO::SIMCALORIMETERHIT ){   
 	  
-        MultiView::instance()->ImportEvent(  createPointSet<EVENT::SimCalorimeterHit>( col , colNames[ icol ]  , kMagenta+4 , 1 , 4  ) ) ; 
+        MultiView::instance()->ImportEvent(  createPointSet<EVENT::SimCalorimeterHit>( col , colName  , kMagenta+4 , 1 , 4  ) ) ;
       }
       else if( col->getTypeName() == LCIO::TRACKERHIT ){   
 	  
-        MultiView::instance()->ImportEvent(  createPointSet<EVENT::TrackerHit>( col , colNames[ icol ]  , kBlue+2 , 1 , 4  ) ) ; 
+        MultiView::instance()->ImportEvent(  createPointSet<EVENT::TrackerHit>( col , colName  , kBlue+2 , 1 , 4  ) ) ;
       }
       else if( col->getTypeName() == LCIO::CALORIMETERHIT ){   
 	  
-        MultiView::instance()->ImportEvent(  createPointSet<EVENT::CalorimeterHit>( col , colNames[ icol ]  , kBlue+4 , 1 , 4  ) ) ; 
+        MultiView::instance()->ImportEvent(  createPointSet<EVENT::CalorimeterHit>( col , colName  , kBlue+4 , 1 , 4  ) ) ;
       }
 	
     }

@@ -312,8 +312,8 @@ template <> void Converter<Plugin>::operator()(xml_h e) const {
       string val = coll.attr<string>(_U(value));
       arguments.emplace_back(val);
     }
-    for(vector<string>::iterator i=arguments.begin(); i!=arguments.end(); ++i)
-      argv.emplace_back(&((*i)[0]));
+    for(auto & argument : arguments)
+      argv.emplace_back(&(argument[0]));
     description.apply(name.c_str(),int(argv.size()), &argv[0]);
     return;
   }

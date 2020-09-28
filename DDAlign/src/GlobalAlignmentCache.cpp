@@ -199,11 +199,11 @@ void GlobalAlignmentCache::apply(GlobalAlignmentStack& stack)    {
       detelt_updates.emplace(e->detector.path(),e->detector);
     }
   }
-  for(sd_entries_t::iterator i=all.begin(); i!=all.end(); ++i)  {
-    DetElement det((*i).first);
+  for(auto & i : all)  {
+    DetElement det(i.first);
     GlobalAlignmentCache* sd_cache = subdetectorAlignments(det.placement().name());
-    sd_cache->apply( (*i).second );
-    (*i).second.clear();
+    sd_cache->apply( i.second );
+    i.second.clear();
   }
 
   printout(INFO,"GlobalAlignmentCache","Alignments were applied. Refreshing physical nodes....");
@@ -212,25 +212,25 @@ void GlobalAlignmentCache::apply(GlobalAlignmentStack& stack)    {
   mgr.RefreshPhysicalNodes();
 
   // Provide update callback for every detector element with a changed placement
-  for(DetElementUpdates::iterator i=detelt_updates.begin(); i!=detelt_updates.end(); ++i)  {
-    DetElement elt((*i).second);
+  for(auto & detelt_update : detelt_updates)  {
+    DetElement elt(detelt_update.second);
     printout(DEBUG,"GlobalAlignmentCache","+++ Trigger placement update for %s [2]",elt.path().c_str());
     elt->update(DetElement::PLACEMENT_CHANGED|DetElement::PLACEMENT_ELEMENT,elt.ptr());
   }
   // Provide update callback for the highest detector element
   string last_path = "?????";
-  for(DetElementUpdates::iterator i=detelt_updates.begin(); i!=detelt_updates.end(); ++i)  {
-    const string& path = (*i).first;
+  for(auto & detelt_update : detelt_updates)  {
+    const string& path = detelt_update.first;
     if ( path.find(last_path) == string::npos )  {
-      DetElement elt((*i).second);
+      DetElement elt(detelt_update.second);
       printout(DEBUG,"GlobalAlignmentCache","+++ Trigger placement update for %s [1]",elt.path().c_str());
       elt->update(DetElement::PLACEMENT_CHANGED|DetElement::PLACEMENT_HIGHEST,elt.ptr());
-      last_path = (*i).first;
+      last_path = detelt_update.first;
     }
   }
   // Provide update callback at the detector level
-  for(sd_entries_t::iterator i=all.begin(); i!=all.end(); ++i)  {
-    DetElement elt((*i).first);
+  for(auto & i : all)  {
+    DetElement elt(i.first);
     printout(DEBUG,"GlobalAlignmentCache","+++ Trigger placement update for %s [0]",elt.path().c_str());
     elt->update(DetElement::PLACEMENT_CHANGED|DetElement::PLACEMENT_DETECTOR,elt.ptr());
   }

@@ -356,8 +356,8 @@ Geant4EventReaderHepEvt::readParticles(int /* event_number */,
   //    based on the generator status, as this varies widely with different
   //    generators.
 
-  for(size_t i=0; i<particles.size(); ++i )   {
-    Geant4ParticleHandle p(particles[i]);
+  for(auto & particle : particles)   {
+    Geant4ParticleHandle p(particle);
     if ( p->parents.size() == 0 )  {
       Geant4Vertex* vtx = new Geant4Vertex ;
       vertices.emplace_back( vtx );

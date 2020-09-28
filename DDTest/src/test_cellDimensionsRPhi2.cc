@@ -125,11 +125,11 @@ void testRPhi2(){
 
   try {
 
-    for (std::vector<TestTuple>::iterator it = tests.begin(); it != tests.end(); ++it) {
+    for (auto & it : tests) {
 
-      CellID cellid   = (*it)._cid;
-      double rSize    = (*it)._r;
-      double rPhiSize = (*it)._p;
+      CellID cellid   = it._cid;
+      double rSize    = it._r;
+      double rPhiSize = it._p;
 
       test( fabs(seg->cellDimensions(cellid)[0] - rSize )  < 1e-11, " Seg: RPhi2: Dimension for R" );
       test( fabs(seg->cellDimensions(cellid)[1] - rPhiSize )  < 1e-11, " Seg: RPhi2: Dimension for RPhi" );
@@ -156,11 +156,11 @@ void testRPhi(){
 
   try {
 
-    for (std::vector<TestTuple>::iterator it = tests.begin(); it != tests.end(); ++it) {
+    for (auto & it : tests) {
 
-      CellID cellid   = (*it)._cid;
-      double rSize    = (*it)._r;
-      double rPhiSize = (*it)._p;
+      CellID cellid   = it._cid;
+      double rSize    = it._r;
+      double rPhiSize = it._p;
 
       test( fabs(seg->cellDimensions(cellid)[0] - rSize )  < 1e-11, " Seg: RPhi: Dimension for R" );
       test( fabs(seg->cellDimensions(cellid)[1] - rPhiSize )  < 1e-11, " Seg: RPhi: Dimension for RPhi" );

@@ -32,8 +32,8 @@ string Geant4GeometryInfo::placementPath(const Geant4PlacementPath& path, bool r
     }
   }
   else  {
-    for (Geant4PlacementPath::const_iterator pIt = path.begin(); pIt != path.end(); ++pIt) {
-      path_name += "/"; path_name += (*pIt)->GetName();
+    for (auto pIt : path) {
+      path_name += "/"; path_name += pIt->GetName();
     }
   }
   return path_name;

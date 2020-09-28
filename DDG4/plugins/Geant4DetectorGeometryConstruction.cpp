@@ -171,8 +171,8 @@ void Geant4DetectorGeometryConstruction::constructGeo(Geant4DetectorConstruction
 int Geant4DetectorGeometryConstruction::printMaterial(const char* mat_name)  {
   if ( mat_name )   {
     auto& g4map = Geant4Mapping::instance().data();
-    for ( auto it = g4map.g4Materials.begin(); it != g4map.g4Materials.end(); ++it )  {
-      const auto* mat = (*it).second;
+    for (auto & g4Material : g4map.g4Materials)  {
+      const auto* mat = g4Material.second;
       if ( mat->GetName() == mat_name )   {
         const auto* ion = mat->GetIonisation();
         printP2("+++  Dump of GEANT4 material: %s", mat_name);

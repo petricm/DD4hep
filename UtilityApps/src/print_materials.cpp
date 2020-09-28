@@ -67,10 +67,10 @@ int main_wrapper(int argc, char** argv ){
   double sum_x0 = 0 ;
   double sum_lambda = 0 ;
   double path_length = 0 ;
-  for( unsigned i=0,n=materials.size();i<n;++i){
+  for(const auto & material : materials){
 
-    Material mat =  materials[i].first  ;
-    double length = materials[i].second  ;
+    Material mat =  material.first  ;
+    double length = material.second  ;
 
     double nx0 = length / mat.radLength()  ;
     sum_x0 += nx0 ;
