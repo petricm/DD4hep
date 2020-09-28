@@ -37,9 +37,9 @@ namespace dd4hep  {
     /// Initializing constructor
     VisVolNameProcessor(Detector& desc);
     /// Default destructor
-    virtual ~VisVolNameProcessor();
+    ~VisVolNameProcessor() override;
     /// Callback to output PlacedVolume information of an single Placement
-    virtual int operator()(PlacedVolume pv, int level);
+    int operator()(PlacedVolume pv, int level) override;
   };
 }
 #endif //  DD4HEP_DDCORE_VISVOLNAMEPROCESSOR_H

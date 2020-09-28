@@ -275,7 +275,7 @@ size_t AlignmentsCalculator::extract_deltas(DetElement start,
       DeltaScanner(OrderedDeltas& d, ExtractContext& e, IOV* eff_iov)
         : delta_conditions(d), extract_context(e), effective_iov(eff_iov) {}
       /// Conditions callback for object processing
-      [[nodiscard]] virtual int process(Condition c)  const override  {
+      [[nodiscard]] int process(Condition c)  const override  {
         ConditionKey::KeyMaker key_maker(c->hash);
         if ( key_maker.values.item_key == align::Keys::deltaKey )   {
           auto idd = extract_context.find(key_maker.values.det_key);

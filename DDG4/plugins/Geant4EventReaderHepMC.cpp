@@ -61,13 +61,13 @@ namespace dd4hep::sim {
       /// Initializing constructor
       explicit Geant4EventReaderHepMC(const std::string& nam);
       /// Default destructor
-      virtual ~Geant4EventReaderHepMC();
+      ~Geant4EventReaderHepMC() override;
       /// Read an event and fill a vector of MCParticles.
-      virtual EventReaderStatus readParticles(int event_number,
+      EventReaderStatus readParticles(int event_number,
                                               Vertices& vertices,
                                               std::vector<Particle*>& particles)  override;
-      virtual EventReaderStatus moveToEvent(int event_number)  override;
-      virtual EventReaderStatus skipEvent() override { return EVENT_READER_OK; }
+      EventReaderStatus moveToEvent(int event_number)  override;
+      EventReaderStatus skipEvent() override { return EVENT_READER_OK; }
 
     };
   }       /* End namespace dd4hep       */

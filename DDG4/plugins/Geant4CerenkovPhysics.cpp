@@ -63,9 +63,9 @@ namespace dd4hep::sim {
         declareProperty("VerboseLevel",          m_verbosity = 0);
       }
       /// Default destructor
-      virtual ~Geant4CerenkovPhysics() = default;
+      ~Geant4CerenkovPhysics() override = default;
       /// Callback to construct processes (uses the G4 particle table)
-      virtual void constructProcesses(G4VUserPhysicsList* physics_list)   { 
+      void constructProcesses(G4VUserPhysicsList* physics_list) override   {
         this->Geant4PhysicsList::constructProcesses(physics_list);
         info("+++ Constructing: maxNumPhotonsPerStep:%d maxBeta:%f "
              "track secondaries:%s stack photons:%s track secondaries:%s",

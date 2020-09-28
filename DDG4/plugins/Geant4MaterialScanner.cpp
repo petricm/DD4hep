@@ -63,9 +63,9 @@ namespace dd4hep::sim   {
       /// Standard constructor
       Geant4MaterialScanner(Geant4Context* context, const std::string& name);
       /// Default destructor
-      virtual ~Geant4MaterialScanner();
+      ~Geant4MaterialScanner() override;
       /// User stepping callback
-      virtual void operator()(const G4Step* step, G4SteppingManager* mgr);
+      void operator()(const G4Step* step, G4SteppingManager* mgr) override;
       /// Begin-of-tracking callback
       virtual void begin(const G4Track* track);
       /// End-of-tracking callback

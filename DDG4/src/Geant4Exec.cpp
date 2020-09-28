@@ -159,11 +159,11 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserRunAction() = default;
+      ~Geant4UserRunAction() override = default;
       /// Begin-of-run callback
-      virtual void BeginOfRunAction(const G4Run* run)  final;
+      void BeginOfRunAction(const G4Run* run)  final;
       /// End-of-run callback
-      virtual void EndOfRunAction(const G4Run* run)  final;
+      void EndOfRunAction(const G4Run* run)  final;
     };
 
     /// Concrete implementation of the Geant4 event action
@@ -185,11 +185,11 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserEventAction() = default;
+      ~Geant4UserEventAction() override = default;
       /// Begin-of-event callback
-      virtual void BeginOfEventAction(const G4Event* evt)  final;
+      void BeginOfEventAction(const G4Event* evt)  final;
       /// End-of-event callback
-      virtual void EndOfEventAction(const G4Event* evt)  final;
+      void EndOfEventAction(const G4Event* evt)  final;
     };
 
     /// Concrete implementation of the Geant4 tracking action
@@ -210,14 +210,14 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserTrackingAction() = default;
+      ~Geant4UserTrackingAction() override = default;
       /// Pre-track action callback
-      virtual void PreUserTrackingAction(const G4Track* trk)  final  {
+      void PreUserTrackingAction(const G4Track* trk)  final  {
         m_sequence->context()->kernel().setTrackMgr(fpTrackingManager);
         m_sequence->begin(trk);
       }
       /// Post-track action callback
-      virtual void PostUserTrackingAction(const G4Track* trk)   final  {
+      void PostUserTrackingAction(const G4Track* trk)   final  {
         m_sequence->end(trk);
         m_sequence->context()->kernel().setTrackMgr(nullptr);
       }
@@ -241,13 +241,13 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserStackingAction() = default;
+      ~Geant4UserStackingAction() override = default;
       /// New-stage callback
-      virtual void NewStage()  final  {
+      void NewStage()  final  {
         m_sequence->newStage();
       }
       /// Preparation callback
-      virtual void PrepareNewEvent()  final  {
+      void PrepareNewEvent()  final  {
         m_sequence->prepare();
       }
     };
@@ -271,9 +271,9 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserGeneratorAction() = default;
+      ~Geant4UserGeneratorAction() override = default;
       /// Generate primary particles
-      virtual void GeneratePrimaries(G4Event* event)  final;
+      void GeneratePrimaries(G4Event* event)  final;
     };
 
     /// Concrete implementation of the Geant4 stepping action
@@ -294,9 +294,9 @@ namespace dd4hep::sim {
         configureFiber(ctxt);
       }
       /// Default destructor
-      virtual ~Geant4UserSteppingAction() = default;
+      ~Geant4UserSteppingAction() override = default;
       /// User stepping callback
-      virtual void UserSteppingAction(const G4Step* s)   final  {
+      void UserSteppingAction(const G4Step* s)   final  {
         (*m_sequence)(s, fpSteppingManager);
       }
     };
@@ -321,11 +321,11 @@ namespace dd4hep::sim {
       {
       }
       /// Default destructor
-      virtual ~Geant4UserDetectorConstruction() = default;
+      ~Geant4UserDetectorConstruction() override = default;
       /// Call the actions for the construction of the sensitive detectors and the field
-      virtual void ConstructSDandField()  final;
+      void ConstructSDandField()  final;
       /// Call the actions to construct the detector geometry
-      virtual G4VPhysicalVolume* Construct()  final;
+      G4VPhysicalVolume* Construct()  final;
     };
 
     /// Concrete implementation of the Geant4 user initialization action sequence
@@ -344,11 +344,11 @@ namespace dd4hep::sim {
         : G4VUserActionInitialization(), Base(ctxt, seq) {
       }
       /// Default destructor
-      virtual ~Geant4UserActionInitialization()  = default;
+      ~Geant4UserActionInitialization()  override = default;
       /// Build the actions for the worker thread
-      virtual void Build()  const  final;
+      void Build()  const  final;
       /// Build the action sequences for the master thread
-      virtual void BuildForMaster()  const  final;
+      void BuildForMaster()  const  final;
     };
 
     /// Begin-of-run callback

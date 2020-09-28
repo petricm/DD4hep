@@ -69,11 +69,11 @@ namespace dd4hep::sim {
       /// Initializing constructor for DDG4
       Geant4DetectorGeometryConstruction(Geant4Context* ctxt, const std::string& nam);
       /// Default destructor
-      virtual ~Geant4DetectorGeometryConstruction();
+      ~Geant4DetectorGeometryConstruction() override;
       /// Geometry construction callback. Called at "Construct()"
       void constructGeo(Geant4DetectorConstructionContext* ctxt)  override;
       /// Install command control messenger to write GDML file from command prompt.
-      virtual void installCommandMessenger()   override;
+      void installCommandMessenger()   override;
     };
   }      // End namespace dd4hep
 

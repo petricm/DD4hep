@@ -34,9 +34,9 @@ namespace dd4hep::sim {
       /// Initializing constructor for DDG4
       Geant4DetectorSensitivesConstruction(Geant4Context* ctxt, const std::string& nam);
       /// Default destructor
-      virtual ~Geant4DetectorSensitivesConstruction();
+      ~Geant4DetectorSensitivesConstruction() override;
       /// Sensitives construction callback. Called at "ConstructSDandField()"
-      void constructSensitives(Geant4DetectorConstructionContext* ctxt);
+      void constructSensitives(Geant4DetectorConstructionContext* ctxt) override;
     };
   }      // End namespace dd4hep
 

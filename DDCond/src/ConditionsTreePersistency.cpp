@@ -43,7 +43,7 @@ namespace  {
     /// Constructor
     Scanner(ConditionsTreePersistency::pool_type& p) : pool(p) {}
     /// Conditions callback for object processing
-    [[nodiscard]] virtual int process(Condition c)  const override  {
+    [[nodiscard]] int process(Condition c)  const override  {
       pool.emplace_back(c.ptr());
       return 1;
     }

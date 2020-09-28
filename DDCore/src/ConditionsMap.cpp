@@ -37,7 +37,7 @@ void ConditionsMap::scan(DetElement   detector,
     Scanner(Condition::key_type low, Condition::key_type up, const Condition::Processor& p)
       : lower(low), upper(up), processor(p) {}
     /// Conditions callback for object processing
-    [[nodiscard]] virtual int process(Condition c)  const override  {
+    [[nodiscard]] int process(Condition c)  const override  {
       Condition::key_type h = c->hash;
       if ( h >= lower && h <= upper )
         return processor(c);
@@ -71,7 +71,7 @@ std::vector<Condition> ConditionsMap::get(DetElement detector,
     /// Constructor
     Scanner(Condition::key_type low, Condition::key_type up, std::vector<Condition>& r) : lower(low), upper(up), result(r) {}
     /// Conditions callback for object processing
-    [[nodiscard]] virtual int process(Condition c)  const override  {
+    [[nodiscard]] int process(Condition c)  const override  {
       Condition::key_type h = c->hash;
       if ( h >= lower && h <= upper )   {
         result.emplace_back(c);

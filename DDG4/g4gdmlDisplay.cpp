@@ -45,11 +45,11 @@ namespace {
   class EmptyPhysicsList: public G4VUserPhysicsList  {
   public:
     EmptyPhysicsList()       = default;
-    ~EmptyPhysicsList()      = default;
+    ~EmptyPhysicsList()      override = default;
     // Construct particle and physics process
-    void ConstructParticle() {    G4Geantino::GeantinoDefinition();  }
-    void ConstructProcess()  {    AddTransportation();               }
-    void SetCuts()           {    SetCutsWithDefault();              }
+    void ConstructParticle() override {    G4Geantino::GeantinoDefinition();  }
+    void ConstructProcess() override  {    AddTransportation();               }
+    void SetCuts() override           {    SetCutsWithDefault();              }
   };
 }
 

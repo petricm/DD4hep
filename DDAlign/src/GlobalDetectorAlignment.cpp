@@ -46,7 +46,7 @@ namespace dd4hep::align {
       GlobalAlignmentData(const std::string& path) : NamedObject(path,"global-alignment") {
         global = GlobalAlignment(path);
       }
-      virtual ~GlobalAlignmentData() {
+      ~GlobalAlignmentData() override {
         detail::destroyHandle (global);
       }
     };

@@ -48,11 +48,11 @@ namespace dd4hep::sim  {
       /// Initializing constructor
       LCIOStdHepReader(const std::string& nam);
       /// Default destructor
-      virtual ~LCIOStdHepReader();
+      ~LCIOStdHepReader() override;
       /// Read an event and fill a vector of MCParticles.
-      virtual EventReaderStatus readParticleCollection(int event_number, EVENT::LCCollection** particles);
-      virtual EventReaderStatus moveToEvent(int event_number);
-      virtual EventReaderStatus skipEvent() { return EVENT_READER_OK; }
+      EventReaderStatus readParticleCollection(int event_number, EVENT::LCCollection** particles) override;
+      EventReaderStatus moveToEvent(int event_number) override;
+      EventReaderStatus skipEvent() override { return EVENT_READER_OK; }
 
     };
   }       /* End namespace dd4hep */

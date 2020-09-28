@@ -38,9 +38,9 @@ namespace dd4hep::sim {
       /// Standard constructor
       Geant4EscapeCounter(Geant4Context* ctxt, const std::string& name, DetElement det, Detector& description);
       /// Default destructor
-      virtual ~Geant4EscapeCounter();
+      ~Geant4EscapeCounter() override;
       /// G4VSensitiveDetector interface: Method for generating hit(s) using the information of G4Step object.
-      virtual bool process(G4Step* step, G4TouchableHistory* history)  override;
+      bool process(G4Step* step, G4TouchableHistory* history)  override;
     };
 
   }      // End namespace dd4hep

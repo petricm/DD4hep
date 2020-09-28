@@ -51,13 +51,13 @@ namespace dd4hep::sim {
       /// Initializing constructor
       explicit Geant4EventReaderHepEvt(const std::string& nam, int format);
       /// Default destructor
-      virtual ~Geant4EventReaderHepEvt();
+      ~Geant4EventReaderHepEvt() override;
       /// Read an event and fill a vector of MCParticles.
-      virtual EventReaderStatus readParticles(int event_number,
+      EventReaderStatus readParticles(int event_number,
                                               Vertices& vertices,
-                                              std::vector<Particle*>& particles);
-      virtual EventReaderStatus moveToEvent(int event_number);
-      virtual EventReaderStatus skipEvent() { return EVENT_READER_OK; }
+                                              std::vector<Particle*>& particles) override;
+      EventReaderStatus moveToEvent(int event_number) override;
+      EventReaderStatus skipEvent() override { return EVENT_READER_OK; }
     };
   }       /* End namespace dd4hep       */
 
@@ -99,14 +99,14 @@ namespace {
     /// Initializing constructor
     explicit Geant4EventReaderHepEvtShort(const string& nam) : Geant4EventReaderHepEvt(nam,HEPEvtShort) {}
     /// Default destructor
-    virtual ~Geant4EventReaderHepEvtShort() = default;
+    ~Geant4EventReaderHepEvtShort() override = default;
   };
   class Geant4EventReaderHepEvtLong : public Geant4EventReaderHepEvt  {
   public:
     /// Initializing constructor
     explicit Geant4EventReaderHepEvtLong(const string& nam) : Geant4EventReaderHepEvt(nam,HEPEvtLong) {}
     /// Default destructor
-    virtual ~Geant4EventReaderHepEvtLong() = default;
+    ~Geant4EventReaderHepEvtLong() override = default;
   };
 }
 

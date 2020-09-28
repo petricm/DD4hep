@@ -52,7 +52,7 @@ namespace dd4hep::detail {
       PandoraConverter(Detector& description);
 
       /// Standard destructor
-      virtual ~PandoraConverter();
+      ~PandoraConverter() override;
 
       /// Create geometry conversion in Pandora XML format
       xml_doc_t create(DetElement top);

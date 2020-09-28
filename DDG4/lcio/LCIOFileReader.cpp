@@ -78,13 +78,13 @@ namespace dd4hep::sim  {
       /// Initializing constructor
       LCIOFileReader(const std::string& nam);
       /// Default destructor
-      virtual ~LCIOFileReader();
+      ~LCIOFileReader() override;
 
       /// Read an event and fill a vector of MCParticles.
-      virtual EventReaderStatus readParticleCollection(int event_number, EVENT::LCCollection** particles);
-      virtual EventReaderStatus moveToEvent(int event_number);
-      virtual EventReaderStatus skipEvent() { return EVENT_READER_OK; }
-      virtual EventReaderStatus setParameters(std::map< std::string, std::string >& parameters); 
+      EventReaderStatus readParticleCollection(int event_number, EVENT::LCCollection** particles) override;
+      EventReaderStatus moveToEvent(int event_number) override;
+      EventReaderStatus skipEvent() override { return EVENT_READER_OK; }
+      EventReaderStatus setParameters(std::map< std::string, std::string >& parameters) override;
     };
   }
 #endif // DD4HEP_DDG4_LCIOFILEREADER_H

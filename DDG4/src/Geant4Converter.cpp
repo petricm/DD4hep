@@ -234,8 +234,8 @@ namespace {
     bool storeSecondaries{false};
     G4UserRegionInformation()
        = default;
-    virtual ~G4UserRegionInformation() = default;
-    virtual void Print() const {
+    ~G4UserRegionInformation() override = default;
+    void Print() const override {
       if (region.isValid())
         printout(DEBUG, "Region", "Name:%s", region.name());
     }

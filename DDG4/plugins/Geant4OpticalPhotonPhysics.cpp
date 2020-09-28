@@ -61,9 +61,9 @@ namespace dd4hep::sim {
         declareProperty("VerboseLevel", m_verbosity = 0);
       }
       /// Default destructor
-      virtual ~Geant4OpticalPhotonPhysics() = default;
+      ~Geant4OpticalPhotonPhysics() override = default;
       /// Callback to construct processes (uses the G4 particle table)
-      virtual void constructProcesses(G4VUserPhysicsList* physics_list)   { 
+      void constructProcesses(G4VUserPhysicsList* physics_list) override   {
         this->Geant4PhysicsList::constructProcesses(physics_list);
         info("+++ Constructing optical_photon processes:");
         info("+++              G4OpAbsorption G4OpRayleigh G4OpMieHG G4OpBoundaryProcess");

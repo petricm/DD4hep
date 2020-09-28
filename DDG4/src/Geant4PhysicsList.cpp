@@ -45,22 +45,22 @@ namespace {
 
   struct EmptyPhysics : public G4VModularPhysicsList {
     EmptyPhysics()  = default;
-    virtual ~EmptyPhysics()  = default;
+    ~EmptyPhysics()  override = default;
   };
   struct ParticlePhysics : public G4VPhysicsConstructor {
     Geant4PhysicsListActionSequence* seq;
     G4VUserPhysicsList*              phys;
     ParticlePhysics(Geant4PhysicsListActionSequence* s, G4VUserPhysicsList* p)
       : seq(s), phys(p)  {}
-    virtual ~ParticlePhysics()  = default;
-    virtual void ConstructProcess()  {
+    ~ParticlePhysics()  override = default;
+    void ConstructProcess() override  {
       seq->constructProcesses(phys);
       if ( seq->transportation() )   {
         auto* ph = (MyPhysics*)phys;
         ph->AddTransportation();
       }
     }
-    virtual void ConstructParticle()  {
+    void ConstructParticle() override  {
       seq->constructParticles(phys);
     }
   };

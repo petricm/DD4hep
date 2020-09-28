@@ -47,31 +47,31 @@ namespace    {
       m_engine = m_generator->engine();
     }
     /// Default destructor
-    virtual ~RNDM() = default;
+    ~RNDM() override = default;
     /// Set new seed
     virtual  void SetSeed(UInt_t seed=0)  final  {
       fSeed = seed;
       m_generator->setSeed((long)seed);
     }
     /// Set new seed
-    virtual  void SetSeed(ULong_t seed=0)  final  {
+     void SetSeed(ULong_t seed=0)  final  {
       fSeed = seed;
       m_generator->setSeed((long)seed);
     }
     /// Single shot random number creation
-    virtual Double_t Rndm()  final {
+    Double_t Rndm()  final {
       return m_engine->flat();
     }
     /// Single shot random number creation
-    virtual Double_t Rndm(Int_t)  final  {
+    Double_t Rndm(Int_t)  final  {
       return m_engine->flat();
     }
     /// Return an array of n random numbers uniformly distributed in ]0,1].
-    virtual void RndmArray(Int_t size, Float_t *array)  final  {
+    void RndmArray(Int_t size, Float_t *array)  final  {
       for (Int_t i=0;i<size;i++) array[i] = m_engine->flat();
     }
     /// Return an array of n random numbers uniformly distributed in ]0,1].
-    virtual void RndmArray(Int_t size, Double_t *array)  final  {
+    void RndmArray(Int_t size, Double_t *array)  final  {
       m_engine->flatArray(size,array);
     }
   };

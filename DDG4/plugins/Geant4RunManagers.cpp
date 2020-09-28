@@ -47,9 +47,9 @@ namespace dd4hep::sim {
       {
         declareProperty("NumberOfThreads", m_numThreads);
       }
-      virtual ~Geant4RunManager()   = default;
+      ~Geant4RunManager()   override = default;
       /// Enable and install UI messenger
-      virtual void enableUI();
+      void enableUI() override;
     private:
       /// global range cut for secondary productions
       int m_numThreads;

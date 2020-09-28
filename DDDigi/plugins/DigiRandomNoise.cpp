@@ -49,9 +49,9 @@ namespace dd4hep::digi {
       /// Standard constructor
       DigiRandomNoise(const DigiKernel& kernel, const std::string& nam);
       /// Default destructor
-      virtual ~DigiRandomNoise();
+      ~DigiRandomNoise() override;
       /// Callback to read event input
-      virtual void execute(DigiContext& context)  const override;
+      void execute(DigiContext& context)  const override;
     };
 
   }      // End namespace dd4hep

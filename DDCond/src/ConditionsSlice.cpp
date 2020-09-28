@@ -170,7 +170,7 @@ namespace  {
     void operator()(const ConditionsIOVPool::Elements::value_type& v)    {
       v.second->select_all(*this);
     }
-    bool operator()(Condition::Object* c)  const  {
+    bool operator()(Condition::Object* c)  const override  {
       if ( 0 == (c->flags&Condition::DERIVED) )   {
 #if !defined(DD4HEP_MINIMAL_CONDITIONS)
         content.addLocation(c->hash,c->address);
@@ -180,7 +180,7 @@ namespace  {
       return true;
     }
     /// Return number of conditions selected
-    [[nodiscard]] virtual size_t size()  const { return content.conditions().size(); }
+    [[nodiscard]] size_t size()  const override { return content.conditions().size(); }
   };
 }
 

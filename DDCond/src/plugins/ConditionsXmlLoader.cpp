@@ -39,7 +39,7 @@ namespace dd4hep::cond  {
       /// Default constructor
       ConditionsXmlLoader(Detector& description, ConditionsManager mgr, const std::string& nam);
       /// Default destructor
-      virtual ~ConditionsXmlLoader();
+      ~ConditionsXmlLoader() override;
       /// Load  a condition set given a Detector Element and the conditions name according to their validity
       virtual size_t load_single(key_type key,
                                  const IOV& req_validity,
@@ -49,10 +49,10 @@ namespace dd4hep::cond  {
                                  const IOV& req_validity,
                                  RangeConditions& conditions);
       /// Optimized update using conditions slice data
-      virtual size_t load_many(  const IOV& /* req_validity */,
+      size_t load_many(  const IOV& /* req_validity */,
                                  RequiredItems&  /* work         */,
                                  LoadedItems&    /* loaded       */,
-                                 IOV&       /* conditions_validity */)
+                                 IOV&       /* conditions_validity */) override
       {
         except("ConditionsLoader","+++ update: Invalid call!");
         return 0;

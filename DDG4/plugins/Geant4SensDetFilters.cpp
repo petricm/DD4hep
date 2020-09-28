@@ -36,7 +36,7 @@ namespace dd4hep::sim {
       /// Constructor.
       ParticleFilter(Geant4Context* context, const std::string& name);
       /// Standard destructor
-      virtual ~ParticleFilter();
+      ~ParticleFilter() override;
       /// Safe access to the definition
       const G4ParticleDefinition* definition() const;
       /// Check if a track is of the same type
@@ -55,9 +55,9 @@ namespace dd4hep::sim {
       /// Constructor.
       ParticleRejectFilter(Geant4Context* c, const std::string& n);
       /// Standard destructor
-      virtual ~ParticleRejectFilter();
+      ~ParticleRejectFilter() override;
       /// Filter action. Return true if hits should be processed
-      virtual bool operator()(const G4Step* step) const  final;
+      bool operator()(const G4Step* step) const  final;
     };
 
     /// Geant4 sensitive detector filter implementing a particle selector
@@ -70,9 +70,9 @@ namespace dd4hep::sim {
       /// Constructor.
       ParticleSelectFilter(Geant4Context* c, const std::string& n);
       /// Standard destructor
-      virtual ~ParticleSelectFilter();
+      ~ParticleSelectFilter() override;
       /// Filter action. Return true if hits should be processed
-      virtual bool operator()(const G4Step* step) const  final;
+      bool operator()(const G4Step* step) const  final;
     };
 
     /// Geant4 sensitive detector filter implementing a Geantino rejector
@@ -85,9 +85,9 @@ namespace dd4hep::sim {
       /// Constructor.
       GeantinoRejectFilter(Geant4Context* c, const std::string& n);
       /// Standard destructor
-      virtual ~GeantinoRejectFilter();
+      ~GeantinoRejectFilter() override;
       /// Filter action. Return true if hits should be processed
-      virtual bool operator()(const G4Step* step) const  final;
+      bool operator()(const G4Step* step) const  final;
     };
 
     /// Geant4 sensitive detector filter implementing an energy cut.
@@ -103,9 +103,9 @@ namespace dd4hep::sim {
       /// Constructor.
       EnergyDepositMinimumCut(Geant4Context* c, const std::string& n);
       /// Standard destructor
-      virtual ~EnergyDepositMinimumCut();
+      ~EnergyDepositMinimumCut() override;
       /// Filter action. Return true if hits should be processed
-      virtual bool operator()(const G4Step* step) const  final;
+      bool operator()(const G4Step* step) const  final;
     };
   }
 

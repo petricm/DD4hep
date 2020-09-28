@@ -96,11 +96,11 @@ namespace dd4hep {
                       int sd_lvl,
                       PrintLevel p);
     /// Default destructor
-    virtual ~DetElementCreator();
+    ~DetElementCreator() override;
     /// Callback to output PlacedVolume information of an single Placement
-    virtual int operator()(PlacedVolume pv, int level);
+    int operator()(PlacedVolume pv, int level) override;
     /// Callback to output PlacedVolume information of an entire Placement
-    virtual int process(PlacedVolume pv, int level, bool recursive);
+    int process(PlacedVolume pv, int level, bool recursive) override;
   };
 }
 #endif   /* DD4HEP_DETELEMENTCREATOR_H  */

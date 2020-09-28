@@ -46,7 +46,7 @@ namespace dd4hep::sim {
       Geant4TCUserParticleHandler(Geant4Context* context, const std::string& nam);
 
       /// Default destructor
-      virtual ~Geant4TCUserParticleHandler() = default;
+      ~Geant4TCUserParticleHandler() override = default;
 
       /// Post-track action callback
       /** Allow the user to force the particle handling in the post track action
@@ -57,10 +57,10 @@ namespace dd4hep::sim {
        *
        *  Note: The particle passed is a temporary and will be copied if kept.
        */
-      virtual void end(const G4Track* track, Particle& particle);
+      void end(const G4Track* track, Particle& particle) override;
 
       /// Post-event action callback: avoid warning (...) was hidden [-Woverloaded-virtual]
-      virtual void end(const G4Event* event);
+      void end(const G4Event* event) override;
 
     };
   }      // End namespace dd4hep

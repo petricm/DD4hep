@@ -402,8 +402,8 @@ static long root_elements(Detector& description, int argc, char** argv) {
     typedef xml::Element elt_h;
     elt_h root;
     ElementPrintXML(elt_h r) : root(r) {}
-    virtual ~ElementPrintXML() = default;
-    virtual void operator()(TGeoElement* element)  {
+    ~ElementPrintXML() override = default;
+    void operator()(TGeoElement* element) override  {
       elt_h elt = root.addChild(_U(element));
       elt.setAttr(_U(Z),element->Z());
       elt.setAttr(_U(N),element->N());
@@ -414,7 +414,7 @@ static long root_elements(Detector& description, int argc, char** argv) {
       atom.setAttr(_U(unit),"g/mole");
       atom.setAttr(_U(value),element->A());
     }
-    virtual void operator()(TGeoIsotope* isotope)  {
+    void operator()(TGeoIsotope* isotope) override  {
       elt_h iso = root.addChild(_U(isotope));
       iso.setAttr(_U(Z),isotope->GetZ());
       iso.setAttr(_U(N),isotope->GetN());
@@ -551,8 +551,8 @@ static long root_materials(Detector& description, int argc, char** argv) {
   struct MaterialPrintXML : public MaterialPrint  {
     elt_h root;
     MaterialPrintXML(elt_h elt, Detector& desc) : MaterialPrint(desc), root(elt) {}
-    virtual ~MaterialPrintXML() = default;
-    virtual elt_h print(TGeoMaterial* mat)  {
+    ~MaterialPrintXML() override = default;
+    elt_h print(TGeoMaterial* mat) override  {
       elt_h elt = root.addChild(_U(material));
       elt.setAttr(_U(name),mat->GetName());
       if ( ::strlen(mat->GetTitle())>0 )   {
@@ -590,13 +590,13 @@ static long root_materials(Detector& description, int argc, char** argv) {
       }
       return elt;
     }
-    virtual void print(elt_h mat, TGeoElement* element, double frac)  {
+    void print(elt_h mat, TGeoElement* element, double frac) override  {
       elt_h elt = mat.addChild(_U(composite));
       elt.setAttr(_U(n),frac);
       elt.setAttr(_U(ref),element->GetName());
     }
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,17,0)
-    virtual void printProperty(elt_h mat, TNamed* prop, TGDMLMatrix* /* matrix */)   {
+    void printProperty(elt_h mat, TNamed* prop, TGDMLMatrix* /* matrix */) override   {
       elt_h elt = mat.addChild(_U(property));
       elt.setAttr(_U(name),prop->GetName());
       elt.setAttr(_U(ref), prop->GetTitle());

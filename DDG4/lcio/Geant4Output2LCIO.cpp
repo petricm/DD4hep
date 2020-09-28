@@ -84,23 +84,23 @@ namespace dd4hep {
       /// Standard constructor
       Geant4Output2LCIO(Geant4Context* ctxt, const std::string& nam);
       /// Default destructor
-      virtual ~Geant4Output2LCIO();
+      ~Geant4Output2LCIO() override;
       /// Callback to store the Geant4 run information
-      virtual void beginRun(const G4Run* run);
+      void beginRun(const G4Run* run) override;
       /// Callback to store the Geant4 run information
-      virtual void endRun(const G4Run* run);
+      void endRun(const G4Run* run) override;
 
       /// Callback to store the Geant4 run information
-      virtual void saveRun(const G4Run* run);
+      void saveRun(const G4Run* run) override;
       /// Callback to store the Geant4 event
-      virtual void saveEvent( OutputContext<G4Event>& ctxt);
+      void saveEvent( OutputContext<G4Event>& ctxt) override;
       /// Callback to store each Geant4 hit collection
-      virtual void saveCollection( OutputContext<G4Event>& ctxt, G4VHitsCollection* collection);
+      void saveCollection( OutputContext<G4Event>& ctxt, G4VHitsCollection* collection) override;
       /// Commit data at end of filling procedure
-      virtual void commit( OutputContext<G4Event>& ctxt);
+      void commit( OutputContext<G4Event>& ctxt) override;
 
       /// begin-of-event callback - creates LCIO event and adds it to the event context
-      virtual void begin(const G4Event* event);
+      void begin(const G4Event* event) override;
     protected:
       /// Fill event parameters in LCIO event
       template <typename T>

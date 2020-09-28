@@ -30,9 +30,9 @@ namespace  {
       : G4VPhysicsConstructor(ct->name(),typ), Geant4PhysicsConstructor::Constructor(), ctor(ct)
     {}
     /// Default destructor
-    virtual ~ConstructorImp() = default;
+    ~ConstructorImp() override = default;
     /// Access to a fresh (resetted) instance of the particle table iterator
-    [[nodiscard]] G4ParticleTable::G4PTblDicIterator* particleIterator()  const   {
+    [[nodiscard]] G4ParticleTable::G4PTblDicIterator* particleIterator()  const override   {
       G4ParticleTable::G4PTblDicIterator* iter;
 
 #if G4VERSION_NUMBER >= 1030
@@ -47,11 +47,11 @@ namespace  {
       return iter;
     }
     /// G4VPhysicsConstructor overload: This method will be invoked in the Construct() method. 
-    virtual void ConstructParticle()   {
+    void ConstructParticle() override   {
       ctor->constructParticle(*this);
     }
     /// G4VPhysicsConstructor overload: This method will be invoked in the Construct() method.
-    virtual void ConstructProcess()   {
+    void ConstructProcess() override   {
       ctor->constructProcess(*this);
     }
   };

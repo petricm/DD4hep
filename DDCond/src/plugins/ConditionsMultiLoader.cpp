@@ -43,7 +43,7 @@ namespace dd4hep::cond  {
       /// Default constructor
       ConditionsMultiLoader(Detector& description, ConditionsManager mgr, const std::string& nam);
       /// Default destructor
-      virtual ~ConditionsMultiLoader();
+      ~ConditionsMultiLoader() override;
 #if 0
       /// Load  a condition set given a Detector Element and the conditions name according to their validity
       virtual size_t load_single(key_type key,
@@ -55,10 +55,10 @@ namespace dd4hep::cond  {
                                  RangeConditions& conditions);
 #endif
       /// Optimized update using conditions slice data
-      virtual size_t load_many(  const IOV& /* req_validity */,
+      size_t load_many(  const IOV& /* req_validity */,
                                  RequiredItems&  /* work         */,
                                  LoadedItems&    /* loaded       */,
-                                 IOV&       /* conditions_validity */)
+                                 IOV&       /* conditions_validity */) override
       {
         except("ConditionsLoader","+++ update: Invalid call!");
         return 0;

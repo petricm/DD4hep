@@ -38,11 +38,11 @@ namespace dd4hep::sim {
       /// Standard constructor
       Geant4ParticleDumpAction(Geant4Context* context, const std::string& nam);
       /// Default destructor
-      virtual ~Geant4ParticleDumpAction();
+      ~Geant4ParticleDumpAction() override;
       /// Geant4EventAction interface: Begin-of-event callback
-      virtual void begin(const G4Event* event)  override;
+      void begin(const G4Event* event)  override;
       /// Geant4EventAction interface: End-of-event callback
-      virtual void end(const G4Event* event)  override;
+      void end(const G4Event* event)  override;
     };
 
   }      // End namespace dd4hep

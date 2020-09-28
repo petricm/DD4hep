@@ -53,9 +53,9 @@ namespace dd4hep::sim {
       /// Standard constructor
       Geant4GDMLWriteAction(Geant4Context* context, const std::string& nam);
       /// Default destructor
-      virtual ~Geant4GDMLWriteAction();
+      ~Geant4GDMLWriteAction() override;
       /// Install command control messenger if wanted
-      virtual void installCommandMessenger()  override;
+      void installCommandMessenger()  override;
       /// Write geometry to GDML
       virtual void writeGDML();
     };

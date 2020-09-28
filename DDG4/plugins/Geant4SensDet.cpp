@@ -88,48 +88,48 @@ namespace dd4hep::sim {
       }
 
       /// Destructor
-      virtual ~Geant4SensDet()        = default;
+      ~Geant4SensDet()        override = default;
       /// Overload to avoid ambiguity between G4VSensitiveDetector and G4VSDFilter
       [[nodiscard]] inline G4String GetName() const
       {  return this->G4VSensitiveDetector::SensitiveDetectorName;      }
       /// G4VSensitiveDetector internals: Access to the detector path name
-      [[nodiscard]] virtual std::string path()  const
+      [[nodiscard]] std::string path()  const override
       {  return this->G4VSensitiveDetector::GetPathName();              }
       /// G4VSensitiveDetector internals: Access to the detector path name
-      [[nodiscard]] virtual std::string fullPath()  const
+      [[nodiscard]] std::string fullPath()  const override
       {  return this->G4VSensitiveDetector::GetFullPathName();          }
       /// Is the detector active?
-      [[nodiscard]] virtual bool isActive() const
+      [[nodiscard]] bool isActive() const override
       {  return this->G4VSensitiveDetector::isActive();                 }
       /// This is a utility method which returns the hits collection ID
-      virtual G4int GetCollectionID(G4int i)
+      G4int GetCollectionID(G4int i) override
       {  return this->G4VSensitiveDetector::GetCollectionID(i);         }
       /// Access to the readout geometry of the sensitive detector
-      [[nodiscard]] virtual G4VReadOutGeometry* readoutGeometry() const
+      [[nodiscard]] G4VReadOutGeometry* readoutGeometry() const override
       {  return this->G4VSensitiveDetector::GetROgeometry();            }
       /// Access to the Detector sensitive detector handle
-      [[nodiscard]] virtual SensitiveDetector sensitiveDetector() const
+      [[nodiscard]] SensitiveDetector sensitiveDetector() const override
       {  return m_sensitive;                                            }
       /// Access to the sensitive type of the detector
-      [[nodiscard]] virtual const std::string& sensitiveType() const
+      [[nodiscard]] const std::string& sensitiveType() const override
       {  return m_sequence->sensitiveType();                            }
       /// Callback if the sequence should be accepted or filtered off
-      virtual G4bool Accept(const G4Step* step) const
+      G4bool Accept(const G4Step* step) const override
       {  return m_sequence->accept(step);                               }
       /// Method invoked at the begining of each event.
-      virtual void Initialize(G4HCofThisEvent* hce)
+      void Initialize(G4HCofThisEvent* hce) override
       {  m_sequence->begin(hce);                                        }
       /// Method invoked at the end of each event.
-      virtual void EndOfEvent(G4HCofThisEvent* hce)
+      void EndOfEvent(G4HCofThisEvent* hce) override
       {  m_sequence->end(hce);                                          }
       /// Method for generating hit(s) using the information of G4Step object.
-      virtual G4bool ProcessHits(G4Step* step,G4TouchableHistory* hist)
+      G4bool ProcessHits(G4Step* step,G4TouchableHistory* hist) override
       {  return m_sequence->process(step,hist);                         }
       /// G4VSensitiveDetector interface: Method invoked if the event was aborted.
-      virtual void clear()
+      void clear() override
       {  m_sequence->clear();                                           }
       /// Initialize the usage of a hit collection. Returns the collection identifier
-      virtual size_t defineCollection(const std::string& coll)  {
+      size_t defineCollection(const std::string& coll) override  {
         if ( coll.empty() ) {
           except("Geant4Sensitive: No collection defined for %s [Invalid name]",c_name());
         }

@@ -57,11 +57,11 @@ public:
   void setID( dd4hep::long64 id ) { _id = id ;
   }
   // overwrite to include points inside the inner radius of the barrel
-  bool insideBounds(const Vector3D& point, double epsilon) const {
+  bool insideBounds(const Vector3D& point, double epsilon) const override {
     return ( std::abs( point.rho() - origin().rho() ) < epsilon && std::abs( point.z() ) < _half_length ) ;
   }
 
-  virtual std::vector< std::pair<Vector3D, Vector3D> > getLines(unsigned nMax=100){
+  std::vector< std::pair<Vector3D, Vector3D> > getLines(unsigned nMax=100) override{
 
     std::vector< std::pair<Vector3D, Vector3D> >  lines ;
 

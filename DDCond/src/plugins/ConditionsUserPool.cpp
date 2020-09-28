@@ -59,73 +59,73 @@ namespace dd4hep::cond {
       /// Default constructor
       ConditionsMappedUserPool(ConditionsManager mgr, ConditionsIOVPool* pool);
       /// Default destructor
-      virtual ~ConditionsMappedUserPool();
+      ~ConditionsMappedUserPool() override;
       /// Print pool content
-      virtual void print(const std::string& opt)   const  override;
+      void print(const std::string& opt)   const  override;
       /// Total entry count
-      [[nodiscard]] virtual size_t size()  const  override;
+      [[nodiscard]] size_t size()  const  override;
       /// Full cleanup of all managed conditions.
-      virtual void clear()  override;
+      void clear()  override;
       /// Check a condition for existence
-      [[nodiscard]] virtual bool exists(Condition::key_type hash)  const  override;
+      [[nodiscard]] bool exists(Condition::key_type hash)  const  override;
       /// Check a condition for existence
-      [[nodiscard]] virtual bool exists(const ConditionKey& key)  const  override;
+      [[nodiscard]] bool exists(const ConditionKey& key)  const  override;
       /// Check if a condition exists in the pool and return it to the caller
-      [[nodiscard]] virtual Condition get(Condition::key_type hash)  const  override;
+      [[nodiscard]] Condition get(Condition::key_type hash)  const  override;
       /// Check if a condition exists in the pool and return it to the caller     
-      [[nodiscard]] virtual Condition get(const ConditionKey& key)  const  override;
+      [[nodiscard]] Condition get(const ConditionKey& key)  const  override;
 
       /// Remove condition by key from pool.
-      virtual bool remove(Condition::key_type hash_key)  override;
+      bool remove(Condition::key_type hash_key)  override;
       /// Remove condition by key from pool.
-      virtual bool remove(const ConditionKey& key)  override;
+      bool remove(const ConditionKey& key)  override;
       /// Do single insertion of condition including registration to the manager
-      virtual bool registerOne(const IOV& iov, Condition cond)  override;
+      bool registerOne(const IOV& iov, Condition cond)  override;
       /// Do block insertions of conditions with identical IOV including registration to the manager
-      virtual size_t registerMany(const IOV& iov, const std::vector<Condition>& values) override;
+      size_t registerMany(const IOV& iov, const std::vector<Condition>& values) override;
       /// Register a new condition to this pool
-      virtual bool insert(Condition cond)  override;
+      bool insert(Condition cond)  override;
 
       /// ConditionsMap overload: Add a condition directly to the slice
-      virtual bool insert(DetElement detector, Condition::itemkey_type key, Condition condition)  override;
+      bool insert(DetElement detector, Condition::itemkey_type key, Condition condition)  override;
       /// ConditionsMap overload: Access a condition
-      [[nodiscard]] virtual Condition get(DetElement detector, Condition::itemkey_type key)  const  override;
+      [[nodiscard]] Condition get(DetElement detector, Condition::itemkey_type key)  const  override;
       /// No ConditionsMap overload: Access all conditions within a key range in the interval [lower,upper]
-      [[nodiscard]] virtual std::vector<Condition> get(DetElement detector,
+      [[nodiscard]] std::vector<Condition> get(DetElement detector,
                                          Condition::itemkey_type lower,
                                          Condition::itemkey_type upper)  const override;
       /// Access all conditions within the key range of a detector element
-      [[nodiscard]] virtual std::vector<Condition> get(Condition::key_type lower,
+      [[nodiscard]] std::vector<Condition> get(Condition::key_type lower,
                                          Condition::key_type upper)  const  override;
 
       /// ConditionsMap overload: Interface to scan data content of the conditions mapping
-      virtual void scan(const Condition::Processor& processor) const  override;
+      void scan(const Condition::Processor& processor) const  override;
       /// ConditionsMap overload: Interface to scan data content of the conditions mapping
-      virtual void scan(Condition::key_type lower,
+      void scan(Condition::key_type lower,
                         Condition::key_type upper,
                         const Condition::Processor& processor) const  override;
       /// ConditionsMap overload: Interface to scan data content of the conditions mapping
-      virtual void scan(DetElement detector,
+      void scan(DetElement detector,
                         Condition::itemkey_type lower,
                         Condition::itemkey_type upper,
                         const Condition::Processor& processor) const  override;
 
       /// Prepare user pool for usage (load, fill etc.) according to required IOV
-      virtual ConditionsManager::Result prepare(const IOV&                  required,
+      ConditionsManager::Result prepare(const IOV&                  required,
                                                 ConditionsSlice&            slice,
                                                 ConditionUpdateUserContext* user_param)  override;
 
       /// Evaluate and register all derived conditions from the dependency list
-      virtual size_t compute(const Dependencies&         dependencies,
+      size_t compute(const Dependencies&         dependencies,
                              ConditionUpdateUserContext* user_param,
                              bool                        force)  override;
 
       /// Prepare user pool for usage (load, fill etc.) according to required IOV
-      virtual ConditionsManager::Result load   (const IOV&              required,
+      ConditionsManager::Result load   (const IOV&              required,
                                                 ConditionsSlice&        slice,
                                                 ConditionUpdateUserContext* user_param)  override;
       /// Prepare user pool for usage (load, fill etc.) according to required IOV
-      virtual ConditionsManager::Result compute(const IOV&                  required,
+      ConditionsManager::Result compute(const IOV&                  required,
                                                 ConditionsSlice&            slice,
                                                 ConditionUpdateUserContext* user_param)  override;
     };
@@ -168,11 +168,11 @@ namespace {
 
   class SimplePrint : public Condition::Processor {
     /// Conditions callback for object processing
-    [[nodiscard]] virtual int process(Condition)  const override    { return 1; }
+    [[nodiscard]] int process(Condition)  const override    { return 1; }
     /// Conditions callback for object processing
-    virtual int operator()(Condition)  const override { return 1; }
+    int operator()(Condition)  const override { return 1; }
     /// Conditions callback for object processing in maps
-    virtual int operator()(const pair<Condition::key_type,Condition>& i)  const override  {
+    int operator()(const pair<Condition::key_type,Condition>& i)  const override  {
       Condition c = i.second;
       printout(INFO,"UserPool","++ %16llX/%16llX Val:%s %s",i.first, c->hash, c->value.c_str(), c.str().c_str());
       return 1;
@@ -181,7 +181,7 @@ namespace {
   template <typename T> struct MapSelector : public ConditionsSelect {
     T& m;
     MapSelector(T& o) : m(o) {}
-    bool operator()(Condition::Object* o)  const
+    bool operator()(Condition::Object* o)  const override
     { return m.emplace(o->hash,o).second;    }
   };
   template <typename T> MapSelector<T> mapSelector(T& container)

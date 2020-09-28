@@ -60,25 +60,25 @@ namespace  Tests {
       InstanceCount::increment(this);
     }
     /// Default destructor
-    virtual ~Geant4SensitiveAction(){
+    ~Geant4SensitiveAction() override{
       InstanceCount::decrement(this);
     }
     /// Define collections created by this sensitivie action object
-    virtual void defineCollections() {}
+    void defineCollections() override {}
     /// G4VSensitiveDetector interface: Method invoked at the begining of each event.
-    virtual void begin(G4HCofThisEvent* hce) {
+    void begin(G4HCofThisEvent* hce) override {
       Base::begin(hce);
     }
     /// G4VSensitiveDetector interface: Method invoked at the end of each event.
-    virtual void end(G4HCofThisEvent* hce) {
+    void end(G4HCofThisEvent* hce) override {
       Base::end(hce);
     }
     /// G4VSensitiveDetector interface: Method for generating hit(s) using the G4Step object.
-    virtual bool process(G4Step* step,G4TouchableHistory* history)  {
+    bool process(G4Step* step,G4TouchableHistory* history) override  {
       return Base::process(step,history);
     }
     /// G4VSensitiveDetector interface: Method invoked if the event was aborted.
-    virtual void clear(G4HCofThisEvent* hce) {
+    void clear(G4HCofThisEvent* hce) override {
       Base::clear(hce);
     }
   };

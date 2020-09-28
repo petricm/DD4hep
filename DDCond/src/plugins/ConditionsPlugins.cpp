@@ -239,9 +239,9 @@ static int ddcond_detelement_dump(Detector& description, int argc, char** argv) 
     /// Standard constructor
     Actor(ConditionsPrinter& p) : printer(p)  {    }
     /// Default destructor
-    virtual ~Actor()   = default;
+    ~Actor()   override = default;
     /// Dump method.
-    virtual int operator()(DetElement de,int level)  const  {
+    int operator()(DetElement de,int level)  const override  {
       const DetElement::Children& children = de.children();
       PlacedVolume place = de.placement();
       char sens = place.volume().isSensitive() ? 'S' : ' ';

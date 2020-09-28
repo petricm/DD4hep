@@ -54,14 +54,14 @@ namespace dd4hep::sim {
       /// Initializing constructor
       explicit Geant4EventReaderGuineaPig(const std::string& nam);
       /// Default destructor
-      virtual ~Geant4EventReaderGuineaPig();
+      ~Geant4EventReaderGuineaPig() override;
       /// Read an event and fill a vector of MCParticles.
-      virtual EventReaderStatus readParticles(int event_number,
+      EventReaderStatus readParticles(int event_number,
                                               Vertices& vertices,
                                               std::vector<Particle*>& particles) override ;
-      virtual EventReaderStatus moveToEvent(int event_number) override ;
-      virtual EventReaderStatus skipEvent() override  { return EVENT_READER_OK; }
-      virtual EventReaderStatus setParameters( std::map< std::string, std::string > & parameters ) override ;
+      EventReaderStatus moveToEvent(int event_number) override ;
+      EventReaderStatus skipEvent() override  { return EVENT_READER_OK; }
+      EventReaderStatus setParameters( std::map< std::string, std::string > & parameters ) override ;
     };
   }       /* End namespace dd4hep       */
 

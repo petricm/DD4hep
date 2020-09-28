@@ -46,9 +46,9 @@ namespace dd4hep  {
     /// Initializing constructor
     VisMaterialProcessor(Detector& desc);
     /// Default destructor
-    virtual ~VisMaterialProcessor();
+    ~VisMaterialProcessor() override;
     /// Callback to output PlacedVolume information of an single Placement
-    virtual int operator()(PlacedVolume pv, int level);
+    int operator()(PlacedVolume pv, int level) override;
   };
 }
 #endif //  DD4HEP_DDCORE_VISMATERIALPROCESSOR_H
