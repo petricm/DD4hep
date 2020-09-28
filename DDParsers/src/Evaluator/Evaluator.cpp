@@ -53,7 +53,7 @@ struct Item {
 };
 
 typedef char * pchar;
-typedef hash_map<string,Item> dic_type;
+using dic_type = hash_map<string, Item>;
 
 namespace {
 

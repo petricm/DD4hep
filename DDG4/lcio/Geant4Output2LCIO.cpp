@@ -258,7 +258,7 @@ void Geant4Output2LCIO::begin(const G4Event* /* event */)  {
 /// Data conversion interface for MC particles to LCIO format
 auto Geant4Output2LCIO::saveParticles(Geant4ParticleMap* particles) -> lcio::LCCollectionVec*    {
   typedef detail::ReferenceBitMask<const int> PropertyMask;
-  typedef Geant4ParticleMap::ParticleMap ParticleMap;
+  using ParticleMap = Geant4ParticleMap::ParticleMap;
   const ParticleMap& pm = particles->particleMap;
   size_t nparts = pm.size();
   auto* lc_coll = new lcio::LCCollectionVec(lcio::LCIO::MCPARTICLE);
@@ -402,8 +402,8 @@ void Geant4Output2LCIO::saveCollection(OutputContext<G4Event>& /* ctxt */, G4VHi
   size_t nhits = collection->GetSize();
   std::string hc_nam = collection->GetName();
   print("+++ Saving LCIO collection %s with %d entries....",hc_nam.c_str(),int(nhits));
-  typedef pair<const Geant4Context*,G4VHitsCollection*> _Args;
-  typedef Geant4Conversion<lcio::LCCollectionVec,_Args> _C;
+  using _Args = pair<const Geant4Context *, G4VHitsCollection *>;
+  using _C = Geant4Conversion<lcio::LCCollectionVec, _Args>;
   const _C& cnv = _C::converter(typeid(Geant4HitCollection));
   auto* evt = context()->event().extension<lcio::LCEventImpl>();
   lcio::LCCollectionVec* col = cnv(_Args(context(),collection));

@@ -29,7 +29,7 @@
 using namespace std;
 using namespace dd4hep::sim;
 typedef dd4hep::detail::ReferenceBitMask<int> PropertyMask;
-typedef Geant4InputAction::Vertices Vertices ;
+using Vertices = Geant4InputAction::Vertices ;
 
 
 /// Initializing constructor

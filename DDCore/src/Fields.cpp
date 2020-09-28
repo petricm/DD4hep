@@ -21,7 +21,7 @@ using namespace dd4hep;
 typedef CartesianField::Object CartesianFieldObject;
 DD4HEP_INSTANTIATE_HANDLE(CartesianFieldObject);
 
-typedef OverlayedField::Object OverlayedFieldObject;
+using OverlayedFieldObject = OverlayedField::Object;
 DD4HEP_INSTANTIATE_HANDLE(OverlayedFieldObject);
 
 namespace {

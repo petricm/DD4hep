@@ -132,7 +132,7 @@ namespace dd4hep::sim   {
     //using namespace Test;
     using namespace dd4hep::sim::Test;
     typedef Geant4TestSensitive Geant4TestSensitiveTracker;
-    typedef Geant4TestSensitive Geant4TestSensitiveCalorimeter;
+    using Geant4TestSensitiveCalorimeter = Geant4TestSensitive;
   }
 
 DECLARE_GEANT4ACTION(Geant4TestRunAction)

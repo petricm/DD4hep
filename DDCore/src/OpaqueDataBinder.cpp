@@ -188,7 +188,7 @@ namespace dd4hep::detail  {
                                  const KEY*,
                                  const VAL*)
     {
-      typedef map<KEY,VAL> map_t;
+      using map_t = map<KEY, VAL>;
       pair<KEY,VAL> entry;
       auto& m = object.template get<map_t>();
       if ( !BasicGrammar::instance<pair<KEY,VAL> >().fromString(&entry,data) )  {

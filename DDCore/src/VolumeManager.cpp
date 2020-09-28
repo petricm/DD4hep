@@ -42,8 +42,8 @@ namespace dd4hep::detail {
      */
     class VolumeManager_Populator {
       typedef vector<TGeoNode*>        Chain;
-      typedef PlacedVolume::VolIDs     VolIDs;
-      typedef pair<VolumeID, VolumeID> Encoding;
+      using VolIDs = PlacedVolume::VolIDs;
+      using Encoding = pair<VolumeID, VolumeID>;
       /// Reference to the Detector instance
       const Detector& m_detDesc;
       /// Reference to the volume manager to be populated

@@ -29,8 +29,8 @@ using namespace dd4hep;
 /// Do not clutter global namespace
 namespace {
   typedef InstanceCount::Counter COUNT;
-  typedef std::map<const std::type_info*, COUNT*> TypeCounter;
-  typedef std::map<const std::string*, COUNT*> StringCounter;
+  using TypeCounter = std::map<const std::type_info *, COUNT *>;
+  using StringCounter = std::map<const std::string *, COUNT *>;
   static bool s_trace_instances = ::getenv("DD4HEP_TRACE") != nullptr;
   static dd4hep_ptr<TypeCounter> s_typCounts(new TypeCounter());
   static dd4hep_ptr<StringCounter> s_strCounts(new StringCounter());

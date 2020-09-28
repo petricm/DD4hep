@@ -53,7 +53,7 @@ namespace dd4hep::sim {
     class Geant4EventReaderHepMC : public Geant4EventReader  {
       typedef boost::iostreams::stream<dd4hep_file_source<int> > in_stream;
       //typedef boost::iostreams::stream<dd4hep_file_source<TFile*> > in_stream;
-      typedef HepMC::EventStream EventStream;
+      using EventStream = HepMC::EventStream;
     protected:
       in_stream    m_input;
       EventStream* m_events;
@@ -136,8 +136,8 @@ namespace dd4hep::sim::HepMC {
        */
       class EventStream {
       public:
-        typedef std::map<int,Geant4Vertex*> Vertices;
-        typedef std::map<int,Geant4Particle*> Particles;
+        using Vertices = std::map<int, Geant4Vertex *>;
+        using Particles = std::map<int, Geant4Particle *>;
 
         istream& instream;
 

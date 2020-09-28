@@ -126,7 +126,7 @@ namespace dd4hep::sim {
         }
       }
     };
-    typedef Geant4GenericSD<OpticalCalorimeter>  Geant4OpticalCalorimeter;
+    using Geant4OpticalCalorimeter = Geant4GenericSD<OpticalCalorimeter>;
   }    // End namespace dd4hep::sim
 
 DECLARE_GEANT4SENSITIVEDETECTOR_NS(dd4hep::sim,Geant4OpticalCalorimeter)

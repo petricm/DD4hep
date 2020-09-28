@@ -399,7 +399,7 @@ static auto root_elements(Detector& description, int argc, char** argv) -> long 
     virtual void operator()(TGeoIsotope* iso)  { iso->Print();  }
   };
   struct ElementPrintXML : public ElementPrint  {
-    typedef xml::Element elt_h;
+    using elt_h = xml::Element;
     elt_h root;
     ElementPrintXML(elt_h r) : root(r) {}
     ~ElementPrintXML() override = default;
@@ -498,7 +498,7 @@ DECLARE_APPLY(DD4hep_ElementTable,root_elements)
  */
 static auto root_materials(Detector& description, int argc, char** argv) -> long {
   struct MaterialPrint {
-    typedef xml::Element elt_h;
+    using elt_h = xml::Element;
     Detector& description;
     MaterialPrint(Detector& desc) : description(desc) {}
     virtual ~MaterialPrint() = default;

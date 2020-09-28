@@ -90,7 +90,7 @@ void Geant4DataDump::print(PrintLevel level, const std::string& container, const
 void Geant4DataDump::print(PrintLevel level, const Geant4ParticleMap* parts)  const {
   if ( parts )    {
     PrintLevel low_lvl = level == ALWAYS ? ALWAYS : PrintLevel(level-1);
-    typedef Geant4ParticleMap::ParticleMap ParticleMap;
+    using ParticleMap = Geant4ParticleMap::ParticleMap;
     const ParticleMap& pm = parts->particles();
     printout(level,m_tag,"+++ Geant4 Particle map %-18s --------------- Track KEEP reasoning ---------------","");
     printout(level,m_tag,"+++ # of Tracks:%6d          PDG Parent Primary Secondary Energy %-8s Calo Tracker Process/Par",

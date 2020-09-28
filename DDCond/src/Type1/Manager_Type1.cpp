@@ -39,7 +39,7 @@ using namespace dd4hep;
 using namespace dd4hep::cond;
 
 typedef UpdatePool::UpdateEntries Updates;
-typedef RangeConditions RC;
+using RC = RangeConditions;
 
 DD4HEP_INSTANTIATE_HANDLE_NAMED(Manager_Type1);
 

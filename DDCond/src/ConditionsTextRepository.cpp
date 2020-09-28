@@ -31,11 +31,11 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::cond;
 typedef xml::Handle_t     xml_h;
-typedef xml::Element      xml_elt_t;
-typedef xml::Document     xml_doc_t;
-typedef xml::Collection_t xml_coll_t;
+using xml_elt_t = xml::Element;
+using xml_doc_t = xml::Document;
+using xml_coll_t = xml::Collection_t;
 
-typedef map<Condition::key_type,Condition> AllConditions;
+using AllConditions = map<Condition::key_type, Condition>;
 
 /// Default constructor. Allocates resources
 ConditionsTextRepository::ConditionsTextRepository()  = default;

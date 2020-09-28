@@ -137,7 +137,7 @@ auto DDG4EventHandler::collectionLoop(const std::string& collection, DDEveHitAct
 
 /// Loop over collection and extract particle data
 auto DDG4EventHandler::collectionLoop(const std::string& collection, DDEveParticleActor& actor) -> size_t    {
-  typedef std::vector<void*> _P;
+  using _P = std::vector<void *>;
   auto i = m_branches.find(collection);
   if ( i != m_branches.end() )   {
     const _P* data_ptr = (_P*)(*i).second.second;

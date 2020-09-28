@@ -171,7 +171,7 @@ void Geant4ParticleHandler::mark(const G4Track* track)   {
 
 /// Event generation action callback
 void Geant4ParticleHandler::operator()(G4Event* event)  {
-  typedef Geant4MonteCarloTruth _MC;
+  using _MC = Geant4MonteCarloTruth;
   debug("+++ Event:%d Add EVENT extension of type Geant4ParticleHandler.....",event->GetEventID());
   context()->event().addExtension((_MC*)this, false);
   clear();
@@ -183,7 +183,7 @@ void Geant4ParticleHandler::operator()(G4Event* event)  {
 
 /// User stepping callback
 void Geant4ParticleHandler::step(const G4Step* step_value, G4SteppingManager* mgr)   {
-  typedef vector<const G4Track*> _Sec;
+  using _Sec = vector<const G4Track *>;
   ++m_currTrack.steps;
   if ( (m_currTrack.reason&G4PARTICLE_ABOVE_ENERGY_THRESHOLD) )  {
     //

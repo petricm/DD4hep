@@ -31,7 +31,7 @@ using namespace dd4hep::sim;
 typedef dd4hep::detail::ReferenceBitMask<int> PropertyMask;
 
 // Neede for backwards compatibility:
-namespace dd4hep::sim{typedef Geant4InputAction LCIOInputAction;}
+namespace dd4hep::sim{using LCIOInputAction = Geant4InputAction;}
 DECLARE_GEANT4ACTION(LCIOInputAction)
 
 

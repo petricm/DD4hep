@@ -144,8 +144,8 @@ namespace dd4hep::sim {
 #include "DDG4/Factories.h"
 
 typedef dd4hep::sim::Geant4SensDet Geant4SensDet;
-typedef dd4hep::sim::Geant4SensDet Geant4tracker;
-typedef dd4hep::sim::Geant4SensDet Geant4calorimeter;
+using Geant4tracker = dd4hep::sim::Geant4SensDet;
+using Geant4calorimeter = dd4hep::sim::Geant4SensDet;
 
 DECLARE_GEANT4SENSITIVEDETECTOR(Geant4SensDet)
 DECLARE_GEANT4SENSITIVEDETECTOR(Geant4tracker)

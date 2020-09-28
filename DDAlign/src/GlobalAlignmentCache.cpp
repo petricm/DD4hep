@@ -185,8 +185,8 @@ auto GlobalAlignmentCache::subdetectorAlignments(const string& nam) -> GlobalAli
 
 /// Apply a complete stack of ordered alignments to the geometry structure
 void GlobalAlignmentCache::apply(GlobalAlignmentStack& stack)    {
-  typedef map<string,DetElement> DetElementUpdates;
-  typedef map<DetElement,vector<Entry*> > sd_entries_t;
+  using DetElementUpdates = map<string, DetElement>;
+  using sd_entries_t = map<DetElement, vector<Entry *> >;
   TGeoManager& mgr = m_detDesc.manager();
   DetElementUpdates detelt_updates;
   sd_entries_t all;
@@ -238,7 +238,7 @@ void GlobalAlignmentCache::apply(GlobalAlignmentStack& stack)    {
 
 /// Apply a vector of SD entries of ordered alignments to the geometry structure
 void GlobalAlignmentCache::apply(const vector<Entry*>& changes)   {
-  typedef map<string,pair<TGeoPhysicalNode*,Entry*> > Nodes;
+  using Nodes = map<string, pair<TGeoPhysicalNode *, Entry *> >;
   Nodes nodes;
   GlobalAlignmentSelector selector(*this,nodes,changes);
   for_each(m_cache.begin(),m_cache.end(),selector.reset());

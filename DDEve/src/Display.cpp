@@ -355,7 +355,7 @@ void Display::OnFileOpen(EventHandler& /* handler */ )   {
 /// Consumer event data
 void Display::OnNewEvent(EventHandler& handler )   {
   typedef EventHandler::TypedEventCollections Types;
-  typedef vector<EventHandler::Collection> Collections;
+  using Collections = vector<EventHandler::Collection>;
   const Types& types = handler.data();
   TEveElement* particles = nullptr;
 

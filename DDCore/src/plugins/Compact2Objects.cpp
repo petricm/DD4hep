@@ -908,7 +908,7 @@ template <> void Converter<Segmentation>::operator()(xml_h seg) const {
           typedef DDSegmentation::TypedSegmentationParameter<int> ParInt;
           static_cast<ParInt*>(p)->setTypedValue(seg.attr<int>(pNam));
         } else if ( pType.compare("float") == 0 ) {
-          typedef DDSegmentation::TypedSegmentationParameter<float> ParFloat;
+          using ParFloat = DDSegmentation::TypedSegmentationParameter<float>;
           static_cast<ParFloat*>(p)->setTypedValue(seg.attr<float>(pNam));
         } else if ( pType.compare("doublevec") == 0 ) {
           vector<double> valueVector;
@@ -920,10 +920,10 @@ template <> void Converter<Segmentation>::operator()(xml_h seg) const {
             if ( spar.empty() ) continue;
             valueVector.emplace_back(_toDouble(spar));
           }
-          typedef DDSegmentation::TypedSegmentationParameter< vector<double> > ParDouVec;
+          using ParDouVec = DDSegmentation::TypedSegmentationParameter<vector<double> >;
           static_cast<ParDouVec*>(p)->setTypedValue(valueVector);
         } else if ( pType.compare("double" ) == 0) {
-          typedef DDSegmentation::TypedSegmentationParameter<double>ParDouble;
+          using ParDouble = DDSegmentation::TypedSegmentationParameter<double>;
           static_cast<ParDouble*>(p)->setTypedValue(seg.attr<double>(pNam));
         } else {
           p->setValue(seg.attr<string>(pNam));

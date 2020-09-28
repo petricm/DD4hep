@@ -27,7 +27,7 @@ using namespace std;
 using namespace dd4hep;
 using namespace dd4hep::detail;
 typedef detail::tools::PlacementPath PlacementPath;
-typedef detail::tools::ElementPath   ElementPath;
+using ElementPath = detail::tools::ElementPath;
 
 DD4HEP_INSTANTIATE_HANDLE_NAMED(DetElementObject);
 DD4HEP_INSTANTIATE_HANDLE_NAMED(SensitiveDetectorObject);

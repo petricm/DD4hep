@@ -61,7 +61,7 @@ using namespace lcio ;
 namespace dd4hep::sim   {
 
     typedef VolumeManager VolMgr;
-    typedef IDDescriptor  IDDescriptor;
+    using IDDescriptor = IDDescriptor;
 
     /// Data conversion interface calling lower level explicit convetrers
     /**
@@ -75,8 +75,8 @@ namespace dd4hep::sim   {
       G4VHitsCollection* c = args.second;
       auto* coll = dynamic_cast<Geant4HitCollection*>(c);
       if ( coll )  {
-        typedef pair<arg_t::first_type,Geant4HitCollection*> _A;
-        typedef Geant4Conversion<output_t,_A> _C;
+        using _A = pair<arg_t::first_type, Geant4HitCollection *>;
+        using _C = Geant4Conversion<output_t, _A>;
         const _C& cnv= _C::converter(coll->type().type);
         return cnv(_A(args.first,coll));
       }
@@ -161,7 +161,7 @@ namespace dd4hep::sim   {
     Geant4DataConversion<lcio::LCCollectionVec,
                          pair<const Geant4Context*,Geant4HitCollection*>,
                          Geant4Calorimeter::Hit>::operator()(const arg_t& args)  const  {
-      typedef Geant4HitData::Contributions Contributions;
+      using Contributions = Geant4HitData::Contributions;
       Geant4HitCollection*   coll     = args.second;
       Geant4Sensitive*       sd       = coll->sensitive();
       size_t                 nhits    = coll->GetSize();
@@ -303,8 +303,8 @@ namespace dd4hep::sim   {
       return moveEntries<tag_t>(args.second,lc);
     }
 
-    typedef pair<const Geant4Context*,G4VHitsCollection*> RAW_CONVERSION_ARGS;
-    typedef pair<const Geant4Context*,Geant4HitCollection*> CONVERSION_ARGS;
+    using RAW_CONVERSION_ARGS = pair<const Geant4Context *, G4VHitsCollection *>;
+    using CONVERSION_ARGS = pair<const Geant4Context *, Geant4HitCollection *>;
     template class Geant4Conversion<lcio::LCCollectionVec,RAW_CONVERSION_ARGS>;
     DECLARE_GEANT4_HITCONVERTER(lcio::LCCollectionVec,RAW_CONVERSION_ARGS,Geant4HitCollection)
 

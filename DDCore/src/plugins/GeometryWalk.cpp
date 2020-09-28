@@ -29,7 +29,7 @@ using namespace dd4hep;
 using namespace dd4hep::detail;
 
 typedef detail::tools::ElementPath   ElementPath;
-typedef detail::tools::PlacementPath PlacementPath;
+using PlacementPath = detail::tools::PlacementPath;
 
 namespace  {
   /** @class GeometryWalk
@@ -63,7 +63,7 @@ namespace  {
   };
 }
 
-typedef DetElement::Children _C;
+using _C = DetElement::Children;
 
 /// Initializing constructor
 GeometryWalk::GeometryWalk(Detector& description, DetElement sdet) : m_det(sdet) {

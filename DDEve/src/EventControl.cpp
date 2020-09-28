@@ -114,7 +114,7 @@ void EventControl::OnFileOpen(EventHandler& handler)  {
 /// Consumer event data
 void EventControl::OnNewEvent(EventHandler& handler)   {
   typedef EventHandler::TypedEventCollections Types;
-  typedef std::vector<EventHandler::Collection> Collections;
+  using Collections = std::vector<EventHandler::Collection>;
   const Types& types = handler.data();
   size_t cnt = 1;
   m_lines[0].second.first->SetText("Hit collection name");

@@ -146,7 +146,7 @@ void Geant4Output2ROOT::saveEvent(OutputContext<G4Event>& /* ctxt */) {
     auto* parts = context()->event().extension<Geant4ParticleMap>();
     if ( parts )   {
       typedef Geant4HitWrapper::HitManipulator Manip;
-      typedef Geant4ParticleMap::ParticleMap ParticleMap;
+      using ParticleMap = Geant4ParticleMap::ParticleMap;
       Manip* manipulator = Geant4HitWrapper::manipulator<Geant4Particle>();
       const ParticleMap& pm = parts->particles();
       vector<void*> particles;

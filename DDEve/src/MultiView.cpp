@@ -45,7 +45,7 @@ MultiView::~MultiView()  = default;
 /// Build the projection view and map it to the given slot
 auto MultiView::Build(TEveWindow* slot) -> View&   {
   typedef DisplayConfiguration::Configurations _C;
-  typedef Display::ViewConfigurations _V;
+  using _V = Display::ViewConfigurations;
   TEveWindowSlot* new_slot;
   View* v;
 

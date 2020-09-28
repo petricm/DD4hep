@@ -1018,7 +1018,7 @@ static auto adler32(unsigned int adler, const XmlChar* xml_buff, size_t len) -> 
 typedef unsigned int (fcn_t)(unsigned int, const XmlChar*, size_t);
 auto Handle_t::checksum(unsigned int param, fcn_t fcn) const -> unsigned int {
 #ifdef DD4HEP_USE_TINYXML
-  typedef map<string, string> StringMap;
+  using StringMap = map<string, string>;
   TiXmlNode* n = Xml(m_node).n;
   if ( n ) {
     if ( nullptr == fcn ) fcn = adler32;

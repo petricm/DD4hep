@@ -30,8 +30,8 @@ using namespace dd4hep;
 using namespace dd4hep::sim;
 
 typedef Geant4DataDump::Particles Particles;
-typedef Geant4DataDump::TrackerHits TrackerHits;
-typedef Geant4DataDump::CalorimeterHits CalorimeterHits;
+using TrackerHits = Geant4DataDump::TrackerHits;
+using CalorimeterHits = Geant4DataDump::CalorimeterHits;
 
 static auto usage() -> long   {
   printout(FATAL,"Geant4ROOTDump","usage: Geant4ROOTDump -opt (app-opts) --opt=value (plugin-opts)");
@@ -112,8 +112,8 @@ static auto dump_root(Detector&, int argc, char** argv) -> long {
     TClass* cl_particles = gROOT->GetClass(typeid(Particles));
     TObjArray* branches  = tree->GetListOfBranches();
     Int_t nbranches = branches->GetEntriesFast();
-    typedef pair<TClass*,void*> ENTRY;
-    typedef map<string,ENTRY> ENTRIES;
+    using ENTRY = pair<TClass *, void *>;
+    using ENTRIES = map<string, ENTRY>;
 
     for(Int_t ievt=entry<0 ? 0 : entry, nevt=entry<0 ? tree->GetEntries() : entry+1; ievt<nevt; ++ievt)  {
       ENTRIES event;

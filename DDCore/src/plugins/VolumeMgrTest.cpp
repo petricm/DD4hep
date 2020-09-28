@@ -41,7 +41,7 @@ namespace  {
    */
   struct VolIDTest  {
     typedef detail::tools::PlacementPath     Chain;
-    typedef PlacedVolume::VolIDs             VolIDs;
+    using VolIDs = PlacedVolume::VolIDs;
 
     /// Helper to scan volume ids
     struct FND {

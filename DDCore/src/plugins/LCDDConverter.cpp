@@ -880,7 +880,7 @@ auto LCDDConverter::handleLimitSet(const std::string& /* name */, LimitSet lim) 
 auto LCDDConverter::handleSegmentation(Segmentation seg) const -> xml_h {
   xml_h xml;
   if (seg.isValid()) {
-    typedef DDSegmentation::Parameters _P;
+    using _P = DDSegmentation::Parameters;
     string typ = seg.type();
     _P p = seg.parameters();
     xml = xml_elt_t(data().doc, Unicode(typ));

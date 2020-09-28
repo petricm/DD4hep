@@ -55,10 +55,10 @@ namespace dd4hep {
       auto operator=(const Count&) -> Count& = default;
     };
     typedef std::vector<Data> VolumeStack;
-    typedef std::map<std::string,DetElement> Detectors;
-    typedef std::map<DetElement,Count>       Counters;
-    typedef std::map<std::pair<DetElement,int>, std::pair<int,int> > LeafCount;
-    typedef std::map<PlacedVolume, std::pair<int,int> > AllPlacements;
+    using Detectors = std::map<std::string, DetElement>;
+    using Counters = std::map<DetElement, Count>;
+    using LeafCount = std::map<std::pair<DetElement, int>, std::pair<int, int> >;
+    using AllPlacements = std::map<PlacedVolume, std::pair<int, int> >;
     Detector&         description;
     Material          sensitive_material;
     Counters          counters;

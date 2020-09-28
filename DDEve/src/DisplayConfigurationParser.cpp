@@ -45,7 +45,7 @@ namespace dd4hep  {  namespace   {
   }
 
   typedef DisplayConfiguration::Configurations Configurations;
-  typedef DisplayConfiguration::ViewConfigurations ViewConfigurations;
+  using ViewConfigurations = DisplayConfiguration::ViewConfigurations;
 
   /// Forward declarations for all specialized converters
   template <> void Converter<ddeve>::operator()(xml_h seq)  const;

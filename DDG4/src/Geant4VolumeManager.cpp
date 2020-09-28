@@ -41,8 +41,8 @@ namespace {
 
   /// Helper class to populate the Geant4 volume manager
   struct Populator {
-    typedef vector<const TGeoNode*> Chain;
-    typedef map<VolumeID,Geant4GeometryInfo::Geant4PlacementPath> Registries;
+    using Chain = vector<const TGeoNode *>;
+    using Registries = map<VolumeID, Geant4GeometryInfo::Geant4PlacementPath>;
     /// Reference to the Detector instance
     const Detector& m_detDesc;
     /// Set of already added entries

@@ -222,8 +222,8 @@ static void rebaseVertices(Geant4PrimaryInteraction::VertexMap& vertices, int pa
 auto dd4hep::sim::mergeInteractions(const Geant4Action* caller,
                                    const Geant4Context* context) -> int
 {
-  typedef Geant4PrimaryEvent::Interaction  Interaction;
-  typedef vector<Interaction*>             Interactions;
+  using Interaction = Geant4PrimaryEvent::Interaction;
+  using Interactions = vector<Interaction *>;
   Geant4Event& event = context->event();
   auto* evt = event.extension<Geant4PrimaryEvent>();
   auto* output = event.extension<Interaction>();
@@ -361,7 +361,7 @@ getRelevant(set<int>& visited,
             const Geant4PrimaryConfig& primaryConfig,
             const Geant4ParticleHandle p) -> vector< pair<Geant4Particle*,G4PrimaryParticle*> >
 {
-  typedef vector< pair<Geant4Particle*,G4PrimaryParticle*> > Primaries;
+  using Primaries = vector<pair<Geant4Particle *, G4PrimaryParticle *> >;
   Primaries res;
   visited.insert(p->id);
   PropertyMask status(p->status);
@@ -424,8 +424,8 @@ auto dd4hep::sim::generatePrimaries(const Geant4Action* caller,
                                    const Geant4Context* context,
                                    G4Event* event) -> int
 {
-  typedef vector< pair<Geant4Particle*,G4PrimaryParticle*> > Primaries;
-  typedef Geant4PrimaryInteraction Interaction;
+  using Primaries = vector<pair<Geant4Particle *, G4PrimaryParticle *> >;
+  using Interaction = Geant4PrimaryInteraction;
   auto* primaries   = context->event().extension<Geant4PrimaryMap>();
   auto*      interaction = context->event().extension<Interaction>();
   Interaction::ParticleMap& pm  = interaction->particles;

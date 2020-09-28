@@ -142,7 +142,7 @@ namespace  Tests {
     return true;
   }
 
-  typedef Geant4SensitiveAction<LcioTestTracker> LcioTestTrackerAction;
+  using LcioTestTrackerAction = Geant4SensitiveAction<LcioTestTracker>;
 } // namespace
 
 #include "DDG4/Factories.h"

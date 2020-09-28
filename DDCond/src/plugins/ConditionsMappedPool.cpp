@@ -44,8 +44,8 @@ namespace dd4hep::cond {
     class ConditionsMappedPool : public BASE   {
     public:
       typedef BASE                               Base;
-      typedef MAPPING                            Mapping;
-      typedef ConditionsMappedPool<Mapping,Base> Self;
+      using Mapping = MAPPING;
+      using Self = ConditionsMappedPool<Mapping, Base>;
       
     protected:
       Mapping          m_entries;
@@ -130,7 +130,7 @@ namespace dd4hep::cond {
       : public ConditionsMappedPool<MAPPING,BASE>
     {
     public:
-      typedef ConditionsMappedPool<MAPPING,BASE>                    Self;
+      using Self = ConditionsMappedPool<MAPPING, BASE>;
     public:
       /// Default constructor
       ConditionsMappedUpdatePool(ConditionsManager mgr)

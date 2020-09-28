@@ -481,9 +481,9 @@ auto ConditionsMappedUserPool<MAPPING>::compute(const Dependencies& deps,
 namespace {
   struct COMP {
     typedef pair<Condition::key_type,const ConditionDependency*>     Dep;
-    typedef pair<const Condition::key_type,detail::ConditionObject*> Cond;
-    typedef pair<const Condition::key_type,ConditionsLoadInfo* >     Info;
-    typedef pair<const Condition::key_type,Condition>                Cond2;
+    using Cond = pair<const Condition::key_type, detail::ConditionObject *>;
+    using Info = pair<const Condition::key_type, ConditionsLoadInfo *>;
+    using Cond2 = pair<const Condition::key_type, Condition>;
     
     auto operator()(const Dep& a,const Cond& b) const -> bool   { return a.first < b.first; }
     auto operator()(const Cond& a,const Dep& b) const -> bool   { return a.first < b.first; }
@@ -501,8 +501,8 @@ ConditionsMappedUserPool<MAPPING>::prepare(const IOV&                  required,
                                            ConditionsSlice&            slice,
                                            ConditionUpdateUserContext* user_param) -> ConditionsManager::Result
 {
-  typedef vector<pair<Condition::key_type,ConditionDependency*> > CalcMissing;
-  typedef vector<pair<Condition::key_type,ConditionsLoadInfo*> >  CondMissing;
+  using CalcMissing = vector<pair<Condition::key_type, ConditionDependency *> >;
+  using CondMissing = vector<pair<Condition::key_type, ConditionsLoadInfo *> >;
   const auto& slice_cond = slice.content->conditions();
   const auto& slice_calc = slice.content->derived();
   auto&  slice_miss_cond = slice.missingConditions();
@@ -629,7 +629,7 @@ ConditionsMappedUserPool<MAPPING>::load(const IOV&                  required,
                                         ConditionsSlice&            slice,
                                         ConditionUpdateUserContext* /* user_param */) -> ConditionsManager::Result
 {
-  typedef vector<pair<Condition::key_type,ConditionsLoadInfo*> >  CondMissing;
+  using CondMissing = vector<pair<Condition::key_type, ConditionsLoadInfo *> >;
   const auto& slice_cond = slice.content->conditions();
   auto&  slice_miss_cond = slice.missingConditions();
   bool   do_load         = m_manager->doLoadConditions();
@@ -703,7 +703,7 @@ ConditionsMappedUserPool<MAPPING>::compute(const IOV&                  required,
                                            ConditionsSlice&            slice,
                                            ConditionUpdateUserContext* user_param) -> ConditionsManager::Result
 {
-  typedef vector<pair<Condition::key_type,ConditionDependency*> > CalcMissing;
+  using CalcMissing = vector<pair<Condition::key_type, ConditionDependency *> >;
   const auto& slice_calc = slice.content->derived();
   auto&  slice_miss_calc = slice.missingDerivations();
   bool   do_load         = m_manager->doLoadConditions();
@@ -771,7 +771,7 @@ ConditionsMappedUserPool<MAPPING>::compute(const IOV&                  required,
 /// Namespace for the AIDA detector description toolkit
 namespace dd4hep::cond {
 
-    typedef unordered_map<Condition::key_type,Condition::Object*> umap_t;
+    using umap_t = unordered_map<Condition::key_type, Condition::Object *>;
 
     /// Access all conditions within a given key range
     /** Specialization necessary, since unordered maps have no lower bound.

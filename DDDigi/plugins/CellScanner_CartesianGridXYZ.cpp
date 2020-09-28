@@ -111,8 +111,8 @@ DECLARE_DIGICELLSCANNER(DigiCellScanner,CartesianGridXYZ,Box)
 
 namespace dd4hep  {
   typedef IntersectionSolid Intersection;
-  typedef SubtractionSolid Subtraction;
-  typedef UnionSolid Union;
+  using Subtraction = SubtractionSolid;
+  using Union = UnionSolid;
 }
 DECLARE_DIGICELLSCANNER(DigiCellScanner,CartesianGridXYZ,Intersection)
 DECLARE_DIGICELLSCANNER(DigiCellScanner,CartesianGridXYZ,Subtraction)

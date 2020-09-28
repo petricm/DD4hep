@@ -16,7 +16,7 @@
 
 //using namespace dd4hep::sim;
 typedef dd4hep::sim::Geant4Vertex   Vertex;
-typedef dd4hep::sim::Geant4Particle Particle;
+using Particle = dd4hep::sim::Geant4Particle;
 
 static dd4hep::DDTest test( "EventReader" ) ;
 

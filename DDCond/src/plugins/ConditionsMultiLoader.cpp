@@ -33,7 +33,7 @@ namespace dd4hep::cond  {
      */
     class ConditionsMultiLoader : public ConditionsDataLoader   {
       typedef std::map<std::string, ConditionsDataLoader*> Loaders;
-      typedef std::map<std::string, ConditionsDataLoader*> OpenSources;
+      using OpenSources = std::map<std::string, ConditionsDataLoader *>;
 
       Loaders m_loaders;
       OpenSources m_openSources;

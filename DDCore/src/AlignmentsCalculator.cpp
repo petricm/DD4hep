@@ -69,9 +69,9 @@ namespace dd4hep::align {
 
       class Calculator::Context  {
       public:
-        typedef std::map<DetElement,size_t,AlignmentsCalculator::PathOrdering>  DetectorMap;
-        typedef std::map<unsigned int,size_t>             Keys;
-        typedef std::vector<Entry>                        Entries;
+        using DetectorMap = std::map<DetElement, size_t, AlignmentsCalculator::PathOrdering>;
+        using Keys = std::map<unsigned int, size_t>;
+        using Entries = std::vector<Entry>;
 
         DetectorMap    detectors;
         Keys           keys;

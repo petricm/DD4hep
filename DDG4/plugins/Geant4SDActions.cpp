@@ -68,7 +68,7 @@ namespace dd4hep::sim   {
 
     /// Method for generating hit(s) using the information of G4Step object.
     template <> bool Geant4SensitiveAction<Geant4Tracker>::process(G4Step* step,G4TouchableHistory* /*hist*/ ) {
-      typedef Geant4Tracker::Hit Hit;
+      using Hit = Geant4Tracker::Hit;
       Geant4StepHandler h(step);
       Position prePos    = h.prePos();
       Position postPos   = h.postPos();
@@ -101,7 +101,7 @@ namespace dd4hep::sim   {
       print("    Geant4 path:%s",handler.path().c_str());
       return true;
     }
-    typedef Geant4SensitiveAction<Geant4Tracker> Geant4TrackerAction;
+    using Geant4TrackerAction = Geant4SensitiveAction<Geant4Tracker>;
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //               Geant4SensitiveAction<Calorimeter>
@@ -123,7 +123,7 @@ namespace dd4hep::sim   {
 
     /// Method for generating hit(s) using the information of G4Step object.
     template <> bool Geant4SensitiveAction<Geant4Calorimeter>::process(G4Step* step,G4TouchableHistory*) {
-      typedef Geant4Calorimeter::Hit Hit;
+      using Hit = Geant4Calorimeter::Hit;
       Geant4StepHandler h(step);
       HitContribution contrib = Hit::extractContribution(step);
       Geant4HitCollection*  coll    = collection(m_collectionID);
@@ -171,7 +171,7 @@ namespace dd4hep::sim   {
       mark(step);
       return true;
     }
-    typedef Geant4SensitiveAction<Geant4Calorimeter> Geant4CalorimeterAction;
+    using Geant4CalorimeterAction = Geant4SensitiveAction<Geant4Calorimeter>;
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //               Geant4SensitiveAction<OpticalCalorimeter>
@@ -208,7 +208,7 @@ namespace dd4hep::sim   {
         return false;
       }
       else {
-        typedef Geant4Calorimeter::Hit Hit;
+        using Hit = Geant4Calorimeter::Hit;
         Geant4StepHandler h(step);
         Geant4HitCollection*  coll    = collection(m_collectionID);
         HitContribution contrib = Hit::extractContribution(step);
@@ -230,7 +230,7 @@ namespace dd4hep::sim   {
         return true;
       }
     }
-    typedef Geant4SensitiveAction<Geant4OpticalCalorimeter>  Geant4OpticalCalorimeterAction;
+    using Geant4OpticalCalorimeterAction = Geant4SensitiveAction<Geant4OpticalCalorimeter>;
 
 
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -258,7 +258,7 @@ namespace dd4hep::sim   {
     }
     /// Method for generating hit(s) using the information of G4Step object.
     template <> bool Geant4SensitiveAction<Geant4ScintillatorCalorimeter>::process(G4Step* step,G4TouchableHistory*) {
-      typedef Geant4Calorimeter::Hit Hit;
+      using Hit = Geant4Calorimeter::Hit;
       Geant4StepHandler h(step);
       HitContribution contrib = Hit::extractContribution(step,true);
       Geant4HitCollection*  coll    = collection(m_collectionID);
@@ -304,7 +304,7 @@ namespace dd4hep::sim   {
       mark(step);
       return true;
     }
-    typedef Geant4SensitiveAction<Geant4ScintillatorCalorimeter> Geant4ScintillatorCalorimeterAction;
+    using Geant4ScintillatorCalorimeterAction = Geant4SensitiveAction<Geant4ScintillatorCalorimeter>;
 
     /**
      *
@@ -490,11 +490,11 @@ namespace dd4hep::sim   {
       return m_userData.process(step, history);
     }
 
-    typedef Geant4SensitiveAction<TrackerCombine>  Geant4TrackerCombineAction;
+    using Geant4TrackerCombineAction = Geant4SensitiveAction<TrackerCombine>;
 
-    typedef Geant4TrackerAction                    Geant4SimpleTrackerAction;
-    typedef Geant4CalorimeterAction                Geant4SimpleCalorimeterAction;
-    typedef Geant4OpticalCalorimeterAction         Geant4SimpleOpticalCalorimeterAction;
+    using Geant4SimpleTrackerAction = Geant4TrackerAction;
+    using Geant4SimpleCalorimeterAction = Geant4CalorimeterAction;
+    using Geant4SimpleOpticalCalorimeterAction = Geant4OpticalCalorimeterAction;
   }
 
 using namespace dd4hep::sim;

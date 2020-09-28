@@ -30,8 +30,8 @@
 using std::string;
 using namespace dd4hep;
 typedef dd4hep::xml::Handle_t  xml_h;
-typedef dd4hep::xml::Dimension xml_dim_t;
-typedef dd4hep::xml::Collection_t xml_coll_t;
+using xml_dim_t = dd4hep::xml::Dimension;
+using xml_coll_t = dd4hep::xml::Collection_t;
 
 namespace {
   PrintLevel s_print = DEBUG;

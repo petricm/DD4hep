@@ -51,10 +51,10 @@ using namespace dd4hep::detail;
  */
 
 typedef TGeoNode                geo_node_t;
-typedef TGeoVolume              geo_volume_t;
-typedef TGeoVolumeAssembly      geo_assembly_t;
+using geo_volume_t = TGeoVolume;
+using geo_assembly_t = TGeoVolumeAssembly;
 template <typename T> static auto _userExtension(const T& v) -> typename T::Object*  {
-  typedef typename T::Object O;
+  using O = typename T::Object;
   O* o = (O*)(v.ptr()->GetUserExtension());
   return o;
 }
