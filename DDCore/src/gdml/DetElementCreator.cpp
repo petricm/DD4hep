@@ -84,7 +84,7 @@ namespace dd4hep {
     /// Create the top level detectors
     void createTopLevelDetectors(PlacedVolume pv);
     /// Generate the name of the DetElement object from the placed volume
-    std::string detElementName(PlacedVolume pv)  const;
+    [[nodiscard]] std::string detElementName(PlacedVolume pv)  const;
   public:
     /// Initializing constructor
     DetElementCreator(Detector& desc,

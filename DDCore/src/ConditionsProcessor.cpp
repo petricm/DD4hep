@@ -30,7 +30,7 @@ int ConditionsCollector<T>::operator()(DetElement de, int)  const  {
     /// Constructor
     Collector(DetElement d, T& c) : det(d), container(c) {}
     /// Processing callback
-    virtual int process(Condition c)  const override { insert_item(container, det, c); return 1; }
+    [[nodiscard]] virtual int process(Condition c)  const override { insert_item(container, det, c); return 1; }
   };
   if ( de.isValid() )  {
     mapping.scan(de, ConditionsMap::FIRST_ITEM, ConditionsMap::LAST_ITEM, Collector(de,conditions));

@@ -64,7 +64,7 @@ namespace dd4hep::cond {
       virtual ~ConditionsMappedPool();
 
       /// Total entry count
-      virtual size_t size()  const  final  {
+      [[nodiscard]] virtual size_t size()  const  final  {
         return m_entries.size();
       }
 
@@ -97,7 +97,7 @@ namespace dd4hep::cond {
       }
 
       /// Check if a condition exists in the pool
-      virtual Condition exists(Condition::key_type key)  const  final   {
+      [[nodiscard]] virtual Condition exists(Condition::key_type key)  const  final   {
         auto i=find_if(m_entries.begin(), m_entries.end(), Operators::keyFind(key));
         return i==m_entries.end() ? Condition() : (*i).second;
       }

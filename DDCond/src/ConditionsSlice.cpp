@@ -180,7 +180,7 @@ namespace  {
       return true;
     }
     /// Return number of conditions selected
-    virtual size_t size()  const { return content.conditions().size(); }
+    [[nodiscard]] virtual size_t size()  const { return content.conditions().size(); }
   };
 }
 

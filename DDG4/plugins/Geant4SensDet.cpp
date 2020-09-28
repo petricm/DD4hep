@@ -90,28 +90,28 @@ namespace dd4hep::sim {
       /// Destructor
       virtual ~Geant4SensDet()        = default;
       /// Overload to avoid ambiguity between G4VSensitiveDetector and G4VSDFilter
-      inline G4String GetName() const
+      [[nodiscard]] inline G4String GetName() const
       {  return this->G4VSensitiveDetector::SensitiveDetectorName;      }
       /// G4VSensitiveDetector internals: Access to the detector path name
-      virtual std::string path()  const
+      [[nodiscard]] virtual std::string path()  const
       {  return this->G4VSensitiveDetector::GetPathName();              }
       /// G4VSensitiveDetector internals: Access to the detector path name
-      virtual std::string fullPath()  const
+      [[nodiscard]] virtual std::string fullPath()  const
       {  return this->G4VSensitiveDetector::GetFullPathName();          }
       /// Is the detector active?
-      virtual bool isActive() const
+      [[nodiscard]] virtual bool isActive() const
       {  return this->G4VSensitiveDetector::isActive();                 }
       /// This is a utility method which returns the hits collection ID
       virtual G4int GetCollectionID(G4int i)
       {  return this->G4VSensitiveDetector::GetCollectionID(i);         }
       /// Access to the readout geometry of the sensitive detector
-      virtual G4VReadOutGeometry* readoutGeometry() const
+      [[nodiscard]] virtual G4VReadOutGeometry* readoutGeometry() const
       {  return this->G4VSensitiveDetector::GetROgeometry();            }
       /// Access to the Detector sensitive detector handle
-      virtual SensitiveDetector sensitiveDetector() const
+      [[nodiscard]] virtual SensitiveDetector sensitiveDetector() const
       {  return m_sensitive;                                            }
       /// Access to the sensitive type of the detector
-      virtual const std::string& sensitiveType() const
+      [[nodiscard]] virtual const std::string& sensitiveType() const
       {  return m_sequence->sensitiveType();                            }
       /// Callback if the sequence should be accepted or filtered off
       virtual G4bool Accept(const G4Step* step) const

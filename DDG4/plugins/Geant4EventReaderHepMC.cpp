@@ -156,7 +156,7 @@ namespace dd4hep::sim::HepMC {
                                    io_type(0), xsection(0.0), xsection_err(0.0)
         { use_default_units();                       }
         /// Check if data stream is in proper state and has data
-        bool ok()  const;
+        [[nodiscard]] bool ok()  const;
         Geant4Vertex* vertex(int i);
         Particles& particles() { return m_particles; }
         Vertices&  vertices()  { return m_vertices;  }

@@ -64,7 +64,7 @@ namespace dd4hep::detail {
       }
 
       /// Access node count
-      size_t numNodes()  const  {   return m_numNodes;  }
+      [[nodiscard]] size_t numNodes()  const  {   return m_numNodes;  }
 
       /// Populate the Volume manager
       void populate(DetElement e) {

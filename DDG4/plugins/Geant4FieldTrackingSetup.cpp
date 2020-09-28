@@ -154,8 +154,8 @@ namespace {
   struct Geant4SetupPropertyMap {
     const map<string,string>& vals;
     Geant4SetupPropertyMap(const map<string,string>& v) : vals(v) {}
-    string value(const string& key) const;
-    double toDouble(const string& key) const;
+    [[nodiscard]] string value(const string& key) const;
+    [[nodiscard]] double toDouble(const string& key) const;
     bool operator[](const string& key) const  { return vals.find(key) != vals.end(); }
   };
   

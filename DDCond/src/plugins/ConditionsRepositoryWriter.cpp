@@ -65,7 +65,7 @@ namespace dd4hep::cond {
       /// Dump the conditions tree content into a XML document structure
       size_t collect(xml::Element root, ConditionsSlice& slice);
       /// Write the XML document structure to a file.
-      long write(xml::Document doc, const std::string& output)  const;
+      [[nodiscard]] long write(xml::Document doc, const std::string& output)  const;
     };
     
   }          /* End namespace dd4hep                              */

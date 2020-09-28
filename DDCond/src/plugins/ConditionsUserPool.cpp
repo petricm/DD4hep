@@ -50,7 +50,7 @@ namespace dd4hep::cond {
       ConditionsDataLoader* m_loader = 0;
 
       /// Internal helper to find conditions
-      Condition::Object* i_findCondition(Condition::key_type key)  const;
+      [[nodiscard]] Condition::Object* i_findCondition(Condition::key_type key)  const;
 
       /// Internal insertion helper
       bool i_insert(Condition::Object* o);
@@ -63,17 +63,17 @@ namespace dd4hep::cond {
       /// Print pool content
       virtual void print(const std::string& opt)   const  override;
       /// Total entry count
-      virtual size_t size()  const  override;
+      [[nodiscard]] virtual size_t size()  const  override;
       /// Full cleanup of all managed conditions.
       virtual void clear()  override;
       /// Check a condition for existence
-      virtual bool exists(Condition::key_type hash)  const  override;
+      [[nodiscard]] virtual bool exists(Condition::key_type hash)  const  override;
       /// Check a condition for existence
-      virtual bool exists(const ConditionKey& key)  const  override;
+      [[nodiscard]] virtual bool exists(const ConditionKey& key)  const  override;
       /// Check if a condition exists in the pool and return it to the caller
-      virtual Condition get(Condition::key_type hash)  const  override;
+      [[nodiscard]] virtual Condition get(Condition::key_type hash)  const  override;
       /// Check if a condition exists in the pool and return it to the caller     
-      virtual Condition get(const ConditionKey& key)  const  override;
+      [[nodiscard]] virtual Condition get(const ConditionKey& key)  const  override;
 
       /// Remove condition by key from pool.
       virtual bool remove(Condition::key_type hash_key)  override;
@@ -89,13 +89,13 @@ namespace dd4hep::cond {
       /// ConditionsMap overload: Add a condition directly to the slice
       virtual bool insert(DetElement detector, Condition::itemkey_type key, Condition condition)  override;
       /// ConditionsMap overload: Access a condition
-      virtual Condition get(DetElement detector, Condition::itemkey_type key)  const  override;
+      [[nodiscard]] virtual Condition get(DetElement detector, Condition::itemkey_type key)  const  override;
       /// No ConditionsMap overload: Access all conditions within a key range in the interval [lower,upper]
-      virtual std::vector<Condition> get(DetElement detector,
+      [[nodiscard]] virtual std::vector<Condition> get(DetElement detector,
                                          Condition::itemkey_type lower,
                                          Condition::itemkey_type upper)  const override;
       /// Access all conditions within the key range of a detector element
-      virtual std::vector<Condition> get(Condition::key_type lower,
+      [[nodiscard]] virtual std::vector<Condition> get(Condition::key_type lower,
                                          Condition::key_type upper)  const  override;
 
       /// ConditionsMap overload: Interface to scan data content of the conditions mapping
@@ -168,7 +168,7 @@ namespace {
 
   class SimplePrint : public Condition::Processor {
     /// Conditions callback for object processing
-    virtual int process(Condition)  const override    { return 1; }
+    [[nodiscard]] virtual int process(Condition)  const override    { return 1; }
     /// Conditions callback for object processing
     virtual int operator()(Condition)  const override { return 1; }
     /// Conditions callback for object processing in maps

@@ -32,7 +32,7 @@ namespace  {
     /// Default destructor
     virtual ~ConstructorImp() = default;
     /// Access to a fresh (resetted) instance of the particle table iterator
-    G4ParticleTable::G4PTblDicIterator* particleIterator()  const   {
+    [[nodiscard]] G4ParticleTable::G4PTblDicIterator* particleIterator()  const   {
       G4ParticleTable::G4PTblDicIterator* iter;
 
 #if G4VERSION_NUMBER >= 1030
