@@ -93,7 +93,7 @@ void DigiSubdetectorSequence::scan_detector(DetElement de, VolumeID vid, VolumeI
     new_msk |= m_idDesc.get_mask(new_ids);
     for (const auto& id : new_ids)   {
       if ( id.first == m_segmentName )   {
-        VolumeID rid = detail::reverseBits<VolumeID>(new_vid);
+        auto rid = detail::reverseBits<VolumeID>(new_vid);
         m_parallelVid.emplace(make_pair(rid, Context(de, new_vid, rid, new_msk)));
         m_parallelDet.emplace(make_pair(de, new_vid));
         scan_sensitive(de.placement(), new_vid, new_msk);

@@ -42,7 +42,7 @@ namespace dd4hep {
     
     const SurfaceMap* SurfaceManager::map( const std::string name ) const {
 
-      SurfaceMapsMap::const_iterator it = _map.find( name ) ;
+      auto it = _map.find( name ) ;
 
       if( it != _map.end() ){
 

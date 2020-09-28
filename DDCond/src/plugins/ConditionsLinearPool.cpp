@@ -217,7 +217,7 @@ namespace {
   
   ConditionsManager _mgr(int argc, char** argv)  {
     if ( argc > 0 )  {
-      ConditionsManager::Object* m = (ConditionsManager::Object*)argv[0];
+      auto* m = (ConditionsManager::Object*)argv[0];
       return m;
     }
     dd4hep::except("ConditionsLinearPool","++ Insufficient arguments: arg[0] = ConditionManager!");

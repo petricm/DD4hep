@@ -68,7 +68,7 @@ static int ddcond_install_cond_mgr (Detector& description, int argc, char** argv
         "\tArguments given: " << arguments(argc,argv) << endl << flush;
       ::exit(EINVAL);
     }
-    ConditionsManagerObject* obj = createPlugin<ConditionsManagerObject>(factory,description);
+    auto* obj = createPlugin<ConditionsManagerObject>(factory,description);
     if ( !obj )  {
       except("ConditionsManagerInstaller","Failed to create manager object of type %s",
              factory.c_str());
@@ -428,7 +428,7 @@ static void* create_printer(Detector& description, int argc,char** argv)  {
   printout(INFO,"Printer","World=%s [%p]",world.path().c_str(),world.ptr());
   ConditionsSlice* slice = 0;
   if ( have_pool )   {
-    PluginTester*    test  = description.extension<PluginTester>();
+    auto*    test  = description.extension<PluginTester>();
     slice = test->extension<ConditionsSlice>("ConditionsTestSlice");
   }
   PRINTER* p = (flags) ? new PRINTER(slice, prefix, flags) : new PRINTER(slice, prefix);

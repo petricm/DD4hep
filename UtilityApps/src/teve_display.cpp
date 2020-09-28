@@ -84,7 +84,7 @@ static long teve_display(Detector& description, int /* argc */, char** /* argv *
   
   //  gEve->fGeometries->Add(new TObjString("DefaultGeometry"),mgr);
 
-  TEveGeoTopNode* tn = new TEveGeoTopNode(mgr, mgr->GetTopNode());
+  auto* tn = new TEveGeoTopNode(mgr, mgr->GetTopNode());
   // option 0 in TEve seems to correspond to option 1 in TGeo ( used in geoDisplay ...)
   tn->SetVisOption(0) ;
   tn->SetVisLevel(4);
@@ -163,7 +163,7 @@ int main(int argc,char** argv)  {
 
 TEveStraightLineSet* getSurfaceVectors(bool addO, bool addU, bool addV, bool addN, TString name,int color) {
 
-  TEveStraightLineSet* ls = new TEveStraightLineSet(name);
+  auto* ls = new TEveStraightLineSet(name);
 
   Detector& description = Detector::getInstance();
 
@@ -205,7 +205,7 @@ TEveStraightLineSet* getSurfaceVectors(bool addO, bool addU, bool addV, bool add
 //=====================================================================================
 TEveStraightLineSet* getSurfaces(int col, const SurfaceType& type, TString name) {
 
-  TEveStraightLineSet* ls = new TEveStraightLineSet(name);
+  auto* ls = new TEveStraightLineSet(name);
 
   Detector& description = Detector::getInstance();
 
@@ -220,7 +220,7 @@ TEveStraightLineSet* getSurfaces(int col, const SurfaceType& type, TString name)
 
   for(auto it : sL){
 
-    Surface* surf = dynamic_cast< Surface*> ( it ) ;
+    auto* surf = dynamic_cast< Surface*> ( it ) ;
 
     if( ! surf ) 
       continue ;
@@ -264,16 +264,16 @@ void make_gui() {
   TEveBrowser* browser = gEve->GetBrowser();
   browser->StartEmbedding(TRootBrowser::kLeft);
 
-  TGMainFrame* frmMain = new TGMainFrame(gClient->GetRoot(), 1000, 600);
+  auto* frmMain = new TGMainFrame(gClient->GetRoot(), 1000, 600);
   frmMain->SetWindowName("dd4hep GUI");
   frmMain->SetCleanup(kDeepCleanup);
 
-  TGHorizontalFrame* hf = new TGHorizontalFrame(frmMain);
+  auto* hf = new TGHorizontalFrame(frmMain);
   {
       
     TString icondir( Form("%s/icons/", gSystem->Getenv("ROOTSYS")) );
     TGPictureButton* b = 0;
-    EvNavHandler    *fh = new EvNavHandler;
+    auto    *fh = new EvNavHandler;
 
     b = new TGPictureButton(hf, gClient->GetPicture(icondir+"GoBack.gif"));
     b->SetEnabled(kFALSE);

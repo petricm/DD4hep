@@ -87,7 +87,7 @@ void Geant4DetectorSensitivesConstruction::constructSensitives(Geant4DetectorCon
     string nam = sd.name();
     auto   iter = types.find(nam);
       string typ = (iter != types.end()) ? (*iter).second : dflt;
-    G4VSensitiveDetector* g4sd = 
+    auto* g4sd =
       PluginService::Create<G4VSensitiveDetector*>(typ, nam, &ctxt->description);
     if (g4sd) {
       print("Geant4SDConstruction", "+++ Subdetector: %-32s  type: %-16s factory: %s.",

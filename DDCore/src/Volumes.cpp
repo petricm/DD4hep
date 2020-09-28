@@ -62,17 +62,17 @@ template <typename T> static typename T::Object* _userExtension(const T& v)  {
 ClassImp(PlacedVolumeExtension)
 namespace {
   TGeoVolume* _createTGeoVolume(const string& name, TGeoShape* s, TGeoMedium* m)  {
-    geo_volume_t* e = new geo_volume_t(name.c_str(),s,m);
+    auto* e = new geo_volume_t(name.c_str(),s,m);
     e->SetUserExtension(new Volume::Object());
     return e;
   }
   TGeoVolume* _createTGeoVolumeAssembly(const string& name)  {
-    geo_assembly_t* e = new geo_assembly_t(name.c_str()); // It is important to use the correct constructor!!
+    auto* e = new geo_assembly_t(name.c_str()); // It is important to use the correct constructor!!
     e->SetUserExtension(new Assembly::Object());
     return e;
   }
   TGeoVolumeMulti* _createTGeoVolumeMulti(const string& name, TGeoMedium* medium)  {
-    TGeoVolumeMulti* e = new TGeoVolumeMulti(name.c_str(), medium);
+    auto* e = new TGeoVolumeMulti(name.c_str(), medium);
     e->SetUserExtension(new VolumeMulti::Object());
     return e;
   }
@@ -108,7 +108,7 @@ namespace {
           except("dd4hep","VolumeImport: Unknown TGeoVolume sub-class: %s",v->IsA()->GetName());
       }
       if  ( c == TGeoVolumeMulti::Class() )  {
-        TGeoVolumeMulti* mv = (TGeoVolumeMulti*)v;
+        auto* mv = (TGeoVolumeMulti*)v;
         for(int i=0, n=mv->GetNvolumes(); i<n; ++i)
           (*this)(mv->GetVolume(i));
       }
@@ -148,8 +148,8 @@ namespace {
         }
         else if  ( c == TGeoVolumeMulti::Class() )   {
           VolumeMulti::Object *new_e, *old_e = (VolumeMulti::Object*)_data(old_vol);
-          TGeoVolumeMulti* new_mv = (TGeoVolumeMulti*)new_v;
-          TGeoVolumeMulti* old_mv = (TGeoVolumeMulti*)old_v;
+          auto* new_mv = (TGeoVolumeMulti*)new_v;
+          auto* old_mv = (TGeoVolumeMulti*)old_v;
           new_v->SetUserExtension(new_e = new VolumeMulti::Object(*old_e));
           old_e->reflected = new_v;
           new_e->reflected = old_v;
@@ -180,7 +180,7 @@ namespace {
 
   TGeoVolume* MakeReflection(TGeoVolume* v, const char* newname=0)  {
     static TMap map(100);
-    TGeoVolume* vol = (TGeoVolume*)map.GetValue(v);
+    auto* vol = (TGeoVolume*)map.GetValue(v);
     if ( vol ) {
       return vol;
     }
@@ -206,7 +206,7 @@ namespace {
     // The volume is now properly cloned, but with the same shape.
     // Reflect the shape (if any) and connect it.
     if (v->GetShape())   {
-      TGeoScale* scale = new TGeoScale( 1., 1.,-1.);
+      auto* scale = new TGeoScale( 1., 1.,-1.);
       TGeoShape* reflected_shape =
         TGeoScaledShape::MakeScaledShape((nam+"_shape_refl").c_str(), v->GetShape(), scale);
       vol->SetShape(reflected_shape);
@@ -217,7 +217,7 @@ namespace {
     TGeoVolume *new_vol;
     if ( !vol->GetFinder() ) {
       for (Int_t i=0; i < nd; i++) {
-        TGeoNodeMatrix* node  = (TGeoNodeMatrix*)vol->GetNode(i);
+        auto* node  = (TGeoNodeMatrix*)vol->GetNode(i);
         TGeoMatrix*     local = node->GetMatrix();
         //         printf("%s before\n", node->GetName());
         //         local->Print();
@@ -312,7 +312,7 @@ TGeoExtension* PlacedVolumeExtension::Grab()   {
 
 /// TGeoExtension overload: Method called always when the pointer to the extension is not needed anymore
 void PlacedVolumeExtension::Release() const  {
-  PlacedVolumeExtension* ext = const_cast<PlacedVolumeExtension*>(this);
+  auto* ext = const_cast<PlacedVolumeExtension*>(this);
   --ext->refCount;
   if ( 0 == ext->refCount ) delete ext;
 }
@@ -320,7 +320,7 @@ void PlacedVolumeExtension::Release() const  {
 /// Lookup volume ID
 vector<PlacedVolumeExtension::VolID>::const_iterator
 PlacedVolumeExtension::VolIDs::find(const string& name) const {
-  for (Base::const_iterator i = this->Base::begin(); i != this->Base::end(); ++i)
+  for (auto i = this->Base::begin(); i != this->Base::end(); ++i)
     if (name == (*i).first)
       return i;
   return this->end();
@@ -329,7 +329,7 @@ PlacedVolumeExtension::VolIDs::find(const string& name) const {
 /// Insert a new value into the volume ID container
 std::pair<vector<PlacedVolumeExtension::VolID>::iterator, bool>
 PlacedVolumeExtension::VolIDs::insert(const string& name, int value) {
-  Base::iterator i = this->Base::begin();
+  auto i = this->Base::begin();
   for (; i != this->Base::end(); ++i)
     if (name == (*i).first)
       break;
@@ -436,7 +436,7 @@ VolumeExtension::~VolumeExtension() {
 
 /// TGeoExtension overload: Method called whenever requiring a pointer to the extension
 TGeoExtension* VolumeExtension::Grab()  {
-  VolumeExtension* ext = const_cast<VolumeExtension*>(this);
+  auto* ext = const_cast<VolumeExtension*>(this);
   ++ext->refCount;
 #ifdef ___print_vols
   if ( ext->sens_det.isValid() )
@@ -449,7 +449,7 @@ TGeoExtension* VolumeExtension::Grab()  {
 
 /// TGeoExtension overload: Method called always when the pointer to the extension is not needed anymore
 void VolumeExtension::Release() const  {
-  VolumeExtension* ext = const_cast<VolumeExtension*>(this);
+  auto* ext = const_cast<VolumeExtension*>(this);
   --ext->refCount;
   if ( 0 == ext->refCount )   {
 #ifdef ___print_vols
@@ -590,7 +590,7 @@ PlacedVolume _addNode(TGeoVolume* par, TGeoVolume* daughter, int id, TGeoMatrix*
   TGeoShape* shape = daughter->GetShape();
   // Need to fix the daughter's BBox of assemblies, if the BBox was not calculated....
   if ( shape->IsA() == TGeoShapeAssembly::Class() )  {
-    TGeoShapeAssembly* as = (TGeoShapeAssembly*)shape;
+    auto* as = (TGeoShapeAssembly*)shape;
     if ( std::fabs(as->GetDX()) < numeric_limits<double>::epsilon() &&
          std::fabs(as->GetDY()) < numeric_limits<double>::epsilon() &&
          std::fabs(as->GetDZ()) < numeric_limits<double>::epsilon() )  {
@@ -744,7 +744,7 @@ string Volume::option() const {
 /// Set the volume's material
 const Volume& Volume::setMaterial(const Material& mat) const {
   if (mat.isValid()) {
-    TGeoMedium* medium = mat._ptr<TGeoMedium>();
+    auto* medium = mat._ptr<TGeoMedium>();
     if (medium) {
       m_element->SetMedium(medium);
       return *this;
@@ -764,7 +764,7 @@ Material Volume::material() const {
 /// Set Visualization attributes to the volume
 const Volume& Volume::setVisAttributes(const VisAttr& attr) const {
   if ( attr.isValid() ) {
-    VisAttr::Object* vis = attr.data<VisAttr::Object>();
+    auto* vis = attr.data<VisAttr::Object>();
     Color_t bright = vis->color;//kBlue;//TColor::GetColorBright(vis->color);
     Color_t dark = vis->color;//kRed;//TColor::GetColorDark(vis->color);
     TColor* c = vis->col;//gROOT->GetColor(dark);
@@ -1007,7 +1007,7 @@ std::string dd4hep::toStringMesh(PlacedVolume place, int prec)   {
   // Prints shape parameters
   Int_t nvert = 0, nsegs = 0, npols = 0;
   sol->GetMeshNumbers(nvert, nsegs, npols);
-  Double_t* points = new Double_t[3*nvert];
+  auto* points = new Double_t[3*nvert];
   sol->SetPoints(points);
 
   os << setw(16) << left << sol->IsA()->GetName()

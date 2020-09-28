@@ -92,7 +92,7 @@ namespace dd4hep::sim {
 void Geant4SensitiveDetector::Initialize(G4HCofThisEvent* HCE) {
   int count = 0;
   m_hce = HCE;
-  for (G4CollectionNameVector::const_iterator i = collectionName.begin(); i != collectionName.end(); ++i, ++count) {
+  for (auto i = collectionName.begin(); i != collectionName.end(); ++i, ++count) {
     G4VHitsCollection* c = createCollection(*i);
     m_hce->AddHitsCollection(GetCollectionID(count), c);
   }
@@ -129,7 +129,7 @@ G4bool Geant4SensitiveDetector::process(G4Step* step, G4TouchableHistory* hist) 
 
 /// Retrieve the hits collection associated with this detector by its collection identifier
 Geant4SensitiveDetector::HitCollection* Geant4SensitiveDetector::collectionByID(int id) {
-  HitCollection* hc = (HitCollection*) m_hce->GetHC(id);
+  auto* hc = (HitCollection*) m_hce->GetHC(id);
   if (hc)
     return hc;
   throw runtime_error("The collection index for subdetector " + name() + " is wrong!");
@@ -139,7 +139,7 @@ Geant4SensitiveDetector::HitCollection* Geant4SensitiveDetector::collectionByID(
 Geant4SensitiveDetector::HitCollection* Geant4SensitiveDetector::collection(int which) {
   size_t w = which;
   if (w < collectionName.size()) {
-    HitCollection* hc = (HitCollection*) m_hce->GetHC(GetCollectionID(which));
+    auto* hc = (HitCollection*) m_hce->GetHC(GetCollectionID(which));
     if (hc)
       return hc;
     throw runtime_error("The collection index for subdetector " + name() + " is wrong!");

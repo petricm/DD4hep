@@ -85,7 +85,7 @@ namespace dd4hep {
 
   /// Helper: Extract the required detector element from the parsing information
   DetElement _getDetector(void* param, xml_h e)  {
-    ConversionArg* arg  = static_cast<ConversionArg*>(param);
+    auto* arg  = static_cast<ConversionArg*>(param);
     DetElement detector = arg ? arg->detector : DetElement();
     string     subpath  = e.hasAttr(_U(path)) ? e.attr<string>(_U(path)) : string();
     return subpath.empty() ? detector : detail::tools::findDaughterElement(detector,subpath);
@@ -134,7 +134,7 @@ namespace dd4hep {
   template <> void Converter<arbitrary>::operator()(xml_h e) const {
     xml_comp_t elt(e);
     string tag = elt.tag();
-    ConversionArg* arg  = _param<ConversionArg>();
+    auto* arg  = _param<ConversionArg>();
     if ( !arg )
       except("ConditionsParser","++ Invalid parser argument [Internal Error]");
     else if ( tag == "conditions" )  
@@ -196,7 +196,7 @@ namespace dd4hep {
    *  @date    01/04/2014
    */
   template <> void Converter<conditions>::operator()(xml_h e) const {
-    ConversionArg* arg  = _param<ConversionArg>();
+    auto* arg  = _param<ConversionArg>();
     DetElement elt = arg->detector;
     arg->detector = _getDetector(param,e);
     xml_coll_t(e,_U(star)).for_each(Converter<arbitrary>(description,param,optional));
@@ -213,7 +213,7 @@ namespace dd4hep {
 static void* setup_global_Conditions(Detector& description, int argc, char** argv)  {
   if ( argc == 2 )  {
     xml_h e = xml_h::Elt_t(argv[0]);
-    ConditionsStack* stack = (ConditionsStack*)argv[1];
+    auto* stack = (ConditionsStack*)argv[1];
     ConversionArg args(description.world(), stack);
     (dd4hep::Converter<conditions>(description,&args))(e);
     return &description;

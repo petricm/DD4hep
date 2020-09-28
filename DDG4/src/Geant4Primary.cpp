@@ -43,13 +43,13 @@ void Geant4PrimaryMap::insert(G4PrimaryParticle* g4,Geant4Particle* p)   {
 
 /// Access DDG4 particle by G4 primary particle
 Geant4Particle* Geant4PrimaryMap::get(const G4PrimaryParticle* particle)   {
-  Primaries::iterator i=m_primaryMap.find(particle);
+  auto i=m_primaryMap.find(particle);
   return i != m_primaryMap.end() ? (*i).second : 0;
 }
 
 /// Access DDG4 particle by G4 primary particle (const)
 const Geant4Particle* Geant4PrimaryMap::get(const G4PrimaryParticle* particle) const   {
-  Primaries::const_iterator i=m_primaryMap.find(particle);
+  auto i=m_primaryMap.find(particle);
   return i != m_primaryMap.end() ? (*i).second : 0;
 }
 
@@ -92,7 +92,7 @@ Geant4PrimaryEvent::~Geant4PrimaryEvent()   {
 /// Add a new interaction object to the event
 void Geant4PrimaryEvent::add(int id, Geant4PrimaryInteraction* interaction)   {
   if ( interaction )  {
-    Interactions::iterator i = m_interactions.find(id);
+    auto i = m_interactions.find(id);
     if ( i == m_interactions.end() )  {
       interaction->mask = id;
       m_interactions.emplace(id,interaction);
@@ -106,7 +106,7 @@ void Geant4PrimaryEvent::add(int id, Geant4PrimaryInteraction* interaction)   {
 
 /// Retrieve an interaction by it's ID
 Geant4PrimaryEvent::Interaction* Geant4PrimaryEvent::get(int mask) const   {
-  Interactions::const_iterator i = m_interactions.find(mask);
+  auto i = m_interactions.find(mask);
   return (i != m_interactions.end()) ? (*i).second : 0;
 }
 

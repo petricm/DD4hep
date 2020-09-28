@@ -52,7 +52,7 @@ namespace dd4hep {
 	
         for(auto dau : daugs){
           DetElement::Children chMap = dau.children() ;
-          for ( DetElement::Children::const_iterator it=chMap.begin() ; it != chMap.end() ; ++it ){
+          for ( auto it=chMap.begin() ; it != chMap.end() ; ++it ){
             DetElement de = (*it).second ;
             gdaugs.push_back( de ) ;
           }  

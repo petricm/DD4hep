@@ -326,6 +326,7 @@ namespace dd4hep {
 #include "TMap.h"
 #include "TColor.h"
 
+
 template class dd4hep::Handle<NamedObject>;
 DD4HEP_SAFE_CAST_IMPLEMENTATION(NamedObject,NamedObject)
 

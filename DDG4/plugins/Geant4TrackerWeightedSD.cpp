@@ -228,7 +228,7 @@ namespace dd4hep::sim   {
           else if ( ended == kOutside )
             hit_flag |= Geant4Tracker::Hit::HIT_ENDED_OUTSIDE;
           
-          Geant4Tracker::Hit* hit = new Geant4Tracker::Hit(pre.truth.trackID,
+          auto* hit = new Geant4Tracker::Hit(pre.truth.trackID,
                                                            pre.truth.pdgID,
                                                            deposit,time);
           hit->flag     = hit_flag;

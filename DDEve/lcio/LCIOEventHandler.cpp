@@ -54,9 +54,9 @@ const void* _fill(const SimCalorimeterHit* hit, DDEveHit* target)   {
 }
 
 static const void* _convertHitFunc(const LCObject* source, DDEveHit* target)  {
-  const SimTrackerHit* t = dynamic_cast<const SimTrackerHit*>(source);
+  const auto* t = dynamic_cast<const SimTrackerHit*>(source);
   if (t && _fill(t,target)) return t;
-  const SimCalorimeterHit* c = dynamic_cast<const SimCalorimeterHit*>(source);
+  const auto* c = dynamic_cast<const SimCalorimeterHit*>(source);
   if (c && _fill(c,target)) return c;
   return 0;
 }
@@ -103,7 +103,7 @@ EventHandler::CollectionType LCIOEventHandler::collectionType(const std::string&
 
 /// Call functor on hit collection
 size_t LCIOEventHandler::collectionLoop(const std::string& collection, DDEveHitActor& actor)   {
-  Branches::const_iterator ibr = m_branches.find(collection);
+  auto ibr = m_branches.find(collection);
   if ( ibr != m_branches.end() )   {
     LCCollection* c = (*ibr).second;
     if ( c )  {
@@ -124,7 +124,7 @@ size_t LCIOEventHandler::collectionLoop(const std::string& collection, DDEveHitA
 
 /// Loop over collection and extract particle data
 size_t LCIOEventHandler::collectionLoop(const std::string& collection, DDEveParticleActor& actor)    {
-  Branches::const_iterator ibr = m_branches.find(collection);
+  auto ibr = m_branches.find(collection);
   if ( ibr != m_branches.end() )   {
     LCCollection* c = (*ibr).second;
     if ( c )  {

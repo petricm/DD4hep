@@ -35,7 +35,7 @@ namespace dd4hep::cond {
 
     /// Access specialization
     template <> ConditionsManager ConditionsManager::from<Detector>(Detector& host)  {
-      Object* obj = host.extension<Object>();
+      auto* obj = host.extension<Object>();
       if ( obj ) return ConditionsManager(obj);
       except("ConditionsManager","+++ Failed to access installed manager from Detector.");
       return ConditionsManager();
@@ -63,7 +63,7 @@ void ConditionsManagerObject::registerCallee(Listeners& listeners, const Listene
     listeners.insert(callee);
     return;
   }
-  Listeners::iterator i=listeners.find(callee);
+  auto i=listeners.find(callee);
   if ( i != listeners.end() ) listeners.erase(i);  
 }
 
@@ -150,7 +150,7 @@ ConditionsPool* ConditionsManagerObject::registerIOV(const string& data)   {
 
 /// Initializing constructor to create a named manager
 ConditionsManager::ConditionsManager(Detector& description, const std::string& factory)   {
-  ConditionsManagerObject* obj = createPlugin<ConditionsManagerObject>(factory,description);
+  auto* obj = createPlugin<ConditionsManagerObject>(factory,description);
   if ( !obj )  {
     except("ConditionsManagerInstaller","Failed to create manager object of type %s",
            factory.c_str());

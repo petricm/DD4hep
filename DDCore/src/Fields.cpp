@@ -102,7 +102,7 @@ bool OverlayedField::changesEnergy() const {
 /// Add a new field component
 void OverlayedField::add(CartesianField field) {
   if (field.isValid()) {
-    Object* o = data<Object>();
+    auto* o = data<Object>();
     if (o) {
       int typ = field.fieldType();
       bool isEle = field.ELECTRIC == (typ & field.ELECTRIC);
@@ -142,7 +142,7 @@ void OverlayedField::combinedMagnetic(const double* pos, double* field) const {
 
 /// Returns the 3 electric (val[0]-val[2]) and magnetic field components (val[3]-val[5]).
 void OverlayedField::electromagneticField(const double* pos, double* field) const {
-  Object* o = data<Object>();
+  auto* o = data<Object>();
   field[0] = field[1] = field[2] = 0.;
   calculate_combined_field(o->electric_components, pos, field);
   calculate_combined_field(o->magnetic_components, pos, field + 3);

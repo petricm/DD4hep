@@ -22,7 +22,7 @@ void next_event(){
 
   std::cout <<  " next_event called - nothing to do ... " << std::endl ;
 
-  TEveElementList* tevent = (TEveElementList* ) gEve->GetCurrentEvent() ;
+  auto* tevent = (TEveElementList* ) gEve->GetCurrentEvent() ;
   
   if( tevent ) 
     tevent->DestroyElements() ;
@@ -44,14 +44,14 @@ TEveStraightLineSet* lineset(Int_t nlines, Int_t nmarkers )
   TRandom r(0);
   Float_t s = 100;
 
-  TEveStraightLineSet* ls = new TEveStraightLineSet();
+  auto* ls = new TEveStraightLineSet();
 
   for(Int_t i = 0; i<nlines; i++)
   {
     ls->AddLine( r.Uniform(-s,s), r.Uniform(-s,s), r.Uniform(-s,s),
                  r.Uniform(-s,s), r.Uniform(-s,s), r.Uniform(-s,s));
     // add random number of markers
-    Int_t nm = Int_t(nmarkers* r.Rndm());
+    auto nm = Int_t(nmarkers* r.Rndm());
     for(Int_t m = 0; m < nm; m++) {
       ls->AddMarker(i, r.Rndm());
     }

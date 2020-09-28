@@ -112,17 +112,17 @@ namespace dd4hep {
       &&   ::strcmp(solid->GetTitle(), PSEUDOTRAP_TAG) == 0;
   }
   template <> bool isInstance<SubtractionSolid>(const Handle<TGeoShape>& solid)   {
-    TGeoCompositeShape* sh = (TGeoCompositeShape*)solid.ptr();
+    auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoSubtraction;
   }
   template <> bool isInstance<UnionSolid>(const Handle<TGeoShape>& solid)   {
-    TGeoCompositeShape* sh = (TGeoCompositeShape*)solid.ptr();
+    auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoUnion;
   }
   template <> bool isInstance<IntersectionSolid>(const Handle<TGeoShape>& solid)   {
-    TGeoCompositeShape* sh = (TGeoCompositeShape*)solid.ptr();
+    auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoIntersection;
   }
@@ -167,19 +167,19 @@ namespace dd4hep {
       &&   ::strcmp(solid->GetTitle(), PSEUDOTRAP_TAG) == 0;
   }
   template <> bool isA<SubtractionSolid>(const Handle<TGeoShape>& solid)   {
-    TGeoCompositeShape* sh = (TGeoCompositeShape*)solid.ptr();
+    auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoSubtraction
       &&   ::strcmp(sh->GetTitle(), SUBTRACTION_TAG) == 0;
   }
   template <> bool isA<UnionSolid>(const Handle<TGeoShape>& solid)   {
-    TGeoCompositeShape* sh = (TGeoCompositeShape*)solid.ptr();
+    auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoUnion
       &&   ::strcmp(sh->GetTitle(), UNION_TAG) == 0;
   }
   template <> bool isA<IntersectionSolid>(const Handle<TGeoShape>& solid)   {
-    TGeoCompositeShape* sh = (TGeoCompositeShape*)solid.ptr();
+    auto* sh = (TGeoCompositeShape*)solid.ptr();
     return sh && sh->IsA() == TGeoCompositeShape::Class()
       &&   sh->GetBoolNode()->GetBooleanOperator() == TGeoBoolNode::kGeoIntersection
       &&   ::strcmp(sh->GetTitle(), INTERSECTION_TAG) == 0;
@@ -306,7 +306,7 @@ namespace dd4hep {
     return pars;
   }
   template <> vector<double> dimensions<TGeoArb8>(const TGeoShape* shape)    {
-    TGeoArb8* sh = get_ptr<TGeoArb8>(shape);
+    auto* sh = get_ptr<TGeoArb8>(shape);
     struct _V { double xy[8][2]; } *vtx = (_V*)sh->GetVertices();
     vector<double> pars { sh->GetDz() };
     for (auto & i : vtx->xy)   {
@@ -329,7 +329,7 @@ namespace dd4hep {
         sh->GetTwistAngle()*units::deg };
   }
   template <> vector<double> dimensions<TGeoScaledShape>(const TGeoShape* shape)    {
-    TGeoScaledShape* sh = get_ptr<TGeoScaledShape>(shape);
+    auto* sh = get_ptr<TGeoScaledShape>(shape);
     TGeoShape*       s_sh = sh->GetShape();
     const Double_t*  scale = sh->GetScale()->GetScale();
     vector<double>   pars {scale[0],scale[1],scale[2]};
@@ -340,7 +340,7 @@ namespace dd4hep {
   
 #if ROOT_VERSION_CODE > ROOT_VERSION(6,21,0)
   template <> vector<double> dimensions<TGeoTessellated>(const TGeoShape* shape)    {
-    TGeoTessellated* sh = get_ptr<TGeoTessellated>(shape);
+    auto* sh = get_ptr<TGeoTessellated>(shape);
     int num_facet = sh->GetNfacets();
     int num_vtx   = sh->GetNvertices();
     vector<double> pars;
@@ -570,7 +570,7 @@ namespace dd4hep {
     if ( params.size() < 3 )   {
       invalidSetDimensionCall(sh,params);
     }
-    size_t nz = size_t(params[2]);
+    auto nz = size_t(params[2]);
     if ( params.size() != 3 + 3*nz )   {
       invalidSetDimensionCall(sh,params);
     }
@@ -851,13 +851,13 @@ namespace dd4hep {
   {  set_dimensions(shape.ptr(), params);   }
 
   template <> void set_dimensions(TruncatedTube shape, const std::vector<double>& params)  {
-    TGeoCompositeShape* sh = (TGeoCompositeShape*) shape.ptr();
+    auto* sh = (TGeoCompositeShape*) shape.ptr();
     TGeoBoolNode* boolean = sh->GetBoolNode();
     TGeoMatrix* right_matrix  = boolean->GetRightMatrix();
     TGeoShape*  left_solid    = boolean->GetLeftShape();
     TGeoShape*  right_solid   = boolean->GetRightShape();
-    TGeoTubeSeg* tubs = (TGeoTubeSeg*)left_solid;
-    TGeoBBox*    box  = (TGeoBBox*)right_solid;
+    auto* tubs = (TGeoTubeSeg*)left_solid;
+    auto*    box  = (TGeoBBox*)right_solid;
     double dz    = params[0];
     double rmin  = params[1];
     double rmax  = params[2];
@@ -907,13 +907,13 @@ namespace dd4hep {
     double tub_dim[] = {rmin, rmax, dz, startPhi, deltaPhi};
     box->SetDimensions(box_dim);
     tubs->SetDimensions(tub_dim);
-    TGeoCombiTrans* combi = (TGeoCombiTrans*)right_matrix;
+    auto* combi = (TGeoCombiTrans*)right_matrix;
     combi->SetRotation(rot);
     combi->SetTranslation(xBox, 0, 0);
     return;
   }
   template <> void set_dimensions(PseudoTrap shape, const std::vector<double>& params)  {
-    TGeoCompositeShape* sh = (TGeoCompositeShape*) shape.ptr();
+    auto* sh = (TGeoCompositeShape*) shape.ptr();
     TGeoBoolNode* boolean = sh->GetBoolNode();
     TGeoMatrix* right_matrix  = boolean->GetRightMatrix();
     TGeoShape*  left_solid    = boolean->GetLeftShape();
@@ -978,7 +978,7 @@ namespace dd4hep {
     }
     else if ( right_solid->IsA() == TGeoCompositeShape::Class() )   {
       double box_dim[] = { 1.1*x, 1.1*h, std::sqrt(r*r-x*x) };
-      TGeoCompositeShape* comp = (TGeoCompositeShape*)right_solid;
+      auto* comp = (TGeoCompositeShape*)right_solid;
       TGeoBoolNode* b_s = comp->GetBoolNode();
       b_s->GetLeftShape()->SetDimensions(tube_dim);
       b_s->GetRightShape()->SetDimensions(box_dim);
@@ -1046,7 +1046,7 @@ namespace dd4hep {
         set_dimensions(TessellatedSolid(shape), params);
 #endif
       else if (cl == TGeoScaledShape::Class())  {
-        TGeoScaledShape* sh = (TGeoScaledShape*) shape.ptr();
+        auto* sh = (TGeoScaledShape*) shape.ptr();
         set_dimensions(sh, params);
       }
       else if ( isA<TruncatedTube>(shape) )
@@ -1093,27 +1093,27 @@ namespace dd4hep {
     log << setprecision(precision);
     log << cl->GetName();
     if ( cl == TGeoBBox::Class() )   {
-      TGeoBBox* sh = (TGeoBBox*) shape;
+      auto* sh = (TGeoBBox*) shape;
       log << " x:" << sh->GetDX()
           << " y:" << sh->GetDY()
           << " z:" << sh->GetDZ();
     }
     else if (cl == TGeoHalfSpace::Class()) {
-      TGeoHalfSpace* sh = (TGeoHalfSpace*)(const_cast<TGeoShape*>(shape));
+      auto* sh = (TGeoHalfSpace*)(const_cast<TGeoShape*>(shape));
       log << " Point:  (" << sh->GetPoint()[0] << ", " << sh->GetPoint()[1] << ", " << sh->GetPoint()[2] << ") " 
           << " Normal: (" << sh->GetNorm()[0]  << ", " << sh->GetNorm()[1]  << ", " << sh->GetNorm()[2]  << ") ";
     }
     else if (cl == TGeoTube::Class()) {
-      const TGeoTube* sh = (const TGeoTube*) shape;
+      const auto* sh = (const TGeoTube*) shape;
       log << " rmin:" << sh->GetRmin() << " rmax:" << sh->GetRmax() << " dz:" << sh->GetDz();
     }
     else if (cl == TGeoTubeSeg::Class()) {
-      const TGeoTubeSeg* sh = (const TGeoTubeSeg*) shape;
+      const auto* sh = (const TGeoTubeSeg*) shape;
       log << " rmin:" << sh->GetRmin() << " rmax:" << sh->GetRmax() << " dz:" << sh->GetDz()
           << " Phi1:" << sh->GetPhi1() << " Phi2:" << sh->GetPhi2();
     }
     else if (cl == TGeoCtub::Class()) {
-      const TGeoCtub* sh = (const TGeoCtub*) shape;
+      const auto* sh = (const TGeoCtub*) shape;
       const Double_t*	hi = sh->GetNhigh();
       const Double_t*	lo = sh->GetNlow();
       log << " rmin:" << sh->GetRmin() << " rmax:" << sh->GetRmax() << " dz:" << sh->GetDz()
@@ -1122,31 +1122,31 @@ namespace dd4hep {
           << " hx:" << hi[0] << " hy:" << hi[1] << " hz:" << hi[2];
     }
     else if (cl == TGeoEltu::Class()) {
-      const TGeoEltu* sh = (const TGeoEltu*) shape;
+      const auto* sh = (const TGeoEltu*) shape;
       log << " A:" << sh->GetA() << " B:" << sh->GetB() << " dz:" << sh->GetDz();
     }
     else if (cl == TGeoTrd1::Class()) {
-      const TGeoTrd1* sh = (const TGeoTrd1*) shape;
+      const auto* sh = (const TGeoTrd1*) shape;
       log << " x1:" << sh->GetDx1() << " x2:" << sh->GetDx2() << " y:" << sh->GetDy() << " z:" << sh->GetDz();
     }
     else if (cl == TGeoTrd2::Class()) {
-      const TGeoTrd2* sh = (const TGeoTrd2*) shape;
+      const auto* sh = (const TGeoTrd2*) shape;
       log << " x1:" << sh->GetDx1() << " x2:" << sh->GetDx2()
           << " y1:" << sh->GetDy1() << " y2:" << sh->GetDy2() << " z:" << sh->GetDz();
     }
     else if (cl == TGeoTrap::Class()) {
-      const TGeoTrap* sh = (const TGeoTrap*) shape;
+      const auto* sh = (const TGeoTrap*) shape;
       log << " dz:" << sh->GetDz() << " Theta:" << sh->GetTheta() << " Phi:" << sh->GetPhi()
           << " H1:" << sh->GetH1() << " Bl1:"   << sh->GetBl1()   << " Tl1:" << sh->GetTl1() << " Alpha1:" << sh->GetAlpha1()
           << " H2:" << sh->GetH2() << " Bl2:"   << sh->GetBl2()   << " Tl2:" << sh->GetTl2() << " Alpha2:" << sh->GetAlpha2();
     }
     else if (cl == TGeoHype::Class()) {
-      const TGeoHype* sh = (const TGeoHype*) shape;
+      const auto* sh = (const TGeoHype*) shape;
       log << " rmin:" << sh->GetRmin() << " rmax:"  << sh->GetRmax() << " dz:" << sh->GetDz()
           << " StIn:" << sh->GetStIn() << " StOut:" << sh->GetStOut();
     }
     else if (cl == TGeoPgon::Class()) {
-      const TGeoPgon* sh = (const TGeoPgon*) shape;
+      const auto* sh = (const TGeoPgon*) shape;
       log << " Phi1:"   << sh->GetPhi1()   << " dPhi:" << sh->GetDphi()
           << " NEdges:" << sh->GetNedges() << " Nz:" << sh->GetNz();
       for(int i=0, n=sh->GetNz(); i<n; ++i)  {
@@ -1155,7 +1155,7 @@ namespace dd4hep {
       }
     }
     else if (cl == TGeoPcon::Class()) {
-      const TGeoPcon* sh = (const TGeoPcon*) shape;
+      const auto* sh = (const TGeoPcon*) shape;
       log << " Phi1:" << sh->GetPhi1() << " dPhi:" << sh->GetDphi() << " Nz:" << sh->GetNz();
       for(int i=0, n=sh->GetNz(); i<n; ++i)  {
         log << " i=" << i << " z:" << sh->GetZ(i)
@@ -1163,35 +1163,35 @@ namespace dd4hep {
       }
     }
     else if (cl == TGeoCone::Class()) {
-      const TGeoCone* sh = (const TGeoCone*) shape;
+      const auto* sh = (const TGeoCone*) shape;
       log << " rmin1:" << sh->GetRmin1() << " rmax1:" << sh->GetRmax1()
           << " rmin2:" << sh->GetRmin2() << " rmax2:" << sh->GetRmax2()
           << " dz:"    << sh->GetDz();
     }
     else if (cl == TGeoConeSeg::Class()) {
-      const TGeoConeSeg* sh = (const TGeoConeSeg*) shape;
+      const auto* sh = (const TGeoConeSeg*) shape;
       log << " rmin1:" << sh->GetRmin1() << " rmax1:" << sh->GetRmax1()
           << " rmin2:" << sh->GetRmin2() << " rmax2:" << sh->GetRmax2()
           << " dz:"    << sh->GetDz()
           << " Phi1:"  << sh->GetPhi1() << " Phi2:" << sh->GetPhi2();
     }
     else if (cl == TGeoParaboloid::Class()) {
-      const TGeoParaboloid* sh = (const TGeoParaboloid*) shape;
+      const auto* sh = (const TGeoParaboloid*) shape;
       log << " dz:" << sh->GetDz() << " RLo:" << sh->GetRlo() << " Rhi:" << sh->GetRhi();
     }
     else if (cl == TGeoSphere::Class()) {
-      const TGeoSphere* sh = (const TGeoSphere*) shape;
+      const auto* sh = (const TGeoSphere*) shape;
       log << " rmin:" << sh->GetRmin() << " rmax:" << sh->GetRmax()
           << " Phi1:" << sh->GetPhi1() << " Phi2:" << sh->GetPhi2()
           << " Theta1:" << sh->GetTheta1() << " Theta2:" << sh->GetTheta2();
     }
     else if (cl == TGeoTorus::Class()) {
-      const TGeoTorus* sh = (const TGeoTorus*) shape;
+      const auto* sh = (const TGeoTorus*) shape;
       log << " rmin:" << sh->GetRmin() << " rmax:" << sh->GetRmax() << " r:" << sh->GetR()
           << " Phi1:" << sh->GetPhi1() << " dPhi:" << sh->GetDphi();
     }
     else if (cl == TGeoArb8::Class()) {
-      TGeoArb8* sh = (TGeoArb8*) shape;
+      auto* sh = (TGeoArb8*) shape;
       const Double_t* v = sh->GetVertices();
       log << " dz:" << sh->GetDz();
       for(int i=0; i<8; ++i) {
@@ -1200,7 +1200,7 @@ namespace dd4hep {
       }
     }
     else if (cl == TGeoXtru::Class()) {
-      const TGeoXtru* sh = (const TGeoXtru*) shape;
+      const auto* sh = (const TGeoXtru*) shape;
       log << " X:   " << sh->GetX(0)
           << " Y:   " << sh->GetY(0)
           << " Z:   " << sh->GetZ(0)
@@ -1210,7 +1210,7 @@ namespace dd4hep {
           << " Nz:  " << sh->GetNz();
     }
     else if (shape->IsA() == TGeoCompositeShape::Class()) {
-      const TGeoCompositeShape* sh = (const TGeoCompositeShape*) shape;
+      const auto* sh = (const TGeoCompositeShape*) shape;
       const TGeoBoolNode* boolean = sh->GetBoolNode();
       const TGeoShape* left  = boolean->GetLeftShape();
       const TGeoShape* right = boolean->GetRightShape();
@@ -1236,7 +1236,7 @@ namespace dd4hep {
     Int_t nvert = 0, nsegs = 0, npols = 0;
 
     sol->GetMeshNumbers(nvert, nsegs, npols);
-    Double_t* points = new Double_t[3*nvert];
+    auto* points = new Double_t[3*nvert];
     sol->SetPoints(points);
 
     os << setw(16) << left << sol->IsA()->GetName()

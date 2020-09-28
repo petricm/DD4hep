@@ -49,7 +49,7 @@ int main() {
 
 Segmentation* createPolarGridRPhi(double rSize, double phiSize) {
 
-  dd4hep::DDSegmentation::PolarGridRPhi* seg = new dd4hep::DDSegmentation::PolarGridRPhi("system:8,barrel:3,layer:8,slice:13,r:16,phi:16");
+  auto* seg = new dd4hep::DDSegmentation::PolarGridRPhi("system:8,barrel:3,layer:8,slice:13,r:16,phi:16");
 
   seg->setGridSizeR(rSize);
   seg->setGridSizePhi(phiSize);
@@ -59,7 +59,7 @@ Segmentation* createPolarGridRPhi(double rSize, double phiSize) {
 
 Segmentation* createPolarGridRPhi2() {
 
-  dd4hep::DDSegmentation::PolarGridRPhi2* seg = new dd4hep::DDSegmentation::PolarGridRPhi2("system:8,barrel:3,layer:8,slice:13,r:16,phi:16");
+  auto* seg = new dd4hep::DDSegmentation::PolarGridRPhi2("system:8,barrel:3,layer:8,slice:13,r:16,phi:16");
 
   std::vector<double> rValues, phiValues;
 

@@ -126,8 +126,8 @@ Path Path::normalize()  const {
   Path temp;
   vector<string>::const_iterator start(pathes.begin());
   vector<string>::const_iterator last(pathes.end());
-  vector<string>::const_iterator stop(last--);
-  for (vector<string>::const_iterator itr(start); itr != stop; ++itr)  {
+  auto stop(last--);
+  for (auto itr(start); itr != stop; ++itr)  {
     // ignore "." except at start and last
     Path itr_path(*itr);
     if (itr_path.native().size() == 1
@@ -165,7 +165,7 @@ Path Path::normalize()  const {
         //  }
         //}
 
-        vector<string>::const_iterator next(itr);
+        auto next(itr);
         if (temp.empty() && ++next != stop && next == last && *last == detail::dot_path())  {
           temp /= detail::dot_path();
         }

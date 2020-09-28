@@ -134,7 +134,7 @@ static int variable(const string & name, double & result,
     result = item.variable;
     return EVAL::OK;
   case Item::EXPRESSION: {
-    pchar exp_begin = (char *)(item.expression.c_str());
+    auto exp_begin = (char *)(item.expression.c_str());
     pchar exp_end   = exp_begin + strlen(exp_begin) - 1;
     if (engine(exp_begin, exp_end, result, exp_end, dictionary) == EVAL::OK)
       return EVAL::OK;
@@ -611,7 +611,7 @@ using namespace dd4hep::tools;
 
 //---------------------------------------------------------------------------
 Evaluator::Evaluator() {
-  Struct * s = new Struct();
+  auto * s = new Struct();
   p = (void *) s;
   s->theExpression = 0;
   s->thePosition   = 0;
@@ -621,7 +621,7 @@ Evaluator::Evaluator() {
 
 //---------------------------------------------------------------------------
 Evaluator::~Evaluator() {
-  Struct * s = reinterpret_cast<Struct*>(p);
+  auto * s = reinterpret_cast<Struct*>(p);
   if (s->theExpression != 0) {
     delete[] s->theExpression;
     s->theExpression = 0;
@@ -631,7 +631,7 @@ Evaluator::~Evaluator() {
 
 //---------------------------------------------------------------------------
 double Evaluator::evaluate(const char * expression) {
-  Struct * s = reinterpret_cast<Struct*>(p);
+  auto * s = reinterpret_cast<Struct*>(p);
   if (s->theExpression != 0) { delete[] s->theExpression; }
   s->theExpression = 0;
   s->thePosition   = 0;
@@ -670,7 +670,7 @@ void Evaluator::print_error() const {
 //---------------------------------------------------------------------------
 void Evaluator::print_error(std::ostream& os) const {
   static char prefix[] = "Evaluator : ";
-  Struct * s = reinterpret_cast<Struct*>(p);
+  auto * s = reinterpret_cast<Struct*>(p);
   const char* opt = (s->thePosition ? s->thePosition : "");
   switch (s->theStatus) {
   case ERROR_NOT_A_NAME:
@@ -704,7 +704,7 @@ void Evaluator::print_error(std::ostream& os) const {
 
 //---------------------------------------------------------------------------
 void Evaluator::setEnviron(const char* name, const char* value)  {
-  Struct* s = reinterpret_cast<Struct*>(p);
+  auto* s = reinterpret_cast<Struct*>(p);
   string prefix = "${";
   string item_name = prefix + string(name) + string("}");
   dic_type::iterator iter = (s->theDictionary).find(item_name);
@@ -728,7 +728,7 @@ void Evaluator::setEnviron(const char* name, const char* value)  {
 }
 //---------------------------------------------------------------------------
 const char* Evaluator::getEnviron(const char* name)  {
-  Struct* s = reinterpret_cast<Struct*>(p);
+  auto* s = reinterpret_cast<Struct*>(p);
   string item_name = name;
   //std::cout << " ++++++++++++++++++++++++++++ Try to resolve env:" << name << std::endl;
   dic_type::iterator iter = (s->theDictionary).find(item_name);
@@ -792,7 +792,7 @@ bool Evaluator::findVariable(const char * name) const {
   if (name == 0 || *name == '\0') return false;
   const char * pointer; int n; REMOVE_BLANKS;
   if (n == 0) return false;
-  Struct * s = reinterpret_cast<Struct*>(p);
+  auto * s = reinterpret_cast<Struct*>(p);
   return
     ((s->theDictionary).find(string(pointer,n)) == (s->theDictionary).end()) ?
     false : true;
@@ -804,7 +804,7 @@ bool Evaluator::findFunction(const char * name, int npar) const {
   if (npar < 0  || npar > MAX_N_PAR) return false;
   const char * pointer; int n; REMOVE_BLANKS;
   if (n == 0) return false;
-  Struct * s = reinterpret_cast<Struct*>(p);
+  auto * s = reinterpret_cast<Struct*>(p);
   return ((s->theDictionary).find(sss[npar]+string(pointer,n)) ==
 	  (s->theDictionary).end()) ? false : true;
 }
@@ -814,7 +814,7 @@ void Evaluator::removeVariable(const char * name) {
   if (name == 0 || *name == '\0') return;
   const char * pointer; int n; REMOVE_BLANKS;
   if (n == 0) return;
-  Struct * s = reinterpret_cast<Struct*>(p);
+  auto * s = reinterpret_cast<Struct*>(p);
   (s->theDictionary).erase(string(pointer,n));
 }
 
@@ -824,13 +824,13 @@ void Evaluator::removeFunction(const char * name, int npar) {
   if (npar < 0  || npar > MAX_N_PAR) return;
   const char * pointer; int n; REMOVE_BLANKS;
   if (n == 0) return;
-  Struct * s = reinterpret_cast<Struct*>(p);
+  auto * s = reinterpret_cast<Struct*>(p);
   (s->theDictionary).erase(sss[npar]+string(pointer,n));
 }
 
 //---------------------------------------------------------------------------
 void Evaluator::clear() {
-  Struct * s = reinterpret_cast<Struct*>(p);
+  auto * s = reinterpret_cast<Struct*>(p);
   s->theDictionary.clear();
   s->theExpression = 0;
   s->thePosition   = 0;

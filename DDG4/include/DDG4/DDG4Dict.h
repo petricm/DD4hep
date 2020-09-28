@@ -154,7 +154,7 @@ namespace dd4hep {
     /// Default constructor
     inline Geant4Calorimeter::Hit::Hit() : energyDeposit(0e0)  {    }
     /// Initializing constructor
-    inline Geant4Calorimeter::Hit::Hit(const Position&) : energyDeposit(0e0) {}
+    inline Geant4Calorimeter::Hit::Hit(Position) : energyDeposit(0e0) {}
     /// Default destructor
     inline Geant4Calorimeter::Hit::~Hit()   {    }
   }

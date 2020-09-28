@@ -33,7 +33,7 @@ DD4HEP_INSTANTIATE_HANDLE_UNNAMED(SegmentationObject);
 Segmentation::Segmentation(const string& typ, const string& nam, const BitFieldCoder* dec) : Handle<Object>()
 {
   string seg_type = "segmentation_constructor__"+typ;
-  SegmentationObject* obj = PluginService::Create<SegmentationObject*>(seg_type, dec);
+  auto* obj = PluginService::Create<SegmentationObject*>(seg_type, dec);
   if ( obj != 0 )  {
     assign(obj, nam, typ);
     if ( !nam.empty() ) obj->setName(nam);

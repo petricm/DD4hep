@@ -56,7 +56,7 @@ using namespace dd4hep;
 static void* create_object(Detector& description, int argc, char** argv)   {
   for(int i = 0; i < argc && argv[i]; ++i)  {  }
   shared_ptr<DetNominalCreator> obj(new DetNominalCreator(description));
-  DetectorProcessorShared<DetNominalCreator>* proc =
+  auto* proc =
     new DetectorProcessorShared<DetNominalCreator>(obj);
   return (void*)proc;
 }

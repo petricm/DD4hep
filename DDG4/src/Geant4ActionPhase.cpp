@@ -64,7 +64,7 @@ bool Geant4ActionPhase::add(Geant4Action* action, Callback callback) {
 /// Remove an existing member from the phase. If not existing returns false
 bool Geant4ActionPhase::remove(Geant4Action* action, Callback callback) {
   if (action && callback.func.first) {
-    Members::iterator i = find(m_members.begin(), m_members.end(), make_pair(action,callback));
+    auto i = find(m_members.begin(), m_members.end(), make_pair(action,callback));
     if (i != m_members.end()) {
       (*i).first->release();
       m_members.erase(i);
@@ -73,7 +73,7 @@ bool Geant4ActionPhase::remove(Geant4Action* action, Callback callback) {
     return false;
   }
   size_t len = m_members.size();
-  for (Members::iterator i = m_members.begin(); i != m_members.end(); ++i) {
+  for (auto i = m_members.begin(); i != m_members.end(); ++i) {
     if ( (*i).first == action && (*i).second.par == callback.par) {
       (*i).first->release();
       m_members.erase(i);

@@ -59,7 +59,7 @@ Readout::Readout(const string& nam) {
 /// Access number of hit collections
 size_t Readout::numCollections() const   {
   if ( isValid() ) {
-    Object& ro = object<Object>();
+    auto& ro = object<Object>();
     return ro.hits.size();
   }
   throw runtime_error("dd4hep: Readout::numCollections: Cannot access object data [Invalid Handle]");
@@ -69,7 +69,7 @@ size_t Readout::numCollections() const   {
 vector<string> Readout::collectionNames()  const   {
   vector<string> colls;
   if ( isValid() ) {
-    Object& ro = object<Object>();
+    auto& ro = object<Object>();
     if ( !ro.hits.empty() )  {
       for(const auto& hit : ro.hits )
         colls.emplace_back(hit.name);
@@ -83,7 +83,7 @@ vector<string> Readout::collectionNames()  const   {
 vector<const HitCollection*> Readout::collections()  const   {
   vector<const HitCollection*> colls;
   if ( isValid() ) {
-    Object& ro = object<Object>();
+    auto& ro = object<Object>();
     if ( !ro.hits.empty() )  {
       for(const auto& hit : ro.hits )
         colls.emplace_back(&hit);
@@ -117,7 +117,7 @@ IDDescriptor Readout::idSpec() const {
 /// Assign segmentation structure to readout
 void Readout::setSegmentation(const Segmentation& seg) const {
   if ( isValid() ) {
-    Object& ro = object<Object>();
+    auto& ro = object<Object>();
     Segmentation::Object* e = ro.segmentation.ptr();
     if ( e && e != seg.ptr() ) {      // Remember:
       delete e;                       // The segmentation is owned by the readout!

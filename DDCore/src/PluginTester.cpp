@@ -46,7 +46,7 @@ void PluginTester::clear(bool destroy)    {
   for (auto & extension : extensions) {
     void* ptr = extension.second;
     if (ptr) {
-      ExtensionMap::iterator j = extensionMap->find(extension.first.first);
+      auto j = extensionMap->find(extension.first.first);
       if (j != extensionMap->end()) {
         Entry& e = (*j).second;
         if (destroy && e.destruct)
@@ -60,9 +60,9 @@ void PluginTester::clear(bool destroy)    {
 /// Add an extension object to the detector element
 void* PluginTester::addExtension(void* ptr, const std::string& name, const std::type_info& info, destruct_t dtor)  {
   key_type key(&info,name);
-  Extensions::iterator j = extensions.find(key);
+  auto j = extensions.find(key);
   if (j == extensions.end()) {
-    ExtensionMap::iterator i = extensionMap->find(&info);
+    auto i = extensionMap->find(&info);
     if (i == extensionMap->end()) {
       Entry entry;
       entry.destruct = dtor;
@@ -78,11 +78,11 @@ void* PluginTester::addExtension(void* ptr, const std::string& name, const std::
 /// Remove an existing extension object from the instance
 void* PluginTester::removeExtension(const std::string& name, const std::type_info& info, bool destroy)  {
   key_type key(&info,name);
-  Extensions::iterator j = extensions.find(key);
+  auto j = extensions.find(key);
   if (j != extensions.end()) {
     void *ptr = (*j).second;
     if ( destroy )  {
-      ExtensionMap::iterator i = extensionMap->find(&info);
+      auto i = extensionMap->find(&info);
       if (i != extensionMap->end()) {
         Entry& e = (*i).second;
         (*e.destruct)((*j).second);
@@ -99,7 +99,7 @@ void* PluginTester::removeExtension(const std::string& name, const std::type_inf
 /// Access an existing extension object from the detector element
 void* PluginTester::extension(const std::string& name, const std::type_info& info, bool alert) const {
   key_type key(&info,name);
-  Extensions::const_iterator j = extensions.find(key);
+  auto j = extensions.find(key);
   if (j != extensions.end()) {
     return (*j).second;
   }

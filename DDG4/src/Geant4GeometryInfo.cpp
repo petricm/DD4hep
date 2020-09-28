@@ -27,7 +27,7 @@ using namespace dd4hep::sim;
 string Geant4GeometryInfo::placementPath(const Geant4PlacementPath& path, bool reverse)   {
   string path_name;
   if ( reverse )  {
-    for (Geant4PlacementPath::const_reverse_iterator pIt = path.rbegin(); pIt != path.rend(); ++pIt) {
+    for (auto pIt = path.rbegin(); pIt != path.rend(); ++pIt) {
       path_name += "/"; path_name += (*pIt)->GetName();
     }
   }
@@ -56,7 +56,7 @@ G4VPhysicalVolume* Geant4GeometryInfo::world() const   {
 
 /// Set the world placement
 void Geant4GeometryInfo::setWorld(const TGeoNode* node)    {
-  Geant4GeometryMaps::PlacementMap::const_iterator g4it = g4Placements.find(node);
+  auto g4it = g4Placements.find(node);
   G4VPhysicalVolume* g4 = (g4it == g4Placements.end()) ? 0 : (*g4it).second;
   if (!g4) {
     throw runtime_error("Geant4GeometryInfo: Attempt to SET invalid world placement");

@@ -75,7 +75,7 @@ namespace dd4hep::sim {
              m_scintillationYieldFactor, m_scintillationExcitationRatio,
              yes_no(m_finiteRiseTime), yes_no(m_stackPhotons),
              yes_no(m_trackSecondariesFirst));
-        G4Scintillation* process = new G4Scintillation(name());
+        auto* process = new G4Scintillation(name());
         process->SetVerboseLevel(m_verbosity);
         process->SetFiniteRiseTime(m_finiteRiseTime);
 #if G4VERSION_NUMBER>1030

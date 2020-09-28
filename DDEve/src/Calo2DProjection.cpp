@@ -60,15 +60,15 @@ void Calo2DProjection::ConfigureGeometry(const DisplayConfiguration::ViewConfig&
     if ( cfg.type == DisplayConfiguration::DETELEMENT )  {
       TEveElementList& sens = m_eve->GetGeoTopic("Sensitive");
       TEveElementList& struc = m_eve->GetGeoTopic("Structure");
-      for(TEveElementList::List_i i=sens.BeginChildren(); i!=sens.EndChildren(); ++i)  {
-	TEveElementList* ll = dynamic_cast<TEveElementList*>(*i);
+      for(auto i=sens.BeginChildren(); i!=sens.EndChildren(); ++i)  {
+	auto* ll = dynamic_cast<TEveElementList*>(*i);
 	if ( ll && cfg.name == ll->GetName() )  {
 	  m_projMgr->ImportElements(*i,m_geoScene);
 	  goto Done;
 	}
       }
-      for(TEveElementList::List_i i=struc.BeginChildren(); i!=struc.EndChildren(); ++i)  {
-	TEveElementList* ll = dynamic_cast<TEveElementList*>(*i);
+      for(auto i=struc.BeginChildren(); i!=struc.EndChildren(); ++i)  {
+	auto* ll = dynamic_cast<TEveElementList*>(*i);
 	if ( ll && cfg.name == ll->GetName() )  {
 	  m_projMgr->ImportElements(*i,m_geoScene);
 	  goto Done;
@@ -85,7 +85,7 @@ void Calo2DProjection::ConfigureGeometry(const DisplayConfiguration::ViewConfig&
       const char* n = cfg.name.c_str();
       const Display::CalodataContext& ctx = m_eve->GetCaloHistogram(cfg.name);
       const DisplayConfiguration::Calo3D& calo3d = ctx.config.data.calo3d;
-      TEveCalo2D* calo2d = (TEveCalo2D*)m_projMgr->ImportElements(ctx.calo3D,m_geoScene);
+      auto* calo2d = (TEveCalo2D*)m_projMgr->ImportElements(ctx.calo3D,m_geoScene);
       calo2d->SetPlotEt(kFALSE);
       calo2d->SetDepth(depth += 1.0);
       calo2d->SetAutoRange(kTRUE);
@@ -99,7 +99,7 @@ void Calo2DProjection::ConfigureGeometry(const DisplayConfiguration::ViewConfig&
       calo2d->AssertCellIdCache();
       calo2d->ComputeBBox();
       Color_t col = ctx.calo3D->GetDataSliceColor(ctx.slice);
-      Annotation* a = new Annotation(viewer(),n,Annotation::DefaultMargin(),legend_y,col);
+      auto* a = new Annotation(viewer(),n,Annotation::DefaultMargin(),legend_y,col);
 #if 0
       // Tries to add a line indicating the echelle of the energy deposit
       TEveArrow* a1 = new TEveArrow(100,100, 100,0., 0., 0.);

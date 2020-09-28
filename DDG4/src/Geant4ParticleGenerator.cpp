@@ -65,7 +65,7 @@ void Geant4ParticleGenerator::getVertexPosition(ROOT::Math::XYZVector& ) const  
 
 /// Print single particle interaction identified by it's mask
 void Geant4ParticleGenerator::printInteraction(int mask)  const  {
-  Geant4PrimaryEvent* prim = context()->event().extension<Geant4PrimaryEvent>();
+  auto* prim = context()->event().extension<Geant4PrimaryEvent>();
   if ( !prim )   {
     warning("printInteraction: Bad primary event [NULL-Pointer].");
     return;
@@ -111,11 +111,11 @@ void Geant4ParticleGenerator::operator()(G4Event*) {
     }
   }
   Geant4Event& evt = context()->event();
-  Geant4PrimaryEvent* prim = evt.extension<Geant4PrimaryEvent>();
-  Geant4PrimaryInteraction* inter = new Geant4PrimaryInteraction();
+  auto* prim = evt.extension<Geant4PrimaryEvent>();
+  auto* inter = new Geant4PrimaryInteraction();
   prim->add(m_mask, inter);
 
-  Geant4Vertex* vtx = new Geant4Vertex();
+  auto* vtx = new Geant4Vertex();
   int multiplicity = m_multiplicity;
   ROOT::Math::XYZVector unit_direction, direction, position = m_position;
   getVertexPosition(position);
@@ -127,7 +127,7 @@ void Geant4ParticleGenerator::operator()(G4Event*) {
   inter->vertices[m_mask].emplace_back( vtx );
   for(int i=0; i<m_multiplicity; ++i)   {
     double momentum = m_energy;
-    Particle* p = new Particle();
+    auto* p = new Particle();
     direction = m_direction;
     getParticleDirection(i, direction, momentum);
     unit_direction = direction.unit();

@@ -105,7 +105,7 @@ int VisDensityProcessor::operator()(PlacedVolume pv, int /* level */)   {
 
 static void* create_object(Detector& description, int argc, char** argv)   {
   DetectorHelper helper(description);
-  VisDensityProcessor*  proc = new VisDensityProcessor(description);
+  auto*  proc = new VisDensityProcessor(description);
   for ( int i=0; i<argc; ++i )   {
     if ( argv[i] )    {
       if ( ::strncmp(argv[i],"-vis",6) == 0 )   {

@@ -116,7 +116,7 @@ void Geant4TrackingAction::end(const G4Track*) {
 
 /// Mark the track to be kept for MC truth propagation
 void Geant4TrackingAction::mark(const G4Track* track) const    {
-  Geant4MonteCarloTruth* truth = context()->event().extension<Geant4MonteCarloTruth>(false);
+  auto* truth = context()->event().extension<Geant4MonteCarloTruth>(false);
   if ( truth ) truth->mark(track,true);
 }
 

@@ -25,7 +25,7 @@ using namespace dd4hep::detail;
 
 static Handle<TObject> create_CAD_Shape(Detector&, xml_h e)   {
   xml_elt_t elt(e);
-  string fname = elt.attr<string>(_U(ref));
+  auto fname = elt.attr<string>(_U(ref));
   double unit  = elt.hasAttr(_U(unit)) ? elt.attr<double>(_U(unit)) : dd4hep::cm;
   auto shapes = cad::ASSIMPReader().read(fname, unit);
   if ( shapes.empty() )   {
@@ -59,7 +59,7 @@ DECLARE_XML_SHAPE(CAD_Shape__shape_constructor,create_CAD_Shape)
 
 static Handle<TObject> create_CAD_MultiShape_Assembly(Detector&, xml_h e)   {
   xml_elt_t elt(e);
-  string fname = elt.attr<string>(_U(ref));
+  auto fname = elt.attr<string>(_U(ref));
   double unit  = elt.hasAttr(_U(unit)) ? elt.attr<double>(_U(unit)) : dd4hep::cm;
   auto shapes = cad::ASSIMPReader().read(fname, unit);
   if ( shapes.empty() )   {
@@ -124,8 +124,8 @@ DECLARE_XML_VOLUME(CAD_Assembly__volume_constructor,create_CAD_MultiShape_Assemb
  */
 static Handle<TObject> create_CAD_Volume(Detector& dsc, xml_h e)   {
   xml_elt_t elt(e);
-  string fname = elt.attr<string>(_U(ref));
-  double unit  = elt.attr<double>(_U(unit));
+  auto fname = elt.attr<string>(_U(ref));
+  auto unit  = elt.attr<double>(_U(unit));
   auto shapes = cad::ASSIMPReader().read(fname, unit);
   if ( shapes.empty() )   {
     except("CAD_Volume","+++ CAD file: %s does not contain any "
@@ -135,7 +135,7 @@ static Handle<TObject> create_CAD_Volume(Detector& dsc, xml_h e)   {
   if ( elt.hasChild(_U(envelope)) )   {
     string   typ   = "DD4hep_StdVolume";
     xml_h    x_env = elt.child(_U(envelope));
-    TObject* pvol  = PluginService::Create<TObject*>(typ, &dsc, &x_env);
+    auto* pvol  = PluginService::Create<TObject*>(typ, &dsc, &x_env);
     envelope = dynamic_cast<TGeoVolume*>(pvol);
     if ( !envelope.isValid() )   {
       except("CAD_Volume",

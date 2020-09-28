@@ -90,8 +90,8 @@ typedef GlobalAlignmentStack::StackEntry StackEntry;
  */
 template <> void Converter<volume>::operator()(xml_h e) const {
   Delta val;
-  GlobalAlignmentStack* stack  = _option<GlobalAlignmentStack>();
-  pair<DetElement,string>* elt = _param<pair<DetElement,string> >();
+  auto* stack  = _option<GlobalAlignmentStack>();
+  auto* elt = _param<pair<DetElement,string> >();
   string subpath    = e.attr<string>(_ALU(path));
   bool   reset      = e.hasAttr(_ALU(reset)) ? e.attr<bool>(_ALU(reset)) : true;
   bool   reset_dau  = e.hasAttr(_ALU(reset_children)) ? e.attr<bool>(_ALU(reset_children)) : true;
@@ -137,7 +137,7 @@ template <> void Converter<volume>::operator()(xml_h e) const {
  */
 template <> void Converter<detelement>::operator()(xml_h e) const {
   DetElement det(_param<DetElement::Object>());
-  GlobalAlignmentStack* stack = _option<GlobalAlignmentStack>();
+  auto* stack = _option<GlobalAlignmentStack>();
   string path      = e.attr<string>(_ALU(path));
   bool   check     = e.hasAttr(_ALU(check_overlaps));
   bool   check_val = check ? e.attr<bool>(_ALU(check_overlaps)) : false;

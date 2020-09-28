@@ -31,7 +31,7 @@ std::shared_ptr<dd4hep::digi::DigiCellScanner>
 dd4hep::digi::create_cell_scanner(const std::string& typ, Segmentation segment)   {
   using namespace dd4hep;
   SegmentationObject* seg = segment.ptr();
-  DigiCellScanner*   scan = PluginService::Create<DigiCellScanner*>(typ, seg);
+  auto*   scan = PluginService::Create<DigiCellScanner*>(typ, seg);
   if ( !scan )   {
     PluginDebug dbg;
     PluginService::Create<DigiCellScanner*>(typ, seg);

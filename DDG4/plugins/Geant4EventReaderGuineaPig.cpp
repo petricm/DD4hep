@@ -217,7 +217,7 @@ Geant4EventReaderGuineaPig::readParticles(int /* event_number */,
 
     //
     //  Create a MCParticle and fill it from stdhep info
-    Particle* p = new Particle(counter);
+    auto* p = new Particle(counter);
     PropertyMask status(p->status);
 
     //  PDGID: If Energy positive (negative) particle is electron (positron)
@@ -249,7 +249,7 @@ Geant4EventReaderGuineaPig::readParticles(int /* event_number */,
     p->vsy = posY*nm;
     p->vsz = posZ*nm;
 
-    Vertex* vtx = new Vertex ;
+    auto* vtx = new Vertex ;
     vtx->x = p->vsx ;
     vtx->y = p->vsy ;
     vtx->z = p->vsz ;

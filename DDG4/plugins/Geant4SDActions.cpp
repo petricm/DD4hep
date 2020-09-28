@@ -400,7 +400,7 @@ namespace dd4hep::sim   {
         Position pos   = deposit != 0 ? mean_pos  / deposit : mean_pos;
         Momentum mom   = 0.5 * (pre.momentum + post.momentum);
         double path_len = (post.position - pre.position).R();
-        Geant4Tracker::Hit* hit = new Geant4Tracker::Hit(pre.truth.trackID,
+        auto* hit = new Geant4Tracker::Hit(pre.truth.trackID,
                                                          pre.truth.pdgID,
                                                          deposit,time);
         hit->position = pos;

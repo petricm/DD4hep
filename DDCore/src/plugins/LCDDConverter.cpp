@@ -112,7 +112,7 @@ namespace {
 }
 
 void LCDDConverter::GeometryInfo::check(const string& name, const TNamed* _n, map<string, const TNamed*>& _m) const {
-  map<string, const TNamed*>::const_iterator i = _m.find(name);
+  auto i = _m.find(name);
   if (i != _m.end()) {
     const char* isa = _n ? _n->IsA()->GetName() : (*i).second ? (*i).second->IsA()->GetName() : "Unknown";
     cout << isa << "(position):  duplicate entry with name:" << name << " " << (void*) _n << " " << (void*) (*i).second << endl;
@@ -173,7 +173,7 @@ xml_h LCDDConverter::handleMaterial(const string& name, Material medium) const {
     geo.checkMaterial(name, medium);
 
     if (geo_mat->IsMixture()) {
-      TGeoMixture   *mix = (TGeoMixture*)geo_mat;
+      auto   *mix = (TGeoMixture*)geo_mat;
       const double *wmix = mix->GetWmixt();
       const int    *nmix = mix->GetNmixt();
       double sum = 0e0;
@@ -218,7 +218,7 @@ xml_h LCDDConverter::handleMaterial(const string& name, Material medium) const {
 /// Dump solid in GDML format to output stream
 xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) const {
   GeometryInfo& geo = data();
-  SolidMap::iterator sit = geo.xmlSolids.find(shape);
+  auto sit = geo.xmlSolids.find(shape);
   if (!shape) {
     // This is an invalid volume. Let's pray returning nothing will work,
     // and the non-existing solid is also nowhere referenced in the GDML.
@@ -239,7 +239,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
     string shape_name = shape->GetName(); //genName(shape->GetName(),shape);
     geo.checkShape(name, shape);
     if (isa == TGeoBBox::Class()) {
-      const TGeoBBox* sh = (const TGeoBBox*) shape;
+      const auto* sh = (const TGeoBBox*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(box)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(x), 2 * sh->GetDX());
@@ -248,7 +248,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoTube::Class()) {
-      const TGeoTube* sh = (const TGeoTube*) shape;
+      const auto* sh = (const TGeoTube*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(tube)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(rmin), sh->GetRmin());
@@ -260,7 +260,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoTubeSeg::Class()) {
-      const TGeoTubeSeg* sh = (const TGeoTubeSeg*) shape;
+      const auto* sh = (const TGeoTubeSeg*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(tube)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(rmin), sh->GetRmin());
@@ -272,7 +272,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoEltu::Class()) {
-      const TGeoEltu* sh = (const TGeoEltu*) shape;
+      const auto* sh = (const TGeoEltu*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(eltube)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(dx), sh->GetA());
@@ -281,7 +281,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoTrd1::Class()) {
-      const TGeoTrd1* sh = (const TGeoTrd1*) shape;
+      const auto* sh = (const TGeoTrd1*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(trd)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(x1), 2 * sh->GetDx1());
@@ -292,7 +292,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoTrd2::Class()) {
-      const TGeoTrd2* sh = (const TGeoTrd2*) shape;
+      const auto* sh = (const TGeoTrd2*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(trd)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(x1), 2 * sh->GetDx1());
@@ -303,7 +303,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoHype::Class()) {
-      const TGeoHype* sh = (const TGeoHype*) shape;
+      const auto* sh = (const TGeoHype*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(hype)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(rmin),  sh->GetRmin());
@@ -315,7 +315,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoPgon::Class()) {
-      const TGeoPgon* sh = (const TGeoPgon*) shape;
+      const auto* sh = (const TGeoPgon*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(polyhedra)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(startphi), sh->GetPhi1());
@@ -332,7 +332,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       }
     }
     else if (isa == TGeoPcon::Class()) {
-      const TGeoPcon* sh = (const TGeoPcon*) shape;
+      const auto* sh = (const TGeoPcon*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(polycone)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(startphi), sh->GetPhi1());
@@ -349,7 +349,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoCone::Class()) {
-      const TGeoCone* sh = (const TGeoCone*) shape;
+      const auto* sh = (const TGeoCone*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(cone)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(z),     2 * sh->GetDz());
@@ -363,7 +363,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoConeSeg::Class()) {
-      const TGeoConeSeg* sh = (const TGeoConeSeg*) shape;
+      const auto* sh = (const TGeoConeSeg*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(cone)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(z), 2*sh->GetDz());
@@ -377,7 +377,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoParaboloid::Class()) {
-      const TGeoParaboloid* sh = (const TGeoParaboloid*) shape;
+      const auto* sh = (const TGeoParaboloid*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(paraboloid)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(rlo), sh->GetRlo());
@@ -393,7 +393,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
     }
 #endif
     else if (isa == TGeoSphere::Class()) {
-      const TGeoSphere* sh = (const TGeoSphere*) shape;
+      const auto* sh = (const TGeoSphere*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(sphere)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(rmin),        sh->GetRmin());
@@ -406,7 +406,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoTorus::Class()) {
-      const TGeoTorus* sh = (const TGeoTorus*) shape;
+      const auto* sh = (const TGeoTorus*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(torus)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(rtor),     sh->GetR());
@@ -418,7 +418,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoTrap::Class()) {
-      const TGeoTrap* sh = (const TGeoTrap*) shape;
+      const auto* sh = (const TGeoTrap*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(trap)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(z),  2 * sh->GetDz());   // Full zlen in GDML, half zlen in TGeo
@@ -436,7 +436,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoPara::Class()) {
-      const TGeoPara* sh = (const TGeoPara*) shape;
+      const auto* sh = (const TGeoPara*) shape;
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(para)));
       solid.setAttr(_U(name), Unicode(shape_name));
       solid.setAttr(_U(x), sh->GetX());
@@ -449,7 +449,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoArb8::Class()) {
-      TGeoArb8* sh = (TGeoArb8*) shape;
+      auto* sh = (TGeoArb8*) shape;
       const double* vtx = sh->GetVertices();
       geo.doc_solids.append(solid = xml_elt_t(geo.doc, _U(arb8)));
       solid.setAttr(_U(name), Unicode(shape_name));
@@ -473,7 +473,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
       solid.setAttr(_U(lunit), "cm");
     }
     else if (isa == TGeoScaledShape::Class())  {
-      TGeoScaledShape* sh = (TGeoScaledShape*) shape;
+      auto* sh = (TGeoScaledShape*) shape;
       const double*    vals = sh->GetScale()->GetScale();
       Solid            s_sh(sh->GetShape());
       handleSolid(s_sh.name(), s_sh.ptr());
@@ -490,7 +490,7 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
              isa == TGeoUnion::Class() ||
              isa == TGeoIntersection::Class() ||
              isa == TGeoSubtraction::Class() )  {
-      const TGeoCompositeShape* sh = (const TGeoCompositeShape*) shape;
+      const auto* sh = (const TGeoCompositeShape*) shape;
       const TGeoBoolNode* boolean = sh->GetBoolNode();
       TGeoBoolNode::EGeoBoolType oper = boolean->GetBooleanOperator();
       TGeoMatrix* rm = boolean->GetRightMatrix();
@@ -515,8 +515,8 @@ xml_h LCDDConverter::handleSolid(const string& name, const TGeoShape* shape) con
           strcmp(rs->ClassName(), "TGeoBBox") == 0) {
         if (strcmp(((TGeoScaledShape *)ls)->GetShape()->ClassName(), "TGeoSphere") == 0) {
           if (oper == TGeoBoolNode::kGeoIntersection) {
-            TGeoScaledShape* lls = (TGeoScaledShape *)ls;
-            TGeoBBox* rrs = (TGeoBBox*)rs;
+            auto* lls = (TGeoScaledShape *)ls;
+            auto* rrs = (TGeoBBox*)rs;
             solid = xml_elt_t(geo.doc,Unicode("ellipsoid"));
             solid.setAttr(_U(name), Unicode(shape_name));
             double sx = lls->GetScale()->GetScale()[0];
@@ -703,7 +703,7 @@ xml_h LCDDConverter::handleVolume(const string& /* name */, Volume volume) const
     const TObjArray* dau = const_cast<TGeoVolume*>(v)->GetNodes();
     if (dau && dau->GetEntries() > 0) {
       for (Int_t i = 0, n_dau = dau->GetEntries(); i < n_dau; ++i) {
-        TGeoNode* node = reinterpret_cast<TGeoNode*>(dau->At(i));
+        auto* node = reinterpret_cast<TGeoNode*>(dau->At(i));
         handlePlacement(node->GetName(), node);
       }
     }
@@ -776,7 +776,7 @@ void LCDDConverter::collectVolume(const string& /* name */, const TGeoVolume* vo
 
 void LCDDConverter::checkVolumes(const string& /* name */, Volume v) const {
   string n = v.name()+_toString(v.ptr(),"_%p");
-  NameSet::const_iterator i = m_checkNames.find(n);
+  auto i = m_checkNames.find(n);
   if (i != m_checkNames.end()) {
     stringstream str;
     str << "++ CheckVolumes: Volume " << n << " ";
@@ -1031,11 +1031,11 @@ void LCDDConverter::handleProperties(Detector::Properties& prp) const {
   map<string, string> processors;
   static int s_idd = 9999999;
   string id;
-  for (Detector::Properties::const_iterator i = prp.begin(); i != prp.end(); ++i) {
+  for (auto i = prp.begin(); i != prp.end(); ++i) {
     const string& nam = (*i).first;
     const Detector::PropertyValues& vals = (*i).second;
     if (nam.substr(0, 6) == "geant4") {
-      Detector::PropertyValues::const_iterator id_it = vals.find("id");
+      auto id_it = vals.find("id");
       if (id_it != vals.end()) {
         id = (*id_it).second;
       }
@@ -1047,7 +1047,7 @@ void LCDDConverter::handleProperties(Detector::Properties& prp) const {
       processors.insert(make_pair(id, nam));
     }
   }
-  for (map<string, string>::const_iterator i = processors.begin(); i != processors.end(); ++i) {
+  for (auto i = processors.begin(); i != processors.end(); ++i) {
     const GeoHandler* ptr = this;
     string nam = (*i).second;
     const Detector::PropertyValues& vals = prp[nam];
@@ -1094,7 +1094,7 @@ void LCDDConverter::handleHeader() const {
 }
 
 template <typename O, typename C, typename F> void handle(const O* o, const C& c, F pmf) {
-  for (typename C::const_iterator i = c.begin(); i != c.end(); ++i) {
+  for (auto i = c.begin(); i != c.end(); ++i) {
     string n = (*i)->GetName();
     (o->*pmf)(n, *i);
   }

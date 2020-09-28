@@ -40,23 +40,23 @@ using namespace dd4hep::rec;
 static void printDetectorData( DetElement det ){
 
   try{ 
-    FixedPadSizeTPCData* d = det.extension<FixedPadSizeTPCData>() ; 
+    auto* d = det.extension<FixedPadSizeTPCData>() ;
     std::cout << *d ;
   } catch(...){}
   try{ 
-    ZPlanarData* d = det.extension<ZPlanarData>() ; 
+    auto* d = det.extension<ZPlanarData>() ;
     std::cout << *d ;
   } catch(...){}
   try{ 
-    ZDiskPetalsData* d = det.extension<ZDiskPetalsData>() ; 
+    auto* d = det.extension<ZDiskPetalsData>() ;
     std::cout << *d ;
   } catch(...){}
   try{ 
-    ConicalSupportData* d = det.extension<ConicalSupportData>() ; 
+    auto* d = det.extension<ConicalSupportData>() ;
     std::cout << *d ;
   } catch(...){}
   try{ 
-    LayeredCalorimeterData* d = det.extension<LayeredCalorimeterData>() ; 
+    auto* d = det.extension<LayeredCalorimeterData>() ;
     std::cout << *d ;
   } catch(...){}
 
@@ -130,7 +130,7 @@ static int invoke_dump_detector(int argc, char** argv ){
 
     dd4hep::Detector::HandleMap dets = description.detectors() ;
 
-    for( dd4hep::Detector::HandleMap::const_iterator it = dets.begin() ; it != dets.end() ; ++it ){
+    for( auto it = dets.begin() ; it != dets.end() ; ++it ){
       
       DetElement det = it->second ;
 
@@ -158,7 +158,7 @@ static int invoke_dump_detector(int argc, char** argv ){
   std::cout << "############################################################################### "  << std::endl  
             << "     sensitive detectors:     " << std::endl ;
 
-  for( dd4hep::Detector::HandleMap::const_iterator it = sensDet.begin() ; it != sensDet.end() ; ++it ){
+  for( auto it = sensDet.begin() ; it != sensDet.end() ; ++it ){
 
     SensitiveDetector sDet = it->second ;
     std::cout << "     " << it->first << " : type = " << sDet.type() << std::endl ;
@@ -176,7 +176,7 @@ static int invoke_dump_detector(int argc, char** argv ){
   while( ! daugs.empty() ) {
     for(auto dau : daugs){
       DetElement::Children chMap = dau.children() ;
-      for ( DetElement::Children::const_iterator it=chMap.begin() ; it != chMap.end() ; ++it ){
+      for ( auto it=chMap.begin() ; it != chMap.end() ; ++it ){
         DetElement de = (*it).second ;
         gdaugs.emplace_back( de ) ;
       }  
@@ -187,7 +187,7 @@ static int invoke_dump_detector(int argc, char** argv ){
   //------------------ end tree traversal ---------
   
 
-  for (  std::list< DetElement >::const_iterator it=dets.begin() ; it != dets.end() ; ++it ){
+  for (  auto it=dets.begin() ; it != dets.end() ; ++it ){
 
     DetElement de = (*it) ;
     

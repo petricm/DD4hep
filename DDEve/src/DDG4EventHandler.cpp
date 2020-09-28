@@ -101,7 +101,7 @@ std::string DDG4EventHandler::datasourceName() const   {
 
 /// Access to the collection type by name
 EventHandler::CollectionType DDG4EventHandler::collectionType(const std::string& collection) const {
-  Branches::const_iterator i = m_branches.find(collection);
+  auto i = m_branches.find(collection);
   if ( i != m_branches.end() )   {
     const char* cl = (*i).second.first->GetClassName();
     if ( ::strstr(cl,"sim::Geant4Calorimeter::Hit") )  return CALO_HIT_COLLECTION;
@@ -118,7 +118,7 @@ EventHandler::CollectionType DDG4EventHandler::collectionType(const std::string&
 /// Call functor on hit collection
 size_t DDG4EventHandler::collectionLoop(const std::string& collection, DDEveHitActor& actor)   {
   typedef std::vector<void*> _P;
-  Branches::const_iterator i = m_branches.find(collection);
+  auto i = m_branches.find(collection);
   if ( i != m_branches.end() )   {
     const _P* data_ptr = (_P*)(*i).second.second;
     if ( data_ptr )  {
@@ -138,7 +138,7 @@ size_t DDG4EventHandler::collectionLoop(const std::string& collection, DDEveHitA
 /// Loop over collection and extract particle data
 size_t DDG4EventHandler::collectionLoop(const std::string& collection, DDEveParticleActor& actor)    {
   typedef std::vector<void*> _P;
-  Branches::const_iterator i = m_branches.find(collection);
+  auto i = m_branches.find(collection);
   if ( i != m_branches.end() )   {
     const _P* data_ptr = (_P*)(*i).second.second;
     if ( data_ptr )  {
@@ -172,7 +172,7 @@ Int_t DDG4EventHandler::ReadEvent(Long64_t event_number)   {
     Int_t nbytes = m_file.second->GetEntry(event_number);
     if ( nbytes >= 0 )   {
       printout(ERROR,"DDG4EventHandler","+++ ReadEvent: Read %d bytes of event data for entry:%d",nbytes,event_number);
-      for(Branches::const_iterator i=m_branches.begin(); i != m_branches.end(); ++i)  {
+      for(auto i=m_branches.begin(); i != m_branches.end(); ++i)  {
         TBranch* b = (*i).second.first;
         std::vector<void*>* ptr_data = *(std::vector<void*>**)b->GetAddress();
         m_data[b->GetClassName()].emplace_back(b->GetName(),ptr_data->size());
@@ -194,20 +194,20 @@ bool DDG4EventHandler::Open(const std::string&, const std::string& name)   {
   TFile* f = TFile::Open(name.c_str());
   if ( f && !f->IsZombie() )  {
     m_file.first = f;
-    TTree* t = (TTree*)f->Get("EVENT");
+    auto* t = (TTree*)f->Get("EVENT");
     if ( t )   {
       TObjArray* br = t->GetListOfBranches();
       m_file.second = t;
       m_entry = -1;
       m_branches.clear();
       for(Int_t i=0; i<br->GetSize(); ++i)  {
-        TBranch* b = (TBranch*)br->At(i);
+        auto* b = (TBranch*)br->At(i);
         if ( !b ) continue;
         m_branches[b->GetName()] = make_pair(b,(void*)0);
         printout(INFO,"DDG4EventHandler::open","+++ Branch %s has %ld entries.",b->GetName(),b->GetEntries());
       }
       for(Int_t i=0; i<br->GetSize(); ++i)  {
-        TBranch* b = (TBranch*)br->At(i);
+        auto* b = (TBranch*)br->At(i);
         if ( !b ) continue;
         b->SetAddress(&m_branches[b->GetName()].second);
       }

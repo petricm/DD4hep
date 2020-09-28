@@ -156,8 +156,8 @@ static long plain_root_dump(Detector& description, int argc, char** argv) {
     DetectorData::unpatchRootStreamer(TGeoNode::Class());
     TFile* f = TFile::Open(input.c_str());
     if ( f && !f->IsZombie() )   {
-      DetectorData* det = dynamic_cast<DetectorData*>(&description);
-      TGeoManager* mgr = (TGeoManager*)f->Get(in_obj.c_str());
+      auto* det = dynamic_cast<DetectorData*>(&description);
+      auto* mgr = (TGeoManager*)f->Get(in_obj.c_str());
       if ( det && mgr )   {
         TGeoManip manip(det, level, do_import, prt);
         DetectorData::patchRootStreamer(TGeoVolume::Class());

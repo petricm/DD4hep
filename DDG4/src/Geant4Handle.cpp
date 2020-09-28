@@ -74,7 +74,7 @@ namespace dd4hep::sim {
 
     template <typename TYPE> TYPE* _create_object(Geant4Kernel& kernel, const TypeName& typ)    {
       Geant4Context* ctxt = kernel.workerContext();
-      Geant4Action* object = PluginService::Create<Geant4Action*>(typ.first, ctxt, typ.second);
+      auto* object = PluginService::Create<Geant4Action*>(typ.first, ctxt, typ.second);
       if (!object && typ.first == typ.second) {
         string _t = typeName(typeid(TYPE));
         printout(DEBUG, "Geant4Handle", "Object factory for %s not found. Try out %s",
@@ -309,7 +309,7 @@ namespace dd4hep::sim {
         TypeName typ = TypeName::split(type_name);
         Detector& description = kernel.detectorDescription();
         DetElement det = description.detector(detector);
-        Geant4Sensitive* object = PluginService::Create<Geant4Sensitive*>(typ.first, ctxt, typ.second, &det, &description);
+        auto* object = PluginService::Create<Geant4Sensitive*>(typ.first, ctxt, typ.second, &det, &description);
         if (object) {
           value = object;
           return;

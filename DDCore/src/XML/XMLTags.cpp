@@ -50,7 +50,7 @@ namespace {
   };
   __Init  __In__;
   void __Init::register_tag(const std::string& name, dd4hep::xml::Tag_t* tag)  {
-    Inventory_t::const_iterator i = __In__.m_inventory.find(name);
+    auto i = __In__.m_inventory.find(name);
     if ( i !=  __In__.m_inventory.end() )  {
       std::string err = "XMLTags: Failed to register XML tag: "+name+". [Tag already exists]";
       std::cout << err << std::endl;

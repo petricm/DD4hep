@@ -126,7 +126,7 @@ static dd4hep::Ref_t create_element(dd4hep::Detector& description,
   //-----------------------------------------------------------------------------------
 
 
-  dd4hep::rec::ConicalSupportData* beampipeData = new dd4hep::rec::ConicalSupportData ;
+  auto* beampipeData = new dd4hep::rec::ConicalSupportData ;
 
   //DD4hep/TGeo seems to need rad (as opposed to the manual)
   const double phi1 = 0 ;
@@ -144,12 +144,12 @@ static dd4hep::Ref_t create_element(dd4hep::Detector& description,
     xml_comp_t xmlSection( c );
 
     ODH::ECrossType crossType = ODH::getCrossType(xmlSection.attr< std::string >(_Unicode(type)));
-    const double zStart       = xmlSection.attr< double > (_Unicode(start));
-    const double zEnd         = xmlSection.attr< double > (_Unicode(end));
-    const double rInnerStart  = xmlSection.attr< double > (_Unicode(rMin1));
-    const double rInnerEnd    = xmlSection.attr< double > (_Unicode(rMin2));
-    const double rOuterStart  = xmlSection.attr< double > (_Unicode(rMax1));
-    const double rOuterEnd    = xmlSection.attr< double > (_Unicode(rMax2));
+    const auto zStart       = xmlSection.attr< double > (_Unicode(start));
+    const auto zEnd         = xmlSection.attr< double > (_Unicode(end));
+    const auto rInnerStart  = xmlSection.attr< double > (_Unicode(rMin1));
+    const auto rInnerEnd    = xmlSection.attr< double > (_Unicode(rMin2));
+    const auto rOuterStart  = xmlSection.attr< double > (_Unicode(rMax1));
+    const auto rOuterEnd    = xmlSection.attr< double > (_Unicode(rMax2));
     const double thickness    = rOuterStart - rInnerStart;
     Material sectionMat  = description.material(xmlSection.materialStr());
     const std::string volName      = "tube_" + xmlSection.nameStr();

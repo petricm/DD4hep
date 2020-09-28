@@ -364,7 +364,7 @@ void DetectorImp::setStdConditions(const std::string& type)   {
 
 /// Retrieve a subdetector element by it's name from the detector description
 DetElement DetectorImp::detector(const std::string& name) const  {
-  HandleMap::const_iterator i = m_detectors.find(name);
+  auto i = m_detectors.find(name);
   if (i != m_detectors.end()) {
     return (*i).second;
   }
@@ -487,7 +487,7 @@ void DetectorImp::mapDetectorTypes()  {
   for( const auto& i : m_detectors )   {
     DetElement det(i.second);
     if ( det.parent().isValid() )  { // Exclude 'world'
-      HandleMap::const_iterator j=m_sensitive.find(det.name());
+      auto j=m_sensitive.find(det.name());
       if ( j != m_sensitive.end() )  {
         SensitiveDetector sd((*j).second);
         m_detectorTypes[sd.type()].emplace_back(det);
@@ -518,7 +518,7 @@ vector<string> DetectorImp::detectorTypes() const  {
 const vector<DetElement>& DetectorImp::detectors(const string& type, bool throw_exc)  {
   if ( m_manager->IsClosed() ) {
     if ( throw_exc )  {
-      DetectorTypeMap::const_iterator i=m_detectorTypes.find(type);
+      auto i=m_detectorTypes.find(type);
       if ( i != m_detectorTypes.end() ) return (*i).second;
       throw runtime_error("detectors("+type+"): Detectors of this type do not exist in the current setup!");
     }
@@ -575,7 +575,7 @@ vector<DetElement> DetectorImp::detectors(const string& type1,
 }
 
 Handle<NamedObject> DetectorImp::getRefChild(const HandleMap& e, const string& name, bool do_throw) const {
-  HandleMap::const_iterator i = e.find(name);
+  auto i = e.find(name);
   if (i != e.end()) {
     return (*i).second;
   }
@@ -625,7 +625,7 @@ namespace {
             s->SetName(nam.c_str());
           }
           if (s->IsA() == TGeoCompositeShape::Class()) {
-            TGeoCompositeShape* c = (TGeoCompositeShape*) s;
+            auto* c = (TGeoCompositeShape*) s;
             const TGeoBoolNode* boolean = c->GetBoolNode();
             s = boolean->GetLeftShape();
             sn = s->GetName();

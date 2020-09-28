@@ -37,7 +37,7 @@ namespace {
     }
     void operator()(const pair<string, Property>& o) {
       string n = path + o.first;
-      G4UIcmdWithAString* cmd = new G4UIcmdWithAString(n.c_str(), msg);
+      auto* cmd = new G4UIcmdWithAString(n.c_str(), msg);
       cmd->SetParameterName(o.first.c_str(), true);
       cmd->SetGuidance(("Property item of type " + o.second.type()).c_str());
       cmds[cmd] = o.first;
@@ -66,7 +66,7 @@ void Geant4UIMessenger::addCall(const std::string& name, const std::string& desc
     m_actionCmd[cmd] = cb;
   }
   else if ( 1 == npar )    {
-    G4UIcmdWithAString* cmd = new G4UIcmdWithAString((m_path + name).c_str(), this);
+    auto* cmd = new G4UIcmdWithAString((m_path + name).c_str(), this);
     cmd->SetParameterName("p1", true);
     cmd->SetGuidance(description.c_str());
     m_actionCmd[cmd] = cb;
@@ -87,7 +87,7 @@ void Geant4UIMessenger::exportProperties(PropertyManager& mgr) {
 
 /// Pass current property value to Geant4 UI
 G4String Geant4UIMessenger::GetCurrentValue(G4UIcommand * c) {
-  Commands::iterator i = m_propertyCmd.find(c);
+  auto i = m_propertyCmd.find(c);
   if (m_properties && i != m_propertyCmd.end()) {
     const string& n = (*i).second;
     return (*m_properties)[n].str();
@@ -99,7 +99,7 @@ G4String Geant4UIMessenger::GetCurrentValue(G4UIcommand * c) {
 
 /// Accept ne property value from Geant4 UI
 void Geant4UIMessenger::SetNewValue(G4UIcommand *c, G4String v) {
-  Commands::iterator i = m_propertyCmd.find(c);
+  auto i = m_propertyCmd.find(c);
   if (m_properties && i != m_propertyCmd.end()) {
     const string& n = (*i).second;
     try  {
@@ -128,7 +128,7 @@ void Geant4UIMessenger::SetNewValue(G4UIcommand *c, G4String v) {
     return;
   }
   else  {
-    Actions::iterator j = m_actionCmd.find(c);
+    auto j = m_actionCmd.find(c);
     if (j != m_actionCmd.end()) {
       try  {
         const void* args[] = {v.c_str(), 0};

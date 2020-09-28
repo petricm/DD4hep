@@ -84,7 +84,7 @@ void next_event(){
     return ;
   
 
-  TEveElementList* tevent = (TEveElementList* ) gEve->GetCurrentEvent() ;
+  auto* tevent = (TEveElementList* ) gEve->GetCurrentEvent() ;
   
   if( tevent ) 
     tevent->DestroyElements() ;
@@ -138,7 +138,7 @@ void next_event(){
 template <class T>
 TEveElement* createPointSet( lcio::LCCollection* col, const std::string& name, unsigned color, unsigned size, unsigned style ) {
    
-  TEvePointSet* ps = new TEvePointSet( name.c_str()  );
+  auto* ps = new TEvePointSet( name.c_str()  );
   ps->SetOwnIds(kTRUE);
    
   int nHit = col->getNumberOfElements() ;

@@ -491,7 +491,7 @@ Document DocumentHandler::load(const std::string& fname, UriReader* reader) cons
     printout(INFO,"DocumentHandler","+++ Loading document URI: %s [Resolved:'%s']",
              fname.c_str(),clean.c_str());
   }
-  TiXmlDocument* doc = new TiXmlDocument(clean.c_str());
+  auto* doc = new TiXmlDocument(clean.c_str());
   bool result = false;
   try {
     result = doc->LoadFile();
@@ -534,7 +534,7 @@ Document DocumentHandler::parse(const char* bytes, size_t length, const char* /*
     printout(WARNING,"DocumentHandler","+++ Parsing memory document %s",
              "[URI Resolution is not supported by TiXML]");
   }
-  TiXmlDocument* doc = new TiXmlDocument();
+  auto* doc = new TiXmlDocument();
   try  {
     if ( bytes )   {
       size_t str_len = ::strlen(bytes);
@@ -586,7 +586,7 @@ int DocumentHandler::output(Document doc, const string& fname) const {
     printout(ERROR,"DocumentHandler","+++ Failed to open output file: %s",fname.c_str());
     return 0;
   }
-  TiXmlDocument* d = (TiXmlDocument*)doc.ptr();
+  auto* d = (TiXmlDocument*)doc.ptr();
   d->Print(file);
   if ( !fn.empty() ) ::fclose(file);
   return 1;
@@ -594,7 +594,7 @@ int DocumentHandler::output(Document doc, const string& fname) const {
 
 /// Dump partial or full XML trees
 void dd4hep::xml::dump_tree(Handle_t elt, ostream& os) {
-  TiXmlNode* node = (TiXmlNode*)elt.ptr();
+  auto* node = (TiXmlNode*)elt.ptr();
   TiXmlPrinter printer;
   printer.SetStreamPrinting();
   node->Accept( &printer );
@@ -603,7 +603,7 @@ void dd4hep::xml::dump_tree(Handle_t elt, ostream& os) {
 
 /// Dump partial or full XML documents
 void dd4hep::xml::dump_tree(Document doc, ostream& os) {
-  TiXmlDocument* node = (TiXmlDocument*)doc.ptr();
+  auto* node = (TiXmlDocument*)doc.ptr();
   TiXmlPrinter printer;
   printer.SetStreamPrinting();
   node->Accept( &printer );

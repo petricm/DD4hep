@@ -92,7 +92,7 @@ int VisVolNameProcessor::operator()(PlacedVolume pv, int /* level */)   {
 
 static void* create_object(Detector& description, int argc, char** argv)   {
   DetectorHelper helper(description);
-  VisVolNameProcessor*  proc = new VisVolNameProcessor(description);
+  auto*  proc = new VisVolNameProcessor(description);
   for ( int i=0; i<argc; ++i )   {
     if ( argv[i] )    {
       if ( ::strncmp(argv[i],"-name",4) == 0 )   {

@@ -273,7 +273,7 @@ void DetElementCreator::createTopLevelDetectors(PlacedVolume pv)   {
 
 /// Add new subdetector to the detector description
 DetElement DetElementCreator::addSubdetector(const std::string& nam, PlacedVolume pv, bool volid)  {
-  Detectors::iterator idet = subdetectors.find(nam);
+  auto idet = subdetectors.find(nam);
   if ( idet == subdetectors.end() )   {
     DetElement det(nam, description.detectors().size()+1);
     det.setPlacement(pv);
@@ -366,7 +366,7 @@ int DetElementCreator::process(PlacedVolume pv, int lvl, bool recursive)   {
           data.pv.addPhysVolID(text, data.pv->GetMotherVolume()->GetIndex(data.pv.ptr())+1);
         }
         else   {
-          AllPlacements::const_iterator e = all_placements.find(data.pv);
+          auto e = all_placements.find(data.pv);
           if ( e != all_placements.end() && (*e).second.first != lvl)  {
             printout(ERROR,"DetElementCreator","PLacement VOLID error: %d <> %d",lvl,(*e).second.first);
           }

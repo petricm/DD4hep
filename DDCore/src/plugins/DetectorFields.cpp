@@ -20,7 +20,7 @@ using namespace dd4hep;
 
 static Handle<NamedObject> convert_constant_field(Detector&, xml_h field, Handle<NamedObject> object) {
   xml_doc_t doc = xml_elt_t(field).document();
-  ConstantField* fld = object.data<ConstantField>();
+  auto* fld = object.data<ConstantField>();
   field.setAttr(_U(name), object->GetName());
   field.setAttr(_U(type), object->GetTitle());
   field.setAttr(_U(lunit), "mm");
@@ -41,7 +41,7 @@ DECLARE_XML_PROCESSOR(ConstantField_Convert2Detector,convert_constant_field)
 
 static Handle<NamedObject> convert_solenoid(Detector&, xml_h field, Handle<NamedObject> object) {
   char text[128];
-  SolenoidField* fld = object.data<SolenoidField>();
+  auto* fld = object.data<SolenoidField>();
   field.setAttr(_U(name), object->GetName());
   field.setAttr(_U(type), object->GetTitle());
   field.setAttr(_U(lunit), "mm");
@@ -64,7 +64,7 @@ DECLARE_XML_PROCESSOR(SolenoidMagnet_Convert2Detector,convert_solenoid)
 static Handle<NamedObject> convert_dipole(Detector&, xml_h field, Handle<NamedObject> object) {
   char text[128];
   xml_doc_t    doc = xml_elt_t(field).document();
-  DipoleField* fld = object.data<DipoleField>();
+  auto* fld = object.data<DipoleField>();
   field.setAttr(_U(lunit), "mm");
   field.setAttr(_U(funit), "tesla");
   ::snprintf(text, sizeof(text), "%g/mm", fld->rmax);
@@ -86,7 +86,7 @@ DECLARE_XML_PROCESSOR(DipoleMagnet_Convert2Detector,convert_dipole)
 
 static Handle<NamedObject> convert_multipole(Detector&, xml_h field, Handle<NamedObject> object) {
   xml_doc_t       doc = xml_elt_t(field).document();
-  MultipoleField* ptr = object.data<MultipoleField>();
+  auto* ptr = object.data<MultipoleField>();
   RotationZYX     rot;
   Position        pos;
 

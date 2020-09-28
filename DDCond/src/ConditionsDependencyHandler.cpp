@@ -65,7 +65,7 @@ ConditionsDependencyHandler::ConditionsDependencyHandler(ConditionsManager mgr,
     m_userParam(user_param), num_callback(0)
 {
   const IOV& iov = m_pool.validity();
-  unsigned char* p = new unsigned char[dependencies.size()*sizeof(Work)];
+  auto* p = new unsigned char[dependencies.size()*sizeof(Work)];
   m_block = (Work*)p;
   for(const auto& d : dependencies)  {
     Work* w = new(p) Work(this,d.second,user_param,iov);

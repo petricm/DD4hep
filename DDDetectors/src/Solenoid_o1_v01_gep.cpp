@@ -45,7 +45,7 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
   int n = 0;
 
   //added code by Thorben Quast for event display
-  rec::LayeredCalorimeterData* solenoidData = new rec::LayeredCalorimeterData;
+  auto* solenoidData = new rec::LayeredCalorimeterData;
   solenoidData->inner_symmetry = 0;
   solenoidData->outer_symmetry = 0;
   solenoidData->layoutType = rec::LayeredCalorimeterData::BarrelLayout ;

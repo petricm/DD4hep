@@ -139,7 +139,7 @@ Solid VolumeBuilder::makeShape(xml_h handle)   {
   /// Check if this volume is part of the volumes to be built for this description type
   a = handle.attr_nothrow(_U(build));
   if ( a )   {
-    string build = handle.attr<string>(a);
+    auto build = handle.attr<string>(a);
     if ( !buildMatch(build,buildType) )  {
       printout(INFO,"VolumeBuilder",
                "+++ Shape %s does NOT match build requirements. [Ignored]",nam.c_str());
@@ -148,7 +148,7 @@ Solid VolumeBuilder::makeShape(xml_h handle)   {
     }
   }
   /// Now we create the shape....
-  string type = x.attr<string>(_U(type));
+  auto type = x.attr<string>(_U(type));
   Solid solid = xml::createShape(description, type, x);
   if ( !solid.isValid() )   {
     except("VolumeBuilder","+++ Failed to create shape %s of type: %s",
@@ -169,13 +169,13 @@ size_t VolumeBuilder::buildShapes(xml_h handle)    {
   size_t len = shapes.size();
   for( xml_coll_t c(handle,_U(shape)); c; ++c )   {
     xml_elt_t x = c;
-    string nam = x.attr<string>(_U(name));
+    auto nam = x.attr<string>(_U(name));
     auto is = shapes.find(nam);
     if ( is == shapes.end() )  {
       /// Check if this volume is part of the volumes to be built for this description type
       xml_attr_t x_build = c.attr_nothrow(_U(build));
       if ( x_build )   {
-        string build = c.attr<string>(x_build);
+        auto build = c.attr<string>(x_build);
         if ( !buildMatch(build,buildType) )  {
           printout(INFO,"VolumeBuilder",
                    "+++ Shape %s does NOT match build requirements. [Ignored]",nam.c_str());
@@ -183,7 +183,7 @@ size_t VolumeBuilder::buildShapes(xml_h handle)    {
           continue;
         }
       }
-      string type  = x.attr<string>(_U(type));
+      auto type  = x.attr<string>(_U(type));
       Solid  solid = xml::createShape(description, type, c);
       if ( !solid.isValid() )   {
         except("VolumeBuilder","+++ Failed to create shape %s of type: %s",
@@ -208,11 +208,11 @@ size_t VolumeBuilder::buildVolumes(xml_h handle)    {
   for( xml_coll_t c(handle,_U(volume)); c; ++c )   {
     Solid solid;
     xml_comp_t x    = c;
-    string     nam  = x.attr<string>(_U(name));
+    auto     nam  = x.attr<string>(_U(name));
     xml_attr_t attr = c.attr_nothrow(_U(build));
     /// Check if this volume is part of the volumes to be built for this description type
     if ( attr )   {
-      string build = c.attr<string>(attr);
+      auto build = c.attr<string>(attr);
       if ( !buildMatch(build,buildType) )  {
         printout(INFO,"VolumeBuilder",
                  "+++ Volume %s does NOT match build requirements. [Ignored]",nam.c_str());
@@ -222,7 +222,7 @@ size_t VolumeBuilder::buildVolumes(xml_h handle)    {
     bool   is_sensitive = c.attr_nothrow(_U(sensitive));
     /// Check if the volume is implemented by a factory
     if ( (attr=c.attr_nothrow(_U(type))) )   {
-      string typ = c.attr<string>(attr);
+      auto typ = c.attr<string>(attr);
       Volume vol = xml::createVolume(description, typ, c);
       vol.setAttributes(description,x.regionStr(),x.limitsStr(),x.visStr());
       volumes.emplace(nam,make_pair(c,vol));
@@ -241,7 +241,7 @@ size_t VolumeBuilder::buildVolumes(xml_h handle)    {
     
     /// Check if the volume has a shape attribute --> shape reference
     if ( (attr=c.attr_nothrow(_U(shape))) )   {
-      string ref = c.attr<string>(attr);
+      auto ref = c.attr<string>(attr);
       if ( !(solid=getShape(ref)).isValid() ) continue;
     }
     /// Else use anonymous shape embedded in volume
@@ -296,7 +296,7 @@ void VolumeBuilder::_placeSingleVolume(DetElement parent, Volume vol, xml_h c)  
   if ( !attr )   {
     except("VolumeBuilder","+++ The xml volume element has no 'logvol' or 'volume' attribute!");
   }
-  string nam = c.attr<string>(attr);
+  auto nam = c.attr<string>(attr);
   if ( vol_veto.find(nam) != vol_veto.end() )   {
     return;
   }
@@ -310,7 +310,7 @@ void VolumeBuilder::_placeSingleVolume(DetElement parent, Volume vol, xml_h c)  
   Volume daughter = (*iv).second.second;
   attr = c.attr_nothrow(_U(transformation));
   if ( attr )   {
-    string tr_nam = c.attr<string>(attr);
+    auto tr_nam = c.attr<string>(attr);
     auto it = transformations.find(tr_nam);
     if ( it == transformations.end() )   {
       except("VolumeBuilder",
@@ -327,7 +327,7 @@ void VolumeBuilder::_placeSingleVolume(DetElement parent, Volume vol, xml_h c)  
   }
   xml_attr_t attr_nam = c.attr_nothrow(_U(name));
   if ( attr_nam )  {
-    string phys_nam = c.attr<string>(attr_nam);
+    auto phys_nam = c.attr<string>(attr_nam);
     pv->SetName(phys_nam.c_str());
   }
   attr = c.attr_nothrow(_U(element));
@@ -338,7 +338,7 @@ void VolumeBuilder::_placeSingleVolume(DetElement parent, Volume vol, xml_h c)  
   }
   else if ( attr )  {
     int    elt_id = parent.id();
-    string elt = c.attr<string>(attr);
+    auto elt = c.attr<string>(attr);
     attr = c.attr_nothrow(_U(id));
     if ( attr )   {
       elt_id = c.attr<int>(attr);
@@ -364,7 +364,7 @@ void VolumeBuilder::_placeParamVolumes(DetElement parent, Volume vol, xml_h c)  
   if ( !attr )   {
     except("VolumeBuilder","+++ The xml volume element has no 'logvol' or 'volume' attribute!");
   }
-  string nam = x_phys.attr<string>(attr);
+  auto nam = x_phys.attr<string>(attr);
   if ( vol_veto.find(nam) != vol_veto.end() )   {
     return;
   }
@@ -384,7 +384,7 @@ void VolumeBuilder::_placeParamVolumes(DetElement parent, Volume vol, xml_h c)  
   attr_tr = c.attr_nothrow(_U(transformation));
   Transform3D tr;
   if ( attr_tr )   {
-    string tr_nam = c.attr<string>(attr_tr);
+    auto tr_nam = c.attr<string>(attr_tr);
     auto it = transformations.find(tr_nam);
     if ( it == transformations.end() )   {
       except("VolumeBuilder",

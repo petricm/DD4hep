@@ -67,7 +67,7 @@ bool detail::tools::findChild(PlacedVolume parent, PlacedVolume child, Placement
     }
     TIter next(parent->GetVolume()->GetNodes());
     // Now check next layer children
-    for (TGeoNode *daughter = (TGeoNode*) next(); daughter; daughter = (TGeoNode*) next()) {
+    for (auto *daughter = (TGeoNode*) next(); daughter; daughter = (TGeoNode*) next()) {
       if ( daughter == child.ptr() ) {
         path.emplace_back(daughter);
         return true;
@@ -75,7 +75,7 @@ bool detail::tools::findChild(PlacedVolume parent, PlacedVolume child, Placement
     }
     next.Reset();
     // Finally crawl down the tree
-    for (TGeoNode *daughter = (TGeoNode*) next(); daughter; daughter = (TGeoNode*) next()) {
+    for (auto *daughter = (TGeoNode*) next(); daughter; daughter = (TGeoNode*) next()) {
       PlacementPath sub_path;
       bool res = findChild(daughter, child, sub_path);
       if (res) {
@@ -98,7 +98,7 @@ static bool findChildByName(PlacedVolume parent, PlacedVolume child, detail::too
     }
     TIter next(parent->GetVolume()->GetNodes());
     // Now check next layer children
-    for (TGeoNode *daughter = (TGeoNode*) next(); daughter; daughter = (TGeoNode*) next()) {
+    for (auto *daughter = (TGeoNode*) next(); daughter; daughter = (TGeoNode*) next()) {
       if ( 0 == ::strcmp(daughter->GetName(),child.ptr()->GetName()) ) {
         path.emplace_back(daughter);
         return true;
@@ -106,7 +106,7 @@ static bool findChildByName(PlacedVolume parent, PlacedVolume child, detail::too
     }
     next.Reset();
     // Finally crawl down the tree
-    for (TGeoNode *daughter = (TGeoNode*) next(); daughter; daughter = (TGeoNode*) next()) {
+    for (auto *daughter = (TGeoNode*) next(); daughter; daughter = (TGeoNode*) next()) {
       detail::tools::PlacementPath sub_path;
       bool res = findChildByName(daughter, child, sub_path);
       if (res) {
@@ -186,7 +186,7 @@ string detail::tools::elementPath(const PlacementPath& nodes, bool reverse)   {
 string detail::tools::elementPath(const ElementPath& nodes, bool reverse)  {
   string path = "";
   if ( reverse )  {
-    for(ElementPath::const_reverse_iterator i=nodes.rbegin();i!=nodes.rend();++i)
+    for(auto i=nodes.rbegin();i!=nodes.rend();++i)
       path += "/" + string((*i)->GetName());
   }
   else  {
@@ -276,7 +276,7 @@ string detail::tools::placementPath(DetElement element)  {
 string detail::tools::placementPath(const PlacementPath& nodes, bool reverse)  {
   string path = "";
   if ( reverse )  {
-    for(PlacementPath::const_reverse_iterator i=nodes.rbegin();i!=nodes.rend();++i)
+    for(auto i=nodes.rbegin();i!=nodes.rend();++i)
       path += "/" + string((*i)->GetName());
   }
   else  {
@@ -290,7 +290,7 @@ string detail::tools::placementPath(const PlacementPath& nodes, bool reverse)  {
 string detail::tools::placementPath(const vector<const TGeoNode*>& nodes, bool reverse)   {
   string path = "";
   if ( reverse )  {
-    for(vector<const TGeoNode*>::const_reverse_iterator i=nodes.rbegin();i!=nodes.rend();++i)
+    for(auto i=nodes.rbegin();i!=nodes.rend();++i)
       path += "/" + string((*i)->GetName());
   }
   else  {

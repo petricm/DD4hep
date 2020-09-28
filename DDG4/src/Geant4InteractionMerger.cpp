@@ -33,7 +33,7 @@ Geant4InteractionMerger::~Geant4InteractionMerger()  {
 
 /// Event generation action callback
 void Geant4InteractionMerger::operator()(G4Event* /* event */)  {
-  Geant4PrimaryEvent* evt = context()->event().extension<Geant4PrimaryEvent>();
+  auto* evt = context()->event().extension<Geant4PrimaryEvent>();
   const std::vector<Geant4PrimaryEvent::Interaction*>& inter  = evt->interactions();
   debug("+++ Merging MC input record from %d interactions:",(int)inter.size());
   mergeInteractions(this,context());

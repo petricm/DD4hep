@@ -95,7 +95,7 @@ TEveElementList* View::AddToGlobalItems(const string& nam)   {
 
 /// Call an element to a event element list
 TEveElement* View::ImportGeoElement(TEveElement* el, TEveElementList* list)  { 
-  TEveScene* scene = dynamic_cast<TEveScene*>(el);
+  auto* scene = dynamic_cast<TEveScene*>(el);
   if ( scene )   {
     printf("ERROR: Adding a Scene [%s] to a list. This is BAD and causes crashes!\n",scene->GetName());
   }
@@ -110,7 +110,7 @@ TEveElement* View::ImportGeoTopic(TEveElement* element, TEveElementList* list)  
 
 /// Call an element to a event element list
 TEveElement* View::ImportEventElement(TEveElement* el, TEveElementList* list)  { 
-  TEveScene* scene = dynamic_cast<TEveScene*>(el);
+  auto* scene = dynamic_cast<TEveScene*>(el);
   if ( scene )   {
     printf("ERROR: Adding a Scene [%s] to a list. This is BAD and causes crashes!\n",scene->GetName());
   }
@@ -150,12 +150,12 @@ void View::ConfigureGeometryFromInfo()     {
 void View::ConfigureGeometryFromGlobal()    {
   TEveElementList* l = &m_eve->GetGeoTopic("Sensitive");
   TEveElementList* t = &GetGeoTopic("Sensitive");
-  for(TEveElementList::List_i i=l->BeginChildren(); i!=l->EndChildren(); ++i)
+  for(auto i=l->BeginChildren(); i!=l->EndChildren(); ++i)
     ImportGeo(*t,*i);
     
   l = &m_eve->GetGeoTopic("Structure");
   t = &GetGeoTopic("Structure");
-  for(TEveElementList::List_i i=l->BeginChildren(); i!=l->EndChildren(); ++i) 
+  for(auto i=l->BeginChildren(); i!=l->EndChildren(); ++i)
     ImportGeo(*t,*i);
 }
 
@@ -179,12 +179,12 @@ void View::ConfigureGeometry(const DisplayConfiguration::ViewConfig& config)    
       if ( ctx.config.use.empty() ) ImportGeo(ctx.calo3D);
       printout(INFO,"View","+++ %s: add detector %s  %s",name().c_str(),nam.c_str(),ctx.config.use.c_str());
       Color_t col = ctx.calo3D->GetDataSliceColor(ctx.slice);
-      Annotation* a = new Annotation(viewer(),nam.c_str(),Annotation::DefaultMargin(),legend_y,col);
+      auto* a = new Annotation(viewer(),nam.c_str(),Annotation::DefaultMargin(),legend_y,col);
       legend_y += a->GetTextSize();
       dets += nam + "(Calo3D)  ";
     }
     else if ( cfg.type == DisplayConfiguration::DETELEMENT )    {
-      DetElement::Children::const_iterator i = c.find(nam);
+      auto i = c.find(nam);
       if ( i != c.end() )   {
         DetElement de = (*i).second;
         SensitiveDetector sd = m_eve->detectorDescription().sensitiveDetector(nam);
@@ -240,7 +240,7 @@ void View::ConfigureEventFromInfo()    {
 /// Configure an event view by default from the global event scene
 void View::ConfigureEventFromGlobal()    {
   TEveElementList* l = m_eve->manager().GetEventScene();
-  for(TEveElementList::List_i i=l->BeginChildren(); i!=l->EndChildren(); ++i) 
+  for(auto i=l->BeginChildren(); i!=l->EndChildren(); ++i)
     ImportEvent(*i);
 }
 
@@ -268,7 +268,7 @@ void View::ConfigureEvent(const DisplayConfiguration::ViewConfig& config)  {
     }
     else if ( cfg.type == DisplayConfiguration::DETELEMENT )  {
       // Not using the global scene!
-      DetElement::Children::const_iterator i = c.find(nam);
+      auto i = c.find(nam);
       if ( i != c.end() && cfg.data.defaults.show_evt>0 )  {
         SensitiveDetector sd = m_eve->detectorDescription().sensitiveDetector(nam);
         if ( sd.isValid() )  {
@@ -297,7 +297,7 @@ void View::ImportEvent(TEveElement* el)  {
 
 /// Access/Create a topic by name
 TEveElementList& View::GetGeoTopic(const string& nam)    {
-  Topics::iterator i=m_geoTopics.find(nam);
+  auto i=m_geoTopics.find(nam);
   if ( i == m_geoTopics.end() )  {
     TEveElementList* topic = new ElementList(nam.c_str(), nam.c_str(), true, true);
     m_geoTopics[nam] = topic;

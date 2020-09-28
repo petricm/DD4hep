@@ -101,7 +101,7 @@ Volume dd4hep::xml::createStdVolume(Detector& description, xml::Element element)
   xml_h h = e;
   xml_attr_t a = h.attr_nothrow(_U(type));
   if ( a )   {
-    string typ = h.attr<string>(a);
+    auto typ = h.attr<string>(a);
     if ( typ.substr(1) == "ssembly" )  {
       Assembly vol("assembly");
       if ( e.hasAttr(_U(name)) ) vol->SetName(e.attr<string>(_U(name)).c_str());
@@ -121,8 +121,8 @@ Volume dd4hep::xml::createVolume(Detector& description,
     xml_dim_t e(element);
     string fac = typ + "__volume_constructor";
     xml::Handle_t elt = element;
-    TObject* obj = PluginService::Create<TObject*>(fac, &description, &elt);
-    Volume vol = Volume(dynamic_cast<TGeoVolume*>(obj));
+    auto* obj = PluginService::Create<TObject*>(fac, &description, &elt);
+    auto vol = Volume(dynamic_cast<TGeoVolume*>(obj));
     if ( !vol.isValid() )  {
       PluginDebug dbg;
       PluginService::Create<TObject*>(fac, &description, &elt);

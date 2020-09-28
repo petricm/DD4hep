@@ -76,7 +76,7 @@ int main_wrapper(int argc, char** argv)   {
     return EINVAL;
   }
 
-  G4RunManager * run = new G4RunManager;
+  auto * run = new G4RunManager;
   run->SetUserInitialization(new Geant4GDMLDetector(gdml));
   run->SetUserInitialization(new EmptyPhysicsList());
   //
@@ -89,7 +89,7 @@ int main_wrapper(int argc, char** argv)   {
   //
   // Get the pointer to the User Interface manager
   G4UImanager* uiman = G4UImanager::GetUIpointer();
-  G4UIExecutive* ui = new G4UIExecutive(1,(char**)args);
+  auto* ui = new G4UIExecutive(1,(char**)args);
   uiman->ApplyCommand("/control/execute "+setup);
   ui->SessionStart();
   // end ...

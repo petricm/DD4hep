@@ -227,7 +227,7 @@ ConditionsMappedUserPool<MAPPING>::~ConditionsMappedUserPool()  {
 
 template<typename MAPPING> inline Condition::Object* 
 ConditionsMappedUserPool<MAPPING>::i_findCondition(Condition::key_type key)  const {
-  typename MAPPING::const_iterator i=m_conditions.find(key);
+  auto i=m_conditions.find(key);
 #if 0
   if ( i == m_conditions.end() )  {
     print("*"); // This causes CTEST to bail out, due too much output!
@@ -379,7 +379,7 @@ template<typename MAPPING> std::vector<Condition>
 ConditionsMappedUserPool<MAPPING>::get(Condition::key_type lower, Condition::key_type upper)   const  {
   vector<Condition> result;
   if ( !m_conditions.empty() )   {
-    typename MAPPING::const_iterator first = m_conditions.lower_bound(lower);
+    auto first = m_conditions.lower_bound(lower);
     for(; first != m_conditions.end(); ++first )  {
       if ( (*first).first > upper ) break;
       result.emplace_back((*first).second);
@@ -414,7 +414,7 @@ void ConditionsMappedUserPool<MAPPING>::scan(Condition::key_type lower,
                                              Condition::key_type upper,
                                              const Condition::Processor& processor) const
 {
-  typename MAPPING::const_iterator first = m_conditions.lower_bound(lower);
+  auto first = m_conditions.lower_bound(lower);
   for(; first != m_conditions.end() && (*first).first <= upper; ++first )
     processor((*first).second);
 }
@@ -428,7 +428,7 @@ bool ConditionsMappedUserPool<MAPPING>::remove(const ConditionKey& key)   {
 /// Remove condition by key from pool.
 template<typename MAPPING>
 bool ConditionsMappedUserPool<MAPPING>::remove(Condition::key_type hash_key)    {
-  typename MAPPING::iterator i = m_conditions.find(hash_key);
+  auto i = m_conditions.find(hash_key);
   if ( i != m_conditions.end() ) {
     m_conditions.erase(i);
     return true;
@@ -446,7 +446,7 @@ size_t ConditionsMappedUserPool<MAPPING>::compute(const Dependencies& deps,
     Dependencies missing;
     // Loop over the dependencies and check if they have to be upgraded
     for ( const auto& i : deps )  {
-      typename MAPPING::iterator j = m_conditions.find(i.first);
+      auto j = m_conditions.find(i.first);
       if ( j != m_conditions.end() )  {
         if ( !force )  {
           Condition::Object* c = (*j).second;
@@ -527,7 +527,7 @@ ConditionsMappedUserPool<MAPPING>::prepare(const IOV&                  required,
   CondMissing cond_missing(slice_cond.size()+m_conditions.size());
   CalcMissing calc_missing(slice_calc.size()+m_conditions.size());
 
-  CondMissing::iterator last_cond = set_difference(begin(slice_cond),   end(slice_cond),
+  auto last_cond = set_difference(begin(slice_cond),   end(slice_cond),
                                                    begin(m_conditions), end(m_conditions),
                                                    begin(cond_missing), COMP());
   long num_cond_miss = last_cond-begin(cond_missing);
@@ -535,7 +535,7 @@ ConditionsMappedUserPool<MAPPING>::prepare(const IOV&                  required,
   printout((flags&PRINT_LOAD) ? INFO : DEBUG,"UserPool",
            "%ld conditions out of %ld conditions are MISSING.",
            num_cond_miss, slice_cond.size());
-  CalcMissing::iterator last_calc = set_difference(begin(slice_calc),   end(slice_calc),
+  auto last_calc = set_difference(begin(slice_calc),   end(slice_calc),
                                                    begin(m_conditions), end(m_conditions),
                                                    begin(calc_missing), COMP());
   long num_calc_miss = last_calc-begin(calc_missing);
@@ -559,7 +559,7 @@ ConditionsMappedUserPool<MAPPING>::prepare(const IOV&                  required,
         // Need to compute the intersection: All missing entries are required....
         CondMissing load_missing(cond_missing.size()+loaded.size());
         // Note: cond_missing is already sorted (doc of 'set_difference'). No need to re-sort....
-        CondMissing::iterator load_last = set_difference(begin(cond_missing), last_cond,
+        auto load_last = set_difference(begin(cond_missing), last_cond,
                                                          begin(loaded), end(loaded),
                                                          begin(load_missing), COMP());
         long num_load_miss = load_last-begin(load_missing);
@@ -606,7 +606,7 @@ ConditionsMappedUserPool<MAPPING>::prepare(const IOV&                  required,
       if ( do_output_miss && result.computed < deps.size() )  {
         // Is this cheaper than an intersection ?
         for( auto i = calc_missing.begin(); i != last_calc; ++i )   {
-          typename MAPPING::iterator j = m_conditions.find((*i).first);
+          auto j = m_conditions.find((*i).first);
           if ( j == m_conditions.end() )
             slice_miss_calc.emplace(*i);
         }
@@ -649,7 +649,7 @@ ConditionsMappedUserPool<MAPPING>::load(const IOV&                  required,
   m_iovPool->select(required, Operators::mapConditionsSelect(m_conditions), pool_iov);
   m_iov = pool_iov;
   CondMissing cond_missing(slice_cond.size()+m_conditions.size());
-  CondMissing::iterator last_cond = set_difference(begin(slice_cond),   end(slice_cond),
+  auto last_cond = set_difference(begin(slice_cond),   end(slice_cond),
                                                    begin(m_conditions), end(m_conditions),
                                                    begin(cond_missing), COMP());
   long num_cond_miss = last_cond-begin(cond_missing);
@@ -672,7 +672,7 @@ ConditionsMappedUserPool<MAPPING>::load(const IOV&                  required,
         // Need to compute the intersection: All missing entries are required....
         CondMissing load_missing(cond_missing.size()+loaded.size());
         // Note: cond_missing is already sorted (doc of 'set_difference'). No need to re-sort....
-        CondMissing::iterator load_last = set_difference(begin(cond_missing), last_cond,
+        auto load_last = set_difference(begin(cond_missing), last_cond,
                                                          begin(loaded), end(loaded),
                                                          begin(load_missing), COMP());
         long num_load_miss = load_last-begin(load_missing);
@@ -719,7 +719,7 @@ ConditionsMappedUserPool<MAPPING>::compute(const IOV&                  required,
 
   slice_miss_calc.clear();
   CalcMissing calc_missing(slice_calc.size()+m_conditions.size());
-  CalcMissing::iterator last_calc = set_difference(begin(slice_calc),   end(slice_calc),
+  auto last_calc = set_difference(begin(slice_calc),   end(slice_calc),
                                                    begin(m_conditions), end(m_conditions),
                                                    begin(calc_missing), COMP());
   long num_calc_miss = last_calc-begin(calc_missing);
@@ -749,7 +749,7 @@ ConditionsMappedUserPool<MAPPING>::compute(const IOV&                  required,
       result.missing -= handler.num_callback;
       if ( do_output && result.computed < deps.size() )  {
         for(auto i=calc_missing.begin(); i != last_calc; ++i)   {
-          typename MAPPING::iterator j = m_conditions.find((*i).first);
+          auto j = m_conditions.find((*i).first);
           if ( j == m_conditions.end() )
             slice_miss_calc.emplace(*i);
         }
@@ -802,8 +802,8 @@ namespace {
   template <typename MAPPING>
   void* create_pool(Detector&, int argc, char** argv)  {
     if ( argc > 1 )  {
-      ConditionsManagerObject* m = (ConditionsManagerObject*)argv[0];
-      ConditionsIOVPool* p = (ConditionsIOVPool*)argv[1];
+      auto* m = (ConditionsManagerObject*)argv[0];
+      auto* p = (ConditionsIOVPool*)argv[1];
       UserPool* pool = new ConditionsMappedUserPool<MAPPING>(m, p);
       return pool;
     }

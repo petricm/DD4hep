@@ -213,7 +213,7 @@ const DetElement::Children& DetElement::children() const {
 DetElement DetElement::child(const string& child_name) const {
   if (isValid()) {
     const Children& c = ptr()->children;
-    Children::const_iterator i = c.find(child_name);
+    auto i = c.find(child_name);
     return i == c.end() ? DetElement() : (*i).second;
   }
   return DetElement();
@@ -293,7 +293,7 @@ pair<DetElement,Volume> DetElement::reflect(const string& new_name, int new_id, 
 /// Access to the ideal physical volume of this detector element
 PlacedVolume DetElement::idealPlacement() const    {
   if (isValid()) {
-    Object& o = object<Object>();
+    auto& o = object<Object>();
     return o.idealPlace;
   }
   return PlacedVolume();
@@ -302,7 +302,7 @@ PlacedVolume DetElement::idealPlacement() const    {
 /// Access to the physical volume of this detector element
 PlacedVolume DetElement::placement() const {
   if (isValid()) {
-    Object& o = object<Object>();
+    auto& o = object<Object>();
     return o.placement;
   }
   return PlacedVolume();

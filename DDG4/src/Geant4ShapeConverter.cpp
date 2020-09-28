@@ -69,23 +69,23 @@ namespace dd4hep::sim {
     }
 
     template <> G4VSolid* convertShape<TGeoBBox>(const TGeoShape* shape)  {
-      const TGeoBBox* sh = (const TGeoBBox*) shape;
+      const auto* sh = (const TGeoBBox*) shape;
       return new G4Box(sh->GetName(), sh->GetDX() * CM_2_MM, sh->GetDY() * CM_2_MM, sh->GetDZ() * CM_2_MM);
     }
 
     template <> G4VSolid* convertShape<TGeoTube>(const TGeoShape* shape)  {
-      const TGeoTube* sh = (const TGeoTube*) shape;
+      const auto* sh = (const TGeoTube*) shape;
       return new G4Tubs(sh->GetName(), sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM, sh->GetDz() * CM_2_MM, 0, 2. * M_PI);
     }
 
     template <> G4VSolid* convertShape<TGeoTubeSeg>(const TGeoShape* shape)  {
-      const TGeoTubeSeg* sh = (const TGeoTubeSeg*) shape;
+      const auto* sh = (const TGeoTubeSeg*) shape;
       return new G4Tubs(sh->GetName(), sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM, sh->GetDz() * CM_2_MM,
                         sh->GetPhi1() * DEGREE_2_RAD, (sh->GetPhi2()-sh->GetPhi1()) * DEGREE_2_RAD);
     }
 
     template <> G4VSolid* convertShape<TGeoCtub>(const TGeoShape* shape)  {
-      const TGeoCtub* sh = (const TGeoCtub*) shape;
+      const auto* sh = (const TGeoCtub*) shape;
       const Double_t* ln = sh->GetNlow();
       const Double_t* hn = sh->GetNhigh();
       G4ThreeVector   lowNorm (ln[0], ln[1], ln[2]);
@@ -96,12 +96,12 @@ namespace dd4hep::sim {
     }
 
     template <> G4VSolid* convertShape<TGeoEltu>(const TGeoShape* shape)  {
-      const TGeoEltu* sh = (const TGeoEltu*) shape;
+      const auto* sh = (const TGeoEltu*) shape;
       return new G4EllipticalTube(sh->GetName(),sh->GetA() * CM_2_MM, sh->GetB() * CM_2_MM, sh->GetDz() * CM_2_MM);
     }
 
     template <> G4VSolid* convertShape<TwistedTubeObject>(const TGeoShape* shape)  {
-      const TwistedTubeObject* sh = (const TwistedTubeObject*) shape;
+      const auto* sh = (const TwistedTubeObject*) shape;
       return new G4TwistedTubs(sh->GetName(),sh->GetPhiTwist() * DEGREE_2_RAD,
                                sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM,
                                sh->GetNegativeEndZ() * CM_2_MM, sh->GetPositiveEndZ() * CM_2_MM,
@@ -109,7 +109,7 @@ namespace dd4hep::sim {
     }
 
     template <> G4VSolid* convertShape<TGeoTrd1>(const TGeoShape* shape)  {
-      const TGeoTrd1* sh = (const TGeoTrd1*) shape;
+      const auto* sh = (const TGeoTrd1*) shape;
       return new G4Trd(sh->GetName(),
                        sh->GetDx1() * CM_2_MM, sh->GetDx2() * CM_2_MM,
                        sh->GetDy() * CM_2_MM, sh->GetDy() * CM_2_MM,
@@ -117,7 +117,7 @@ namespace dd4hep::sim {
     }
 
     template <> G4VSolid* convertShape<TGeoTrd2>(const TGeoShape* shape)  {
-      const TGeoTrd2* sh = (const TGeoTrd2*) shape;
+      const auto* sh = (const TGeoTrd2*) shape;
       return new G4Trd(sh->GetName(),
                        sh->GetDx1() * CM_2_MM, sh->GetDx2() * CM_2_MM,
                        sh->GetDy1() * CM_2_MM, sh->GetDy2() * CM_2_MM,
@@ -125,7 +125,7 @@ namespace dd4hep::sim {
     }
 
     template <> G4VSolid* convertShape<TGeoHype>(const TGeoShape* shape)  {
-      const TGeoHype* sh = (const TGeoHype*) shape;
+      const auto* sh = (const TGeoHype*) shape;
       return new G4Hype(sh->GetName(), sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM,
                         sh->GetStIn() * DEGREE_2_RAD, sh->GetStOut() * DEGREE_2_RAD,
                         sh->GetDz() * CM_2_MM);
@@ -133,7 +133,7 @@ namespace dd4hep::sim {
 
     template <> G4VSolid* convertShape<TGeoArb8>(const TGeoShape* shape)  {
       vector<G4TwoVector> vertices;
-      TGeoArb8* sh = (TGeoArb8*) shape;
+      auto* sh = (TGeoArb8*) shape;
       Double_t* vtx_xy = sh->GetVertices();
       for ( size_t i=0; i<8; ++i, vtx_xy +=2 )
         vertices.emplace_back(vtx_xy[0] * CM_2_MM, vtx_xy[1] * CM_2_MM);
@@ -141,7 +141,7 @@ namespace dd4hep::sim {
     }
 
     template <> G4VSolid* convertShape<TGeoXtru>(const TGeoShape* shape)  {
-      const TGeoXtru* sh = (const TGeoXtru*) shape;
+      const auto* sh = (const TGeoXtru*) shape;
       size_t nz = sh->GetNz();
       vector<G4ExtrudedSolid::ZSection> z;
       vector<G4TwoVector> polygon;
@@ -155,7 +155,7 @@ namespace dd4hep::sim {
     }
 
     template <> G4VSolid* convertShape<TGeoPgon>(const TGeoShape* shape)  {
-      const TGeoPgon* sh = (const TGeoPgon*) shape;
+      const auto* sh = (const TGeoPgon*) shape;
       vector<double> rmin, rmax, z;
       for (Int_t i = 0; i < sh->GetNz(); ++i) {
         rmin.emplace_back(sh->GetRmin(i) * CM_2_MM);
@@ -167,7 +167,7 @@ namespace dd4hep::sim {
     }
 
     template <> G4VSolid* convertShape<TGeoPcon>(const TGeoShape* shape)  {
-      const TGeoPcon* sh = (const TGeoPcon*) shape;
+      const auto* sh = (const TGeoPcon*) shape;
       vector<double> rmin, rmax, z;
       for (Int_t i = 0; i < sh->GetNz(); ++i) {
         rmin.emplace_back(sh->GetRmin(i) * CM_2_MM);
@@ -179,13 +179,13 @@ namespace dd4hep::sim {
     }
 
     template <> G4VSolid* convertShape<TGeoCone>(const TGeoShape* shape)  {
-      const TGeoCone* sh = (const TGeoCone*) shape;
+      const auto* sh = (const TGeoCone*) shape;
       return new G4Cons(sh->GetName(), sh->GetRmin1() * CM_2_MM, sh->GetRmax1() * CM_2_MM, sh->GetRmin2() * CM_2_MM,
                         sh->GetRmax2() * CM_2_MM, sh->GetDz() * CM_2_MM, 0.0, 2.*M_PI);
     }
 
     template <> G4VSolid* convertShape<TGeoConeSeg>(const TGeoShape* shape)  {
-      const TGeoConeSeg* sh = (const TGeoConeSeg*) shape;
+      const auto* sh = (const TGeoConeSeg*) shape;
       return new G4Cons(sh->GetName(), sh->GetRmin1() * CM_2_MM, sh->GetRmax1() * CM_2_MM,
                         sh->GetRmin2() * CM_2_MM, sh->GetRmax2() * CM_2_MM,
                         sh->GetDz() * CM_2_MM,
@@ -193,24 +193,24 @@ namespace dd4hep::sim {
     }
 
     template <> G4VSolid* convertShape<TGeoParaboloid>(const TGeoShape* shape)  {
-      const TGeoParaboloid* sh = (const TGeoParaboloid*) shape;
+      const auto* sh = (const TGeoParaboloid*) shape;
       return new G4Paraboloid(sh->GetName(), sh->GetDz() * CM_2_MM, sh->GetRlo() * CM_2_MM, sh->GetRhi() * CM_2_MM);
     }
 
     template <> G4VSolid* convertShape<TGeoSphere>(const TGeoShape* shape)  {
-      const TGeoSphere* sh = (const TGeoSphere*) shape;
+      const auto* sh = (const TGeoSphere*) shape;
       return new G4Sphere(sh->GetName(), sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM, sh->GetPhi1() * DEGREE_2_RAD,
                           sh->GetPhi2() * DEGREE_2_RAD, sh->GetTheta1() * DEGREE_2_RAD, sh->GetTheta2() * DEGREE_2_RAD);
     }
 
     template <> G4VSolid* convertShape<TGeoTorus>(const TGeoShape* shape)  {
-      const TGeoTorus* sh = (const TGeoTorus*) shape;
+      const auto* sh = (const TGeoTorus*) shape;
       return new G4Torus(sh->GetName(), sh->GetRmin() * CM_2_MM, sh->GetRmax() * CM_2_MM, sh->GetR() * CM_2_MM,
                          sh->GetPhi1() * DEGREE_2_RAD, sh->GetDphi() * DEGREE_2_RAD);
     }
 
     template <> G4VSolid* convertShape<TGeoTrap>(const TGeoShape* shape)  {
-      const TGeoTrap* sh = (const TGeoTrap*) shape;
+      const auto* sh = (const TGeoTrap*) shape;
       return new G4Trap(sh->GetName(), sh->GetDz() * CM_2_MM, sh->GetTheta() * DEGREE_2_RAD, sh->GetPhi() * DEGREE_2_RAD,
                         sh->GetH1() * CM_2_MM, sh->GetBl1() * CM_2_MM, sh->GetTl1() * CM_2_MM, sh->GetAlpha1() * DEGREE_2_RAD,
                         sh->GetH2() * CM_2_MM, sh->GetBl2() * CM_2_MM, sh->GetTl2() * CM_2_MM, sh->GetAlpha2() * DEGREE_2_RAD);
@@ -218,7 +218,7 @@ namespace dd4hep::sim {
 
     template <> G4VSolid* convertShape<G4GenericTrap>(const TGeoShape* shape)  {
       vector<G4TwoVector> vertices;
-      TGeoTrap* sh = (TGeoTrap*) shape;
+      auto* sh = (TGeoTrap*) shape;
       Double_t* vtx_xy = sh->GetVertices();
       for ( size_t i=0; i<8; ++i, vtx_xy +=2 )
         vertices.emplace_back(vtx_xy[0] * CM_2_MM, vtx_xy[1] * CM_2_MM);
@@ -235,8 +235,8 @@ namespace dd4hep::sim {
 namespace dd4hep::sim {
 
     template <> G4VSolid* convertShape<TGeoTessellated>(const TGeoShape* shape)  {
-      TGeoTessellated*   sh  = (TGeoTessellated*) shape;
-      G4TessellatedSolid* g4 = new G4TessellatedSolid(sh->GetName());
+      auto*   sh  = (TGeoTessellated*) shape;
+      auto* g4 = new G4TessellatedSolid(sh->GetName());
       int num_facet = sh->GetNfacets();
 
       printout(DEBUG,"TessellatedSolid","+++ %s> Converting %d facets", sh->GetName(), num_facet);

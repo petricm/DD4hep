@@ -158,7 +158,7 @@ Geant4Kernel& Geant4Kernel::instance(Detector& description) {
 
 /// Access thread identifier
 unsigned long int Geant4Kernel::thread_self()    {
-  unsigned long int thr_id = (unsigned long int)::pthread_self();
+  auto thr_id = (unsigned long int)::pthread_self();
   return thr_id;
 }
 
@@ -166,7 +166,7 @@ unsigned long int Geant4Kernel::thread_self()    {
 Geant4Kernel& Geant4Kernel::createWorker()   {
   if ( isMaster() )   {
     unsigned long identifier = thread_self();
-    Geant4Kernel* w = new Geant4Kernel(this, identifier);
+    auto* w = new Geant4Kernel(this, identifier);
     m_workers[identifier] = w;
     printout(INFO,"Geant4Kernel","+++ Created worker instance id=%ul",identifier);
     return *w;
@@ -176,7 +176,7 @@ Geant4Kernel& Geant4Kernel::createWorker()   {
 
 /// Access worker instance by it's identifier
 Geant4Kernel& Geant4Kernel::worker(unsigned long identifier, bool create_if)    {
-  Workers::iterator i = m_workers.find(identifier);
+  auto i = m_workers.find(identifier);
   if ( i != m_workers.end() )   {
     return *((*i).second);
   }
@@ -239,7 +239,7 @@ void Geant4Kernel::setOutputLevel(const std::string object, PrintLevel new_level
 
 /// Retrieve the global output level of a named object.
 dd4hep::PrintLevel Geant4Kernel::getOutputLevel(const std::string object) const   {
-  ClientOutputLevels::const_iterator i=m_clientLevels.find(object);
+  auto i=m_clientLevels.find(object);
   if ( i != m_clientLevels.end() ) return (PrintLevel)(*i).second;
   return dd4hep::PrintLevel(dd4hep::printLevel()-1);
 }
@@ -257,7 +257,7 @@ G4RunManager& Geant4Kernel::runManager() {
     return *m_runManager;
   }
   else if ( isMaster() )   {
-    Geant4Action* mgr =
+    auto* mgr =
       PluginService::Create<Geant4Action*>(m_runManagerType,
                                            m_context,
                                            string("Geant4RunManager"));
@@ -349,7 +349,7 @@ int Geant4Kernel::terminate() {
 Geant4Kernel& Geant4Kernel::registerGlobalAction(Geant4Action* action) {
   if (action) {
     string nam = action->name();
-    GlobalActions::const_iterator i = m_globalActions.find(nam);
+    auto i = m_globalActions.find(nam);
     if (i == m_globalActions.end()) {
       action->addRef();
       m_globalActions[nam] = action;
@@ -367,7 +367,7 @@ Geant4Kernel& Geant4Kernel::registerGlobalAction(Geant4Action* action) {
 
 /// Retrieve action from repository
 Geant4Action* Geant4Kernel::globalAction(const std::string& action_name, bool throw_if_not_present) {
-  GlobalActions::iterator i = m_globalActions.find(action_name);
+  auto i = m_globalActions.find(action_name);
   if (i == m_globalActions.end()) {
     if (throw_if_not_present) {
        except("Geant4Kernel", "DDG4: The action '%s' is not globally "
@@ -386,7 +386,7 @@ Geant4Action* Geant4Kernel::globalAction(const std::string& action_name, bool th
 Geant4Kernel& Geant4Kernel::registerGlobalFilter(Geant4Action* filter) {
   if (filter) {
     string nam = filter->name();
-    GlobalActions::const_iterator i = m_globalFilters.find(nam);
+    auto i = m_globalFilters.find(nam);
     if (i == m_globalFilters.end()) {
       filter->addRef();
       m_globalFilters[nam] = filter;
@@ -402,7 +402,7 @@ Geant4Kernel& Geant4Kernel::registerGlobalFilter(Geant4Action* filter) {
 
 /// Retrieve filter from repository
 Geant4Action* Geant4Kernel::globalFilter(const std::string& filter_name, bool throw_if_not_present) {
-  GlobalActions::iterator i = m_globalFilters.find(filter_name);
+  auto i = m_globalFilters.find(filter_name);
   if (i == m_globalFilters.end()) {
     if (throw_if_not_present) {
       except("Geant4Kernel", "DDG4: The filter '%s' is not already globally "
@@ -415,7 +415,7 @@ Geant4Action* Geant4Kernel::globalFilter(const std::string& filter_name, bool th
 
 /// Execute phase action if it exists
 bool Geant4Kernel::executePhase(const std::string& nam, const void** arguments)  const   {
-  Phases::const_iterator i = m_phases.find(nam);
+  auto i = m_phases.find(nam);
   if (i != m_phases.end())   {
     (*i).second->execute(arguments);
     return true;
@@ -425,7 +425,7 @@ bool Geant4Kernel::executePhase(const std::string& nam, const void** arguments) 
 
 /// Access phase by name
 Geant4ActionPhase* Geant4Kernel::getPhase(const std::string& nam) {
-  Phases::const_iterator i = m_phases.find(nam);
+  auto i = m_phases.find(nam);
   if (i != m_phases.end()) {
     return (*i).second;
   }
@@ -441,9 +441,9 @@ Geant4ActionPhase* Geant4Kernel::addSimplePhase(const std::string& name, bool th
 /// Add a new phase
 Geant4ActionPhase* Geant4Kernel::addPhase(const std::string& nam, const type_info& arg0, const type_info& arg1,
                                           const type_info& arg2, bool throw_on_exist) {
-  Phases::const_iterator i = m_phases.find(nam);
+  auto i = m_phases.find(nam);
   if (i == m_phases.end()) {
-    Geant4ActionPhase* p = new Geant4ActionPhase(workerContext(), nam, arg0, arg1, arg2);
+    auto* p = new Geant4ActionPhase(workerContext(), nam, arg0, arg1, arg2);
     m_phases.emplace(nam, p);
     return p;
   }
@@ -455,7 +455,7 @@ Geant4ActionPhase* Geant4Kernel::addPhase(const std::string& nam, const type_inf
 
 /// Remove an existing phase from the phase. If not existing returns false
 bool Geant4Kernel::removePhase(const std::string& nam) {
-  Phases::iterator i = m_phases.find(nam);
+  auto i = m_phases.find(nam);
   if (i != m_phases.end()) {
     delete (*i).second;
     m_phases.erase(i);

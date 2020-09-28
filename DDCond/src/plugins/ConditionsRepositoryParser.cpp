@@ -202,7 +202,7 @@ namespace dd4hep {
     xml_dim_t e   = element;
     string    nam = e.nameStr();
     size_t    id  = e.id() >= 0 ? e.id() : INT_MAX;
-    ConversionArg* arg  = _param<ConversionArg>();
+    auto* arg  = _param<ConversionArg>();
     printout(s_parseLevel,"XMLConditions","++ Registering IOV type: [%d]: %s",int(id),nam.c_str());
     const IOVType* iov_type = arg->manager.registerIOVType(id,nam).second;
     if ( !iov_type )   {
@@ -218,13 +218,13 @@ namespace dd4hep {
    */
   template <> void Converter<iov>::operator()(xml_h element) const {
     xml_dim_t e   = element;
-    string    val = e.attr<string>(_UC(validity));
-    ConversionArg* arg  = _param<ConversionArg>();
+    auto    val = e.attr<string>(_UC(validity));
+    auto* arg  = _param<ConversionArg>();
     CurrentPool pool(arg);
 
     pool.set(arg->manager.registerIOV(val));
     if ( e.hasAttr(_U(ref)) )  {
-      string    ref = e.attr<string>(_U(ref));
+      auto    ref = e.attr<string>(_U(ref));
       printout(s_parseLevel,"XMLConditions","++ Reading IOV file: %s -> %s",val.c_str(),ref.c_str());
       xml::DocumentHolder doc(xml::DocumentHandler().load(element, element.attr_value(_U(ref))));
       Converter<conditions>(description,param,optional)(doc.root());
@@ -240,7 +240,7 @@ namespace dd4hep {
    *  \date    01/04/2014
    */
   template <> void Converter<manager>::operator()(xml_h element) const {
-    ConversionArg* arg  = _param<ConversionArg>();
+    auto* arg  = _param<ConversionArg>();
     if ( element.hasAttr(_U(ref)) )  {
       xml::DocumentHolder doc(xml::DocumentHandler().load(element, element.attr_value(_U(ref))));
       Converter<arbitrary>(description,param,optional)(doc.root());
@@ -270,7 +270,7 @@ namespace dd4hep {
    *  \date    01/04/2014
    */
   template <> void Converter<value>::operator()(xml_h e) const {
-    ConversionArg* arg = _param<ConversionArg>();
+    auto* arg = _param<ConversionArg>();
     Condition      con = bind_condition(detail::ValueBinder(), arg->detector, e);
     arg->manager.registerUnlocked(*arg->pool, con);
   }
@@ -284,7 +284,7 @@ namespace dd4hep {
    *  \date    01/04/2014
    */
   template <> void Converter<pressure>::operator()(xml_h e) const {
-    ConversionArg* arg = _param<ConversionArg>();
+    auto* arg = _param<ConversionArg>();
     Condition      con = bind_condition(detail::ValueBinder(), arg->detector, e, "double");
     con->setFlag(Condition::PRESSURE);
     arg->manager.registerUnlocked(*arg->pool, con);
@@ -299,7 +299,7 @@ namespace dd4hep {
    *  \date    01/04/2014
    */
   template <> void Converter<temperature>::operator()(xml_h e) const {
-    ConversionArg* arg = _param<ConversionArg>();
+    auto* arg = _param<ConversionArg>();
     Condition      con = bind_condition(detail::ValueBinder(), arg->detector, e, "double");
     con->setFlag(Condition::TEMPERATURE);
     arg->manager.registerUnlocked(*arg->pool, con);
@@ -312,7 +312,7 @@ namespace dd4hep {
    *  \date    01/04/2014
    */
   template <> void Converter<sequence>::operator()(xml_h e) const {
-    ConversionArg* arg = _param<ConversionArg>();
+    auto* arg = _param<ConversionArg>();
     Condition      con = create_condition(arg->detector, e);
     xml::parse_sequence(e, con->data);
     arg->manager.registerUnlocked(*arg->pool, con);
@@ -325,7 +325,7 @@ namespace dd4hep {
    *  \date    01/04/2014
    */
   template <> void Converter<mapping>::operator()(xml_h e) const {
-    ConversionArg* arg = _param<ConversionArg>();
+    auto* arg = _param<ConversionArg>();
     Condition      con = create_condition(arg->detector, e);
     xml::parse_mapping(e, con->data);
     arg->manager.registerUnlocked(*arg->pool, con);
@@ -339,7 +339,7 @@ namespace dd4hep {
    */
   template <> void Converter<alignment>::operator()(xml_h e) const {
     xml_h              child_rot, child_pos, child_piv;
-    ConversionArg*     arg = _param<ConversionArg>();
+    auto*     arg = _param<ConversionArg>();
     Condition          con = create_condition(arg->detector, e);
     //Delta& del = con.bind<Delta>();
     xml::parse_delta(e, con->data);
@@ -355,7 +355,7 @@ namespace dd4hep {
    */
   template <> void Converter<detelement>::operator()(xml_h e) const {
     xml_comp_t elt(e);
-    ConversionArg* arg = _param<ConversionArg>();
+    auto* arg = _param<ConversionArg>();
     CurrentDetector detector(arg);
     if ( elt.hasAttr(_U(path)) )  {
       detector.set(e.attr<string>(_U(path)));

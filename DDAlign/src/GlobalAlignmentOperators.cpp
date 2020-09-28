@@ -89,7 +89,7 @@ template <> void GlobalAlignmentActor<DDAlign_standard_operations::node_reset>::
             *mat = *(a->GetOriginalMatrix());
           }
           else if ( i==nLvl ) {
-            TGeoHMatrix* hm = dynamic_cast<TGeoHMatrix*>(mat);
+            auto* hm = dynamic_cast<TGeoHMatrix*>(mat);
             TGeoMatrix*  org = p->GetOriginalMatrix();
             if ( hm && org )  {
               hm->SetTranslation(org->GetTranslation());

@@ -71,7 +71,7 @@ void ViewMenu::Build(TGMenuBar* menubar, int hints)    {
 
 /// Create a new generic view
 void ViewMenu::CreateView(TGMenuEntry*, void* ud)   {
-  pair<string,string>* args = (pair<string,string>*)ud;
+  auto* args = (pair<string,string>*)ud;
   CreateView(args->first,args->second);
 }
 

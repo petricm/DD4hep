@@ -40,7 +40,7 @@ namespace {
 
 /// Initializing constructor
 IDDescriptor::IDDescriptor(const string& nam, const string& description) {
-  Object* obj = new Object(description);
+  auto* obj = new Object(description);
   assign(obj, nam, "iddescriptor");
   _construct(obj, description);
 }

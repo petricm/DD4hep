@@ -97,7 +97,7 @@ void dd4hep::xml::parse(xml_h e, Delta& delta)  {
 
 /// Parse delta into an opaque data block
 void dd4hep::xml::parse_delta(Handle_t e, OpaqueDataBlock& block)   {
-  Delta& delta = block.bind<Delta>();
+  auto& delta = block.bind<Delta>();
   parse(e, delta);
 }
 

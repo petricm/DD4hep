@@ -418,7 +418,7 @@ void* Geant4Converter::handleMaterial(const string& name, Material medium) const
     if (material->IsMixture()) {
       double A_total = 0.0;
       double W_total = 0.0;
-      TGeoMixture* mix = (TGeoMixture*) material;
+      auto* mix = (TGeoMixture*) material;
       int    nElements = mix->GetNelements();
       mat = new G4Material(name, density, nElements, state, 
                            material->GetTemperature(), material->GetPressure());
@@ -450,9 +450,9 @@ void* Geant4Converter::handleMaterial(const string& name, Material medium) const
     G4MaterialPropertiesTable* tab = 0;
     TListIter propIt(&material->GetProperties());
     for(TObject* obj=propIt.Next(); obj; obj = propIt.Next())  {
-      TNamed*      named  = (TNamed*)obj;
+      auto*      named  = (TNamed*)obj;
       TGDMLMatrix* matrix = info.manager->GetGDMLMatrix(named->GetTitle());
-      Geant4GeometryInfo::PropertyVector* v =
+      auto* v =
         (Geant4GeometryInfo::PropertyVector*)handleMaterialProperties(matrix);
       if ( 0 == v )   {
         except("Geant4Converter", "++ FAILED to create G4 material %s [Cannot convert property:%s]",
@@ -473,7 +473,7 @@ void* Geant4Converter::handleMaterial(const string& name, Material medium) const
       for(size_t i=0, count=bins.size(); i<count; ++i)
         bins[i] *= conv.first, vals[i] *= conv.second;
 
-      G4MaterialPropertyVector* vec = new G4MaterialPropertyVector(&bins[0], &vals[0], bins.size());
+      auto* vec = new G4MaterialPropertyVector(&bins[0], &vals[0], bins.size());
       tab->AddProperty(named->GetName(), vec);
       printout(lvl, "Geant4Converter", "++      Property: %-20s [%ld x %ld] -> %s ",
                named->GetName(), matrix->GetRows(), matrix->GetCols(), named->GetTitle());
@@ -485,7 +485,7 @@ void* Geant4Converter::handleMaterial(const string& name, Material medium) const
     TListIter cpropIt(&material->GetConstProperties());
     for(TObject* obj=cpropIt.Next(); obj; obj = cpropIt.Next())  {
       Bool_t     err = kFALSE;
-      TNamed*  named = (TNamed*)obj;
+      auto*  named = (TNamed*)obj;
       double       v = info.manager->GetProperty(named->GetTitle(),&err);
       if ( err != kFALSE )   {
         except("Geant4Converter",
@@ -579,7 +579,7 @@ void* Geant4Converter::handleSolid(const string& name, const TGeoShape* shape) c
       solid = convertShape<TGeoTessellated>(shape);
 #endif
     else if (isa == TGeoScaledShape::Class())  {
-      TGeoScaledShape* sh = (TGeoScaledShape*) shape;
+      auto* sh = (TGeoScaledShape*) shape;
       const double*    vals = sh->GetScale()->GetScale();
       Solid            s_sh(sh->GetShape());
       G4VSolid* scaled = (G4VSolid*)handleSolid(s_sh.name(), s_sh.ptr());
@@ -587,7 +587,7 @@ void* Geant4Converter::handleSolid(const string& name, const TGeoShape* shape) c
                                scaled, G4Scale3D(vals[0],vals[1],vals[2]));
     }
     else if (isa == TGeoCompositeShape::Class())   {
-      const TGeoCompositeShape* sh = (const TGeoCompositeShape*) shape;
+      const auto* sh = (const TGeoCompositeShape*) shape;
       const TGeoBoolNode* boolean = sh->GetBoolNode();
       TGeoBoolNode::EGeoBoolType oper = boolean->GetBooleanOperator();
       TGeoMatrix* matrix = boolean->GetRightMatrix();
@@ -611,8 +611,8 @@ void* Geant4Converter::handleSolid(const string& name, const TGeoShape* shape) c
           strcmp(rs->ClassName(), "TGeoBBox") == 0) {
         if (strcmp(((TGeoScaledShape *)ls)->GetShape()->ClassName(), "TGeoSphere") == 0) {
           if (oper == TGeoBoolNode::kGeoIntersection) {
-            TGeoScaledShape* lls = (TGeoScaledShape *)ls;
-            TGeoBBox* rrs = (TGeoBBox*)rs;
+            auto* lls = (TGeoScaledShape *)ls;
+            auto* rrs = (TGeoBBox*)rs;
             double sx     = lls->GetScale()->GetScale()[0];
             double sy     = lls->GetScale()->GetScale()[1];
             double radius = ((TGeoSphere *)lls->GetShape())->GetRmax();
@@ -667,7 +667,7 @@ void* Geant4Converter::handleSolid(const string& name, const TGeoShape* shape) c
 void* Geant4Converter::handleVolume(const string& name, const TGeoVolume* volume) const {
   Geant4GeometryInfo& info = data();
   PrintLevel lvl = debugVolumes ? ALWAYS : outputLevel;
-  Geant4GeometryMaps::VolumeMap::const_iterator volIt = info.g4Volumes.find(volume);
+  auto volIt = info.g4Volumes.find(volume);
   Volume     _v(volume);
   if ( _v.testFlagBit(Volume::VETO_SIMU) )  {
     printout(lvl, "Geant4Converter", "++ Volume %s not converted [Veto'ed for simulation]",volume->GetName());
@@ -723,7 +723,7 @@ void* Geant4Converter::handleVolume(const string& name, const TGeoVolume* volume
       printout(lvl, "Geant4Converter", "++ Volume     + Apply LIMITS settings:%-24s to volume %s.",
                lim.name(), _v.name());
     }
-    G4LogicalVolume* vol = new G4LogicalVolume(solid, medium, n, 0, 0, user_limits);
+    auto* vol = new G4LogicalVolume(solid, medium, n, 0, 0, user_limits);
     if (region) {
       printout(lvl, "Geant4Converter", "++ Volume     + Apply REGION settings: %s to volume %s.",
                reg.name(), _v.name());
@@ -780,7 +780,7 @@ void* Geant4Converter::handleAssembly(const string& name, const TGeoNode* node) 
       TGeoMatrix* tr = d->GetMatrix();
       MyTransform3D transform(tr->GetTranslation(),tr->IsRotation() ? tr->GetRotationMatrix() : s_identity_rot);
       if ( dau_vol->IsA() == TGeoVolumeAssembly::Class() )  {
-        Geant4GeometryMaps::AssemblyMap::iterator assIt = info.g4AssemblyVolumes.find(d);
+        auto assIt = info.g4AssemblyVolumes.find(d);
         if ( assIt == info.g4AssemblyVolumes.end() )  {
           printout(FATAL, "Geant4Converter", "+++ Invalid child assembly at %s : %d  parent: %s child:%s",
                    __FILE__, __LINE__, name.c_str(), d->GetName());
@@ -793,7 +793,7 @@ void* Geant4Converter::handleAssembly(const string& name, const TGeoNode* node) 
                  transform.dx(), transform.dy(), transform.dz());
       }
       else   {
-        Geant4GeometryMaps::VolumeMap::iterator volIt = info.g4Volumes.find(dau_vol);
+        auto volIt = info.g4Volumes.find(dau_vol);
         if ( volIt == info.g4Volumes.end() )  {
           printout(FATAL,"Geant4Converter", "+++ Invalid child volume at %s : %d  parent: %s child:%s",
                    __FILE__, __LINE__, name.c_str(), d->GetName());
@@ -816,7 +816,7 @@ void* Geant4Converter::handleAssembly(const string& name, const TGeoNode* node) 
 void* Geant4Converter::handlePlacement(const string& name, const TGeoNode* node) const {
   Geant4GeometryInfo& info = data();
   PrintLevel lvl = debugPlacements ? ALWAYS : outputLevel;
-  Geant4GeometryMaps::PlacementMap::const_iterator g4it = info.g4Placements.find(node);
+  auto g4it = info.g4Placements.find(node);
   G4VPhysicalVolume* g4 = (g4it == info.g4Placements.end()) ? 0 : (*g4it).second;
   TGeoVolume* vol = node->GetVolume();
   Volume _v(vol);
@@ -840,7 +840,7 @@ void* Geant4Converter::handlePlacement(const string& name, const TGeoNode* node)
       bool node_is_assembly = vol->IsA() == TGeoVolumeAssembly::Class();
       bool mother_is_assembly = mot_vol ? mot_vol->IsA() == TGeoVolumeAssembly::Class() : false;
       MyTransform3D transform(tr->GetTranslation(),tr->IsRotation() ? tr->GetRotationMatrix() : s_identity_rot);
-      Geant4GeometryMaps::VolumeMap::const_iterator volIt = info.g4Volumes.find(mot_vol);
+      auto volIt = info.g4Volumes.find(mot_vol);
 
       if ( mother_is_assembly )   {
         //
@@ -904,7 +904,7 @@ void* Geant4Converter::handleRegion(Region region, const set<const TGeoVolume*>&
       throw runtime_error("G4Region: StoreSecondaries is True, but no explicit threshold set:");
     }
     printout(lvl, "Geant4Converter", "++ Setting up region: %s", r.name());
-    G4UserRegionInformation* info = new G4UserRegionInformation();
+    auto* info = new G4UserRegionInformation();
     info->region = r;
     info->threshold = r.threshold()*CLHEP::MeV/units::MeV;
     info->storeSecondaries = r.storeSecondaries();
@@ -991,7 +991,7 @@ void* Geant4Converter::handleLimitSet(LimitSet limitset, const set<const TGeoVol
         return *this;
       }
     };
-    Geant4UserLimits* limits = new Geant4UserLimits(limitset);
+    auto* limits = new Geant4UserLimits(limitset);
     g4 = limits;
     if ( debugRegions )    {
       LimitPrint print(limitset);
@@ -1037,11 +1037,11 @@ void Geant4Converter::handleProperties(Detector::Properties& prp) const {
   map < string, string > processors;
   static int s_idd = 9999999;
   string id;
-  for (Detector::Properties::const_iterator i = prp.begin(); i != prp.end(); ++i) {
+  for (auto i = prp.begin(); i != prp.end(); ++i) {
     const string& nam = (*i).first;
     const Detector::PropertyValues& vals = (*i).second;
     if (nam.substr(0, 6) == "geant4") {
-      Detector::PropertyValues::const_iterator id_it = vals.find("id");
+      auto id_it = vals.find("id");
       if (id_it != vals.end()) {
         id = (*id_it).second;
       }
@@ -1053,13 +1053,13 @@ void Geant4Converter::handleProperties(Detector::Properties& prp) const {
       processors.emplace(id, nam);
     }
   }
-  for (map<string, string>::const_iterator i = processors.begin(); i != processors.end(); ++i) {
+  for (auto i = processors.begin(); i != processors.end(); ++i) {
     const GeoHandler* hdlr = this;
     string nam = (*i).second;
     const Detector::PropertyValues& vals = prp[nam];
     string type = vals.find("type")->second;
     string tag = type + "_Geant4_action";
-    Detector* detPtr = const_cast<Detector*>(&m_detDesc);
+    auto* detPtr = const_cast<Detector*>(&m_detDesc);
     long result = PluginService::Create<long>(tag, detPtr, hdlr, &vals);
     if (0 == result) {
       throw runtime_error("Failed to locate plugin to interprete files of type"
@@ -1076,7 +1076,7 @@ void Geant4Converter::handleProperties(Detector::Properties& prp) const {
 #if ROOT_VERSION_CODE >= ROOT_VERSION(6,17,0)
 /// Convert the geometry type material into the corresponding Geant4 object(s).
 void* Geant4Converter::handleMaterialProperties(TObject* matrix) const    {
-  TGDMLMatrix* gdmlMat = (TGDMLMatrix*)matrix;
+  auto* gdmlMat = (TGDMLMatrix*)matrix;
   Geant4GeometryInfo& info = data();
   Geant4GeometryInfo::PropertyVector* g4 = info.g4OpticalProperties[gdmlMat];
   if (!g4) {
@@ -1190,7 +1190,7 @@ static G4OpticalSurfaceModel geant4_surface_model(TGeoOpticalSurface::ESurfaceMo
 
 /// Convert the optical surface to Geant4
 void* Geant4Converter::handleOpticalSurface(TObject* surface) const    {
-  TGeoOpticalSurface* optSurf    = (TGeoOpticalSurface*)surface;
+  auto* optSurf    = (TGeoOpticalSurface*)surface;
   Geant4GeometryInfo& info = data();
   G4OpticalSurface*   g4   = info.g4OpticalSurfaces[optSurf];
   if (!g4) {
@@ -1209,13 +1209,13 @@ void* Geant4Converter::handleOpticalSurface(TObject* surface) const    {
     G4MaterialPropertiesTable* tab = 0;
     TListIter it(&optSurf->GetProperties());
     for(TObject* obj = it.Next(); obj; obj = it.Next())  {
-      TNamed*      named = (TNamed*)obj;
+      auto*      named = (TNamed*)obj;
       TGDMLMatrix* matrix = info.manager->GetGDMLMatrix(named->GetTitle());
       if ( 0 == tab )  {
         tab = new G4MaterialPropertiesTable();
         g4->SetMaterialPropertiesTable(tab);
       }
-      Geant4GeometryInfo::PropertyVector* v =
+      auto* v =
         (Geant4GeometryInfo::PropertyVector*)handleMaterialProperties(matrix);
       if ( !v )  {  // Error!
         except("Geant4OpticalSurface","++ Failed to convert opt.surface %s. Property table %s is not defined!",
@@ -1231,7 +1231,7 @@ void* Geant4Converter::handleOpticalSurface(TObject* surface) const    {
       vector<double> bins(v->bins), vals(v->values);
       for(size_t i=0, count=v->bins.size(); i<count; ++i)
         bins[i] *= conv.first, vals[i] *= conv.second;
-      G4MaterialPropertyVector* vec = new G4MaterialPropertyVector(&bins[0], &vals[0], bins.size());
+      auto* vec = new G4MaterialPropertyVector(&bins[0], &vals[0], bins.size());
       tab->AddProperty(named->GetName(), vec);
       
       printout(debugSurfaces ? ALWAYS : DEBUG, "Geant4Converter",
@@ -1249,7 +1249,7 @@ void* Geant4Converter::handleOpticalSurface(TObject* surface) const    {
 
 /// Convert the skin surface to Geant4
 void* Geant4Converter::handleSkinSurface(TObject* surface) const   {
-  TGeoSkinSurface*    surf = (TGeoSkinSurface*)surface;
+  auto*    surf = (TGeoSkinSurface*)surface;
   Geant4GeometryInfo& info = data();
   G4LogicalSkinSurface* g4 = info.g4SkinSurfaces[surf];
   if (!g4) {
@@ -1266,7 +1266,7 @@ void* Geant4Converter::handleSkinSurface(TObject* surface) const   {
 
 /// Convert the border surface to Geant4
 void* Geant4Converter::handleBorderSurface(TObject* surface) const   {
-  TGeoBorderSurface*    surf = (TGeoBorderSurface*)surface;
+  auto*    surf = (TGeoBorderSurface*)surface;
   Geant4GeometryInfo&   info = data();
   G4LogicalBorderSurface* g4 = info.g4BorderSurfaces[surf];
   if (!g4) {
@@ -1302,7 +1302,7 @@ void Geant4Converter::printSensitive(SensitiveDetector sens_det, const set<const
   printout(INFO, "Geant4Converter", str.str().c_str());
 
   for (const auto i : volset )  {
-    map<Volume, G4LogicalVolume*>::iterator v = info.g4Volumes.find(i);
+    auto v = info.g4Volumes.find(i);
     G4LogicalVolume* vol = (*v).second;
     str.str("");
     str << "                                   | " << "Volume:" << setw(24) << left << vol->GetName() << " "
@@ -1318,7 +1318,7 @@ string printSolid(G4VSolid* sol) {
     str << "++ Box: x=" << b->GetXHalfLength() << " y=" << b->GetYHalfLength() << " z=" << b->GetZHalfLength();
   }
   else if (typeid(*sol) == typeid(G4Tubs)) {
-    const G4Tubs* t = (const G4Tubs*) sol;
+    const auto* t = (const G4Tubs*) sol;
     str << " Tubs: Ri=" << t->GetInnerRadius() << " Ra=" << t->GetOuterRadius() << " z/2=" << t->GetZHalfLength() << " Phi="
         << t->GetStartPhiAngle() << "..." << t->GetDeltaPhiAngle();
   }
@@ -1358,14 +1358,14 @@ void* Geant4Converter::printPlacement(const string& name, const TGeoNode* node) 
 
 namespace  {
   template <typename O, typename C, typename F> void handleRefs(const O* o, const C& c, F pmf) {
-    for (typename C::const_iterator i = c.begin(); i != c.end(); ++i) {
+    for (auto i = c.begin(); i != c.end(); ++i) {
       //(o->*pmf)((*i)->GetName(), *i);
       (o->*pmf)("", *i);
     }
   }
 
   template <typename O, typename C, typename F> void handle(const O* o, const C& c, F pmf) {
-    for (typename C::const_iterator i = c.begin(); i != c.end(); ++i) {
+    for (auto i = c.begin(); i != c.end(); ++i) {
       (o->*pmf)((*i)->GetName(), *i);
     }
   }
@@ -1377,12 +1377,12 @@ namespace  {
   }
 
   template <typename O, typename C, typename F> void handleMap(const O* o, const C& c, F pmf) {
-    for (typename C::const_iterator i = c.begin(); i != c.end(); ++i)
+    for (auto i = c.begin(); i != c.end(); ++i)
       (o->*pmf)((*i).first, (*i).second);
   }
 
   template <typename O, typename C, typename F> void handleRMap(const O* o, const C& c, F pmf) {
-    for (typename C::const_reverse_iterator i = c.rbegin(); i != c.rend(); ++i)  {
+    for (auto i = c.rbegin(); i != c.rend(); ++i)  {
       //cout << "Handle RMAP [ " << (*i).first << " ]" << endl;
       handle(o, (*i).second, pmf);
     }

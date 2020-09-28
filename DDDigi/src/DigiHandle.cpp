@@ -57,7 +57,7 @@ namespace dd4hep::digi {
     }
 
     template <typename T> T* _raw_create(const std::string& t, const DigiKernel& kernel, const std::string& n)    {
-      DigiEventAction* object = PluginService::Create<DigiEventAction*>(t, &kernel, n);
+      auto* object = PluginService::Create<DigiEventAction*>(t, &kernel, n);
       return object ? dynamic_cast<T*>(object) : nullptr;
     }
     template <> DigiAction* _raw_create<DigiAction>(const std::string& t, const DigiKernel& kernel, const std::string& n)    {

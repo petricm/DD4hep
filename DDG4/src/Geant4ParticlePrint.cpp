@@ -50,7 +50,7 @@ Geant4ParticlePrint::~Geant4ParticlePrint()  {
 
 /// Print particle table
 void Geant4ParticlePrint::makePrintout(const G4Event* e) const  {
-  Geant4ParticleMap* parts = context()->event().extension<Geant4ParticleMap>();
+  auto* parts = context()->event().extension<Geant4ParticleMap>();
   if ( parts )   {
     const ParticleMap& particles = parts->particles();
     print("+++ ******** MC Particle Printout for event ID:%d ********",e->GetEventID());
@@ -112,16 +112,16 @@ void Geant4ParticlePrint::printParticle(const std::string& prefix, const G4Event
         status.isSet(G4PARTICLE_GEN_DOCUMENTATION) ? 'd' : '.'
         );
   if ( e && m_printHits )  {
-    Geant4ParticleMap* truth = context()->event().extension<Geant4ParticleMap>();
+    auto* truth = context()->event().extension<Geant4ParticleMap>();
     G4HCofThisEvent* hc = e->GetHCofThisEvent();
     for (int ihc=0, nhc=hc->GetNumberOfCollections(); ihc<nhc; ++ihc)   {
       G4VHitsCollection* c = hc->GetHC(ihc);
-      Geant4HitCollection* coll = dynamic_cast<Geant4HitCollection*>(c);
+      auto* coll = dynamic_cast<Geant4HitCollection*>(c);
       if ( coll )  {
         size_t nhits = coll->GetSize();
         for(size_t i=0; i<nhits; ++i)   {
           Geant4HitData* h = coll->hit(i);
-          Geant4Tracker::Hit* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
+          auto* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
           if ( 0 != trk_hit )   {
             Geant4HitData::Contribution& t = trk_hit->truth;
             int trackID = t.trackID;
@@ -131,7 +131,7 @@ void Geant4ParticlePrint::printParticle(const std::string& prefix, const G4Event
                     trk_hit->position.x(),trk_hit->position.y(),trk_hit->position.z());
             }
           }
-          Geant4Calorimeter::Hit* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
+          auto* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
           if ( 0 != cal_hit )   {
             Geant4HitData::Contributions& contrib = cal_hit->truth;
             for(auto & t : contrib)  {
@@ -220,7 +220,7 @@ void Geant4ParticlePrint::printParticleTree(const G4Event* e, const ParticleMap&
   print("+++ MC Particles %12s #Tracks:%7d %-12s Parent%-7s "
         "Primary Secondary Energy %-8s Calo Tracker Process/Par  Details",
         "",int(particles.size()),"ParticleType","","in [MeV]");
-  for(ParticleMap::const_iterator i=particles.begin(); i!=particles.end(); ++i)  {
+  for(auto i=particles.begin(); i!=particles.end(); ++i)  {
     Geant4ParticleHandle p = (*i).second;
     PropertyMask mask(p->reason);
     if ( mask.isSet(G4PARTICLE_PRIMARY) ) printParticleTree(e, particles, 0, p);

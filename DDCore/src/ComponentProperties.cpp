@@ -142,13 +142,13 @@ void PropertyManager::adopt(const PropertyManager& copy)   {
 
 /// Check for existence
 bool PropertyManager::exists(const std::string& name) const   {
-  Properties::const_iterator i = m_properties.find(name);
+  auto i = m_properties.find(name);
   return i != m_properties.end();
 }
 
 /// Verify that this property does not exist (throw exception if the name was found)
 void PropertyManager::verifyNonExistence(const string& name) const {
-  Properties::const_iterator i = m_properties.find(name);
+  auto i = m_properties.find(name);
   if (i == m_properties.end())
     return;
   throw runtime_error("The property:" + name + " already exists for this component.");
@@ -157,7 +157,7 @@ void PropertyManager::verifyNonExistence(const string& name) const {
 /// Verify that this property exists (throw exception if the name was not found)
 PropertyManager::Properties::const_iterator
 PropertyManager::verifyExistence(const string& name) const {
-  Properties::const_iterator i = m_properties.find(name);
+  auto i = m_properties.find(name);
   if (i != m_properties.end())
     return i;
   throw runtime_error("PropertyManager: Unknown property:" + name);
@@ -166,7 +166,7 @@ PropertyManager::verifyExistence(const string& name) const {
 /// Verify that this property exists (throw exception if the name was not found)
 PropertyManager::Properties::iterator
 PropertyManager::verifyExistence(const string& name) {
-  Properties::iterator i = m_properties.find(name);
+  auto i = m_properties.find(name);
   if (i != m_properties.end())
     return i;
   throw runtime_error("PropertyManager: Unknown property:" + name);

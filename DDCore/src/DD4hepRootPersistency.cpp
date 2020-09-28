@@ -42,7 +42,7 @@ int DD4hepRootPersistency::save(Detector& description, const char* fname, const 
       TTimeStamp start;
       DetectorData::patchRootStreamer(TGeoVolume::Class());
       DetectorData::patchRootStreamer(TGeoNode::Class());
-      DD4hepRootPersistency* persist = new DD4hepRootPersistency();
+      auto* persist = new DD4hepRootPersistency();
       persist->m_data = new dd4hep::DetectorData();
       persist->m_data->adoptData(dynamic_cast<DetectorData&>(description),false);
       for( const auto& sens : persist->m_data->m_sensitive )  {
@@ -156,8 +156,8 @@ int DD4hepRootPersistency::load(Detector& description, const char* fname, const 
         else   {
           printout(ALWAYS,"DD4hepRootPersistency","+++ Volume manager NOT restored. [Was it ever up when saved?]");
         }
-        DetectorData* tar_data = dynamic_cast<DetectorData*>(&description);
-        DetectorData* src_data = dynamic_cast<DetectorData*>(source);
+        auto* tar_data = dynamic_cast<DetectorData*>(&description);
+        auto* src_data = dynamic_cast<DetectorData*>(source);
         if( tar_data != nullptr && src_data != nullptr )  {
           tar_data->adoptData(*src_data,false);
           TTimeStamp stop;

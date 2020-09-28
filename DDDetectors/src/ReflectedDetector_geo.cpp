@@ -29,7 +29,7 @@ static Ref_t create_element(Detector& description, xml_h e, Ref_t sens)  {
   xml_dim_t  x_pos   = x_det.child(_U(position),false);
   xml_dim_t  x_rot   = x_det.child(_U(rotation),false);
   xml_dim_t  x_refl  = x_det.child(_U(reflect),false);
-  string     ref_nam = x_det.attr<string>(_U(sdref));
+  auto     ref_nam = x_det.attr<string>(_U(sdref));
   DetElement ref_det = description.detector(ref_nam);
   auto       refl    = ref_det.reflect(x_det.nameStr(), x_det.id(), sd);
   Volume     vol     = refl.second;

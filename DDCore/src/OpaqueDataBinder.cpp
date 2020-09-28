@@ -139,7 +139,7 @@ namespace dd4hep::detail  {
                                  const VAL*)
     {
       typedef map<KEY,VAL> map_t;
-      map_t& m = object.template get<map_t>();
+      auto& m = object.template get<map_t>();
       VAL v;
       if ( !BasicGrammar::instance<VAL>().fromString(&v, val) )  {
         except("OpaqueDataBinder","++ Failed to convert conditions map entry.");
@@ -190,7 +190,7 @@ namespace dd4hep::detail  {
     {
       typedef map<KEY,VAL> map_t;
       pair<KEY,VAL> entry;
-      map_t& m = object.template get<map_t>();
+      auto& m = object.template get<map_t>();
       if ( !BasicGrammar::instance<pair<KEY,VAL> >().fromString(&entry,data) )  {
         except("OpaqueDataBinder","++ Failed to convert conditions map entry.");
       }

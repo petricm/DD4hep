@@ -95,7 +95,7 @@ using namespace dd4hep::cond;
 namespace {
   void* create_loader(dd4hep::Detector& description, int argc, char** argv)   {
     const char* name = argc>0 ? argv[0] : "MULTILoader";
-    ConditionsManager::Object* mgr = (ConditionsManager::Object*)(argc>0 ? argv[1] : 0);
+    auto* mgr = (ConditionsManager::Object*)(argc>0 ? argv[1] : 0);
     return new ConditionsMultiLoader(description,ConditionsManager(mgr),name);
   }
 }
@@ -115,14 +115,14 @@ ConditionsDataLoader*
 ConditionsMultiLoader::load_source(const std::string& nam,
                                    const IOV& req_validity)
 {
-  OpenSources::iterator iop = m_openSources.find(nam);
+  auto iop = m_openSources.find(nam);
   if ( iop == m_openSources.end() )  {
     size_t idx = nam.find(':');
     if ( idx == string::npos )   {
       except("ConditionsMultiLoader","Invalid data source specification: "+nam);
     }
     string ident = nam.substr(0,idx);
-    Loaders::iterator ild = m_loaders.find(ident);
+    auto ild = m_loaders.find(ident);
     ConditionsDataLoader* loader = 0;
     if ( ild == m_loaders.end() )  {
       string typ = "DD4hep_Conditions_"+ident+"_Loader";

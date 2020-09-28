@@ -58,7 +58,7 @@ void GenericEventHandler::Subscribe(EventConsumer* consumer)  {
 
 /// Unsubscribe from notification of new data present
 void GenericEventHandler::Unsubscribe(EventConsumer* consumer)  {
-  Subscriptions::iterator i=m_subscriptions.find(consumer);
+  auto i=m_subscriptions.find(consumer);
   if ( i != m_subscriptions.end() ) m_subscriptions.erase(i);
 }
 

@@ -106,33 +106,33 @@ void* GeometryTreeDump::handleVolume(const string& name, Volume vol) const {
 void* GeometryTreeDump::handleSolid(const string& name, const TGeoShape* shape) const {
   if (shape) {
     if (shape->IsA() == TGeoBBox::Class()) {
-      const TGeoBBox* sh = (const TGeoBBox*) shape;
+      const auto* sh = (const TGeoBBox*) shape;
       m_output << "\t\t<box name=\"" << name << "_shape\" x=\"" << sh->GetDX() << "\" y=\"" << sh->GetDY() << "\" z=\""
                << sh->GetDZ() << R"(" lunit="cm"/>)" << endl;
     }
     else if (shape->IsA() == TGeoTube::Class()) {
-      const TGeoTube* sh = (const TGeoTube*) shape;
+      const auto* sh = (const TGeoTube*) shape;
       m_output << "\t\t<tube name=\"" << name << "_shape\" rmin=\"" << sh->GetRmin() << "\" rmax=\"" << sh->GetRmax() << "\" z=\""
                << sh->GetDz() << R"(" startphi="0.0" deltaphi="360.0" aunit="deg" lunit="cm"/>)" << endl;
     }
     else if (shape->IsA() == TGeoTubeSeg::Class()) {
-      const TGeoTubeSeg* sh = (const TGeoTubeSeg*) shape;
+      const auto* sh = (const TGeoTubeSeg*) shape;
       m_output << "\t\t<tube name=\"" << name << "_shape\" rmin=\"" << sh->GetRmin() << "\" rmax=\"" << sh->GetRmax() << "\" z=\""
                << sh->GetDz() << "\" startphi=\"" << sh->GetPhi1() << "\" deltaphi=\"" << sh->GetPhi2()
                << R"(" aunit="deg" lunit="cm"/>)" << endl;
     }
     else if (shape->IsA() == TGeoTrd1::Class()) {
-      const TGeoTrd1* sh = (const TGeoTrd1*) shape;
+      const auto* sh = (const TGeoTrd1*) shape;
       m_output << "\t\t<tube name=\"" << name << "_shape\" x1=\"" << sh->GetDx1() << "\" x2=\"" << sh->GetDx2() << "\" y1=\""
                << sh->GetDy() << "\" y2=\"" << sh->GetDy() << "\" z=\"" << sh->GetDz() << R"(" lunit="cm"/>)" << endl;
     }
     else if (shape->IsA() == TGeoTrd2::Class()) {
-      const TGeoTrd2* sh = (const TGeoTrd2*) shape;
+      const auto* sh = (const TGeoTrd2*) shape;
       m_output << "\t\t<tube name=\"" << name << "_shape\" x1=\"" << sh->GetDx1() << "\" x2=\"" << sh->GetDx2() << "\" y1=\""
                << sh->GetDy1() << "\" y2=\"" << sh->GetDy2() << "\" z=\"" << sh->GetDz() << R"(" lunit="cm"/>)" << endl;
     }
     else if (shape->IsA() == TGeoPgon::Class()) {
-      const TGeoPgon* sh = (const TGeoPgon*) shape;
+      const auto* sh = (const TGeoPgon*) shape;
       m_output << "\t\t<polyhedra name=\"" << name << "_shape\" startphi=\"" << sh->GetPhi1() << "\" deltaphi=\"" << sh->GetDphi()
                << "\" numsides=\"" << sh->GetNedges() << R"(" aunit="deg" lunit="cm">)" << endl;
       for (int i = 0; i < sh->GetNz(); ++i) {
@@ -142,7 +142,7 @@ void* GeometryTreeDump::handleSolid(const string& name, const TGeoShape* shape) 
       m_output << "\t\t</polyhedra>" << endl;
     }
     else if (shape->IsA() == TGeoPcon::Class()) {
-      const TGeoPcon* sh = (const TGeoPcon*) shape;
+      const auto* sh = (const TGeoPcon*) shape;
       m_output << "\t\t<polycone name=\"" << name << "_shape\" startphi=\"" << sh->GetPhi1() << "\" deltaphi=\"" << sh->GetDphi()
                << R"(" aunit="deg" lunit="cm">)" << endl;
       for (int i = 0; i < sh->GetNz(); ++i) {
@@ -153,7 +153,7 @@ void* GeometryTreeDump::handleSolid(const string& name, const TGeoShape* shape) 
     }
     else if (shape->IsA() == TGeoCompositeShape::Class()) {
       string nn = name;
-      const TGeoCompositeShape* sh = (const TGeoCompositeShape*) shape;
+      const auto* sh = (const TGeoCompositeShape*) shape;
       const TGeoBoolNode* boolean = sh->GetBoolNode();
       TGeoBoolNode::EGeoBoolType oper = boolean->GetBooleanOperator();
 
@@ -263,7 +263,7 @@ static void dumpStructure(PlacedVolume pv, int level) {
   ::printf(fmt, level, "", "  ->path:", _path.c_str());
   if (num_children > 0) {
     for (int i = 0; i < num_children; ++i) {
-      TGeoNode* node = static_cast<TGeoNode*>(nodes->At(i));
+      auto* node = static_cast<TGeoNode*>(nodes->At(i));
       dumpStructure(PlacedVolume(node), level + 1);
     }
   }

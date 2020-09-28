@@ -105,7 +105,7 @@ namespace {
     UInt_t R__c = 0; // Count of bytes.
     TClass* cl = BasicGrammar::instance<OpaqueDataBlock>().clazz();//gROOT->GetClass("dd4hep::OpaqueDataBlock");
    
-    OpaqueDataBlock* block = (OpaqueDataBlock*)obj;
+    auto* block = (OpaqueDataBlock*)obj;
     if ( b.IsReading() )  {
       b.ReadVersion(&R__s, &R__c, cl);
       BasicGrammar::key_type key = 0;

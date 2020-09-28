@@ -159,7 +159,7 @@ void EventControl::OnNewEvent(EventHandler& handler)   {
 /// User callback to add elements to the control
 void EventControl::OnBuild()   {
   string icondir = TString::Format("%s/icons/", gSystem->Getenv("ROOTSYS")).Data();
-  TGGroupFrame* group = new TGGroupFrame(m_frame,"Event I/O Control");
+  auto* group = new TGGroupFrame(m_frame,"Event I/O Control");
   TGCompositeFrame* top = new TGHorizontalFrame(group);
   TGPictureButton* b = 0;
   char text[1024];

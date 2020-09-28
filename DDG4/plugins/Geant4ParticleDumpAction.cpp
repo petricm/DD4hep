@@ -94,7 +94,7 @@ void Geant4ParticleDumpAction::begin(const G4Event* /* event */)   {
 
 /// Geant4EventAction interface: End-of-event callback
 void Geant4ParticleDumpAction::end(const G4Event* event)    {
-  Geant4ParticleMap* parts = context()->event().extension<Geant4ParticleMap>();
+  auto* parts = context()->event().extension<Geant4ParticleMap>();
   if ( parts )   {
     Geant4DataDump dump(name());
     dump.print(ALWAYS,parts);

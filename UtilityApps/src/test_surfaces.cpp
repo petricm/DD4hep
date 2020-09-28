@@ -118,7 +118,7 @@ int main_wrapper(int argc, char** argv ){
       
       for(int i=0 ; i< nHit ; ++i){
 	
-        EVENT::SimTrackerHit* sHit = (EVENT::SimTrackerHit*) col->getElementAt(i) ;
+        auto* sHit = (EVENT::SimTrackerHit*) col->getElementAt(i) ;
 	
         dd4hep::long64 id = sHit->getCellID0() ;
 	
@@ -128,7 +128,7 @@ int main_wrapper(int argc, char** argv ){
 #if 0
         Surface* surf = surfMap[ id ] ;
 #else
-        SurfaceMap::const_iterator si = surfMap.find( id )  ;
+        auto si = surfMap.find( id )  ;
 	//        Surface* surf = dynamic_cast<Surface*> ( ( si != surfMap.end()  ?  si->second  : 0 )   ) ; 
         ISurface* surf = ( si != surfMap.end()  ?  si->second  : 0 )  ; 
 #endif

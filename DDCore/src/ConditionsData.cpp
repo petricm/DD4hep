@@ -23,7 +23,7 @@ std::ostream& operator << (std::ostream& s, const AbstractMap& data)   {
   struct _Print {
     void operator()(const AbstractMap::Params::value_type& obj)  const {
       if ( obj.second.typeInfo() == typeid(AbstractMap) )  {
-        const AbstractMap& d= obj.second.get<AbstractMap>();
+        const auto& d= obj.second.get<AbstractMap>();
         dd4hep::printout(dd4hep::INFO,"Condition","++ %-16s [%d] %-8s -> %s",
                          obj.first.c_str(), d.classID,
                          obj.second.dataType().c_str(), 

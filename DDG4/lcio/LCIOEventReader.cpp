@@ -37,7 +37,7 @@ DECLARE_GEANT4ACTION(LCIOInputAction)
 
 namespace {
   inline int GET_ENTRY(const map<EVENT::MCParticle*,int>& mcparts, EVENT::MCParticle* part)  {
-    map<EVENT::MCParticle*,int>::const_iterator ip=mcparts.find(part);
+    auto ip=mcparts.find(part);
     if ( ip == mcparts.end() )  {
       throw runtime_error("Unknown particle identifier look-up!");
     }
@@ -76,7 +76,7 @@ LCIOEventReader::readParticles(int event_number,
 
   mcpcoll.resize(NHEP,0);
   for(int i=0; i<NHEP; ++i ) {
-    EVENT::MCParticle* p = dynamic_cast<EVENT::MCParticle*>(primaries->getElementAt(i));
+    auto* p = dynamic_cast<EVENT::MCParticle*>(primaries->getElementAt(i));
     mcparts[p] = i;
     mcpcoll[i] = p;
   }
@@ -139,7 +139,7 @@ LCIOEventReader::readParticles(int event_number,
 
     if ( p->parents.size() == 0 )  {
 
-      Geant4Vertex* vtx = new Geant4Vertex ;
+      auto* vtx = new Geant4Vertex ;
       vertices.emplace_back( vtx );
       vtx->x = p->vsx;
       vtx->y = p->vsy;

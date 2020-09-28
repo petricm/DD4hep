@@ -93,7 +93,7 @@ void SurfaceInstaller::install(DetElement component, PlacedVolume pv)   {
     printout(INFO,m_det.name(),log.str());
     log.str("");
     log << "       " << " detail::matrix[" <<  all_nodes.size()  << "]: ";
-    for(PlacementPath::const_reverse_iterator i=all_nodes.rbegin(); i!=all_nodes.rend(); ++i)  {
+    for(auto i=all_nodes.rbegin(); i!=all_nodes.rend(); ++i)  {
       PlacedVolume placed = *i;
       log << (void*)(placed->GetMatrix()) << " ";
       if ( placed->GetUserExtension() )  {
@@ -123,7 +123,7 @@ void SurfaceInstaller::install(DetElement component, PlacedVolume pv)   {
 void SurfaceInstaller::scan(DetElement e)  {
   const _C& children = e.children();
   install(e,e.placement());
-  for (_C::const_iterator i=children.begin(); !m_stopScanning && i!=children.end(); ++i)
+  for (auto i=children.begin(); !m_stopScanning && i!=children.end(); ++i)
     scan((*i).second);
 }
 

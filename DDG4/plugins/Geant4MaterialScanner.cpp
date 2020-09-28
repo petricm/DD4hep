@@ -185,7 +185,7 @@ void Geant4MaterialScanner::end(const G4Track* track) {
     ::printf(" | Layer \\ %-11s            [g/mole]  [g/cm3]     [cm]        [cm]          [cm]      [cm]     [cm]        [cm]     (     cm,     cm,     cm)\n","");
     ::printf("%s",line);
     int count = 1;
-    for(Steps::const_iterator i=m_steps.begin(); i!=m_steps.end(); ++i, ++count)  {
+    for(auto i=m_steps.begin(); i!=m_steps.end(); ++i, ++count)  {
       const G4LogicalVolume* logVol = (*i)->volume;
       G4Material* material = logVol->GetMaterial();
       const Position& prePos  = (*i)->pre;

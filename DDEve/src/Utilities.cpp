@@ -38,7 +38,7 @@ using namespace std;
 /// Set the rendering flags for the object and the next level children
 void Utilities::SetRnrChildren(TEveElementList* l, bool b)  {
   l->SetRnrChildren(b);
-  for(TEveElementList::List_i i=l->BeginChildren(); i!=l->EndChildren(); ++i)  {
+  for(auto i=l->BeginChildren(); i!=l->EndChildren(); ++i)  {
     (*i)->SetRnrChildren(b);
   }
 }
@@ -46,9 +46,9 @@ void Utilities::SetRnrChildren(TEveElementList* l, bool b)  {
 /// Recursively set the rendering flags for the object ans its children
 void Utilities::SetRnrAll(TEveElementList* l, bool b)  {
   l->SetRnrSelfChildren(b,b);
-  for(TEveElementList::List_i i=l->BeginChildren(); i!=l->EndChildren(); ++i)  {
+  for(auto i=l->BeginChildren(); i!=l->EndChildren(); ++i)  {
     TEveElement* e = *i;
-    TEveElementList* ll = dynamic_cast<TEveElementList*>(e);
+    auto* ll = dynamic_cast<TEveElementList*>(e);
     if ( ll ) SetRnrAll(ll, b);
     else  e->SetRnrSelfChildren(b,b);
   }
@@ -56,7 +56,7 @@ void Utilities::SetRnrAll(TEveElementList* l, bool b)  {
 
 /// Make a set of nodes starting from a top element (in-)visible with a given depth
 void Utilities::MakeNodesVisible(TEveElement* e, bool visible, int level)   {
-  TEveElementList* lst = dynamic_cast<TEveElementList*>(e);
+  auto* lst = dynamic_cast<TEveElementList*>(e);
   if ( !lst )  {
     return;
   }
@@ -91,7 +91,7 @@ Utilities::createEveShape(int level,
   TEveElement* element = 0;
 
   if ( p )   {
-    TGeoNode* pn = (TGeoNode*)p->GetUserData();
+    auto* pn = (TGeoNode*)p->GetUserData();
     if ( pn == n )  {
       element = p;
     }
@@ -106,7 +106,7 @@ Utilities::createEveShape(int level,
 
   if ( geoShape->IsA() == TGeoShapeAssembly::Class() )  {
     //printout(INFO,"createEveShape","+++ Assembly Shape %s Userdata:%p.",n->GetName(),n);
-    ElementList* shape = new ElementList(n->GetName(),n->GetName(),true,true);
+    auto* shape = new ElementList(n->GetName(),n->GetName(),true,true);
     shape->SetUserData(n);
     shape->SetMainTransparency(true);
     shape->SetMainAlpha(0.2);
@@ -121,7 +121,7 @@ Utilities::createEveShape(int level,
     goto Daughters;
   }  
   else if ( 0 == element )  {
-    TEveGeoShape* shape = new TEveGeoShape(n->GetName());
+    auto* shape = new TEveGeoShape(n->GetName());
     //printout(INFO,"createEveShape","+++ Create TEveGeoShape %s [%s] Userdata:%p.",
     //n->GetName(),geoShape->IsA()->GetName(),n);
     created = true;
@@ -198,7 +198,7 @@ std::pair<bool,TEveElement*> Utilities::LoadDetElement(DetElement de,int levels,
       gGeoManager = 0;
       gGeoManager = new TGeoManager();
       std::pair<bool,TEveElement*> e = createEveShape(0, levels, parent, n, *matrix, de.name());
-      TEveElementList* list = dynamic_cast<TEveElementList*>(e.second);
+      auto* list = dynamic_cast<TEveElementList*>(e.second);
       if ( list )  {
         list->SetName(de.name());
       }

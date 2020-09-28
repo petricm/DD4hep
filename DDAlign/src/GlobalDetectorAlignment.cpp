@@ -119,8 +119,8 @@ namespace {
     detail::tools::placementPath(det,nodes);
     detail::tools::elementPath(det,det_nodes);
     ///    cout << "Placement path:";
-    detail::tools::PlacementPath::const_reverse_iterator j=nodes.rbegin();
-    detail::tools::ElementPath::const_reverse_iterator   k=det_nodes.rbegin();
+    auto j=nodes.rbegin();
+    auto   k=det_nodes.rbegin();
     for(; j!=nodes.rend(); ++j, ++level)  {
       //cout << "(" << level << ") " << (void*)((*j).ptr())
       //           << " " << string((*j)->GetName()) << " ";

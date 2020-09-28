@@ -66,7 +66,7 @@ namespace dd4hep::sim {
         Position pos = 0.5 * (pre.position + post.position);
         Momentum mom = 0.5 * (pre.momentum + post.momentum);
         double path_len = (post.position - pre.position).R();
-        Geant4TrackerHit* hit = new Geant4TrackerHit(pre.truth.trackID,
+        auto* hit = new Geant4TrackerHit(pre.truth.trackID,
                                                      pre.truth.pdgID,
                                                      pre.truth.deposit,
                                                      pre.truth.time);

@@ -133,7 +133,7 @@ static Ref_t create_ConstantField(Detector& /* description */, xml_h e) {
   CartesianField obj;
   xml_comp_t field(e), strength(e.child(_U(strength)));
   string t = e.attr<string>(_U(field));
-  ConstantField* ptr = new ConstantField();
+  auto* ptr = new ConstantField();
   ptr->type = ::toupper(t[0]) == 'E' ? CartesianField::ELECTRIC : CartesianField::MAGNETIC;
   ptr->direction.SetX(strength.x());
   ptr->direction.SetY(strength.y());
@@ -153,7 +153,7 @@ static Ref_t create_SolenoidField(Detector& description, xml_h e) {
                 " xml attributes inner_radius of outer_radius MUST be set.");
   }
   CartesianField obj;
-  SolenoidField* ptr = new SolenoidField();
+  auto* ptr = new SolenoidField();
   //
   // This logic is a bit weird, but has it's origin in the compact syntax:
   // If no "inner_radius" is given, the "outer_radius" IS the "inner_radius"
@@ -195,7 +195,7 @@ DECLARE_XMLELEMENT(solenoid,create_SolenoidField)
 static Ref_t create_DipoleField(Detector& /* description */, xml_h e) {
   xml_comp_t c(e);
   CartesianField obj;
-  DipoleField* ptr = new DipoleField();
+  auto* ptr = new DipoleField();
   double lunit = c.hasAttr(_U(lunit)) ? c.attr<double>(_U(lunit)) : 1.0;
   double funit = c.hasAttr(_U(funit)) ? c.attr<double>(_U(funit)) : 1.0;
   double val, mult = funit;
@@ -224,7 +224,7 @@ DECLARE_XMLELEMENT(DipoleMagnet,create_DipoleField)
 static Ref_t create_MultipoleField(Detector& description, xml_h e) {
   xml_dim_t c(e), child;
   CartesianField obj;
-  MultipoleField* ptr = new MultipoleField();
+  auto* ptr = new MultipoleField();
   double lunit = c.hasAttr(_U(lunit)) ? c.attr<double>(_U(lunit)) : 1.0;
   double funit = c.hasAttr(_U(funit)) ? c.attr<double>(_U(funit)) : 1.0;
   double val, mult = funit, bz = 0.0;
@@ -340,8 +340,8 @@ template <> void Converter<Plugin>::operator()(xml_h e) const {
 template <> void Converter<Constant>::operator()(xml_h e) const {
   if ( e.tag() != "include" )   {
     xml_ref_t constant(e);
-    string nam = constant.attr<string>(_U(name));
-    string val = constant.attr<string>(_U(value));
+    auto nam = constant.attr<string>(_U(name));
+    auto val = constant.attr<string>(_U(value));
     string typ = constant.hasAttr(_U(type)) ? constant.attr<string>(_U(type)) : "number";
     Constant c(nam, val, typ);
     _toDictionary(nam, val, typ);
@@ -399,7 +399,7 @@ template <> void Converter<Material>::operator()(xml_h e) const {
   const char*       matname = mname.c_str();
   TGeoElementTable* table   = mgr.GetElementTable();
   TGeoMaterial*     mat     = mgr.GetMaterial(matname);
-  TGeoMixture*      mix     = dynamic_cast<TGeoMixture*>(mat);
+  auto*      mix     = dynamic_cast<TGeoMixture*>(mat);
   xml_coll_t        fractions (x_mat, _U(fraction));
   xml_coll_t        composites(x_mat, _U(composite));
 
@@ -493,10 +493,10 @@ template <> void Converter<Material>::operator()(xml_h e) const {
       xml_elt_t p = properties;
       if ( p.hasAttr(_U(ref)) )   {
         bool   err = kFALSE;
-        string ref = p.attr<string>(_U(ref));
+        auto ref = p.attr<string>(_U(ref));
         mgr.GetProperty(ref.c_str(), &err); /// Check existence
         if ( err == kFALSE )  {
-          string prop_nam = p.attr<string>(_U(name));
+          auto prop_nam = p.attr<string>(_U(name));
           mat->AddConstProperty(prop_nam.c_str(), ref.c_str());
           printout(s_debug.materials ? ALWAYS : DEBUG, "Compact",
                    "++            material %-16s  add constant property: %s  ->  %s.",
@@ -522,10 +522,10 @@ template <> void Converter<Material>::operator()(xml_h e) const {
     for(xml_coll_t properties(x_mat, _U(property)); properties; ++properties) {
       xml_elt_t p = properties;
       if ( p.hasAttr(_U(ref)) )   {
-        string ref = p.attr<string>(_U(ref));
+        auto ref = p.attr<string>(_U(ref));
         TGDMLMatrix* gdmlMat = mgr.GetGDMLMatrix(ref.c_str());
         if ( gdmlMat )  {
-          string prop_nam = p.attr<string>(_U(name));
+          auto prop_nam = p.attr<string>(_U(name));
           mat->AddProperty(prop_nam.c_str(), ref.c_str());
           printout(s_debug.materials ? ALWAYS : DEBUG, "Compact",
                    "++            material %-16s  add property: %s  ->  %s.",
@@ -548,7 +548,7 @@ template <> void Converter<Material>::operator()(xml_h e) const {
   // TGeo has no notion of a material "formula"
   // Hence, treat the formula the same way as the material itself
   if (x_mat.hasAttr(_U(formula))) {
-    string form = x_mat.attr<string>(_U(formula));
+    auto form = x_mat.attr<string>(_U(formula));
     if (form != matname) {
       medium = mgr.GetMedium(form.c_str());
       if (0 == medium) {
@@ -579,8 +579,8 @@ template <> void Converter<Isotope>::operator()(xml_h e) const {
     xml_ref_t atom(isotope.child(_U(atom)));
     int    n     = isotope.attr<int>(_U(N));
     int    z     = isotope.attr<int>(_U(Z));
-    double value = atom.attr<double>(_U(value));
-    string unit  = atom.attr<string>(_U(unit));
+    auto value = atom.attr<double>(_U(value));
+    auto unit  = atom.attr<string>(_U(unit));
     double a     = value * _multiply<double>(unit,"mol/g");
     iso = new TGeoIsotope(nam.c_str(), z, n, a);
     printout(s_debug.isotopes ? ALWAYS : DEBUG, "Compact",
@@ -617,9 +617,9 @@ template <> void Converter<Atom>::operator()(xml_h e) const {
   if ( !elt ) {
     if ( elem.hasChild(_U(atom)) )  {
       xml_ref_t atom(elem.child(_U(atom)));
-      string formula = elem.attr<string>(_U(formula));
-      double value   = atom.attr<double>(_U(value));
-      string unit    = atom.attr<string>(_U(unit));
+      auto formula = elem.attr<string>(_U(formula));
+      auto value   = atom.attr<double>(_U(value));
+      auto unit    = atom.attr<string>(_U(unit));
       int    z       = elem.attr<int>(_U(Z));
       double a       = value*_multiply<double>(unit,"mol/g");
       printout(s_debug.elements ? ALWAYS : DEBUG, "Compact",
@@ -742,7 +742,7 @@ template <> void Converter<OpticalSurface>::operator()(xml_h element) const {
       values.emplace_back(_toDouble(val));
     }
     /// Create table and register table
-    TGDMLMatrix* table = new TGDMLMatrix("",values.size()/cols, cols);
+    auto* table = new TGDMLMatrix("",values.size()/cols, cols);
     str_nam << nam << "__" << (void*)table;
     table->SetName(str_nam.str().c_str());
     table->SetTitle(nam.c_str());
@@ -892,7 +892,7 @@ template <> void Converter<Region>::operator()(xml_h elt) const {
 template <> void Converter<Segmentation>::operator()(xml_h seg) const {
   string type = seg.attr<string>(_U(type));
   string name = seg.hasAttr(_U(name)) ? seg.attr<string>(_U(name)) : string();
-  std::pair<Segmentation,IDDescriptor>* opt = _option<pair<Segmentation,IDDescriptor> >();
+  auto* opt = _option<pair<Segmentation,IDDescriptor> >();
 
   const BitFieldCoder* bitfield = &opt->second->decoder;
   Segmentation segment(type, name, bitfield);
@@ -1163,7 +1163,7 @@ template <> void Converter<SensitiveDetector>::operator()(xml_h element) const {
     }
     xml_attr_t limits = element.attr_nothrow(_U(limits));
     if ( limits ) {
-      string l = element.attr<string>(limits);
+      auto l = element.attr<string>(limits);
       LimitSet ls = description.limitSet(l);
       if (!ls.isValid()) {
         throw_print("Converter<SensitiveDetector>: Request for non-existing limitset:" + l);
@@ -1172,7 +1172,7 @@ template <> void Converter<SensitiveDetector>::operator()(xml_h element) const {
     }
     xml_attr_t region = element.attr_nothrow(_U(region));
     if ( region ) {
-      string r = element.attr<string>(region);
+      auto r = element.attr<string>(region);
       Region reg = description.region(r);
       if (!reg.isValid()) {
         throw_print("Converter<SensitiveDetector>: Request for non-existing region:" + r);

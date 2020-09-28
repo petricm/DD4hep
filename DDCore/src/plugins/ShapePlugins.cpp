@@ -359,7 +359,7 @@ static Handle<TObject> create_TessellatedSolid(Detector&, xml_h element)   {
   }
   int num_facets = 0;
   for ( xml_coll_t facet(element, _U(facet)); facet; ++facet ) ++num_facets;
-  TessellatedSolid solid = TessellatedSolid(num_facets);
+  auto solid = TessellatedSolid(num_facets);
   if ( e.hasAttr(_U(name)) ) solid->SetName(e.attr<string>(_U(name)).c_str());
   for ( xml_coll_t facet(element, _U(facet)); facet; ++facet )   {
     xml_dim_t f(facet);
@@ -400,7 +400,7 @@ static Handle<TObject> create_BooleanShape(Detector&, xml_h element)   {
   Solid solid2( xml_comp_t( x_shape2 ).createShape())  ;
 
 
-  std::string op = e.attr<std::string>(_U(operation)) ;
+  auto op = e.attr<std::string>(_U(operation)) ;
   std::transform( op.begin(), op.end(), op.begin(), ::tolower);
   
   Solid resultSolid ;
@@ -486,7 +486,7 @@ static Handle<TObject> create_BooleanMulti(Detector& description, xml_h element)
   Transform3D position, rotation, trafo;
 
   xml_attr_t attr = 0;
-  std::string op = e.attr<std::string>(_U(operation)) ;
+  auto op = e.attr<std::string>(_U(operation)) ;
   std::transform( op.begin(), op.end(), op.begin(), ::tolower);
   //printout(ALWAYS,"","Boolean shape ---> %s",op.c_str());
   for (xml_coll_t i(e ,_U(star)); i; ++i )   {
@@ -572,7 +572,7 @@ static Handle<TObject> create_BooleanMulti(Detector& description, xml_h element)
   }
   attr = element.attr_nothrow(_U(name));
   if ( attr )   {
-    string nam = element.attr<string>(attr);
+    auto nam = element.attr<string>(attr);
     result->SetName(nam.c_str());
   }
   return result;
@@ -586,7 +586,7 @@ DECLARE_XML_VOLUME(DD4hep_StdVolume,create_std_volume)
 
 static Handle<TObject> create_gen_volume(Detector& description, xml_h e)   {
   xml_dim_t elt = e;
-  string    typ = elt.attr<string>(_U(type));
+  auto    typ = elt.attr<string>(_U(type));
   return xml::createVolume(description, typ, e);
 }
 DECLARE_XML_VOLUME(DD4hep_GenericVolume,create_gen_volume)

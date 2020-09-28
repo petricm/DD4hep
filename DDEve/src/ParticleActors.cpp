@@ -62,10 +62,10 @@ MCParticleCreator::MCParticleCreator(TEveTrackPropagator* p, TEveCompound* ps, c
 
 /// Access sub-compound by name
 void MCParticleCreator::addCompound(const std::string& name, TEveLine* e)   {
-  Compounds::const_iterator i = types.find(name);
+  auto i = types.find(name);
   if ( i == types.end() )  {
     static int icol = 0;
-    TEveCompound* o = new TEveCompound(name.c_str(),name.c_str());
+    auto* o = new TEveCompound(name.c_str(),name.c_str());
     particles->AddElement(o);
     i = types.emplace(name,o).first;
     Color_t col = Colors[icol%(sizeof(Colors)/sizeof(Colors[0]))];
@@ -81,10 +81,10 @@ void MCParticleCreator::addCompound(const std::string& name, TEveLine* e)   {
 
 /// Access sub-compound by name
 void MCParticleCreator::addCompoundLight(const std::string& name, TEveLine* e)   {
-  Compounds::const_iterator i = types.find(name);
+  auto i = types.find(name);
   if ( i == types.end() )  {
     static int icol = 0;
-    TEveCompound* o = new TEveCompound(name.c_str(),name.c_str());
+    auto* o = new TEveCompound(name.c_str(),name.c_str());
     particles->AddElement(o);
     i = types.emplace(name,o).first;
     o->SetMainColor(kBlack);
@@ -100,7 +100,7 @@ void MCParticleCreator::addCompoundLight(const std::string& name, TEveLine* e)  
 
 /// Close compounds
 void MCParticleCreator::close()   {
-  for(Compounds::const_iterator i = types.begin(); i!=types.end(); ++i)  {
+  for(auto i = types.begin(); i!=types.end(); ++i)  {
     (*i).second->CSCApplyMainColorToAllChildren();
     (*i).second->CloseCompound();
   }
@@ -127,7 +127,7 @@ void MCParticleCreator::operator()(const DDEveParticle& p)  {
                    p.psx*MEV_2_GEV, p.psy*MEV_2_GEV, p.psz*MEV_2_GEV, p.energy*MEV_2_GEV,
                    p.vsx*MM_2_CM, p.vsy*MM_2_CM, p.vsz*MM_2_CM, p.time);
   
-    TEveTrack* t = new TEveTrack(&part,p.id,propagator);
+    auto* t = new TEveTrack(&part,p.id,propagator);
 
     // Add start-vertex as path mark
     //t->AddPathMark(TEvePathMark(TEvePathMark::kDecay,start));

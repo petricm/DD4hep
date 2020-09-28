@@ -66,8 +66,8 @@ G4VPrimaryGenerator* Geant4GeneratorWrapper::generator()   {
 
 /// Event generation action callback
 void Geant4GeneratorWrapper::operator()(G4Event* event)  {
-  Geant4PrimaryEvent* prim = context()->event().extension<Geant4PrimaryEvent>();
-  Geant4PrimaryMap*   primaryMap = context()->event().extension<Geant4PrimaryMap>();
+  auto* prim = context()->event().extension<Geant4PrimaryEvent>();
+  auto*   primaryMap = context()->event().extension<Geant4PrimaryMap>();
   set<G4PrimaryVertex*> primaries;
   
   /// Collect all existing interactions (primary vertices)

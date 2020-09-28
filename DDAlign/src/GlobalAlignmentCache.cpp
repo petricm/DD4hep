@@ -72,7 +72,7 @@ int GlobalAlignmentCache::release()   {
 
 /// Create and install a new instance tree
 GlobalAlignmentCache* GlobalAlignmentCache::install(Detector& description)   {
-  GlobalAlignmentCache* cache = description.extension<GlobalAlignmentCache>(false);
+  auto* cache = description.extension<GlobalAlignmentCache>(false);
   if ( !cache )  {
     cache = new GlobalAlignmentCache(description,"world",true);
     ExtensionEntry* e = new detail::DeleteExtension<GlobalAlignmentCache,GlobalAlignmentCache>(cache);
@@ -92,7 +92,7 @@ void GlobalAlignmentCache::uninstall(Detector& description)   {
 bool GlobalAlignmentCache::insert(GlobalAlignment alignment)  {
   TGeoPhysicalNode* pn = alignment.ptr();
   unsigned int index = detail::hash32(pn->GetName()+m_sdPathLen);
-  Cache::const_iterator i = m_cache.find(index);
+  auto i = m_cache.find(index);
   printout(ALWAYS,"GlobalAlignmentCache","Section: %s adding entry: %s",
            name().c_str(),alignment->GetName());
   if ( i == m_cache.end() )   {
@@ -116,7 +116,7 @@ GlobalAlignmentCache* GlobalAlignmentCache::section(const string& path_name) con
   }
   if ( (idq=path_name.find('/',idx+1)) != string::npos ) --idq;
   string path = path_name.substr(idx+1,idq-idx);
-  SubdetectorAlignments::const_iterator j = m_detectors.find(path);
+  auto j = m_detectors.find(path);
   return (j==m_detectors.end()) ? 0 : (*j).second;
 }
 
@@ -124,7 +124,7 @@ GlobalAlignmentCache* GlobalAlignmentCache::section(const string& path_name) con
 GlobalAlignment GlobalAlignmentCache::get(const string& path_name) const   {
   size_t idx, idq;
   unsigned int index = detail::hash32(path_name.c_str()+m_sdPathLen);
-  Cache::const_iterator i = m_cache.find(index);
+  auto i = m_cache.find(index);
   if ( i != m_cache.end() )  {
     return GlobalAlignment((*i).second);
   }
@@ -140,7 +140,7 @@ GlobalAlignment GlobalAlignmentCache::get(const string& path_name) const   {
   }
   if ( (idq=path_name.find('/',idx+1)) != string::npos ) --idq;
   string path = path_name.substr(idx+1,idq-idx);
-  SubdetectorAlignments::const_iterator j = m_detectors.find(path);
+  auto j = m_detectors.find(path);
   if ( j != m_detectors.end() ) return (*j).second->get(path_name);
   return GlobalAlignment(0);
 }
@@ -152,7 +152,7 @@ vector<GlobalAlignment> GlobalAlignmentCache::matches(const string& match, bool 
   if ( c )  {
     size_t len = match.length();
     result.reserve(c->m_cache.size());
-    for(Cache::const_iterator i=c->m_cache.begin(); i!=c->m_cache.end();++i)  {
+    for(auto i=c->m_cache.begin(); i!=c->m_cache.end();++i)  {
       const Cache::value_type& v = *i;
       const char* n = v.second->GetName();
       if ( 0 == ::strncmp(n,match.c_str(),len) )   {
@@ -174,9 +174,9 @@ void GlobalAlignmentCache::commit(GlobalAlignmentStack& stack)   {
 
 /// Retrieve branch cache by name. If not present it will be created
 GlobalAlignmentCache* GlobalAlignmentCache::subdetectorAlignments(const string& nam)    {
-  SubdetectorAlignments::const_iterator i = m_detectors.find(nam);
+  auto i = m_detectors.find(nam);
   if ( i == m_detectors.end() )   {
-    GlobalAlignmentCache* ptr = new GlobalAlignmentCache(m_detDesc,nam,false);
+    auto* ptr = new GlobalAlignmentCache(m_detDesc,nam,false);
     m_detectors.emplace(nam,ptr);
     return ptr;
   }

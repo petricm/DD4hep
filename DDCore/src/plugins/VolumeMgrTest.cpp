@@ -280,7 +280,7 @@ void VolIDTest::walkVolume(DetElement detector, PlacedVolume pv, VolIDs ids, con
     int         num_children = nodes ? nodes->GetEntriesFast() : 0;
 
     for(int i=0; i<num_children; ++i)   {
-      TGeoNode* node = (TGeoNode*)nodes->At(i);
+      auto* node = (TGeoNode*)nodes->At(i);
       PlacedVolume place(node);
       VolIDs child_ids(ids);
       Chain  child_chain(chain);

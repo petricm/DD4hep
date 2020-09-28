@@ -73,10 +73,10 @@ namespace dd4hep::sim {
           except("++ Cannot resolve 'opticalphoton' particle definition!");
         }
 
-        G4OpBoundaryProcess*  fBoundaryProcess           = new G4OpBoundaryProcess();
-        G4OpAbsorption*       fAbsorptionProcess         = new G4OpAbsorption();
-        G4OpRayleigh*         fRayleighScatteringProcess = new G4OpRayleigh();
-        G4OpMieHG*            fMieHGScatteringProcess    = new G4OpMieHG();
+        auto*  fBoundaryProcess           = new G4OpBoundaryProcess();
+        auto*       fAbsorptionProcess         = new G4OpAbsorption();
+        auto*         fRayleighScatteringProcess = new G4OpRayleigh();
+        auto*            fMieHGScatteringProcess    = new G4OpMieHG();
 
         fAbsorptionProcess->SetVerboseLevel(m_verbosity);
         fRayleighScatteringProcess->SetVerboseLevel(m_verbosity);

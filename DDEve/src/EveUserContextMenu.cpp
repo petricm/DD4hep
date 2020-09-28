@@ -44,19 +44,19 @@ TEveManager& EveUserContextMenu::manager() const   {
 
 /// Set everything (in-) visible
 void EveUserContextMenu::VisibleAll(bool visible, TObject* target, void* /* user_param */)   {
-  TEveElement* element = dynamic_cast<TEveElement*>(target);
+  auto* element = dynamic_cast<TEveElement*>(target);
   if ( element ) m_display->MakeNodesVisible(element,visible,9999);
 }
 
 /// Set self (in-) visible
 void EveUserContextMenu::VisibleSelf(bool visible, TObject* target, void* /* user_param */)  {
-  TEveElement* element = dynamic_cast<TEveElement*>(target);
+  auto* element = dynamic_cast<TEveElement*>(target);
   if ( element ) m_display->MakeNodesVisible(element,visible,0);
 }
 
 /// Set the children (in-) visible
 void EveUserContextMenu::VisibleChildren(bool visible, TObject* target, void* /* user_param */)  {
-  TEveElement* element = dynamic_cast<TEveElement*>(target);
+  auto* element = dynamic_cast<TEveElement*>(target);
   if ( element ) m_display->MakeNodesVisible(element,visible,1);
 }
 
@@ -92,13 +92,13 @@ void EveUserContextMenu::HideChildren(TObject* target, void* user_param)   {
 
 /// Load next level children and add them to all scenes
 void EveUserContextMenu::LoadChildren(TObject* target, void* /* user_param */)   {
-  TEveElement* element = dynamic_cast<TEveElement*>(target);
+  auto* element = dynamic_cast<TEveElement*>(target);
   if ( element ) m_display->LoadGeoChildren(element, 1, true);
 }
 
 /// Load all children and add them to all scenes
 void EveUserContextMenu::DeepLoadChildren(TObject* target, void* /* user_param */)   {
-  TEveElement* element = dynamic_cast<TEveElement*>(target);
+  auto* element = dynamic_cast<TEveElement*>(target);
   if ( element ) m_display->LoadGeoChildren(element, 9999, true);
 }
 

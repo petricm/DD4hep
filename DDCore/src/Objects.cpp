@@ -61,7 +61,7 @@ void Author::setAuthorEmail(const string& addr) {
 
 /// Constructor to be used when creating a new DOM tree
 Header::Header(const string& author_name, const string& descr_url) {
-  Object* obj_ptr = new Object();
+  auto* obj_ptr = new Object();
   assign(obj_ptr, author_name, descr_url);
 }
 
@@ -237,7 +237,7 @@ double Material::fraction(Atom atom) const    {
   for ( int i=0, n=mat->GetNelements(); i<n; ++i )  {
     TGeoElement* e = mat->GetElement(i);
     if ( mat->IsMixture() )  {
-      TGeoMixture* mix = (TGeoMixture*)mat;
+      auto* mix = (TGeoMixture*)mat;
       tot  += mix->GetWmixt()[i];
     }
     else {
@@ -245,7 +245,7 @@ double Material::fraction(Atom atom) const    {
     }
     if ( e == elt )   {
       if ( mat->IsMixture() )  {
-        TGeoMixture* mix = (TGeoMixture*)mat;
+        auto* mix = (TGeoMixture*)mat;
         frac += mix->GetWmixt()[i];
       }
       else  {
@@ -283,7 +283,7 @@ string Material::toString() const {
 
 /// Constructor to be used when creating a new entity
 VisAttr::VisAttr(const string& nam) {
-  Object* obj = new Object();
+  auto* obj = new Object();
   assign(obj, nam, "vis");
   obj->color = 2;
   setLineStyle (SOLID);
@@ -294,7 +294,7 @@ VisAttr::VisAttr(const string& nam) {
 
 /// Constructor to be used when creating a new entity
 VisAttr::VisAttr(const char* nam) {
-  Object* obj = new Object();
+  auto* obj = new Object();
   assign(obj, nam, "vis");
   obj->color = 2;
   setLineStyle (SOLID);
@@ -364,16 +364,16 @@ int VisAttr::color() const {
 
 /// Set object color
 void VisAttr::setColor(float red, float green, float blue) {
-  Object& o = object<Object>();
+  auto& o = object<Object>();
   o.color = TColor::GetColor(red, green, blue);
   o.col = gROOT->GetColor(o.color);
 }
 
 /// Get RGB values of the color (if valid)
 bool VisAttr::rgb(float& red, float& green, float& blue) const {
-  Object& o = object<Object>();
+  auto& o = object<Object>();
   if (o.col) {
-    TColor* c = (TColor*) o.col;
+    auto* c = (TColor*) o.col;
     c->GetRGB(red, green, blue);
     return true;
   }
@@ -446,7 +446,7 @@ const std::set<Limit>& LimitSet::cuts() const    {
 
 /// Constructor to be used when creating a new DOM tree
 Region::Region(const string& nam) {
-  Object* p = new Object();
+  auto* p = new Object();
   assign(p, nam, "region");
   p->magic = magic_word();
   p->store_secondaries = false;

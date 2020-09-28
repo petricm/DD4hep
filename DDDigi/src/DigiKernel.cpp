@@ -192,7 +192,7 @@ PropertyManager& DigiKernel::properties()   {
 /// Print the property values
 void DigiKernel::printProperties()  const  {
   printout(ALWAYS,"DigiKernel","OutputLevel:  %d", internals->outputLevel);
-  for(ClientOutputLevels::const_iterator i=internals->clientLevels.begin(); i!=internals->clientLevels.end();++i)  {
+  for(auto i=internals->clientLevels.begin(); i!=internals->clientLevels.end();++i)  {
     printout(ALWAYS,"DigiKernel","OutputLevel[%s]:  %d",(*i).first.c_str(),(*i).second);
   }
 }
@@ -219,7 +219,7 @@ void DigiKernel::setOutputLevel(const std::string object, PrintLevel new_level) 
 
 /// Retrieve the global output level of a named object.
 dd4hep::PrintLevel DigiKernel::getOutputLevel(const std::string object) const   {
-  ClientOutputLevels::const_iterator i=internals->clientLevels.find(object);
+  auto i=internals->clientLevels.find(object);
   if ( i != internals->clientLevels.end() ) return (PrintLevel)(*i).second;
   return dd4hep::PrintLevel(dd4hep::printLevel()-1);
 }

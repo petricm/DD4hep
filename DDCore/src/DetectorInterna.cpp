@@ -96,7 +96,7 @@ DetElementObject::~DetElementObject() {
 
 /// Deep object copy to replicate DetElement trees e.g. for reflection
 DetElementObject* DetElementObject::clone(int new_id, int flg) const {
-  DetElementObject* obj = new DetElementObject();
+  auto* obj = new DetElementObject();
   obj->id          = new_id;
   obj->typeFlag    = typeFlag;
   obj->flag        = 0;

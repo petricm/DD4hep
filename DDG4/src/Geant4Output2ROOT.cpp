@@ -55,10 +55,10 @@ Geant4Output2ROOT::~Geant4Output2ROOT() {
 
 /// Create/access tree by name
 TTree* Geant4Output2ROOT::section(const string& nam) {
-  Sections::const_iterator i = m_sections.find(nam);
+  auto i = m_sections.find(nam);
   if (i == m_sections.end()) {
     TDirectory::TContext ctxt(m_file);
-    TTree* t = new TTree(nam.c_str(), ("Geant4 " + nam + " information").c_str());
+    auto* t = new TTree(nam.c_str(), ("Geant4 " + nam + " information").c_str());
     m_sections.emplace(nam, t);
     return t;
   }
@@ -83,7 +83,7 @@ void Geant4Output2ROOT::beginRun(const G4Run* run) {
 int Geant4Output2ROOT::fill(const string& nam, const ComponentCast& type, void* ptr) {
   if (m_file) {
     TBranch* b = 0;
-    Branches::const_iterator i = m_branches.find(nam);
+    auto i = m_branches.find(nam);
     if (i == m_branches.end()) {
       TClass* cl = TBuffer::GetClass(type.type);
       if (cl) {
@@ -124,7 +124,7 @@ void Geant4Output2ROOT::commit(OutputContext<G4Event>& ctxt) {
     Int_t nb = a->GetEntriesFast();
     /// Fill NULL pointers to all branches, which have less entries than the Event branch
     for (Int_t i = 0; i < nb; ++i) {
-      TBranch* br_ptr = (TBranch*) a->UncheckedAt(i);
+      auto* br_ptr = (TBranch*) a->UncheckedAt(i);
       Long64_t br_evt = br_ptr->GetEntries();
       if (br_evt < evt) {
         Long64_t num = evt - br_evt;
@@ -143,7 +143,7 @@ void Geant4Output2ROOT::commit(OutputContext<G4Event>& ctxt) {
 /// Callback to store the Geant4 event
 void Geant4Output2ROOT::saveEvent(OutputContext<G4Event>& /* ctxt */) {
   if ( !m_disableParticles )  {
-    Geant4ParticleMap* parts = context()->event().extension<Geant4ParticleMap>();
+    auto* parts = context()->event().extension<Geant4ParticleMap>();
     if ( parts )   {
       typedef Geant4HitWrapper::HitManipulator Manip;
       typedef Geant4ParticleMap::ParticleMap ParticleMap;
@@ -161,7 +161,7 @@ void Geant4Output2ROOT::saveEvent(OutputContext<G4Event>& /* ctxt */) {
 
 /// Callback to store each Geant4 hit collection
 void Geant4Output2ROOT::saveCollection(OutputContext<G4Event>& /* ctxt */, G4VHitsCollection* collection) {
-  Geant4HitCollection* coll = dynamic_cast<Geant4HitCollection*>(collection);
+  auto* coll = dynamic_cast<Geant4HitCollection*>(collection);
   string hc_nam = collection->GetName();
   for(const auto& n : m_disabledCollections)  {
     if ( n == hc_nam )   {
@@ -177,13 +177,13 @@ void Geant4Output2ROOT::saveCollection(OutputContext<G4Event>& /* ctxt */, G4VHi
       try  {
         for(size_t i=0; i<nhits; ++i)   {
           Geant4HitData* h = coll->hit(i);
-          Geant4Tracker::Hit* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
+          auto* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
           if ( 0 != trk_hit )   {
             Geant4HitData::Contribution& t = trk_hit->truth;
             int trackID = t.trackID;
             t.trackID = m_truth->particleID(trackID);
           }
-          Geant4Calorimeter::Hit* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
+          auto* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
           if ( 0 != cal_hit )   {
             Geant4HitData::Contributions& c = cal_hit->truth;
             for(auto & t : c)  {

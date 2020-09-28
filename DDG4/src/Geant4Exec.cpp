@@ -110,7 +110,7 @@ namespace dd4hep::sim {
       }
       /// Create Geant4 run context
       void createClientContext(const G4Run* run)   {
-        Geant4Run* r = new Geant4Run(run);
+        auto* r = new Geant4Run(run);
         m_activeContext->setRun(r);
       }
       /// Destroy Geant4 run context
@@ -123,7 +123,7 @@ namespace dd4hep::sim {
       }
       /// Create Geant4 event context
       void createClientContext(const G4Event* evt)   {
-        Geant4Event* e = new Geant4Event(evt,Geant4Random::instance());
+        auto* e = new Geant4Event(evt,Geant4Random::instance());
         m_activeContext->setEvent(e);
       }
       /// Destroy Geant4 event context
@@ -439,15 +439,15 @@ namespace dd4hep::sim {
         m_sequence->updateContext(old);
       }
       // Set user generator action sequence. Not optional, since event context is defined inside
-      Geant4UserGeneratorAction* gen_action = new Geant4UserGeneratorAction(ctx,krnl.generatorAction(false));
+      auto* gen_action = new Geant4UserGeneratorAction(ctx,krnl.generatorAction(false));
       SetUserAction(gen_action);
 
       // Set the run action sequence. Not optional, since run context is defined/destroyed inside
-      Geant4UserRunAction* run_action = new Geant4UserRunAction(ctx,krnl.runAction(false));
+      auto* run_action = new Geant4UserRunAction(ctx,krnl.runAction(false));
       SetUserAction(run_action);
 
       // Set the event action sequence. Not optional, since event context is destroyed inside
-      Geant4UserEventAction* evt_action = new Geant4UserEventAction(ctx,krnl.eventAction(false));
+      auto* evt_action = new Geant4UserEventAction(ctx,krnl.eventAction(false));
       run_action->eventAction = evt_action;
       evt_action->runAction = run_action;
       SetUserAction(evt_action);
@@ -455,19 +455,19 @@ namespace dd4hep::sim {
       // Set the tracking action sequence
       Geant4TrackingActionSequence* trk_action = krnl.trackingAction(false);
       if ( trk_action ) {
-        Geant4UserTrackingAction* action = new Geant4UserTrackingAction(ctx, trk_action);
+        auto* action = new Geant4UserTrackingAction(ctx, trk_action);
         SetUserAction(action);
       }
       // Set the stepping action sequence
       Geant4SteppingActionSequence* stp_action = krnl.steppingAction(false);
       if ( stp_action ) {
-        Geant4UserSteppingAction* action = new Geant4UserSteppingAction(ctx, stp_action);
+        auto* action = new Geant4UserSteppingAction(ctx, stp_action);
         SetUserAction(action);
       }
       // Set the stacking action sequence
       Geant4StackingActionSequence* stk_action = krnl.stackingAction(false);
       if ( stk_action ) {
-        Geant4UserStackingAction* action = new Geant4UserStackingAction(ctx, stk_action);
+        auto* action = new Geant4UserStackingAction(ctx, stk_action);
         SetUserAction(action);
       }
       
@@ -569,7 +569,7 @@ int Geant4Exec::configure(Geant4Kernel& kernel) {
   if ( 0 == user_det && !kernel.isMultiThreaded() )   {
     user_det = Geant4Compatibility().buildDefaultDetectorConstruction(kernel);
   }
-  Geant4UserDetectorConstruction* det_seq = new Geant4UserDetectorConstruction(ctx,user_det);
+  auto* det_seq = new Geant4UserDetectorConstruction(ctx,user_det);
   runManager.SetUserInitialization(det_seq);
 
   // Get the physics list constructed
@@ -602,7 +602,7 @@ int Geant4Exec::configure(Geant4Kernel& kernel) {
     // Use default actions registered to the default kernel. Will do the right thing...
     user_init = kernel.userInitialization(true);
   }
-  Geant4UserActionInitialization* init = new Geant4UserActionInitialization(ctx,user_init);
+  auto* init = new Geant4UserActionInitialization(ctx,user_init);
   runManager.SetUserInitialization(init);
   return 1;
 }
@@ -622,13 +622,13 @@ int Geant4Exec::initialize(Geant4Kernel& kernel) {
 /// Run the simulation
 int Geant4Exec::run(Geant4Kernel& kernel) {
   Property& p = kernel.property("UI");
-  string value = p.value<string>();
+  auto value = p.value<string>();
 
   kernel.executePhase("start",0);
   if ( !value.empty() )  {
     Geant4Action* ui = kernel.globalAction(value);
     if ( ui )  {
-      Geant4Call* c = dynamic_cast<Geant4Call*>(ui);
+      auto* c = dynamic_cast<Geant4Call*>(ui);
       if ( c )  {
         (*c)(0);
         kernel.executePhase("stop",0);

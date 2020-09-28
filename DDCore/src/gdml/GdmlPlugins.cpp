@@ -219,7 +219,7 @@ static long gdml_extract(Detector& description, int argc, char** argv) {
       TObjArray* ents = top->GetNodes();
       Actor a(path, volpath ? true : false);
       for (Int_t i = 0, n = ents->GetEntries(); i < n && a._node == 0; ++i)  {
-        TGeoNode* node = (TGeoNode*)ents->At(i);
+        auto* node = (TGeoNode*)ents->At(i);
         a.scan(node, node->GetName());
       }
       if ( a._node )    {
@@ -268,7 +268,7 @@ static Ref_t create_detector(Detector& description, xml_h e, Ref_t /* sens_det *
   xml_dim_t   x_par  (x_det.child(_U(parent)));
   string      name    = x_det.nameStr();
   string      par_nam = x_par.nameStr();
-  string      gdml   = x_gdml.attr<string>(_U(ref));
+  auto      gdml   = x_gdml.attr<string>(_U(ref));
   DetElement  det_parent = description.detector(par_nam);
   TGDMLParse parser;
   if ( !gdml.empty() && gdml[0] == '/' )  {

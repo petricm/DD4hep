@@ -154,7 +154,7 @@ int main_wrapper(int argc, char** argv)   {
 
 
   //----- open root file and book histograms
-  TFile* rootFile = new TFile(outFileName.c_str(),"recreate");
+  auto* rootFile = new TFile(outFileName.c_str(),"recreate");
 
   for(auto& det : subdets){
 

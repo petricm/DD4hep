@@ -38,7 +38,7 @@ Alignment::Processor::Processor() {
 /// Initializing constructor to create a new object (Specialized for AlignmentNamedObject)
 Alignment::Alignment(const string& nam)  {
   char*   p = (char*)::operator new(sizeof(Object)+sizeof(AlignmentData));
-  Object* o = new(p) Object(nam, "alignment", p+sizeof(Object), sizeof(AlignmentData));
+  auto* o = new(p) Object(nam, "alignment", p+sizeof(Object), sizeof(AlignmentData));
   assign(o, nam, "alignment");
   o->hash   = 0;
 }
@@ -46,7 +46,7 @@ Alignment::Alignment(const string& nam)  {
 /// Initializing constructor to create a new object (Specialized for AlignmentObject)
 AlignmentCondition::AlignmentCondition(const string& nam)   {
   char*   p = (char*)::operator new(sizeof(Object)+sizeof(AlignmentData));
-  Object* o = new(p) Object(nam, "alignment", p+sizeof(Object), sizeof(AlignmentData));
+  auto* o = new(p) Object(nam, "alignment", p+sizeof(Object), sizeof(AlignmentData));
   assign(o, nam, "alignment");
   o->hash   = 0;
 }

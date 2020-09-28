@@ -99,7 +99,7 @@ Geant4ParticleHandler& Geant4ParticleHandler::operator=(const Geant4ParticleHand
 bool Geant4ParticleHandler::adopt(Geant4Action* action)    {
   if ( action )   {
     if ( !m_userHandler )  {
-      Geant4UserParticleHandler* h = dynamic_cast<Geant4UserParticleHandler*>(action);
+      auto* h = dynamic_cast<Geant4UserParticleHandler*>(action);
       if ( h )  {
         m_userHandler = h;
         m_userHandler->addRef();
@@ -157,7 +157,7 @@ void Geant4ParticleHandler::mark(const G4Track* track)   {
   // If yes, flag it, because it is a candidate for removal.
   G4LogicalVolume*       vol = track->GetVolume()->GetLogicalVolume();
   G4VSensitiveDetector*   g4 = vol->GetSensitiveDetector();
-  Geant4ActionSD* sd = dynamic_cast<Geant4ActionSD*>(g4);
+  auto* sd = dynamic_cast<Geant4ActionSD*>(g4);
   string typ = sd ? sd->sensitiveType() : string();
   if ( typ == "calorimeter" )
     mask.set(G4PARTICLE_CREATED_CALORIMETER_HIT);
@@ -274,7 +274,7 @@ void Geant4ParticleHandler::begin(const G4Track* track)   {
   m_currTrack.pez         = 0.0;
   // If the creator process of the track is in the list of process products to be kept, set the proper flag
   if ( m_currTrack.process )  {
-    Processes::iterator i=find(m_processNames.begin(),m_processNames.end(),m_currTrack.process->GetProcessName());
+    auto i=find(m_processNames.begin(),m_processNames.end(),m_currTrack.process->GetProcessName());
     if ( i != m_processNames.end() )  {
       PropertyMask(m_currTrack.reason).set(G4PARTICLE_KEEP_PROCESS);
     }
@@ -339,7 +339,7 @@ void Geant4ParticleHandler::end(const G4Track* track)   {
   //
   if ( !mask.isNull() )   {
     m_equivalentTracks[g4_id] = g4_id;
-    ParticleMap::iterator ip = m_particleMap.find(g4_id);
+    auto ip = m_particleMap.find(g4_id);
     if ( mask.isSet(G4PARTICLE_PRIMARY) )   {
       ph.dump2(outputLevel()-1,name(),"Add Primary",h.id(),ip!=m_particleMap.end());
     }
@@ -373,7 +373,7 @@ void Geant4ParticleHandler::end(const G4Track* track)   {
 
 /// Pre-event action callback
 void Geant4ParticleHandler::beginEvent(const G4Event* event)  {
-  Geant4PrimaryInteraction* interaction = context()->event().extension<Geant4PrimaryInteraction>();
+  auto* interaction = context()->event().extension<Geant4PrimaryInteraction>();
   info("+++ Event %d Begin event action. Access event related information.",event->GetEventID());
   m_primaryMap = context()->event().extension<Geant4PrimaryMap>();
   m_globalParticleID = interaction->nextPID();
@@ -389,7 +389,7 @@ void Geant4ParticleHandler::beginEvent(const G4Event* event)  {
 void Geant4ParticleHandler::dumpMap(const char* tag)  const  {
   const string& n = name();
   Geant4ParticleHandle::header4(INFO,n,tag);
-  for(ParticleMap::const_iterator iend=m_particleMap.end(), i=m_particleMap.begin(); i!=iend; ++i)  {
+  for(auto iend=m_particleMap.end(), i=m_particleMap.begin(); i!=iend; ++i)  {
     Geant4ParticleHandle((*i).second).dump4(INFO,n,tag);
   }
 }
@@ -416,7 +416,7 @@ void Geant4ParticleHandler::endEvent(const G4Event* event)  {
   setVertexEndpointBit();
 
   // Now export the data to the final record.
-  Geant4ParticleMap* part_map = context()->event().extension<Geant4ParticleMap>();
+  auto* part_map = context()->event().extension<Geant4ParticleMap>();
   part_map->adopt(m_particleMap, m_equivalentTracks);
   m_primaryMap = 0;
   clear();
@@ -430,7 +430,7 @@ void Geant4ParticleHandler::rebaseSimulatedTracks(int )   {
   ParticleMap::const_iterator ipar, iend, i;
   int count;
 
-  Geant4PrimaryInteraction* interaction = context()->event().extension<Geant4PrimaryInteraction>();
+  auto* interaction = context()->event().extension<Geant4PrimaryInteraction>();
   ParticleMap& pm = interaction->particles;
 
   // (1.0) Copy the pre-defined particle mapping for the simulated tracks
@@ -456,10 +456,10 @@ void Geant4ParticleHandler::rebaseSimulatedTracks(int )   {
     }
   }
   // (2) Re-evaluate the corresponding geant4 track equivalents using the new mapping
-  for(TrackEquivalents::iterator ie=m_equivalentTracks.begin(),ie_end=m_equivalentTracks.end(); ie!=ie_end; ++ie)  {
+  for(auto ie=m_equivalentTracks.begin(),ie_end=m_equivalentTracks.end(); ie!=ie_end; ++ie)  {
     int g4_equiv = (*ie).first;
     while( (ipar=m_particleMap.find(g4_equiv)) == m_particleMap.end() )  {
-      TrackEquivalents::const_iterator iequiv = m_equivalentTracks.find(g4_equiv);
+      auto iequiv = m_equivalentTracks.find(g4_equiv);
       if ( iequiv == ie_end )  {
         break;  // ERROR !! Will be handled by printout below because ipar==end()
       }
@@ -495,7 +495,7 @@ void Geant4ParticleHandler::rebaseSimulatedTracks(int )   {
   for(iend=finalParticles.end(), i=finalParticles.begin(); i!=iend; ++i)  {
     Particle* p = (*i).second;
     if ( p->g4Parent > 0 )  {
-      TrackEquivalents::iterator iequ = equivalents.find(p->g4Parent);
+      auto iequ = equivalents.find(p->g4Parent);
       if ( iequ != equivalents.end() )  {
         equiv_id = (*iequ).second;//equivalents[p->g4Parent];
         if ( (ipar=finalParticles.find(equiv_id)) != finalParticles.end() )  {
@@ -583,7 +583,7 @@ int Geant4ParticleHandler::recombineParents()  {
   set<int> remove;
 
   /// Need to start from BACK, to clean first the latest produced stuff.
-  for(ParticleMap::reverse_iterator i=m_particleMap.rbegin(); i!=m_particleMap.rend(); ++i)  {
+  for(auto i=m_particleMap.rbegin(); i!=m_particleMap.rend(); ++i)  {
     Particle* p = (*i).second;
     PropertyMask mask(p->reason);
     // Allow the user to force the particle handling either by
@@ -616,7 +616,7 @@ int Geant4ParticleHandler::recombineParents()  {
       //continue;
     }
     else if ( mask.isSet(G4PARTICLE_KEEP_PROCESS) )  {
-      ParticleMap::iterator ip = m_particleMap.find(p->g4Parent);
+      auto ip = m_particleMap.find(p->g4Parent);
       if ( ip != m_particleMap.end() )   {
         Particle* parent_part = (*ip).second;
         PropertyMask parent_mask(parent_part->reason);
@@ -632,7 +632,7 @@ int Geant4ParticleHandler::recombineParents()  {
     /// Remove this track from the list and also do the cleanup in the parent's children list
     if ( remove_me )  {
       int g4_id = (*i).first;
-      ParticleMap::iterator ip = m_particleMap.find(p->g4Parent);
+      auto ip = m_particleMap.find(p->g4Parent);
       remove.insert(g4_id);
       m_equivalentTracks[g4_id] = p->g4Parent;
       if ( ip != m_particleMap.end() )   {
@@ -648,7 +648,7 @@ int Geant4ParticleHandler::recombineParents()  {
     }
   }
   for(int r : remove)  {
-    ParticleMap::iterator ir = m_particleMap.find(r);
+    auto ir = m_particleMap.find(r);
     if ( ir != m_particleMap.end() )  {
       (*ir).second->release();
       m_particleMap.erase(ir);
@@ -677,7 +677,7 @@ void Geant4ParticleHandler::checkConsistency()  const   {
     // We assume that particles from the generator have consistent parents
     // For all other particles except the primaries, the parent must be contained in the record.
     if ( !mask.isSet(G4PARTICLE_PRIMARY) && !status.anySet(G4PARTICLE_GEN_STATUS) )  {
-      TrackEquivalents::const_iterator eq_it = m_equivalentTracks.find(p->g4Parent);
+      auto eq_it = m_equivalentTracks.find(p->g4Parent);
       bool in_map = false, in_parent_list = false;
       int parent_id = -1;
       if ( eq_it != m_equivalentTracks.end() )   {

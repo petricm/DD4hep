@@ -111,7 +111,7 @@ namespace {
       Readout ro = sd.readout();
       IDDescriptor iddesc = ro.idSpec();
       VolumeID code = iddesc.encode(ids);
-      Registries::const_iterator i = m_entries.find(code);
+      auto i = m_entries.find(code);
       PrintLevel print_action = m_geo.printLevel;
       PrintLevel print_chain = m_geo.printLevel;
       PrintLevel print_res = m_geo.printLevel;
@@ -121,9 +121,9 @@ namespace {
 
       if (i == m_entries.end()) {
         path.reserve(nodes.size());
-        for (Chain::const_reverse_iterator k = nodes.rbegin(), kend=nodes.rend(); k != kend; ++k) {
+        for (auto k = nodes.rbegin(), kend=nodes.rend(); k != kend; ++k) {
           node = *(k);
-          PlacementMap::const_iterator g4pit = m_geo.g4Placements.find(node);
+          auto g4pit = m_geo.g4Placements.find(node);
           if (g4pit != m_geo.g4Placements.end()) {
             path.emplace_back((*g4pit).second);
             printout(print_chain, "Geant4VolumeManager", "+++     Chain: Node OK: %s [%s]",
@@ -132,7 +132,7 @@ namespace {
           }
           control.insert(control.begin(),node);
           vol = Volume(node->GetVolume());
-          VolumeImprintMap::const_iterator iVolImp = m_geo.g4VolumeImprints.find(vol);
+          auto iVolImp = m_geo.g4VolumeImprints.find(vol);
           if ( iVolImp != m_geo.g4VolumeImprints.end() )   {
             const Imprints& imprints = (*iVolImp).second;
             //size_t len = kend-k;

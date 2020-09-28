@@ -94,7 +94,7 @@ void ConditionsPrinter::ParamPrinter::operator()(const AbstractMap::Params::valu
              value.c_str());
   }
   else if ( type == typeid(AbstractMap) )  {
-    const AbstractMap& d= obj.second.get<AbstractMap>();
+    const auto& d= obj.second.get<AbstractMap>();
     printout(m_parent->printLevel,m_parent->name,"++ %s\t-> [%s] CL:%d %-8s -> %s",
              prefix.c_str(),
              obj.first.c_str(), d.classID,

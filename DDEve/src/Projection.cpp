@@ -49,7 +49,7 @@ TEveElement* Projection::ImportGeoTopic(TEveElement*, TEveElementList*)   {
 /// Call an element to a event element list
 TEveElement* Projection::ImportElement(TEveElement* el, TEveElementList* list)  {
   TEveElementList* unprojected = &GetGeoTopic("Unprojected");
-  for(Topics::iterator i=m_geoTopics.begin(); i!=m_geoTopics.end(); ++i)  {
+  for(auto i=m_geoTopics.begin(); i!=m_geoTopics.end(); ++i)  {
     if ( el == unprojected )   {
       m_projMgr->AddElement(el);
       return 0;
@@ -62,7 +62,7 @@ TEveElement* Projection::ImportElement(TEveElement* el, TEveElementList* list)  
 
   unprojected->AddElement(el);
   if ( list != m_geoScene && list != m_eveScene )   {
-    TEveElement::List_ci ci = std::find(m_geoScene->BeginChildren(),m_geoScene->EndChildren(),list);
+    auto ci = std::find(m_geoScene->BeginChildren(),m_geoScene->EndChildren(),list);
     if ( ci == m_geoScene->EndChildren() )  {
       m_geoScene->AddElement(list);
     }
@@ -82,7 +82,7 @@ TEveElement* Projection::ImportEventElement(TEveElement* element, TEveElementLis
 
 /// Add axis to the projection view
 Projection& Projection::AddAxis()    {
-  TEveProjectionAxes* a = new TEveProjectionAxes(m_projMgr);
+  auto* a = new TEveProjectionAxes(m_projMgr);
   a->SetMainColor(kWhite);
   a->SetTitle("R-Phi");
   a->SetTitleSize(0.05);

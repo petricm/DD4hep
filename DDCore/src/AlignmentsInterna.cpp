@@ -37,7 +37,7 @@ AlignmentObject::AlignmentObject()
 {
   InstanceCount::increment(this);
   flags  = Condition::ALIGNMENT_DERIVED;
-  AlignmentData& d = data.construct<AlignmentData>();
+  auto& d = data.construct<AlignmentData>();
   alignment_data   = &d;
 }
 
@@ -47,7 +47,7 @@ AlignmentObject::AlignmentObject(const string& nam, const string& tit, void* p, 
 {
   InstanceCount::increment(this);
   flags  = Condition::ALIGNMENT_DERIVED|Condition::ONSTACK;
-  AlignmentData& d = data.bind<AlignmentData>(p,len);
+  auto& d = data.bind<AlignmentData>(p,len);
   alignment_data   = &d;
 }
 

@@ -99,12 +99,12 @@ void Geant4HitTruthHandler::begin(const G4Event* /* event */)   {
 
 /// Dump single container of hits
 void Geant4HitTruthHandler::handleCollection(Geant4ParticleMap* truth, G4VHitsCollection* collection)  {
-  Geant4HitCollection* coll = dynamic_cast<Geant4HitCollection*>(collection);
+  auto* coll = dynamic_cast<Geant4HitCollection*>(collection);
   if ( coll )    {
     size_t nhits = coll->GetSize();
     for(size_t i=0; i<nhits; ++i)   {
       Geant4HitData* h = coll->hit(i);
-      Geant4Tracker::Hit* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
+      auto* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
       if ( 0 != trk_hit )   {
         if ( truth )  {
           Geant4HitData::Contribution& t = trk_hit->truth;
@@ -112,7 +112,7 @@ void Geant4HitTruthHandler::handleCollection(Geant4ParticleMap* truth, G4VHitsCo
           t.trackID = truth->particleID(trackID);
         }
       }
-      Geant4Calorimeter::Hit* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
+      auto* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
       if ( 0 != cal_hit )   {
         if ( truth )  {
           Geant4HitData::Contributions& c = cal_hit->truth;
@@ -131,7 +131,7 @@ void Geant4HitTruthHandler::end(const G4Event* event)    {
   G4HCofThisEvent* hce = event->GetHCofThisEvent();
   if ( hce )  {
     int nCol = hce->GetNumberOfCollections();
-    Geant4ParticleMap* truth = context()->event().extension<Geant4ParticleMap>(false);
+    auto* truth = context()->event().extension<Geant4ParticleMap>(false);
     if ( truth && !truth->isValid() )  {
       truth = 0;
       printout(WARNING,name(),"+++ [Event:%d] No valid MC truth info present. "

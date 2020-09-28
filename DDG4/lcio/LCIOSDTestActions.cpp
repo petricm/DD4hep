@@ -116,7 +116,7 @@ namespace  Tests {
       direction *= new_len/hit_len;
     }
 
-    lcio::SimTrackerHitImpl* hit = new lcio::SimTrackerHitImpl;
+    auto* hit = new lcio::SimTrackerHitImpl;
     //    (h.track->GetTrackID(),
     // h.track->GetDefinition()->GetPDGEncoding(),
     // step->GetTotalEnergyDeposit(),

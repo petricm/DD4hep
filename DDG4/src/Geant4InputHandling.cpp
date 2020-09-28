@@ -39,7 +39,7 @@ typedef detail::ReferenceBitMask<int> PropertyMask;
 
 /// Create a vertex object from the Geant4 primary vertex
 Geant4Vertex* dd4hep::sim::createPrimary(const G4PrimaryVertex* g4)      {        
-  Geant4Vertex* v = new Geant4Vertex();
+  auto* v = new Geant4Vertex();
   v->x = g4->GetX0();
   v->y = g4->GetY0();
   v->z = g4->GetZ0();
@@ -102,7 +102,7 @@ static void collectPrimaries(Geant4PrimaryMap*         pm,
   pm->insert(gp,p);
 
   if ( dau )   {
-    Geant4Vertex* dv = new Geant4Vertex(*particle_origine);
+    auto* dv = new Geant4Vertex(*particle_origine);
     int vid = int(interaction->vertices.size());
     PropertyMask reason(p->reason);
     reason.set(G4PARTICLE_HAS_SECONDARIES);
@@ -123,7 +123,7 @@ dd4hep::sim::createPrimary(int mask,
                            Geant4PrimaryMap* pm,
                            const G4PrimaryVertex* gv)
 {
-  Geant4PrimaryInteraction* interaction = new Geant4PrimaryInteraction();
+  auto* interaction = new Geant4PrimaryInteraction();
   Geant4Vertex* v = createPrimary(gv);
   int vid = int(interaction->vertices.size());
   interaction->locked = true;
@@ -157,12 +157,12 @@ int dd4hep::sim::generationInitialization(const Geant4Action* /* caller */,
   // This is the input to the translator forming the final
   // Geant4PrimaryInteraction (see below) containing rebiased particle
   // and vertex maps.
-  Geant4PrimaryEvent* evt = new Geant4PrimaryEvent();
+  auto* evt = new Geant4PrimaryEvent();
   context->event().addExtension(evt);
   //
   // The Geant4PrimaryInteraction extension contains the final
   // vertices and particles ready to be injected to Geant4.
-  Geant4PrimaryInteraction* inter = new Geant4PrimaryInteraction();
+  auto* inter = new Geant4PrimaryInteraction();
   inter->setNextPID(-1);
   context->event().addExtension(inter);
   return 1;
@@ -225,8 +225,8 @@ int dd4hep::sim::mergeInteractions(const Geant4Action* caller,
   typedef Geant4PrimaryEvent::Interaction  Interaction;
   typedef vector<Interaction*>             Interactions;
   Geant4Event& event = context->event();
-  Geant4PrimaryEvent* evt = event.extension<Geant4PrimaryEvent>();
-  Interaction* output = event.extension<Interaction>();
+  auto* evt = event.extension<Geant4PrimaryEvent>();
+  auto* output = event.extension<Interaction>();
   Interactions inter  = evt->interactions();
   int particle_offset = 0;
 
@@ -389,7 +389,7 @@ getRelevant(set<int>& visited,
       or (isProperTimeZero and p.definition()->GetPDGStable() ) // initial state electrons, etc.
       or (isProperTimeZero and primaryConfig.m_zeroTimePDGs.count(abs(p->pdgID)) != 0 ) ; // charged 'documentation' leptons, e.g. in lepton pairs w/ FSR
     if (not rejectParticle) {
-      map<int,G4PrimaryParticle*>::iterator ip4 = prim.find(p->id);
+      auto ip4 = prim.find(p->id);
       G4PrimaryParticle* p4 = (ip4 == prim.end()) ? 0 : (*ip4).second;
       if ( !p4 )  {
         p4 = createG4Primary(p);
@@ -426,8 +426,8 @@ int dd4hep::sim::generatePrimaries(const Geant4Action* caller,
 {
   typedef vector< pair<Geant4Particle*,G4PrimaryParticle*> > Primaries;
   typedef Geant4PrimaryInteraction Interaction;
-  Geant4PrimaryMap* primaries   = context->event().extension<Geant4PrimaryMap>();
-  Interaction*      interaction = context->event().extension<Interaction>();
+  auto* primaries   = context->event().extension<Geant4PrimaryMap>();
+  auto*      interaction = context->event().extension<Interaction>();
   Interaction::ParticleMap& pm  = interaction->particles;
   Interaction::VertexMap&   vm  = interaction->vertices;
   map<int,G4PrimaryParticle*> prim;
@@ -445,11 +445,11 @@ int dd4hep::sim::generatePrimaries(const Geant4Action* caller,
   }
   else   {
     Geant4PrimaryInteraction::VertexMap::iterator ivfnd, iv, ivend;
-    for(Interaction::VertexMap::const_iterator iend=vm.end(),i=vm.begin(); i!=iend; ++i)  {
+    for(auto iend=vm.end(),i=vm.begin(); i!=iend; ++i)  {
       for( Geant4Vertex* v : (*i).second ){
 
         int num_part = 0;
-        G4PrimaryVertex* v4 = new G4PrimaryVertex(v->x,v->y,v->z,v->time);
+        auto* v4 = new G4PrimaryVertex(v->x,v->y,v->z,v->time);
         event->AddPrimaryVertex(v4);
         caller->print("+++++ G4PrimaryVertex at (%+.2e,%+.2e,%+.2e) [mm] %+.2e [ns]",
                       v->x/CLHEP::mm,v->y/CLHEP::mm,v->z/CLHEP::mm,v->time/CLHEP::ns);

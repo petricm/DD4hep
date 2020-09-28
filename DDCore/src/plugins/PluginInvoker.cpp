@@ -60,7 +60,7 @@ using namespace dd4hep::detail;
 template <> void Converter<dd4hep::arg>::operator()(xml_h e)  const  {
   xml_comp_t c(e);
   string val = c.valueStr();
-  vector<string>* args = (vector<string>*)param;
+  auto* args = (vector<string>*)param;
   args->emplace_back(val);
 }
 

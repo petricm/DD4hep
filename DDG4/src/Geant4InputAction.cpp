@@ -227,7 +227,7 @@ int Geant4InputAction::readParticles(int evt_number,
 void Geant4InputAction::operator()(G4Event* event)   {
   vector<Particle*>         primaries;
   Geant4Event&              evt = context()->event();
-  Geant4PrimaryEvent*       prim = evt.extension<Geant4PrimaryEvent>();
+  auto*       prim = evt.extension<Geant4PrimaryEvent>();
   Vertices                  vertices ;
   int result;
 
@@ -240,7 +240,7 @@ void Geant4InputAction::operator()(G4Event* event)   {
     return;
   }
 
-  Geant4PrimaryInteraction* inter = new Geant4PrimaryInteraction();
+  auto* inter = new Geant4PrimaryInteraction();
   prim->add(m_mask, inter);
 
   // check if there is at least one particle

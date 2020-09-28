@@ -75,7 +75,7 @@ template <> void Converter<detector>::operator()(json_h element) const {
       // We have here a nested detector. If the mother volume is not yet registered
       // it must be done here, so that the detector constructor gets the correct answer from
       // the call to Detector::pickMotherVolume(DetElement).
-      string par_name = element.attr<string>(attr_par);
+      auto par_name = element.attr<string>(attr_par);
       DetElement parent_detector = description.detector(par_name);
       if ( !parent_detector.isValid() )  {
         except("Compact","Failed to access valid parent detector of %s",name.c_str());

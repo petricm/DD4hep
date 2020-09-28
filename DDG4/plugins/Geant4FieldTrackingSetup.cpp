@@ -160,7 +160,7 @@ namespace {
   };
   
   string Geant4SetupPropertyMap::value(const string& key) const {
-    Detector::PropertyValues::const_iterator iV = vals.find(key);
+    auto iV = vals.find(key);
     return iV == vals.end() ? "" : (*iV).second;
   }
 
@@ -193,7 +193,7 @@ int Geant4FieldTrackingSetup::execute(Detector& description)   {
   G4PropagatorInField*     propagator;
   G4FieldManager*          fieldManager;
   G4MagneticField*         mag_field    = new sim::Geant4Field(fld);
-  G4Mag_EqRhs*             mag_equation = PluginService::Create<G4Mag_EqRhs*>(eq_typ,mag_field);
+  auto*             mag_equation = PluginService::Create<G4Mag_EqRhs*>(eq_typ,mag_field);
   G4EquationOfMotion*      mag_eq       = mag_equation;
   if ( nullptr == mag_eq )   {
     mag_eq = PluginService::Create<G4EquationOfMotion*>(eq_typ,mag_field);
@@ -201,7 +201,7 @@ int Geant4FieldTrackingSetup::execute(Detector& description)   {
       except("FieldSetup", "Cannot create G4EquationOfMotion of type: %s.",eq_typ.c_str());
     }
   }
-  G4MagIntegratorStepper* fld_stepper = PluginService::Create<G4MagIntegratorStepper*>(stepper_typ,mag_eq);
+  auto* fld_stepper = PluginService::Create<G4MagIntegratorStepper*>(stepper_typ,mag_eq);
   if ( nullptr == fld_stepper )   {
     fld_stepper  = PluginService::Create<G4MagIntegratorStepper*>(stepper_typ,mag_equation);
     if ( nullptr == fld_stepper )   {
@@ -239,7 +239,7 @@ static long setup_fields(Detector& description, const dd4hep::detail::GeoHandler
   struct XMLFieldTrackingSetup : public Geant4FieldTrackingSetup {
     XMLFieldTrackingSetup(const map<string,string>& values) : Geant4FieldTrackingSetup() {
       Geant4SetupPropertyMap pm(values);
-      Detector::PropertyValues::const_iterator iV = values.find("min_chord_step");
+      auto iV = values.find("min_chord_step");
       eq_typ      = pm.value("equation");
       stepper_typ = pm.value("stepper");
       min_chord_step = _toDouble((iV==values.end()) ? string("1e-2 * mm") : (*iV).second);

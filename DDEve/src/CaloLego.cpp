@@ -56,7 +56,7 @@ View& CaloLego::Build(TEveWindow* slot)   {
 
 /// Configure a single geometry view
 void CaloLego::ConfigureGeometry(const DisplayConfiguration::ViewConfig& config)    {
-  DisplayConfiguration::Configurations::const_iterator j = config.subdetectors.begin();
+  auto j = config.subdetectors.begin();
   Display::CalodataContext& ctx = m_data;
   float legend_y = Annotation::DefaultTextSize()+Annotation::DefaultMargin();
 
@@ -71,12 +71,12 @@ void CaloLego::ConfigureGeometry(const DisplayConfiguration::ViewConfig& config)
 	TH2F* h = new TH2F(*calo.eveHist->GetHist(isl));
 	ctx.eveHist->AddHistogram(h);
 	ctx.eveHist->RefSliceInfo(nslice).Setup(n,cd.threshold,cd.color,101);
-	Annotation* a = new Annotation(viewer(),n,Annotation::DefaultMargin(),legend_y,cd.color);
+	auto* a = new Annotation(viewer(),n,Annotation::DefaultMargin(),legend_y,cd.color);
 	legend_y += a->GetTextSize();
       }
     }
   }
-  TEveCaloLego* lego = new TEveCaloLego(ctx.eveHist);
+  auto* lego = new TEveCaloLego(ctx.eveHist);
   ImportGeo(lego);
   ctx.caloViz = lego;
   ctx.caloViz->SetPlotEt(kFALSE);
@@ -88,7 +88,7 @@ void CaloLego::ConfigureGeometry(const DisplayConfiguration::ViewConfig& config)
 
   // draws scales and axis on borders of window
   TGLViewer* glv = viewer()->GetGLViewer();
-  TEveCaloLegoOverlay* overlay = new TEveCaloLegoOverlay();
+  auto* overlay = new TEveCaloLegoOverlay();
   glv->AddOverlayElement(overlay);
   overlay->SetCaloLego(lego);
   
@@ -105,7 +105,7 @@ void CaloLego::ConfigureGeometry(const DisplayConfiguration::ViewConfig& config)
 
 /// Configure a single event scene view
 void CaloLego::ConfigureEvent(const DisplayConfiguration::ViewConfig& config)  {
-  DisplayConfiguration::Configurations::const_iterator j = config.subdetectors.begin();
+  auto j = config.subdetectors.begin();
   printout(INFO,"CaloLego","+++ Import geometry topics for view %s.",name().c_str());
   for(int ihist=0; j != config.subdetectors.end(); ++j)   {
     const char* n = (*j).name.c_str();

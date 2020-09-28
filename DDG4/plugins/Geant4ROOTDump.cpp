@@ -106,7 +106,7 @@ static long dump_root(Detector&, int argc, char** argv) {
   TFile* f = TFile::Open(input.c_str());
 
   if ( f && !f->IsZombie() )  {
-    TTree* tree = (TTree*)f->Get("EVENT");
+    auto* tree = (TTree*)f->Get("EVENT");
     TClass* cl_calo = gROOT->GetClass(typeid(CalorimeterHits));
     TClass* cl_tracker = gROOT->GetClass(typeid(TrackerHits));
     TClass* cl_particles = gROOT->GetClass(typeid(Particles));
@@ -123,30 +123,30 @@ static long dump_root(Detector&, int argc, char** argv) {
 
       // First suck in all data
       for (Int_t i=0;i<nbranches;i++)  {
-        TBranch* branch = (TBranch*)branches->UncheckedAt(i);
+        auto* branch = (TBranch*)branches->UncheckedAt(i);
         pair<TClass*,void*> data = load(branch,ievt);
         if ( data.first ) event[branch->GetName()] = data;
       }
       // Now dump the stuff
-      for(ENTRIES::const_iterator i=event.begin(); i!=event.end(); ++i)  {
+      for(auto i=event.begin(); i!=event.end(); ++i)  {
         pair<TClass*,void*> data = (*i).second;
         if ( data.first == cl_particles )  {
-          Particles* parts = (Particles*)data.second;
+          auto* parts = (Particles*)data.second;
           dump.print(INFO, (*i).first, parts);
           for_each(parts->begin(), parts->end(), detail::DestroyObject<Geant4Particle*>());
         }
       }
-      for(ENTRIES::const_iterator i=event.begin(); i!=event.end(); ++i)  {
+      for(auto i=event.begin(); i!=event.end(); ++i)  {
         pair<TClass*,void*> data = (*i).second;
         if ( data.first == cl_particles )  {
         }
         else if ( data.first == cl_tracker )   {
-          TrackerHits* hits = (TrackerHits*)data.second;
+          auto* hits = (TrackerHits*)data.second;
           dump.print(INFO, (*i).first, hits);
           for_each(hits->begin(), hits->end(), detail::DestroyObject<Geant4Tracker::Hit*>());
         }
         else if ( data.first == cl_calo )   {
-          CalorimeterHits* hits = (CalorimeterHits*)data.second;
+          auto* hits = (CalorimeterHits*)data.second;
           dump.print(INFO, (*i).first, hits);
           for_each(hits->begin(), hits->end(), detail::DestroyObject<Geant4Calorimeter::Hit*>());
         }

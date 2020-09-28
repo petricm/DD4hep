@@ -83,7 +83,7 @@ void TiledLayerSegmentation::setLayerDimensions(int layerIndex, double x, double
 		throw runtime_error(
 				"TiledLayerSegmentation::setLayerDimensions: inconsistent size of layer parameter vectors.");
 	}
-	vector<int>::iterator it = find(_layerIndices.begin(), _layerIndices.end(), layerIndex);
+	auto it = find(_layerIndices.begin(), _layerIndices.end(), layerIndex);
 	if (it == _layerIndices.end()) {
 		_layerIndices.emplace_back(layerIndex);
 		_layerDimensionsX.emplace_back(x);
@@ -102,7 +102,7 @@ TiledLayerSegmentation::LayerDimensions TiledLayerSegmentation::layerDimensions(
 		throw runtime_error(
 				"TiledLayerSegmentation::layerDimensions: inconsistent size of layer parameter vectors.");
 	}
-	vector<int>::const_iterator it = find(_layerIndices.begin(), _layerIndices.end(), layerIndex);
+	auto it = find(_layerIndices.begin(), _layerIndices.end(), layerIndex);
 	if (it == _layerIndices.end()) {
 		stringstream message;
 		message << "TiledLayerSegmentation::layerDimensions: invalid layer index " << layerIndex;

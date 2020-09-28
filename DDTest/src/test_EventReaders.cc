@@ -52,7 +52,7 @@ int main(int argc, char** argv ){
       bool skipEOF =  it.skipEOF;
       //InputFiles are in DDTest/inputFiles, argument is cmake_source directory
       std::string inputFile = argv[1]+ std::string("/inputFiles/") + fileName;
-      dd4hep::sim::Geant4EventReader* thisReader = dd4hep::PluginService::Create<dd4hep::sim::Geant4EventReader*>(readerType, inputFile);
+      auto* thisReader = dd4hep::PluginService::Create<dd4hep::sim::Geant4EventReader*>(readerType, inputFile);
       if ( not thisReader ) {
         test.log( "Plugin not found" );
         test.log( readerType );

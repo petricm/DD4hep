@@ -105,26 +105,26 @@ static void extract(DisplayConfiguration::Config& c, xml_h e, int typ)   {
  *  @date    01/06/2014
  */
 template <> void Converter<detelement>::operator()(xml_h e)  const  {
-  Configurations* configs = (Configurations*)param;
+  auto* configs = (Configurations*)param;
   DisplayConfiguration::Config c;
   extract(c,e,DisplayConfiguration::DETELEMENT);
   configs->push_back(c);
 }
 template <> void Converter<panel>::operator()(xml_h e)  const  {
-  Configurations* configs = (Configurations*)param;
+  auto* configs = (Configurations*)param;
   DisplayConfiguration::Config c;
   extract(c,e,DisplayConfiguration::PANEL);
   configs->push_back(c);
 }
 template <> void Converter<calodata_configs>::operator()(xml_h e)  const  {
-  Configurations* configs = (Configurations*)param;
+  auto* configs = (Configurations*)param;
   DisplayConfiguration::Config c;
   extract(c,e,DisplayConfiguration::CALODATA);
   configs->push_back(c);
 }
 
 template <> void Converter<collection_configs>::operator()(xml_h e)  const  {
-  Configurations* configs = (Configurations*)param;
+  auto* configs = (Configurations*)param;
   DisplayConfiguration::Config c;
   c.name = e.attr<string>(_U(name));
   c.type = DisplayConfiguration::COLLECTION;
@@ -150,7 +150,7 @@ template <> void Converter<collection_configs>::operator()(xml_h e)  const  {
  *  @date    01/06/2014
  */
 template <> void Converter<view>::operator()(xml_h e)  const  {
-  ViewConfigurations* configs = (ViewConfigurations*)param;
+  auto* configs = (ViewConfigurations*)param;
   DisplayConfiguration::ViewConfig c;
   extract(c,e,DisplayConfiguration::VIEW);
   c.type  = e.attr<string>(_U(type));
@@ -178,7 +178,7 @@ template <> void Converter<view>::operator()(xml_h e)  const  {
  *  @date    01/06/2014
  */
 template <> void Converter<calodata>::operator()(xml_h e)  const  {
-  Configurations* configs = (Configurations*)param;
+  auto* configs = (Configurations*)param;
   DisplayConfiguration::Config c;
   c.name    = e.attr<string>(_U(name));
   c.type    = DisplayConfiguration::CALODATA;
@@ -217,7 +217,7 @@ template <> void Converter<calodata>::operator()(xml_h e)  const  {
  *  @date    01/06/2014
  */
 template <> void Converter<collection>::operator()(xml_h e)  const  {
-  Configurations* configs = (Configurations*)param;
+  auto* configs = (Configurations*)param;
   DisplayConfiguration::Config c;
   c.name = e.attr<string>(_U(name));
   c.type = DisplayConfiguration::COLLECTION;
@@ -246,7 +246,7 @@ template <> void Converter<collection>::operator()(xml_h e)  const  {
  */
 template <> void Converter<include>::operator()(xml_h e)  const  {
   if ( e )  {
-    DetectorLoad* load = dynamic_cast<DetectorLoad*>(&this->description);
+    auto* load = dynamic_cast<DetectorLoad*>(&this->description);
     if ( load )   {
       load->processXML(e,e.attr<string>(_U(ref)));
       return;
@@ -268,7 +268,7 @@ template <> void Converter<include>::operator()(xml_h e)  const  {
  *  @date    01/06/2014
  */
 template <> void Converter<display>::operator()(xml_h e)  const  {
-  Display* d = (Display*)param;
+  auto* d = (Display*)param;
   if ( e.hasAttr(_Unicode(visLevel)) ) d->setVisLevel(e.attr<int>(_Unicode(visLevel)));
   if ( e.hasAttr(_Unicode(eventHandler)) ) d->setEventHandlerName(e.attr<std::string>(_Unicode(eventHandler)));
   if ( e.hasAttr(_Unicode(loadLevel)) ) d->setLoadLevel(e.attr<int>(_Unicode(loadLevel)));
@@ -286,7 +286,7 @@ template <> void Converter<display>::operator()(xml_h e)  const  {
  *  @date    01/06/2014
  */
 template <> void Converter<ddeve>::operator()(xml_h e)  const  {
-  Display* disp = (Display*)param;
+  auto* disp = (Display*)param;
   DisplayConfiguration cfg(disp);
   /// Now we process all allowed elements within this tag
   xml_coll_t(e,_Unicode(display)).for_each(Converter<display>(description,disp));
@@ -305,7 +305,7 @@ template <> void Converter<ddeve>::operator()(xml_h e)  const  {
  *  @date    01/06/2014
  */
 static long setup_DDEve(Detector& description, const xml_h& e) {
-  Display* display = description.extension<Display>();
+  auto* display = description.extension<Display>();
   static bool first = true;
   if ( first )   {
     first = false;

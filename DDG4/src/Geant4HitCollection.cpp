@@ -109,7 +109,7 @@ void Geant4HitCollection::clear()   {
 /// Find hit in a collection by comparison of attributes
 void* Geant4HitCollection::findHit(const Compare& cmp)  {
   void* p = 0;
-  WrappedHits::const_iterator i = m_hits.begin();
+  auto i = m_hits.begin();
   if ( m_flags.bits.repeatedLookup && m_lastHit < m_hits.size() )  {
     if ( (p = cmp(*(i+m_lastHit))) != 0 ) return p;
   }
@@ -124,7 +124,7 @@ void* Geant4HitCollection::findHit(const Compare& cmp)  {
 
 /// Find hit in a collection by comparison of the key
 Geant4HitWrapper* Geant4HitCollection::findHitByKey(VolumeID key)   {
-  Keys::const_iterator i=m_keys.find(key);
+  auto i=m_keys.find(key);
   if ( i == m_keys.end() ) return 0;
   m_lastHit = (*i).second;
   return &m_hits.at(m_lastHit);

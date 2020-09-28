@@ -66,7 +66,7 @@ DetElement AlignmentsCalib::detector(const string& path)  const   {
 pair<key_type,AlignmentsCalib::Entry*>
 AlignmentsCalib::_set(DetElement detector, const Delta& delta)   {
   ConditionKey tar_key(detector.key(),Keys::alignmentKey);
-  UsedConditions::iterator i = used.find(tar_key.hash);
+  auto i = used.find(tar_key.hash);
   if ( i != used.end() )   {
     (*i).second->delta = delta;
     return (*i);

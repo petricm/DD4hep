@@ -72,7 +72,7 @@ namespace dd4hep::sim {
              m_maxNumPhotonsPerStep, m_maxBetaChangePerStep,
              yes_no(m_trackSecondariesFirst), yes_no(m_stackPhotons),
              yes_no(m_trackSecondariesFirst));
-        G4Cerenkov* process = new G4Cerenkov(name());
+        auto* process = new G4Cerenkov(name());
         process->SetVerboseLevel(m_verbosity);
         process->SetMaxNumPhotonsPerStep(m_maxNumPhotonsPerStep);
         process->SetMaxBetaChangePerStep(m_maxBetaChangePerStep);

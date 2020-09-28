@@ -124,7 +124,7 @@ void ConditionsMapping<T>::scan(DetElement   detector,
     Condition::detkey_type det_key = detector.key();
     Condition::key_type low = ConditionKey::KeyMaker(det_key,lower).hash;
     Condition::key_type up  = ConditionKey::KeyMaker(det_key,upper).hash;
-    typename T::const_iterator first = data.lower_bound(low);
+    auto first = data.lower_bound(low);
     for(; first != data.end() && (*first).first <= up; ++first )
       processor((*first).second);
     return;

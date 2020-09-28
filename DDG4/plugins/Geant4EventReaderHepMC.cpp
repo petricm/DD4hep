@@ -231,7 +231,7 @@ Geant4EventReaderHepMC::readParticles(int /* ev_id */,
 
   //fg: for now we create exactly one event vertex here ( as before )
   //    this needs revisiting as HepMC allows to have more than one vertex ...
-  Geant4Vertex* primary_vertex = new Geant4Vertex ;
+  auto* primary_vertex = new Geant4Vertex ;
   vertices.emplace_back( primary_vertex );
   primary_vertex->x = 0;
   primary_vertex->y = 0;
@@ -310,7 +310,7 @@ void HepMC::fix_particles(EventStream& info)  {
       p->vez = v->z;
       v->in.insert(p->id);
       for(id=v->out.begin(); id!=v->out.end();++id)    {
-        EventStream::Particles::iterator ipp = parts.find(*id);
+        auto ipp = parts.find(*id);
         Geant4Particle* dau = ipp != parts.end() ? (*ipp).second : 0;
         if ( !dau )
           cout << "ERROR: Invalid daughter particle: " << *id << endl;
@@ -323,7 +323,7 @@ void HepMC::fix_particles(EventStream& info)  {
   for(const auto& iv : verts)   {
     Geant4Vertex* v = iv.second;
     for (int pout : v->out)   {
-      EventStream::Particles::iterator ipp = parts.find(pout);
+      auto ipp = parts.find(pout);
       Geant4Particle* p = (*ipp).second;
       for (int d : v->in)   {
         p->parents.insert(d);
@@ -350,7 +350,7 @@ void HepMC::fix_particles(EventStream& info)  {
 }
 
 Geant4Vertex* HepMC::vertex(EventStream& info, int i)   {
-  EventStream::Vertices::iterator it=info.vertices().find(i);
+  auto it=info.vertices().find(i);
   return (it==info.vertices().end()) ? 0 : (*it).second;
 }
 
@@ -480,7 +480,7 @@ int HepMC::read_particle(EventStream &info, istringstream& input, Geant4Particle
 int HepMC::read_vertex(EventStream &info, istream& is, istringstream & input)    {
   int id=0, dummy = 0, num_orphans_in=0, num_particles_out=0, weights_size=0;
   vector<float> weights;
-  Geant4Vertex* v = new Geant4Vertex();
+  auto* v = new Geant4Vertex();
   Geant4Particle* p;
 
   if( !input ) {

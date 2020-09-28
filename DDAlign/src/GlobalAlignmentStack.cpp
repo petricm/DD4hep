@@ -142,7 +142,7 @@ bool GlobalAlignmentStack::insert(dd4hep_ptr<StackEntry>& entry)  {
 /// Add a new entry to the cache. The key is the placement path
 bool GlobalAlignmentStack::add(dd4hep_ptr<StackEntry>& entry)  {
   if ( entry.get() && !entry->path.empty() )  {
-    Stack::const_iterator i = m_stack.find(entry->path);
+    auto i = m_stack.find(entry->path);
     if ( i == m_stack.end() )   {
       StackEntry* e = entry.get();
       // Need to make some checks BEFORE insertion
@@ -161,7 +161,7 @@ bool GlobalAlignmentStack::add(dd4hep_ptr<StackEntry>& entry)  {
 
 /// Retrieve an alignment entry of the current stack
 dd4hep_ptr<GlobalAlignmentStack::StackEntry> GlobalAlignmentStack::pop()   {
-  Stack::iterator i = m_stack.begin();
+  auto i = m_stack.begin();
   if ( i != m_stack.end() )   {
     dd4hep_ptr<StackEntry> e((*i).second);
     m_stack.erase(i);

@@ -82,7 +82,7 @@ using namespace dd4hep::cond;
 namespace {
   void* create_loader(Detector& description, int argc, char** argv)   {
     const char* name = argc>0 ? argv[0] : "XMLLoader";
-    ConditionsManagerObject* mgr = (ConditionsManagerObject*)(argc>0 ? argv[1] : 0);
+    auto* mgr = (ConditionsManagerObject*)(argc>0 ? argv[1] : 0);
     return new ConditionsXmlLoader(description,ConditionsManager(mgr),name);
   }
 }
@@ -139,7 +139,7 @@ size_t ConditionsXmlLoader::load_single(key_type key,
   if ( m_buffer.empty() && !m_sources.empty() )  {
     return load_source(m_sources.begin()->first, key, req_validity, conditions);
   }
-  for (Buffer::iterator j=m_buffer.begin(); j!=m_buffer.end(); ++j)  {
+  for (auto j=m_buffer.begin(); j!=m_buffer.end(); ++j)  {
     Condition condition = *j;
     const IOV* iov = condition->iov;
     if ( IOV::partial_match(req_validity,*iov) )  {

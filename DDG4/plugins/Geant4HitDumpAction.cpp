@@ -103,7 +103,7 @@ void Geant4HitDumpAction::begin(const G4Event* /* event */)   {
 
 /// Dump single container of hits
 void Geant4HitDumpAction::dumpCollection(G4VHitsCollection* collection)  {
-  Geant4HitCollection* coll = dynamic_cast<Geant4HitCollection*>(collection);
+  auto* coll = dynamic_cast<Geant4HitCollection*>(collection);
   string nam = collection->GetName();
   if ( coll )    {
     Geant4DataDump::CalorimeterHits cal_hits;
@@ -112,11 +112,11 @@ void Geant4HitDumpAction::dumpCollection(G4VHitsCollection* collection)  {
     size_t nhits = coll->GetSize();
     for(size_t i=0; i<nhits; ++i)   {
       Geant4HitData* h = coll->hit(i);
-      Geant4Tracker::Hit* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
+      auto* trk_hit = dynamic_cast<Geant4Tracker::Hit*>(h);
       if ( 0 != trk_hit )   {
         trk_hits.emplace_back(trk_hit);
       }
-      Geant4Calorimeter::Hit* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
+      auto* cal_hit = dynamic_cast<Geant4Calorimeter::Hit*>(h);
       if ( 0 != cal_hit )   {
         cal_hits.emplace_back(cal_hit);
       }

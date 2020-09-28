@@ -208,7 +208,7 @@ static long run_function(Detector&, int argc, char** argv) {
     }
   }
   typedef int (*call_t)(int, char**);
-  call_t ff  = (call_t)f;
+  auto ff  = (call_t)f;
   ret = (*ff)(args.size(),&args[0]);
   return ret;
 }
@@ -284,7 +284,7 @@ static long root_dump_gdml_tables(Detector& description, int /* argc */, char** 
   TObjArrayIter arr(c);
   printout(INFO,"Dump_GDMLTables","+++ Dumping known GDML tables from TGeoManager.");
   for(TObject* i = arr.Next(); i; i=arr.Next())   {
-    TGDMLMatrix* gdmlMat = (TGDMLMatrix*)i;
+    auto* gdmlMat = (TGDMLMatrix*)i;
     num_elements += (gdmlMat->GetRows()*gdmlMat->GetCols());
     ++num_tables;
     gdmlMat->Print();
@@ -314,7 +314,7 @@ static long root_dump_optical_surfaces(Detector& description, int /* argc */, ch
   TObjArrayIter arr(c);
   printout(ALWAYS,"Dump_OpticalSurfaces","+++ Dumping known Optical Surfaces from TGeoManager.");
   for(TObject* i = arr.Next(); i; i=arr.Next())   {
-    TGeoOpticalSurface* optSurt = (TGeoOpticalSurface*)i;
+    auto* optSurt = (TGeoOpticalSurface*)i;
     ++num_surfaces;
     optSurt->Print();
   }
@@ -342,7 +342,7 @@ static long root_dump_skin_surfaces(Detector& description, int /* argc */, char*
   TObjArrayIter arr(c);
   printout(ALWAYS,"Dump_SkinSurfaces","+++ Dumping known Skin Surfaces from TGeoManager.");
   for(TObject* i = arr.Next(); i; i=arr.Next())   {
-    TGeoSkinSurface* skinSurf = (TGeoSkinSurface*)i;
+    auto* skinSurf = (TGeoSkinSurface*)i;
     ++num_surfaces;
     skinSurf->Print();
   }
@@ -370,7 +370,7 @@ static long root_dump_border_surfaces(Detector& description, int /* argc */, cha
   TObjArrayIter arr(c);
   printout(ALWAYS,"Dump_BorderSurfaces","+++ Dumping known Border Surfaces from TGeoManager.");
   for(TObject* i = arr.Next(); i; i=arr.Next())   {
-    TGeoBorderSurface* bordSurt = (TGeoBorderSurface*)i;
+    auto* bordSurt = (TGeoBorderSurface*)i;
     ++num_surfaces;
     bordSurt->Print();
   }
@@ -648,7 +648,7 @@ static long root_materials(Detector& description, int argc, char** argv) {
   TList* mats = description.manager().GetListOfMaterials();
   dd4hep_ptr<TIterator> iter(mats->MakeIterator());
   while( (obj=iter->Next()) != 0 )  {
-    TGeoMaterial* mat = (TGeoMaterial*)obj;
+    auto* mat = (TGeoMaterial*)obj;
     if ( name.empty() || name == mat->GetName() )
       (*printer)(mat);
   }
@@ -744,9 +744,9 @@ DECLARE_APPLY(DD4hep_XMLLoader,load_xml)
 static long process_xml_doc(Detector& description, int argc, char** argv) {
   if ( argc > 0 )   {
     DetectorBuildType type = BUILD_DEFAULT;
-    DetectorImp* imp = dynamic_cast<DetectorImp*>(&description);
+    auto* imp = dynamic_cast<DetectorImp*>(&description);
     if ( imp )  {
-      xml::XmlElement* h = (xml::XmlElement*)argv[0];
+      auto* h = (xml::XmlElement*)argv[0];
       xml::Handle_t input(h);
       if ( input.ptr() )   {
         if ( argc > 1 )  {
@@ -776,7 +776,7 @@ DECLARE_APPLY(DD4hep_XMLProcessor,process_xml_doc)
 static long load_volmgr(Detector& description, int, char**) {
   printout(INFO,"DD4hepVolumeManager","**** running plugin DD4hepVolumeManager ! " );
   try {
-    DetectorImp* imp = dynamic_cast<DetectorImp*>(&description);
+    auto* imp = dynamic_cast<DetectorImp*>(&description);
     if ( imp )  {
       imp->imp_loadVolumeManager();
       printout(INFO,"VolumeManager","+++ Volume manager populated and loaded.");
@@ -1535,7 +1535,7 @@ DECLARE_SURFACE_INSTALLER(TestSurfaces,TestSurfacesPlugin)
  */
 #include "DD4hep/PluginTester.h"
 static long install_plugin_tester(Detector& description, int , char** ) {
-  PluginTester* test = description.extension<PluginTester>(false);
+  auto* test = description.extension<PluginTester>(false);
   if ( !test )  {
     description.addExtension<PluginTester>(new PluginTester());
     printout(INFO,"PluginTester",

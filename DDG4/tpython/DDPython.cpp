@@ -102,14 +102,14 @@ namespace {
 
 DDPython::GILState::GILState(int) : state(0) {
   if ( ::Py_IsInitialized() )  {
-    PyGILState_STATE st = (PyGILState_STATE)::PyGILState_Ensure();
+    auto st = (PyGILState_STATE)::PyGILState_Ensure();
     state = (int)st;
   }
 }
 
 DDPython::GILState::~GILState()  {
   if ( ::Py_IsInitialized() )  {
-    PyGILState_STATE st = (PyGILState_STATE)state;
+    auto st = (PyGILState_STATE)state;
     ::PyGILState_Release(st);
   }
 }

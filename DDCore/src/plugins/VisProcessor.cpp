@@ -179,7 +179,7 @@ int VisMaterialProcessor::operator()(PlacedVolume pv, int /* level */)   {
 
 static void* create_object(Detector& description, int argc, char** argv)   {
   DetectorHelper helper(description);
-  VisMaterialProcessor*  proc = new VisMaterialProcessor(description);
+  auto*  proc = new VisMaterialProcessor(description);
   for ( int i=0; i<argc; ++i )   {
     if ( argv[i] )    {
       if ( ::strncmp(argv[i],"-vis-active",6) == 0 )   {

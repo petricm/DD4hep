@@ -99,7 +99,7 @@ namespace dd4hep {
       if ( action.hasChild(_Unicode(adopt)) )  {
         xml_comp_t child = action.child(_Unicode(adopt));
         Geant4Action* user = kernel.globalAction(child.nameStr());
-        Geant4ParticleHandler* ph = dynamic_cast<Geant4ParticleHandler*>(handle.get());
+        auto* ph = dynamic_cast<Geant4ParticleHandler*>(handle.get());
         if ( ph )  {
           ph->adopt(user);
         }
@@ -176,7 +176,7 @@ namespace dd4hep {
   template <> void Converter<Phase>::operator()(xml_h e)  const  {
     xml_comp_t x_phase(e);
     Kernel& kernel = Kernel::instance(description);
-    string nam = x_phase.attr<string>(_U(type));
+    auto nam = x_phase.attr<string>(_U(type));
     typedef Geant4ActionPhase PH;
     Phase p;
 
@@ -285,7 +285,7 @@ namespace dd4hep {
     Kernel& kernel = Kernel::instance(description);
 
     if ( seq.hasAttr(_U(sd)) )   {
-      string sd_nam = seq.attr<string>(_U(sd));
+      auto sd_nam = seq.attr<string>(_U(sd));
       SensitiveDetector sensitive = description.sensitiveDetector(sd_nam);
       seqNam  = seq.attr<string>(_U(type))+"/"+sd_nam;
       if ( !sensitive.isValid() )  {

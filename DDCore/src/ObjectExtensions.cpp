@@ -25,7 +25,7 @@ using namespace dd4hep;
 
 namespace {
   std::string obj_type(void* ptr)  {
-    ObjectExtensions* o = (ObjectExtensions*)ptr;
+    auto* o = (ObjectExtensions*)ptr;
     return typeName(typeid(*o));
   }
 }

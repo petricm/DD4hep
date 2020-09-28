@@ -73,7 +73,7 @@ namespace dd4hep::DDSegmentation {
 
     size_t BitFieldCoder::index( const std::string& name) const {
     
-      IndexMap::const_iterator it = _map.find( name ) ;
+      auto it = _map.find( name ) ;
     
       if( it != _map.end() ) 
       

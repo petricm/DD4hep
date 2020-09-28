@@ -61,7 +61,7 @@ void Geant4InteractionVertexSmear::smear(Interaction* inter)  const  {
 /// Callback to generate primary particles
 void Geant4InteractionVertexSmear::operator()(G4Event*) {
   typedef std::vector<Geant4PrimaryInteraction*> _I;
-  Geant4PrimaryEvent* evt = context()->event().extension<Geant4PrimaryEvent>();
+  auto* evt = context()->event().extension<Geant4PrimaryEvent>();
 
   if ( m_mask >= 0 )  {
     Interaction* inter = evt->get(m_mask);

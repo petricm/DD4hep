@@ -82,7 +82,7 @@ void Geant4TrackingPostAction::end(const G4Track* tr) {
   Geant4TrackHandler track(tr);
   //Geant4TrackInformation* info = track.info<Geant4TrackInformation>();
   const string& proc = track.creatorProcess()->GetProcessName();
-  StringV::const_iterator trIt = find_if(m_ignoredProcs.begin(), m_ignoredProcs.end(), FindString(proc));
+  auto trIt = find_if(m_ignoredProcs.begin(), m_ignoredProcs.end(), FindString(proc));
   if (trIt != m_ignoredProcs.end()) {
     warning("Particles created by processes of type %s are not kept!", (*trIt).c_str());
     return;

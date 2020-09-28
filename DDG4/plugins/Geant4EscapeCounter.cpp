@@ -99,7 +99,7 @@ bool Geant4EscapeCounter::process(G4Step* step, G4TouchableHistory* /* history *
   string   hdlr_path  = handler.path();
   Position prePos     = h.prePos();
   Geant4HitCollection* coll = collection(m_collectionID);
-  SimpleTracker::Hit*  hit = new SimpleTracker::Hit(th.id(),th.pdgID(),h.deposit(),th.time());
+  auto*  hit = new SimpleTracker::Hit(th.id(),th.pdgID(),h.deposit(),th.time());
   hit->cellID        = volumeID(step);
   hit->energyDeposit = th.energy();
   hit->position      = prePos;

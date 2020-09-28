@@ -115,7 +115,7 @@ Geant4Sensitive::~Geant4Sensitive() {
 
 /// Add an actor responding to all callbacks. Sequence takes ownership.
 void Geant4Sensitive::adoptFilter(Geant4Action* action)   {
-  Geant4Filter* filter = dynamic_cast<Geant4Filter*>(action);
+  auto* filter = dynamic_cast<Geant4Filter*>(action);
   adopt(filter);
 }
 
@@ -131,7 +131,7 @@ void Geant4Sensitive::adopt(Geant4Filter* filter) {
 
 /// Add an actor responding to all callbacks. Sequence takes ownership.
 void Geant4Sensitive::adoptFilter_front(Geant4Action* action)   {
-  Geant4Filter* filter = dynamic_cast<Geant4Filter*>(action);
+  auto* filter = dynamic_cast<Geant4Filter*>(action);
   adopt_front(filter);
 }
 
@@ -209,13 +209,13 @@ void Geant4Sensitive::clear(G4HCofThisEvent* /* HCE */) {
 
 /// Mark the track to be kept for MC truth propagation during hit processing
 void Geant4Sensitive::mark(const G4Track* track) const  {
-  Geant4MonteCarloTruth* truth = context()->event().extension<Geant4MonteCarloTruth>(false);
+  auto* truth = context()->event().extension<Geant4MonteCarloTruth>(false);
   if ( truth ) truth->mark(track);
 }
 
 /// Mark the track of this step to be kept for MC truth propagation during hit processing
 void Geant4Sensitive::mark(const G4Step* step) const  {
-  Geant4MonteCarloTruth* truth = context()->event().extension<Geant4MonteCarloTruth>(false);
+  auto* truth = context()->event().extension<Geant4MonteCarloTruth>(false);
   if ( truth ) truth->mark(step);
 }
 
@@ -273,7 +273,7 @@ void Geant4SensDetActionSequence::updateContext(Geant4Context* ctxt)    {
 
 /// Add an actor responding to all callbacks. Sequence takes ownership.
 void Geant4SensDetActionSequence::adoptFilter(Geant4Action* action)   {
-  Geant4Filter* filter = dynamic_cast<Geant4Filter*>(action);
+  auto* filter = dynamic_cast<Geant4Filter*>(action);
   adopt(filter);
 }
 
@@ -330,7 +330,7 @@ const std::string& Geant4SensDetActionSequence::hitCollectionName(size_t which) 
 Geant4HitCollection* Geant4SensDetActionSequence::collection(size_t which) const {
   if (which < m_collections.size()) {
     int hc_id = m_detector->GetCollectionID(which);
-    Geant4HitCollection* c = (Geant4HitCollection*) m_hce->GetHC(hc_id);
+    auto* c = (Geant4HitCollection*) m_hce->GetHC(hc_id);
     if (c)
       return c;
     except("The collection index for subdetector %s is wrong!", c_name());
@@ -341,7 +341,7 @@ Geant4HitCollection* Geant4SensDetActionSequence::collection(size_t which) const
 
 /// Retrieve the hits collection associated with this detector by its collection identifier
 Geant4HitCollection* Geant4SensDetActionSequence::collectionByID(size_t id) const {
-  Geant4HitCollection* c = (Geant4HitCollection*) m_hce->GetHC(id);
+  auto* c = (Geant4HitCollection*) m_hce->GetHC(id);
   if (c)
     return c;
   except("The collection index for subdetector %s is wrong!", c_name());
@@ -357,7 +357,7 @@ bool Geant4SensDetActionSequence::accept(const G4Step* step) const {
 /// Function to process hits
 bool Geant4SensDetActionSequence::process(G4Step* step, G4TouchableHistory* hist) {
   bool result = false;
-  for (auto sensitive : *m_actors) {
+  for (auto *sensitive : m_actors) {
     if (sensitive->accept(step))
       result |= sensitive->process(step, hist);
   }
@@ -408,7 +408,7 @@ Geant4SensDetSequences::~Geant4SensDetSequences() {
 /// Access sequence member by name
 Geant4SensDetActionSequence* Geant4SensDetSequences::operator[](const string& name) const {
   string nam = "SD_Seq_" + name;
-  Members::const_iterator i = m_sequences.find(nam);
+  auto i = m_sequences.find(nam);
   if (i != m_sequences.end())
     return (*i).second;
   throw runtime_error("Attempt to access undefined SensDetActionSequence!");
@@ -417,7 +417,7 @@ Geant4SensDetActionSequence* Geant4SensDetSequences::operator[](const string& na
 /// Access sequence member by name
 Geant4SensDetActionSequence* Geant4SensDetSequences::find(const std::string& name) const {
   string nam = "SD_Seq_" + name;
-  Members::const_iterator i = m_sequences.find(nam);
+  auto i = m_sequences.find(nam);
   if (i != m_sequences.end())
     return (*i).second;
   return 0;

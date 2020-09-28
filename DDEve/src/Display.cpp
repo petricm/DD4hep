@@ -61,7 +61,7 @@ ClassImp(Display)
 
 namespace dd4hep {
   void EveDisplay(const char* xmlConfig = 0, const char* eventFileName = 0)  {
-    Display* display = new Display(TEveManager::Create(true,"VI"));
+    auto* display = new Display(TEveManager::Create(true,"VI"));
     if ( xmlConfig != 0 )   {
       char text[PATH_MAX];
       ::snprintf(text,sizeof(text),"%s%s",strncmp(xmlConfig,"file:",5)==0 ? "file:" : "",xmlConfig);
@@ -117,7 +117,7 @@ Display::~Display()   {
   deletePtr(m_viewMenu);
   deletePtr(m_eve);
   //br->ReallyDelete();
-  DetectorData* data = dynamic_cast<DetectorData*>(m_detDesc);
+  auto* data = dynamic_cast<DetectorData*>(m_detDesc);
   if ( data ) data->destroyData(false);
   deletePtr(m_detDesc);
   gGeoManager = 0;
@@ -191,9 +191,9 @@ void Display::ImportConfiguration(const DisplayConfiguration& config)   {
 
 /// Access to calo data histograms by name as defined in the configuration
 Display::CalodataContext& Display::GetCaloHistogram(const string& nam)   {
-  Calodata::iterator i = m_calodata.find(nam);
+  auto i = m_calodata.find(nam);
   if ( i == m_calodata.end() )  {
-    DataConfigurations::const_iterator j = m_calodataConfigs.find(nam);
+    auto j = m_calodataConfigs.find(nam);
     if ( j != m_calodataConfigs.end() )   {
       CalodataContext ctx;
       ctx.config = (*j).second;
@@ -242,13 +242,13 @@ Display::CalodataContext& Display::GetCaloHistogram(const string& nam)   {
 
 /// Access a data filter by name. Data filters are used to customize views
 const Display::ViewConfig* Display::GetViewConfiguration(const string& nam)  const   {
-  ViewConfigurations::const_iterator i = m_viewConfigs.find(nam);
+  auto i = m_viewConfigs.find(nam);
   return (i == m_viewConfigs.end()) ? 0 : &((*i).second);
 }
 
 /// Access a data filter by name. Data filters are used to customize calodatas
 const Display::DataConfig* Display::GetCalodataConfiguration(const string& nam)  const   {
-  DataConfigurations::const_iterator i = m_calodataConfigs.find(nam);
+  auto i = m_calodataConfigs.find(nam);
   return (i == m_calodataConfigs.end()) ? 0 : &((*i).second);
 }
 
@@ -259,7 +259,7 @@ void Display::RegisterEvents(View* view)   {
 
 /// Unregister from the main event scene
 void Display::UnregisterEvents(View* view)   {
-  Views::iterator i = m_eveViews.find(view);
+  auto i = m_eveViews.find(view);
   if ( i != m_eveViews.end() )  {
     m_eveViews.erase(i);
   }
@@ -370,7 +370,7 @@ void Display::OnNewEvent(EventHandler& handler )   {
         EventHandler::CollectionType typ = handler.collectionType(nam);
         if ( typ == EventHandler::CALO_HIT_COLLECTION ||
              typ == EventHandler::TRACKER_HIT_COLLECTION )  {
-          const DataConfigurations::const_iterator i=m_collectionsConfigs.find(nam);
+          const auto i=m_collectionsConfigs.find(nam);
           if ( i != m_collectionsConfigs.end() )  {
             const DataConfig& cfg = (*i).second;
             if ( cfg.hits == "PointSet" )  {
@@ -406,7 +406,7 @@ void Display::OnNewEvent(EventHandler& handler )   {
           // last track is gone ie. when we re-initialize the event scene
 
           // $$$ Do not know exactly what the field parameters mean
-          const DataConfigurations::const_iterator i=m_collectionsConfigs.find(nam);
+          const auto i=m_collectionsConfigs.find(nam);
           const DataConfig* cfg = (i==m_collectionsConfigs.end()) ? 0 : &((*i).second);
           MCParticleCreator cr(new TEveTrackPropagator("","",new TEveMagFieldDuo(350, -3.5, 2.0)),
                                new TEveCompound("MC_Particles","MC_Particles"),cfg);
@@ -449,7 +449,7 @@ TEveElementList& Display::GetGeo()   {
 
 /// Access/Create a topic by name
 TEveElementList& Display::GetGeoTopic(const string& name)    {
-  Topics::iterator i=m_geoTopics.find(name);
+  auto i=m_geoTopics.find(name);
   if ( i == m_geoTopics.end() )  {
     TEveElementList* topic = new ElementList(name.c_str(), name.c_str(), true, true);
     m_geoTopics[name] = topic;
@@ -461,7 +461,7 @@ TEveElementList& Display::GetGeoTopic(const string& name)    {
 
 /// Access/Create a topic by name. Throws exception if the topic does not exist
 TEveElementList& Display::GetGeoTopic(const string& name) const   {
-  Topics::const_iterator i=m_geoTopics.find(name);
+  auto i=m_geoTopics.find(name);
   if ( i == m_geoTopics.end() )  {
     throw runtime_error("Display: Attempt to access non-existing geometry topic:"+name);
   }
@@ -470,7 +470,7 @@ TEveElementList& Display::GetGeoTopic(const string& name) const   {
 
 /// Access/Create a topic by name
 TEveElementList& Display::GetEveTopic(const string& name)    {
-  Topics::iterator i=m_eveTopics.find(name);
+  auto i=m_eveTopics.find(name);
   if ( i == m_eveTopics.end() )  {
     TEveElementList* topic = new ElementList(name.c_str(), name.c_str(), true, true);
     m_eveTopics[name] = topic;
@@ -482,7 +482,7 @@ TEveElementList& Display::GetEveTopic(const string& name)    {
 
 /// Access/Create a topic by name. Throws exception if the topic does not exist
 TEveElementList& Display::GetEveTopic(const string& name) const   {
-  Topics::const_iterator i=m_eveTopics.find(name);
+  auto i=m_eveTopics.find(name);
   if ( i == m_eveTopics.end() )  {
     throw runtime_error("Display: Attempt to access non-existing event topic:"+name);
   }
@@ -535,7 +535,7 @@ void Display::LoadGeoChildren(TEveElement* start, int levels, bool redraw)  {
       }
     }
     else    {
-      TGeoNode* n = (TGeoNode*)start->GetUserData();
+      auto* n = (TGeoNode*)start->GetUserData();
       printout(INFO,"Display","+++ Load children of %s to %d levels",Utilities::GetName(start),levels);
       if ( 0 != n )   {
         TGeoHMatrix mat;

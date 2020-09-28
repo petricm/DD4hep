@@ -132,7 +132,7 @@ int main_wrapper(int argc, char** argv ){
       
       for(int i=0 ; i< nHit ; ++i){
 	
-        SimCalorimeterHit* sHit = (SimCalorimeterHit*) col->getElementAt(i) ;
+        auto* sHit = (SimCalorimeterHit*) col->getElementAt(i) ;
 	
         dd4hep::long64 id0 = sHit->getCellID0() ;
         dd4hep::long64 id1 = sHit->getCellID1() ;

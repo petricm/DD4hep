@@ -223,7 +223,7 @@ void Geant4Output2LCIO::endRun(const G4Run* /*run*/)  {
 
 /// Commit data at end of filling procedure
 void Geant4Output2LCIO::commit( OutputContext<G4Event>& /* ctxt */)   {
-  lcio::LCEventImpl* e = context()->event().extension<lcio::LCEventImpl>();
+  auto* e = context()->event().extension<lcio::LCEventImpl>();
   if ( m_file )   {
     G4AutoLock protection_lock(&action_mutex);
     m_file->writeEvent(e);
@@ -236,7 +236,7 @@ void Geant4Output2LCIO::commit( OutputContext<G4Event>& /* ctxt */)   {
 void Geant4Output2LCIO::saveRun(const G4Run* run)  {
   G4AutoLock protection_lock(&action_mutex);
   // --- write an lcio::RunHeader ---------
-  lcio::LCRunHeaderImpl* rh =  new lcio::LCRunHeaderImpl;
+  auto* rh =  new lcio::LCRunHeaderImpl;
   for (auto & it : m_runHeader) {
     rh->parameters().setValue( it.first, it.second );
   }
@@ -249,7 +249,7 @@ void Geant4Output2LCIO::saveRun(const G4Run* run)  {
 }
 
 void Geant4Output2LCIO::begin(const G4Event* /* event */)  {
-  lcio::LCEventImpl* e  = new lcio::LCEventImpl;
+  auto* e  = new lcio::LCEventImpl;
   //fg: here the event context takes ownership and
   //    deletes the event in the end
   context()->event().addExtension<lcio::LCEventImpl>( e );
@@ -261,7 +261,7 @@ lcio::LCCollectionVec* Geant4Output2LCIO::saveParticles(Geant4ParticleMap* parti
   typedef Geant4ParticleMap::ParticleMap ParticleMap;
   const ParticleMap& pm = particles->particleMap;
   size_t nparts = pm.size();
-  lcio::LCCollectionVec* lc_coll = new lcio::LCCollectionVec(lcio::LCIO::MCPARTICLE);
+  auto* lc_coll = new lcio::LCCollectionVec(lcio::LCIO::MCPARTICLE);
   lc_coll->reserve(nparts);
   if ( nparts > 0 )  {
     size_t cnt = 0;
@@ -269,13 +269,13 @@ lcio::LCCollectionVec* Geant4Output2LCIO::saveParticles(Geant4ParticleMap* parti
     vector<const Geant4Particle*> p_part(pm.size(),0);
     vector<MCParticleImpl*> p_lcio(pm.size(),0);
     // First create the particles
-    for(ParticleMap::const_iterator i=pm.begin(); i!=pm.end();++i, ++cnt)   {
+    for(auto i=pm.begin(); i!=pm.end();++i, ++cnt)   {
       int id = (*i).first;
       const Geant4ParticleHandle p = (*i).second;
       PropertyMask mask(p->status);
       //      std::cout << " ********** mcp status : 0x" << std::hex << p->status << ", mask.isSet(G4PARTICLE_GEN_STABLE) x" << std::dec << mask.isSet(G4PARTICLE_GEN_STABLE)  <<std::endl ;
       const G4ParticleDefinition* def = p.definition();
-      MCParticleImpl* q = new lcio::MCParticleImpl();
+      auto* q = new lcio::MCParticleImpl();
       q->setPDG(p->pdgID);
 
       float ps_fa[3] = {float(p->psx/CLHEP::GeV),float(p->psy/CLHEP::GeV),float(p->psz/CLHEP::GeV)};
@@ -365,8 +365,8 @@ lcio::LCCollectionVec* Geant4Output2LCIO::saveParticles(Geant4ParticleMap* parti
 
 /// Callback to store the Geant4 event
 void Geant4Output2LCIO::saveEvent(OutputContext<G4Event>& ctxt)  {
-  lcio::LCEventImpl* e = context()->event().extension<lcio::LCEventImpl>();
-  EventParameters* parameters = context()->event().extension<EventParameters>(false);
+  auto* e = context()->event().extension<lcio::LCEventImpl>();
+  auto* parameters = context()->event().extension<EventParameters>(false);
   int runNumber(0), eventNumber(0);
   const int eventNumberOffset(m_eventNumberOffset > 0 ? m_eventNumberOffset : 0);
   const int runNumberOffset(m_runNumberOffset > 0 ? m_runNumberOffset : 0);
@@ -386,8 +386,8 @@ void Geant4Output2LCIO::saveEvent(OutputContext<G4Event>& ctxt)  {
   saveEventParameters<int>(e, m_eventParametersInt);
   saveEventParameters<float>(e, m_eventParametersFloat);
   saveEventParameters<std::string>(e, m_eventParametersString);
-  lcio::LCEventImpl* evt = context()->event().extension<lcio::LCEventImpl>();
-  Geant4ParticleMap* part_map = context()->event().extension<Geant4ParticleMap>(false);
+  auto* evt = context()->event().extension<lcio::LCEventImpl>();
+  auto* part_map = context()->event().extension<Geant4ParticleMap>(false);
   if ( part_map )   {
     print("+++ Saving %d LCIO particles....",int(part_map->particleMap.size()));
     if ( part_map->particleMap.size() > 0 )  {
@@ -405,7 +405,7 @@ void Geant4Output2LCIO::saveCollection(OutputContext<G4Event>& /* ctxt */, G4VHi
   typedef pair<const Geant4Context*,G4VHitsCollection*> _Args;
   typedef Geant4Conversion<lcio::LCCollectionVec,_Args> _C;
   const _C& cnv = _C::converter(typeid(Geant4HitCollection));
-  lcio::LCEventImpl* evt = context()->event().extension<lcio::LCEventImpl>();
+  auto* evt = context()->event().extension<lcio::LCEventImpl>();
   lcio::LCCollectionVec* col = cnv(_Args(context(),collection));
   evt->addCollection(col,hc_nam);
 }

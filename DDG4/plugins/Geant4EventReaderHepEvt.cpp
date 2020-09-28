@@ -229,7 +229,7 @@ Geant4EventReaderHepEvt::readParticles(int /* event_number */,
 
     //
     //  create a MCParticle and fill it from stdhep info
-    Particle* p = new Particle(IHEP);
+    auto* p = new Particle(IHEP);
     PropertyMask status(p->status);
     //
     //  PDGID
@@ -359,7 +359,7 @@ Geant4EventReaderHepEvt::readParticles(int /* event_number */,
   for(auto & particle : particles)   {
     Geant4ParticleHandle p(particle);
     if ( p->parents.size() == 0 )  {
-      Geant4Vertex* vtx = new Geant4Vertex ;
+      auto* vtx = new Geant4Vertex ;
       vertices.emplace_back( vtx );
       vtx->x = p->vsx;
       vtx->y = p->vsy;

@@ -251,7 +251,7 @@ namespace dd4hep::detail {
             context->element    = e;
             context->flag       = nodes.empty() ? 0 : 1;
             if ( context->flag )  {
-              detail::VolumeManagerContextExtension* ext = (detail::VolumeManagerContextExtension*)context;
+              auto* ext = (detail::VolumeManagerContextExtension*)context;
               ext->placement  = PlacedVolume(n);
               for (size_t i = nodes.size(); i > 1; --i) {   // Omit the placement of the parent DetElement
                 TGeoMatrix* m = nodes[i-1]->GetMatrix();
@@ -309,7 +309,7 @@ PlacedVolume VolumeManagerContext::elementPlacement()  const   {
 PlacedVolume VolumeManagerContext::volumePlacement()  const   {
   if ( 0 == flag )
     return element.placement();
-  const detail::VolumeManagerContextExtension* ext = (const detail::VolumeManagerContextExtension*)this;
+  const auto* ext = (const detail::VolumeManagerContextExtension*)this;
   return ext->placement;
 }
 
@@ -317,7 +317,7 @@ PlacedVolume VolumeManagerContext::volumePlacement()  const   {
 const TGeoHMatrix& VolumeManagerContext::toElement()  const   {
   static TGeoHMatrix identity;
   if ( 0 == flag ) return identity;
-  const detail::VolumeManagerContextExtension* ext = (const detail::VolumeManagerContextExtension*)this;
+  const auto* ext = (const detail::VolumeManagerContextExtension*)this;
   return ext->toElement;
 }
 
@@ -325,7 +325,7 @@ const TGeoHMatrix& VolumeManagerContext::toElement()  const   {
 VolumeManager::VolumeManager(const Detector& description, const string& nam, DetElement elt, Readout ro, int flags) {
   printout(INFO, "VolumeManager", " - populating volume ids - be patient ..."  );
   size_t node_count = 0;
-  Object* obj_ptr = new Object();
+  auto* obj_ptr = new Object();
   assign(obj_ptr, nam, "VolumeManager");
   if (elt.isValid()) {
     detail::VolumeManager_Populator p(description, *this);
@@ -341,7 +341,7 @@ VolumeManager::VolumeManager(const Detector& description, const string& nam, Det
 
 /// Initializing constructor to create a new object
 VolumeManager::VolumeManager(DetElement sub_detector, Readout ro)  {
-  Object* obj_ptr = new Object();
+  auto* obj_ptr = new Object();
   obj_ptr->detector = sub_detector;
   obj_ptr->id = ro.isValid() ? ro.idSpec() : IDDescriptor();
   assign(obj_ptr, sub_detector.name(), "VolumeManager");
@@ -617,7 +617,7 @@ VolumeManager::worldTransformation(const ConditionsMap& mapping,
 /// Enable printouts for debugging
 std::ostream& dd4hep::operator<<(std::ostream& os, const VolumeManager& mgr) {
   const VolumeManager::Object& o = *mgr.data<VolumeManager::Object>();
-  VolumeManager::Object* top = dynamic_cast<VolumeManager::Object*>(o.top);
+  auto* top = dynamic_cast<VolumeManager::Object*>(o.top);
   bool isTop = top == &o;
   //bool hasTop = (o.flags & VolumeManager::ONE) == VolumeManager::ONE;
   //bool isSdet = (o.flags & VolumeManager::TREE) == VolumeManager::TREE && top != &o;

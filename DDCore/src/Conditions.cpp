@@ -27,7 +27,7 @@ using namespace dd4hep;
 Condition::Condition(key_type hash_key) : Handle<Object>()
 {
   if ( hash_key != 0 && hash_key != ~0x0ULL )  {
-    Object* o = new Object();
+    auto* o = new Object();
     assign(o,"","");
     o->hash = hash_key;
     return;
@@ -38,7 +38,7 @@ Condition::Condition(key_type hash_key) : Handle<Object>()
 /// Initializing constructor for a pure, undecorated conditions object
 Condition::Condition(const std::string& nam, const std::string& typ) : Handle<Object>()
 {
-  Object* o = new Object();
+  auto* o = new Object();
   assign(o,nam,typ);
   o->hash = 0;
 }
@@ -48,7 +48,7 @@ Condition::Condition(const string& nam,const string& typ, size_t memory)
   : Handle<Object>()
 {
   void* ptr = ::operator new(sizeof(Object)+memory);
-  Object* o = new(ptr) Object();
+  auto* o = new(ptr) Object();
   assign(o,nam,typ);
   o->hash = 0;
 }

@@ -58,15 +58,15 @@ namespace dd4hep::DDEve  {
 static void* _convertHitCollection(const char* source)  {
   typedef dd4hep::DDEve::SimulationHit SimulationHit;
   const std::vector<SimpleHit*>* c = (std::vector<SimpleHit*>*)source;
-  std::vector<SimulationHit>* pv = new std::vector<SimulationHit>();
+  auto* pv = new std::vector<SimulationHit>();
   if ( source && c->size() > 0 )   {
     for(auto k : *c)   {
-      SimpleTracker::Hit* trh = dynamic_cast<SimpleTracker::Hit*>(k);
+      auto* trh = dynamic_cast<SimpleTracker::Hit*>(k);
       if ( trh )   {
         pv->emplace_back(SimulationHit(trh->position, trh->energyDeposit));
         continue;
       }
-      SimpleCalorimeter::Hit* cah = dynamic_cast<SimpleCalorimeter::Hit*>(k);
+      auto* cah = dynamic_cast<SimpleCalorimeter::Hit*>(k);
       if ( cah )   {
         pv->emplace_back(SimulationHit(cah->position, cah->energyDeposit));
         continue;

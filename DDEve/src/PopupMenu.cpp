@@ -65,7 +65,7 @@ int PopupMenu::AddEntry(const char* name, Callback cb, void* ud, const TGPicture
 
 /// Handle menu items.
 void PopupMenu::HandleMenu(int id)   {
-  Callbacks::const_iterator i = m_calls.find(id);
+  auto i = m_calls.find(id);
   if ( i != m_calls.end() )  {
     TGMenuEntry* e = m_popup.GetEntry(id);
     void* ud = e->GetUserData();

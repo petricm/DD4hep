@@ -106,7 +106,7 @@ Geant4Particle& Geant4Particle::get_data(Geant4Particle& c)   {
 
 /// Remove daughter from set
 void Geant4Particle::removeDaughter(int id_daughter)  {
-  std::set<int>::iterator j = daughters.find(id_daughter);
+  auto j = daughters.find(id_daughter);
   if ( j != daughters.end() ) daughters.erase(j);
 }
 
@@ -511,7 +511,7 @@ void Geant4ParticleMap::adopt(ParticleMap& pm, TrackEquivalents& equiv)    {
 
 /// Access the equivalent track id (shortcut to the usage of TrackEquivalents)
 int Geant4ParticleMap::particleID(int g4_id, bool) const   {
-  TrackEquivalents::const_iterator iequiv = equivalentTracks.find(g4_id);
+  auto iequiv = equivalentTracks.find(g4_id);
   if ( iequiv != equivalentTracks.end() ) return (*iequiv).second;
   printout(ERROR,"Geant4ParticleMap","+++ No Equivalent particle for track:%d."
            " Monte Carlo truth record looks broken!",g4_id);

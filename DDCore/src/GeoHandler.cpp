@@ -36,7 +36,7 @@ namespace {
       shape->SetName(name.c_str());
     }
     if (shape->IsA() == TGeoCompositeShape::Class()) {
-      const TGeoCompositeShape* s = (const TGeoCompositeShape*) shape;
+      const auto* s = (const TGeoCompositeShape*) shape;
       const TGeoBoolNode* boolean = s->GetBoolNode();
       collectSolid(geo, name + "_left", name + "_left", boolean->GetLeftShape(), boolean->GetLeftMatrix());
       collectSolid(geo, name + "_right", name + "_right", boolean->GetRightShape(), boolean->GetRightMatrix());
@@ -139,7 +139,7 @@ GeoHandler& GeoHandler::i_collect(const TGeoNode* current, int level, Region rg,
   //printf("GeoHandler: collect level:%d %s\n",level,current->GetName());
   if (num_children > 0) {
     for (int i = 0; i < num_children; ++i) {
-      TGeoNode* node = (TGeoNode*) nodes->At(i);
+      auto* node = (TGeoNode*) nodes->At(i);
       i_collect(node, level + 1, region, limits);
     }
   }

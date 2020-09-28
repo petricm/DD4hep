@@ -525,7 +525,7 @@ namespace dd4hep::rec {
     //================================================================================================================
 
     VolSurfaceList* volSurfaceList( DetElement& det ) {
-      VolSurfaceList* list = det.extension< VolSurfaceList >(false);
+      auto* list = det.extension< VolSurfaceList >(false);
       if ( !list )  {
         list = det.addExtension<VolSurfaceList >(new VolSurfaceList);
       }
@@ -749,7 +749,7 @@ namespace dd4hep::rec {
 
       //---- if the volSurface is not in the DetElement's volume, we need to mutliply the path to the volume to the
       // DetElements world transform
-      for( std::list<PlacedVolume>::iterator it = ++( pVList.begin() ) , n = pVList.end() ; it != n ; ++it ){
+      for( auto it = ++( pVList.begin() ) , n = pVList.end() ; it != n ; ++it ){
 
       	PlacedVolume pvol = *it ;
       	TGeoMatrix* m = pvol->GetMatrix();
@@ -872,7 +872,7 @@ namespace dd4hep::rec {
 	
         if( shape->IsA() == TGeoBBox::Class() ) {
 	  
-          TGeoBBox* box = ( TGeoBBox* ) shape  ;
+          auto* box = ( TGeoBBox* ) shape  ;
 	  
           Vector3D boxDim(  box->GetDX() , box->GetDY() , box->GetDZ() ) ;  
 	  
@@ -939,14 +939,14 @@ namespace dd4hep::rec {
             double rmin1 = 0 ;
             double rmin2 = 0 ;
             if( shape->InheritsFrom("TGeoTube") ) {
-              TGeoTube* tube = ( TGeoTube* ) shape  ;
+              auto* tube = ( TGeoTube* ) shape  ;
               zhalf = tube->GetDZ() ;
               rmax1 = tube->GetRmax() ;
               rmax2 = tube->GetRmax() ;
               rmin1 = tube->GetRmin() ;
               rmin2 = tube->GetRmin() ;
             } else {   // shape->InheritsFrom("TGeoCone") )
-              TGeoCone* cone = ( TGeoCone* ) shape  ;
+              auto* cone = ( TGeoCone* ) shape  ;
               zhalf = cone->GetDZ() ;
               rmax1 = cone->GetRmax1() ;
               rmax2 = cone->GetRmax2() ;
@@ -1016,7 +1016,7 @@ namespace dd4hep::rec {
         }
 
         else if(shape->IsA() == TGeoTrap::Class()) {
-          TGeoTrap* trapezoid = ( TGeoTrap* ) shape;
+          auto* trapezoid = ( TGeoTrap* ) shape;
           
           double dx1 = trapezoid->GetBl1();
           double dx2 = trapezoid->GetTl1();
@@ -1045,7 +1045,7 @@ namespace dd4hep::rec {
         }
         //added code by Thorben Quast for simplified set of lines for trapezoids with unequal lengths in x
         else if(shape->IsA() == TGeoTrd1::Class()){
-          TGeoTrd1* trapezoid = ( TGeoTrd1* ) shape;
+          auto* trapezoid = ( TGeoTrd1* ) shape;
           //all lengths are half length
           double dx1 = trapezoid->GetDx1();
           double dx2 = trapezoid->GetDx2();
@@ -1076,7 +1076,7 @@ namespace dd4hep::rec {
         }
         //added code by Thorben Quast for simplified set of lines for trapezoids with unequal lengths in x AND y
         else if(shape->IsA() == TGeoTrd2::Class()){
-          TGeoTrd2* trapezoid = ( TGeoTrd2* ) shape;
+          auto* trapezoid = ( TGeoTrd2* ) shape;
           //all lengths are half length
           double dx1 = trapezoid->GetDx1();
           double dx2 = trapezoid->GetDx2();
@@ -1171,7 +1171,7 @@ namespace dd4hep::rec {
 
           lines.reserve( nMax ) ;
 
-          TGeoBBox* tube = ( TGeoBBox* ) shape  ;
+          auto* tube = ( TGeoBBox* ) shape  ;
 
           double zHalf = tube->GetDZ() ;
 

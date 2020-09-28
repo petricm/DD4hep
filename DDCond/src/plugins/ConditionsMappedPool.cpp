@@ -220,7 +220,7 @@ namespace {
   using namespace dd4hep;
   ConditionsManager _mgr(int argc, char** argv)  {
     if ( argc > 0 )  {
-      ConditionsManagerObject* m = (ConditionsManagerObject*)argv[0];
+      auto* m = (ConditionsManagerObject*)argv[0];
       return m;
     }
     dd4hep::except("ConditionsMappedPool","++ Insufficient arguments: arg[0] = ConditionManager!");

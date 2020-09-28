@@ -154,7 +154,7 @@ std::string dd4hep::volumeID(VolumeID vid)   {
 /// We need it so often: one-at-time 64 bit hash function
 unsigned long long int dd4hep::detail::hash64(const char* key)   {
   //return murmur_hash_64(key, strlen(key));
-  unsigned char* str = (unsigned char*)key;
+  auto* str = (unsigned char*)key;
   unsigned long long int hash = FNV1a_64::hashinit;
   for ( ; *str; ++str) hash = FNV1a_64::doByte(hash, *str);
   return hash;

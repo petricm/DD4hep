@@ -153,7 +153,7 @@ int main_wrapper(int argc, char** argv)   {
 
   //-----
 
-  TFile* f = new TFile(outFileName.c_str(),"recreate");
+  auto* f = new TFile(outFileName.c_str(),"recreate");
 
   Vector3D p0, p1; // the two points between which material is calculated
 

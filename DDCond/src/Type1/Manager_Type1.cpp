@@ -221,7 +221,7 @@ ConditionsPool* Manager_Type1::registerIOV(const IOVType& typ, IOV::Key key)   {
   if ( !pool )  {
     m_rawPool[typ.type] = pool = new ConditionsIOVPool(&typ);
   }
-  ConditionsIOVPool::Elements::const_iterator i = pool->elements.find(key);
+  auto i = pool->elements.find(key);
   if ( i != pool->elements.end() )   {
     return (*i).second.get();
   }
@@ -333,7 +333,7 @@ void Manager_Type1::__get_checked_pool(const IOV& req_iov,
     ConditionsIOVPool* pool = m_rawPool[typ->type];
     if ( 0 == up.get() )  {
       const void* argv[] = {this, pool, 0};
-      UserPool* p = createPlugin<UserPool>(m_userType,m_detDesc,2,argv);
+      auto* p = createPlugin<UserPool>(m_userType,m_detDesc,2,argv);
       up.reset(p);
     }
     return;

@@ -65,9 +65,9 @@ ContextMenu::~ContextMenu()   {
 
 /// Instantiator
 ContextMenu& ContextMenu::instance(TClass* cl)  {
-  Contexts::const_iterator i = mapped_entries().find(cl->GetName());
+  auto i = mapped_entries().find(cl->GetName());
   if ( i != mapped_entries().end() ) return *((*i).second);
-  ContextMenu* m = new ContextMenu(cl);
+  auto* m = new ContextMenu(cl);
   mapped_entries().emplace(cl->GetName(),m);
   return *m;
 }
@@ -82,7 +82,7 @@ ContextMenu& ContextMenu::Clear()   {
 
 /// Add a separator
 ContextMenu& ContextMenu::AddSeparator()   {
-  TClassMenuItem* item = 
+  auto* item =
     new TClassMenuItem(TClassMenuItem::kPopupSeparator,ContextMenuHandler::Class(),"seperator");
   m_class->GetMenuList()->AddFirst(item);
   return *this;
@@ -90,8 +90,8 @@ ContextMenu& ContextMenu::AddSeparator()   {
 
 /// Add user callback 
 ContextMenu& ContextMenu::Add(const string& title, Callback cb, void* ud)   {
-  ContextMenuHandler* handler = new ContextMenuHandler(cb, ud);
-  TClassMenuItem* item = 
+  auto* handler = new ContextMenuHandler(cb, ud);
+  auto* item =
     new TClassMenuItem(TClassMenuItem::kPopupUserFunction,
 		       ContextMenuHandler::Class(),title.c_str(),
 		       "Context",handler,"TObject*",2);

@@ -62,7 +62,7 @@ View& MultiView::Build(TEveWindow* slot)   {
 
   _C panels;
   const _V& view_cfg = m_eve->viewConfigurations();
-  _V::const_iterator icfg = view_cfg.find(m_name);
+  auto icfg = view_cfg.find(m_name);
   if ( icfg != view_cfg.end() )   {
     const _C& c = (*icfg).second.subdetectors;
     for(const auto & i : c)  {

@@ -96,7 +96,7 @@ namespace dd4hep::DDSegmentation {
 
     /// Access to parameter by name
     Parameter Segmentation::parameter(const std::string& parameterName) const {
-      map<std::string, Parameter>::const_iterator it = _parameters.find(parameterName);
+      auto it = _parameters.find(parameterName);
       if (it != _parameters.end()) {
         return it->second;
       }
@@ -122,7 +122,7 @@ namespace dd4hep::DDSegmentation {
     /// Add a cell identifier to this segmentation. Used by derived classes to define their required identifiers
     void Segmentation::registerIdentifier(const std::string& idName, const std::string& idDescription, std::string& identifier,
                                           const std::string& defaultValue) {
-      StringParameter idParameter =
+      auto idParameter =
         new TypedSegmentationParameter<std::string>(idName, idDescription, identifier, defaultValue,
                                                     SegmentationParameter::NoUnit, true);
       _parameters[idName]       = idParameter;
@@ -172,7 +172,7 @@ namespace dd4hep::DDSegmentation {
             << "of the segmentation";
         throw std::runtime_error(err.str());
       }
-      std::vector<double>::const_iterator bin = std::upper_bound(cellBoundaries.begin(),
+      auto bin = std::upper_bound(cellBoundaries.begin(),
                                                                  cellBoundaries.end(),
                                                                  position-offset);
       // need to reduce found bin by one, because upper_bound works that way, lower_bound would not help
