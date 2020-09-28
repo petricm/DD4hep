@@ -18,7 +18,7 @@ namespace dd4hep {
 namespace units = dd4hep;
 
 #include <cmath>        // for sqrt and pow
-#include <math.h>
+#include <cmath>
 
 using namespace std;
 

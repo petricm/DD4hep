@@ -8,10 +8,10 @@
 #include "DDRec/Surface.h"
 #include "STR.h"
 
+#include <cassert>
+#include <cmath>
 #include <exception>
 #include <iostream>
-#include <assert.h>
-#include <cmath>
 
 using namespace std ;
 using namespace dd4hep ;

@@ -1,8 +1,8 @@
 #include "DD4hep/DDTest.h"
+#include <cassert>
+#include <cmath>
 #include <exception>
 #include <iostream>
-#include <assert.h>
-#include <cmath>
 
 #include "DDSegmentation/BitFieldCoder.h"
 
