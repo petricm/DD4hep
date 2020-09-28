@@ -31,7 +31,7 @@ namespace dd4hep::DDSegmentation {
 
     /// Default constructor used by derived classes passing an existing decoder
     Segmentation::Segmentation(const BitFieldCoder* newDecoder) :
-      _name("Segmentation"), _type("Segmentation"), _decoder(newDecoder), _ownsDecoder(false) {
+      _name("Segmentation"), _type("Segmentation"), _decoder(newDecoder) {
     }
 
     /// Destructor

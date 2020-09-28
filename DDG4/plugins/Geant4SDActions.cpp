@@ -331,15 +331,14 @@ namespace dd4hep::sim   {
     struct TrackerCombine {
       Geant4Tracker::Hit  pre, post;
       Position          mean_pos;
-      Geant4Sensitive*  sensitive;
-      double            mean_time;
-      double            e_cut;
-      int               current;
-      int               combined;
-      long long int     cell;
+      Geant4Sensitive*  sensitive{0};
+      double            mean_time{0.0};
+      double            e_cut{0.0};
+      int               current{-1};
+      int               combined{0};
+      long long int     cell{0};
 
-      TrackerCombine() : pre(), post(), sensitive(0), mean_time(0.0), 
-                         e_cut(0.0), current(-1), combined(0), cell(0)
+      TrackerCombine() : pre(), post()
       {
       }
 

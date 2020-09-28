@@ -43,7 +43,7 @@ void Geant4SteppingAction::operator()(const G4Step*, G4SteppingManager*) {
 
 /// Standard constructor
 Geant4SharedSteppingAction::Geant4SharedSteppingAction(Geant4Context* ctxt, const string& nam)
-  : Geant4SteppingAction(ctxt, nam), m_action(0)
+  : Geant4SteppingAction(ctxt, nam)
 {
   InstanceCount::increment(this);
 }

@@ -63,10 +63,10 @@ namespace dd4hep::sim {
     public:
       typedef SequenceHdl<T> Base;
       T* m_sequence;
-      mutable Geant4Context* m_activeContext;
+      mutable Geant4Context* m_activeContext{0};
       /// Default constructor
       SequenceHdl()
-        : m_sequence(0), m_activeContext(0) {
+        : m_sequence(0) {
       }
       /// Initializing constructor
       SequenceHdl(Geant4Context* ctxt, T* seq) : m_sequence(0), m_activeContext(ctxt)  {

@@ -33,7 +33,7 @@ DD4HEP_INSTANTIATE_HANDLE_NAMED(AlignmentObject,ConditionObject);
 
 /// Default constructor
 AlignmentObject::AlignmentObject()
-  : ConditionObject(), alignment_data(0)
+  : ConditionObject()
 {
   InstanceCount::increment(this);
   flags  = Condition::ALIGNMENT_DERIVED;
@@ -43,7 +43,7 @@ AlignmentObject::AlignmentObject()
 
 /// Standard constructor
 AlignmentObject::AlignmentObject(const string& nam, const string& tit, void* p, size_t len)
-  : ConditionObject(nam, tit), alignment_data(0)
+  : ConditionObject(nam, tit)
 {
   InstanceCount::increment(this);
   flags  = Condition::ALIGNMENT_DERIVED|Condition::ONSTACK;

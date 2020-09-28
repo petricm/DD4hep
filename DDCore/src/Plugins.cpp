@@ -54,13 +54,13 @@ bool PluginService::setDebug(bool new_value)   {
 
 namespace   {
   struct PluginInterface  {
-    int (*getDebug)();
-    int (*setDebug)(int new_value);
-    PluginService::stub_t (*create)(const char* identifier, const char* signature);
+    int (*getDebug)(){0};
+    int (*setDebug)(int new_value){0};
+    PluginService::stub_t (*create)(const char* identifier, const char* signature){nullptr};
     void  (*add)(const char* identifier, 
                  PluginService::stub_t&& creator_stub, 
                  const char* signature, 
-                 const char* return_type);
+                 const char* return_type){nullptr};
     PluginInterface() noexcept(false);
     static PluginInterface& instance()  noexcept(false)   {
       static PluginInterface s_instance;
@@ -94,7 +94,7 @@ namespace   {
   }
 
   PluginInterface::PluginInterface()  noexcept(false)
-    : getDebug(0), setDebug(0), create(nullptr), add(nullptr)
+
   {
     void* handle = 0;
     const char* plugin_name = ::getenv("DD4HEP_PLUGINMGR");

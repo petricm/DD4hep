@@ -34,9 +34,9 @@ namespace dd4hep::DDEve  {
     class SimulationHit   {
     public:
       Position position;
-      float deposit;
+      float deposit{0.0};
       /// Default constructor
-      SimulationHit() : deposit(0.0) {}
+      SimulationHit()  {}
       /// Standard initializing constructor
       SimulationHit(Position  p, float d) : position(std::move(p)), deposit(d) {}
       /// Copy constructor

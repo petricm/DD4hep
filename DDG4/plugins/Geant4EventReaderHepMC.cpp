@@ -110,20 +110,18 @@ namespace dd4hep::sim::HepMC {
        */
       class EventHeader  {
       public:
-        int   id;
-        int   num_vertices;
-        int   bp1, bp2;
-        int   signal_process_id;
-        int   signal_process_vertex;
-        float scale;
-        float alpha_qcd;
-        float alpha_qed;
+        int   id{0};
+        int   num_vertices{0};
+        int   bp1{0}, bp2{0};
+        int   signal_process_id{0};
+        int   signal_process_vertex{0};
+        float scale{0.0};
+        float alpha_qcd{0.0};
+        float alpha_qed{0.0};
         vector<float>      weights;
         vector<long>       random;
         /// Default constructor
-        EventHeader() : id(0), num_vertices(0), bp1(0), bp2(0), 
-                        signal_process_id(0), signal_process_vertex(0),
-                        scale(0.0), alpha_qcd(0.0), alpha_qed(0.0), weights(), random() {}
+        EventHeader() :  weights(), random() {}
       };
 
       /// The known_io enum is used to track which type of input is being read

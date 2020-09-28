@@ -33,11 +33,11 @@ namespace dd4hep::sim {
     struct TrackerCombine {
       Geant4TrackerHit  pre;
       Geant4TrackerHit  post;
-      G4Track*          track;
-      double            e_cut;
-      int               current;
-      long long int     cellID;
-      TrackerCombine() : pre(), post(), track(0), e_cut(0.0), current(-1), cellID(0)  {
+      G4Track*          track{0};
+      double            e_cut{0.0};
+      int               current{-1};
+      long long int     cellID{0};
+      TrackerCombine() : pre(), post()  {
       }
       void start(long long int cell, G4Step* step, G4StepPoint* point)   {
         pre.storePoint(step,point);

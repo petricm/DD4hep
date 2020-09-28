@@ -284,14 +284,14 @@ PlacedVolumeExtension::PlacedVolumeExtension()
 
 /// Default move
 PlacedVolumeExtension::PlacedVolumeExtension(PlacedVolumeExtension&& c)
-  : TGeoExtension(c), magic(move(c.magic)), refCount(0), volIDs() {
+  : TGeoExtension(c), magic(move(c.magic)),  volIDs() {
   INCREMENT_COUNTER;
   volIDs = move(c.volIDs);
 }
 
 /// Copy constructor
 PlacedVolumeExtension::PlacedVolumeExtension(const PlacedVolumeExtension& c)
-  : TGeoExtension(), magic(c.magic), refCount(0), volIDs() {
+  : TGeoExtension(), magic(c.magic),  volIDs() {
   INCREMENT_COUNTER;
   volIDs = c.volIDs;
 }

@@ -230,10 +230,10 @@ namespace {
   class G4UserRegionInformation : public G4VUserRegionInformation {
   public:
     Region region;
-    double threshold;
-    bool storeSecondaries;
+    double threshold{0.0};
+    bool storeSecondaries{false};
     G4UserRegionInformation()
-      : threshold(0.0), storeSecondaries(false) {
+       {
     }
     virtual ~G4UserRegionInformation() {
     }

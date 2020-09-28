@@ -186,7 +186,7 @@ namespace {
 
 /// Initializing constructor. The tree will automatically be built if possible
 Geant4VolumeManager::Geant4VolumeManager(const Detector& description, Geant4GeometryInfo* info)
-  : Handle<Geant4GeometryInfo>(info), m_isValid(false) {
+  : Handle<Geant4GeometryInfo>(info) {
   if (info && info->valid && info->g4Paths.empty()) {
     Populator p(description, *info);
     p.populate(description.world());

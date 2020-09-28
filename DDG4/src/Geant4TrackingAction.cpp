@@ -122,7 +122,7 @@ void Geant4TrackingAction::mark(const G4Track* track) const    {
 
 /// Standard constructor
 Geant4SharedTrackingAction::Geant4SharedTrackingAction(Geant4Context* ctxt, const string& nam)
-  : Geant4TrackingAction(ctxt, nam), m_action(0)
+  : Geant4TrackingAction(ctxt, nam)
 {
   InstanceCount::increment(this);
 }

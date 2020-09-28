@@ -50,7 +50,7 @@ Geant4Event::~Geant4Event()  {
 
 /// Default constructor
 Geant4Context::Geant4Context(Geant4Kernel* kernel_pointer)
-  : m_kernel(kernel_pointer), m_run(0), m_event(0) {
+  : m_kernel(kernel_pointer) {
   InstanceCount::increment(this);
 }
 

@@ -85,7 +85,7 @@ namespace dd4hep {
 
 /// Standard constructor
 Display::Display(TEveManager* eve) 
-  : m_eve(eve), m_detDesc(0), m_evtHandler(0), m_geoGlobal(0), m_eveGlobal(0),
+  : m_eve(eve),
     m_viewMenu(0), m_dd4Menu(0), m_visLevel(7), m_loadLevel(1)
 {
   TEveBrowser* br = m_eve->GetBrowser();

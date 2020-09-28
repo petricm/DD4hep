@@ -58,7 +58,7 @@ DataExtension::~DataExtension() {
 
 /// Default constructor
 Geant4HitData::Geant4HitData()
-  : cellID(0), flag(0), g4ID(0), extension() {
+  :  g4ID(0), extension() {
   InstanceCount::increment(this);
 }
 

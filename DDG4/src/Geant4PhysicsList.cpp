@@ -68,7 +68,7 @@ namespace {
 
 /// Default constructor
 Geant4PhysicsList::Process::Process()
-  : ordAtRestDoIt(-1), ordAlongSteptDoIt(-1), ordPostStepDoIt(-1)  {
+    {
 }
 /// Copy constructor
 Geant4PhysicsList::Process::Process(const Process& p)

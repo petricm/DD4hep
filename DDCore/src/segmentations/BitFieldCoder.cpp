@@ -10,11 +10,10 @@ namespace dd4hep::DDSegmentation {
   
     BitFieldElement::BitFieldElement( std::string  fieldName,
                                       unsigned fieldOffset, int signedWidth ) :
-      _mask(0), 
+
       _offset( fieldOffset ),
       _width( abs( signedWidth ) ),
-      _minVal(0),
-      _maxVal(0),
+
       _isSigned( signedWidth < 0 ),
       _name(std::move( fieldName )) {
     

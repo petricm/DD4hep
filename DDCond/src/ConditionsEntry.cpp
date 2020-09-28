@@ -24,7 +24,7 @@ using namespace dd4hep::cond;
 
 /// Default constructor
 Entry::Entry()
-  : NamedObject(), detector(), value(), validity(), hash(0)
+  : NamedObject(), detector(), value(), validity()
 {
   InstanceCount::increment(this);
 }
