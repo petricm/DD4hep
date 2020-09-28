@@ -32,9 +32,7 @@ namespace {
   std::mutex s_mutex;
 
   typedef const dd4hep::BasicGrammar& (*grammar_create_t)();
-  typedef std;
-
-using grammar_args_t = std::pair<grammar_create_t, dd4hep::BasicGrammar::specialization_t>;
+  using grammar_args_t = std::pair<grammar_create_t, dd4hep::BasicGrammar::specialization_t>;
 
   // This static object needs to be in function to trick out static constructors populating this registry....
   static auto active_registry() -> std::map<dd4hep::BasicGrammar::key_type, dd4hep::BasicGrammar*>&  {
