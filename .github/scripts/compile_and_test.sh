@@ -16,9 +16,6 @@ cmake -GNinja \
       -DBUILD_SHARED_LIBS=${SHARED} \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_FLAGS="-fdiagnostics-color=always"  \
-      -DPYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")  \
-      -DPYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))") \
-      -DPYTHON_EXECUTABLE:FILEPATH=`which python` \
       -DCMAKE_CXX_STANDARD=${STANDARD} .. && \
       ninja
 
@@ -36,12 +33,8 @@ ctest --output-on-failure -j4 && \
 cd ../examples/ && \
 mkdir build && \
 cd build && \
-cmake \
-      -GNinja \
+cmake -GNinja \
       -DBoost_NO_BOOST_CMAKE=ON \
-      -DPYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")  \
-      -DPYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))") \
-      -DPYTHON_EXECUTABLE:FILEPATH=`which python` \
       -DCMAKE_CXX_STANDARD=${STANDARD} .. && \
 ninja && \
 ninja install && \
