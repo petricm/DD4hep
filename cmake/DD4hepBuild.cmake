@@ -80,13 +80,37 @@ macro(dd4hep_set_compiler_flags)
     message( STATUS "Unknown thread library: CMAKE_SHARED_LINKER_FLAGS ${CMAKE_SHARED_LINKER_FLAGS}" )
   endif()
 
-  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
-    SET ( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-undefined,error")
-  elseif ( ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") OR ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" ))
-    SET ( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
-  else()
-    MESSAGE( WARNING "We do not test with the ${CMAKE_CXX_COMPILER_ID} compiler, use at your own discretion" )
-  endif()
+  # From cmake 3.18 linker flag checks are possible on the fly
+  IF(CMAKE_VERSION VERSION_GREATER_EQUAL 3.18)
+    include(CheckLinkerFlag)
+    SET(LINKER_FLAGS -Wl,-undefined,error -Wl,--no-undefined)
+
+    FOREACH( FLAG ${LINKER_FLAGS} )
+      ## meed to replace the minus or plus signs from the variables, because it is passed
+      ## as a macro to g++ which causes a warning about no whitespace after macro
+      ## definition
+      STRING(REPLACE "-" "_" FLAG_WORD ${FLAG} )
+      STRING(REPLACE "," "_" FLAG_WORD ${FLAG_WORD} )
+      STRING(REPLACE "+" "P" FLAG_WORD ${FLAG_WORD} )
+
+      CHECK_LINKER_FLAG(CXX "${FLAG}" CXX_LINKER_FLAG_WORKS_${FLAG_WORD} )
+      IF( ${CXX_LINKER_FLAG_WORKS_${FLAG_WORD}} )
+        dd4hep_debug("|DDD> Adding -Wl,${FLAG} to CMAKE_SHARED_LINKER_FLAGS" )
+        SET ( CMAKE_SHARED_LINKER_FLAGS "-Wl,${FLAG} ${CMAKE_SHARED_LINKER_FLAGS} ")
+      ELSE()
+         dd4hep_debug("|DDD> NOT Adding -Wl,${FLAG} to CMAKE_SHARED_LINKER_FLAGS" )
+      ENDIF()
+    ENDFOREACH()
+  ELSE()
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
+      SET ( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-undefined,error")
+    elseif ( ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") OR ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" ))
+      SET ( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
+    else()
+      MESSAGE( WARNING "We do not test with the ${CMAKE_CXX_COMPILER_ID} compiler, use at your own discretion" )
+    endif()
+  ENDIF()
+
 
  #---RPATH options-------------------------------------------------------------------------------
  #  When building, don't use the install RPATH already (but later on when installing)
