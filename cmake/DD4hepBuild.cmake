@@ -102,7 +102,7 @@ macro(dd4hep_set_compiler_flags)
       ENDIF()
     ENDFOREACH()
   ELSE()
-      SET ( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-undefined,error")
+      SET ( CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
   ENDIF()
 
 
